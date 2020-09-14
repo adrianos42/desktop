@@ -1,0 +1,49 @@
+name: desktop
+description: Flutter design standard for desktop.
+
+version: 0.1.0
+
+environment:
+  sdk: '>=2.2.2 <3.0.0'
+  flutter: '>=1.15.2-pre.54'
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  fonts:
+    - family: IBMPlexSerif
+      fonts:
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf
+          weight: 300
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf
+          weight: 400
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Medium.ttf
+          weight: 500
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-SemiBold.ttf
+          weight: 600  
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf
+          weight: 700
+        
+    - family: IBMPlexSans
+      fonts:
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Light.ttf
+          weight: 300
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf
+          weight: 400
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf
+          weight: 600  
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf
+          weight: 700
+
+
+    - family: SharpMaterialIcons
+      fonts:
+        - asset: fonts/sharp_material_icons.ttf
