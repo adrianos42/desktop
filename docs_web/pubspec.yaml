@@ -1,0 +1,59 @@
+name: docs
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0-0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  desktop:
+    path: ../desktop
+    
+  url_launcher: 6.0.0-nullsafety.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/GitHub-Mark-120px-plus.png
+    - assets/GitHub-Mark-Light-120px-plus.png
+  fonts:
+    - family: mode
+      fonts:
+        - asset: fonts/mode.ttf
+    - family: IBMPlexSerif
+      fonts:
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf
+          weight: 300
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf
+          weight: 400
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Medium.ttf
+          weight: 500
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-SemiBold.ttf
+          weight: 600  
+        - asset: fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf
+          weight: 700
+        
+    - family: IBMPlexSans
+      fonts:
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Light.ttf
+          weight: 300
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf
+          weight: 400
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Medium.ttf
+          weight: 500
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf
+          weight: 600  
+        - asset: fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf
+          weight: 700
+    - family: SharpMaterialIcons
+      fonts:
+        - asset: fonts/sharp_material_icons.ttf
