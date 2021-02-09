@@ -68,7 +68,7 @@ class Dialog extends StatelessWidget {
                 child: body,
                 textAlign: TextAlign.justify,
                 style: themeData.textTheme.body1.copyWith(
-                  color: textTheme.textMedium.toColor(),
+                  color: textTheme.textHigh.toColor(),
                 ),
               ),
             ],
@@ -84,15 +84,14 @@ class Dialog extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Container(
-                    //color: Theme.of(context).colorScheme.overlay6,
-                    constraints: BoxConstraints(
-                      maxHeight: 38.0,
-                      minHeight: 38.0,
-                    ),
+                    // constraints: BoxConstraints(
+                    //   maxHeight: 26.0,
+                    //   minHeight: 26.0,
+                    // ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: menus!, // FIXME
+                      children: menus!, // FIXME what?
                     ),
                   ),
                 ),

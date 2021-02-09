@@ -9,7 +9,7 @@ const EdgeInsets _kTitlePadding = EdgeInsets.only(bottom: 16.0);
 const EdgeInsets _kMenuPadding = EdgeInsets.only(top: 16.0);
 const EdgeInsets _kOutsidePadding = EdgeInsets.symmetric(vertical: 32.0);
 const double _kMinDialogWidth = 640.0;
-const double _kMinDialogHeight = 200.0;
+const double _kMinDialogHeight = 120.0;
 
 class DialogThemeData {
   const DialogThemeData({
@@ -117,7 +117,7 @@ class DialogTheme extends InheritedTheme {
 
       if (dialogThemeData.barrierColor == null) {
         dialogThemeData = dialogThemeData.copyWidth(
-            barrierColor: HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.25));
+            barrierColor: HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.1));
       }
     }
 

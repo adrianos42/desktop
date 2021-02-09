@@ -121,17 +121,28 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     );
   }
 
+  int totalDuration(double width) {
+    final prop = _kIndeterminateLinearDuration.toDouble() * width / 300.0;
+    return prop.clamp(700, 3600).round();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.value != null) {
       return _buildIndicator(context, _controller.value);
     }
 
-    return AnimatedBuilder(
+    return LayoutBuilder(builder: (context, constraints) {
+      _controller.repeat(
+          period: Duration(
+              milliseconds: totalDuration(constraints.constrainWidth())));
+      return AnimatedBuilder(
         animation: _controller.view,
         builder: (BuildContext context, Widget? child) {
           return _buildIndicator(context, _controller.value);
-        });
+        },
+      );
+    });
   }
 
   @override
@@ -167,13 +178,13 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
 
   static const Curve line1Head = Interval(
     0.0,
-    400.0 / _kIndeterminateLinearDuration,
+    0.5,
     curve: Curves.linear,
   );
 
   static const Curve line1Tail = Interval(
-    400.0 / _kIndeterminateLinearDuration,
-    800 / _kIndeterminateLinearDuration,
+    0.5,
+    1.0,
     curve: Curves.linear,
   );
 
@@ -264,7 +275,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 6),
       vsync: this,
     );
     if (widget.value == null) _controller.repeat();
@@ -343,7 +354,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     required this.stepValue,
     required this.rotationValue,
     required this.strokeWidth,
-  })  : arcStart = value != null
+  })   : arcStart = value != null
             ? _startAngle
             : _startAngle +
                 tailValue * 3 / 2 * math.pi +
@@ -385,8 +396,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
       canvas.drawArc(Offset.zero & size, 0, _sweep, false, backgroundPaint);
     }
 
-    if (value == null)
-      paint.strokeCap = StrokeCap.square;
+    if (value == null) paint.strokeCap = StrokeCap.square;
 
     canvas.drawArc(Offset.zero & size, arcStart, arcSweep, false, paint);
   }

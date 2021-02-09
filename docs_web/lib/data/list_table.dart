@@ -29,18 +29,6 @@ class _ListTablePageState extends State<ListTablePage> {
                 child: Row(
                   children: [
                     Text('$col'),
-                    ButtonTheme.merge(
-                      data: ButtonThemeData(
-                        bodyPadding: EdgeInsets.zero,
-                        buttonPadding: EdgeInsets.zero,
-                        color: textTheme.textMedium,
-                        hoverColor: textTheme.textHigh
-                      ),
-                      child: IconButton(
-                        Icons.arrow_drop_down,
-                        onPressed: () {},
-                      ),
-                    ),
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),

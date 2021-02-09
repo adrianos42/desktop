@@ -18,7 +18,7 @@ class Radio extends StatefulWidget {
 
   final bool value;
 
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool>? onChanged;
 
   final FocusNode? focusNode;
 
@@ -34,18 +34,17 @@ class Radio extends StatefulWidget {
 
 class _RadioState extends State<Radio> with TickerProviderStateMixin {
   bool get enabled => widget.onChanged != null;
-  // Map<LocalKey, ActionFactory> _actionMap;
+  late Map<Type, Action<Intent>> _actionMap;
 
   @override
   void initState() {
     super.initState();
-    // _actionMap = <LocalKey, ActionFactory>{
-    //   ActivateAction.key: () =>
-    //       CallbackAction(ActivateAction.key, onInvoke: _actionHandler),
-    // };
+    _actionMap = <Type, Action<Intent>>{
+      ActivateIntent: CallbackAction(onInvoke: _actionHandler),
+    };
   }
 
-  void _actionHandler(FocusNode node, Intent intent) {
+  void _actionHandler(Intent intent) {
     if (widget.onChanged != null) {
       switch (widget.value) {
         case false:
@@ -54,13 +53,10 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
         case true:
           widget.onChanged!(false); // FIXME
           break;
-        default: // case null:
-          widget.onChanged!(false); // FIXME
-          break;
       }
     }
 
-    final RenderObject renderObject = node.context!.findRenderObject()!;
+    final RenderObject renderObject = context.findRenderObject()!;
     renderObject.sendSemanticsEvent(const TapSemanticEvent());
   }
 
@@ -85,25 +81,28 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    //Size size = const Size();
 
-    //final BoxConstraints constraints = BoxConstraints.tight(size);
-
+    final hoverColor = colorScheme.background4;
     final background = colorScheme.background;
 
-    final effectiveHoverColor = colorScheme.primary1;
-    final effectiveActiveColor = colorScheme.primary2;
-
-    final foregroundColor = enabled
-        ? textTheme.foreground(background)
-        : textTheme.disabledForeground(background);
+    final activeColor = enabled
+        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
+        : colorScheme.background4;
+    final inactiveColor = enabled
+        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
+        : colorScheme.background4;
+    final focusColor = enabled
+        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
+        : colorScheme.background4;
+    final foregroundColor =
+        enabled ? textTheme.textHigh : textTheme.textDisabled;
 
     final Size size = Size.square(Radio.outerRadius * 2.0);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
-      // actions: _actionMap,
+      actions: _actionMap,
       focusNode: widget.focusNode,
       autofocus: widget.autofocus,
       enabled: enabled,
@@ -113,12 +112,10 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
         builder: (BuildContext context) {
           return _RadioRenderObjectWidget(
             value: widget.value,
-            activeColor: effectiveActiveColor.toColor(),
-            inactiveColor: enabled
-                ? colorScheme.overlay5.toColor()
-                : colorScheme.overlay3.toColor(),
-            hoverColor: effectiveHoverColor.toColor(),
-            onChanged: widget.onChanged,
+            activeColor: activeColor.toColor(),
+            inactiveColor: inactiveColor.toColor(),
+            hoverColor: focusColor.toColor(),
+            onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
             foregroundColor: foregroundColor.toColor(),
             focusColor: foregroundColor.toColor(), // FIXME
             vsync: this,

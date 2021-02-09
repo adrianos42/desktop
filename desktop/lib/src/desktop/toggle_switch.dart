@@ -16,7 +16,7 @@ class ToggleSwitch extends StatefulWidget {
 
   final bool value;
 
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<bool>? onChanged;
 
   final FocusNode? focusNode;
 
@@ -35,20 +35,18 @@ class ToggleSwitch extends StatefulWidget {
 class _ToggleSwitchState extends State<ToggleSwitch>
     with TickerProviderStateMixin {
   bool get enabled => widget.onChanged != null;
-  // Map<LocalKey, ActionFactory> _actionMap;
+  late Map<Type, Action<Intent>> _actionMap;
 
   @override
   void initState() {
     super.initState();
-    // _actionMap = <LocalKey, ActionFactory>{
-    //   ActivateAction.key: () =>
-    //       CallbackAction(ActivateAction.key, onInvoke: _actionHandler),
-    // };
+    _actionMap = <Type, Action<Intent>>{
+      ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
+    };
   }
 
-  void _actionHandler(FocusNode node, Intent intent) {
+  void _actionHandler(Intent intent) {
     if (widget.onChanged != null) {
-      // FIXME
       switch (widget.value) {
         case false:
           widget.onChanged!(true);
@@ -56,13 +54,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         case true:
           widget.onChanged!(false);
           break;
-        default: // case null:
-          widget.onChanged!(false);
-          break;
       }
     }
 
-    final RenderObject renderObject = node.context!.findRenderObject()!;
+    final RenderObject renderObject = context.findRenderObject()!;
     renderObject.sendSemanticsEvent(const TapSemanticEvent());
   }
 
@@ -88,26 +83,27 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
+    final hoverColor = colorScheme.background4;
     final background = colorScheme.background;
-    //Size size = const Size();
 
-    //final BoxConstraints constraints = BoxConstraints.tight(size);
-
-    final effectiveHoverColor = colorScheme.primary;
-    final effectiveActiveColor = colorScheme.primary2;
-
-    final foregroundColor = enabled
-        ? textTheme.foreground(background)
-        : textTheme.disabledForeground(background);
+    final activeColor = enabled
+        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
+        : colorScheme.background4;
+    final inactiveColor = enabled
+        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
+        : colorScheme.background4;
+    final focusColor = enabled
+        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
+        : colorScheme.background4;
+    final foregroundColor =
+        enabled ? textTheme.textHigh : textTheme.textDisabled;
 
     final Size size = Size(ToggleSwitch.width, ToggleSwitch.height);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
-    final focusColor = foregroundColor; // FIXME
-
     return FocusableActionDetector(
-        // actions: _actionMap,
+        actions: _actionMap,
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
         enabled: enabled,
@@ -117,12 +113,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           builder: (BuildContext context) {
             return _ToggleSwitchRenderObjectWidget(
               value: widget.value,
-              activeColor: effectiveActiveColor.toColor(),
-              inactiveColor: enabled
-                  ? colorScheme.overlay5.toColor()
-                  : colorScheme.overlay3.toColor(),
-              hoverColor: effectiveHoverColor.toColor(),
-              onChanged: widget.onChanged,
+              activeColor: activeColor.toColor(),
+              inactiveColor: inactiveColor.toColor(),
+              hoverColor: focusColor.toColor(),
+              onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
               foregroundColor: foregroundColor.toColor(),
               vsync: this,
               hasFocus: _focused,

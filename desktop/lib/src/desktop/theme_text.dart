@@ -5,11 +5,13 @@ import 'package:flutter/widgets.dart';
 
 import "theme_color.dart";
 
+const HSLColor _kLightDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
 const HSLColor _kLightTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
 const HSLColor _kLightTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
 const HSLColor _kLightTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 const HSLColor _kLightForeground = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
+const HSLColor _kDarkDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.3);
 const HSLColor _kDarkTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
 const HSLColor _kDarkTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.7);
 const HSLColor _kDarkTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9);
@@ -97,6 +99,7 @@ class TextTheme {
     required this.textMedium,
     required this.colorScheme,
     required this.textForeground,
+    required this.textDisabled,
   });
 
   factory TextTheme(Brightness brightness, ColorScheme colorScheme) {
@@ -117,6 +120,7 @@ class TextTheme {
           textMedium: _kDarkTextMedium,
           textHigh: _kDarkTextHigh,
           textForeground: _kDarkForeground,
+          textDisabled: _kDarkDisabled,
           colorScheme: colorScheme,
         );
         break;
@@ -136,6 +140,7 @@ class TextTheme {
           textMedium: _kLightTextMedium,
           textHigh: _kLightTextHigh,
           textForeground: _kLightForeground,
+          textDisabled: _kDarkDisabled,
           colorScheme: colorScheme,
         );
         break;
@@ -163,6 +168,8 @@ class TextTheme {
   final HSLColor textMedium;
 
   final HSLColor textLow;
+
+  final HSLColor textDisabled;
 
   final ColorScheme colorScheme;
 
@@ -202,7 +209,7 @@ class TextTheme {
     //   effectiveForeground = textMedium;
     // }
 
-    return effectiveForeground;
+    return textHigh;
   }
 
   HSLColor disabledForeground(HSLColor background) {
@@ -238,6 +245,6 @@ class TextTheme {
     //   effectiveForeground = colorScheme.overlay6;
     // }
 
-    return effectiveForeground;
+    return textDisabled;
   }
 }

@@ -6,12 +6,11 @@ import 'theme.dart';
 import 'theme_color.dart';
 import 'constants.dart';
 
-const HSLColor _kHyperlinkDefaultForeground = HSLColor.fromAHSL(1.0, 210.0, 0.8, 1.0);
 const double _kLineThickness = 1.0;
 
 class HyperlinkButtonThemeData {
   const HyperlinkButtonThemeData({
-    this.color = _kHyperlinkDefaultForeground,
+    this.color = Colors.dodgerBlue,
     this.textStyle,
   });
 
@@ -69,7 +68,7 @@ class HyperlinkButtonTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       hyperlinkThemeData ??= themeData.hyperlinkButtonTheme;
 
-      final TextStyle textStyle = themeData.textTheme.body1.copyWith(
+      final TextStyle textStyle = themeData.textTheme.body2.copyWith(
         fontSize: 14.0,
         decoration: TextDecoration.underline,
         decorationThickness: _kLineThickness,

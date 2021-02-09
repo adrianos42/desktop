@@ -158,27 +158,30 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
 
     return MouseRegion(
-      onEnter: (_) => setState(() => hoveredIndex = index),
-      onExit: (_) => setState(() => hoveredIndex = -1),
+      onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
+      onExit: (_) => dragging ? null : setState(() => hoveredIndex = -1),
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
-        onTapDown: (_) => setState(() => pressedIndex = index),
-        onTapUp: (_) => setState(() => pressedIndex = -1),
-        onTapCancel: () => setState(() => pressedIndex = -1),
-        onTap: () {
-          if (widget.onPressed != null) {
-            if (waitingIndex == index) return;
-            waitingIndex = index;
-            dynamic result = widget.onPressed!(index) as dynamic; // FIXME
+        onTapDown:
+            dragging ? null : (_) => setState(() => pressedIndex = index),
+        onTapUp: dragging ? null : (_) => setState(() => pressedIndex = -1),
+        onTapCancel: dragging ? null : () => setState(() => pressedIndex = -1),
+        onTap: dragging
+            ? null
+            : () {
+                if (widget.onPressed != null) {
+                  if (waitingIndex == index) return;
+                  waitingIndex = index;
+                  dynamic result = widget.onPressed!(index) as dynamic; // FIXME
 
-            if (result is Future) {
-              setState(() => waitingIndex = index);
-              result.then((_) => setState(() => waitingIndex = -1));
-            } else {
-              waitingIndex = -1;
-            }
-          }
-        },
+                  if (result is Future) {
+                    setState(() => waitingIndex = index);
+                    result.then((_) => setState(() => waitingIndex = -1));
+                  } else {
+                    waitingIndex = -1;
+                  }
+                }
+              },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -241,6 +244,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   List<double> colSizes = List.empty(growable: true);
   Map<int, double>? colFraction;
 
+  bool dragging = false;
   double? previousWidth;
   double? totalWidth;
   List<double>? previousColSizes;
@@ -259,6 +263,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
     previousWidth = colSizes.sublist(col).reduce((v, e) => v + e);
     totalWidth = colSizes.reduce((v, e) => v + e);
+    dragging = true;
   }
 
   @override
@@ -295,10 +300,13 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
   @override
   void dragEnd() {
-    totalWidth = null;
-    previousWidth = null;
-    previousColSizes = null;
-    previousColFraction = null;
+    setState(() {
+      dragging = false;
+      totalWidth = null;
+      previousWidth = null;
+      previousColSizes = null;
+      previousColFraction = null;
+    });
   }
 
   @override

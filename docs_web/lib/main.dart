@@ -42,7 +42,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ThemeData themeData = ThemeData(
-      brightness: Brightness.dark, primaryColor: PrimaryColors.redPink);
+      brightness: Brightness.dark, primaryColor: PrimaryColors.dodgerBlue);
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => TextFieldPage(),
                       ),
                     ]),
-                    TreeNode('Scrolling', builder: (context) => ScrollingPage()),
+                    TreeNode('Scrolling',
+                        builder: (context) => ScrollingPage()),
                   ],
                 ),
               ),

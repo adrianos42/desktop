@@ -9,6 +9,8 @@ class ToggleSwitchPage extends StatefulWidget {
 }
 
 class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
+  bool value = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,9 +19,11 @@ class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
         Expanded(
           child: Center(
             child: ToggleSwitch(
-              onChanged: (value) {},
+              onChanged: (fvalue) {
+                setState(() => value = fvalue);
+              },
               autofocus: true,
-              value: true,
+              value: value,
             ),
           ),
         ),

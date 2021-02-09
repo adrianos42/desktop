@@ -87,8 +87,6 @@ class _TabState extends State<Tab> {
   final List<GlobalKey<NavigatorState>> _navigators =
       <GlobalKey<NavigatorState>>[];
 
-  FocusScopeNode _tabsNode = FocusScopeNode();
-
   int _index = _kIntialIndexValue;
 
   int get _length => widget.items.length;
@@ -181,8 +179,6 @@ class _TabState extends State<Tab> {
 
     for (var focusNode in _focusNodes) focusNode.dispose();
     for (var focusNode in _disposedFocusNodes) focusNode.dispose();
-
-    _tabsNode.dispose();
   }
 
   @override

@@ -10,7 +10,7 @@ import 'theme.dart';
 import 'theme_color.dart';
 import 'desktop.dart';
 
-const double _kScrollbarThickness = 14.0;
+const double _kScrollbarThickness = 8.0;
 const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1800);
 const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
 const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
@@ -85,8 +85,8 @@ class _ScrollbarState extends State<Scrollbar>
     final ColorScheme colorScheme = _themeData!.colorScheme;
 
     return pressed
-        ? colorScheme.overlay9
-        : hovered ? colorScheme.overlay7 : colorScheme.overlay6;
+        ? colorScheme.background4
+        : hovered ? colorScheme.background3 : colorScheme.background2;
   }
 
   late AnimationController _fadeoutAnimationController;
@@ -300,7 +300,7 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _receivedPointerSignal(PointerSignalEvent event) {
-    if (event is PointerScrollEvent && _position != null) {
+    if (event is PointerScrollEvent) {
       _targetScrollOffsetForPointerScroll(event);
     }
   }
@@ -618,26 +618,29 @@ class _ScrollbarState extends State<Scrollbar>
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     HSLColor background = widget.enabled
         ? colorScheme.background.withAlpha(1.0)
-        : colorScheme.overlay3;
+        : colorScheme.background1;
 
     Widget result = NotificationListener<ScrollNotification>(
       onNotification: _handleScrollNotification,
-      child: Stack(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Listener(
+         Expanded(child: Listener(
             child: Container(
-              margin: EdgeInsets.only(right: _kScrollbarThickness),
+             // margin: EdgeInsets.only(right: _kScrollbarThickness),
               child: widget.child,
             ),
             behavior: HitTestBehavior.deferToChild,
             onPointerSignal: _receivedPointerSignal,
-          ),
+          ),),
           RepaintBoundary(
             child: RawGestureDetector(
               gestures: _gestures,
               behavior: HitTestBehavior.deferToChild,
               child: MouseRegion(
-                opaque: false,
+                opaque: true,
                 onEnter: _handleMouseEnter,
                 onExit: _handleMouseExit,
                 onHover: _handleMouseHover,

@@ -43,7 +43,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-     _actionMap = <Type, Action<Intent>>{
+    _actionMap = <Type, Action<Intent>>{
       ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
     };
   }
@@ -55,10 +55,10 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
           widget.onChanged!(true); // FIXME
           break;
         case true:
-          widget.onChanged!(widget.tristate ? null : false);  // FIXME
+          widget.onChanged!(widget.tristate ? null : false); // FIXME
           break;
         default: // case null:
-          widget.onChanged!(false);  // FIXME
+          widget.onChanged!(false); // FIXME
           break;
       }
     }
@@ -88,23 +88,26 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    //Size size = const Size();
-
-    //final BoxConstraints constraints = BoxConstraints.tight(size);
-
     final hoverColor = colorScheme.background4;
 
-    final activeColor = enabled ?(_hovering || _focused ? colorScheme.primary1 : colorScheme.primary2) : colorScheme.overlay3;
-    final inactiveColor = enabled ? (_hovering || _focused ? hoverColor : colorScheme.overlay5) : colorScheme.overlay3;
-    final focusColor = enabled ? (_hovering || _focused ? hoverColor : textTheme.textMedium) : colorScheme.overlay3;
-    final foregroundColor = enabled ? textTheme.textHigh : colorScheme.overlay6;
-    
+    final activeColor = enabled
+        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
+        : colorScheme.background4;
+    final inactiveColor = enabled
+        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
+        : colorScheme.background4;
+    final focusColor = enabled
+        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
+        : colorScheme.background4;
+    final foregroundColor =
+        enabled ? textTheme.textHigh : textTheme.textDisabled;
+
     final Size size = Size.square(_kCheckboxWidth + 2);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
-         actions: _actionMap,
+        actions: _actionMap,
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
         enabled: enabled,
@@ -144,7 +147,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hasFocus,
     required this.hoverColor,
     required this.additionalConstraints,
-  })  : assert(tristate || value != null),
+  })   : assert(tristate || value != null),
         super(key: key);
 
   final bool? value;
@@ -204,7 +207,7 @@ class _RenderCheckbox extends RenderToggleable {
     required bool hasFocus,
     required TickerProvider vsync,
     required BoxConstraints additionalConstraints,
-  })  : _oldValue = value,
+  })   : _oldValue = value,
         super(
           value: value,
           tristate: tristate,
@@ -258,7 +261,8 @@ class _RenderCheckbox extends RenderToggleable {
   void _drawBorder(Canvas canvas, RRect outer, double t, Paint paint) {
     assert(t >= 0.0 && t <= 0.5);
     final double size = outer.width;
-    final RRect  inner = outer.deflate(math.min(size / 2.0, _kStrokeWidth + size * t));
+    final RRect inner =
+        outer.deflate(math.min(size / 2.0, _kStrokeWidth + size * t));
     canvas.drawDRRect(outer, inner, paint);
   }
 

@@ -7,6 +7,7 @@ import 'tab_i.dart';
 import 'button.dart';
 import 'theme_button.dart';
 import 'icons.dart';
+import 'scrollbar.dart';
 
 class TreeNode {
   final List<TreeNode>? children;
@@ -38,13 +39,16 @@ class _BuildTreePage {
   _BuildTreePage(this.builder);
 
   final WidgetBuilder builder;
+  final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
+  final FocusScopeNode focusScopeNode = FocusScopeNode(
+    skipTraversal: true,
+  );
   bool shouldBuild = false;
 }
 
 class _TreeState extends State<Tree> {
   final _pages = HashMap<String, _BuildTreePage>();
   String? _current;
-
   void setPage(String name) => setState(() => _current = name);
 
   void _createEntries(String name, TreeNode node) {
@@ -59,6 +63,29 @@ class _TreeState extends State<Tree> {
     } else {
       throw Exception('Either builder or children must be non null');
     }
+  }
+
+  @override
+  void didUpdateWidget(Tree oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // if (widget.items.length - _shouldBuildView.length > 0) { TODO
+    //   _shouldBuildView.addAll(List<bool>.filled(
+    //       widget.items.length - _shouldBuildView.length, false));
+    // } else {
+    //   _shouldBuildView.removeRange(
+    //       widget.items.length, _shouldBuildView.length);
+    // }
+
+    // if (widget.items.length - _navigators.length > 0) {
+    //   _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
+    //       widget.items.length - _navigators.length,
+    //       (index) => GlobalKey<NavigatorState>()));
+    // } else {
+    //   _navigators.removeRange(widget.items.length, _navigators.length);
+    // }
+
+    //  _focusView();
   }
 
   @override
@@ -90,11 +117,13 @@ class _TreeState extends State<Tree> {
           child: TickerMode(
             enabled: active,
             child: FocusScope(
+              node: entry.value.focusScopeNode,
               canRequestFocus: active,
               child: Builder(
                 builder: (context) {
                   return entry.value.shouldBuild
                       ? TabView(
+                          navigatorKey: entry.value.navigator,
                           builder: entry.value.builder,
                           navigatorObserver: NavigatorObserver(),
                         )
@@ -107,32 +136,37 @@ class _TreeState extends State<Tree> {
       );
     }
 
+    final controller = ScrollController();
+
     Widget result = Row(
       children: [
         Container(
           alignment: Alignment.topLeft,
           width: 200.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (widget.title != null)
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: widget.title!,
-                ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
+          child: Scrollbar(
+            controller: controller,
+            child: SingleChildScrollView(
+              controller: controller,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: widget.nodes
-                    .map((e) => TreeColumn(
-                          node: e,
-                          parentName: '',
-                        ))
-                    .toList(),
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (widget.title != null)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: widget.title!,
+                    ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widget.nodes
+                        .map((e) => TreeColumn(node: e, parentName: ''))
+                        .toList(),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
         Expanded(

@@ -37,8 +37,8 @@ class ColorScheme {
       ? _primary.withLightness(_primary.lightness + 0.1)
       : _primary.withLightness(_primary.lightness - 0.1);
 
-  HSLColor get primary1 => primary.withSaturation(_primary.saturation - 0.2);
-  HSLColor get primary2 => primary.withSaturation(_primary.saturation - 0.4);
+  HSLColor get primary1 => primary.withSaturation(_primary.saturation - 0.1).withLightness(_primary.lightness - 0.1);
+  HSLColor get primary2 => primary.withSaturation(_primary.saturation - 0.2).withLightness(_primary.lightness - 0.1);
 
   HSLColor get background => _backgroundFromIntensity(1.0);
   HSLColor get background1 => _backgroundFromIntensity(0.9);
