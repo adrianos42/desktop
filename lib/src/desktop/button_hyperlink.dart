@@ -6,10 +6,9 @@ import 'button.dart';
 import 'theme_hyperlink_button.dart';
 
 class HyperlinkButton extends StatelessWidget {
-  const HyperlinkButton({
+  const HyperlinkButton(this.text, {
     Key? key,
-    required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.tooltip,
   })  : 
         super(key: key);
@@ -18,7 +17,7 @@ class HyperlinkButton extends StatelessWidget {
 
   final String? tooltip;
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {

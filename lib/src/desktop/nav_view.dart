@@ -143,7 +143,7 @@ class _NavigationViewState extends State<NavigationView> {
       axis: NavScope.of(context)!.navAxis,
       pageBuilder: (context) => Container(
         alignment: Alignment.center,
-        color: themeData.colorScheme.background,
+        color: themeData.colorScheme.background.toColor(),
         child: Text(
           'Page "$name" not found',
           style: themeData.textTheme.title,

@@ -81,7 +81,7 @@ class _ScrollbarState extends State<Scrollbar>
   //       const Intent(PageDownAction.key),
   // };
 
-  Color get _trackColor {
+  HSLColor get _trackColor {
     final ColorScheme colorScheme = _themeData!.colorScheme;
 
     return pressed
@@ -149,7 +149,7 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _updateTrackColor() {
-    _painter?.color = _trackColor;
+    _painter?.color = _trackColor.toColor();
   }
 
   void _handleHoverChanged(bool value) {
@@ -186,7 +186,7 @@ class _ScrollbarState extends State<Scrollbar>
 
   DesktopScrollbarPainter _buildScrollbarPainter(BuildContext context) {
     return DesktopScrollbarPainter(
-      color: _trackColor,
+      color: _trackColor.toColor(),
       thickness: _kScrollbarThickness,
       textDirection: Directionality.of(context),
       minOverscrollLength: _kScrollbarMinOverscrollLength,
@@ -560,7 +560,7 @@ class _ScrollbarState extends State<Scrollbar>
         _painter!
           ..textDirection = Directionality.of(context)
           ..padding = EdgeInsets.zero
-          ..color = _trackColor;
+          ..color = _trackColor.toColor();
       });
 
       if (_position.maxScrollExtent <= _position.minScrollExtent) {
@@ -585,7 +585,7 @@ class _ScrollbarState extends State<Scrollbar>
       _painter!
         ..textDirection = Directionality.of(context)
         //..padding = MediaQuery.of(context).padding
-        ..color = _trackColor;
+        ..color = _trackColor.toColor();
     }
 
     WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
@@ -616,8 +616,8 @@ class _ScrollbarState extends State<Scrollbar>
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    Color background = widget.enabled
-        ? colorScheme.background.withOpacity(1.0)
+    HSLColor background = widget.enabled
+        ? colorScheme.background.withAlpha(1.0)
         : colorScheme.overlay3;
 
     Widget result = NotificationListener<ScrollNotification>(
@@ -651,7 +651,7 @@ class _ScrollbarState extends State<Scrollbar>
                       alignment: Alignment.topRight,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: background,
+                            color: background.toColor(),
                             border: Border(
                               // top: BorderSide(
                               //   color: colorScheme.overlay4,

@@ -8,7 +8,7 @@ import 'theme_text.dart';
 
 const double _kSidePadding = 6.0;
 const double _kHeight = 32.0;
-const double _kIconSize = 18.0;
+const double _kIconSize = 19.0;
 const double _kFontSize = 14.0;
 const double _kMinWidth = 12.0;
 
@@ -48,15 +48,15 @@ class ButtonThemeData {
 
   final TextStyle? textStyle;
 
-  final Color? disabledColor;
+  final HSLColor? disabledColor;
 
-  final Color? color;
+  final HSLColor? color;
 
-  final Color? focusColor;
+  final HSLColor? focusColor;
 
-  final Color? hoverColor;
+  final HSLColor? hoverColor;
 
-  final Color? highlightColor;
+  final HSLColor? highlightColor;
 
   ButtonThemeData copyWith({
     TextStyle? textStyle,
@@ -68,11 +68,11 @@ class ButtonThemeData {
     EdgeInsets? buttonPadding,
     double? height,
     double? minWidth,
-    Color? disabledColor,
-    Color? color,
-    Color? focusColor,
-    Color? hoverColor,
-    Color? highlightColor,
+    HSLColor? disabledColor,
+    HSLColor? color,
+    HSLColor? focusColor,
+    HSLColor? hoverColor,
+    HSLColor? highlightColor,
   }) {
     return ButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -170,7 +170,7 @@ class ButtonTheme extends InheritedTheme {
     Key? key,
     required Widget child,
     required this.data,
-  })  : super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   final ButtonThemeData data;
 
@@ -205,14 +205,14 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           themeData.textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final Color highlightColor =
+      final HSLColor highlightColor =
           buttonThemeData.highlightColor ?? textTheme.textHigh;
-      final Color hoverColor =
+      final HSLColor hoverColor =
           buttonThemeData.hoverColor ?? textTheme.textMedium;
-      final Color color = buttonThemeData.color ?? colorScheme.primary;
-      final Color disabledColor =
-          buttonThemeData.disabledColor ?? colorScheme.overlay10;
-      final Color focusColor = buttonThemeData.focusColor ?? highlightColor;
+      final HSLColor color = buttonThemeData.color ?? colorScheme.primary;
+      final HSLColor disabledColor =
+          buttonThemeData.disabledColor ?? colorScheme.background4;
+      final HSLColor focusColor = buttonThemeData.focusColor ?? highlightColor;
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,

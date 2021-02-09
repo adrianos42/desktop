@@ -35,9 +35,9 @@ class Slider extends StatefulWidget {
 
   final double max;
 
-  final Color? activeColor;
+  final HSLColor? activeColor;
 
-  final Color? thumbColor;
+  final HSLColor? thumbColor;
 
   @override
   _SliderState createState() => _SliderState();
@@ -61,17 +61,17 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-    TextTheme textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     
-    final Color activeColor = widget.activeColor ?? colorScheme.primary2;
-    final Color thumbColor = colorScheme.primary3;
+    final HSLColor activeColor = widget.activeColor ?? colorScheme.primary2;
+    final HSLColor thumbColor = colorScheme.primary2;
 
     Widget result = _SliderRenderObjectWidget(
       value: (widget.value - widget.min) / (widget.max - widget.min),
-      activeColor: activeColor,
-      thumbColor: thumbColor,
+      activeColor: activeColor.toColor(),
+      thumbColor: thumbColor.toColor(),
       onChanged: _handleChanged,
       onChangeStart: _handleDragStart,
       onChangeEnd: _handleDragEnd,
@@ -114,7 +114,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       value: value,
       activeColor: activeColor,
       thumbColor: thumbColor,
-      trackColor: Theme.of(context).colorScheme.overlay6,
+      trackColor: Theme.of(context).colorScheme.overlay6.toColor(),
       onChanged: onChanged,
       onChangeStart: onChangeStart,
       onChangeEnd: onChangeEnd,
@@ -129,7 +129,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       ..value = value
       ..activeColor = activeColor
       ..thumbColor = thumbColor
-      ..trackColor = Theme.of(context).colorScheme.overlay6
+      ..trackColor = Theme.of(context).colorScheme.overlay6.toColor()
       ..onChanged = onChanged
       ..onChangeStart = onChangeStart
       ..onChangeEnd = onChangeEnd

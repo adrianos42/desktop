@@ -20,8 +20,7 @@ class NavGroup extends StatefulWidget {
     required this.axis,
     required this.onChanged,
     required this.navWidgets,
-  })   :
-        super(key: key);
+  }) : super(key: key);
 
   final Axis axis;
 
@@ -45,14 +44,14 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    itemLengths = List<double>.filled(widget.navItems.length, 0.0);
+    itemLengths = List<double>.filled(widget.navItems.length, 0.0, growable: true);
   }
 
   @override
   Widget build(BuildContext context) {
     final axis = widget.axis;
 
-    var titleItems = List<Widget>.empty();
+    var titleItems = List<Widget>.empty(growable: true);
 
     final NavThemeData navThemeData = NavTheme.of(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -156,7 +155,8 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
               width: renderWidth,
             ),
             index: widget.index,
-            foreground: enabled ? textTheme.textHigh : textTheme.textLow,
+            foreground:
+                (enabled ? textTheme.textHigh : textTheme.textLow).toColor(),
           ),
         ],
       ),
@@ -169,7 +169,7 @@ class _NavButtonItem extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required this.button,
-  })   : super(key: key, child: button);
+  }) : super(key: key, child: button);
 
   final ValueChanged<Size> onLayout;
   final Widget button;

@@ -88,7 +88,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
     return Container(
       decoration: hasBorder
-          ? BoxDecoration(border: Border(bottom: tableBorder!.top)) // FIXME
+          ? BoxDecoration(border: Border(bottom: tableBorder.top)) // FIXME
           : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -197,19 +197,20 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
             result = Align(alignment: Alignment.bottomLeft, child: result);
 
-            Color? backgroundColor =
+            HSLColor? backgroundColor =
                 pressedIndex == index || waitingIndex == index
-                    ? Theme.of(context).colorScheme.overlay4
+                    ? Theme.of(context).colorScheme.background3
                     : hoveredIndex == index
-                        ? Theme.of(context).colorScheme.overlay2
+                        ? Theme.of(context).colorScheme.background1
                         : null;
 
-            BoxDecoration decoration = BoxDecoration(color: backgroundColor);
+            BoxDecoration decoration =
+                BoxDecoration(color: backgroundColor?.toColor());
 
+            // FIXME
             if (widget.tableBorder != null &&
-                    widget.tableBorder!.horizontalInside !=
-                        BorderSide.none || // FIXME
-                widget.tableBorder!.verticalInside != BorderSide.none) {
+                (widget.tableBorder!.horizontalInside != BorderSide.none ||
+                    widget.tableBorder!.verticalInside != BorderSide.none)) {
               final isBottom = index < widget.itemCount - 1 || hasExtent;
               final isRight = col < widget.colCount - 1 && col < lastNonZero;
 
@@ -237,7 +238,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     );
   }
 
-  List<double> colSizes = List.empty();
+  List<double> colSizes = List.empty(growable: true);
   Map<int, double>? colFraction;
 
   double? previousWidth;
@@ -553,33 +554,33 @@ class _TableColHandlerState extends State<_TableColHandler>
 
   @override
   Widget build(BuildContext context) {
-    final hoveredColor = Theme.of(context).colorScheme.overlay10;
+    final hoveredColor = Theme.of(context).colorScheme.background4;
     final draggedColor = Theme.of(context).colorScheme.primary;
 
     BorderSide? border = widget.border;
     bool hasFocus = hovered || dragged || widget.hasIndicator;
 
     if (border != null && border != BorderSide.none) {
-      final borderColor = dragged
+      final HSLColor borderColor = dragged
           ? draggedColor
           : hovered
               ? hoveredColor
-              : border.color;
+              : HSLColor.fromColor(border.color);
 
       border = border.copyWith(
-          color: borderColor,
+          color: borderColor.toColor(),
           width: hasFocus
               ? border.width + (border.width / 2.0).roundToDouble()
               : border.width);
     } else {
-      final color = Theme.of(context).colorScheme.overlay6;
+      final color = Theme.of(context).colorScheme.background2;
       final width = hasFocus ? 2.0 : 1.0;
       final borderColor = dragged
           ? draggedColor
           : hovered
               ? hoveredColor
               : color;
-      border = BorderSide(width: width, color: borderColor);
+      border = BorderSide(width: width, color: borderColor.toColor());
     }
 
     return RawGestureDetector(

@@ -39,7 +39,7 @@ class Dialog extends StatelessWidget {
 
     final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
-    final Color backgroundColor = dialogThemeData.background!;
+    final Color backgroundColor = dialogThemeData.background!.toColor();
 
     Widget result = Container(
       constraints: constraints ?? dialogThemeData.constraints,
@@ -68,7 +68,7 @@ class Dialog extends StatelessWidget {
                 child: body,
                 textAlign: TextAlign.justify,
                 style: themeData.textTheme.body1.copyWith(
-                  color: textTheme.textMedium,
+                  color: textTheme.textMedium.toColor(),
                 ),
               ),
             ],
@@ -187,7 +187,7 @@ PopupRoute<T> createDialogRoute<T>({
   bool barrierDismissible = true,
 }) {
   final DialogThemeData dialogThemeData = DialogTheme.of(context);
-  final Color? barrierColor = dialogThemeData.barrierColor;
+  final Color? barrierColor = dialogThemeData.barrierColor!.toColor();
 
   return DialogRoute<T>(
       barrierColor: barrierColor,

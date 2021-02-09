@@ -14,8 +14,7 @@ class Radio extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-  })  : 
-        super(key: key);
+  }) : super(key: key);
 
   final bool value;
 
@@ -92,8 +91,8 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
     final background = colorScheme.background;
 
-    final effectiveHoverColor = colorScheme.primary2;
-    final effectiveActiveColor = colorScheme.primary3;
+    final effectiveHoverColor = colorScheme.primary1;
+    final effectiveActiveColor = colorScheme.primary2;
 
     final foregroundColor = enabled
         ? textTheme.foreground(background)
@@ -104,30 +103,32 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
-        // actions: _actionMap,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        enabled: enabled,
-        onShowHoverHighlight: _handleHoverChanged,
-        onShowFocusHighlight: _handleFocusHighlightChanged,
-        child: Builder(
-          builder: (BuildContext context) {
-            return _RadioRenderObjectWidget(
-              value: widget.value,
-              activeColor: effectiveActiveColor,
-              inactiveColor:
-                  enabled ? colorScheme.overlay5 : colorScheme.overlay3,
-              hoverColor: effectiveHoverColor,
-              onChanged: widget.onChanged,
-              foregroundColor: foregroundColor,
-              focusColor: foregroundColor, // FIXME
-              vsync: this,
-              hasFocus: _focused,
-              hovering: _hovering,
-              additionalConstraints: additionalConstraints,
-            );
-          },
-        ));
+      // actions: _actionMap,
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: enabled,
+      onShowHoverHighlight: _handleHoverChanged,
+      onShowFocusHighlight: _handleFocusHighlightChanged,
+      child: Builder(
+        builder: (BuildContext context) {
+          return _RadioRenderObjectWidget(
+            value: widget.value,
+            activeColor: effectiveActiveColor.toColor(),
+            inactiveColor: enabled
+                ? colorScheme.overlay5.toColor()
+                : colorScheme.overlay3.toColor(),
+            hoverColor: effectiveHoverColor.toColor(),
+            onChanged: widget.onChanged,
+            foregroundColor: foregroundColor.toColor(),
+            focusColor: foregroundColor.toColor(), // FIXME
+            vsync: this,
+            hasFocus: _focused,
+            hovering: _hovering,
+            additionalConstraints: additionalConstraints,
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -145,8 +146,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hovering,
     required this.focusColor,
     required this.additionalConstraints,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   final bool value;
   final bool hasFocus;

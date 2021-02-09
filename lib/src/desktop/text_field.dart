@@ -161,26 +161,26 @@ class _TextFieldState extends State<TextField>
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    final Color background = enabled
+    final HSLColor background = enabled
         ? _effectiveFocusNode.hasFocus
             ? colorScheme.background
-            : colorScheme.background.withOpacity(0.0)
+            : colorScheme.background.withAlpha(0.0)
         : colorScheme.overlay3;
-    final Color characterColor =
+    final HSLColor characterColor =
         enabled ? textTheme.textHigh : colorScheme.overlay8;
-    final Color selectionColor = enabled ? colorScheme.primary3 : background;
-    final Color borderColor = _effectiveFocusNode.hasFocus
-        ? colorScheme.overlay10
+    final HSLColor selectionColor = enabled ? colorScheme.primary2 : background;
+    final HSLColor borderColor = _effectiveFocusNode.hasFocus
+        ? colorScheme.overlay9
         : colorScheme.overlay6;
 
     final textStyle = textTheme.body1.copyWith(
-      color: characterColor,
+      color: characterColor.toColor(),
     );
 
     final decoration = BoxDecoration(
-      color: background,
+      color: background.toColor(),
       border:
-          enabled ? Border.all(color: borderColor, width: _kBorderWidth) : null,
+          enabled ? Border.all(color: borderColor.toColor(), width: _kBorderWidth) : null,
     );
 
     final editable = EditableText(
@@ -191,17 +191,17 @@ class _TextFieldState extends State<TextField>
       focusNode: _effectiveFocusNode,
       keyboardType: TextInputType.text,
       style: widget.style ?? textStyle,
-      backgroundCursorColor: background, // FIXME
+      backgroundCursorColor: background.toColor(), // FIXME
       textAlign: widget.textAlign,
       autofocus: widget.autofocus,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       expands: false,
-      selectionColor: enabled ? selectionColor : colorScheme.background,
+      selectionColor: enabled ? selectionColor.toColor() : colorScheme.background.toColor(),
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingComplete,
       cursorWidth: _kCursorWidth,
-      cursorColor: characterColor,
+      cursorColor: characterColor.toColor(),
       cursorOffset: Offset.zero,
       inputFormatters: widget.inputFormatters,
       strutStyle: widget.strutStyle,

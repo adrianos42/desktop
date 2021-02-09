@@ -30,7 +30,7 @@ class Theme extends StatelessWidget {
 
   final Widget child;
 
-  static invertedThemeOf(BuildContext context) {
+  static ThemeData invertedThemeOf(BuildContext context) {
     final _InheritedTheme inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
 

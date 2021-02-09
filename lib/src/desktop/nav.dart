@@ -25,11 +25,11 @@ class NavItem {
     required this.builder,
     required this.title,
     required this.route,
-    this.icon,
+    required this.icon,
   });
 
   final WidgetBuilder builder;
-  final IconData? icon;
+  final IconData icon;
   final String title;
   final String route;
 }
@@ -49,17 +49,17 @@ class NavMenuItem {
 class Nav extends StatefulWidget {
   const Nav({
     Key? key,
-    required this.navItems,
+    required this.items,
     this.back = !kIsWeb,
     this.navAxis = Axis.vertical,
     this.trailingMenu,
     this.leadingMenu,
     this.menuRouteBuilder,
   })  ://assert(back != null && back != kIsWeb),
-        assert(navItems.length > 0),
+        assert(items.length > 0),
         super(key: key);
 
-  final List<NavItem> navItems;
+  final List<NavItem> items;
 
   final List<NavMenuItem>? trailingMenu;
 
@@ -78,7 +78,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _index = _kIntialIndexValue;
 
-  int get _length => widget.navItems.length;
+  int get _length => widget.items.length;
 
   final Set<String> _menus = <String>{};
 
@@ -92,11 +92,11 @@ class _NavState extends State<Nav> {
 
   NavigatorState get _currentNavigator => _navigators[_index].currentState!;
 
-  final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
-  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
-  final List<bool> _shouldBuildView = <bool>[];
+  final List<FocusScopeNode> _focusNodes = List<FocusScopeNode>.empty(growable: true);
+  final List<FocusScopeNode> _disposedFocusNodes = List<FocusScopeNode>.empty(growable: true);
+  final List<bool> _shouldBuildView = List<bool>.empty(growable: true);
   final List<GlobalKey<NavigatorState>> _navigators =
-      <GlobalKey<NavigatorState>>[];
+      List<GlobalKey<NavigatorState>>.empty(growable: true);
 
   void _closeItem() {
     if (_menus.isEmpty) {
@@ -210,11 +210,11 @@ class _NavState extends State<Nav> {
       padding: itemsSpacing,
       child: NavGroup(
         navWidgets: widget.navAxis == Axis.horizontal
-            ? (context, index) => Text(widget.navItems[index].title)
-            : (context, index) => Icon(widget.navItems[index].icon),
+            ? (context, index) => Text(widget.items[index].title)
+            : (context, index) => Icon(widget.items[index].icon),
         axis: widget.navAxis,
         enabled: _menus.isEmpty,
-        navItems: widget.navItems,
+        navItems: widget.items,
         index: _index,
         onChanged: (value) => _indexChanged(value),
       ),
@@ -318,20 +318,20 @@ class _NavState extends State<Nav> {
   void didUpdateWidget(Nav oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.navItems.length - _shouldBuildView.length > 0) {
+    if (widget.items.length - _shouldBuildView.length > 0) {
       _shouldBuildView.addAll(List<bool>.filled(
-          widget.navItems.length - _shouldBuildView.length, false));
+          widget.items.length - _shouldBuildView.length, false));
     } else {
       _shouldBuildView.removeRange(
-          widget.navItems.length, _shouldBuildView.length);
+          widget.items.length, _shouldBuildView.length);
     }
 
-    if (widget.navItems.length - _navigators.length > 0) {
+    if (widget.items.length - _navigators.length > 0) {
       _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-          widget.navItems.length - _navigators.length,
+          widget.items.length - _navigators.length,
           (index) => GlobalKey<NavigatorState>()));
     } else {
-      _navigators.removeRange(widget.navItems.length, _navigators.length);
+      _navigators.removeRange(widget.items.length, _navigators.length);
     }
 
     _focusView();
@@ -362,7 +362,7 @@ class _NavState extends State<Nav> {
               builder: (context) {
                 return _shouldBuildView[index]
                     ? NavigationView(
-                        builder: widget.navItems[index].builder,
+                        builder: widget.items[index].builder,
                         //name: widget.navItems[index].route,
                         navigatorKey: _navigators[index],
                         navigatorObserver: _NavObserver(this),

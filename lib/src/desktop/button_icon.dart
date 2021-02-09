@@ -7,7 +7,7 @@ class IconButton extends StatelessWidget {
   const IconButton(this.icon, {
     Key? key,
     this.tooltip,
-    required this.onPressed,
+    this.onPressed,
   })  : super(key: key);
 
   final String? tooltip;

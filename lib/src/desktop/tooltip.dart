@@ -328,7 +328,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     final ThemeData themeData = Theme.of(context).invertedTheme;
 
     TextStyle defaultTextStyle = themeData.textTheme.caption;
-    Color defaultDecoration = themeData.colorScheme.background;
+    Color defaultDecoration = themeData.colorScheme.background.toColor();
 
     height = widget.height ?? _kTooltipHeight;
     maxWidth = widget.maxWidth ?? _kTooltipMaxWidth;

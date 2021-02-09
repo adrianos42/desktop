@@ -92,9 +92,9 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
     //final BoxConstraints constraints = BoxConstraints.tight(size);
 
-    final hoverColor = colorScheme.overlay10;
+    final hoverColor = colorScheme.background4;
 
-    final activeColor = enabled ?(_hovering || _focused ? colorScheme.primary2 : colorScheme.primary3) : colorScheme.overlay3;
+    final activeColor = enabled ?(_hovering || _focused ? colorScheme.primary1 : colorScheme.primary2) : colorScheme.overlay3;
     final inactiveColor = enabled ? (_hovering || _focused ? hoverColor : colorScheme.overlay5) : colorScheme.overlay3;
     final focusColor = enabled ? (_hovering || _focused ? hoverColor : textTheme.textMedium) : colorScheme.overlay3;
     final foregroundColor = enabled ? textTheme.textHigh : colorScheme.overlay6;
@@ -115,12 +115,12 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
             return _CheckboxRenderObjectWidget(
               value: widget.value,
               tristate: widget.tristate,
-              activeColor: activeColor,
-              inactiveColor: inactiveColor,
+              activeColor: activeColor.toColor(),
+              inactiveColor: inactiveColor.toColor(),
               onChanged: widget.onChanged,
-              foregroundColor: foregroundColor,
-              focusColor: focusColor,
-              hoverColor: hoverColor,
+              foregroundColor: foregroundColor.toColor(),
+              focusColor: focusColor.toColor(),
+              hoverColor: hoverColor.toColor(),
               vsync: this,
               hasFocus: false,
               additionalConstraints: additionalConstraints,

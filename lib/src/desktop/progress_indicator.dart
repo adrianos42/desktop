@@ -21,18 +21,18 @@ abstract class ProgressIndicator extends StatefulWidget {
 
   final double? value;
 
-  final Color? valueColor;
+  final HSLColor? valueColor;
 
-  final Color? backgroundColor;
+  final HSLColor? backgroundColor;
 
   final String? semanticsLabel;
 
   final String? semanticsValue;
 
-  Color _getBackgroundColor(BuildContext context) =>
-      backgroundColor ?? Theme.of(context).colorScheme.overlay6;
+  HSLColor _getBackgroundColor(BuildContext context) =>
+      backgroundColor ?? Theme.of(context).colorScheme.background3;
 
-  Color _getValueColor(BuildContext context) =>
+  HSLColor _getValueColor(BuildContext context) =>
       valueColor ?? Theme.of(context).colorScheme.primary;
 
   @override
@@ -64,10 +64,10 @@ class LinearProgressIndicator extends ProgressIndicator {
   const LinearProgressIndicator({
     Key? key,
     double? value,
-    Color? valueColor,
+    HSLColor? valueColor,
     String? semanticsLabel,
     String? semanticsValue,
-    Color? backgroundColor,
+    HSLColor? backgroundColor,
   }) : super(
           key: key,
           value: value,
@@ -111,8 +111,8 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
         ),
         child: CustomPaint(
           painter: _LinearProgressIndicatorPainter(
-            backgroundColor: widget._getBackgroundColor(context),
-            valueColor: widget._getValueColor(context),
+            backgroundColor: widget._getBackgroundColor(context).toColor(),
+            valueColor: widget._getValueColor(context).toColor(),
             value: widget.value,
             animationValue: animationValue,
           ),
@@ -219,8 +219,8 @@ class CircularProgressIndicator extends ProgressIndicator {
   const CircularProgressIndicator({
     Key? key,
     double? value,
-    required Color backgroundColor,
-    required Color valueColor,
+    HSLColor? backgroundColor,
+    HSLColor? valueColor,
     this.strokeWidth = 3.0,
     String? semanticsLabel,
     String? semanticsValue,
@@ -296,8 +296,8 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
         ),
         child: CustomPaint(
           painter: _CircularProgressIndicatorPainter(
-            backgroundColor: widget.backgroundColor,
-            valueColor: widget._getValueColor(context),
+            backgroundColor: widget.backgroundColor?.toColor(),
+            valueColor: widget._getValueColor(context).toColor(),
             value: widget.value, // may be null
             headValue:
                 headValue, // remaining arguments are ignored if widget.value is not null

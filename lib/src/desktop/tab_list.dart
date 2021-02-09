@@ -45,8 +45,7 @@ class TabList extends StatefulWidget {
   const TabList({
     Key? key,
     required this.tabItems,
-  })  : assert(tabItems != null),
-        assert(tabItems.length > 0),
+  })  : assert(tabItems.length > 0),
         super(key: key);
 
   final List<TabListItem> tabItems;
@@ -259,27 +258,27 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final TextStyle textStyle = textTheme.body1.copyWith(fontSize: 14.0);
     final colorScheme = Theme.of(context).colorScheme;
-    final Color selectedColor = colorScheme.primary3;
+    final HSLColor selectedColor = colorScheme.primary1;
 
     return List<Widget>.generate(widget.items.length, (index) {
       final bool selected = index == widget.index;
       final pressed = _pressedIndex == index;
       final hovered = _hoveredIndex == index;
 
-      final Color? background = selected
+      final HSLColor? background = selected
           ? (selectedColor)
           : pressed
               ? colorScheme.overlay6
               : hovered ? colorScheme.overlay4 : null;
 
-      final Color foreground = pressed || selected
+      final HSLColor foreground = pressed || selected
           ? textTheme.textHigh
           : hovered ? textTheme.textMedium : textTheme.textLow;
 
       Widget item = DefaultTextStyle(
-        style: textStyle.copyWith(color: foreground),
+        style: textStyle.copyWith(color: foreground.toColor()),
         child: Container(
-          color: background,
+          color: background?.toColor(),
           padding:
               const EdgeInsets.symmetric(horizontal: _kMenuHorizontalPadding),
           alignment: AlignmentDirectional.centerStart,
@@ -337,7 +336,7 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
         //color: colorScheme.overlay2,
         border: Border(
           right: BorderSide(
-            color: colorScheme.overlay2,
+            color: colorScheme.overlay2.toColor(),
             width: 1.0,
           ),
         ),

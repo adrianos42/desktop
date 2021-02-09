@@ -117,15 +117,16 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           builder: (BuildContext context) {
             return _ToggleSwitchRenderObjectWidget(
               value: widget.value,
-              activeColor: effectiveActiveColor,
-              inactiveColor:
-                  enabled ? colorScheme.overlay5 : colorScheme.overlay3,
-              hoverColor: effectiveHoverColor,
+              activeColor: effectiveActiveColor.toColor(),
+              inactiveColor: enabled
+                  ? colorScheme.overlay5.toColor()
+                  : colorScheme.overlay3.toColor(),
+              hoverColor: effectiveHoverColor.toColor(),
               onChanged: widget.onChanged,
-              foregroundColor: foregroundColor,
+              foregroundColor: foregroundColor.toColor(),
               vsync: this,
               hasFocus: _focused,
-              focusColor: focusColor,
+              focusColor: focusColor.toColor(),
               hovering: _hovering,
               additionalConstraints: additionalConstraints,
             );

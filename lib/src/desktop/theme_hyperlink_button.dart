@@ -6,7 +6,7 @@ import 'theme.dart';
 import 'theme_color.dart';
 import 'constants.dart';
 
-const Color _kHyperlinkDefaultForeground = Color(0xFF1C86EE);
+const HSLColor _kHyperlinkDefaultForeground = HSLColor.fromAHSL(1.0, 210.0, 0.8, 1.0);
 const double _kLineThickness = 1.0;
 
 class HyperlinkButtonThemeData {
@@ -15,12 +15,12 @@ class HyperlinkButtonThemeData {
     this.textStyle,
   });
 
-  final Color color;
+  final HSLColor color;
 
   final TextStyle? textStyle;
 
   HyperlinkButtonThemeData copyWidth({
-    Color? color,
+    HSLColor? color,
     TextStyle? textStyle,
   }) {
     return HyperlinkButtonThemeData(

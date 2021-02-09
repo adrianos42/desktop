@@ -33,7 +33,7 @@ class Button extends StatefulWidget {
 
   final VoidCallback? onPressed;
 
-  final Color? color;
+  final HSLColor? color;
 
   bool get enabled => onPressed != null;
 
@@ -86,23 +86,23 @@ class _ButtonState extends State<Button> with ComponentStateMixin {
 
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final Color enabledForeground = widget.color ?? buttonThemeData.color!;
-    final Color pressedForeground = buttonThemeData.highlightColor!;
-    final Color hoveredForeground = buttonThemeData.hoverColor!;
-    final Color disabledForeground = buttonThemeData.disabledColor!;
+    final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
+    final HSLColor pressedForeground = buttonThemeData.highlightColor!;
+    final HSLColor hoveredForeground = buttonThemeData.hoverColor!;
+    final HSLColor disabledForeground = buttonThemeData.disabledColor!;
 
-    final Color foregroundColor = enabled
+    final HSLColor foregroundColor = enabled
         ? waiting || pressed
             ? pressedForeground
             : hovered ? hoveredForeground : enabledForeground
         : disabledForeground;
 
     final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
-      color: foregroundColor,
+      color: foregroundColor.toColor(),
     );
 
     final IconThemeData iconThemeData = buttonThemeData.iconThemeData!.copyWith(
-      color: foregroundColor,
+      color: foregroundColor.toColor(),
     );
 
     Widget result;

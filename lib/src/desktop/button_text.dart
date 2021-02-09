@@ -16,7 +16,7 @@ class TextButton extends StatelessWidget {
 
   final String? tooltip;
 
-  final Color? color;
+  final HSLColor? color;
 
   final VoidCallback? onPressed;
 

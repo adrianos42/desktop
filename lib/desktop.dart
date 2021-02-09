@@ -38,4 +38,5 @@ export 'src/desktop/theme_text.dart';
 export 'src/desktop/theme.dart';
 export 'src/desktop/toggle_switch.dart';
 export 'src/desktop/tooltip.dart';
-export 'src/desktop/tree_view.dart';
+export 'src/desktop/tree.dart';
+export 'src/desktop/document.dart';

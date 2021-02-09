@@ -196,11 +196,11 @@ class _DesktopAppState extends State<DesktopApp> {
           showSemanticsDebugger: widget.showSemanticsDebugger,
           debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
           home: Container(
-            color: effectiveThemeData.colorScheme.background,
+            color: effectiveThemeData.colorScheme.background.toColor(),
             child: result,
           ),
           title: widget.title,
-          color: effectiveThemeData.colorScheme.primary,
+          color: effectiveThemeData.colorScheme.primary.toColor(),
           // actions: <LocalKey, ActionFactory>{
           //   ...WidgetsApp.defaultActions,
           //   ...DesktopApp._actions,

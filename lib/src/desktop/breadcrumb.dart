@@ -41,7 +41,7 @@ class Breadcrumb extends StatefulWidget {
 class _BreadcrumbState extends State<Breadcrumb> {
   late GlobalKey<NavigatorState> _navigatorKey;
 
-  List<String> _names = List<String>.empty();
+  List<String> _names = List<String>.empty(growable: true);
 
   void _pushName(String name) {
     name = _formatNavText(name);
@@ -83,11 +83,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
   }
 
   Widget _createBarNavigation() {
-    ThemeData themeData = Theme.of(context);
-    ColorScheme colorScheme = themeData.colorScheme;
-    TextTheme textTheme = themeData.textTheme;
+    final themeData = Theme.of(context);
+    final colorScheme = themeData.colorScheme;
+    final textTheme = themeData.textTheme;
 
-    var items = List<Widget>.empty();
+    var items = List<Widget>.empty(growable: true);
 
     for (int i = 0; i < _names.length; i++) {
       var isLast = i == _names.length - 1;
@@ -97,7 +97,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
           Center(
             child: Icon(
               Icons.chevron_right,
-              color: textTheme.textLow,
+              color: textTheme.textLow.toColor(),
               size: 20.0,
             ),
           ),
@@ -121,7 +121,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
     Widget result = Container(
       constraints: BoxConstraints.tightFor(height: _kHeight),
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.background.toColor(),
       child: Padding(
         padding: EdgeInsets.only(left: 12.0),
         child: Row(
@@ -256,11 +256,11 @@ class _TabGroupState extends State<_TabGroup> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
-      final Color foreground = widget.index == index || _pressedIndex == index
+      final HSLColor foreground = widget.index == index || _pressedIndex == index
           ? colorScheme.primary
           : _hoveredIndex == index ? textTheme.textMedium : textTheme.textLow;
 
-      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground);
+      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground.toColor());
 
       return Padding(
         padding: EdgeInsets.only(
@@ -286,7 +286,7 @@ class _TabGroupState extends State<_TabGroup> {
 
     Widget result = Container(
       height: _kHeight,
-      color: colorScheme.background,
+      color: colorScheme.background.toColor(),
       child: Padding(
         padding: _khorizontalPadding,
         child: Row(
@@ -352,7 +352,7 @@ class _NavigationViewState extends State<_NavigationView> {
     return DesktopPageRoute(
       builder: (context) => Container(
         alignment: Alignment.center,
-        color: themeData.colorScheme.background,
+        color: themeData.colorScheme.background.toColor(),
         child: Text(
           'Page "$name" not found',
           style: themeData.textTheme.title,

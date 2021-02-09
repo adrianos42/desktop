@@ -170,7 +170,7 @@ class TabViewState extends State<TabView> {
     return TabMenuRoute(
       pageBuilder: (context) => Container(
         alignment: Alignment.center,
-        color: themeData.colorScheme.background,
+        color: themeData.colorScheme.background.toColor(),
         child: Text(
           'Page "${settings.name}" not found',
           style: themeData.textTheme.title,

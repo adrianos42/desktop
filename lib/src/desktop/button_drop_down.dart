@@ -121,7 +121,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         (value) => value!.represents(widget.initialValue!),
         orElse: () => null);
 
-    Color? inactiveBackground;
+    HSLColor? inactiveBackground;
 
     final waitingBackground = colorScheme.overlay6;
 
@@ -131,7 +131,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         ? waitingBackground
         : hovered ? colorScheme.overlay6 : colorScheme.overlay4;
 
-    border = Border.all(color: borderColor, width: 1.0);
+    border = Border.all(color: borderColor.toColor(), width: 1.0);
 
     if (child != null) inactiveBackground = colorScheme.background;
 
@@ -150,7 +150,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
           maxWidth: kMaxMenuWidth,
         ),
         decoration: BoxDecoration(
-          color: background,
+          color: background!.toColor(),
           border: border,
         ),
         //constraints: constraints,
@@ -165,7 +165,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               child: Icon(
                 Icons.arrow_drop_down,
                 size: 18.0,
-                color: foreground,
+                color: foreground.toColor(),
               ),
             ),
           ],

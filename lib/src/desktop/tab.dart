@@ -225,7 +225,9 @@ class _TabState extends State<Tab> {
           trailing: widget.items[_index].tabTrailing ?? widget.trailing,
           changeIndex: (value) => _indexChanged(value),
           items: List<Widget>.generate(
-              _length, (index) => widget.items[index].title),
+            _length,
+            (index) => widget.items[index].title,
+          ),
         ),
         Expanded(
           child: Stack(
@@ -295,15 +297,15 @@ class _TabGroupState extends State<_TabGroup> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
-      final Color foreground = widget.index == index || _pressedIndex == index
+      final HSLColor foreground = widget.index == index || _pressedIndex == index
           ? colorScheme.primary
           : _hoveredIndex == index
-              ? textTheme.textMedium
+              ? textTheme.textHigh
               : textTheme.textLow;
 
-      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground);
+      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground.toColor());
       final IconThemeData iconThemeData = IconThemeData(
-        color: foreground,
+        color: foreground.toColor(),
         size: 18.0,
       );
 
@@ -333,7 +335,7 @@ class _TabGroupState extends State<_TabGroup> {
 
     Widget result = Container(
       height: _kTabHeight,
-      color: colorScheme.background,
+      color: colorScheme.background.toColor(),
       child: Padding(
         padding: _khorizontalPadding,
         child: Row(

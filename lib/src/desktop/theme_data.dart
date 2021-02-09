@@ -12,9 +12,9 @@ import 'theme_dialog.dart';
 class ThemeData {
   factory ThemeData({
     required Brightness brightness,
-    Color? primaryColor,
+    HSLColor primaryColor = kDefaultPrimary,
   }) {
-    final colorScheme = ColorScheme(brightness);
+    final colorScheme = ColorScheme(brightness, primaryColor);
 
     return ThemeData._raw(
       brightness: brightness,
@@ -37,9 +37,11 @@ class ThemeData {
     required this.hyperlinkButtonTheme,
   });
 
-  factory ThemeData.light() => ThemeData(brightness: Brightness.light);
+  factory ThemeData.light([HSLColor primaryColor = kDefaultPrimary]) =>
+      ThemeData(brightness: Brightness.light, primaryColor: primaryColor);
 
-  factory ThemeData.dark() => ThemeData(brightness: Brightness.dark);
+  factory ThemeData.dark([HSLColor primaryColor = kDefaultPrimary]) =>
+      ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
 
   factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);
 
@@ -61,7 +63,7 @@ class ThemeData {
     final Brightness inverseBrightness =
         brightness == Brightness.dark ? Brightness.light : Brightness.dark;
 
-    final invertedColorScheme = ColorScheme(inverseBrightness);
+    final invertedColorScheme =colorScheme.withBrightness(inverseBrightness);
 
     return ThemeData._raw(
       brightness: inverseBrightness,

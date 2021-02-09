@@ -35,9 +35,9 @@ class DialogThemeData {
 
   final EdgeInsets dialogPadding;
 
-  final Color? background;
+  final HSLColor? background;
 
-  final Color? barrierColor;
+  final HSLColor? barrierColor;
 
   DialogThemeData copyWidth({
     BoxConstraints? constraints,
@@ -45,8 +45,8 @@ class DialogThemeData {
     EdgeInsets? titlePadding,
     EdgeInsets? outsidePadding,
     EdgeInsets? dialogPadding,
-    Color? background,
-    Color? barrierColor,
+    HSLColor? background,
+    HSLColor? barrierColor,
   }) {
     return DialogThemeData(
       constraints: constraints ?? this.constraints,
@@ -96,7 +96,7 @@ class DialogTheme extends InheritedTheme {
     required this.data,
     required Widget child,
     Key? key,
-  })  : super(child: child);
+  }) : super(child: child);
 
   final DialogThemeData data;
 
@@ -116,8 +116,8 @@ class DialogTheme extends InheritedTheme {
       }
 
       if (dialogThemeData.barrierColor == null) {
-        dialogThemeData =
-            dialogThemeData.copyWidth(barrierColor: Color(0x80404040));
+        dialogThemeData = dialogThemeData.copyWidth(
+            barrierColor: HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.25));
       }
     }
 

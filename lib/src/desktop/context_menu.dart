@@ -120,12 +120,12 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     final colorScheme = Theme.of(context).colorScheme;
 
     final bool selected = widget.selected(context);
-    final Color selectedColor = colorScheme.primary3;
+    final HSLColor selectedColor = colorScheme.primary1;
 
-    final Color? background = pressed
+    final HSLColor? background = pressed
         ? colorScheme.overlay6
         : selected
-            ? (hovered ? colorScheme.primary2 : colorScheme.primary3)
+            ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
             : hovered
                 ? colorScheme.overlay4
                 : null;
@@ -134,11 +134,11 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
       style: textStyle,
       child: IconTheme(
         data: IconThemeData(
-          color: textTheme.textHigh,
+          color: textTheme.textHigh.toColor(),
           size: 18.0,
         ),
         child: Container(
-          color: background,
+          color: background?.toColor(),
           padding:
               const EdgeInsets.symmetric(horizontal: kMenuHorizontalPadding),
           alignment: AlignmentDirectional.centerStart,
@@ -186,14 +186,14 @@ class ContextMenuDivider extends ContextMenuEntry<Null> {
 class _ContextMenuDividerState extends State<ContextMenuDivider> {
   @override
   Widget build(BuildContext context) {
-    Color background = Theme.of(context).colorScheme.background;
+    HSLColor background = Theme.of(context).colorScheme.background;
 
     return SizedBox(
         height: widget.height,
         child: Center(
           child: Container(
             height: _kDividerThickness,
-            color: background,
+            color: background.toColor(),
           ),
         ));
   }
@@ -265,7 +265,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colorScheme.overlay2,
+        color: colorScheme.overlay2.toColor(),
       ),
       position: DecorationPosition.background,
       child: child,
