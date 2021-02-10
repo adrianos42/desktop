@@ -6,7 +6,7 @@ import 'theme.dart';
 import 'theme_color.dart';
 import 'constants.dart';
 
-const double _kLineThickness = 1.0;
+const double _kLineThickness = 2.0;
 
 class HyperlinkButtonThemeData {
   const HyperlinkButtonThemeData({

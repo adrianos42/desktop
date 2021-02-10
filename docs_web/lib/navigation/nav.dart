@@ -14,10 +14,11 @@ class _NavPageState extends State<NavPage> {
     return Column(
       children: [
         Defaults.createHeader(context, 'Nav'),
-        Defaults.createTitle(context, 'tab example'),
+        Defaults.createTitle(context, 'Tab example'),
         Expanded(
           child: Container(
             decoration: Defaults.itemDecoration(context),
+            margin: EdgeInsets.symmetric(vertical: 4.0),
             child: Nav(
               items: [
                 NavItem(

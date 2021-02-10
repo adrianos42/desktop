@@ -13,18 +13,17 @@ class DropDownButton<T> extends StatefulWidget {
   const DropDownButton({
     Key? key,
     required this.itemBuilder,
-    this.initialValue,
+    this.value,
     this.onSelected,
     this.onCanceled,
     this.tooltip,
     this.isField = false,
     this.enabled = true,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   final ContextMenuItemBuilder<T> itemBuilder;
 
-  final T? initialValue;
+  final T? value;
 
   final ContextMenuItemSelected<T>? onSelected;
 
@@ -44,7 +43,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     with ComponentStateMixin {
   void showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Overlay.of(context)!.context.findRenderObject()! as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context)!.context.findRenderObject()! as RenderBox;
 
     final Rect position = Rect.fromPoints(
       button.localToGlobal(
@@ -57,7 +57,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       ),
     );
 
-    final List<ContextMenuEntry<T>?> items = widget.itemBuilder(context);
+    final List<ContextMenuEntry<T>> items = widget.itemBuilder(context);
 
     assert(items.isNotEmpty);
 
@@ -66,7 +66,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     await showMenu<T>(
       context: context,
       items: items,
-      initialValue: widget.initialValue,
+      initialValue: widget.value,
       position: position,
       width: button.size.width,
       settings: RouteSettings(),
@@ -117,23 +117,29 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     final TextStyle textStyle = textTheme.body1.copyWith(fontSize: 14.0);
     final enabled = widget.enabled;
 
-    Widget? child = widget.itemBuilder(context).firstWhere(
-        (value) => value!.represents(widget.initialValue!),
-        orElse: () => null);
-
+    Widget child;
     HSLColor? inactiveBackground;
 
-    final waitingBackground = colorScheme.overlay6;
+    if (widget.value != null) {
+      child = widget
+          .itemBuilder(context)
+          .firstWhere((value) => value.represents(widget.value!));
+      inactiveBackground = colorScheme.background;
+    } else {
+      child = Container();
+    }
+
+    final waitingBackground = colorScheme.background3;
 
     Border border;
 
     final borderColor = waiting
         ? waitingBackground
-        : hovered ? colorScheme.overlay6 : colorScheme.overlay4;
+        : hovered
+            ? colorScheme.background2
+            : colorScheme.background1;
 
     border = Border.all(color: borderColor.toColor(), width: 1.0);
-
-    if (child != null) inactiveBackground = colorScheme.background;
 
     final background = waiting ? waitingBackground : inactiveBackground;
 
@@ -142,7 +148,6 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     Widget result = DefaultTextStyle(
       style: textStyle,
       child: Container(
-        //color: waiting ? colorScheme.overlay7 : colorScheme.overlay2,
         constraints: const BoxConstraints(
           minHeight: kMinMenuHeight,
           minWidth: kMinMenuWidth,
@@ -150,7 +155,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
           maxWidth: kMaxMenuWidth,
         ),
         decoration: BoxDecoration(
-          color: background!.toColor(),
+          color: background?.toColor(),
           border: border,
         ),
         //constraints: constraints,
@@ -159,11 +164,14 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            child ?? Container(),
+            IgnorePointer(
+              ignoring: true,
+              child: child,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Icon(
-                Icons.arrow_drop_down,
+                Icons.expand_more,
                 size: 18.0,
                 color: foreground.toColor(),
               ),

@@ -23,8 +23,7 @@ class Breadcrumb extends StatefulWidget {
     required this.initialRoute,
     this.routeNameChanged,
     this.trailing,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   final String initialRoute;
 
@@ -48,7 +47,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
     widget.routeNameChanged?.call(name);
 
-    setState(() => _names.add(name));
+    _names.add(name);
+
+    if (mounted) {
+    //  setState(() {});
+    }
   }
 
   void _popName() {
@@ -58,7 +61,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
     names.removeLast();
     widget.routeNameChanged?.call(names.last);
 
-    setState(() => _names = names);
+    _names = names;
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void _popByIndex(int index) {
@@ -216,8 +223,7 @@ class _TabGroup extends StatefulWidget {
     required this.items,
     required this.changeIndex,
     this.trailing,
-  })  : 
-        super(key: key);
+  }) : super(key: key);
 
   final int index;
 
@@ -256,11 +262,15 @@ class _TabGroupState extends State<_TabGroup> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
-      final HSLColor foreground = widget.index == index || _pressedIndex == index
-          ? colorScheme.primary
-          : _hoveredIndex == index ? textTheme.textMedium : textTheme.textLow;
+      final HSLColor foreground =
+          widget.index == index || _pressedIndex == index
+              ? colorScheme.primary
+              : _hoveredIndex == index
+                  ? textTheme.textMedium
+                  : textTheme.textLow;
 
-      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground.toColor());
+      final TextStyle textStyle =
+          textTheme.body2.copyWith(color: foreground.toColor());
 
       return Padding(
         padding: EdgeInsets.only(
@@ -313,8 +323,7 @@ class _NavigationView extends StatefulWidget {
     this.navigatorKey,
     required this.navigatorObserver,
     Key? key,
-  })  :
-        super(key: key);
+  }) : super(key: key);
 
   final RouteBuilder builder;
 

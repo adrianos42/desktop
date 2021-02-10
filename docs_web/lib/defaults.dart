@@ -33,7 +33,7 @@ class Defaults {
   static Widget createTitle(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 6.0),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.title,

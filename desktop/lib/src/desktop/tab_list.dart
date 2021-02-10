@@ -268,8 +268,8 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
       final HSLColor? background = selected
           ? (selectedColor)
           : pressed
-              ? colorScheme.overlay6
-              : hovered ? colorScheme.overlay4 : null;
+              ? colorScheme.background2
+              : hovered ? colorScheme.background1 : null;
 
       final HSLColor foreground = pressed || selected
           ? textTheme.textHigh

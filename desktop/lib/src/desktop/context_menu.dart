@@ -29,7 +29,7 @@ abstract class ContextMenuEntry<T> extends StatefulWidget {
   bool represents(T value);
 
   bool selected(BuildContext context) =>
-      _MenuItemSelected.itemSelected(context)!;
+      _MenuItemSelected.itemSelected(context) ?? false;
 }
 
 class _MenuItem extends SingleChildRenderObjectWidget {
@@ -123,11 +123,11 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     final HSLColor selectedColor = colorScheme.primary1;
 
     final HSLColor? background = pressed
-        ? colorScheme.overlay6
+        ? colorScheme.background3
         : selected
             ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
             : hovered
-                ? colorScheme.overlay4
+                ? colorScheme.background2
                 : null;
 
     Widget item = DefaultTextStyle(
@@ -204,7 +204,7 @@ class _MenuItemSelected extends InheritedWidget {
     Key? key,
     required Widget child,
     required this.selected,
-  })   : super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   final bool selected;
 
@@ -233,7 +233,14 @@ class _ContextMenu<T> extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final children = route.items.map((item) {
-      final selected = item!.represents(route.initialValue!);
+      final selected;
+
+      if (route.value != null) {
+        selected = item.represents(route.value!);
+      } else {
+        selected = false;
+      }
+
       return _MenuItem(
         child: _MenuItemSelected(
           child: item,
@@ -265,7 +272,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colorScheme.overlay2.toColor(),
+        color: colorScheme.background1.toColor(),
       ),
       position: DecorationPosition.background,
       child: child,
@@ -276,7 +283,7 @@ class _ContextMenu<T> extends StatelessWidget {
 class _ContextMenuRoute<T> extends ContextRoute<T> {
   _ContextMenuRoute({
     required this.items,
-    this.initialValue,
+    this.value,
     this.barrierLabel,
     this.semanticLabel,
     this.width,
@@ -284,8 +291,8 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
     required RouteSettings settings,
   }) : super(settings: settings);
 
-  final List<ContextMenuEntry<T>?> items;
-  final T? initialValue;
+  final List<ContextMenuEntry<T>> items;
+  final T? value;
   final String? semanticLabel;
   final Rect position;
   final double? width;
@@ -313,11 +320,11 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
       Animation<double> secondaryAnimation) {
     int? selectedItemIndex;
 
-    if (initialValue != null) {
+    if (value != null) {
       for (int index = 0;
           selectedItemIndex == null && index < items.length;
           index += 1) {
-        if (items[index]!.represents(initialValue!)) selectedItemIndex = index;
+        if (items[index].represents(value!)) selectedItemIndex = index;
       }
     }
 
@@ -387,7 +394,7 @@ class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
 
 Future<T?> showMenu<T>({
   required BuildContext context,
-  required List<ContextMenuEntry<T>?> items,
+  required List<ContextMenuEntry<T>> items,
   required Rect position,
   required RouteSettings settings,
   double? width,
@@ -401,7 +408,7 @@ Future<T?> showMenu<T>({
   return Navigator.of(context, rootNavigator: false).push(
     _ContextMenuRoute<T>(
       items: items,
-      initialValue: initialValue,
+      value: initialValue,
       semanticLabel: label,
       position: position,
       width: width,
@@ -414,5 +421,5 @@ typedef ContextMenuItemSelected<T> = void Function(T value);
 
 typedef ContextMenuCanceled = void Function();
 
-typedef ContextMenuItemBuilder<T> = List<ContextMenuEntry<T>?> Function(
+typedef ContextMenuItemBuilder<T> = List<ContextMenuEntry<T>> Function(
     BuildContext context);

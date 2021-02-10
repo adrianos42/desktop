@@ -17,6 +17,7 @@ class _TabPageState extends State<TabPage> {
         Expanded(
           child: Container(
             decoration: Defaults.itemDecoration(context),
+            margin: EdgeInsets.symmetric(vertical: 4.0),
             child: Tab(
               items: [
                 TabItem(

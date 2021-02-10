@@ -121,10 +121,10 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     );
   }
 
-  int totalDuration(double width) {
-    final prop = _kIndeterminateLinearDuration.toDouble() * width / 300.0;
-    return prop.clamp(700, 3600).round();
-  }
+  // int totalDuration(double width) {
+  //   final prop = _kIndeterminateLinearDuration.toDouble() * width / 300.0;
+  //   return prop.clamp(700, 3600).round();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -133,9 +133,6 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     }
 
     return LayoutBuilder(builder: (context, constraints) {
-      _controller.repeat(
-          period: Duration(
-              milliseconds: totalDuration(constraints.constrainWidth())));
       return AnimatedBuilder(
         animation: _controller.view,
         builder: (BuildContext context, Widget? child) {

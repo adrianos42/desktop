@@ -16,8 +16,10 @@ import 'input/button_text.dart';
 import 'input/button_toggle.dart';
 import 'input/checkbox.dart';
 import 'input/toggle_switch.dart';
+import 'input/slider.dart';
 import 'navigation/nav.dart';
 import 'navigation/tab.dart';
+import 'navigation/breadcrumb.dart';
 import 'status/progress_indicator.dart';
 import 'status/status_bar.dart';
 import 'status/tooltip.dart';
@@ -128,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     TreeNode('Navigation', children: [
                       TreeNode('Nav', builder: (context) => NavPage()),
                       TreeNode('Tab', builder: (context) => TabPage()),
+                      TreeNode('Breadcrumb',
+                          builder: (context) => BreadcrumbPage()),
                     ]),
                     TreeNode('Data', children: [
                       TreeNode('List Table',
@@ -143,11 +147,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => ButtonPage(),
                       ),
                       TreeNode(
-                        'Context menu button',
+                        'Context menu',
                         builder: (context) => ButtonContextMenuPage(),
                       ),
                       TreeNode(
-                        'Drop down menu button',
+                        'Drop down menu',
                         builder: (context) => ButtonDropDownPage(),
                       ),
                       TreeNode(
@@ -173,6 +177,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       TreeNode(
                         'Checkbox',
                         builder: (context) => CheckboxPage(),
+                      ),
+                      TreeNode(
+                        'Slider',
+                        builder: (context) => SliderPage(),
                       ),
                       TreeNode(
                         'Toggle switch',

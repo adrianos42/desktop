@@ -9,33 +9,62 @@ class ButtonContextMenuPage extends StatefulWidget {
 }
 
 class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
+  String firstValue = 'Joinville';
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Defaults.createHeader(context, 'Context menu button'),
+        Defaults.createHeader(context, 'Context menu'),
         Expanded(
-          child: ContextMenuButton(
-            Icons.place,
-            initialValue: 0,
-            itemBuilder: (context) => [
-              ContextMenuItem(
-                child: Text('Florianópolis'),
-                value: 0,
-              ),
-              ContextMenuItem(
-                child: Text('Joinville'),
-                value: 1,
-              ),
-              ContextMenuItem(
-                child: Text('Blumenau'),
-                value: 2,
-              ),
-              ContextMenuItem(
-                child: Text('São Paulo'),
-                value: 3,
-              ),
-            ],
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createTitle(context, 'Basic context menu'),
+                Text('Enabled:'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: Row(
+                    children: [
+                      ContextMenuButton(
+                        Icons.place,
+                        value: firstValue,
+                        onSelected: (String value) =>
+                            setState(() => firstValue = value),
+                        itemBuilder: (context) => [
+                          ContextMenuItem(
+                            child: Text('Florianópolis'),
+                            value: 'Florianópolis',
+                          ),
+                          ContextMenuItem(
+                            child: Text('Joinville'),
+                            value: 'Joinville',
+                          ),
+                          ContextMenuItem(
+                            child: Text('Blumenau'),
+                            value: 'Blumenau',
+                          ),
+                          ContextMenuItem(
+                            child: Text('São Paulo'),
+                            value: 'São Paulo',
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        alignment: Alignment.center,
+                        child: Text(firstValue),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

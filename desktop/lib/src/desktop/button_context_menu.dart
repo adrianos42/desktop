@@ -8,7 +8,7 @@ class ContextMenuButton<T> extends StatefulWidget {
   const ContextMenuButton(
     this.icon, {
     required this.itemBuilder,
-    this.initialValue,
+    this.value,
     this.onSelected,
     this.onCanceled,
     this.tooltip,
@@ -20,7 +20,7 @@ class ContextMenuButton<T> extends StatefulWidget {
 
   final ContextMenuItemBuilder<T> itemBuilder;
 
-  final T? initialValue;
+  final T? value;
 
   final ContextMenuItemSelected<T>? onSelected;
 
@@ -35,7 +35,7 @@ class ContextMenuButton<T> extends StatefulWidget {
 }
 
 class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
-  void showButtonMenu() async {
+  void showButtonMenu(BuildContext context) async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
     final RenderBox overlay =
         Overlay.of(context)!.context.findRenderObject()! as RenderBox;
@@ -51,14 +51,14 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
       ),
     );
 
-    final List<ContextMenuEntry<T>?> items = widget.itemBuilder(context);
+    final List<ContextMenuEntry<T>> items = widget.itemBuilder(context);
 
     assert(items.isNotEmpty);
 
     await showMenu<T>(
       context: context,
       items: items,
-      initialValue: widget.initialValue,
+      initialValue: widget.value,
       position: position,
       settings: RouteSettings(),
     ).then<void>((T? newValue) {
@@ -82,7 +82,7 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
   Widget build(BuildContext context) {
     return IconButton(
       widget.icon,
-      onPressed: widget.enabled ? showButtonMenu : null,
+      onPressed: widget.enabled ? () => showButtonMenu(context) : null,
       tooltip: widget.tooltip,
     );
   }

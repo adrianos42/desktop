@@ -13,7 +13,7 @@ class Slider extends StatefulWidget {
   const Slider({
     Key? key,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
     this.min = 0.0,
@@ -25,7 +25,7 @@ class Slider extends StatefulWidget {
 
   final double value;
 
-  final ValueChanged<double> onChanged;
+  final ValueChanged<double>? onChanged;
 
   final ValueChanged<double>? onChangeStart;
 
@@ -47,7 +47,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   void _handleChanged(double value) {
     final double? lerpValue = lerpDouble(widget.min, widget.max, value);
     if (lerpValue != widget.value) {
-      widget.onChanged(lerpValue!);
+      widget.onChanged!(lerpValue!);
     }
   }
 
@@ -61,20 +61,23 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final active = widget.onChanged != null;
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
-    
-    final HSLColor activeColor = widget.activeColor ?? colorScheme.primary2;
-    final HSLColor thumbColor = colorScheme.primary2;
+    final HSLColor activeColor = active
+        ? widget.activeColor ?? colorScheme.primary2
+        : colorScheme.background1;
+
+    final HSLColor thumbColor =
+        active ? colorScheme.primary2 : colorScheme.background1;
 
     Widget result = _SliderRenderObjectWidget(
       value: (widget.value - widget.min) / (widget.max - widget.min),
       activeColor: activeColor.toColor(),
       thumbColor: thumbColor.toColor(),
-      onChanged: _handleChanged,
-      onChangeStart: _handleDragStart,
-      onChangeEnd: _handleDragEnd,
+      onChanged: active ? _handleChanged : null,
+      onChangeStart: active && widget.onChangeStart != null ? _handleDragStart : null,
+      onChangeEnd: active && widget.onChangeEnd != null ? _handleDragEnd : null,
       vsync: this,
     );
 
@@ -92,10 +95,10 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   const _SliderRenderObjectWidget({
     Key? key,
     required this.value,
-    required this.onChanged,
     required this.vsync,
     required this.activeColor,
     required this.thumbColor,
+    this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
   }) : super(key: key);
@@ -103,7 +106,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   final double value;
   final Color activeColor;
   final Color thumbColor;
-  final ValueChanged<double> onChanged;
+  final ValueChanged<double>? onChanged;
   final ValueChanged<double>? onChangeStart;
   final ValueChanged<double>? onChangeEnd;
   final TickerProvider vsync;
@@ -114,7 +117,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       value: value,
       activeColor: activeColor,
       thumbColor: thumbColor,
-      trackColor: Theme.of(context).colorScheme.overlay6.toColor(),
+      trackColor: Theme.of(context).colorScheme.background2.toColor(),
       onChanged: onChanged,
       onChangeStart: onChangeStart,
       onChangeEnd: onChangeEnd,
@@ -129,7 +132,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       ..value = value
       ..activeColor = activeColor
       ..thumbColor = thumbColor
-      ..trackColor = Theme.of(context).colorScheme.overlay6.toColor()
+      ..trackColor = Theme.of(context).colorScheme.background2.toColor()
       ..onChanged = onChanged
       ..onChangeStart = onChangeStart
       ..onChangeEnd = onChangeEnd
@@ -150,12 +153,12 @@ class _RenderSlider extends RenderConstrainedBox {
     required Color activeColor,
     required Color thumbColor,
     required Color trackColor,
-    required ValueChanged<double> onChanged,
+    ValueChanged<double>? onChanged,
     this.onChangeStart,
     this.onChangeEnd,
     required TickerProvider vsync,
     required TextDirection textDirection,
-  })  : assert(value >= 0.0 && value <= 1.0),
+  })   : assert(value >= 0.0 && value <= 1.0),
         _value = value,
         _activeColor = activeColor,
         _thumbColor = thumbColor,
@@ -230,9 +233,9 @@ class _RenderSlider extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
-  ValueChanged<double> _onChanged;
-  ValueChanged<double> get onChanged => _onChanged;
-  set onChanged(ValueChanged<double> value) {
+  ValueChanged<double>? _onChanged;
+  ValueChanged<double>? get onChanged => _onChanged;
+  set onChanged(ValueChanged<double>? value) {
     if (value == _onChanged) return;
     final bool wasInteractive = isInteractive;
     _onChanged = value;
@@ -276,10 +279,10 @@ class _RenderSlider extends RenderConstrainedBox {
         visualPosition)!;
   }
 
-  Paint get _thumbPaintColor { 
-     final paint = Paint()..color = _active ? _thumbColor : _activeColor;
-     return paint;
-    }
+  Paint get _thumbPaintColor {
+    final paint = Paint()..color = _active ? _thumbColor : _activeColor;
+    return paint;
+  }
 
   void _handleDragStart(DragStartDetails details) =>
       _startInteraction(details.globalPosition);
@@ -297,7 +300,7 @@ class _RenderSlider extends RenderConstrainedBox {
           break;
       }
 
-      onChanged(_discretizedCurrentDragValue);
+      onChanged!(_discretizedCurrentDragValue);
     }
   }
 
@@ -323,16 +326,16 @@ class _RenderSlider extends RenderConstrainedBox {
     if (isInteractive) {
       _active = true;
       if (onChangeStart != null) {
-        onChangeStart!(_discretizedCurrentDragValue); // FIXME 
+        onChangeStart!(_discretizedCurrentDragValue); // FIXME
       }
       _currentDragValue = _getValueFromGlobalPosition(globalPosition);
-      onChanged(_discretizedCurrentDragValue);
+      onChanged!(_discretizedCurrentDragValue);
     }
   }
 
   void _endInteraction() {
     if (onChangeEnd != null) {
-      onChangeEnd!(_discretizedCurrentDragValue);  // FIXME 
+      onChangeEnd!(_discretizedCurrentDragValue); // FIXME
     }
 
     _active = false;

@@ -27,7 +27,7 @@ class DesktopPageRoute<T> extends PageRoute<T> {
   @override
   void didChangePrevious(Route<dynamic>? previousRoute) {
     final String previousTitleString =
-        previousRoute is DesktopPageRoute ? previousRoute.title! : '';
+        previousRoute is DesktopPageRoute ? previousRoute.title ?? '' : '';
     _previousTitle.value = previousTitleString;
 
     super.didChangePrevious(previousRoute);
