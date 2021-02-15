@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'theme.dart';
-import 'theme_color.dart';
-import 'theme_nav.dart';
-import 'nav_scope.dart';
+import 'theme/theme.dart';
+import 'navigation/nav_scope.dart';
 
 class SettingsBar extends StatelessWidget {
   @override

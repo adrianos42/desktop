@@ -4,8 +4,9 @@ import 'package:desktop/desktop.dart';
 class Defaults {
   static BoxDecoration itemDecoration(BuildContext context) => BoxDecoration(
         border: Border.all(
-            color: Theme.of(context).colorScheme.background4.toColor(),
-            width: 1.0),
+          color: Theme.of(context).colorScheme.background4.toColor(),
+          width: 1.0,
+        ),
       );
 
   static Widget createHeader(BuildContext context, String name) {
@@ -14,7 +15,7 @@ class Defaults {
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         name,
-        style: Theme.of(context).textTheme.hearder,
+        style: Theme.of(context).textTheme.header,
       ),
     );
   }

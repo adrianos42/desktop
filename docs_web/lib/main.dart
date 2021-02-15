@@ -25,26 +25,32 @@ import 'status/status_bar.dart';
 import 'status/tooltip.dart';
 import 'text/text_field.dart';
 import 'scrolling.dart';
+import 'typography.dart';
+import 'colorscheme.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(DocApp());
 
-class MyApp extends StatelessWidget {
+class DocApp extends StatefulWidget {
+  DocApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MyHomePage();
+  _DocAppState createState() => _DocAppState();
+}
+
+class _DocAppState extends State<DocApp> {
+  ThemeData _themeData = ThemeData(brightness: Brightness.dark);
+  ThemeData get themeData =>
+      ThemeData(brightness: _themeData.brightness, primaryColor: primaryColor);
+
+  static ContextMenuItem<PrimaryColor> _menuItemPrimaryColor(
+      PrimaryColor color) {
+    return ContextMenuItem(
+      child: Text(color.toString()),
+      value: color,
+    );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  ThemeData themeData = ThemeData(
-      brightness: Brightness.dark, primaryColor: PrimaryColors.dodgerBlue);
+  PrimaryColor primaryColor = PrimaryColors.royalBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +101,45 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Spacer(),
+                  Container(
+                    width: 200.0,
+                    child: DropDownButtonTheme.merge(
+                      data: DropDownButtonThemeData(
+                        color: Theme.of(context).colorScheme.primary1,
+                        hoverColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      child: DropDownButton<PrimaryColor>(
+                        value: primaryColor,
+                        onSelected: (PrimaryColor value) {
+                          setState(() => primaryColor = value);
+                        },
+                        itemBuilder: (context) => [
+                          _menuItemPrimaryColor(PrimaryColors.coral),
+                          _menuItemPrimaryColor(PrimaryColors.sandyBrown),
+                          _menuItemPrimaryColor(PrimaryColors.orange),
+                          _menuItemPrimaryColor(PrimaryColors.goldenrod),
+                          _menuItemPrimaryColor(PrimaryColors.springGreen),
+                          _menuItemPrimaryColor(PrimaryColors.turquoise),
+                          _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
+                          _menuItemPrimaryColor(PrimaryColors.steelBlue),
+                          _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
+                          _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
+                          _menuItemPrimaryColor(PrimaryColors.royalBlue),
+                          _menuItemPrimaryColor(PrimaryColors.slateBlue),
+                          _menuItemPrimaryColor(PrimaryColors.purple),
+                          _menuItemPrimaryColor(PrimaryColors.violet),
+                          _menuItemPrimaryColor(PrimaryColors.orchid),
+                          _menuItemPrimaryColor(PrimaryColors.hotPink),
+                          _menuItemPrimaryColor(PrimaryColors.violetRed),
+                          _menuItemPrimaryColor(PrimaryColors.red),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ThemeToggle(
+                    onPressed: () => setState(
+                        () => _themeData = Theme.invertedThemeOf(context)),
+                  ),
                   Button(
                     body: githubImage,
                     onPressed: () async {
@@ -105,13 +150,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     },
                   ),
-                  Builder(builder: (context) {
-                    return ThemeToggle(
-                      onPressed: () => setState(() {
-                        themeData = Theme.invertedThemeOf(context);
-                      }),
-                    );
-                  }),
                 ],
               ),
               Expanded(
@@ -207,8 +245,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => TextFieldPage(),
                       ),
                     ]),
-                    TreeNode('Scrolling',
-                        builder: (context) => ScrollingPage()),
+                    TreeNode(
+                      'Scrolling',
+                      builder: (context) => ScrollingPage(),
+                    ),
+                    TreeNode(
+                      'Typography',
+                      builder: (context) => TypographyPage(),
+                    ),
+                    TreeNode(
+                      'Color Scheme',
+                      builder: (context) => ColorschemePage(),
+                    ),
                   ],
                 ),
               ),
@@ -236,7 +284,7 @@ class _ThemeToggleState extends State<ThemeToggle> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-    final iconForeground = themeData.textTheme.textForeground;
+    final iconForeground = themeData.textTheme.textHigh;
     switch (themeData.brightness) {
       case Brightness.dark:
         return Button(

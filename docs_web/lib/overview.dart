@@ -21,13 +21,18 @@ class _OverviewPageState extends State<OverviewPage> {
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               'Overview',
-              style: Theme.of(context).textTheme.hearder,
+              style: Theme.of(context).textTheme.header,
             ),
           ),
           Text.rich(
             TextSpan(
               children: [
-                TextSpan(style: Theme.of(context).textTheme.body1, text: '''
+                TextSpan(
+                    style: Theme.of(context).textTheme.body1.copyWith(
+                        ),
+                    text: '''
+Almost before we knew it, we had left the ground.
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fermentum, elit sed vestibulum consectetur, mauris nisl cursus tellus, ac gravida urna magna a mi. Sed condimentum metus id purus faucibus tempor. Aenean sit amet fringilla elit, in tincidunt nibh. In hac habitasse platea dictumst. Aliquam quis justo iaculis, congue justo sed, pharetra nunc. In arcu felis, pellentesque eget sem id, aliquam molestie eros. In eleifend enim in eros varius, a lacinia nibh volutpat. Quisque fermentum velit nec quam auctor, ac maximus odio laoreet. Donec quis accumsan dui. Cras tempus urna vitae ex interdum, a pharetra magna venenatis. Ut ultrices est nec quam dictum, vitae tristique tellus posuere.
 
 Aliquam erat volutpat. Vivamus metus arcu, cursus eu justo sed, varius lobortis leo. Sed facilisis sodales mi non aliquam. Proin vehicula turpis eget elit aliquam, ullamcorper ultrices nibh sodales. Praesent id fermentum mi. Vivamus mollis feugiat tortor eget vulputate. Nulla malesuada in ipsum luctus auctor. Donec pharetra urna id dapibus elementum. Integer mi nibh, imperdiet eu fringilla id, varius ac sem. Vivamus efficitur ornare tellus in tempor.

@@ -19,43 +19,42 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
           child: Container(
             decoration: Defaults.itemDecoration(context),
             margin: EdgeInsets.symmetric(vertical: 4.0),
-            child: Breadcrumb(
-              initialRoute: '/page1',
-              routeBuilder: (context, settings) {
-                print(settings.name);
-                switch (settings.name) {
-                  case '/':
-                  case '/page1':
-                    return DesktopPageRoute(
-                      builder: (context) {
-                        return Center(
-                          child: TextButton(
-                            'navigate page 2',
-                            onPressed: () =>
-                                Navigator.of(context).pushNamed('/page2'),
-                          ),
-                        );
-                      },
-                      settings: settings,
-                    );
-                  case '/page2':
-                    return DesktopPageRoute(
-                      builder: (context) {
-                        return Center(
-                          child: TextButton(
-                            'navigate page 2',
-                            onPressed: () =>
-                                Navigator.of(context).pushNamed('/page3'),
-                          ),
-                        );
-                      },
-                      settings: settings,
-                    );
-                }
+            // child: Breadcrumb(
+            //   initialRoute: '/page1',
+            //   routeBuilder: (context, settings) {
+            //     print(settings.name);
+            //     switch (settings.name) {
+            //       case '/page1':
+            //         return DesktopPageRoute(
+            //           builder: (context) {
+            //             return Center(
+            //               child: TextButton(
+            //                 'navigate page 2',
+            //                 onPressed: () =>
+            //                     Navigator.of(context).pushNamed('/page2'),
+            //               ),
+            //             );
+            //           },
+            //           settings: settings,
+            //         );
+            //       case '/page2':
+            //         return DesktopPageRoute(
+            //           builder: (context) {
+            //             return Center(
+            //               child: TextButton(
+            //                 'navigate page 2',
+            //                 onPressed: () =>
+            //                     Navigator.of(context).pushNamed('/page3'),
+            //               ),
+            //             );
+            //           },
+            //           settings: settings,
+            //         );
+            //     }
 
-                throw Exception('Page not found');
-              },
-            ),
+            //     throw Exception('Page not found');
+            //   },
+            // ),
           ),
         ),
       ],

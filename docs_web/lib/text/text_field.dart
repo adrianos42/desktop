@@ -15,7 +15,30 @@ class _TextFieldPageState extends State<TextFieldPage> {
       children: [
         Defaults.createHeader(context, 'Text field'),
         Expanded(
-          child: Center(child: Center(child: TextField(),),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  constraints: BoxConstraints.loose(Size(300.0, 300.0)),
+                  padding: EdgeInsets.all(16.0),
+                  child: TextField(
+                    maxLines: 3,
+                    minLines: 3,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  constraints: BoxConstraints.loose(Size(300.0, 300.0)),
+                  padding: EdgeInsets.all(16.0),
+                  child: TextField(),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
