@@ -63,7 +63,9 @@ class _ColorschemePageState extends State<ColorschemePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pColor = ColorScheme(Brightness.light).background;
+    final textTheme = Theme.of(context).textTheme;
+    final light = ColorScheme(Brightness.dark).inverted;
+    final dark = ColorScheme(Brightness.dark).background;
 
     final controller = ScrollController();
     return Scrollbar(
@@ -105,11 +107,6 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.background5,
-                    'Background 5',
-                  ),
-                  _createItemForColor(
-                    context,
                     colorScheme.disabled,
                     'Disabled',
                   ),
@@ -121,27 +118,45 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   ),
                   _createItemForColor(
                     context,
+                    textTheme.textLow,
+                    'Text Low',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    textTheme.textMedium,
+                    'Text Medium',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    textTheme.textHigh,
+                    'Text High',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
                     colorScheme.primary,
                     'Primary',
-                    pColor,
+                    light,
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.primary1,
                     'Primary 1',
-                    pColor,
+                    light,
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.primary2,
                     'Primary 2',
-                    pColor,
+                    light,
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.error,
                     'Error',
-                    pColor,
+                    light,
                   ),
                 ],
               ),
@@ -151,24 +166,24 @@ class _ColorschemePageState extends State<ColorschemePage> {
               child: Column(
                 children: [
                   Defaults.createTitle(context, 'Primary Colors'),
-                  _itemPrimary(context, PrimaryColors.coral, pColor),
-                  _itemPrimary(context, PrimaryColors.sandyBrown, pColor),
-                  _itemPrimary(context, PrimaryColors.orange, pColor),
-                  _itemPrimary(context, PrimaryColors.goldenrod, pColor),
-                  _itemPrimary(context, PrimaryColors.springGreen, pColor),
-                  _itemPrimary(context, PrimaryColors.turquoise, pColor),
-                  _itemPrimary(context, PrimaryColors.deepSkyBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.steelBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.dodgerBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.cornflowerBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.royalBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.slateBlue, pColor),
-                  _itemPrimary(context, PrimaryColors.purple, pColor),
-                  _itemPrimary(context, PrimaryColors.violet, pColor),
-                  _itemPrimary(context, PrimaryColors.orchid, pColor),
-                  _itemPrimary(context, PrimaryColors.hotPink, pColor),
-                  _itemPrimary(context, PrimaryColors.violetRed, pColor),
-                  _itemPrimary(context, PrimaryColors.red, pColor),
+                  _itemPrimary(context, PrimaryColors.coral, light),
+                  _itemPrimary(context, PrimaryColors.sandyBrown, light),
+                  _itemPrimary(context, PrimaryColors.orange, light),
+                  _itemPrimary(context, PrimaryColors.goldenrod, light),
+                  _itemPrimary(context, PrimaryColors.springGreen, light),
+                  _itemPrimary(context, PrimaryColors.turquoise, light),
+                  _itemPrimary(context, PrimaryColors.deepSkyBlue, light),
+                  _itemPrimary(context, PrimaryColors.steelBlue, light),
+                  _itemPrimary(context, PrimaryColors.dodgerBlue, light),
+                  _itemPrimary(context, PrimaryColors.cornflowerBlue, light),
+                  _itemPrimary(context, PrimaryColors.royalBlue, light),
+                  _itemPrimary(context, PrimaryColors.slateBlue, light),
+                  _itemPrimary(context, PrimaryColors.purple, light),
+                  _itemPrimary(context, PrimaryColors.violet, light),
+                  _itemPrimary(context, PrimaryColors.orchid, light),
+                  _itemPrimary(context, PrimaryColors.hotPink, light),
+                  _itemPrimary(context, PrimaryColors.violetRed, light),
+                  _itemPrimary(context, PrimaryColors.red, light),
                 ],
               ),
             ),

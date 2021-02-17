@@ -50,7 +50,7 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColors.royalBlue;
+  PrimaryColor primaryColor = PrimaryColors.cornflowerBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -200,10 +200,10 @@ class _DocAppState extends State<DocApp> {
                         'Text button',
                         builder: (context) => ButtonTextPage(),
                       ),
-                      TreeNode(
-                        'Toggle button',
-                        builder: (context) => ButtonTogglePage(),
-                      ),
+                      // TreeNode(
+                      //   'Toggle button',
+                      //   builder: (context) => ButtonTogglePage(),
+                      // ),
                       TreeNode(
                         'Hyperlink',
                         builder: (context) => ButtonHyperlinkPage(),

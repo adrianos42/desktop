@@ -40,9 +40,7 @@ class _BuildTreePage {
 
   final WidgetBuilder builder;
   final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
-  final FocusScopeNode focusScopeNode = FocusScopeNode(
-    skipTraversal: true,
-  );
+  final FocusScopeNode focusScopeNode = FocusScopeNode(skipTraversal: true);
   bool shouldBuild = false;
 }
 

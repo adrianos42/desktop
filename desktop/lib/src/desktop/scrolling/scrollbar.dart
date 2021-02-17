@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
+import '../theme/scrollbar.dart';
 import '../component.dart';
 
 const double _kScrollbarThickness = 8.0;
@@ -49,7 +50,7 @@ class Scrollbar extends StatefulWidget {
     this.enabled = true,
     this.autofocus = false,
     this.focusNode,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final ScrollController? controller;
 
@@ -72,7 +73,7 @@ class _ScrollbarState extends State<Scrollbar>
   Timer? _fadeoutTimer;
   Timer? _showTimer;
 
-  // Map<LocalKey, ActionFactory> _actionMap;
+  late Map<Type, Action<Intent>> _actionMap;
 
   // static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
   //   LogicalKeySet(LogicalKeyboardKey.pageUp): const Intent(PageUpAction.key),
@@ -81,11 +82,12 @@ class _ScrollbarState extends State<Scrollbar>
   // };
 
   HSLColor get _trackColor {
-    final ColorScheme colorScheme = _themeData!.colorScheme;
-
+    final theme = ScrollbarTheme.of(context);
     return pressed
-        ? colorScheme.background4
-        : hovered ? colorScheme.background3 : colorScheme.background2;
+        ? theme.highlightColor!
+        : hovered
+            ? theme.hoverColor!
+            : theme.color!;
   }
 
   late AnimationController _fadeoutAnimationController;
@@ -100,8 +102,6 @@ class _ScrollbarState extends State<Scrollbar>
       widget.controller ?? (_currentController ??= ScrollController());
 
   ScrollPosition get _position => _controller.position;
-
-  ThemeData? _themeData;
 
   Map<Type, GestureRecognizerFactory> get _gestures {
     final Map<Type, GestureRecognizerFactory> gestures =
@@ -166,21 +166,15 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _handleMouseEnter(PointerEnterEvent event) {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-
-    _handleHoverChanged(
-        _painter?.hitTest(renderBox.globalToLocal(event.position)) ?? false);
+    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
   }
 
   void _handleMouseHover(PointerHoverEvent event) {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-
-    _handleHoverChanged(
-        _painter?.hitTest(renderBox.globalToLocal(event.position)) ?? false);
+    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
   }
 
   void _handleMouseExit(PointerExitEvent event) {
-    _handleHoverChanged(false);
+    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
   }
 
   DesktopScrollbarPainter _buildScrollbarPainter(BuildContext context) {
@@ -304,110 +298,55 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  double _targetScrollOffset = 0.0;
   double _scrollInitialPosition = 0.0;
 
-  double _getTargetScrollOffset(double position, double delta) {
-    final newPosition = (position + delta)
-        .clamp(_position.minScrollExtent, _position.maxScrollExtent) as double;
+  void _handleIncrement(double value) {
+    double totalContentExtent = _position.maxScrollExtent -
+        _position.minScrollExtent +
+        _position.viewportDimension;
 
-    return newPosition - position;
+    _position.moveTo(_position.pixels + (totalContentExtent) * value,
+        curve: _kAnimationCurveIncrement,
+        duration: _kAnimationDurationIncrement);
   }
+
+  Timer? _scrollTimer;
 
   void _targetScrollOffsetForPointerScroll(PointerScrollEvent event) {
     double delta = _position.axis == Axis.horizontal
         ? event.scrollDelta.dx
         : event.scrollDelta.dy;
 
-    _addScrollOffsetDelta(delta, event);
-  }
-
-  Timer? _scrollTimer;
-
-  VelocityTracker? _velocityTracker;
-  bool _beginEnd = false;
-
-  void _addScrollOffsetDelta(double delta, PointerScrollEvent event) {
     _scrollTimer?.cancel();
 
-    delta *= 2;
-
     if (_scrollTimer != null) {
-      if (_targetScrollOffset.isNegative ^ delta.isNegative) {
+      if (_scrollInitialPosition.isNegative != delta.isNegative) {
         _scrollInitialPosition = _position.pixels;
-        _targetScrollOffset = delta;
-
-        _previousValue = 0.0;
-        _positionCompleted = 0.0;
-
-        _velocityTracker = VelocityTracker.withKind(PointerDeviceKind.mouse);
-        _velocityTracker!.addPosition(
-            event.timeStamp, Offset(0.0, _targetScrollOffset));
-
-        //_drag = null;
-
-        _scrollScrollbar(delta);
-
-        //_positionController.reset();
-        //_positionController.repeat();
-      } else {
-        _dCount += 1;
-        _targetScrollOffset += delta;
-
-        //_position.moveTo(_scrollInitialPosition + _targetScrollOffset);
-
-        //_position.physics.applyPhysicsToUserOffset(_position, offset)
-
-        _scrollScrollbar(delta);
-        _velocityTracker!.addPosition(
-            event.timeStamp, Offset(0.0, _targetScrollOffset));
       }
+
+      _scrollInitialPosition += delta;
+
+      _position.moveTo(_scrollInitialPosition);
+
+      // _position.animateTo(_scrollInitialPosition,
+      //     duration: Duration(milliseconds: 400), curve: Curves.ease);
     } else {
-      _drag = null;
       _scrollInitialPosition = _position.pixels;
-
-      _velocityTracker = VelocityTracker.withKind(PointerDeviceKind.mouse);
-
-      _scrollScrollbar(0.0);
-
-      _targetScrollOffset = delta;
-
-      _velocityTracker!.addPosition(
-          event.timeStamp, Offset(0.0, _targetScrollOffset));
-
-      ///_position.moveTo(_scrollInitialPosition + _targetScrollOffset);
-
-      _dCount = 1;
-      _previousValue = 0.0;
-      _positionCompleted = 0.0;
-      //_position.moveTo(_scrollInitialPosition);
-      //_positionController.reset();
-      //_positionController.repeat();
     }
 
-    Duration duration = Duration(milliseconds: 40);
-
-    _scrollTimer = Timer(duration, () {
-      //Velocity velocity = _velocityTracker.getVelocityEstimate().pixelsPerSecond;
-      final double scrollVelocityY =
-          _velocityTracker!.getVelocityEstimate()!.pixelsPerSecond.dy;
-
-      // _drag?.end(DragEndDetails(
-      //   primaryVelocity: -scrollVelocityY,
-      //   velocity: Velocity(pixelsPerSecond: Offset(0.0, -scrollVelocityY)),
-      // ));
-
-      _drag?.end(DragEndDetails(
-        primaryVelocity: -0,
-        velocity: Velocity(pixelsPerSecond: Offset(0.0, -0)),
-      ));
-
-      _dragScrollbarPositionY = null;
-      _drag = null;
-
+    _scrollTimer = Timer(Duration(milliseconds: 1000), () {
       _scrollTimer = null;
-      _dCount = 0;
     });
+
+    // if (_drag == null) {
+    //   _targetScrollOffset = delta;
+    // } else {
+    //   if (delta.isFinite != _targetScrollOffset.isFinite) {
+    //     _handleDragCancel();
+    //   }
+
+    //   _targetScrollOffset += delta;
+    // }
   }
 
   void _scrollScrollbar(double primaryDelta) {
@@ -435,55 +374,12 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  int _dCount = 0;
-
   void _handlePositionStateChanged(AnimationStatus status) {
     if (status == AnimationStatus.completed) {}
   }
 
   double _previousValue = 0.0;
   double _positionCompleted = 0.0;
-
-  void _updateScroll() {
-    if (_positionController.value == 1.0) {
-      return;
-    }
-
-    if (_previousValue > _positionController.value) {
-      _previousValue = 0.0;
-    }
-
-    final double value = _positionController.value - _previousValue;
-    _previousValue = _positionController.value;
-
-    if (value == 0.0) return;
-
-    double valueAdd = (_targetScrollOffset - _positionCompleted) * value;
-
-    _positionCompleted += valueAdd;
-
-    if (_positionCompleted.abs() >= _targetScrollOffset.abs() ||
-        _scrollTimer == null) {
-      _positionController.stop();
-    }
-
-    //print('');
-    //print(_positionCompleted);
-    //print(_targetScrollOffset);
-
-    final double pos = _positionCompleted + _scrollInitialPosition;
-    _position.moveTo(pos.roundToDouble());
-  }
-
-  void _handleIncrement(double value) {
-    double totalContentExtent = _position.maxScrollExtent -
-        _position.minScrollExtent +
-        _position.viewportDimension;
-
-    _position.moveTo(_position.pixels + (totalContentExtent) * value,
-        curve: _kAnimationCurveIncrement,
-        duration: _kAnimationDurationIncrement);
-  }
 
   bool _handleScrollNotification(ScrollNotification notification) {
     final ScrollMetrics metrics = notification.metrics;
@@ -517,16 +413,28 @@ class _ScrollbarState extends State<Scrollbar>
     super.initState();
 
     _positionController = AnimationController(
-      lowerBound: 0.0,
-      upperBound: 1.0,
       vsync: this,
       duration: _kAnimationDuration,
     );
 
     _positionAnimation =
         CurvedAnimation(parent: _positionController, curve: _kAnimationCurve)
-          ..addListener(_updateScroll)
+          // ..addListener(_updateScroll)
           ..addStatusListener(_handlePositionStateChanged);
+
+    _actionMap = <Type, Action<Intent>>{
+      ScrollIntent: CallbackAction<ScrollIntent>(onInvoke: (action) {
+        switch (action.direction) {
+          case AxisDirection.down:
+            _scrollScrollbar(120.0);
+            break;
+          case AxisDirection.up:
+            _scrollScrollbar(-120.0);
+            break;
+          default:
+        }
+      }),
+    };
 
     // _actionMap = <LocalKey, ActionFactory>{
     //   PageDownAction.key: () => CallbackAction(
@@ -576,8 +484,6 @@ class _ScrollbarState extends State<Scrollbar>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _themeData = Theme.of(context);
-
     if (_painter == null) {
       _painter = _buildScrollbarPainter(context);
     } else {
@@ -607,18 +513,13 @@ class _ScrollbarState extends State<Scrollbar>
     _showTimer?.cancel();
     _painter?.dispose();
     _positionAnimation
-      ..removeListener(_updateScroll)
+      //..removeListener(_updateScroll)
       ..removeStatusListener(_handlePositionStateChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-    HSLColor background = widget.enabled
-        ? colorScheme.background.withAlpha(1.0)
-        : colorScheme.background1;
-
     Widget result = NotificationListener<ScrollNotification>(
       onNotification: _handleScrollNotification,
       child: Row(
@@ -626,14 +527,16 @@ class _ScrollbarState extends State<Scrollbar>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-         Expanded(child: Listener(
-            child: Container(
-             // margin: EdgeInsets.only(right: _kScrollbarThickness),
-              child: widget.child,
+          Expanded(
+            child: Listener(
+              child: Container(
+                // margin: EdgeInsets.only(right: _kScrollbarThickness),
+                child: widget.child,
+              ),
+              behavior: HitTestBehavior.deferToChild,
+              onPointerSignal: _receivedPointerSignal,
             ),
-            behavior: HitTestBehavior.deferToChild,
-            onPointerSignal: _receivedPointerSignal,
-          ),),
+          ),
           RepaintBoundary(
             child: RawGestureDetector(
               gestures: _gestures,
@@ -644,7 +547,7 @@ class _ScrollbarState extends State<Scrollbar>
                 onExit: _handleMouseExit,
                 onHover: _handleMouseHover,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 38.0),
+                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 1.0, 0.0),
                   //padding: EdgeInsets.zero,
                   child: CustomPaint(
                     key: _customPaintKey,
@@ -652,22 +555,6 @@ class _ScrollbarState extends State<Scrollbar>
                     child: Align(
                       alignment: Alignment.topRight,
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: background.toColor(),
-                            border: Border(
-                              // top: BorderSide(
-                              //   color: colorScheme.overlay4,
-                              //   width: 1.0,
-                              // ),
-                              // right: BorderSide(
-                              //   color: colorScheme.overlay4,
-                              //   width: 1.0,
-                              // ),
-                              // left: BorderSide(
-                              //   color: colorScheme.overlay4,
-                              //   width: 1.0,
-                              // ),
-                            )),
                         width: _kScrollbarThickness,
                       ),
                     ),
@@ -682,7 +569,7 @@ class _ScrollbarState extends State<Scrollbar>
 
     result = FocusableActionDetector(
       child: result,
-      // actions: _actionMap,
+      actions: _actionMap,
       // shortcuts: _shortcuts,
       autofocus: widget.autofocus,
       focusNode: widget.focusNode,
@@ -701,7 +588,7 @@ class _ThumbVerticalDragGestureRecognizer
     PointerDeviceKind? kind,
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })  : _customPaintKey = customPaintKey,
+  })   : _customPaintKey = customPaintKey,
         super(
           kind: kind,
           debugOwner: debugOwner,
@@ -727,7 +614,7 @@ class _TapGestureRecognizer extends TapGestureRecognizer {
   _TapGestureRecognizer({
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })  : _customPaintKey = customPaintKey,
+  })   : _customPaintKey = customPaintKey,
         super(
           debugOwner: debugOwner,
         );

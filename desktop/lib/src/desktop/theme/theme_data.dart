@@ -9,6 +9,11 @@ import 'button.dart';
 import 'button_hyperlink.dart';
 import 'dialog.dart';
 import 'button_drop_down.dart';
+import 'checkbox.dart';
+import 'toggle_switch.dart';
+import 'slider.dart';
+import 'button_radio.dart';
+import 'scrollbar.dart';
 
 class Theme extends StatelessWidget {
   const Theme({
@@ -60,7 +65,7 @@ class _InheritedTheme extends InheritedTheme {
     Key? key,
     required this.theme,
     required Widget child,
-  })   :super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   final Theme theme;
 
@@ -76,7 +81,6 @@ class _InheritedTheme extends InheritedTheme {
   @override
   bool updateShouldNotify(_InheritedTheme old) => theme.data != old.theme.data;
 }
-
 
 class ThemeData {
   factory ThemeData({
@@ -94,6 +98,11 @@ class ThemeData {
       dropDownButtonTheme: const DropDownButtonThemeData(),
       dialogTheme: const DialogThemeData(),
       hyperlinkButtonTheme: const HyperlinkButtonThemeData(),
+      radioButtonTheme: const RadioButtonThemeData(),
+      checkboxTheme: const CheckboxThemeData(),
+      toggleSwitchTheme: const ToggleSwitchThemeData(),
+      sliderTheme: const SliderThemeData(),
+      scrollbarTheme: const ScrollbarThemeData(),
     );
   }
 
@@ -106,6 +115,11 @@ class ThemeData {
     required this.dropDownButtonTheme,
     required this.dialogTheme,
     required this.hyperlinkButtonTheme,
+    required this.radioButtonTheme,
+    required this.checkboxTheme,
+    required this.sliderTheme,
+    required this.toggleSwitchTheme,
+    required this.scrollbarTheme,
   });
 
   factory ThemeData.light([HSLColor primaryColor = kDefaultPrimary]) =>
@@ -132,11 +146,21 @@ class ThemeData {
 
   final HyperlinkButtonThemeData hyperlinkButtonTheme;
 
+  final RadioButtonThemeData radioButtonTheme;
+
+  final CheckboxThemeData checkboxTheme;
+
+  final ToggleSwitchThemeData toggleSwitchTheme;
+
+  final SliderThemeData sliderTheme;
+
+  final ScrollbarThemeData scrollbarTheme;
+
   ThemeData get invertedTheme {
     final Brightness inverseBrightness =
         brightness == Brightness.dark ? Brightness.light : Brightness.dark;
 
-    final invertedColorScheme =colorScheme.withBrightness(inverseBrightness);
+    final invertedColorScheme = colorScheme.withBrightness(inverseBrightness);
 
     return ThemeData._raw(
       brightness: inverseBrightness,
@@ -147,6 +171,11 @@ class ThemeData {
       dropDownButtonTheme: const DropDownButtonThemeData(),
       dialogTheme: const DialogThemeData(),
       hyperlinkButtonTheme: const HyperlinkButtonThemeData(),
+      radioButtonTheme: const RadioButtonThemeData(),
+      checkboxTheme: const CheckboxThemeData(),
+      toggleSwitchTheme: const ToggleSwitchThemeData(),
+      sliderTheme: const SliderThemeData(),
+      scrollbarTheme: const ScrollbarThemeData(),
     );
   }
 }

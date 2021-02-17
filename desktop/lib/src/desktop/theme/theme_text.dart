@@ -4,12 +4,12 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 
-const HSLColor _kLightDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
+//const HSLColor _kLightDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
 const HSLColor _kLightTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
 const HSLColor _kLightTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
 const HSLColor _kLightTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
-const HSLColor _kDarkDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
+//const HSLColor _kDarkDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
 const HSLColor _kDarkTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
 const HSLColor _kDarkTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
 const HSLColor _kDarkTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
@@ -117,7 +117,7 @@ class TextTheme {
           textLow: _kDarkTextLow,
           textMedium: _kDarkTextMedium,
           textHigh: _kDarkTextHigh,
-          textDisabled: _kDarkDisabled,
+          textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
         break;
@@ -136,7 +136,7 @@ class TextTheme {
           textLow: _kLightTextLow,
           textMedium: _kLightTextMedium,
           textHigh: _kLightTextHigh,
-          textDisabled: _kLightDisabled,
+          textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
         break;

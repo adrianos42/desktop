@@ -22,7 +22,7 @@ class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
               onChanged: (fvalue) {
                 setState(() => value = fvalue);
               },
-              autofocus: true,
+              autofocus: false,
               value: value,
             ),
           ),

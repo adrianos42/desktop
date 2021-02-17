@@ -6,12 +6,12 @@ import '../theme/theme.dart';
 import 'button.dart';
 
 class HyperlinkButton extends StatelessWidget {
-  const HyperlinkButton(this.text, {
+  const HyperlinkButton(
+    this.text, {
     Key? key,
     this.onPressed,
     this.tooltip,
-  })  : 
-        super(key: key);
+  }) : super(key: key);
 
   final String text;
 
@@ -29,6 +29,7 @@ class HyperlinkButton extends StatelessWidget {
       data: buttonThemeData.copyWith(
         textStyle: hyperlinkButtonThemeData.textStyle,
         color: hyperlinkButtonThemeData.color,
+        highlightColor: hyperlinkButtonThemeData.color,
       ),
       child: Button(
         body: Text(text),

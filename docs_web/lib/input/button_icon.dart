@@ -17,7 +17,7 @@ class _ButtonIconPageState extends State<ButtonIconPage> {
         Expanded(
           child: Center(
             child: IconButton(
-              Icons.playlist_play,
+              Icons.place,
               onPressed: () {},
             ),
           ),

@@ -15,7 +15,7 @@ class _ButtonTextPageState extends State<ButtonTextPage> {
       children: [
         Defaults.createHeader(context, 'Text button'),
         Expanded(
-          child: Center(child: TextButton('Clickme', onPressed: () {},),),
+          child: Center(child: TextButton('Click me', onPressed: () {},),),
         ),
       ],
     );

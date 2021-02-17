@@ -77,24 +77,16 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+   final theme = RadioButtonTheme.of(context);
 
-    final hoverColor = colorScheme.background4;
-    final background = colorScheme.background;
-
-    final activeColor = enabled
-        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
-        : colorScheme.background4;
-    final inactiveColor = enabled
-        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
-        : colorScheme.background4;
-    final focusColor = enabled
-        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
-        : colorScheme.background4;
-    final foregroundColor =
-        enabled ? textTheme.textHigh : textTheme.textDisabled;
+    final activeColor =
+        _hovering || _focused ? theme.activeHoverColor! : theme.activeColor!;
+    final inactiveColor = _hovering || _focused
+        ? theme.inactiveHoverColor!
+        : theme.inactiveColor!;
+    final foregroundColor = theme.foreground!;
+    final focusColor = theme.activeHoverColor!; // FIXME
+    final disabledColor = theme.disabledColor!; // FIXME
 
     final Size size = Size.square(Radio.outerRadius * 2.0);
 
@@ -113,10 +105,10 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
             value: widget.value,
             activeColor: activeColor.toColor(),
             inactiveColor: inactiveColor.toColor(),
-            hoverColor: focusColor.toColor(),
+            disabledColor: disabledColor.toColor(),
             onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
             foregroundColor: foregroundColor.toColor(),
-            focusColor: foregroundColor.toColor(), // FIXME
+            focusColor: focusColor.toColor(), // FIXME
             vsync: this,
             hasFocus: _focused,
             hovering: _hovering,
@@ -135,7 +127,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
     required this.activeColor,
     required this.foregroundColor,
     required this.inactiveColor,
-    required this.hoverColor,
+    required this.disabledColor,
     required this.onChanged,
     required this.vsync,
     required this.hasFocus,
@@ -150,7 +142,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
   final Color activeColor;
   final Color foregroundColor;
   final Color inactiveColor;
-  final Color hoverColor;
+  final Color disabledColor;
   final Color focusColor;
   final ValueChanged<bool?>? onChanged;
   final TickerProvider vsync;
@@ -163,7 +155,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
         activeColor: activeColor,
         foregroundColor: foregroundColor,
         inactiveColor: inactiveColor,
-        hoverColor: hoverColor,
+        disabledColor: disabledColor,
         onChanged: onChanged,
         hovering: hovering,
         focusColor: focusColor,
@@ -178,7 +170,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
       ..activeColor = activeColor
       ..foregroundColor = foregroundColor
       ..inactiveColor = inactiveColor
-      ..hoverColor = hoverColor
+      ..disabledColor = disabledColor
       ..onChanged = onChanged
       ..additionalConstraints = additionalConstraints
       ..vsync = vsync;
@@ -192,7 +184,7 @@ class _RenderRadio extends RenderToggleable {
     required this.foregroundColor,
     required Color inactiveColor,
     required Color focusColor,
-    required Color hoverColor,
+    required Color disabledColor,
     required ValueChanged<bool?>? onChanged,
     required bool hasFocus,
     required bool hovering,
@@ -204,7 +196,7 @@ class _RenderRadio extends RenderToggleable {
           activeColor: activeColor,
           inactiveColor: inactiveColor,
           focusColor: focusColor,
-          hoverColor: hoverColor,
+          disabledColor: disabledColor,
           onChanged: onChanged,
           hasFocus: hasFocus,
           hovering: hovering,

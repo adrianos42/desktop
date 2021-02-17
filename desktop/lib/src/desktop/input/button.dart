@@ -41,35 +41,63 @@ class Button extends StatefulWidget {
   _ButtonState createState() => _ButtonState();
 }
 
-class _ButtonState extends State<Button> with ComponentStateMixin {
+class _ButtonState extends State<Button>
+    with ComponentStateMixin, SingleTickerProviderStateMixin {
   void _handleHoverEntered() {
-    if (!hovered && (pressed || !_globalPointerDown))
+    if (!hovered && (pressed || !_globalPointerDown)) {
+      _controller.reset();
+      _controller.forward();
       setState(() => hovered = true);
+    }
   }
 
   void _handleHoverExited() {
-    if (hovered) setState(() => hovered = false);
+    if (hovered) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => hovered = false);
+    }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = false);
+    }
   }
 
   void _handleTapDown(TapDownDetails event) {
-    if (!pressed) setState(() => pressed = true);
+    if (!pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = true);
+    }
   }
 
   void _handleTapCancel() {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = false);
+    }
   }
 
   bool _globalPointerDown = false;
 
   void _mouseRoute(event) => _globalPointerDown = event.down;
 
+  late AnimationController _controller;
+
+  ColorTween? _color;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 50),
+    );
 
     WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
   }
@@ -78,6 +106,12 @@ class _ButtonState extends State<Button> with ComponentStateMixin {
   void dispose() {
     WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _color = null;
   }
 
   @override
@@ -94,52 +128,62 @@ class _ButtonState extends State<Button> with ComponentStateMixin {
     final HSLColor foregroundColor = enabled
         ? waiting || pressed
             ? pressedForeground
-            : hovered ? hoveredForeground : enabledForeground
+            : hovered
+                ? hoveredForeground
+                : enabledForeground
         : disabledForeground;
 
-    final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
-      color: foregroundColor.toColor(),
-    );
+    _color = ColorTween(
+        begin: _color?.end ?? foregroundColor.toColor(),
+        end: foregroundColor.toColor());
 
-    final IconThemeData iconThemeData = buttonThemeData.iconThemeData!.copyWith(
-      color: foregroundColor.toColor(),
-    );
+    Widget result = AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final foreground =
+            _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
+        final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
+          color: foreground,
+        );
 
-    Widget result;
+        final IconThemeData iconThemeData =
+            buttonThemeData.iconThemeData!.copyWith(
+          color: foreground,
+        );
 
-    result = Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (widget.leading != null)
-          Padding(
-            padding: buttonThemeData.leadingPadding,
-            child: widget.leading,
+        return DefaultTextStyle(
+          style: textStyle,
+          child: IconTheme(
+            data: iconThemeData,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.leading != null)
+                  Padding(
+                    padding: buttonThemeData.leadingPadding,
+                    child: widget.leading,
+                  ),
+                // The widget that is always placed in the button.
+                Padding(
+                  padding: buttonThemeData.bodyPadding,
+                  child: widget.body,
+                ),
+                if (widget.trailing != null)
+                  Padding(
+                    padding: buttonThemeData.trailingPadding,
+                    child: widget.trailing,
+                  ),
+              ],
+            ),
           ),
-        // The widget that is always placed in the button.
-        Padding(
-          padding: buttonThemeData.bodyPadding,
-          child: widget.body,
-        ),
-        if (widget.trailing != null)
-          Padding(
-            padding: buttonThemeData.trailingPadding,
-            child: widget.trailing,
-          ),
-      ],
+        );
+      },
     );
 
     result = Container(
       child: result,
       height: buttonThemeData.height,
-    );
-
-    result = DefaultTextStyle(
-      style: textStyle,
-      child: IconTheme(
-        data: iconThemeData,
-        child: result,
-      ),
     );
 
     if (enabled) {
@@ -155,7 +199,7 @@ class _ButtonState extends State<Button> with ComponentStateMixin {
           onTap: () {
             if (waiting) return;
             waiting = true;
-            dynamic result = widget.onPressed!() as dynamic;  // TODO
+            dynamic result = widget.onPressed!() as dynamic; // TODO
 
             if (result is Future) {
               setState(() => waiting = true);

@@ -22,7 +22,7 @@ class _DialogPageState extends State<DialogPage> {
               children: [
                 Defaults.createTitle(context, 'Basic dialogs'),
                 TextButton(
-                  'Open that requires the user to take action',
+                  'Open dialog that requires action',
                   onPressed: () async {
                     await showDialog(
                       context: context,
@@ -30,8 +30,9 @@ class _DialogPageState extends State<DialogPage> {
                       builder: (context) => Dialog(
                         menus: [
                           TextButton(
-                            'Open',
-                            onPressed: null,
+                            'Remove',
+                            color: Theme.of(context).colorScheme.error,
+                            onPressed: () {},
                           ),
                           TextButton(
                             'Close',

@@ -21,7 +21,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     bool tristate = false,
     required Color activeColor,
     required Color inactiveColor,
-    required Color hoverColor,
+    required Color disabledColor,
     required Color focusColor,
     ValueChanged<bool?>? onChanged,
     required BoxConstraints additionalConstraints,
@@ -33,7 +33,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
         _tristate = tristate,
         _activeColor = activeColor,
         _inactiveColor = inactiveColor,
-        _hoverColor = hoverColor,
+        _disabledColor = disabledColor,
         _focusColor = focusColor,
         _onChanged = onChanged,
         _hasFocus = hasFocus,
@@ -200,11 +200,11 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   /// when it is being hovered over.
   ///
   /// Defaults to the [activeColor] at alpha [kRadialReactionAlpha].
-  Color get hoverColor => _hoverColor;
-  Color _hoverColor;
-  set hoverColor(Color value) {
-    if (value == _hoverColor) return;
-    _hoverColor = value;
+  Color get disabledColor => _disabledColor;
+  Color _disabledColor;
+  set disabledColor(Color value) {
+    if (value == _disabledColor) return;
+    _disabledColor = value;
     markNeedsPaint();
   }
 

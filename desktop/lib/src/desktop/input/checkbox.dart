@@ -53,13 +53,13 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
     if (widget.onChanged != null) {
       switch (widget.value) {
         case false:
-          widget.onChanged!(true); // FIXME
+          widget.onChanged!(true);
           break;
         case true:
-          widget.onChanged!(widget.tristate ? null : false); // FIXME
+          widget.onChanged!(widget.tristate ? null : false);
           break;
         default: // case null:
-          widget.onChanged!(false); // FIXME
+          widget.onChanged!(false);
           break;
       }
     }
@@ -86,51 +86,45 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
-    final hoverColor = colorScheme.background4;
+    final theme = CheckboxTheme.of(context);
 
-    final activeColor = enabled
-        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
-        : colorScheme.background4;
-    final inactiveColor = enabled
-        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
-        : colorScheme.background4;
-    final focusColor = enabled
-        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
-        : colorScheme.background4;
-    final foregroundColor =
-        enabled ? textTheme.textHigh : textTheme.textDisabled;
+    final activeColor =
+        _hovering || _focused ? theme.activeHoverColor! : theme.activeColor!;
+    final inactiveColor = _hovering || _focused
+        ? theme.inactiveHoverColor!
+        : theme.inactiveColor!;
+    final foregroundColor = theme.foreground!;
+    final focusColor = theme.activeHoverColor!; // FIXME
+    final disabledColor = theme.disabledColor!; // FIXME
 
     final Size size = Size.square(_kCheckboxWidth + 2);
-
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
-        actions: _actionMap,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        enabled: enabled,
-        onShowHoverHighlight: _handleHoverChanged,
-        onShowFocusHighlight: _handleFocusHighlightChanged,
-        child: Builder(
-          builder: (BuildContext context) {
-            return _CheckboxRenderObjectWidget(
-              value: widget.value,
-              tristate: widget.tristate,
-              activeColor: activeColor.toColor(),
-              inactiveColor: inactiveColor.toColor(),
-              onChanged: widget.onChanged,
-              foregroundColor: foregroundColor.toColor(),
-              focusColor: focusColor.toColor(),
-              hoverColor: hoverColor.toColor(),
-              vsync: this,
-              hasFocus: false,
-              additionalConstraints: additionalConstraints,
-            );
-          },
-        ));
+      actions: _actionMap,
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: enabled,
+      onShowHoverHighlight: _handleHoverChanged,
+      onShowFocusHighlight: _handleFocusHighlightChanged,
+      child: Builder(
+        builder: (BuildContext context) {
+          return _CheckboxRenderObjectWidget(
+            value: widget.value,
+            tristate: widget.tristate,
+            activeColor: activeColor.toColor(),
+            inactiveColor: inactiveColor.toColor(),
+            onChanged: widget.onChanged,
+            foregroundColor: foregroundColor.toColor(),
+            focusColor: focusColor.toColor(),
+            disabledColor: disabledColor.toColor(),
+            vsync: this,
+            hasFocus: false,
+            additionalConstraints: additionalConstraints,
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -146,7 +140,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.focusColor,
     required this.vsync,
     required this.hasFocus,
-    required this.hoverColor,
+    required this.disabledColor,
     required this.additionalConstraints,
   })   : assert(tristate || value != null),
         super(key: key);
@@ -160,7 +154,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   final Color inactiveColor;
   final ValueChanged<bool?>? onChanged;
   final TickerProvider vsync;
-  final Color hoverColor;
+  final Color disabledColor;
   final BoxConstraints additionalConstraints;
 
   @override
@@ -173,7 +167,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
         inactiveColor: inactiveColor,
         focusColor: focusColor,
         onChanged: onChanged,
-        hoverColor: hoverColor,
+        disabledColor: disabledColor,
         vsync: vsync,
         additionalConstraints: additionalConstraints,
       );
@@ -188,7 +182,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
       ..inactiveColor = inactiveColor
       ..hasFocus = hasFocus
       ..focusColor = focusColor
-      ..hoverColor = hoverColor
+      ..disabledColor = disabledColor
       ..onChanged = onChanged
       ..additionalConstraints = additionalConstraints
       ..vsync = vsync;
@@ -203,7 +197,7 @@ class _RenderCheckbox extends RenderToggleable {
     required this.foregroundColor,
     required Color inactiveColor,
     required Color focusColor,
-    required Color hoverColor,
+    required Color disabledColor,
     ValueChanged<bool?>? onChanged,
     required bool hasFocus,
     required TickerProvider vsync,
@@ -217,7 +211,7 @@ class _RenderCheckbox extends RenderToggleable {
           focusColor: focusColor,
           onChanged: onChanged,
           hasFocus: hasFocus,
-          hoverColor: hoverColor,
+          disabledColor: disabledColor,
           vsync: vsync,
           additionalConstraints: additionalConstraints,
         );
@@ -246,7 +240,7 @@ class _RenderCheckbox extends RenderToggleable {
 
   Color _colorAt(double t) {
     return onChanged == null
-        ? inactiveColor
+        ? disabledColor
         : (t >= 0.25
             ? activeColor
             : Color.lerp(inactiveColor, activeColor, t * 4.0))!;
@@ -346,16 +340,18 @@ class _RenderCheckbox extends RenderToggleable {
 
       if (tNormalized <= 0.5) {
         final double tShrink = 1.0 - tNormalized * 2.0;
-        if (_oldValue == true)
+        if (_oldValue == true) {
           _drawCheck(canvas, origin, tShrink, strokePaint);
-        else
+        } else {
           _drawInside(canvas, origin, tShrink, strokePaint);
+        }
       } else {
         final double tExpand = (tNormalized - 0.5) * 2.0;
-        if (value == true)
+        if (value == true) {
           _drawCheck(canvas, origin, tExpand, strokePaint);
-        else
+        } else {
           _drawInside(canvas, origin, tExpand, strokePaint);
+        }
       }
     }
   }

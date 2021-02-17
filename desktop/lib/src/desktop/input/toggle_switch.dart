@@ -80,53 +80,46 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
+    final theme = ToggleSwitchTheme.of(context);
 
-    final hoverColor = colorScheme.background4;
-    final background = colorScheme.background;
-
-    final activeColor = enabled
-        ? (_hovering || _focused ? colorScheme.primary : colorScheme.primary1)
-        : colorScheme.background4;
-    final inactiveColor = enabled
-        ? (_hovering || _focused ? hoverColor : colorScheme.background2)
-        : colorScheme.background4;
-    final focusColor = enabled
-        ? (_hovering || _focused ? hoverColor : textTheme.textMedium)
-        : colorScheme.background4;
-    final foregroundColor =
-        enabled ? textTheme.textHigh : textTheme.textDisabled;
+    final activeColor =
+        _hovering || _focused ? theme.activeHoverColor! : theme.activeColor!;
+    final inactiveColor = _hovering || _focused
+        ? theme.inactiveHoverColor!
+        : theme.inactiveColor!;
+    final foregroundColor = theme.foreground!;
+    final focusColor = theme.activeHoverColor!; // FIXME
+    final disabledColor = theme.disabledColor!; // FIXME
 
     final Size size = Size(ToggleSwitch.width, ToggleSwitch.height);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
-        actions: _actionMap,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        enabled: enabled,
-        onShowHoverHighlight: _handleHoverChanged,
-        onShowFocusHighlight: _handleFocusHighlightChanged,
-        child: Builder(
-          builder: (BuildContext context) {
-            return _ToggleSwitchRenderObjectWidget(
-              value: widget.value,
-              activeColor: activeColor.toColor(),
-              inactiveColor: inactiveColor.toColor(),
-              hoverColor: focusColor.toColor(),
-              onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
-              foregroundColor: foregroundColor.toColor(),
-              vsync: this,
-              hasFocus: _focused,
-              focusColor: focusColor.toColor(),
-              hovering: _hovering,
-              additionalConstraints: additionalConstraints,
-            );
-          },
-        ));
+      actions: _actionMap,
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: enabled,
+      onShowHoverHighlight: _handleHoverChanged,
+      onShowFocusHighlight: _handleFocusHighlightChanged,
+      child: Builder(
+        builder: (BuildContext context) {
+          return _ToggleSwitchRenderObjectWidget(
+            value: widget.value,
+            activeColor: activeColor.toColor(),
+            inactiveColor: inactiveColor.toColor(),
+            disabledColor: disabledColor.toColor(),
+            onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
+            foregroundColor: foregroundColor.toColor(),
+            vsync: this,
+            hasFocus: _focused,
+            focusColor: focusColor.toColor(),
+            hovering: _hovering,
+            additionalConstraints: additionalConstraints,
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -137,7 +130,7 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.activeColor,
     required this.foregroundColor,
     required this.inactiveColor,
-    required this.hoverColor,
+    required this.disabledColor,
     required this.onChanged,
     required this.vsync,
     required this.hasFocus,
@@ -152,7 +145,7 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   final Color activeColor;
   final Color foregroundColor;
   final Color inactiveColor;
-  final Color hoverColor;
+  final Color disabledColor;
   final Color focusColor;
   final ValueChanged<bool?>? onChanged;
   final TickerProvider vsync;
@@ -166,7 +159,7 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
         activeColor: activeColor,
         foregroundColor: foregroundColor,
         inactiveColor: inactiveColor,
-        hoverColor: hoverColor,
+        disabledColor: disabledColor,
         onChanged: onChanged,
         vsync: vsync,
         additionalConstraints: additionalConstraints,
@@ -181,7 +174,7 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..activeColor = activeColor
       ..foregroundColor = foregroundColor
       ..inactiveColor = inactiveColor
-      ..hoverColor = hoverColor
+      ..disabledColor = disabledColor
       ..onChanged = onChanged
       ..additionalConstraints = additionalConstraints
       ..vsync = vsync;
@@ -195,7 +188,7 @@ class _RenderToggleSwitch extends RenderToggleable {
     required this.foregroundColor,
     required Color inactiveColor,
     required Color focusColor,
-    required Color hoverColor,
+    required Color disabledColor,
     ValueChanged<bool?>? onChanged,
     bool hasFocus = false,
     bool hovering = false,
@@ -207,7 +200,7 @@ class _RenderToggleSwitch extends RenderToggleable {
           activeColor: activeColor,
           inactiveColor: inactiveColor,
           focusColor: focusColor,
-          hoverColor: hoverColor,
+          disabledColor: disabledColor,
           onChanged: onChanged,
           hasFocus: hasFocus,
           hovering: hovering,

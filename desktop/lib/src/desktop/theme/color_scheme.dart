@@ -39,7 +39,7 @@ class ColorScheme {
 
   HSLColor get inverted => brightness == Brightness.light
       ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9);
+      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
   HSLColor get background => brightness == Brightness.light
       ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
@@ -58,9 +58,11 @@ class ColorScheme {
   HSLColor get background5 => brightness == Brightness.light
       ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.65)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25);
-  HSLColor get disabled => HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
+  HSLColor get disabled => brightness == Brightness.light
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5)
+      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
 
-  HSLColor get error => _Colors.firebrick;
+  HSLColor get error => _Colors.red;
 }
 
 class _Colors {
@@ -197,24 +199,34 @@ class _Colors {
 
 class PrimaryColors {
   static const coral = PrimaryColor.fromAHSL('Coral', 1.0, 16, 1.0, 0.66);
-  static const cornflowerBlue = PrimaryColor.fromAHSL('Cornflower Blue', 1.0, 219, 0.79, 0.66);
-  static const turquoise = PrimaryColor.fromAHSL('Turquoise', 1.0, 181, 1.0, 0.41);
-  static const deepSkyBlue = PrimaryColor.fromAHSL('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
-  static const dodgerBlue = PrimaryColor.fromAHSL('Dodger Blue', 1.0, 210, 1.0, 0.56);
-  static const goldenrod = PrimaryColor.fromAHSL('Goldenrod', 1.0, 43, 0.74, 0.49);
+  static const cornflowerBlue =
+      PrimaryColor.fromAHSL('Cornflower Blue', 1.0, 219, 0.79, 0.66);
+  static const turquoise =
+      PrimaryColor.fromAHSL('Turquoise', 1.0, 181, 1.0, 0.41);
+  static const deepSkyBlue =
+      PrimaryColor.fromAHSL('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
+  static const dodgerBlue =
+      PrimaryColor.fromAHSL('Dodger Blue', 1.0, 210, 1.0, 0.56);
+  static const goldenrod =
+      PrimaryColor.fromAHSL('Goldenrod', 1.0, 43, 0.74, 0.49);
   static const hotPink = PrimaryColor.fromAHSL('Hot Pink', 1.0, 330, 1.0, 0.71);
   static const purple = PrimaryColor.fromAHSL('Purple', 1.0, 260, 0.6, 0.65);
   static const orange = PrimaryColor.fromAHSL('Orange', 1.0, 33, 1.0, 0.5);
   static const orchid = PrimaryColor.fromAHSL('Orchid', 1.0, 302, 0.59, 0.65);
-  static const royalBlue = PrimaryColor.fromAHSL('Royal Blue', 1.0, 225, 0.73, 0.57);
-  static const sandyBrown = PrimaryColor.fromAHSL('Sandy Brown', 1.0, 20, 0.87, 0.67);
-  static const slateBlue = PrimaryColor.fromAHSL('Slate Blue', 1.0, 248, 0.53, 0.58);
-  static const steelBlue = PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
+  static const royalBlue =
+      PrimaryColor.fromAHSL('Royal Blue', 1.0, 225, 0.73, 0.57);
+  static const sandyBrown =
+      PrimaryColor.fromAHSL('Sandy Brown', 1.0, 20, 0.87, 0.67);
+  static const slateBlue =
+      PrimaryColor.fromAHSL('Slate Blue', 1.0, 248, 0.53, 0.58);
+  static const steelBlue =
+      PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
   static const violet = PrimaryColor.fromAHSL('Violet', 1.0, 300, 0.76, 0.72);
-  static const springGreen = PrimaryColor.fromAHSL('Spring Green', 1.0, 150, 1.0, 0.4);
-  static const violetRed = PrimaryColor.fromAHSL('Violet Red', 1.0, 333, 1.0, 0.60); 
-  static const red = PrimaryColor.fromAHSL('Red', 1.0, 347.0, 0.9, 0.6); 
-
+  static const springGreen =
+      PrimaryColor.fromAHSL('Spring Green', 1.0, 150, 1.0, 0.4);
+  static const violetRed =
+      PrimaryColor.fromAHSL('Violet Red', 1.0, 333, 1.0, 0.60);
+  static const red = PrimaryColor.fromAHSL('Red', 1.0, 347.0, 0.9, 0.6);
 }
 
 class PrimaryColor extends HSLColor {

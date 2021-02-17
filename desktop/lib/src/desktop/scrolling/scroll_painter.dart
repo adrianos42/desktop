@@ -25,7 +25,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     fadeoutOpacityAnimation.addListener(notifyListeners);
   }
 
-  /// [Color] of the thumb. Mustn't be null.
+  /// [Color] of the thumb. 
   Color get color => _color;
   late Color _color;
   set color(Color value) {
@@ -36,7 +36,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   }
 
   /// [TextDirection] of the [BuildContext] which dictates the side of the
-  /// screen the scrollbar appears in (the trailing side). Mustn't be null.
+  /// screen the scrollbar appears in (the trailing side). 
   TextDirection get textDirection => _textDirection;
   late TextDirection _textDirection;
   set textDirection(TextDirection value) {
@@ -46,12 +46,12 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     notifyListeners();
   }
 
-  /// Thickness of the scrollbar in its cross-axis in logical pixels. Mustn't be null.
+  /// Thickness of the scrollbar in its cross-axis in logical pixels.
   double thickness;
 
   /// An opacity [Animation] that dictates the opacity of the thumb.
   /// Changes in value of this [Listenable] will automatically trigger repaints.
-  /// Mustn't be null.
+  /// 
   final Animation<double> fadeoutOpacityAnimation;
 
   /// Distance from the scrollbar's start and end to the edge of the viewport

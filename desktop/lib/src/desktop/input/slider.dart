@@ -16,8 +16,8 @@ class Slider extends StatefulWidget {
     this.onChangeEnd,
     this.min = 0.0,
     this.max = 1.0,
-    this.activeColor,
-    this.thumbColor,
+    this.focusNode,
+    this.autofocus = false,
   })  : assert(value >= min && value <= max),
         super(key: key);
 
@@ -33,9 +33,9 @@ class Slider extends StatefulWidget {
 
   final double max;
 
-  final HSLColor? activeColor;
+  final FocusNode? focusNode;
 
-  final HSLColor? thumbColor;
+  final bool autofocus;
 
   @override
   _SliderState createState() => _SliderState();
@@ -49,34 +49,78 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     }
   }
 
-  void _handleDragStart(double value) {
-    widget.onChangeStart!(lerpDouble(widget.min, widget.max, value)!);
+  bool _dragging = false;
+  void _handleDragChanged(bool dragging) {
+    setState(() => _dragging = dragging);
   }
 
-  void _handleDragEnd(double value) {
-    widget.onChangeEnd!(lerpDouble(widget.min, widget.max, value)!);
+  bool _hovering = false;
+  void _handleHoverChanged(bool hovering) {
+    setState(() => _hovering = hovering);
+  }
+
+  bool _focused = false;
+  void _handleFocusHighlightChanged(bool focused) {
+    if (focused != _focused) {
+      setState(() => _focused = focused);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final active = widget.onChanged != null;
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = SliderTheme.of(context);
 
     final HSLColor activeColor = active
-        ? widget.activeColor ?? colorScheme.primary2
-        : colorScheme.background1;
+        ? (_hovering || _focused || _dragging
+            ? theme.activeHoverColor!
+            : theme.activeColor!)
+        : theme.disabledColor!;
 
-    final HSLColor thumbColor =
-        active ? colorScheme.primary2 : colorScheme.background1;
+    final HSLColor trackColor = theme.trackColor!;
 
-    Widget result = _SliderRenderObjectWidget(
-      value: (widget.value - widget.min) / (widget.max - widget.min),
-      activeColor: activeColor.toColor(),
-      thumbColor: thumbColor.toColor(),
-      onChanged: active ? _handleChanged : null,
-      onChangeStart: active && widget.onChangeStart != null ? _handleDragStart : null,
-      onChangeEnd: active && widget.onChangeEnd != null ? _handleDragEnd : null,
-      vsync: this,
+    return FocusableActionDetector(
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: active,
+      onShowHoverHighlight: _handleHoverChanged,
+      onShowFocusHighlight: _handleFocusHighlightChanged,
+      child: Builder(
+        builder: (BuildContext context) {
+          return _SliderRenderObjectWidget(
+            value: (widget.value - widget.min) / (widget.max - widget.min),
+            activeColor: activeColor.toColor(),
+            thumbColor: activeColor.toColor(),
+            trackColor: trackColor.toColor(),
+            onChanged: active ? _handleChanged : null,
+            onChangeStart: (value) {
+              if (active) {
+                _handleDragChanged(true);
+                if (widget.onChangeStart != null) {
+                  widget.onChangeStart!(lerpDouble(
+                    widget.min,
+                    widget.max,
+                    value,
+                  )!);
+                }
+              }
+            },
+            onChangeEnd: (value) {
+              if (active) {
+                _handleDragChanged(false);
+                if (widget.onChangeEnd != null) {
+                  widget.onChangeEnd!(lerpDouble(
+                    widget.min,
+                    widget.max,
+                    value,
+                  )!);
+                }
+              }
+            },
+            vsync: this,
+          );
+        },
+      ),
     );
 
     // return Tooltip(
@@ -84,8 +128,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     //   child: result,
     //   preferBelow: false,
     // );
-
-    return result;
   }
 }
 
@@ -96,6 +138,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
     required this.vsync,
     required this.activeColor,
     required this.thumbColor,
+    required this.trackColor,
     this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
@@ -104,6 +147,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   final double value;
   final Color activeColor;
   final Color thumbColor;
+  final Color trackColor;
   final ValueChanged<double>? onChanged;
   final ValueChanged<double>? onChangeStart;
   final ValueChanged<double>? onChangeEnd;
@@ -115,7 +159,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       value: value,
       activeColor: activeColor,
       thumbColor: thumbColor,
-      trackColor: Theme.of(context).colorScheme.background2.toColor(),
+      trackColor: trackColor,
       onChanged: onChanged,
       onChangeStart: onChangeStart,
       onChangeEnd: onChangeEnd,
@@ -130,7 +174,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       ..value = value
       ..activeColor = activeColor
       ..thumbColor = thumbColor
-      ..trackColor = Theme.of(context).colorScheme.background2.toColor()
+      ..trackColor = trackColor
       ..onChanged = onChanged
       ..onChangeStart = onChangeStart
       ..onChangeEnd = onChangeEnd
