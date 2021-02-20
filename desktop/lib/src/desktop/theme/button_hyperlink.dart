@@ -83,13 +83,12 @@ class HyperlinkButtonTheme extends InheritedTheme {
             decorationThickness: _kLineThickness,
           );
 
-      final HSLColor color = hyperlinkThemeData.color ??
-          PrimaryColors.dodgerBlue
-              .withSaturation(PrimaryColors.dodgerBlue.saturation - 0.2)
-              .withLightness(PrimaryColors.dodgerBlue.lightness - 0.2);
+      final HSLColor color =
+          hyperlinkThemeData.color ?? PrimaryColors.dodgerBlue;
 
-      final HSLColor hoverColor =
-          hyperlinkThemeData.hoverColor ?? PrimaryColors.dodgerBlue;
+      final HSLColor hoverColor = hyperlinkThemeData.hoverColor ??
+          PrimaryColors.dodgerBlue
+              .withLightness(PrimaryColors.dodgerBlue.lightness + 0.2);
 
       hyperlinkThemeData = hyperlinkThemeData.copyWidth(
         textStyle: textStyle,

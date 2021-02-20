@@ -52,7 +52,7 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColors.cornflowerBlue;
+  PrimaryColor primaryColor = PrimaryColors.dodgerBlue;
 
   @override
   Widget build(BuildContext context) {

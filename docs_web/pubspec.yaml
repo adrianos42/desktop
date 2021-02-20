@@ -25,6 +25,7 @@ flutter:
   assets:
     - assets/GitHub-Mark-120px-plus.png
     - assets/GitHub-Mark-Light-120px-plus.png
+    
     - assets/cats/pexels-akbar-nemati-5622738.jpg
     - assets/cats/pexels-aleksandr-nadyojin-4492149.jpg
     - assets/cats/pexels-anete-lusina-4790622.jpg
@@ -67,6 +68,49 @@ flutter:
     - assets/cats/pexels-xue-guangjian-1687831.jpg
     - assets/cats/pexels-zhang-kaiyv-4858815.jpg
     - assets/cats/pexels-александар-цветановић-1440406.jpg
+
+    - assets/cats_small/pexels-akbar-nemati-5622738.jpg
+    - assets/cats_small/pexels-aleksandr-nadyojin-4492149.jpg
+    - assets/cats_small/pexels-anete-lusina-4790622.jpg
+    - assets/cats_small/pexels-bianca-marolla-3030635.jpg
+    - assets/cats_small/pexels-christopher-schruff-720684.jpg
+    - assets/cats_small/pexels-danielle-daniel-479009.jpg
+    - assets/cats_small/pexels-david-savochka-192384.jpg
+    - assets/cats_small/pexels-dương-nhân-2817405.jpg
+    - assets/cats_small/pexels-emily-geibel-3772262.jpg
+    - assets/cats_small/pexels-emir-kaan-okutan-2255565.jpg
+    - assets/cats_small/pexels-engin-akyurt-1571724.jpg
+    - assets/cats_small/pexels-evg-culture-1416792.jpg
+    - assets/cats_small/pexels-faris-subriun-4391733.jpg
+    - assets/cats_small/pexels-flickr-156321.jpg
+    - assets/cats_small/pexels-fotografierende-3127729.jpg
+    - assets/cats_small/pexels-francesco-ungaro-96428.jpg
+    - assets/cats_small/pexels-halil-i̇brahim-çeti̇n-1754986.jpg
+    - assets/cats_small/pexels-hugo-zoccal-fernandes-laguna-1299518.jpg
+    - assets/cats_small/pexels-jan-kopřiva-5800065.jpg
+    - assets/cats_small/pexels-josé-andrés-pacheco-cortes-5456616.jpg
+    - assets/cats_small/pexels-leonardo-de-oliveira-1770918.jpg
+    - assets/cats_small/pexels-levent-simsek-4411430.jpg
+    - assets/cats_small/pexels-luan-oosthuizen-1784289.jpg
+    - assets/cats_small/pexels-mark-burnett-731553.jpg
+    - assets/cats_small/pexels-mati-mango-4734723.jpg
+    - assets/cats_small/pexels-matteo-petralli-1828875.jpg
+    - assets/cats_small/pexels-matthias-oben-5281143.jpg
+    - assets/cats_small/pexels-mustafa-ezz-979503.jpg
+    - assets/cats_small/pexels-peng-louis-1643457.jpg
+    - assets/cats_small/pexels-peng-louis-1653357.jpg
+    - assets/cats_small/pexels-piers-olphin-5044690.jpg
+    - assets/cats_small/pexels-pixabay-45170.jpg
+    - assets/cats_small/pexels-pixabay-45201.jpg
+    - assets/cats_small/pexels-pixabay-104827.jpg
+    - assets/cats_small/pexels-pixabay-160755.jpg
+    - assets/cats_small/pexels-pixabay-271611.jpg
+    - assets/cats_small/pexels-tamba-budiarsana-979247.jpg
+    - assets/cats_small/pexels-tomas-ryant-2693561.jpg
+    - assets/cats_small/pexels-utku-koylu-2611939.jpg
+    - assets/cats_small/pexels-xue-guangjian-1687831.jpg
+    - assets/cats_small/pexels-zhang-kaiyv-4858815.jpg
+    - assets/cats_small/pexels-александар-цветановић-1440406.jpg
 
   fonts:
     - family: IBM Plex Mono
