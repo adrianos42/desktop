@@ -15,7 +15,33 @@ class _ButtonTextPageState extends State<ButtonTextPage> {
       children: [
         Defaults.createHeader(context, 'Text button'),
         Expanded(
-          child: Center(child: TextButton('Click me', onPressed: () {},),),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createCaption(context, 'Enabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: TextButton(
+                    'Click me',
+                    onPressed: () {},
+                  ),
+                ),
+                Defaults.createCaption(context, 'Disabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: TextButton('Click me'),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );

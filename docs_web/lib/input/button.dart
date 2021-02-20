@@ -15,12 +15,37 @@ class _ButtonPageState extends State<ButtonPage> {
       children: [
         Defaults.createHeader(context, 'Button'),
         Expanded(
-          child: Center(
-            child: Button(
-              body: Text('Button'),
-              trailing: Icon(Icons.phone),
-              leading: Icon(Icons.dashboard),
-              onPressed: () {},
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createCaption(context, 'Enabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: Button(
+                    body: Text('Button'),
+                    trailing: Icon(Icons.phone),
+                    leading: Icon(Icons.control_camera),
+                    onPressed: () {},
+                  ),
+                ),
+                Defaults.createCaption(context, 'Disabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: Button(
+                    body: Text('Button'),
+                    trailing: Icon(Icons.phone),
+                    leading: Icon(Icons.control_camera),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

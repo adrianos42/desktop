@@ -53,5 +53,16 @@ class Defaults {
     );
   }
 
+  static Widget createCaption(BuildContext context, String name) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 2.0),
+      child: Text(
+        name,
+        style: Theme.of(context).textTheme.caption,
+      ),
+    );
+  }
+
   double get borderWidth => 2.0;
 }

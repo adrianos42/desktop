@@ -5,6 +5,8 @@ import '../theme/theme.dart';
 
 import 'button.dart';
 
+typedef FunctionStringCallback = void Function(String);
+
 class HyperlinkButton extends StatelessWidget {
   const HyperlinkButton(
     this.text, {
@@ -17,7 +19,7 @@ class HyperlinkButton extends StatelessWidget {
 
   final String? tooltip;
 
-  final VoidCallback? onPressed;
+  final FunctionStringCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class HyperlinkButton extends StatelessWidget {
       child: Button(
         body: Text(text),
         tooltip: tooltip,
-        onPressed: onPressed,
+        onPressed: onPressed != null ? () => onPressed!(text) : null,
       ),
     );
   }

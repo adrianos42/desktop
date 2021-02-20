@@ -161,10 +161,10 @@ class _DocAppState extends State<DocApp> {
                     ),
                   ),
                   nodes: [
-                    TreeNode(
-                      'Overview',
-                      builder: (context) => OverviewPage(),
-                    ),
+                    // TreeNode(
+                    //   'Overview',
+                    //   builder: (context) => OverviewPage(),
+                    // ),
                     TreeNode('Navigation', children: [
                       TreeNode('Nav', builder: (context) => NavPage()),
                       TreeNode('Tab', builder: (context) => TabPage()),
@@ -230,10 +230,10 @@ class _DocAppState extends State<DocApp> {
                         'Progress indicator',
                         builder: (context) => ProgressIndicatorPage(),
                       ),
-                      TreeNode(
-                        'Status bar',
-                        builder: (context) => StatusBarPage(),
-                      ),
+                      // TreeNode(
+                      //   'Status bar',
+                      //   builder: (context) => StatusBarPage(),
+                      // ),
                       TreeNode(
                         'Tooltip',
                         builder: (context) => TooltipPage(),

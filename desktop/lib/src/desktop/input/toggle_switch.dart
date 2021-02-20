@@ -10,7 +10,7 @@ class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({
     Key? key,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
     this.focusNode,
     this.autofocus = false,
   }) : super(key: key);

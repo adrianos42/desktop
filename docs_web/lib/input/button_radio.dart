@@ -17,29 +17,64 @@ class _ButtonRadioPageState extends State<ButtonRadioPage> {
       children: [
         Defaults.createHeader(context, 'Radio'),
         Expanded(
-          child: Center(
-            child: Container(
-              width: 100.0,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Radio(
-                      value: value,
-                      onChanged: (fvalue) {
-                        setState(() {
-                          value = true;
-                        });
-                      },
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createCaption(context, 'Enabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50.0,
+                  child: Container(
+                    width: 100.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Radio(
+                          value: value,
+                          onChanged: (fvalue) {
+                            setState(() {
+                              value = true;
+                            });
+                          },
+                        ),
+                        Radio(
+                          value: !value,
+                          onChanged: (fvalue) {
+                            setState(() {
+                              value = false;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                    Radio(
-                      value: !value,
-                      onChanged: (fvalue) {
-                        setState(() {
-                          value = false;
-                        });
-                      },
+                  ),
+                ),
+                Defaults.createCaption(context, 'Disabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50.0,
+                  child: Container(
+                    width: 100.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Radio(
+                          value: true,
+                        ),
+                        Radio(
+                          value: false,
+                        ),
+                      ],
                     ),
-                  ]),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

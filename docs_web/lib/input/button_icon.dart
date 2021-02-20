@@ -15,10 +15,31 @@ class _ButtonIconPageState extends State<ButtonIconPage> {
       children: [
         Defaults.createHeader(context, 'Icon button'),
         Expanded(
-          child: Center(
-            child: IconButton(
-              Icons.place,
-              onPressed: () {},
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createCaption(context, 'Enabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: IconButton(
+                    Icons.place,
+                    onPressed: () {},
+                  ),
+                ),
+                Defaults.createCaption(context, 'Disabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: IconButton(Icons.place),
+                ),
+              ],
             ),
           ),
         ),

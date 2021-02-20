@@ -15,8 +15,33 @@ class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
       children: [
         Defaults.createHeader(context, 'Hyperlink'),
         Expanded(
-          child: Center(
-            child: HyperlinkButton('hyperlink', onPressed: () {},),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Defaults.createCaption(context, 'Enabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child: HyperlinkButton(
+                    'https://github.com/adrianos42/desktop',
+                    onPressed: (value) { },
+                  ),
+                ),
+                Defaults.createCaption(context, 'Disabled'),
+                Container(
+                  decoration: Defaults.itemDecoration(context),
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                  height: 50,
+                  child:
+                      HyperlinkButton('https://github.com/adrianos42/desktop'),
+                ),
+              ],
+            ),
           ),
         ),
       ],
