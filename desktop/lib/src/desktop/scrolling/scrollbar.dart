@@ -508,8 +508,8 @@ class _ScrollbarState extends State<Scrollbar>
 
   @override
   void dispose() {
-    _fadeoutAnimationController.dispose();
     _fadeoutTimer?.cancel();
+    _fadeoutAnimationController.dispose();
     _showTimer?.cancel();
     _painter?.dispose();
     _positionAnimation

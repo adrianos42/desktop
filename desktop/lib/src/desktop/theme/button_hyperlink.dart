@@ -10,26 +10,32 @@ const double _kLineThickness = 1.0;
 
 class HyperlinkButtonThemeData {
   const HyperlinkButtonThemeData({
-    this.color = PrimaryColors.dodgerBlue,
+    this.color,
+    this.hoverColor,
     this.textStyle,
   });
 
-  final HSLColor color;
+  final HSLColor? color;
+
+  final HSLColor? hoverColor;
 
   final TextStyle? textStyle;
 
   HyperlinkButtonThemeData copyWidth({
     HSLColor? color,
+    HSLColor? hoverColor,
+    HSLColor? highlightColor,
     TextStyle? textStyle,
   }) {
     return HyperlinkButtonThemeData(
       color: color ?? this.color,
       textStyle: textStyle ?? this.textStyle,
+      hoverColor: hoverColor ?? this.hoverColor,
     );
   }
 
   bool get isConcrete {
-    return textStyle != null;
+    return textStyle != null && color != null && hoverColor != null;
   }
 
   @override
@@ -37,6 +43,7 @@ class HyperlinkButtonThemeData {
     return hashValues(
       color,
       textStyle,
+      hoverColor,
     );
   }
 
@@ -46,7 +53,8 @@ class HyperlinkButtonThemeData {
     if (other.runtimeType != runtimeType) return false;
     return other is HyperlinkButtonThemeData &&
         other.color == color &&
-        other.textStyle == textStyle;
+        other.textStyle == textStyle &&
+        other.hoverColor == hoverColor;
   }
 }
 
@@ -68,13 +76,26 @@ class HyperlinkButtonTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       hyperlinkThemeData ??= themeData.hyperlinkButtonTheme;
 
-      final TextStyle textStyle = themeData.textTheme.body2.copyWith(
-        fontSize: 14.0,
-        decoration: TextDecoration.underline,
-        decorationThickness: _kLineThickness,
-      );
+      final TextStyle textStyle = hyperlinkThemeData.textStyle ??
+          themeData.textTheme.body2.copyWith(
+            fontSize: 14.0,
+            decoration: TextDecoration.underline,
+            decorationThickness: _kLineThickness,
+          );
 
-      hyperlinkThemeData = hyperlinkThemeData.copyWidth(textStyle: textStyle);
+      final HSLColor color = hyperlinkThemeData.color ??
+          PrimaryColors.dodgerBlue
+              .withSaturation(PrimaryColors.dodgerBlue.saturation - 0.2)
+              .withLightness(PrimaryColors.dodgerBlue.lightness - 0.2);
+
+      final HSLColor hoverColor =
+          hyperlinkThemeData.hoverColor ?? PrimaryColors.dodgerBlue;
+
+      hyperlinkThemeData = hyperlinkThemeData.copyWidth(
+        textStyle: textStyle,
+        color: color,
+        hoverColor: hoverColor,
+      );
     }
 
     assert(hyperlinkThemeData.isConcrete);

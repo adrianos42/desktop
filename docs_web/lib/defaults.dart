@@ -12,7 +12,7 @@ class Defaults {
   static Widget createHeader(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.header,
@@ -23,7 +23,7 @@ class Defaults {
   static Widget createSubheader(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.subheader,
@@ -34,7 +34,7 @@ class Defaults {
   static Widget createTitle(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.fromLTRB(0.0, 24.0, 0.0, 8.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.title,
@@ -45,7 +45,7 @@ class Defaults {
   static Widget createSubtitle(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 6.0),
+      padding: EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 4.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.subtitle,
@@ -56,7 +56,7 @@ class Defaults {
   static Widget createCaption(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 2.0),
+      padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 2.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.caption,

@@ -10,7 +10,7 @@ class ColorScheme {
   ColorScheme(this.brightness, [HSLColor primary = kDefaultPrimary])
       : assert(primary.lightness >= 0.4),
         assert(primary.lightness <= 0.8),
-        assert(primary.saturation >= 0.4),
+        assert(primary.saturation >= 0.5),
         _primary = primary;
 
   ColorScheme withBrightness(Brightness brightness) {
@@ -27,15 +27,17 @@ class ColorScheme {
   HSLColor get overlay4 => background.withAlpha(0.6);
   HSLColor get overlay5 => background.withAlpha(0.5);
 
-  HSLColor get primary => _primary;
+  HSLColor get primary => brightness == Brightness.light
+      ? _primary.withLightness(_primary.lightness - 0.1)
+      : _primary.withLightness(_primary.lightness + 0.1);
 
   HSLColor get primary1 => primary
-      .withSaturation(_primary.saturation - 0.1)
-      .withLightness(_primary.lightness - 0.1);
+      .withSaturation(primary.saturation - 0.1)
+      .withLightness(primary.lightness - 0.1);
 
   HSLColor get primary2 => primary
-      .withSaturation(_primary.saturation - 0.2)
-      .withLightness(_primary.lightness - 0.2);
+      .withSaturation(primary.saturation - 0.2)
+      .withLightness(primary.lightness - 0.2);
 
   HSLColor get inverted => brightness == Brightness.light
       ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0)
@@ -219,8 +221,8 @@ class PrimaryColors {
       PrimaryColor.fromAHSL('Sandy Brown', 1.0, 20, 0.87, 0.67);
   static const slateBlue =
       PrimaryColor.fromAHSL('Slate Blue', 1.0, 248, 0.53, 0.58);
-  static const steelBlue =
-      PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
+  // static const steelBlue =
+  //     PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
   static const violet = PrimaryColor.fromAHSL('Violet', 1.0, 300, 0.76, 0.72);
   static const springGreen =
       PrimaryColor.fromAHSL('Spring Green', 1.0, 150, 1.0, 0.4);

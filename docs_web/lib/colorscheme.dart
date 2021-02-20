@@ -173,7 +173,6 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   _itemPrimary(context, PrimaryColors.springGreen, light),
                   _itemPrimary(context, PrimaryColors.turquoise, light),
                   _itemPrimary(context, PrimaryColors.deepSkyBlue, light),
-                  _itemPrimary(context, PrimaryColors.steelBlue, light),
                   _itemPrimary(context, PrimaryColors.dodgerBlue, light),
                   _itemPrimary(context, PrimaryColors.cornflowerBlue, light),
                   _itemPrimary(context, PrimaryColors.royalBlue, light),

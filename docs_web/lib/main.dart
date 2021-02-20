@@ -1,8 +1,10 @@
+// @dart=2.9
 import 'dart:ui';
 import 'package:desktop/desktop.dart';
+import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'overview.dart';
+import 'defaults.dart';
 import 'data/list_table.dart';
 import 'data/tree.dart';
 import 'dialogs/dialog.dart';
@@ -31,7 +33,7 @@ import 'colorscheme.dart';
 void main() => runApp(DocApp());
 
 class DocApp extends StatefulWidget {
-  DocApp({Key? key}) : super(key: key);
+  DocApp({Key key}) : super(key: key);
 
   @override
   _DocAppState createState() => _DocAppState();
@@ -54,7 +56,7 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
-    final githubImage;
+    var githubImage;
     if (themeData.brightness == Brightness.dark) {
       githubImage = Image.asset(
         'assets/GitHub-Mark-Light-120px-plus.png',
@@ -121,7 +123,6 @@ class _DocAppState extends State<DocApp> {
                           _menuItemPrimaryColor(PrimaryColors.springGreen),
                           _menuItemPrimaryColor(PrimaryColors.turquoise),
                           _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
-                          _menuItemPrimaryColor(PrimaryColors.steelBlue),
                           _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
                           _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
                           _menuItemPrimaryColor(PrimaryColors.royalBlue),
@@ -161,15 +162,15 @@ class _DocAppState extends State<DocApp> {
                     ),
                   ),
                   nodes: [
-                    // TreeNode(
-                    //   'Overview',
-                    //   builder: (context) => OverviewPage(),
-                    // ),
+                    TreeNode(
+                      'Overview',
+                      builder: (context) => OverviewPage(),
+                    ),
                     TreeNode('Navigation', children: [
                       TreeNode('Nav', builder: (context) => NavPage()),
                       TreeNode('Tab', builder: (context) => TabPage()),
-                      TreeNode('Breadcrumb',
-                          builder: (context) => BreadcrumbPage()),
+                      // TreeNode('Breadcrumb',
+                      //     builder: (context) => BreadcrumbPage()),
                     ]),
                     TreeNode('Data', children: [
                       TreeNode('List Table',
@@ -270,8 +271,8 @@ class _DocAppState extends State<DocApp> {
 
 class ThemeToggle extends StatefulWidget {
   ThemeToggle({
-    required this.onPressed,
-    Key? key,
+    this.onPressed,
+    Key key,
   }) : super(key: key);
 
   final VoidCallback onPressed;
@@ -303,5 +304,87 @@ class _ThemeToggleState extends State<ThemeToggle> {
           ),
         );
     }
+  }
+}
+
+// FIXME Move this class to its own file.
+class OverviewPage extends StatefulWidget {
+  OverviewPage({Key key}) : super(key: key);
+
+  @override
+  _OverviewPageState createState() => _OverviewPageState();
+}
+
+class _OverviewPageState extends State<OverviewPage> {
+  @override
+  Widget build(BuildContext context) {
+    final controller = ScrollController();
+
+    return SingleChildScrollView(
+      controller: controller,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Defaults.createHeader(context, 'Overview'),
+          // Text.rich(
+          //   TextSpan(
+          //     children: [
+          //       TextSpan(
+          //           style: Theme.of(context).textTheme.body1.copyWith(),
+          //           text: 'Flutter wigdets for desktop usage'),
+          //     ],
+          //   ),
+          // ),
+          Defaults.createTitle(context, 'Resources'),
+          HyperlinkButton(
+            'Github',
+            onPressed: (_) async {
+              final link = 'https://github.com/adrianos42/native_idl';
+              if (await canLaunch(link)) {
+                await launch(link);
+              }
+            },
+          ),
+          HyperlinkButton(
+            'Figma',
+            onPressed: (_) async {
+              final link =
+                  'https://www.figma.com/file/WQCf5O9Jh7cLtOY4zRDL0U/Model?node-id=2%3A0';
+              if (await canLaunch(link)) {
+                await launch(link);
+              }
+            },
+          ),
+          Defaults.createTitle(context, 'Flutter resources'),
+          HyperlinkButton(
+            'Desktop support for Flutter',
+            onPressed: (_) async {
+              final link = 'https://flutter.dev/desktop';
+              if (await canLaunch(link)) {
+                await launch(link);
+              }
+            },
+          ),
+          HyperlinkButton(
+            'Build and release a Linux app',
+            onPressed: (_) async {
+              final link = 'https://flutter.dev/docs/deployment/linux';
+              if (await canLaunch(link)) {
+                await launch(link);
+              }
+            },
+          ),
+          HyperlinkButton(
+            'Build and release a web app',
+            onPressed: (_) async {
+              final link = 'https://flutter.dev/docs/deployment/web';
+              if (await canLaunch(link)) {
+                await launch(link);
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

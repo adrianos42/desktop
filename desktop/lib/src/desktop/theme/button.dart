@@ -8,7 +8,7 @@ import 'theme_text.dart';
 
 const double _kSidePadding = 6.0;
 const double _kHeight = 32.0;
-const double _kIconSize = 20.0;
+const double _kIconSize = 22.0;
 const double _kFontSize = 14.0;
 const double _kMinWidth = 12.0;
 
@@ -203,19 +203,18 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? colorScheme.primary;
+      final HSLColor color = buttonThemeData.color ?? textTheme.textLow;
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? textTheme.textHigh; // FIXME
+          buttonThemeData.hoverColor ?? textTheme.textMedium; 
 
-      final HSLColor color = buttonThemeData.color ?? textTheme.textLow;
+          final HSLColor highlightColor =
+          buttonThemeData.highlightColor ?? textTheme.textHigh;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
 
-      final HSLColor focusColor =
-          buttonThemeData.focusColor ?? colorScheme.background4; // TODO
+      final HSLColor focusColor = hoverColor; // TODO
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: color.toColor());

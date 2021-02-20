@@ -271,14 +271,18 @@ class _TreeColumnState extends State<TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
+      final hoverColor = active ? colorScheme.primary : textTheme.textHigh;
+      final activeColor = active ? colorScheme.primary : textTheme.textLow;
+      final highlightColor = colorScheme.primary;
 
       return ButtonTheme.merge(
         data: ButtonThemeData(
-          color: active ? colorScheme.primary : textTheme.textLow,
+          color: activeColor,
           buttonPadding: EdgeInsets.zero,
           bodyPadding: EdgeInsets.zero,
-          highlightColor: colorScheme.primary,
-          hoverColor: active ? colorScheme.primary : textTheme.textHigh,
+          highlightColor: highlightColor,
+          hoverColor: hoverColor,
+          focusColor: hoverColor,
         ),
         child: Button(
           body: Text(widget.node.title),

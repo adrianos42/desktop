@@ -31,7 +31,7 @@ class HyperlinkButton extends StatelessWidget {
       data: buttonThemeData.copyWith(
         textStyle: hyperlinkButtonThemeData.textStyle,
         color: hyperlinkButtonThemeData.color,
-        highlightColor: hyperlinkButtonThemeData.color,
+        hoverColor: hyperlinkButtonThemeData.hoverColor,
       ),
       child: Button(
         body: Text(text),
