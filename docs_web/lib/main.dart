@@ -92,7 +92,7 @@ class _DocAppState extends State<DocApp> {
                     child: Builder(
                       builder: (context) {
                         return Text(
-                          'Native Idl',
+                          'Desktop',
                           style: Theme.of(context).textTheme.title.copyWith(
                               color: Theme.of(context)
                                   .colorScheme

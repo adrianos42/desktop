@@ -34652,7 +34652,7 @@ $1:function(a){var s=null,r=M.K(C.n,new T.cw(new F.Xw(),s),s,s,s,s,s,new V.T(0,8
 return M.K(C.bd,T.av(H.b([T.cp(H.b([r,new R.og(s),M.K(s,Y.ahe(Y.a4I(!0,!1,new F.Xx(),new F.Xy(o),o.e,t.zj),new Y.mY(s,s,s,q,s,p,s,s)),s,s,s,s,s,s,200),new F.um(new F.XJ(o,a),s),Z.hp(this.a.a,s,s,new F.XR(),s,s)],n),C.o,C.k,C.j),T.bS(new Y.oJ(new T.cw(new F.XS(),s),H.b([new Y.aC(s,new F.XT(),"Overview"),new Y.aC(H.b([new Y.aC(s,new F.XU(),"Nav"),new Y.aC(s,new F.XV(),"Tab")],m),s,"Navigation"),new Y.aC(H.b([new Y.aC(s,new F.XW(),"List Table"),new Y.aC(s,new F.XX(),"Tree")],m),s,"Data"),new Y.aC(H.b([new Y.aC(s,new F.Xz(),"Dialog")],m),s,"Dialogs"),new Y.aC(H.b([new Y.aC(s,new F.XA(),"Button"),new Y.aC(s,new F.XB(),"Context menu"),new Y.aC(s,new F.XC(),"Drop down menu"),new Y.aC(s,new F.XD(),"Icon button"),new Y.aC(s,new F.XE(),"Text button"),new Y.aC(s,new F.XF(),"Hyperlink"),new Y.aC(s,new F.XG(),"Radio"),new Y.aC(s,new F.XH(),"Checkbox"),new Y.aC(s,new F.XI(),"Slider"),new Y.aC(s,new F.XK(),"Toggle switch")],m),s,"Input"),new Y.aC(H.b([new Y.aC(s,new F.XL(),"Progress indicator"),new Y.aC(s,new F.XM(),"Tooltip")],m),s,"Status"),new Y.aC(H.b([new Y.aC(s,new F.XN(),"Text field")],m),s,"Text"),new Y.aC(s,new F.XO(),"Scrolling"),new Y.aC(s,new F.XP(),"Typography"),new Y.aC(s,new F.XQ(),"Color Scheme")],m),s),1)],n),C.D,C.k,C.j),s,s,s,s,s,new V.T(16,16,4,4),s)},
 $S:188}
 F.Xw.prototype={
-$1:function(a){return L.Q("Native Idl",X.aB(a).c.c.dP(X.aB(a).b.gc8().a1()),null)},
+$1:function(a){return L.Q("Desktop",X.aB(a).c.c.dP(X.aB(a).b.gc8().a1()),null)},
 $S:90}
 F.Xy.prototype={
 $1:function(a){var s=this.a
