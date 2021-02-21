@@ -236,14 +236,14 @@ class _RenderToggleSwitch extends RenderToggleable {
 
   Color _colorAt(double t) {
     return onChanged == null
-        ? inactiveColor
+        ? disabledColor
         : (t >= 0.25
             ? activeColor
             : Color.lerp(inactiveColor, activeColor, t * 4.0)!);
   }
 
   Paint _createStrokePaint() {
-    return Paint()..color = foregroundColor;
+    return Paint()..color = onChanged == null ? disabledColor : foregroundColor;
   }
 
   void _drawTrack(Canvas canvas, Offset origin, double t, Paint paint) {

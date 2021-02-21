@@ -126,11 +126,10 @@ class CheckboxTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       checkboxThemeData ??= themeData.checkboxTheme;
 
-      final TextTheme textTheme = themeData.textTheme;
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final HSLColor foreground =
-          checkboxThemeData.foreground ?? textTheme.textHigh;
+          checkboxThemeData.foreground ?? colorScheme.shade;
 
       final HSLColor activeHoverColor =
           checkboxThemeData.activeHoverColor ?? colorScheme.primary;
@@ -139,10 +138,10 @@ class CheckboxTheme extends InheritedTheme {
           checkboxThemeData.activeColor ?? colorScheme.primary2;
 
       final HSLColor inactiveHoverColor =
-          checkboxThemeData.activeHoverColor ?? textTheme.textHigh;
+          checkboxThemeData.activeHoverColor ?? colorScheme.shade;
 
       final HSLColor inactiveColor =
-          checkboxThemeData.activeColor ?? textTheme.textLow;
+          checkboxThemeData.activeColor ?? colorScheme.shade2;
 
       final HSLColor disabledColor =
           checkboxThemeData.disabledColor ?? colorScheme.disabled;

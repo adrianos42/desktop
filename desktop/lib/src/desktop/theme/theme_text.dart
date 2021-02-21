@@ -4,15 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 
-//const HSLColor _kLightDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
-const HSLColor _kLightTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
-const HSLColor _kLightTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
-const HSLColor _kLightTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
-//const HSLColor _kDarkDisabled = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
-const HSLColor _kDarkTextLow = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
-const HSLColor _kDarkTextMedium = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
-const HSLColor _kDarkTextHigh = HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
 
 class _TextThemes {
   static const TextStyle header = TextStyle(
@@ -20,7 +12,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w300,
     fontSize: 44.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle subheader = TextStyle(
@@ -28,7 +20,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w300,
     fontSize: 34.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle title = TextStyle(
@@ -36,7 +28,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w400,
     fontSize: 24.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle subtitle = TextStyle(
@@ -44,7 +36,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w400,
     fontSize: 20.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle body1 = TextStyle(
@@ -53,7 +45,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle body2 = TextStyle(
@@ -61,7 +53,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle caption = TextStyle(
@@ -69,7 +61,7 @@ class _TextThemes {
     fontFamily: 'IBM Plex Sans',
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
-    height: 1.2,
+    //height: 1.2,
   );
 
   static const TextStyle monospace = TextStyle(
@@ -77,7 +69,6 @@ class _TextThemes {
     fontFamily: 'IBM Plex Mono',
     fontWeight: FontWeight.w400,
     fontSize: 13.0,
-    height: 1.0,
   );
 }
 
@@ -99,12 +90,12 @@ class TextTheme {
     required this.monospace,
   });
 
-  factory TextTheme(Brightness brightness, ColorScheme colorScheme) {
+  factory TextTheme(ColorScheme colorScheme) {
     TextTheme result;
 
-    switch (brightness) {
+    switch (colorScheme.brightness) {
       case Brightness.dark:
-      final foreground = _kDarkTextHigh.toColor();
+      final foreground = colorScheme.shade.toColor();
         result = TextTheme._raw(
          header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -114,16 +105,16 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
-          textLow: _kDarkTextLow,
-          textMedium: _kDarkTextMedium,
-          textHigh: _kDarkTextHigh,
+          textLow: colorScheme.shade4,
+          textMedium: colorScheme.shade2,
+          textHigh: colorScheme.shade,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
         break;
 
       case Brightness.light:
-        final foreground = _kLightTextHigh.toColor();
+        final foreground = colorScheme.shade.toColor();
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -133,9 +124,9 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
-          textLow: _kLightTextLow,
-          textMedium: _kLightTextMedium,
-          textHigh: _kLightTextHigh,
+          textLow: colorScheme.shade4,
+          textMedium: colorScheme.shade2,
+          textHigh: colorScheme.shade,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );

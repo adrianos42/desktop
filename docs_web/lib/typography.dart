@@ -12,7 +12,13 @@ class _TypographyPageState extends State<TypographyPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Column(
+    final controller = ScrollController();
+    
+    return Scrollbar(
+      controller: controller,
+      child: SingleChildScrollView(
+        controller: controller,
+        child: Column(
       children: [
         Defaults.createHeader(context, 'Typography'),
         Container(
@@ -131,7 +137,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ],
               ),
             ),
-      ],
+      ],),),
     );
   }
 }

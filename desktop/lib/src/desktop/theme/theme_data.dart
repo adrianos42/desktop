@@ -92,7 +92,7 @@ class ThemeData {
     return ThemeData._raw(
       brightness: brightness,
       colorScheme: colorScheme,
-      textTheme: TextTheme(brightness, colorScheme),
+      textTheme: TextTheme(colorScheme),
       navTheme: const NavThemeData(),
       buttonTheme: const ButtonThemeData(),
       dropDownButtonTheme: const DropDownButtonThemeData(),
@@ -166,7 +166,7 @@ class ThemeData {
       brightness: inverseBrightness,
       colorScheme: invertedColorScheme,
       navTheme: const NavThemeData(),
-      textTheme: TextTheme(inverseBrightness, invertedColorScheme),
+      textTheme: TextTheme(invertedColorScheme),
       buttonTheme: const ButtonThemeData(),
       dropDownButtonTheme: const DropDownButtonThemeData(),
       dialogTheme: const DialogThemeData(),

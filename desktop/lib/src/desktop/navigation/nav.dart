@@ -217,8 +217,6 @@ class _NavState extends State<Nav> {
 
   Widget _createNavBar() {
     final ThemeData themeData = Theme.of(context);
-
-    final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
     final NavThemeData navThemeData = NavTheme.of(context);
@@ -264,7 +262,7 @@ class _NavState extends State<Nav> {
         height: navThemeData.height,
         bodyPadding: EdgeInsets.zero,
         iconThemeData: navThemeData.iconThemeData,
-        color: textTheme.textLow,
+        color: colorScheme.shade4,
       ),
       child: result,
     );

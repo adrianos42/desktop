@@ -15,7 +15,64 @@ class _TreePageState extends State<TreePage> {
       children: [
         Defaults.createHeader(context, 'Tree'),
         Expanded(
-          child: Text(''),
+          child: Tree(
+            title: Builder(
+              builder: (context) => Text(
+                'Tree',
+                style: Theme.of(context).textTheme.body2,
+              ),
+            ),
+            nodes: [
+              TreeNode(
+                'Node0',
+                builder: (context) => Text('Node0'),
+              ),
+              TreeNode('Node1', children: [
+                TreeNode(
+                  'Node0',
+                  builder: (context) => Text('Node0'),
+                ),
+                TreeNode(
+                  'Node1',
+                  builder: (context) => Text('Node1'),
+                ),
+                TreeNode(
+                  'Node2',
+                  builder: (context) => Text('Node2'),
+                ),
+                TreeNode('Node3', children: [
+                  TreeNode(
+                    'Node0',
+                    builder: (context) => Text('Node0'),
+                  ),
+                  TreeNode(
+                    'Node1',
+                    builder: (context) => Text('Node1'),
+                  ),
+                  // TreeNode('Breadcrumb',
+                  //     builder: (context) => BreadcrumbPage()),
+                ]),
+                // TreeNode('Breadcrumb',
+                //     builder: (context) => BreadcrumbPage()),
+              ]),
+              TreeNode(
+                'Node2',
+                builder: (context) => Text('Node2'),
+              ),
+              TreeNode('Node3', children: [
+                TreeNode(
+                  'Node0',
+                  builder: (context) => Text('Node0'),
+                ),
+                TreeNode(
+                  'Node1',
+                  builder: (context) => Text('Node1'),
+                ),
+                // TreeNode('Breadcrumb',
+                //     builder: (context) => BreadcrumbPage()),
+              ]),
+            ],
+          ),
         ),
       ],
     );

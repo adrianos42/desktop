@@ -128,17 +128,20 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     final waitingBackground = buttonThemeData.waitingColor!;
 
-    final borderColor = waiting
-        ? waitingBackground
-        : hovered
-            ? buttonThemeData.hoverColor!
-            : buttonThemeData.color!;
+    final borderColor = enabled
+        ? waiting
+            ? waitingBackground
+            : hovered
+                ? buttonThemeData.hoverColor!
+                : buttonThemeData.color!
+        : buttonThemeData.disabledColor!;
 
     final border = Border.all(color: borderColor.toColor(), width: 1.0);
     final background = waiting ? waitingBackground : inactiveBackground;
 
     Widget result = DefaultTextStyle(
-      style: buttonThemeData.textStyle!,
+      style: buttonThemeData.textStyle!.copyWith(
+          color: !enabled ? buttonThemeData.disabledColor!.toColor() : null),
       child: Container(
         constraints: const BoxConstraints(
           minHeight: kMinMenuHeight,

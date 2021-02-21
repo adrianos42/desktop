@@ -126,11 +126,10 @@ class ToggleSwitchTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       toggleSwitchThemeData ??= themeData.toggleSwitchTheme;
 
-      final TextTheme textTheme = themeData.textTheme;
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final HSLColor foreground =
-          toggleSwitchThemeData.foreground ?? textTheme.textHigh;
+          toggleSwitchThemeData.foreground ?? colorScheme.shade;
 
       final HSLColor activeHoverColor =
           toggleSwitchThemeData.activeHoverColor ?? colorScheme.primary;
@@ -139,10 +138,10 @@ class ToggleSwitchTheme extends InheritedTheme {
           toggleSwitchThemeData.activeColor ?? colorScheme.primary2;
 
       final HSLColor inactiveHoverColor =
-          toggleSwitchThemeData.activeHoverColor ?? textTheme.textHigh;
+          toggleSwitchThemeData.activeHoverColor ?? colorScheme.shade;
 
       final HSLColor inactiveColor =
-          toggleSwitchThemeData.activeColor ?? textTheme.textLow;
+          toggleSwitchThemeData.activeColor ?? colorScheme.shade2;
 
       final HSLColor disabledColor =
           toggleSwitchThemeData.disabledColor ?? colorScheme.disabled;

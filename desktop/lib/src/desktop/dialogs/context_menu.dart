@@ -121,15 +121,15 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     final bool selected = widget.selected(context);
 
     final HSLColor? background = pressed
-        ? colorScheme.background3
+        ? (selected ? colorScheme.primary : colorScheme.background3) // TODO
         : selected
             ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
             : hovered
-                ? colorScheme.background2
+                ? colorScheme.background2 // TODO
                 : null;
 
     final foreground = selected
-        ? TextTheme(Brightness.dark, colorScheme).textHigh // FIXME ???
+        ? TextTheme(colorScheme.withBrightness(Brightness.dark)).textHigh // FIXME ???
         : textTheme.textHigh;
 
     final TextStyle textStyle = textTheme.body1.copyWith(

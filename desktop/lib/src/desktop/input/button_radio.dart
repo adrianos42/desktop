@@ -77,7 +77,7 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-   final theme = RadioButtonTheme.of(context);
+    final theme = RadioButtonTheme.of(context);
 
     final activeColor =
         _hovering || _focused ? theme.activeHoverColor! : theme.activeColor!;
@@ -218,7 +218,7 @@ class _RenderRadio extends RenderToggleable {
 
   Color _colorAt(double t) {
     return onChanged == null
-        ? inactiveColor
+        ? disabledColor
         : (t >= 0.25
             ? activeColor
             : Color.lerp(inactiveColor, activeColor, t * 4.0)!);
@@ -235,7 +235,8 @@ class _RenderRadio extends RenderToggleable {
       ..style = PaintingStyle.stroke
       ..strokeWidth = _strokeWidth;
 
-    final Paint strokePaint = Paint()..color = foregroundColor;
+    final Paint strokePaint = Paint()
+      ..color = onChanged == null ? disabledColor : foregroundColor;
 
     canvas.drawCircle(center, _outerRadius, borderPaint);
 

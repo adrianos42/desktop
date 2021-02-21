@@ -219,7 +219,6 @@ class _TreeColumnState extends State<TreeColumn> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     if (widget.node.title.isEmpty) {
       throw Exception('Title in tree cannot be null');
@@ -249,9 +248,9 @@ class _TreeColumnState extends State<TreeColumn> {
         children: [
           ButtonTheme.merge(
             data: ButtonThemeData(
-              color: textTheme.textLow,
-              hoverColor: textTheme.textHigh,
-              highlightColor: textTheme.textHigh,
+              color: colorScheme.shade4,
+              hoverColor: colorScheme.shade,
+              highlightColor: colorScheme.shade,
               bodyPadding: EdgeInsets.zero,
               trailingPadding: EdgeInsets.only(left: 12.0),
               buttonPadding: EdgeInsets.zero,
@@ -271,8 +270,8 @@ class _TreeColumnState extends State<TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
-      final hoverColor = active ? colorScheme.primary : textTheme.textHigh;
-      final activeColor = active ? colorScheme.primary : textTheme.textLow;
+      final hoverColor = active ? colorScheme.primary : colorScheme.shade;
+      final activeColor = active ? colorScheme.primary : colorScheme.shade4;
       final highlightColor = colorScheme.primary;
 
       return ButtonTheme.merge(

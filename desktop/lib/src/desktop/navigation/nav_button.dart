@@ -79,8 +79,8 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
       final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
       final IconThemeData iconThemeData = navThemeData.iconThemeData;
       final highlightColor = colorScheme.primary;
-      final color = textTheme.textLow;
-      final hoverColor = textTheme.textMedium;
+      final color = colorScheme.shade4;
+      final hoverColor = colorScheme.shade;
 
       titleItems.add(
         _NavButtonItem(

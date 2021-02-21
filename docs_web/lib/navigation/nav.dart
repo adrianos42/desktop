@@ -86,7 +86,7 @@ Nav(
                         maxLines: 1000,
                         controller: textController,
                         keyboardType: TextInputType.multiline,
-                        style: TextStyle(fontFamily: 'IBM Plex Mono'),
+                        style: Theme.of(context).textTheme.monospace,
                       ),
                     ),
                     title: Icon(Icons.code),

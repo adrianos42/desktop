@@ -63,11 +63,11 @@ class _ColorschemePageState extends State<ColorschemePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final light = ColorScheme(Brightness.dark).inverted;
+    final light = ColorScheme(Brightness.dark).shade;
     final dark = ColorScheme(Brightness.dark).background;
 
     final controller = ScrollController();
+
     return Scrollbar(
       controller: controller,
       child: SingleChildScrollView(
@@ -102,36 +102,49 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.background4,
-                    'Background 4',
-                  ),
-                  _createItemForColor(
-                    context,
                     colorScheme.disabled,
                     'Disabled',
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.inverted,
-                    'Inverted',
+                    colorScheme.shade6,
+                    'Shade 6',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    textTheme.textLow,
-                    'Text Low',
+                    colorScheme.shade5,
+                    'Shade 5',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    textTheme.textMedium,
-                    'Text Medium',
+                    colorScheme.shade4,
+                    'Shade 4',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    textTheme.textHigh,
-                    'Text High',
+                    colorScheme.shade3,
+                    'Shade 3',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade2,
+                    'Shade 2',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade1,
+                    'Shade 1',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade,
+                    'Shade',
                     colorScheme.background,
                   ),
                   _createItemForColor(
