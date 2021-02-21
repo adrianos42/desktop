@@ -89,7 +89,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
             controller: controller,
             child: GridView.custom(
               controller: controller,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(4.0),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 mainAxisSpacing: 4.0,

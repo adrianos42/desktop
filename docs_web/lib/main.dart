@@ -78,7 +78,7 @@ class _DocAppState extends State<DocApp> {
       home: Builder(
         builder: (context) => Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.fromLTRB(16.0, 16.0, 4.0, 4.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
