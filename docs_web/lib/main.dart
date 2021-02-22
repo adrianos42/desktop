@@ -145,7 +145,7 @@ class _DocAppState extends State<DocApp> {
                     body: githubImage,
                     onPressed: () async {
                       final urlRepository =
-                          'https://github.com/adrianos42/native_idl';
+                          'https://github.com/adrianos42/desktop';
                       if (await canLaunch(urlRepository)) {
                         await launch(urlRepository);
                       }
@@ -339,7 +339,7 @@ class _OverviewPageState extends State<OverviewPage> {
           HyperlinkButton(
             'Github',
             onPressed: (_) async {
-              final link = 'https://github.com/adrianos42/native_idl';
+              final link = 'https://github.com/adrianos42/desktop';
               if (await canLaunch(link)) {
                 await launch(link);
               }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart' show Curves;
@@ -118,11 +120,12 @@ class DialogRoute<T> extends PopupRoute<T> {
     String? barrierLabel,
     RouteSettings? settings,
     Color? barrierColor,
+    ImageFilter? filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel,
         _barrierColor = barrierColor,
-        super(settings: settings);
+        super(settings: settings, filter: filter);
 
   final RoutePageBuilder _pageBuilder;
 
@@ -169,11 +172,13 @@ Future<T?> showDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,
+  ImageFilter? filter,
 }) {
   return Navigator.of(context, rootNavigator: true).push<T>(createDialogRoute(
     builder: builder,
     context: context,
     barrierDismissible: barrierDismissible,
+    filter: filter,
   ));
 }
 
@@ -181,12 +186,15 @@ PopupRoute<T> createDialogRoute<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,
+  ImageFilter? filter,
 }) {
   final DialogThemeData dialogThemeData = DialogTheme.of(context);
   final Color? barrierColor = dialogThemeData.barrierColor!.toColor();
 
   return DialogRoute<T>(
-      barrierColor: barrierColor,
-      barrierDismissible: barrierDismissible,
-      pageBuilder: (context, _, __) => builder(context));
+    barrierColor: barrierColor,
+    barrierDismissible: barrierDismissible,
+    filter: filter,
+    pageBuilder: (context, _, __) => builder(context),
+  );
 }

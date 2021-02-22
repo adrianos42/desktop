@@ -73,11 +73,11 @@ class DesktopPageRoute<T> extends PageRoute<T> {
     Widget child,
   ) {
     return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOut,
-          ),
-          child: child);
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOut,
+        ),
+        child: child);
   }
 }
 

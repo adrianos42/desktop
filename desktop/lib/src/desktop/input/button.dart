@@ -104,6 +104,7 @@ class _ButtonState extends State<Button>
 
   @override
   void dispose() {
+    _controller.dispose();
     WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
   }
