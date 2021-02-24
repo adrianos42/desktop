@@ -4,7 +4,7 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "docs.png": "f9606f95519ac4aac78099a8873f5116",
-"main.dart.js": "b8780c4f76dae6586bde0d3084f9a117",
+"main.dart.js": "c948a258faf3016551cc34874b411790",
 "assets/fonts/sharp_material_icons.ttf": "7286a89ec4d461263d0cddb86fc16b61",
 "assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLightItalic.ttf": "3046cfbc0a34e7459330e0f1c41c0c63",
@@ -47,7 +47,7 @@ const RESOURCES = {
 "assets/fonts/IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf": "453b2bbf7ad0bb52a93f64ac96641f24",
 "assets/fonts/mode.ttf": "7af27e3be7174ff453dd84b58017a7f1",
 "assets/AssetManifest.json": "defe841d7f97cc5c27225b7a747e021e",
-"assets/NOTICES": "73080f89b7695173360f3fc74d8849bc",
+"assets/NOTICES": "1aad6d4ed0bcd192455eebb8894c86c9",
 "assets/packages/desktop/fonts/sharp_material_icons.ttf": "7286a89ec4d461263d0cddb86fc16b61",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLightItalic.ttf": "3046cfbc0a34e7459330e0f1c41c0c63",
@@ -175,10 +175,10 @@ const RESOURCES = {
 "assets/assets/cats_small/pexels-david-savochka-192384.jpg": "86ef015ed5353520a573bd6b67f77b3b",
 "assets/assets/cats_small/pexels-pixabay-104827.jpg": "c652943766be78b2b6a9fe5334379f5d",
 "assets/FontManifest.json": "91190a1bb93dda0da2fbf866fd4fc79e",
-"manifest.json": "a2df45e57f692729ee6de635285d3fe1",
+"manifest.json": "728a7628da12f2b36b2879a3f7fa9938",
 "version.json": "341c101d4b678f29adc2e2fa68fd71f3",
-"index.html": "6b12fd88c2f62210bcf82ffafa78deea",
-"/": "6b12fd88c2f62210bcf82ffafa78deea",
+"index.html": "a1495ed6de7c867874082dfc8eab8975",
+"/": "a1495ed6de7c867874082dfc8eab8975",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116"
 };
@@ -198,7 +198,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });

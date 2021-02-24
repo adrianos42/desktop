@@ -173,12 +173,14 @@ Future<T?> showDialog<T>({
   required WidgetBuilder builder,
   bool barrierDismissible = true,
   ImageFilter? filter,
+  HSLColor? barrierColor,
 }) {
   return Navigator.of(context, rootNavigator: true).push<T>(createDialogRoute(
     builder: builder,
     context: context,
     barrierDismissible: barrierDismissible,
     filter: filter,
+    barrierColor: barrierColor,
   ));
 }
 
@@ -187,12 +189,13 @@ PopupRoute<T> createDialogRoute<T>({
   required WidgetBuilder builder,
   bool barrierDismissible = true,
   ImageFilter? filter,
+  HSLColor? barrierColor,
 }) {
   final DialogThemeData dialogThemeData = DialogTheme.of(context);
-  final Color? barrierColor = dialogThemeData.barrierColor!.toColor();
+  final Color color = barrierColor?.toColor() ?? dialogThemeData.barrierColor!.toColor();
 
   return DialogRoute<T>(
-    barrierColor: barrierColor,
+    barrierColor: color,
     barrierDismissible: barrierDismissible,
     filter: filter,
     pageBuilder: (context, _, __) => builder(context),
