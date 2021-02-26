@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'defaults.dart';
 
 final _kFileNames = [
-  'pexels-akbar-nemati-5622738',
   'pexels-anete-lusina-4790622',
   'pexels-bianca-marolla-3030635',
   'pexels-christopher-schruff-720684',
   'pexels-danielle-daniel-479009',
   'pexels-david-savochka-192384',
+  'pexels-akbar-nemati-5622738',
   'pexels-dương-nhân-2817405',
   'pexels-emily-geibel-3772262',
   'pexels-emir-kaan-okutan-2255565',
@@ -60,23 +60,31 @@ class _ScrollingPageState extends State<ScrollingPage> {
   final controller = ScrollController();
 
   String? _requestPrevious(String name) {
-    final index = _kFileNames.lastIndexOf(name) - 1;
+    final lastIndex = _kFileNames.indexOf(name);
 
-    if (index >= 0) {
-      return _kFileNames[index];
-    } else {
-      return null;
+    if (lastIndex >= 0) {
+      final index = lastIndex - 1;
+
+      if (index >= 0 && index < _kFileNames.length) {
+        return _kFileNames[index];
+      }
     }
+
+    return null;
   }
 
   String? _requestNext(String name) {
-    final index = _kFileNames.lastIndexOf(name) + 1;
+    final lastIndex = _kFileNames.indexOf(name);
 
-    if (index > 0 && index < _kFileNames.length) {
-      return _kFileNames[index];
-    } else {
-      return null;
+    if (lastIndex >= 0) {
+      final index = lastIndex + 1;
+
+      if (index >= 0 && index < _kFileNames.length) {
+        return _kFileNames[index];
+      }
     }
+
+    return null;
   }
 
   @override
@@ -101,6 +109,8 @@ class _ScrollingPageState extends State<ScrollingPage> {
                   onTap: () async {
                     showDialog(
                       context: context,
+                      barrierColor: Theme.of(context).colorScheme.background,
+                      barrierDismissible: true,
                       builder: (context) {
                         return _ImagePage(
                           assetName,
@@ -169,13 +179,17 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
-    setState(() => replaceAssetName =
-        widget.requestPrevious!(replaceAssetName ?? widget.assetName));
+    final replace = widget.requestPrevious!(replaceAssetName ?? widget.assetName);
+    if (replace != null) {
+      setState(() => replaceAssetName = replace);
+    }
   }
 
   void _requestNext() {
-    setState(() => replaceAssetName =
-        widget.requestNext!(replaceAssetName ?? widget.assetName));
+    final replace = widget.requestNext!(replaceAssetName ?? widget.assetName);
+    if (replace != null) {
+      setState(() => replaceAssetName = replace);
+    }
   }
 
   @override
@@ -231,21 +245,15 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
       child: Stack(
         children: [
           LayoutBuilder(builder: (context, constraints) {
-            return GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                height: constraints.maxHeight,
-                color: Color(0x0),
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Image.asset(
-                    'assets/cats/$assetName.jpg',
-                    frameBuilder: _frameBuilder,
-                    fit: BoxFit.contain,
-                    cacheHeight: constraints.maxHeight.toInt(),
-                  ),
-                ),
+            return Container(
+              height: constraints.maxHeight,
+              color: Color(0x0),
+              alignment: Alignment.center,
+              child: Image.asset(
+                'assets/cats/$assetName.jpg',
+                //frameBuilder: _frameBuilder,
+                fit: BoxFit.contain,
+                cacheHeight: constraints.maxHeight.toInt(),
               ),
             );
           }),
@@ -255,7 +263,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Container(
-                  color: colorScheme.background.withAlpha(0.9).toColor(),
+                  color: colorScheme.overlay1.toColor(),
                   height: 60.0,
                   child: MouseRegion(
                     onEnter: (_) => setState(() => menuFocus = true),
@@ -350,6 +358,6 @@ Widget _frameBuilder(
     child: child,
     opacity: frame == null ? 0 : 1,
     duration: const Duration(milliseconds: 200),
-    curve: Curves.easeOutSine,
+    curve: Curves.easeOut,
   );
 }

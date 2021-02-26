@@ -167,10 +167,10 @@ class _DocAppState extends State<DocApp> {
                       builder: (context) => OverviewPage(),
                     ),
                     TreeNode('Navigation', children: [
+                      TreeNode('Breadcrumb',
+                          builder: (context) => BreadcrumbPage()),
                       TreeNode('Nav', builder: (context) => NavPage()),
                       TreeNode('Tab', builder: (context) => TabPage()),
-                      // TreeNode('Breadcrumb',
-                      //     builder: (context) => BreadcrumbPage()),
                     ]),
                     TreeNode('Data', children: [
                       TreeNode('List Table',
@@ -335,26 +335,26 @@ class _OverviewPageState extends State<OverviewPage> {
           //     ],
           //   ),
           // ),
-          Defaults.createTitle(context, 'Resources'),
-          HyperlinkButton(
-            'Github',
-            onPressed: (_) async {
-              final link = 'https://github.com/adrianos42/desktop';
-              if (await canLaunch(link)) {
-                await launch(link);
-              }
-            },
-          ),
-          HyperlinkButton(
-            'Figma',
-            onPressed: (_) async {
-              final link =
-                  'https://www.figma.com/file/WQCf5O9Jh7cLtOY4zRDL0U/Model?node-id=2%3A0';
-              if (await canLaunch(link)) {
-                await launch(link);
-              }
-            },
-          ),
+          // Defaults.createTitle(context, 'Resources'),
+          // HyperlinkButton(
+          //   'Github',
+          //   onPressed: (_) async {
+          //     final link = 'https://github.com/adrianos42/desktop';
+          //     if (await canLaunch(link)) {
+          //       await launch(link);
+          //     }
+          //   },
+          // ),
+          // HyperlinkButton(
+          //   'Figma',
+          //   onPressed: (_) async {
+          //     final link =
+          //         'https://www.figma.com/file/WQCf5O9Jh7cLtOY4zRDL0U/Model?node-id=2%3A0';
+          //     if (await canLaunch(link)) {
+          //       await launch(link);
+          //     }
+          //   },
+          // ),
           Defaults.createTitle(context, 'Flutter resources'),
           HyperlinkButton(
             'Desktop support for Flutter',

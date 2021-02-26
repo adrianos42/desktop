@@ -20,7 +20,6 @@ class _DialogPageState extends State<DialogPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Defaults.createTitle(context, 'Basic dialogs'),
                 TextButton(
                   'Open dialog that requires action',
                   onPressed: () async {

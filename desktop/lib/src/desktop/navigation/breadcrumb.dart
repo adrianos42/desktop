@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'route.dart';
 
 import '../theme/theme.dart';
-import '../input/button_text.dart';
+import '../input/button.dart';
 import '../icons.dart';
 
 import 'nav_scope.dart' show RouteBuilder;
@@ -22,6 +22,7 @@ class Breadcrumb extends StatefulWidget {
     required this.initialRoute,
     this.routeNameChanged,
     this.trailing,
+    this.leading,
   }) : super(key: key);
 
   final String initialRoute;
@@ -31,6 +32,8 @@ class Breadcrumb extends StatefulWidget {
   final RouteBuilder routeBuilder;
 
   final Widget? trailing;
+
+  final Widget? leading;
 
   @override
   _BreadcrumbState createState() => _BreadcrumbState();
@@ -44,33 +47,28 @@ class _BreadcrumbState extends State<Breadcrumb> {
   void _pushName(String name) {
     if (mounted) {
       name = _formatNavText(name);
-
       widget.routeNameChanged?.call(name);
       setState(() => _names.add(name));
     }
   }
 
-  void _popName() {
+  void _popName(String name) {
     if (mounted) {
       var names = _names;
       assert(names.length > 1, "Cannot pop the first route");
 
       names.removeLast();
       widget.routeNameChanged?.call(names.last);
-
-      _names = names;
-
-      setState(() {});
+      setState(() => _names = names);
     }
   }
 
   void _popByIndex(int index) {
     var names = _names;
 
+    // Pops until the name index
     while (names.length - 1 > index) {
-      names.removeAt(names.length - 1);
       assert(_navigatorKey.currentState!.canPop());
-
       _navigatorKey.currentState!.pop();
     }
 
@@ -85,52 +83,76 @@ class _BreadcrumbState extends State<Breadcrumb> {
     return capitalize(value.replaceAll('/', '').replaceAll('_', ' '));
   }
 
+  final scrollController = ScrollController();
+
   Widget _createBarNavigation() {
     final themeData = Theme.of(context);
     final colorScheme = themeData.colorScheme;
-    final textTheme = themeData.textTheme;
 
     var items = List<Widget>.empty(growable: true);
 
     for (int i = 0; i < _names.length; i++) {
       var isLast = i == _names.length - 1;
 
-      if (i > 0 && 1 < _names.length) {
-        items.add(
-          Center(
-            child: Icon(
-              Icons.chevron_right,
-              color: textTheme.textLow.toColor(),
-              size: 20.0,
-            ),
-          ),
-        );
-      }
-
       items.add(
         Align(
           alignment: Alignment.centerLeft,
-          child: TextButton(
-            _names[i],
-            // hoveredForeground: textTheme.textHigh,
-            // activeForeground: textTheme.textLow,
-            // pressedForeground: textTheme.textHigh,
-            // disabledForeground: textTheme.textHigh,
-            onPressed: isLast ? null : () => _popByIndex(i),
+          child: ButtonTheme.merge(
+            data: ButtonThemeData(
+              disabledColor: isLast ? colorScheme.primary : null,
+              hoverColor: colorScheme.shade,
+              highlightColor: colorScheme.primary,
+              color: colorScheme.shade4,
+              bodyPadding: EdgeInsets.zero,
+              buttonPadding: EdgeInsets.symmetric(horizontal: 2.0),
+            ),
+            child: Builder(
+              builder: (context) => Button(
+                body: Text(_names[i]),
+                onPressed: isLast ? null : () => _popByIndex(i),
+              ),
+            ),
           ),
         ),
       );
+
+      if (!isLast) {
+        items.add(
+          Icon(
+            Icons.chevron_right,
+            color: colorScheme.shade4.toColor(),
+            size: 20.0,
+          ),
+        );
+      }
     }
 
     Widget result = Container(
       constraints: BoxConstraints.tightFor(height: _kHeight),
       color: Theme.of(context).colorScheme.background.toColor(),
-      child: Padding(
-        padding: EdgeInsets.only(left: 12.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: items,
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          if (widget.leading != null) widget.leading!,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 6.0),
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                reverse: true,
+                controller: scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: items,
+                ),
+              ),
+            ),
+          ),
+          if (widget.trailing != null) widget.trailing!,
+        ],
       ),
     );
 
@@ -142,9 +164,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
     super.initState();
 
     var name = _formatNavText(widget.initialRoute);
-
     _names.add(name);
-
     _navigatorKey = GlobalKey<NavigatorState>();
   }
 
@@ -170,7 +190,9 @@ class _BreadcrumbState extends State<Breadcrumb> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        _createBarNavigation(),
+        Builder(
+          builder: (context) => _createBarNavigation(),
+        ),
         Expanded(
           child: Builder(
             builder: (context) => _NavigationView(
@@ -202,7 +224,9 @@ class _NavObserver extends NavigatorObserver {
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (route is PageRoute<dynamic>) {}
+    if (!route.isFirst && route is PageRoute<dynamic>) {
+      _navState._popName(route.settings.name!);
+    }
   }
 
   @override
@@ -346,7 +370,6 @@ class _NavigationViewState extends State<_NavigationView> {
   }
 
   Route<dynamic> _onGenerateRoute(RouteSettings settings) {
-    print(settings.name);
     return widget.builder(context, settings);
   }
 

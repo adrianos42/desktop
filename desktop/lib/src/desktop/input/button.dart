@@ -187,38 +187,38 @@ class _ButtonState extends State<Button>
       height: buttonThemeData.height,
     );
 
-    if (enabled) {
-      result = MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => _handleHoverEntered(),
-        onExit: (_) => _handleHoverExited(),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTapDown: _handleTapDown,
-          onTapUp: _handleTapUp,
-          onTapCancel: _handleTapCancel,
-          onTap: () {
-            if (waiting) return;
-            waiting = true;
-            dynamic result = widget.onPressed!() as dynamic; // TODO
+    result = MouseRegion(
+      cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
+      onEnter: enabled ? (_) => _handleHoverEntered() : null,
+      onExit: (_) => _handleHoverExited(),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: enabled ? _handleTapDown : null,
+        onTapUp: enabled ? _handleTapUp : null,
+        onTapCancel: _handleTapCancel,
+        onTap: enabled
+            ? () {
+                if (waiting) return;
+                waiting = true;
+                dynamic result = widget.onPressed!() as dynamic; // TODO
 
-            if (result is Future) {
-              setState(() => waiting = true);
-              result.then((_) => setState(() => waiting = false));
-            } else {
-              waiting = false;
-            }
-          },
-          child: result,
-        ),
+                if (result is Future) {
+                  setState(() => waiting = true);
+                  result.then((_) => setState(() => waiting = false));
+                } else {
+                  waiting = false;
+                }
+              }
+            : null,
+        child: result,
+      ),
+    );
+
+    if (widget.tooltip != null) {
+      result = Tooltip(
+        message: widget.tooltip!,
+        child: result,
       );
-
-      if (widget.tooltip != null) {
-        result = Tooltip(
-          message: widget.tooltip!,
-          child: result,
-        );
-      }
     }
 
     return Semantics(

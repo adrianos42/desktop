@@ -14,7 +14,6 @@ class _ListTablePageState extends State<ListTablePage> {
     return Column(
       children: [
         Defaults.createHeader(context, 'List table'),
-        Defaults.createTitle(context, 'Basic table'),
         Expanded(
           child: Container(
             //decoration: Defaults.itemDecoration(context),
