@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
 
-import 'toggleable.dart';
+import 'internal/toggleable.dart';
 
 class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({

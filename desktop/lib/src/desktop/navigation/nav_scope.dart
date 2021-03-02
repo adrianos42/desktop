@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 
 typedef RouteBuilder = Route<dynamic> Function(BuildContext, RouteSettings);
 
-class NavScope extends InheritedWidget {
-  const NavScope({
+class NavigationScope extends InheritedWidget {
+  const NavigationScope({
     Key? key,
     required Widget child,
     required this.navAxis,
@@ -20,8 +20,8 @@ class NavScope extends InheritedWidget {
   final Axis navAxis;
 
   @override
-  bool updateShouldNotify(NavScope old) => true;
+  bool updateShouldNotify(NavigationScope old) => true;
 
-  static NavScope? of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<NavScope>();
+  static NavigationScope? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<NavigationScope>();
 }

@@ -203,13 +203,13 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = buttonThemeData.color ?? colorScheme.shade5;
+      final HSLColor color = buttonThemeData.color ?? colorScheme.shade4;
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? colorScheme.shade3; 
+          buttonThemeData.hoverColor ?? colorScheme.shade2; 
 
           final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? colorScheme.shade1;
+          buttonThemeData.highlightColor ?? colorScheme.shade;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

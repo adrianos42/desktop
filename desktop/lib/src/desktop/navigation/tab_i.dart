@@ -6,50 +6,6 @@ import '../theme/theme.dart';
 
 import 'route.dart';
 
-class TabViewNavigator extends StatelessWidget {
-  const TabViewNavigator({
-    Key? key,
-    required this.navigatorKey,
-    required this.child,
-  }) : super(key: key);
-
-  final Widget child;
-
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  static NavigatorState? of(BuildContext context) {
-    final _CurrentNavigator? currentNavigator =
-        context.dependOnInheritedWidgetOfExactType<_CurrentNavigator>();
-
-    assert(currentNavigator != null);
-
-    return currentNavigator!.navigatorState;
-  }
-
-  Widget build(BuildContext context) {
-    return _CurrentNavigator(
-      navigatorKey: navigatorKey,
-      child: child,
-    );
-  }
-}
-
-class _CurrentNavigator extends InheritedWidget {
-  const _CurrentNavigator({
-    Key? key,
-    required Widget child,
-    this.navigatorKey,
-  })  : super(key: key, child: child);
-
-  final GlobalKey<NavigatorState>? navigatorKey;
-
-  NavigatorState? get navigatorState => navigatorKey?.currentState;
-
-  @override
-  bool updateShouldNotify(_CurrentNavigator old) =>
-      old.navigatorKey != navigatorKey;
-}
-
 class TabMenuRoute<T> extends PopupRoute<T> {
   TabMenuRoute({
     required WidgetBuilder pageBuilder,

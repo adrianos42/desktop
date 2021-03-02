@@ -8,6 +8,7 @@ import '../theme/theme.dart';
 
 import 'route.dart';
 import 'tab_i.dart';
+import 'nav_scope.dart';
 
 const int _kIntialIndexValue = 0;
 const double _kTabHeight = 38.0;
@@ -235,9 +236,10 @@ class _TabState extends State<Tab> {
       tabState: this,
     );
 
-    result = TabViewNavigator(
+    result = NavigationScope(
       child: result,
       navigatorKey: _navigators[_index],
+      navAxis: Axis.horizontal,
     );
 
     return result;

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/theme.dart';
 
 import 'route.dart';
-import 'nav_scope.dart' show NavScope, RouteBuilder;
+import 'nav_scope.dart' show NavigationScope, RouteBuilder;
 
 class NavMenuRoute<T> extends PopupRoute<T> {
   NavMenuRoute({
@@ -141,7 +141,7 @@ class _NavigationViewState extends State<NavigationView> {
     ThemeData themeData = Theme.invertedThemeOf(context);
 
     return NavMenuRoute(
-      axis: NavScope.of(context)!.navAxis,
+      axis: NavigationScope.of(context)!.navAxis,
       pageBuilder: (context) => Container(
         alignment: Alignment.center,
         color: themeData.colorScheme.background.toColor(),

@@ -6,7 +6,7 @@ import 'dart:math' as math;
 
 import '../theme/theme.dart';
 
-import 'toggleable.dart';
+import 'internal/toggleable.dart';
 
 const double _kCheckboxWidth = 16.0;
 const double _kEdgeSize = _kCheckboxWidth;

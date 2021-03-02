@@ -8,7 +8,7 @@ import '../theme/theme.dart';
 import '../input/button.dart';
 import '../icons.dart';
 
-import 'nav_scope.dart' show RouteBuilder;
+import 'nav_scope.dart' show RouteBuilder, NavigationScope;
 
 typedef TextCallback = void Function(String);
 
@@ -154,6 +154,12 @@ class _BreadcrumbState extends State<Breadcrumb> {
           if (widget.trailing != null) widget.trailing!,
         ],
       ),
+    );
+
+    result = NavigationScope(
+      child: result,
+      navigatorKey: _navigatorKey,
+      navAxis: Axis.horizontal,
     );
 
     return result;

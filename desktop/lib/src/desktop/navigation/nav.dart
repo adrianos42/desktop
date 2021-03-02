@@ -10,7 +10,7 @@ import 'nav_view.dart';
 import 'nav_scope.dart';
 import 'nav_button.dart';
 export 'nav_view.dart' show NavMenuRoute;
-export 'nav_scope.dart' show NavScope, RouteBuilder;
+export 'nav_scope.dart' show NavigationScope, RouteBuilder;
 
 const int _kIntialIndexValue = 0;
 
@@ -382,7 +382,7 @@ class _NavState extends State<Nav> {
       ],
     );
 
-    return NavScope(
+    return NavigationScope(
       navigatorKey: _navigators[_index],
       navAxis: widget.navAxis,
       child: result,
