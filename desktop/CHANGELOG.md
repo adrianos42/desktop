@@ -6,6 +6,6 @@
 
 - Initial
 
-1.0.1
+1.0.1-2.12.0-0
 
 - Fix buttons
