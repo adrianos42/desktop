@@ -26,4 +26,3 @@ Minimal desktop widgets for flutter.
 * Scrollbar
 * Progress indicator
 * Text field
-
