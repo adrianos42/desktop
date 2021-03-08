@@ -47,10 +47,10 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
     if (widget.onChanged != null) {
       switch (widget.value) {
         case false:
-          widget.onChanged!(true); // FIXME
+          widget.onChanged!(true);
           break;
         case true:
-          widget.onChanged!(false); // FIXME
+          widget.onChanged!(false);
           break;
       }
     }
@@ -85,8 +85,8 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
         ? theme.inactiveHoverColor!
         : theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
-    final focusColor = theme.activeHoverColor!; // FIXME
-    final disabledColor = theme.disabledColor!; // FIXME
+    final focusColor = theme.activeHoverColor!;
+    final disabledColor = theme.disabledColor!;
 
     final Size size = Size.square(Radio.outerRadius * 2.0);
 
