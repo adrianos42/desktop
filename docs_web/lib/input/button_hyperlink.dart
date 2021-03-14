@@ -11,40 +11,49 @@ class ButtonHyperlinkPage extends StatefulWidget {
 class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Hyperlink'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+HyperlinkButton(
+  'https://github.com/adrianos42/desktop',
+  onPressed: (value) {},
+),
+''';
+
+    final disabledCode = '''
+HyperlinkButton('https://github.com/adrianos42/desktop'),
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: HyperlinkButton(
-                    'https://github.com/adrianos42/desktop',
-                    onPressed: (value) { },
-                  ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child:
-                      HyperlinkButton('https://github.com/adrianos42/desktop'),
-                ),
-              ],
+            child: Container(
+              height: 50,
+              child: HyperlinkButton(
+                'https://github.com/adrianos42/desktop',
+                onPressed: (value) {},
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 50,
+              child: HyperlinkButton('https://github.com/adrianos42/desktop'),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 200.0,
         ),
       ],
+      header: 'Hyperlink',
     );
   }
 }

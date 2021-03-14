@@ -11,45 +11,59 @@ class ButtonPage extends StatefulWidget {
 class _ButtonPageState extends State<ButtonPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Button'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+Button(
+  body: Text('Button'),
+  trailing: Icon(Icons.phone),
+  leading: Icon(Icons.control_camera),
+  onPressed: () {},
+)
+''';
+
+    final disabledCode = '''
+Button(
+  body: Text('Button'),
+  trailing: Icon(Icons.phone),
+  leading: Icon(Icons.control_camera),
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Button(
-                    body: Text('Button'),
-                    trailing: Icon(Icons.phone),
-                    leading: Icon(Icons.control_camera),
-                    onPressed: () {},
-                  ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Button(
-                    body: Text('Button'),
-                    trailing: Icon(Icons.phone),
-                    leading: Icon(Icons.control_camera),
-                  ),
-                ),
-              ],
+            child: Container(
+              child: Button(
+                body: Text('Button'),
+                trailing: Icon(Icons.phone),
+                leading: Icon(Icons.control_camera),
+                onPressed: () {},
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Button(
+                body: Text('Button'),
+                trailing: Icon(Icons.phone),
+                leading: Icon(Icons.control_camera),
+              ),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 200.0,
         ),
       ],
+      header: 'Button',
     );
   }
 }

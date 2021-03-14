@@ -11,7 +11,9 @@ class NavPage extends StatefulWidget {
 class _NavPageState extends State<NavPage> {
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController(text: '''
+    final controller = ScrollController();
+
+    final codeSample = '''
 Nav(
   items: [
     NavItem(
@@ -33,8 +35,32 @@ Nav(
       icon: Icons.share,
     ),
   ],
-)''');
-    final controller = ScrollController();
+)''';
+
+    final codeHorizontalSample = '''
+Nav(
+  navAxis: Axis.horizontal,
+  items: [
+    NavItem(
+      builder: (context) => Center(child: Text('page1')),
+      title: 'page1',
+      icon: Icons.today,
+      route: '/page1',
+    ),
+    NavItem(
+      builder: (context) => Center(child: Text('page2')),
+      title: 'page2',
+      route: '/page2',
+      icon: Icons.stars,
+    ),
+    NavItem(
+      builder: (context) => Center(child: Text('page3')),
+      title: 'page3',
+      route: '/page3',
+      icon: Icons.share,
+    ),
+  ],
+)''';
 
     return Scrollbar(
       controller: controller,
@@ -46,81 +72,63 @@ Nav(
             Defaults.createHeader(context, 'Nav'),
             Defaults.createTitle(context, 'Vertical example'),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 4.0),
               constraints: BoxConstraints.tightFor(height: 600.0),
-              child: Tab(
-                items: [
-                  TabItem(
-                    builder: (context) => Container(
-                      decoration: Defaults.itemDecoration(context),
-                      child: Nav(
-                        items: [
-                          NavItem(
-                            builder: (context) => Center(child: Text('page1')),
-                            title: 'page1',
-                            icon: Icons.today,
-                            route: '/page1',
-                          ),
-                          NavItem(
-                            builder: (context) => Center(child: Text('page2')),
-                            title: 'page2',
-                            route: '/page2',
-                            icon: Icons.stars,
-                          ),
-                          NavItem(
-                            builder: (context) => Center(child: Text('page3')),
-                            title: 'page3',
-                            route: '/page3',
-                            icon: Icons.share,
-                          ),
-                        ],
-                      ),
+              child: Defaults.createCodeSession(
+                context,
+                builder: (context) => Nav(
+                  items: [
+                    NavItem(
+                      builder: (context) => Center(child: Text('page1')),
+                      title: 'page1',
+                      icon: Icons.today,
+                      route: '/page1',
                     ),
-                    title: Icon(Icons.visibility),
-                  ),
-                  TabItem(
-                    builder: (context) => Container(
-                      alignment: Alignment.topLeft,
-                      //decoration: Defaults.itemDecoration(context),
-                      child: TextField(
-                        maxLines: 1000,
-                        controller: textController,
-                        keyboardType: TextInputType.multiline,
-                        style: Theme.of(context).textTheme.monospace,
-                      ),
+                    NavItem(
+                      builder: (context) => Center(child: Text('page2')),
+                      title: 'page2',
+                      route: '/page2',
+                      icon: Icons.stars,
                     ),
-                    title: Icon(Icons.code),
-                  ),
-                ],
+                    NavItem(
+                      builder: (context) => Center(child: Text('page3')),
+                      title: 'page3',
+                      route: '/page3',
+                      icon: Icons.share,
+                    ),
+                  ],
+                ),
+                codeText: codeSample,
               ),
             ),
             Defaults.createTitle(context, 'Horizontal example'),
             Container(
-              decoration: Defaults.itemDecoration(context),
-              margin: EdgeInsets.symmetric(vertical: 4.0),
               constraints: BoxConstraints.tightFor(height: 600.0),
-              child: Nav(
-                navAxis: Axis.horizontal,
-                items: [
-                  NavItem(
-                    builder: (context) => Center(child: Text('page1')),
-                    title: 'page1',
-                    icon: Icons.today,
-                    route: '/page1',
-                  ),
-                  NavItem(
-                    builder: (context) => Center(child: Text('page2')),
-                    title: 'page2',
-                    route: '/page2',
-                    icon: Icons.stars,
-                  ),
-                  NavItem(
-                    builder: (context) => Center(child: Text('page3')),
-                    title: 'page3',
-                    route: '/page3',
-                    icon: Icons.share,
-                  ),
-                ],
+              child: Defaults.createCodeSession(
+                context,
+                builder: (context) => Nav(
+                  navAxis: Axis.horizontal,
+                  items: [
+                    NavItem(
+                      builder: (context) => Center(child: Text('page1')),
+                      title: 'page1',
+                      icon: Icons.today,
+                      route: '/page1',
+                    ),
+                    NavItem(
+                      builder: (context) => Center(child: Text('page2')),
+                      title: 'page2',
+                      route: '/page2',
+                      icon: Icons.stars,
+                    ),
+                    NavItem(
+                      builder: (context) => Center(child: Text('page3')),
+                      title: 'page3',
+                      route: '/page3',
+                      icon: Icons.share,
+                    ),
+                  ],
+                ),
+                codeText: codeHorizontalSample,
               ),
             ),
           ],

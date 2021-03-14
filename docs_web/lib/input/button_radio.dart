@@ -13,72 +13,109 @@ class _ButtonRadioPageState extends State<ButtonRadioPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Radio'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+Container(
+  width: 100.0,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Radio(
+        value: value,
+        onChanged: (fvalue) {
+          setState(() {
+            value = true;
+          });
+        },
+      ),
+      Radio(
+        value: !value,
+        onChanged: (fvalue) {
+          setState(() {
+            value = false;
+          });
+        },
+      ),
+    ],
+  ),
+)
+''';
+
+    final disabledCode = '''
+Container(
+  width: 100.0,
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Radio(
+        value: true,
+      ),
+      Radio(
+        value: false,
+      ),
+    ],
+  ),
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 100.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Radio(
-                          value: value,
-                          onChanged: (fvalue) {
-                            setState(() {
-                              value = true;
-                            });
-                          },
-                        ),
-                        Radio(
-                          value: !value,
-                          onChanged: (fvalue) {
-                            setState(() {
-                              value = false;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+            child: Container(
+              width: 100.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Radio(
+                    value: value,
+                    onChanged: (fvalue) {
+                      setState(() {
+                        value = true;
+                      });
+                    },
                   ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 100.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Radio(
-                          value: true,
-                        ),
-                        Radio(
-                          value: false,
-                        ),
-                      ],
-                    ),
+                  Radio(
+                    value: !value,
+                    onChanged: (fvalue) {
+                      setState(() {
+                        value = false;
+                      });
+                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 400.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 100.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Radio(
+                    value: true,
+                  ),
+                  Radio(
+                    value: false,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 400.0,
         ),
       ],
+      header: 'Radio',
     );
   }
 }

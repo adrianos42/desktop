@@ -37,7 +37,6 @@ Breadcrumb(
         Defaults.createHeader(context, 'Breadcrumb'),
         Expanded(
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 4.0),
             constraints: BoxConstraints.tightFor(height: 600.0),
             child: Tab(
               items: [

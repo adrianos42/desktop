@@ -11,39 +11,43 @@ class ButtonIconPage extends StatefulWidget {
 class _ButtonIconPageState extends State<ButtonIconPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Icon button'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+conButton(
+  Icons.place,
+  onPressed: () {},
+)
+''';
+
+    final disabledCode = '''
+IconButton(Icons.place)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: IconButton(
-                    Icons.place,
-                    onPressed: () {},
-                  ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: IconButton(Icons.place),
-                ),
-              ],
+            child: IconButton(
+              Icons.place,
+              onPressed: () {},
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(Icons.place),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 200.0,
         ),
       ],
+      header: 'Icon button',
     );
   }
 }

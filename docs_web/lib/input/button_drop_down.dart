@@ -13,89 +13,143 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Drop down menu'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+Container(
+  width: 200.0,
+  child: DropDownButton(
+    onSelected: (int value) {
+      setState(() => initialValue = value);
+    },
+    value: initialValue,
+    isField: true,
+    itemBuilder: (context) => [
+      ContextMenuItem(
+        child: Text('Florianópolis'),
+        value: 0,
+      ),
+      ContextMenuItem(
+        child: Text('Joinville'),
+        value: 1,
+      ),
+      ContextMenuItem(
+        child: Text('Blumenau'),
+        value: 2,
+      ),
+      ContextMenuItem(
+        child: Text('São Paulo'),
+        value: 3,
+      ),
+    ],
+  ),
+)
+''';
+
+    final disabledCode = '''
+Container(
+  width: 200.0,
+  child: DropDownButton(
+    enabled: false,
+    isField: true,
+    itemBuilder: (context) => [
+      ContextMenuItem(
+        child: Text('Florianópolis'),
+        value: 0,
+      ),
+      ContextMenuItem(
+        child: Text('Joinville'),
+        value: 1,
+      ),
+      ContextMenuItem(
+        child: Text('Blumenau'),
+        value: 2,
+      ),
+      ContextMenuItem(
+        child: Text('São Paulo'),
+        value: 3,
+      ),
+    ],
+  ),
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 200.0,
-                    child: DropDownButton(
-                      onSelected: (int value) {
-                        setState(() => initialValue = value);
-                      },
-                      value: initialValue,
-                      isField: true,
-                      itemBuilder: (context) => [
-                        ContextMenuItem(
-                          child: Text('Florianópolis'),
-                          value: 0,
-                        ),
-                        ContextMenuItem(
-                          child: Text('Joinville'),
-                          value: 1,
-                        ),
-                        ContextMenuItem(
-                          child: Text('Blumenau'),
-                          value: 2,
-                        ),
-                        ContextMenuItem(
-                          child: Text('São Paulo'),
-                          value: 3,
-                        ),
-                      ],
-                    ),
+            child: Container(
+              width: 200.0,
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(16.0),
+              child: DropDownButton(
+                onSelected: (int value) {
+                  setState(() => initialValue = value);
+                },
+                value: initialValue,
+                isField: true,
+                itemBuilder: (context) => [
+                  ContextMenuItem(
+                    child: Text('Florianópolis'),
+                    value: 0,
                   ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 200.0,
-                    child: DropDownButton(
-                      enabled: false,
-                      isField: true,
-                      itemBuilder: (context) => [
-                        ContextMenuItem(
-                          child: Text('Florianópolis'),
-                          value: 0,
-                        ),
-                        ContextMenuItem(
-                          child: Text('Joinville'),
-                          value: 1,
-                        ),
-                        ContextMenuItem(
-                          child: Text('Blumenau'),
-                          value: 2,
-                        ),
-                        ContextMenuItem(
-                          child: Text('São Paulo'),
-                          value: 3,
-                        ),
-                      ],
-                    ),
+                  ContextMenuItem(
+                    child: Text('Joinville'),
+                    value: 1,
                   ),
-                ),
-              ],
+                  ContextMenuItem(
+                    child: Text('Blumenau'),
+                    value: 2,
+                  ),
+                  ContextMenuItem(
+                    child: Text('São Paulo'),
+                    value: 3,
+                  ),
+                ],
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 400.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 200.0,
+              alignment: Alignment.center,
+              margin: EdgeInsets.all(16.0),
+              child: DropDownButton(
+                enabled: false,
+                isField: true,
+                itemBuilder: (context) => [
+                  ContextMenuItem(
+                    child: Text('Florianópolis'),
+                    value: 0,
+                  ),
+                  ContextMenuItem(
+                    child: Text('Joinville'),
+                    value: 1,
+                  ),
+                  ContextMenuItem(
+                    child: Text('Blumenau'),
+                    value: 2,
+                  ),
+                  ContextMenuItem(
+                    child: Text('São Paulo'),
+                    value: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 400.0,
         ),
       ],
+      header: 'Drop down menu',
     );
   }
 }

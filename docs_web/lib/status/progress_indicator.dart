@@ -21,14 +21,13 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
               Defaults.createTitle(context, 'Linear'),
               Container(
                 padding: EdgeInsets.all(16.0),
-                //decoration: Defaults.itemDecoration(context),
+                decoration: Defaults.itemDecoration(context),
                 child: LinearProgressIndicator(),
               ),
-              SizedBox(height: 16.0,),
               Defaults.createTitle(context, 'Circular'),
               Container(
                 padding: EdgeInsets.all(16.0),
-                //decoration: Defaults.itemDecoration(context),
+                decoration: Defaults.itemDecoration(context),
                 child: CircularProgressIndicator(),
               ),
             ],

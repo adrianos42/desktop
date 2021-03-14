@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'defaults.dart';
 import 'data/list_table.dart';
-import 'data/tree.dart';
+import 'navigation/tree.dart';
 import 'dialogs/dialog.dart';
 import 'input/button.dart';
 import 'input/button_context_menu.dart';
@@ -78,7 +78,7 @@ class _DocAppState extends State<DocApp> {
       home: Builder(
         builder: (context) => Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.fromLTRB(16.0, 16.0, 4.0, 4.0),
+          padding: EdgeInsets.only(top: 16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,8 @@ class _DocAppState extends State<DocApp> {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: Builder(
                       builder: (context) {
                         return Text(
@@ -155,6 +156,7 @@ class _DocAppState extends State<DocApp> {
               ),
               Expanded(
                 child: Tree(
+                  pagePadding: EdgeInsets.only(left: 8.0),
                   title: Builder(
                     builder: (context) => Text(
                       'Documentation',
@@ -171,11 +173,11 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => BreadcrumbPage()),
                       TreeNode('Nav', builder: (context) => NavPage()),
                       TreeNode('Tab', builder: (context) => TabPage()),
+                      TreeNode('Tree', builder: (context) => TreePage()),
                     ]),
                     TreeNode('Data', children: [
                       TreeNode('List Table',
                           builder: (context) => ListTablePage()),
-                      TreeNode('Tree', builder: (context) => TreePage()),
                     ]),
                     TreeNode('Dialogs', children: [
                       TreeNode('Dialog', builder: (context) => DialogPage()),
@@ -235,10 +237,10 @@ class _DocAppState extends State<DocApp> {
                       //   'Status bar',
                       //   builder: (context) => StatusBarPage(),
                       // ),
-                      TreeNode(
-                        'Tooltip',
-                        builder: (context) => TooltipPage(),
-                      ),
+                      // TreeNode(
+                      //   'Tooltip',
+                      //   builder: (context) => TooltipPage(),
+                      // ),
                     ]),
                     TreeNode('Text', children: [
                       TreeNode(

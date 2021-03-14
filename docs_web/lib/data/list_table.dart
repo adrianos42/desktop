@@ -11,14 +11,40 @@ class ListTablePage extends StatefulWidget {
 class _ListTablePageState extends State<ListTablePage> {
   @override
   Widget build(BuildContext context) {
+    final codeSample = '''
+ListTable(
+  colCount: 4,
+  itemCount: 15,
+  tableHeaderBuilder: (context, col, constraints) {
+    return Container(
+      constraints: constraints,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.only(left: 8.0),
+      child: Row(
+        children: [
+          Text('\$col'),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+    );
+  },
+  tableRowBuilder: (context, row, col, constraints) {
+    return Container(
+      constraints: constraints,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Text('\$row\$col'),
+    );
+  },
+)
+''';
     return Column(
       children: [
         Defaults.createHeader(context, 'List table'),
         Expanded(
-          child: Container(
-            //decoration: Defaults.itemDecoration(context),
-            margin: EdgeInsets.symmetric(vertical: 4.0),
-            child: ListTable(
+          child: Defaults.createCodeSession(
+            context,
+            builder: (context) => ListTable(
               colCount: 4,
               itemCount: 15,
               tableHeaderBuilder: (context, col, constraints) {
@@ -43,6 +69,7 @@ class _ListTablePageState extends State<ListTablePage> {
                 );
               },
             ),
+            codeText: codeSample,
           ),
         ),
       ],

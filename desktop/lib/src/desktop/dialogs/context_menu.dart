@@ -156,7 +156,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     );
 
     item = IgnorePointer(
-      ignoring: !widget.enabled || selected == null,
+      ignoring: !widget.enabled, //|| selected == null,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (event) => _handleHoverChanged(true),

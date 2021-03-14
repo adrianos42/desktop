@@ -15,104 +15,154 @@ class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Context menu'),
-        Expanded(
-          child: Container(
+    final enabledText = ''' 
+ContextMenuButton(
+  Icons.place,
+  value: firstValue,
+  onSelected: (String value) =>
+      setState(() => firstValue = value),
+  itemBuilder: (context) => [
+    ContextMenuItem(
+      child: Text('Florianópolis'),
+      value: 'Florianópolis',
+    ),
+    ContextMenuItem(
+      child: Text('Joinville'),
+      value: 'Joinville',
+    ),
+    ContextMenuItem(
+      child: Text('Blumenau'),
+      value: 'Blumenau',
+    ),
+    ContextMenuItem(
+      child: Text('São Paulo'),
+      value: 'São Paulo',
+    ),
+  ],
+),
+''';
+
+    final disabledText = '''
+ContextMenuButton(
+  Icons.place,
+  value: firstValue,
+  enabled: false,
+  itemBuilder: (context) => [
+    ContextMenuItem(
+      child: Text('Florianópolis'),
+      value: 'Florianópolis',
+    ),
+    ContextMenuItem(
+      child: Text('Joinville'),
+      value: 'Joinville',
+    ),
+    ContextMenuItem(
+      child: Text('Blumenau'),
+      value: 'Blumenau',
+    ),
+    ContextMenuItem(
+      child: Text('São Paulo'),
+      value: 'São Paulo',
+    ),
+  ],
+),
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Row(
-                    children: [
-                      ContextMenuButton(
-                        Icons.place,
-                        value: firstValue,
-                        onSelected: (String value) =>
-                            setState(() => firstValue = value),
-                        itemBuilder: (context) => [
-                          ContextMenuItem(
-                            child: Text('Florianópolis'),
-                            value: 'Florianópolis',
-                          ),
-                          ContextMenuItem(
-                            child: Text('Joinville'),
-                            value: 'Joinville',
-                          ),
-                          ContextMenuItem(
-                            child: Text('Blumenau'),
-                            value: 'Blumenau',
-                          ),
-                          ContextMenuItem(
-                            child: Text('São Paulo'),
-                            value: 'São Paulo',
-                          ),
-                        ],
+            child: Container(
+              child: Row(
+                children: [
+                  ContextMenuButton(
+                    Icons.place,
+                    value: firstValue,
+                    onSelected: (String value) =>
+                        setState(() => firstValue = value),
+                    itemBuilder: (context) => [
+                      ContextMenuItem(
+                        child: Text('Florianópolis'),
+                        value: 'Florianópolis',
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.center,
-                        child: Text(firstValue),
+                      ContextMenuItem(
+                        child: Text('Joinville'),
+                        value: 'Joinville',
+                      ),
+                      ContextMenuItem(
+                        child: Text('Blumenau'),
+                        value: 'Blumenau',
+                      ),
+                      ContextMenuItem(
+                        child: Text('São Paulo'),
+                        value: 'São Paulo',
                       ),
                     ],
                   ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Row(
-                    children: [
-                      ContextMenuButton(
-                        Icons.place,
-                        value: firstValue,
-                        enabled: false,
-                        itemBuilder: (context) => [
-                          ContextMenuItem(
-                            child: Text('Florianópolis'),
-                            value: 'Florianópolis',
-                          ),
-                          ContextMenuItem(
-                            child: Text('Joinville'),
-                            value: 'Joinville',
-                          ),
-                          ContextMenuItem(
-                            child: Text('Blumenau'),
-                            value: 'Blumenau',
-                          ),
-                          ContextMenuItem(
-                            child: Text('São Paulo'),
-                            value: 'São Paulo',
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          firstValue,
-                          style: textTheme.body1.copyWith(
-                            color: textTheme.textDisabled.toColor(),
-                          ),
-                        ),
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    alignment: Alignment.center,
+                    child: Text(firstValue),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          codeText: enabledText,
+          title: 'Enabled',
+          height: 400.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Row(
+                children: [
+                  ContextMenuButton(
+                    Icons.place,
+                    value: firstValue,
+                    enabled: false,
+                    itemBuilder: (context) => [
+                      ContextMenuItem(
+                        child: Text('Florianópolis'),
+                        value: 'Florianópolis',
+                      ),
+                      ContextMenuItem(
+                        child: Text('Joinville'),
+                        value: 'Joinville',
+                      ),
+                      ContextMenuItem(
+                        child: Text('Blumenau'),
+                        value: 'Blumenau',
+                      ),
+                      ContextMenuItem(
+                        child: Text('São Paulo'),
+                        value: 'São Paulo',
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    alignment: Alignment.center,
+                    child: Text(
+                      firstValue,
+                      style: textTheme.body1.copyWith(
+                        color: textTheme.textDisabled.toColor(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          codeText: disabledText,
+          title: 'Disabled',
+          height: 400.0,
         ),
       ],
+      header: 'Context menu',
     );
   }
 }

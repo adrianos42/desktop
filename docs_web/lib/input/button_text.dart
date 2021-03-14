@@ -11,39 +11,45 @@ class ButtonTextPage extends StatefulWidget {
 class _ButtonTextPageState extends State<ButtonTextPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Text button'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+TextButton(
+  'Click me',
+  onPressed: () {},
+)
+''';
+
+    final disabledCode = '''
+TextButton(
+  'Click me',
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: TextButton(
-                    'Click me',
-                    onPressed: () {},
-                  ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: TextButton('Click me'),
-                ),
-              ],
+            child: TextButton(
+              'Click me',
+              onPressed: () {},
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton('Click me'),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 200.0,
         ),
       ],
+      header: 'Text button',
     );
   }
 }

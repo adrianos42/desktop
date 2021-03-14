@@ -11,13 +11,19 @@ class ButtonTogglePage extends StatefulWidget {
 class _ButtonTogglePageState extends State<ButtonTogglePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Toggle button'),
-        Expanded(
-          child: Center(child: Text(''),),
-        ),
+    final enabledCode = '''
+''';
+
+    final disabledCode = '''
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(body: (context) => Text(''), codeText: enabledCode, title: 'Enabled', height: 400.0),
+        ItemTitle(body: (context) => Text(''), codeText: disabledCode, title: 'Disabled', height: 400.0),
       ],
+      header: 'Toggle button',
     );
   }
 }

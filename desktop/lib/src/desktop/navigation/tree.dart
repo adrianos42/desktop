@@ -22,11 +22,13 @@ class Tree extends StatefulWidget {
   Tree({
     this.title,
     required this.nodes,
+    this.pagePadding,
     Key? key,
   }) : super(key: key);
 
   final Widget? title;
   final List<TreeNode> nodes;
+  final EdgeInsets? pagePadding;
 
   @override
   _TreeState createState() => _TreeState();
@@ -120,10 +122,13 @@ class _TreeState extends State<Tree> {
               child: Builder(
                 builder: (context) {
                   return entry.value.shouldBuild
-                      ? TabView(
-                          navigatorKey: entry.value.navigator,
-                          builder: entry.value.builder,
-                          navigatorObserver: NavigatorObserver(),
+                      ? Padding(
+                          padding: widget.pagePadding ?? EdgeInsets.zero,
+                          child: TabView(
+                            navigatorKey: entry.value.navigator,
+                            builder: entry.value.builder,
+                            navigatorObserver: NavigatorObserver(),
+                          ),
                         )
                       : Container();
                 },
@@ -145,24 +150,27 @@ class _TreeState extends State<Tree> {
             controller: controller,
             child: SingleChildScrollView(
               controller: controller,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (widget.title != null)
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: widget.title!,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (widget.title != null)
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: widget.title!,
+                      ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: widget.nodes
+                          .map((e) => _TreeColumn(node: e, parentName: ''))
+                          .toList(),
                     ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: widget.nodes
-                        .map((e) => TreeColumn(node: e, parentName: ''))
-                        .toList(),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -197,8 +205,8 @@ class _TreeScope extends InheritedWidget {
   bool updateShouldNotify(_TreeScope old) => old.treeState != treeState;
 }
 
-class TreeColumn extends StatefulWidget {
-  TreeColumn({
+class _TreeColumn extends StatefulWidget {
+  _TreeColumn({
     required this.node,
     required this.parentName,
     Key? key,
@@ -211,7 +219,7 @@ class TreeColumn extends StatefulWidget {
   _TreeColumnState createState() => _TreeColumnState();
 }
 
-class _TreeColumnState extends State<TreeColumn> {
+class _TreeColumnState extends State<_TreeColumn> {
   var _collapsed = true;
 
   String get name => '${widget.parentName}${widget.node.title}';
@@ -233,7 +241,7 @@ class _TreeColumnState extends State<TreeColumn> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: widget.node.children!
-              .map((e) => TreeColumn(
+              .map((e) => _TreeColumn(
                     node: e,
                     parentName: name,
                   ))

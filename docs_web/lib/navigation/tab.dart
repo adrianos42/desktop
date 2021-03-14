@@ -11,14 +11,31 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> {
   @override
   Widget build(BuildContext context) {
+    final codeSample = '''
+Tab(
+  items: [
+    TabItem(
+      builder: (context) => Center(child: Text('page1')),
+      title: Text('page1'),
+    ),
+    TabItem(
+      builder: (context) => Center(child: Text('page2')),
+      title: Text('page2'),
+    ),
+    TabItem(
+      builder: (context) => Center(child: Text('page3')),
+      title: Text('page3'),
+    ),
+  ],
+),
+''';
     return Column(
       children: [
         Defaults.createHeader(context, 'Tab'),
         Expanded(
-          child: Container(
-            decoration: Defaults.itemDecoration(context),
-            margin: EdgeInsets.symmetric(vertical: 4.0),
-            child: Tab(
+          child: Defaults.createCodeSession(
+            context,
+            builder: (context) => Tab(
               items: [
                 TabItem(
                   builder: (context) => Center(child: Text('page1')),
@@ -34,6 +51,7 @@ class _TabPageState extends State<TabPage> {
                 ),
               ],
             ),
+            codeText: codeSample,
           ),
         ),
       ],

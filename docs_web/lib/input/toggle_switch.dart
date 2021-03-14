@@ -13,63 +13,73 @@ class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Toggle switch'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+ToggleSwitch(
+  onChanged: (fvalue) {
+    setState(() => value = fvalue);
+  },
+  autofocus: false,
+  value: value,
+)
+''';
+
+    final disabledCode = '''
+ToggleSwitch(
+  autofocus: false,
+  value: false,
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 100.0,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ToggleSwitch(
-                          onChanged: (fvalue) {
-                            setState(() => value = fvalue);
-                          },
-                          autofocus: false,
-                          value: value,
-                        ),
-                      ],
-                    ),
+            child: Container(
+              width: 100.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ToggleSwitch(
+                    onChanged: (fvalue) {
+                      setState(() => value = fvalue);
+                    },
+                    autofocus: false,
+                    value: value,
                   ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50.0,
-                  child: Container(
-                    width: 100.0,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ToggleSwitch(
-                          autofocus: false,
-                          value: false,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 100.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ToggleSwitch(
+                    autofocus: false,
+                    value: false,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 200.0,
         ),
       ],
+      header: 'Toggle switch',
     );
   }
 }

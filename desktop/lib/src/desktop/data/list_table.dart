@@ -9,7 +9,7 @@ import '../component.dart';
 const _kHeaderHeight = 38.0;
 const _kMinColumnWidth = 38.0;
 const _kHandlerWidth = 8.0;
-const _kDefaultItemExtent = 40.0;
+//const _kDefaultItemExtent = 40.0;
 
 typedef TableHeaderBuilder = Widget Function(
   BuildContext context,
@@ -354,8 +354,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             Map<int, double>.from(widget.colFraction ?? Map<int, double>());
         colSizes = List<double>.filled(colCount, 0);
 
-        double toltalWidth = constraints.maxWidth;
-        double remWidth = toltalWidth;
+        double totalWidth = constraints.maxWidth;
+        double remWidth = totalWidth;
 
         // TODO: make sure this is considering only the valid indexes
         int nfactors = 0;
@@ -379,7 +379,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                   break;
                 }
 
-                double width = (colFraction![i]! * toltalWidth)
+                double width = (colFraction![i]! * totalWidth)
                     .roundToDouble()
                     .clamp(_kMinColumnWidth, remWidth);
                 colSizes[i] = width;
@@ -394,14 +394,14 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
         // if there's no key for every index in columns
         if (nfactors < colCount) {
-          int remNfactors = colCount - nfactors;
-          double nonFactorWidth = (remWidth / remNfactors).roundToDouble();
+          int remNFactors = colCount - nfactors;
+          double nonFactorWidth = (remWidth / remNFactors).roundToDouble();
 
           assert(remWidth >= 0.0);
 
           for (int i = 0; i < colCount; i++) {
             if (!colFraction!.containsKey(i)) {
-              remNfactors -= 1;
+              remNFactors -= 1;
 
               if (remWidth < _kMinColumnWidth) {
                 colFraction![i] = 0.0;
@@ -409,9 +409,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
               }
 
               // last item
-              if (i == colCount - 1 || remNfactors == 0) {
+              if (i == colCount - 1 || remNFactors == 0) {
                 colSizes[i] = remWidth;
-                colFraction![i] = remWidth / toltalWidth;
+                colFraction![i] = remWidth / totalWidth;
                 remWidth = 0;
                 break;
               }
@@ -420,7 +420,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 nonFactorWidth = remWidth;
               }
 
-              colFraction![i] = nonFactorWidth / toltalWidth;
+              colFraction![i] = nonFactorWidth / totalWidth;
 
               colSizes[i] = nonFactorWidth;
               remWidth -= nonFactorWidth;

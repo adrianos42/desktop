@@ -14,67 +14,87 @@ class _SliderPageState extends State<SliderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Slider'),
-        Expanded(
-          child: Container(
+    final enabledCode = '''
+Container(
+  width: 200.0,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Slider(
+        value: first,
+        onChanged: (value) {
+          setState(() => first = value);
+        },
+      ),
+    ],
+  ),
+)
+''';
+
+    final disabledCode = '''
+Container(
+  width: 200.0,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Slider(
+        value: 0.3,
+      ),
+    ],
+  ),
+)
+''';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createCaption(context, 'Enabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Container(
-                    width: 200.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Slider(
-                          value: first,
-                          onChanged: (value) {
-                            setState(() => first = value);
-                          },
-                        ),
-                        // Slider(
-                        //   value: second,
-                        //   onChanged: (value) {
-                        //     setState(() => second = value);
-                        //   },
-                        // ),
-                      ],
-                    ),
+            child: Container(
+              width: 200.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Slider(
+                    value: first,
+                    onChanged: (value) {
+                      setState(() => first = value);
+                    },
                   ),
-                ),
-                Defaults.createCaption(context, 'Disabled'),
-                Container(
-                  decoration: Defaults.itemDecoration(context),
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.symmetric(vertical: 4.0),
-                  height: 50,
-                  child: Container(
-                    width: 200.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Slider(
-                          value: 0.3,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
+          codeText: enabledCode,
+          title: 'Enabled',
+          height: 400.0,
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 200.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Slider(
+                    value: 0.3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          codeText: disabledCode,
+          title: 'Disabled',
+          height: 400.0,
         ),
       ],
+      header: 'Slider',
     );
   }
 }
