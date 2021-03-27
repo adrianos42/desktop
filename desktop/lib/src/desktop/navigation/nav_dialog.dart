@@ -8,10 +8,18 @@ import 'nav_scope.dart';
 class NavDialog extends StatefulWidget {
   NavDialog({
     required this.child,
+    this.height,
+    this.width,
     Key? key,
   }) : super(key: key);
 
   final Widget child;
+
+  /// The height of the dialog in case the nav axis is horizontal.
+  final double? height;
+
+  /// The width of the dialog in case the nav axis is vertical.
+  final double? width;
 
   @override
   _NavDialogState createState() => _NavDialogState();
@@ -23,11 +31,9 @@ class _NavDialogState extends State<NavDialog> {
     final navScope = NavigationScope.of(context)!;
     final axis = navScope.navAxis;
 
-    print('Current axis: $axis');
-
     return Container(
-      height: axis == Axis.horizontal ? 200.0 : null,
-      width: axis == Axis.vertical ? 400.0 : null,
+      height: axis == Axis.horizontal ? widget.height : null, //// TODO Set this in theme.
+      width: axis == Axis.vertical ? widget.width : null, //// TODO Set this in theme.
       color: Theme.of(context).colorScheme.background.toColor(), //// TODO Set this in theme.
       child: widget.child,
     );

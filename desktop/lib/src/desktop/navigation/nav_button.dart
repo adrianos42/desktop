@@ -56,6 +56,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     final bool enabled = widget.enabled;
+    final highlightColor = colorScheme.primary1;
 
     for (int index = 0; index < widget.navItems.length; index++) {
       final navItem = widget.navItems[index];
@@ -78,7 +79,6 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
 
       final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
       final IconThemeData iconThemeData = navThemeData.iconThemeData;
-      final highlightColor = colorScheme.primary;
       final color = colorScheme.shade4;
       final hoverColor = colorScheme.shade;
 
@@ -90,7 +90,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
             child: ButtonTheme(
               data: ButtonThemeData(
                 color: active ? highlightColor : color,
-                highlightColor: highlightColor,
+                highlightColor: active ? highlightColor : hoverColor,
                 hoverColor: active ? highlightColor : hoverColor,
                 textStyle: textStyle,
                 iconThemeData: iconThemeData,
@@ -154,8 +154,8 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
               width: renderWidth,
             ),
             index: widget.index,
-            foreground: (enabled ? colorScheme.primary : colorScheme.disabled)
-                .toColor(),
+            foreground:
+                (enabled ? highlightColor : colorScheme.disabled).toColor(),
           ),
         ],
       ),

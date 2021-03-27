@@ -84,6 +84,7 @@ Nav(
                         child: Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(32.0),
+                          width: 600.0,
                           child: Text('Settings page'),
                         ),
                       ),
@@ -129,6 +130,7 @@ Nav(
                         child: Container(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(32.0),
+                          height: 100.0,
                           child: Text('Settings page'),
                         ),
                       ),
