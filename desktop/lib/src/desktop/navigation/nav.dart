@@ -28,18 +28,6 @@ class NavItem {
   final String route;
 }
 
-class NavMenuItem {
-  const NavMenuItem({
-    required this.title,
-    required this.route,
-    required this.icon,
-  });
-
-  final String title;
-  final String route;
-  final IconData icon;
-}
-
 class Nav extends StatefulWidget {
   const Nav({
     Key? key,
@@ -48,18 +36,15 @@ class Nav extends StatefulWidget {
     this.navAxis = Axis.vertical,
     this.trailingMenu,
     this.leadingMenu,
-    this.menuRouteBuilder,
-  })  ://assert(back != null && back != kIsWeb),
+  })  : //assert(back != null && back != kIsWeb),
         assert(items.length > 0),
         super(key: key);
 
   final List<NavItem> items;
 
-  final List<NavMenuItem>? trailingMenu;
+  final List<NavItem>? trailingMenu;
 
-  final List<NavMenuItem>? leadingMenu;
-
-  final RouteBuilder? menuRouteBuilder;
+  final List<NavItem>? leadingMenu;
 
   final bool back;
 
@@ -86,8 +71,10 @@ class _NavState extends State<Nav> {
 
   NavigatorState get _currentNavigator => _navigators[_index].currentState!;
 
-  final List<FocusScopeNode> _focusNodes = List<FocusScopeNode>.empty(growable: true);
-  final List<FocusScopeNode> _disposedFocusNodes = List<FocusScopeNode>.empty(growable: true);
+  final List<FocusScopeNode> _focusNodes =
+      List<FocusScopeNode>.empty(growable: true);
+  final List<FocusScopeNode> _disposedFocusNodes =
+      List<FocusScopeNode>.empty(growable: true);
   final List<bool> _shouldBuildView = List<bool>.empty(growable: true);
   final List<GlobalKey<NavigatorState>> _navigators =
       List<GlobalKey<NavigatorState>>.empty(growable: true);
@@ -104,15 +91,15 @@ class _NavState extends State<Nav> {
 
   void _previousView() => _indexChanged((_index - 1) % _length);
 
-  void _requestViewFirstFocus() {
-    FocusNode focusedNode = _currentNavigator.focusScopeNode.focusedChild ??
-        _currentNavigator.focusScopeNode;
+  // void _requestViewFirstFocus() {
+  //   FocusNode focusedNode = _currentNavigator.focusScopeNode.focusedChild ??
+  //       _currentNavigator.focusScopeNode;
 
-    if (focusedNode.traversalDescendants.isEmpty) return;
+  //   if (focusedNode.traversalDescendants.isEmpty) return;
 
-    focusedNode.requestFocus(
-        focusedNode.traversalDescendants.whereType<FocusNode>().first);
-  }
+  //   focusedNode.requestFocus(
+  //       focusedNode.traversalDescendants.whereType<FocusNode>().first);
+  // }
 
   bool _indexChanged(int index) {
     if (index != _index) {
@@ -136,12 +123,10 @@ class _NavState extends State<Nav> {
     if (mounted) {
       NavigatorState navigatorState = _currentNavigator;
 
-      bool value = navigatorState.canPop(); //
+      bool value = navigatorState.canPop();
 
       if (value != _isBack) {
-        setState(() {
-          _isBack = value;
-        });
+        setState(() => _isBack = value);
       }
     }
   }
@@ -166,11 +151,13 @@ class _NavState extends State<Nav> {
       await _currentNavigator.pushNamed<dynamic>(name).then((_) {
         setState(() => _menus.clear());
       });
+    } else {
+      _currentNavigator.pop();
     }
   }
 
-  Widget _createMenuItems(EdgeInsets itemsSpacing, NavThemeData navThemeData,
-      List<NavMenuItem> items) {
+  Widget _createMenuItems(
+      EdgeInsets itemsSpacing, NavThemeData navThemeData, List<NavItem> items) {
     return Padding(
       padding: itemsSpacing,
       child: Flex(
@@ -221,7 +208,7 @@ class _NavState extends State<Nav> {
 
     final NavThemeData navThemeData = NavTheme.of(context);
 
-    final backgroundColor = navThemeData.background;
+    //final backgroundColor = navThemeData.background;
 
     BoxConstraints constraints;
     EdgeInsets itemsSpacing;
@@ -237,22 +224,19 @@ class _NavState extends State<Nav> {
 
     Widget result = ConstrainedBox(
       constraints: constraints,
-      child: Container(
-        color: backgroundColor,
-        child: Flex(
-          direction: widget.navAxis,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (widget.back) _createBackMenu(itemsSpacing, navThemeData),
-            if (widget.leadingMenu != null && widget.leadingMenu!.length > 0) // FIXME
-              _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
-            _createNavItems(itemsSpacing, navThemeData),
-            Spacer(),
-            if (widget.trailingMenu != null && widget.trailingMenu!.length > 0) // FIXME
-              _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!)
-          ],
-        ),
+      child: Flex(
+        direction: widget.navAxis,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (widget.back) _createBackMenu(itemsSpacing, navThemeData),
+          if (widget.leadingMenu != null && widget.leadingMenu!.length > 0)
+            _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
+          _createNavItems(itemsSpacing, navThemeData),
+          Spacer(),
+          if (widget.trailingMenu != null && widget.trailingMenu!.length > 0)
+            _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!)
+        ],
       ),
     );
 
@@ -358,7 +342,14 @@ class _NavState extends State<Nav> {
                         //name: widget.navItems[index].route,
                         navigatorKey: _navigators[index],
                         navigatorObserver: _NavObserver(this),
-                        menuRouteBuilder: widget.menuRouteBuilder,
+                        menuRouteBuilder: (context, settings) {
+                          return NavMenuRoute(
+                            axis: widget.navAxis,
+                            settings: settings,
+                            pageBuilder: (context) =>
+                                widget.trailingMenu!.first.builder(context),
+                          );
+                        },
                       )
                     : Container();
               },
@@ -410,9 +401,10 @@ class _NavObserver extends NavigatorObserver {
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     assert(route.navigator == _navState._currentNavigator);
 
-    if (!route.isFirst && route is PopupRoute<dynamic> ||
-        route is PageRoute<dynamic>) {
-      _navState._updateBackButton();
+    if (!route.isFirst) {
+      if (route is PopupRoute<dynamic> || route is PageRoute<dynamic>) {
+        _navState._updateBackButton();
+      }
     }
   }
 

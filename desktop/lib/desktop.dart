@@ -5,7 +5,6 @@ export 'dart:ui' show Brightness;
 
 export 'src/desktop/app.dart';
 export 'src/desktop/icons.dart';
-export 'src/desktop/settings.dart';
 export 'src/desktop/component.dart';
 
 export 'src/desktop/data/data.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-typedef RouteBuilder = Route<dynamic> Function(BuildContext, RouteSettings);
+typedef RouteBuilder = Route<dynamic>? Function(BuildContext, RouteSettings);
 
 class NavigationScope extends InheritedWidget {
   const NavigationScope({

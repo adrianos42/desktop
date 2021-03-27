@@ -24,7 +24,9 @@ class NavMenuRoute<T> extends PopupRoute<T> {
 
   Animation<double>? _animation;
 
-  static final Curve _animationCurve = Curves.easeOutCubic;
+  static final Curve _animationCurve = Curves.easeInOut;
+
+
 
   @override
   bool get barrierDismissible => true;
@@ -34,10 +36,10 @@ class NavMenuRoute<T> extends PopupRoute<T> {
   final String? _barrierLabel;
 
   @override
-  Color? get barrierColor => null;
+  Color? get barrierColor => HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.1).toColor();
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 200);
+  Duration get transitionDuration => const Duration(milliseconds: 400);
 
   @override
   Animation<double> createAnimation() {
@@ -45,7 +47,7 @@ class NavMenuRoute<T> extends PopupRoute<T> {
     _animation = CurvedAnimation(
       parent: super.createAnimation(),
       curve: _animationCurve,
-      reverseCurve: _animationCurve.flipped,
+      reverseCurve: _animationCurve,
     );
 
     final Offset begin =
@@ -144,7 +146,7 @@ class _NavigationViewState extends State<NavigationView> {
       axis: NavigationScope.of(context)!.navAxis,
       pageBuilder: (context) => Container(
         alignment: Alignment.center,
-        color: themeData.colorScheme.background.toColor(),
+        color: themeData.colorScheme.background3.toColor(),
         child: Text(
           'Page "$name" not found',
           style: themeData.textTheme.title,

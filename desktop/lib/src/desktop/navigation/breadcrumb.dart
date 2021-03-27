@@ -375,7 +375,7 @@ class _NavigationViewState extends State<_NavigationView> {
     );
   }
 
-  Route<dynamic> _onGenerateRoute(RouteSettings settings) {
+  Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
     return widget.builder(context, settings);
   }
 

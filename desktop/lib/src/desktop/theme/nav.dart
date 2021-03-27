@@ -24,7 +24,7 @@ class NavThemeData {
     this.animationDuration = _kChangeDuration,
   });
 
-  Color get background => const Color(0x000D0D0D);
+  //Color get background => const Color(0x000D0D0D);
 
   Color? get foreground => null;
 

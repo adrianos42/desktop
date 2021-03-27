@@ -76,6 +76,20 @@ Nav(
               child: Defaults.createCodeSession(
                 context,
                 builder: (context) => Nav(
+                  trailingMenu: [
+                    NavItem(
+                      title: 'settings',
+                      route: '/settings',
+                      builder: (context) => NavDialog(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(32.0),
+                          child: Text('Settings page'),
+                        ),
+                      ),
+                      icon: Icons.settings,
+                    ),
+                  ],
                   items: [
                     NavItem(
                       builder: (context) => Center(child: Text('page1')),
@@ -107,6 +121,20 @@ Nav(
                 context,
                 builder: (context) => Nav(
                   navAxis: Axis.horizontal,
+                  trailingMenu: [
+                    NavItem(
+                      title: 'settings',
+                      route: '/settings',
+                      builder: (context) => NavDialog(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(32.0),
+                          child: Text('Settings page'),
+                        ),
+                      ),
+                      icon: Icons.settings,
+                    ),
+                  ],
                   items: [
                     NavItem(
                       builder: (context) => Center(child: Text('page1')),
