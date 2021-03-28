@@ -35,8 +35,6 @@ class Button extends StatefulWidget {
 
   final HSLColor? color;
 
-  bool get enabled => onPressed != null;
-
   @override
   _ButtonState createState() => _ButtonState();
 }
@@ -99,6 +97,8 @@ class _ButtonState extends State<Button>
       duration: Duration(milliseconds: 50),
     );
 
+    _controller.forward();
+
     WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
   }
 
@@ -117,8 +117,7 @@ class _ButtonState extends State<Button>
 
   @override
   Widget build(BuildContext context) {
-    final bool enabled = widget.enabled;
-
+    final bool enabled = widget.onPressed != null;
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
     final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
@@ -197,17 +196,17 @@ class _ButtonState extends State<Button>
         onTapUp: enabled ? _handleTapUp : null,
         onTapCancel: _handleTapCancel,
         onTap: enabled
-            ? () {
+            ? () async {
                 if (waiting) return;
-                waiting = true;
+                setState(() => waiting = true);
+
                 dynamic result = widget.onPressed!() as dynamic; // TODO
 
-                if (result is Future) {
-                  setState(() => waiting = true);
-                  result.then((_) => setState(() => waiting = false));
-                } else {
-                  waiting = false;
+                if (result is Future<void>) {
+                  await result;
                 }
+                
+                setState(() => waiting = false);
               }
             : null,
         child: result,

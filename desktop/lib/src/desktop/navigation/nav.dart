@@ -59,7 +59,7 @@ class _NavState extends State<Nav> {
 
   int get _length => widget.items.length;
 
-  final Set<String> _menus = <String>{};
+  String? _menus;
 
   // static final Map<LocalKey, ActionFactory> _actions =
   //     <LocalKey, ActionFactory>{
@@ -79,14 +79,6 @@ class _NavState extends State<Nav> {
   final List<GlobalKey<NavigatorState>> _navigators =
       List<GlobalKey<NavigatorState>>.empty(growable: true);
 
-  void _closeItem() {
-    if (_menus.isEmpty) {
-    } else {
-      assert(_currentNavigator.canPop());
-      _currentNavigator.pop();
-    }
-  }
-
   void _nextView() => _indexChanged((_index + 1) % _length);
 
   void _previousView() => _indexChanged((_index - 1) % _length);
@@ -105,7 +97,7 @@ class _NavState extends State<Nav> {
     if (index != _index) {
       if (index < 0 ||
           index >= _length ||
-          _menus.isNotEmpty ||
+          _menus != null ||
           Navigator.of(context, rootNavigator: true).canPop()) return false;
 
       setState(() {
@@ -121,21 +113,18 @@ class _NavState extends State<Nav> {
 
   void _updateBackButton() {
     if (mounted) {
-      NavigatorState navigatorState = _currentNavigator;
-
-      bool value = navigatorState.canPop();
+      bool value = _currentNavigator.canPop();
 
       if (value != _isBack) {
+        print('button updated');
         setState(() => _isBack = value);
       }
     }
   }
 
   void _goBack() {
-    NavigatorState navigatorState = _currentNavigator;
-
     if (_isBack) {
-      navigatorState.pop();
+      _currentNavigator.pop();
     } else if (_index != _kIntialIndexValue) {
       setState(() {
         _index = _kIntialIndexValue;
@@ -144,16 +133,27 @@ class _NavState extends State<Nav> {
     }
   }
 
-  Future<void> _showMenu(String name) async {
-    if (_menus.isEmpty) {
-      setState(() => _menus.add(name));
+  void _showMenu(NavItem item) {
+    print('show menu: $_menus');
+    setState(() {
+      if (_menus == null) {
+        print('menu added');
+        _menus = item.route;
 
-      await _currentNavigator.pushNamed<dynamic>(name).then((_) {
-        setState(() => _menus.clear());
-      });
-    } else {
-      _currentNavigator.pop();
-    }
+        _currentNavigator
+            .push<dynamic>(NavMenuRoute(
+          axis: widget.navAxis,
+          settings: RouteSettings(name: item.route),
+          pageBuilder: item.builder,
+        ))
+            .then((_) {
+          print('_menus cleared');
+          setState(() => _menus = null);
+        }).then((_) {});
+      } else {
+        _currentNavigator.pop();
+      }
+    });
   }
 
   Widget _createMenuItems(
@@ -163,30 +163,29 @@ class _NavState extends State<Nav> {
       child: Flex(
         direction: widget.navAxis,
         mainAxisSize: MainAxisSize.min,
-        children: items
-            .map(
-              (item) => IconButton(
-                item.icon,
-                onPressed: _menus.isEmpty || _menus.contains(item.route)
-                    ? () async => await _showMenu(item.route)
-                    : null,
-              ),
-            )
-            .toList(),
+        children: items.map((item) {
+          return NavMenuButton(
+            Icon(item.icon),
+            active: _menus == item.route,
+            onPressed: _menus == null || _menus == item.route
+                ? () => _showMenu(item)
+                : null,
+          );
+          // Widget result = IconButton(
+          //   item.icon,
+          //   onPressed: _menus.isEmpty || _menus.contains(item.route)
+          //       ? () async => await
+          //       : null,
+          // );
+
+          // return ButtonTheme.merge(data: ButtonThemeData(), child: result);
+        }).toList(),
       ),
     );
   }
 
-  Widget _createBackMenu(EdgeInsets itemsSpacing, NavThemeData navThemeData) {
-    return IconButton(
-      Icons.arrow_back,
-      onPressed:
-          _isBack || _index != _kIntialIndexValue ? () => _goBack() : null,
-      tooltip: 'Back',
-    );
-  }
-
   Widget _createNavItems(EdgeInsets itemsSpacing, NavThemeData navThemeData) {
+    print('createnavitem: $_menus');
     return Padding(
       padding: itemsSpacing,
       child: NavGroup(
@@ -194,7 +193,7 @@ class _NavState extends State<Nav> {
             ? (context, index) => Text(widget.items[index].title)
             : (context, index) => Icon(widget.items[index].icon),
         axis: widget.navAxis,
-        enabled: _menus.isEmpty,
+        enabled: _menus == null,
         navItems: widget.items,
         index: _index,
         onChanged: (value) => _indexChanged(value),
@@ -222,25 +221,46 @@ class _NavState extends State<Nav> {
       itemsSpacing = EdgeInsets.symmetric(vertical: navThemeData.itemsSpacing);
     }
 
+    final navList = <Widget>[];
+
+    if (widget.back) {
+      final enabled = _isBack || _index != _kIntialIndexValue || _menus != null;
+
+      print('back enabled: $enabled');
+      print(_menus);
+      final value = IconButton(
+        Icons.arrow_back,
+        onPressed: enabled ? () => _goBack() : null,
+        tooltip: 'Back',
+      );
+
+      navList.add(value);
+    }
+
+    if (widget.leadingMenu != null && widget.leadingMenu!.length > 0) {
+      navList.add(
+          _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!));
+    }
+
+    navList.add(_createNavItems(itemsSpacing, navThemeData));
+    navList.add(Spacer());
+
+    if (widget.trailingMenu != null && widget.trailingMenu!.length > 0) {
+      navList.add(
+          _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!));
+    }
+
     Widget result = ConstrainedBox(
       constraints: constraints,
       child: Flex(
         direction: widget.navAxis,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (widget.back) _createBackMenu(itemsSpacing, navThemeData),
-          if (widget.leadingMenu != null && widget.leadingMenu!.length > 0)
-            _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
-          _createNavItems(itemsSpacing, navThemeData),
-          Spacer(),
-          if (widget.trailingMenu != null && widget.trailingMenu!.length > 0)
-            _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!)
-        ],
+        children: navList,
       ),
     );
 
-    result = ButtonTheme(
+    result = ButtonTheme.merge(
       data: ButtonThemeData(
         // FIXME buttonPadding: widget.navAxis == Axis.vertical ? EdgeInsets.zero : null,
         height: navThemeData.height,
@@ -282,6 +302,34 @@ class _NavState extends State<Nav> {
     _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
         _length, (_) => GlobalKey<NavigatorState>()));
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
+
+    widget.leadingMenu?.forEach((element) {
+      if (widget.leadingMenu!
+                  .where((other) => other.route == element.route)
+                  .length !=
+              1 ||
+          (widget.trailingMenu
+                      ?.where((other) => other.route == element.route)
+                      .length ??
+                  0) !=
+              0) {
+        throw Exception('Menu item must have unique route name.');
+      }
+    });
+
+    widget.trailingMenu?.forEach((element) {
+      if (widget.trailingMenu!
+                  .where((other) => other.route == element.route)
+                  .length !=
+              1 ||
+          (widget.leadingMenu
+                      ?.where((other) => other.route == element.route)
+                      .length ??
+                  0) !=
+              0) {
+        throw Exception('Menu item must have unique route name.');
+      }
+    });
   }
 
   @override
@@ -323,6 +371,8 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
+    print('updated');
+
     final list = List<Widget>.generate(_length, (index) {
       final bool active = index == _index;
       _shouldBuildView[index] = active || _shouldBuildView[index];
@@ -342,14 +392,6 @@ class _NavState extends State<Nav> {
                         //name: widget.navItems[index].route,
                         navigatorKey: _navigators[index],
                         navigatorObserver: _NavObserver(this),
-                        menuRouteBuilder: (context, settings) {
-                          return NavMenuRoute(
-                            axis: widget.navAxis,
-                            settings: settings,
-                            pageBuilder: (context) =>
-                                widget.trailingMenu!.first.builder(context),
-                          );
-                        },
                       )
                     : Container();
               },

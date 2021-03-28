@@ -87,7 +87,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
           onLayout: onLayout,
           button: Container(
             constraints: constraints,
-            child: ButtonTheme(
+            child: ButtonTheme.merge(
               data: ButtonThemeData(
                 color: active ? highlightColor : color,
                 highlightColor: active ? highlightColor : hoverColor,
@@ -370,5 +370,53 @@ class _RenderIconSide extends RenderConstrainedBox {
     RectTween _rectTween = RectTween(begin: _rectLast, end: _rectNew);
 
     canvas.drawRect(_rectTween.lerp(position.value)!, paint);
+  }
+}
+
+class NavMenuButton extends StatelessWidget {
+  const NavMenuButton(
+    this.child, {
+    Key? key,
+    this.tooltip,
+    this.onPressed,
+    required this.active,
+  }) : super(key: key);
+
+  final String? tooltip;
+
+  final Widget child;
+
+  final VoidCallback? onPressed;
+
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final NavThemeData navThemeData = NavTheme.of(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    final highlightColor = colorScheme.primary1;
+
+    final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
+      final IconThemeData iconThemeData = navThemeData.iconThemeData;
+      final color = colorScheme.shade4;
+      final hoverColor = colorScheme.shade;
+
+    return ButtonTheme.merge(
+      data: ButtonThemeData(
+        color: active ? highlightColor : color,
+        highlightColor: active ? highlightColor : hoverColor,
+        hoverColor: active ? highlightColor : hoverColor,
+        textStyle: textStyle,
+        iconThemeData: iconThemeData,
+        bodyPadding: EdgeInsets.zero,
+      ),
+      child: Button(
+        onPressed: onPressed,
+        tooltip: tooltip,
+        body: child,
+      ),
+    );
   }
 }

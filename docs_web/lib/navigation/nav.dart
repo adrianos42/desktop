@@ -78,6 +78,19 @@ Nav(
                 builder: (context) => Nav(
                   trailingMenu: [
                     NavItem(
+                      title: 'home',
+                      route: '/home',
+                      builder: (context) => NavDialog(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(32.0),
+                          width: 600.0,
+                          child: Text('Home page'),
+                        ),
+                      ),
+                      icon: Icons.home,
+                    ),
+                    NavItem(
                       title: 'settings',
                       route: '/settings',
                       builder: (context) => NavDialog(
