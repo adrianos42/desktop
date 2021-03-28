@@ -17,3 +17,7 @@
 1.0.3
 
 - Fix button animations. Add option for nav menu
+
+1.0.4
+
+- Fix tooltip position

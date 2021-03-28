@@ -138,20 +138,27 @@ class _DocAppState extends State<DocApp> {
                       ),
                     ),
                   ),
-                  ThemeToggle(
-                    onPressed: () => setState(
-                        () => _themeData = Theme.invertedThemeOf(context)),
-                  ),
-                  Button(
-                    body: githubImage,
-                    onPressed: () async {
-                      final urlRepository =
-                          'https://github.com/adrianos42/desktop';
-                      if (await canLaunch(urlRepository)) {
-                        await launch(urlRepository);
-                      }
-                    },
-                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        ThemeToggle(
+                          onPressed: () => setState(() =>
+                              _themeData = Theme.invertedThemeOf(context)),
+                        ),
+                        Button(
+                          body: githubImage,
+                          onPressed: () async {
+                            final urlRepository =
+                                'https://github.com/adrianos42/desktop';
+                            if (await canLaunch(urlRepository)) {
+                              await launch(urlRepository);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
               Expanded(
