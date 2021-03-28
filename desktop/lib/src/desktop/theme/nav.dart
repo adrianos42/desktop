@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import 'theme_data.dart';
 import 'color_scheme.dart';
-import 'constants.dart';
 
 const double _kNavWidth = 38.0;
 const double _kNavHeight = 42.0;

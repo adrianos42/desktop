@@ -18,6 +18,67 @@ class TreeNode {
       : assert(builder == null || children == null);
 }
 
+/// Tree
+///
+/// ```dart
+/// Tree(
+///   title: Builder(
+///     builder: (context) => Text(
+///       'Tree',
+///       style: Theme.of(context).textTheme.body2,
+///     ),
+///   ),
+///   nodes: [
+///     TreeNode(
+///       'Node0',
+///       builder: (context) => Text('Node0'),
+///     ),
+///     TreeNode('Node1', children: [
+///       TreeNode(
+///         'Node0',
+///         builder: (context) => Text('Node0'),
+///       ),
+///       TreeNode(
+///         'Node1',
+///         builder: (context) => Text('Node1'),
+///       ),
+///       TreeNode(
+///         'Node2',
+///         builder: (context) => Text('Node2'),
+///       ),
+///       TreeNode('Node3', children: [
+///         TreeNode(
+///           'Node0',
+///           builder: (context) => Text('Node0'),
+///         ),
+///         TreeNode(
+///           'Node1',
+///           builder: (context) => Text('Node1'),
+///         ),
+///         // TreeNode('Breadcrumb',
+///         //     builder: (context) => BreadcrumbPage()),
+///       ]),
+///       // TreeNode('Breadcrumb',
+///       //     builder: (context) => BreadcrumbPage()),
+///     ]),
+///     TreeNode(
+///       'Node2',
+///       builder: (context) => Text('Node2'),
+///     ),
+///     TreeNode('Node3', children: [
+///       TreeNode(
+///         'Node0',
+///         builder: (context) => Text('Node0'),
+///       ),
+///       TreeNode(
+///         'Node1',
+///         builder: (context) => Text('Node1'),
+///       ),
+///       // TreeNode('Breadcrumb',
+///       //     builder: (context) => BreadcrumbPage()),
+///     ]),
+///   ],
+/// )```
 class Tree extends StatefulWidget {
   Tree({
     this.title,
@@ -69,7 +130,8 @@ class _TreeState extends State<Tree> {
   void didUpdateWidget(Tree oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // if (widget.items.length - _shouldBuildView.length > 0) { TODO
+    // FIXME!!!!!!!
+    // if (widget.items.length - _shouldBuildView.length > 0) {
     //   _shouldBuildView.addAll(List<bool>.filled(
     //       widget.items.length - _shouldBuildView.length, false));
     // } else {
@@ -260,7 +322,7 @@ class _TreeColumnState extends State<_TreeColumn> {
               hoverColor: colorScheme.shade,
               highlightColor: colorScheme.shade,
               bodyPadding: EdgeInsets.zero,
-              trailingPadding: EdgeInsets.only(left: 12.0),
+              trailingPadding: EdgeInsets.only(left: 8.0),
               buttonPadding: EdgeInsets.zero,
               // color: Theme.of(context).textTheme.textHigh,
             ),
@@ -278,9 +340,9 @@ class _TreeColumnState extends State<_TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
-      final hoverColor = active ? colorScheme.primary : colorScheme.shade;
-      final activeColor = active ? colorScheme.primary : colorScheme.shade4;
-      final highlightColor = colorScheme.primary;
+      final hoverColor = active ? colorScheme.primary1 : colorScheme.shade;
+      final activeColor = active ? colorScheme.primary1 : colorScheme.shade4;
+      final highlightColor = colorScheme.primary1;
 
       return ButtonTheme.merge(
         data: ButtonThemeData(

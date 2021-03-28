@@ -4,11 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'button.dart';
 
 class IconButton extends StatelessWidget {
-  const IconButton(this.icon, {
+  const IconButton(
+    this.icon, {
     Key? key,
     this.tooltip,
     this.onPressed,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final String? tooltip;
 

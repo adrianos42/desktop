@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -34,52 +33,56 @@ class DesktopApp extends StatefulWidget {
     this.shortcuts,
     // this.actions,
     this.onGenerateRoute,
-  })  :super(key: key);
+  }) : super(key: key);
 
-  // static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
-  //   // LogicalKeySet(LogicalKeyboardKey.escape): Intent(DismissModalAction.key),
-  //   // LogicalKeySet(LogicalKeyboardKey.escape): Intent(NavItemCloseAction.key),
-  //   // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
-  //   //     Intent(NextNavViewAction.key),
-  //   // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-  //   //     LogicalKeyboardKey.tab): Intent(PreviousNavViewAction.key),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit1):
-  //       SetViewIntent(0),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit2):
-  //       SetViewIntent(1),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit3):
-  //       SetViewIntent(2),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit4):
-  //       SetViewIntent(3),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit5):
-  //       SetViewIntent(4),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit6):
-  //       SetViewIntent(5),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit7):
-  //       SetViewIntent(6),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit8):
-  //       SetViewIntent(7),
-  //   LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit9):
-  //       SetViewIntent(8),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit1):
-  //       SetTabIntent(0),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit2):
-  //       SetTabIntent(1),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit3):
-  //       SetTabIntent(2),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit4):
-  //       SetTabIntent(3),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit5):
-  //       SetTabIntent(4),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit6):
-  //       SetTabIntent(5),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit7):
-  //       SetTabIntent(6),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit8):
-  //       SetTabIntent(7),
-  //   LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit9):
-  //       SetTabIntent(8),
-  // };
+  static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
+    LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
+        NextTabIntent(),
+    LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+        LogicalKeyboardKey.tab): PreviousTabIntent(),
+    // LogicalKeySet(LogicalKeyboardKey.escape): Intent(DismissModalAction.key),
+    // LogicalKeySet(LogicalKeyboardKey.escape): Intent(NavItemCloseAction.key),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
+    //     Intent(NextNavViewAction.key),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+    //     LogicalKeyboardKey.tab): Intent(PreviousNavViewAction.key),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit1):
+    //     SetViewIntent(0),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit2):
+    //     SetViewIntent(1),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit3):
+    //     SetViewIntent(2),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit4):
+    //     SetViewIntent(3),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit5):
+    //     SetViewIntent(4),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit6):
+    //     SetViewIntent(5),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit7):
+    //     SetViewIntent(6),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit8):
+    //     SetViewIntent(7),
+    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit9):
+    //     SetViewIntent(8),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit1):
+    //     SetTabIntent(0),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit2):
+    //     SetTabIntent(1),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit3):
+    //     SetTabIntent(2),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit4):
+    //     SetTabIntent(3),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit5):
+    //     SetTabIntent(4),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit6):
+    //     SetTabIntent(5),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit7):
+    //     SetTabIntent(6),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit8):
+    //     SetTabIntent(7),
+    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit9):
+    //     SetTabIntent(8),
+  };
 
   // static final Map<LocalKey, ActionFactory> _actions =
   //     <LocalKey, ActionFactory>{
@@ -201,6 +204,10 @@ class _DesktopAppState extends State<DesktopApp> {
           ),
           title: widget.title,
           color: effectiveThemeData.colorScheme.primary.toColor(),
+          shortcuts: <LogicalKeySet, Intent>{
+            ...WidgetsApp.defaultShortcuts,
+            ...DesktopApp._shortcuts,
+          },
           // actions: <LocalKey, ActionFactory>{
           //   ...WidgetsApp.defaultActions,
           //   ...DesktopApp._actions,

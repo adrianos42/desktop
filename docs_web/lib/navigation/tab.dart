@@ -15,20 +15,35 @@ class _TabPageState extends State<TabPage> {
 Tab(
   items: [
     TabItem(
-      builder: (context) => Center(child: Text('page1')),
-      title: Text('page1'),
+      builder: (context) => Center(
+          child: Text(
+        'page 0',
+        style: textTheme.title,
+      )),
+      title: Text('page 0'),
     ),
     TabItem(
-      builder: (context) => Center(child: Text('page2')),
-      title: Text('page2'),
+      builder: (context) => Center(
+          child: Text(
+        'page 1',
+        style: textTheme.title,
+      )),
+      title: Text('page 1'),
     ),
     TabItem(
-      builder: (context) => Center(child: Text('page3')),
-      title: Text('page3'),
+      builder: (context) => Center(
+          child: Text(
+        'page 2',
+        style: textTheme.title,
+      )),
+      title: Text('page 2'),
     ),
   ],
-),
+)
 ''';
+
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Defaults.createHeader(context, 'Tab'),
@@ -38,16 +53,28 @@ Tab(
             builder: (context) => Tab(
               items: [
                 TabItem(
-                  builder: (context) => Center(child: Text('page1')),
-                  title: Text('page1'),
+                  builder: (context) => Center(
+                      child: Text(
+                    'page 0',
+                    style: textTheme.title,
+                  )),
+                  title: Text('page 0'),
                 ),
                 TabItem(
-                  builder: (context) => Center(child: Text('page2')),
-                  title: Text('page2'),
+                  builder: (context) => Center(
+                      child: Text(
+                    'page 1',
+                    style: textTheme.title,
+                  )),
+                  title: Text('page 1'),
                 ),
                 TabItem(
-                  builder: (context) => Center(child: Text('page3')),
-                  title: Text('page3'),
+                  builder: (context) => Center(
+                      child: Text(
+                    'page 2',
+                    style: textTheme.title,
+                  )),
+                  title: Text('page 2'),
                 ),
               ],
             ),

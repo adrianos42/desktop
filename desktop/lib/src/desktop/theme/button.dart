@@ -19,7 +19,7 @@ class ButtonThemeData {
     this.leadingPadding = const EdgeInsets.only(left: _kSidePadding),
     this.trailingPadding = const EdgeInsets.only(right: _kSidePadding),
     this.bodyPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.buttonPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
+    this.buttonPadding = const EdgeInsets.all(0.0),
     this.minWidth = _kMinWidth,
     this.textStyle,
     this.iconThemeData,
@@ -206,15 +206,15 @@ class ButtonTheme extends InheritedTheme {
       final HSLColor color = buttonThemeData.color ?? colorScheme.shade4;
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? colorScheme.shade2; 
+          buttonThemeData.hoverColor ?? colorScheme.shade2;
 
-          final HSLColor highlightColor =
+      final HSLColor highlightColor =
           buttonThemeData.highlightColor ?? colorScheme.shade;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
 
-      final HSLColor focusColor = hoverColor; // TODO
+      final HSLColor focusColor = hoverColor; // FIXME
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: color.toColor());

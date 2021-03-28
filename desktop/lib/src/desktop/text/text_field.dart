@@ -101,7 +101,7 @@ abstract class DesktopTextSelectionGestureDetectorBuilderDelegate {
 class _TextFieldState extends State<TextField>
     with AutomaticKeepAliveClientMixin<TextField>, RestorationMixin
     implements DesktopTextSelectionGestureDetectorBuilderDelegate {
-  final GlobalKey _clearGlobalKey = GlobalKey();
+  // FIXME final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
   TextEditingController get _effectiveController =>
@@ -177,10 +177,10 @@ class _TextFieldState extends State<TextField>
     }
   }
 
-  void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause cause) {
-    if (cause == SelectionChangedCause.longPress) {}
-  }
+  // void _handleSelectionChanged(
+  //     TextSelection selection, SelectionChangedCause cause) {
+  //   if (cause == SelectionChangedCause.longPress) {}
+  // }
 
   @override
   bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
@@ -203,9 +203,8 @@ class _TextFieldState extends State<TextField>
     final HSLColor characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
     final HSLColor selectionColor = enabled ? colorScheme.primary2 : background;
-    final HSLColor borderColor = _effectiveFocusNode.hasFocus
-        ? colorScheme.shade5
-        : colorScheme.shade6;
+    final HSLColor borderColor =
+        _effectiveFocusNode.hasFocus ? colorScheme.shade5 : colorScheme.shade6;
 
     final textStyle = textTheme.body1.copyWith(
       color: characterColor.toColor(),

@@ -13,17 +13,18 @@ import 'tab_i.dart';
 //export 'nav_view.dart' show NavMenuRoute;
 //export 'nav_scope.dart' show NavScope;
 
-const Duration _kMenuDuration = Duration(microseconds: 200);
-const double _kDividerThickness = 1.0;
+// FIXME
+// const Duration _kMenuDuration = Duration(microseconds: 200);
+// const double _kDividerThickness = 1.0;
 const double _kMenuWidthStep = 120.0;
-const double _kDividerHeight = 1.0;
+// const double _kDividerHeight = 1.0;
 
 const double _kMenuHorizontalPadding = 16.0;
 const double _kMinMenuWidth = 2.0 * _kMenuWidthStep;
 const double _kMaxMenuWidth = 6.0 * _kMenuWidthStep;
 const double _kDefaultItemHeight = 34.0;
-const double _kMinMenuHeight = _kDefaultItemHeight;
-const double _kMaxMenuHeight = _kDefaultItemHeight;
+// const double _kMinMenuHeight = _kDefaultItemHeight;
+// const double _kMaxMenuHeight = _kDefaultItemHeight;
 
 const int _kIntialIndexValue = 0;
 
@@ -43,7 +44,7 @@ class TabList extends StatefulWidget {
   const TabList({
     Key? key,
     required this.tabItems,
-  })  : assert(tabItems.length > 0),
+  })   : assert(tabItems.length > 0),
         super(key: key);
 
   final List<TabListItem> tabItems;
@@ -57,19 +58,11 @@ class _TabListState extends State<TabList> {
 
   int get _length => widget.tabItems.length;
 
-  // static final Map<LocalKey, ActionFactory> _actions =
-  //     <LocalKey, ActionFactory>{
-  //   NextFocusAction.key: () => NextFocusViewAction(),
-  //   PreviousFocusAction.key: () => PreviousFocusViewAction(),
-  // };
-
   final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
   final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   final List<bool> _shouldBuildView = <bool>[];
   final List<GlobalKey<NavigatorState>> _navigators =
       <GlobalKey<NavigatorState>>[];
-
-  NavigatorState? get _currentNavigator => _navigators[_index].currentState;
 
   void _indexChanged(int index) {
     if (index != _index) {
@@ -202,42 +195,13 @@ class _TabListState extends State<TabList> {
   }
 }
 
-class _NavObserver extends NavigatorObserver {
-  _NavObserver(this._navState);
-
-  _TabListState _navState;
-
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    assert(route.navigator == _navState._currentNavigator);
-
-    if (!route.isFirst) {
-      if (route is PopupRoute<dynamic> || route is PageRoute<dynamic>) {}
-    }
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    assert(route.navigator == _navState._currentNavigator);
-
-    if (!route.isFirst && route is PopupRoute<dynamic> ||
-        route is PageRoute<dynamic>) {}
-  }
-
-  @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {}
-
-  @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {}
-}
-
 class _MenuItem extends StatefulWidget {
   const _MenuItem({
     Key? key,
     required this.index,
     required this.items,
     required this.changeIndex,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final int index;
 
@@ -267,11 +231,15 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
           ? (selectedColor)
           : pressed
               ? colorScheme.background2
-              : hovered ? colorScheme.background1 : null;
+              : hovered
+                  ? colorScheme.background1
+                  : null;
 
       final HSLColor foreground = pressed || selected
           ? textTheme.textHigh
-          : hovered ? textTheme.textMedium : textTheme.textLow;
+          : hovered
+              ? textTheme.textMedium
+              : textTheme.textLow;
 
       Widget item = DefaultTextStyle(
         style: textStyle.copyWith(color: foreground.toColor()),

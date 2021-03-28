@@ -53,7 +53,7 @@ class _RenderMenuItem extends RenderShiftedBox {
       child!.layout(constraints, parentUsesSize: true);
       size = constraints.constrain(child!.size);
 
-      // TODO
+      // FIXME
       final BoxParentData childParentData = child!.parentData as BoxParentData;
       childParentData.offset = Offset.zero;
     }
@@ -121,15 +121,16 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     final bool selected = widget.selected(context);
 
     final HSLColor? background = pressed
-        ? (selected ? colorScheme.primary : colorScheme.background3) // TODO
+        ? (selected ? colorScheme.primary : colorScheme.background3) // FIXME
         : selected
             ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
             : hovered
-                ? colorScheme.background2 // TODO
+                ? colorScheme.background2 // FIXME
                 : null;
 
     final foreground = selected
-        ? TextTheme(colorScheme.withBrightness(Brightness.dark)).textHigh // FIXME ???
+        ? TextTheme(colorScheme.withBrightness(Brightness.dark))
+            .textHigh // FIXME ???
         : textTheme.textHigh;
 
     final TextStyle textStyle = textTheme.body1.copyWith(

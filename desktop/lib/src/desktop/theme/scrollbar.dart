@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 import 'theme_data.dart';
-import 'theme_text.dart';
 
 class ScrollbarThemeData {
   const ScrollbarThemeData({
@@ -128,8 +127,7 @@ class ScrollbarTheme extends InheritedTheme {
 
       final ColorScheme colorScheme = themeData.colorScheme;
 
-      final HSLColor color =
-          scrollbarThemeData.color ?? colorScheme.shade6;
+      final HSLColor color = scrollbarThemeData.color ?? colorScheme.shade6;
 
       final HSLColor hoverColor =
           scrollbarThemeData.hoverColor ?? colorScheme.shade5;

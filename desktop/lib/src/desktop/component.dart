@@ -20,11 +20,10 @@ mixin ComponentStateMixin {
   set hovered(bool value) => _updateState(ComponentState.hovered, value);
   bool get focused => states.contains(ComponentState.focused);
   set focused(bool value) => _updateState(ComponentState.focused, value);
-  bool get pressed => states.contains(ComponentState.pressed);    
+  bool get pressed => states.contains(ComponentState.pressed);
   set pressed(bool value) => _updateState(ComponentState.pressed, value);
-  bool get dragged => states.contains(ComponentState.dragged);    
+  bool get dragged => states.contains(ComponentState.dragged);
   set dragged(bool value) => _updateState(ComponentState.dragged, value);
   bool get waiting => states.contains(ComponentState.waiting);
   set waiting(bool value) => _updateState(ComponentState.waiting, value);
 }
-

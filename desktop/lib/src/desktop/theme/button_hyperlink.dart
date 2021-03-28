@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import 'theme_data.dart';
 import 'color_scheme.dart';
-import 'constants.dart';
 
 const double _kLineThickness = 1.0;
 

@@ -10,7 +10,7 @@ class NavigationScope extends InheritedWidget {
     required Widget child,
     required this.navAxis,
     required GlobalKey<NavigatorState> navigatorKey,
-  })  : _navigatorKey = navigatorKey,
+  })   : _navigatorKey = navigatorKey,
         super(key: key, child: child);
 
   final GlobalKey<NavigatorState> _navigatorKey;

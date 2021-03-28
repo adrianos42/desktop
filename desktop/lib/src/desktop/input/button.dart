@@ -24,9 +24,7 @@ class Button extends StatefulWidget {
 
   final Widget? body;
 
-  /// {@template desktop.Button.trailing}
   /// Widget to place at the end of the button.
-  /// {@endtemplate}
   final Widget? trailing;
 
   final Widget? leading;
@@ -200,12 +198,12 @@ class _ButtonState extends State<Button>
                 if (waiting) return;
                 setState(() => waiting = true);
 
-                dynamic result = widget.onPressed!() as dynamic; // TODO
+                dynamic result = widget.onPressed!() as dynamic; // FIXME
 
                 if (result is Future<void>) {
                   await result;
                 }
-                
+
                 setState(() => waiting = false);
               }
             : null,

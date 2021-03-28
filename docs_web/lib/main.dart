@@ -237,10 +237,10 @@ class _DocAppState extends State<DocApp> {
                       //   'Status bar',
                       //   builder: (context) => StatusBarPage(),
                       // ),
-                      // TreeNode(
-                      //   'Tooltip',
-                      //   builder: (context) => TooltipPage(),
-                      // ),
+                      TreeNode(
+                        'Tooltip',
+                        builder: (context) => TooltipPage(),
+                      ),
                     ]),
                     TreeNode('Text', children: [
                       TreeNode(

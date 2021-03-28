@@ -85,7 +85,7 @@ class TabView extends StatefulWidget {
     required this.navigatorObserver,
     this.navigatorKey,
     Key? key,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final WidgetBuilder builder;
 

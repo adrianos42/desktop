@@ -13,3 +13,7 @@
 1.0.2
 
 - Read
+
+1.0.3
+
+- Fix button animations. Add option for nav menu

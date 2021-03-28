@@ -32,9 +32,16 @@ class _NavDialogState extends State<NavDialog> {
     final axis = navScope.navAxis;
 
     return Container(
-      height: axis == Axis.horizontal ? widget.height : null, //// TODO Set this in theme.
-      width: axis == Axis.vertical ? widget.width : null, //// TODO Set this in theme.
-      color: Theme.of(context).colorScheme.background.toColor(), //// TODO Set this in theme.
+      height: axis == Axis.horizontal
+          ? widget.height
+          : null, //// FIXME Set this in theme.
+      width: axis == Axis.vertical
+          ? widget.width
+          : null, //// FIXME Set this in theme.
+      color: Theme.of(context)
+          .colorScheme
+          .background
+          .toColor(), //// FIXME Set this in theme.
       child: widget.child,
     );
   }

@@ -26,8 +26,6 @@ class NavMenuRoute<T> extends PopupRoute<T> {
 
   static final Curve _animationCurve = Curves.easeInOut;
 
-
-
   @override
   bool get barrierDismissible => true;
 

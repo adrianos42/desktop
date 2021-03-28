@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-
+import 'dart:ui' show Brightness;
 import 'color_scheme.dart';
 
 
@@ -163,7 +162,7 @@ class TextTheme {
   final ColorScheme colorScheme;
 
   HSLColor effectiveForeground(HSLColor background) {
-    HSLColor effectiveForeground = background;
+    // HSLColor effectiveForeground = background;
 
     // if (background == colorScheme.overlay1) {
     //   effectiveForeground = textHigh;
@@ -193,13 +192,13 @@ class TextTheme {
     //   effectiveForeground = textHigh;
     // } else {
     //   effectiveForeground = textMedium;
-    // }
+    // }Q
 
     return textHigh;
   }
 
   HSLColor effectiveDisabledForeground(HSLColor background) {
-    HSLColor effectiveForeground = background;
+    // HSLColor effectiveForeground = background;
 
     // if (background == colorScheme.overlay1) {
     //   effectiveForeground = colorScheme.overlay6;

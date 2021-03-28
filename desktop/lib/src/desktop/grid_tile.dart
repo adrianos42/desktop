@@ -6,7 +6,7 @@ class GridTile extends StatelessWidget {
     this.header,
     this.footer,
     required this.child,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final Widget? header;
 
@@ -41,5 +41,3 @@ class GridTile extends StatelessWidget {
     );
   }
 }
-
-

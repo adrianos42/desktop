@@ -16,7 +16,7 @@ const double _kVerticalOffset = 24.0;
 const bool _kPreferBelow = true;
 const EdgeInsetsGeometry _kPadding =
     EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
-const EdgeInsetsGeometry _kMargin = EdgeInsets.all(0.0);
+const EdgeInsetsGeometry _kMargin = EdgeInsets.zero;
 const Duration _kFadeInDuration = Duration(milliseconds: 80);
 const Duration _kFadeOutDuration = Duration(milliseconds: 40);
 const Duration _kShowDuration = Duration(milliseconds: 1200);
@@ -102,12 +102,6 @@ class Tooltip extends StatefulWidget {
   final Color? background;
 
   /// The style to use for the message of the tooltip.
-  ///
-  /// If null, the message's [TextStyle] will be determined based on
-  /// [ThemeData]. If [ThemeData.brightness] is set to [Brightness.dark],
-  /// [ThemeData.textTheme.body1] will be used with [Colors.white]. Otherwise,
-  /// if [ThemeData.brightness] is set to [Brightness.light],
-  /// [ThemeData.textTheme.body1] will be used with [Colors.black].
   final TextStyle? textStyle;
 
   /// The length of time that a pointer must hover over a tooltip's widget
@@ -248,8 +242,16 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
   }
 
   void _createNewEntry() {
+    final OverlayState overlayState = Overlay.of(
+      context,
+      debugRequiredFor: widget,
+    )!;
+
     final RenderBox box = context.findRenderObject() as RenderBox;
-    final Offset target = box.localToGlobal(box.size.center(Offset.zero));
+    final Offset target = box.localToGlobal(
+      box.size.center(Offset.zero),
+      ancestor: overlayState.context.findRenderObject(),
+    );
 
     // We create this widget outside of the overlay entry's builder to prevent
     // updated values from happening to leak into the overlay when the overlay
@@ -303,6 +305,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     if (_entry != null) {
       _hideTooltip(immediately: true);
     }
+    _showTimer?.cancel();
     super.deactivate();
   }
 
@@ -458,7 +461,8 @@ class _TooltipOverlay extends StatelessWidget {
           child: FadeTransition(
             opacity: animation,
             child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 0.0, maxWidth: maxWidth),
+              constraints:
+                  BoxConstraints(minHeight: height, maxWidth: maxWidth),
               child: Container(
                 color: background,
                 padding: padding,

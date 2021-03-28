@@ -129,6 +129,8 @@ class DialogRoute<T> extends PopupRoute<T> {
 
   final RoutePageBuilder _pageBuilder;
 
+  final _curve = Curves.linear;
+
   @override
   bool get barrierDismissible => _barrierDismissible;
   final bool _barrierDismissible;
@@ -142,7 +144,7 @@ class DialogRoute<T> extends PopupRoute<T> {
   final Color? _barrierColor;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 200);
+  Duration get transitionDuration => const Duration(milliseconds: 300);
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
@@ -161,7 +163,8 @@ class DialogRoute<T> extends PopupRoute<T> {
     return FadeTransition(
       opacity: CurvedAnimation(
         parent: animation,
-        curve: Curves.linear,
+        curve: _curve,
+        reverseCurve: _curve.flipped,
       ),
       child: child,
     );
@@ -192,7 +195,8 @@ PopupRoute<T> createDialogRoute<T>({
   HSLColor? barrierColor,
 }) {
   final DialogThemeData dialogThemeData = DialogTheme.of(context);
-  final Color color = barrierColor?.toColor() ?? dialogThemeData.barrierColor!.toColor();
+  final Color color =
+      barrierColor?.toColor() ?? dialogThemeData.barrierColor!.toColor();
 
   return DialogRoute<T>(
     barrierColor: color,

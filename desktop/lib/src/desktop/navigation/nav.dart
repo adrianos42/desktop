@@ -11,6 +11,7 @@ import 'nav_scope.dart';
 import 'nav_button.dart';
 export 'nav_view.dart' show NavMenuRoute;
 export 'nav_scope.dart' show NavigationScope, RouteBuilder;
+import 'route.dart' show NextTabIntent, PreviousTabIntent;
 
 const int _kIntialIndexValue = 0;
 
@@ -22,12 +23,73 @@ class NavItem {
     required this.icon,
   });
 
+  /// Page builder.
   final WidgetBuilder builder;
+
+  /// Icon used if the nav axis is vertical.
   final IconData icon;
+
+  /// The title shown in case the nav axis is horizontal.
   final String title;
+
+  /// Unique route name for the page created with `builder`.
   final String route;
 }
 
+/// Navigation widget [Nav]...
+///
+/// ```dart
+/// Nav(
+///   trailingMenu: [
+///     NavItem(
+///       title: 'home',
+///       route: '/home',
+///       builder: (context) => NavDialog(
+///         child: Container(
+///           alignment: Alignment.center,
+///           padding: EdgeInsets.all(32.0),
+///           width: 600.0,
+///           child: Text('Home page'),
+///         ),
+///       ),
+///       icon: Icons.home,
+///     ),
+///     NavItem(
+///       title: 'settings',
+///       route: '/settings',
+///       builder: (context) => NavDialog(
+///         child: Container(
+///           alignment: Alignment.center,
+///           padding: EdgeInsets.all(32.0),
+///           width: 600.0,
+///           child: Text('Settings page'),
+///         ),
+///       ),
+///       icon: Icons.settings,
+///     ),
+///   ],
+///   items: [
+///     NavItem(
+///       builder: (context) => Center(child: Text('page1')),
+///       title: 'page1',
+///       icon: Icons.today,
+///       route: '/page1',
+///     ),
+///     NavItem(
+///       builder: (context) => Center(child: Text('page2')),
+///       title: 'page2',
+///       route: '/page2',
+///       icon: Icons.stars,
+///     ),
+///     NavItem(
+///       builder: (context) => Center(child: Text('page3')),
+///       title: 'page3',
+///       route: '/page3',
+///       icon: Icons.share,
+///     ),
+///   ],
+/// )
+/// ```
 class Nav extends StatefulWidget {
   const Nav({
     Key? key,
@@ -36,19 +98,30 @@ class Nav extends StatefulWidget {
     this.navAxis = Axis.vertical,
     this.trailingMenu,
     this.leadingMenu,
-  })  : //assert(back != null && back != kIsWeb),
-        assert(items.length > 0),
+    this.focusNode,
+    this.autofocus = true,
+  })  : assert(items.length > 0),
         super(key: key);
 
+  /// The items with builder and route names for transition among pages.
   final List<NavItem> items;
 
+  /// Menu before the navigation items.
   final List<NavItem>? trailingMenu;
 
+  /// Menu after the navigation items, usually at the end of the nav bar.
   final List<NavItem>? leadingMenu;
 
+  /// If the back button is enabled. Defaults to true in linux.
   final bool back;
 
+  /// The axis of the nav bar.
   final Axis navAxis;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  final bool autofocus;
 
   @override
   _NavState createState() => _NavState();
@@ -67,6 +140,8 @@ class _NavState extends State<Nav> {
   //   PreviousFocusAction.key: () => PreviousFocusViewAction(),
   // };
 
+  late Map<Type, Action<Intent>> _actionMap;
+
   bool _isBack = false;
 
   NavigatorState get _currentNavigator => _navigators[_index].currentState!;
@@ -79,19 +154,13 @@ class _NavState extends State<Nav> {
   final List<GlobalKey<NavigatorState>> _navigators =
       List<GlobalKey<NavigatorState>>.empty(growable: true);
 
+  FocusNode? _focusNode;
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode());
+
   void _nextView() => _indexChanged((_index + 1) % _length);
 
   void _previousView() => _indexChanged((_index - 1) % _length);
-
-  // void _requestViewFirstFocus() {
-  //   FocusNode focusedNode = _currentNavigator.focusScopeNode.focusedChild ??
-  //       _currentNavigator.focusScopeNode;
-
-  //   if (focusedNode.traversalDescendants.isEmpty) return;
-
-  //   focusedNode.requestFocus(
-  //       focusedNode.traversalDescendants.whereType<FocusNode>().first);
-  // }
 
   bool _indexChanged(int index) {
     if (index != _index) {
@@ -116,7 +185,6 @@ class _NavState extends State<Nav> {
       bool value = _currentNavigator.canPop();
 
       if (value != _isBack) {
-        print('button updated');
         setState(() => _isBack = value);
       }
     }
@@ -134,10 +202,8 @@ class _NavState extends State<Nav> {
   }
 
   void _showMenu(NavItem item) {
-    print('show menu: $_menus');
     setState(() {
       if (_menus == null) {
-        print('menu added');
         _menus = item.route;
 
         _currentNavigator
@@ -147,9 +213,8 @@ class _NavState extends State<Nav> {
           pageBuilder: item.builder,
         ))
             .then((_) {
-          print('_menus cleared');
           setState(() => _menus = null);
-        }).then((_) {});
+        });
       } else {
         _currentNavigator.pop();
       }
@@ -171,21 +236,12 @@ class _NavState extends State<Nav> {
                 ? () => _showMenu(item)
                 : null,
           );
-          // Widget result = IconButton(
-          //   item.icon,
-          //   onPressed: _menus.isEmpty || _menus.contains(item.route)
-          //       ? () async => await
-          //       : null,
-          // );
-
-          // return ButtonTheme.merge(data: ButtonThemeData(), child: result);
         }).toList(),
       ),
     );
   }
 
   Widget _createNavItems(EdgeInsets itemsSpacing, NavThemeData navThemeData) {
-    print('createnavitem: $_menus');
     return Padding(
       padding: itemsSpacing,
       child: NavGroup(
@@ -226,8 +282,6 @@ class _NavState extends State<Nav> {
     if (widget.back) {
       final enabled = _isBack || _index != _kIntialIndexValue || _menus != null;
 
-      print('back enabled: $enabled');
-      print(_menus);
       final value = IconButton(
         Icons.arrow_back,
         onPressed: enabled ? () => _goBack() : null,
@@ -262,9 +316,8 @@ class _NavState extends State<Nav> {
 
     result = ButtonTheme.merge(
       data: ButtonThemeData(
-        // FIXME buttonPadding: widget.navAxis == Axis.vertical ? EdgeInsets.zero : null,
+        buttonPadding: itemsSpacing,
         height: navThemeData.height,
-        bodyPadding: EdgeInsets.zero,
         iconThemeData: navThemeData.iconThemeData,
         color: colorScheme.shade4,
       ),
@@ -298,6 +351,13 @@ class _NavState extends State<Nav> {
   @override
   void initState() {
     super.initState();
+
+    _actionMap = <Type, Action<Intent>>{
+      NextTabIntent:
+          CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
+      PreviousTabIntent:
+          CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
+    };
 
     _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
         _length, (_) => GlobalKey<NavigatorState>()));
@@ -371,8 +431,6 @@ class _NavState extends State<Nav> {
 
   @override
   Widget build(BuildContext context) {
-    print('updated');
-
     final list = List<Widget>.generate(_length, (index) {
       final bool active = index == _index;
       _shouldBuildView[index] = active || _shouldBuildView[index];
@@ -389,7 +447,6 @@ class _NavState extends State<Nav> {
                 return _shouldBuildView[index]
                     ? NavigationView(
                         builder: widget.items[index].builder,
-                        //name: widget.navItems[index].route,
                         navigatorKey: _navigators[index],
                         navigatorObserver: _NavObserver(this),
                       )
@@ -415,10 +472,24 @@ class _NavState extends State<Nav> {
       ],
     );
 
-    return NavigationScope(
+    result = NavigationScope(
       navigatorKey: _navigators[_index],
       navAxis: widget.navAxis,
       child: result,
+    );
+
+    return FocusableActionDetector(
+      child: result,
+      focusNode: _effectiveFocusNode,
+      autofocus: widget.autofocus,
+      onShowFocusHighlight: (_) {},
+      onFocusChange: (_) {},
+      onShowHoverHighlight: (value) {
+        if (value) {
+          FocusScope.of(context).requestFocus(_effectiveFocusNode);
+        }
+      },
+      actions: _actionMap,
     );
   }
 }

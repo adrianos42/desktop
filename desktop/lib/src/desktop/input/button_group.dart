@@ -51,9 +51,9 @@ class ToggleButton<T> extends StatelessWidget {
             data: ButtonThemeData(
               bodyPadding: EdgeInsets.symmetric(horizontal: 6.0),
               buttonPadding: EdgeInsets.zero,
-              hoverColor: isSelected ? colorScheme.primary : null,
-              highlightColor: isSelected ? colorScheme.primary : null,
-              color: isSelected ? colorScheme.primary : null,
+              hoverColor: isSelected ? colorScheme.primary1 : null,
+              highlightColor: isSelected ? colorScheme.primary1 : null,
+              color: isSelected ? colorScheme.primary1 : null,
             ),
             child: Button(
               body: e.builder(context),

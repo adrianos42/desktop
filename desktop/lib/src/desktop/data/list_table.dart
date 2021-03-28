@@ -357,7 +357,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         double totalWidth = constraints.maxWidth;
         double remWidth = totalWidth;
 
-        // TODO: make sure this is considering only the valid indexes
+        // FIXME: make sure this is considering only the valid indexes
         int nfactors = 0;
         colFraction!.keys.forEach((value) {
           if (value < colCount) nfactors += 1;

@@ -25,7 +25,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     fadeoutOpacityAnimation.addListener(notifyListeners);
   }
 
-  /// [Color] of the thumb. 
+  /// [Color] of the thumb.
   Color get color => _color;
   late Color _color;
   set color(Color value) {
@@ -36,7 +36,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   }
 
   /// [TextDirection] of the [BuildContext] which dictates the side of the
-  /// screen the scrollbar appears in (the trailing side). 
+  /// screen the scrollbar appears in (the trailing side).
   TextDirection get textDirection => _textDirection;
   late TextDirection _textDirection;
   set textDirection(TextDirection value) {
@@ -51,7 +51,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
   /// An opacity [Animation] that dictates the opacity of the thumb.
   /// Changes in value of this [Listenable] will automatically trigger repaints.
-  /// 
+  ///
   final Animation<double> fadeoutOpacityAnimation;
 
   /// Distance from the scrollbar's start and end to the edge of the viewport
@@ -77,7 +77,6 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   EdgeInsets get padding => _padding;
   late EdgeInsets _padding;
   set padding(EdgeInsets value) {
-    assert(value != null);
     if (padding == value) return;
 
     //_padding = value;
@@ -310,7 +309,6 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   //   return interactiveThumbRect.contains(position);
   // }
 
-  // Scrollbars can be interactive in Cupertino.
   @override
   bool hitTest(Offset position) {
     if (_thumbRect == null) {

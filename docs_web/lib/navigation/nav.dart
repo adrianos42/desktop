@@ -15,52 +15,118 @@ class _NavPageState extends State<NavPage> {
 
     final codeSample = '''
 Nav(
-  items: [
-    NavItem(
-      builder: (context) => Center(child: Text('page1')),
-      title: 'page1',
-      icon: Icons.today,
-      route: '/page1',
-    ),
-    NavItem(
-      builder: (context) => Center(child: Text('page2')),
-      title: 'page2',
-      route: '/page2',
-      icon: Icons.stars,
-    ),
-    NavItem(
-      builder: (context) => Center(child: Text('page3')),
-      title: 'page3',
-      route: '/page3',
-      icon: Icons.share,
-    ),
-  ],
-)''';
+    trailingMenu: [
+      NavItem(
+        title: 'settings',
+        route: '/settings',
+        builder: (context) => NavDialog(
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(32.0),
+            width: 600.0,
+            child: Text(
+              'Settings page',
+              style: textTheme.subtitle,
+            ),
+          ),
+        ),
+        icon: Icons.settings,
+      ),
+    ],
+    items: [
+      NavItem(
+        builder: (context) => Center(
+            child: Text(
+          'page 0',
+          style: textTheme.title,
+        )),
+        title: 'page 0',
+        icon: Icons.today,
+        route: '/page0',
+      ),
+      NavItem(
+        builder: (context) => Center(
+            child: Text(
+          'page 1',
+          style: textTheme.title,
+        )),
+        title: 'page 1',
+        route: '/page1',
+        icon: Icons.stars,
+      ),
+      NavItem(
+        builder: (context) => Center(
+            child: Text(
+          'page 2',
+          style: textTheme.title,
+        )),
+        title: 'page 2',
+        route: '/page2',
+        icon: Icons.share,
+      ),
+    ],
+  ),
+  codeText: codeSample,
+)
+''';
 
     final codeHorizontalSample = '''
 Nav(
   navAxis: Axis.horizontal,
+  trailingMenu: [
+    NavItem(
+      title: 'settings',
+      route: '/settings',
+      builder: (context) => NavDialog(
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(32.0),
+          height: 100.0,
+          child: Text(
+            'Settings page',
+            style: textTheme.subtitle,
+          ),
+        ),
+      ),
+      icon: Icons.settings,
+    ),
+  ],
   items: [
     NavItem(
-      builder: (context) => Center(child: Text('page1')),
-      title: 'page1',
+      builder: (context) => Center(
+          child: Text(
+        'page 0',
+        style: textTheme.title,
+      )),
+      title: 'page 0',
       icon: Icons.today,
-      route: '/page1',
+      route: '/page0',
     ),
     NavItem(
-      builder: (context) => Center(child: Text('page2')),
-      title: 'page2',
-      route: '/page2',
+      builder: (context) => Center(
+          child: Text(
+        'page 1',
+        style: textTheme.title,
+      )),
+      title: 'page 1',
+      route: '/page1',
       icon: Icons.stars,
     ),
     NavItem(
-      builder: (context) => Center(child: Text('page3')),
-      title: 'page3',
-      route: '/page3',
+      builder: (context) => Center(
+          child: Text(
+        'page 2',
+        style: textTheme.title,
+      )),
+      title: 'page 2',
+      route: '/page2',
       icon: Icons.share,
     ),
   ],
-)''';
+)
+''';
+
+    final textTheme = Theme.of(context).textTheme;
 
     return Scrollbar(
       controller: controller,
@@ -78,19 +144,6 @@ Nav(
                 builder: (context) => Nav(
                   trailingMenu: [
                     NavItem(
-                      title: 'home',
-                      route: '/home',
-                      builder: (context) => NavDialog(
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(32.0),
-                          width: 600.0,
-                          child: Text('Home page'),
-                        ),
-                      ),
-                      icon: Icons.home,
-                    ),
-                    NavItem(
                       title: 'settings',
                       route: '/settings',
                       builder: (context) => NavDialog(
@@ -98,7 +151,10 @@ Nav(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(32.0),
                           width: 600.0,
-                          child: Text('Settings page'),
+                          child: Text(
+                            'Settings page',
+                            style: textTheme.subtitle,
+                          ),
                         ),
                       ),
                       icon: Icons.settings,
@@ -106,21 +162,33 @@ Nav(
                   ],
                   items: [
                     NavItem(
-                      builder: (context) => Center(child: Text('page1')),
-                      title: 'page1',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 0',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 0',
                       icon: Icons.today,
-                      route: '/page1',
+                      route: '/page0',
                     ),
                     NavItem(
-                      builder: (context) => Center(child: Text('page2')),
-                      title: 'page2',
-                      route: '/page2',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 1',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 1',
+                      route: '/page1',
                       icon: Icons.stars,
                     ),
                     NavItem(
-                      builder: (context) => Center(child: Text('page3')),
-                      title: 'page3',
-                      route: '/page3',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 2',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 2',
+                      route: '/page2',
                       icon: Icons.share,
                     ),
                   ],
@@ -144,7 +212,10 @@ Nav(
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(32.0),
                           height: 100.0,
-                          child: Text('Settings page'),
+                          child: Text(
+                            'Settings page',
+                            style: textTheme.subtitle,
+                          ),
                         ),
                       ),
                       icon: Icons.settings,
@@ -152,21 +223,33 @@ Nav(
                   ],
                   items: [
                     NavItem(
-                      builder: (context) => Center(child: Text('page1')),
-                      title: 'page1',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 0',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 0',
                       icon: Icons.today,
-                      route: '/page1',
+                      route: '/page0',
                     ),
                     NavItem(
-                      builder: (context) => Center(child: Text('page2')),
-                      title: 'page2',
-                      route: '/page2',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 1',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 1',
+                      route: '/page1',
                       icon: Icons.stars,
                     ),
                     NavItem(
-                      builder: (context) => Center(child: Text('page3')),
-                      title: 'page3',
-                      route: '/page3',
+                      builder: (context) => Center(
+                          child: Text(
+                        'page 2',
+                        style: textTheme.title,
+                      )),
+                      title: 'page 2',
+                      route: '/page2',
                       icon: Icons.share,
                     ),
                   ],

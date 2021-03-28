@@ -33,7 +33,7 @@ abstract class ProgressIndicator extends StatefulWidget {
       backgroundColor ?? Theme.of(context).colorScheme.shade6;
 
   HSLColor _getValueColor(BuildContext context) =>
-      valueColor ?? Theme.of(context).colorScheme.primary;
+      valueColor ?? Theme.of(context).colorScheme.primary2;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

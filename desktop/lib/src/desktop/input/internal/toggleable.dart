@@ -40,11 +40,11 @@ abstract class RenderToggleable extends RenderConstrainedBox {
         _hovering = hovering,
         _vsync = vsync,
         super(additionalConstraints: additionalConstraints) {
-    _tap = TapGestureRecognizer()
-      ..onTapDown = _handleTapDown
-      ..onTap = _handleTap
-      ..onTapUp = _handleTapUp
-      ..onTapCancel = _handleTapCancel;
+    _tap = TapGestureRecognizer()..onTap = _handleTap;
+    // FIXME
+    // ..onTapDown = _handleTapDown
+    //..onTapUp = _handleTapUp
+    //..onTapCancel = _handleTapCancel;
 
     _positionController = AnimationController(
       duration: _kToggleDuration,
@@ -254,7 +254,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool get isInteractive => onChanged != null;
 
   late TapGestureRecognizer _tap;
-  Offset? _downPosition;
+  // FIXME Offset? _downPosition;
 
   @override
   void attach(PipelineOwner owner) {
@@ -284,11 +284,12 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     }
   }
 
-  void _handleTapDown(TapDownDetails details) {
-    if (isInteractive) {
-      _downPosition = globalToLocal(details.globalPosition);
-    }
-  }
+  // FIXME
+  // void _handleTapDown(TapDownDetails details) {
+  //   if (isInteractive) {
+  //     _downPosition = globalToLocal(details.globalPosition);
+  //   }
+  // }
 
   void _handleTap() {
     if (!isInteractive) return;
@@ -307,9 +308,8 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     sendSemanticsEvent(const TapSemanticEvent());
   }
 
-  void _handleTapUp(TapUpDetails details) => _downPosition = null;
-
-  void _handleTapCancel() => _downPosition = null;
+  // FIXME void _handleTapUp(TapUpDetails details) => _downPosition = null;
+  // void _handleTapCancel() => _downPosition = null;
 
   @override
   bool hitTestSelf(Offset position) => true;

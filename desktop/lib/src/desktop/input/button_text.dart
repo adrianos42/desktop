@@ -5,12 +5,13 @@ import 'package:flutter/widgets.dart';
 import 'button.dart';
 
 class TextButton extends StatelessWidget {
-  const TextButton(this.text, {
+  const TextButton(
+    this.text, {
     Key? key,
     this.onPressed,
     this.color,
     this.tooltip,
-  })  : super(key: key);
+  }) : super(key: key);
 
   final String text;
 

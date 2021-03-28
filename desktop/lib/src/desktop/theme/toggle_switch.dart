@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 import 'theme_data.dart';
-import 'theme_text.dart';
 
 class ToggleSwitchThemeData {
   const ToggleSwitchThemeData({
@@ -135,7 +134,7 @@ class ToggleSwitchTheme extends InheritedTheme {
           toggleSwitchThemeData.activeHoverColor ?? colorScheme.primary;
 
       final HSLColor activeColor =
-          toggleSwitchThemeData.activeColor ?? colorScheme.primary2;
+          toggleSwitchThemeData.activeColor ?? colorScheme.primary1;
 
       final HSLColor inactiveHoverColor =
           toggleSwitchThemeData.activeHoverColor ?? colorScheme.shade;
@@ -162,7 +161,8 @@ class ToggleSwitchTheme extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(ToggleSwitchTheme oldWidget) => data != oldWidget.data;
+  bool updateShouldNotify(ToggleSwitchTheme oldWidget) =>
+      data != oldWidget.data;
 
   @override
   Widget wrap(BuildContext context, Widget child) {

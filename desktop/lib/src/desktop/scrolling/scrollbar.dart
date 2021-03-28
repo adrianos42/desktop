@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'scroll_painter.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 
@@ -12,7 +10,7 @@ import '../component.dart';
 
 const double _kScrollbarThickness = 8.0;
 const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1800);
-const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
+// FIXME const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
 const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
 const double _kScrollTapIncrement = 0.05;
 const double _kScrollbarMinOverscrollLength = 8.0;
@@ -74,12 +72,6 @@ class _ScrollbarState extends State<Scrollbar>
   Timer? _showTimer;
 
   late Map<Type, Action<Intent>> _actionMap;
-
-  // static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
-  //   LogicalKeySet(LogicalKeyboardKey.pageUp): const Intent(PageUpAction.key),
-  //   LogicalKeySet(LogicalKeyboardKey.pageDown):
-  //       const Intent(PageDownAction.key),
-  // };
 
   HSLColor get _trackColor {
     final theme = ScrollbarTheme.of(context);
@@ -199,19 +191,20 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  void _startShowTimer() {
-    _showTimer?.cancel();
+  // FIXME
+  // void _startShowTimer() {
+  //   _showTimer?.cancel();
 
-    _showTimer = Timer(_kScrollbarTimeToShow, () {
-      if (_position.maxScrollExtent <= _position.minScrollExtent) {
-        return;
-      }
+  //   _showTimer = Timer(_kScrollbarTimeToShow, () {
+  //     if (_position.maxScrollExtent <= _position.minScrollExtent) {
+  //       return;
+  //     }
 
-      _fadeoutAnimationController.forward();
+  //     _fadeoutAnimationController.forward();
 
-      _painter!.update(_position, _position.axisDirection);
-    });
-  }
+  //     _painter!.update(_position, _position.axisDirection);
+  //   });
+  // }
 
   void _dragScrollbar(double primaryDelta) {
     if (_position.maxScrollExtent <= 0.0) {
@@ -260,8 +253,8 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    final double scrollVelocityY =
-        _painter!.getTrackToScroll(details.velocity.pixelsPerSecond.dy);
+    // final double scrollVelocityY =
+    //     _painter!.getTrackToScroll(details.velocity.pixelsPerSecond.dy);
 
     // _drag?.end(DragEndDetails(
     //   primaryVelocity: -scrollVelocityY,
@@ -378,9 +371,6 @@ class _ScrollbarState extends State<Scrollbar>
     if (status == AnimationStatus.completed) {}
   }
 
-  double _previousValue = 0.0;
-  double _positionCompleted = 0.0;
-
   bool _handleScrollNotification(ScrollNotification notification) {
     final ScrollMetrics metrics = notification.metrics;
 
@@ -435,17 +425,6 @@ class _ScrollbarState extends State<Scrollbar>
         }
       }),
     };
-
-    // _actionMap = <LocalKey, ActionFactory>{
-    //   PageDownAction.key: () => CallbackAction(
-    //         PageDownAction.key,
-    //         onInvoke: (node, tag) => _addScrollOffsetDelta(120.0),
-    //       ),
-    //   PageUpAction.key: () => CallbackAction(
-    //         PageUpAction.key,
-    //         onInvoke: (node, tag) => _addScrollOffsetDelta(-120.0),
-    //       ),
-    // };
 
     WidgetsBinding.instance!.addObserver(this);
 

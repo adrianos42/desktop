@@ -6,11 +6,12 @@ import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
-const double _kSidePadding = 6.0;
-const double _kHeight = 32.0;
+// FIXME
+// const double _kSidePadding = 6.0;
+// const double _kHeight = 32.0;
 const double _kIconSize = 19.0;
 const double _kFontSize = 14.0;
-const double _kMinWidth = 12.0;
+// const double _kMinWidth = 12.0;
 
 class DropDownButtonThemeData {
   const DropDownButtonThemeData({

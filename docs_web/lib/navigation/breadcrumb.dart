@@ -13,24 +13,26 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
   Widget build(BuildContext context) {
     final textController = TextEditingController(text: '''
 Breadcrumb(
-  initialRoute: 'Page0/',
+  initialRoute: 'page_0/',
   routeBuilder: (context, settings) {
     switch (settings.name) {
-      case 'Page0/':
+      case 'page_0/':
         return DesktopPageRoute(
           fullscreenDialog: false,
-          builder: (context) => HomePage(),
+          builder: (context) => _MainPage(0),
           settings: RouteSettings(name: settings.name),
         );
       default:
+        final count = settings.arguments as int;
         return DesktopPageRoute(
           fullscreenDialog: false,
-          builder: (context) => Page(settings.arguments),
+          builder: (context) => _MainPage(count),
           settings: RouteSettings(name: settings.name),
         );
     }
   },
-)''');
+)
+''');
 
     return Column(
       children: [

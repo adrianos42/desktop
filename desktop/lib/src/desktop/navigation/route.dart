@@ -1,10 +1,19 @@
 import 'dart:async';
-import 'dart:math';
-import 'dart:ui' show lerpDouble, ImageFilter;
+import 'dart:ui' show ImageFilter;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart' show Curves;
+
+class NextTabIntent extends Intent {
+  /// Creates an intent that is used with [NextTabIntent].
+  const NextTabIntent();
+}
+
+class PreviousTabIntent extends Intent {
+  /// Creates an intent that is used with [PreviousTabIntent].
+  const PreviousTabIntent();
+}
 
 class DesktopPageRoute<T> extends PageRoute<T> {
   DesktopPageRoute({

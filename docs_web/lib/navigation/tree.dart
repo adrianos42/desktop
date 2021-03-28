@@ -16,35 +16,59 @@ Tree(
   title: Builder(
     builder: (context) => Text(
       'Tree',
-      style: Theme.of(context).textTheme.body2,
+      style: textTheme.body2,
     ),
   ),
   nodes: [
     TreeNode(
-      'Node0',
-      builder: (context) => Text('Node0'),
+      'Node 0',
+      builder: (context) => Center(
+          child: Text(
+        'Node 0',
+        style: textTheme.title,
+      )),
     ),
-    TreeNode('Node1', children: [
+    TreeNode('Node 1', children: [
       TreeNode(
-        'Node0',
-        builder: (context) => Text('Node0'),
+        'Node 0',
+        builder: (context) => Center(
+            child: Text(
+          'Node 1 -> 0',
+          style: textTheme.title,
+        )),
       ),
       TreeNode(
-        'Node1',
-        builder: (context) => Text('Node1'),
+        'Node 1',
+        builder: (context) => Center(
+            child: Text(
+          'Node 1 -> 1',
+          style: textTheme.title,
+        )),
       ),
       TreeNode(
-        'Node2',
-        builder: (context) => Text('Node2'),
+        'Node 2',
+        builder: (context) => Center(
+            child: Text(
+          'Node 1 -> 2',
+          style: textTheme.title,
+        )),
       ),
       TreeNode('Node3', children: [
         TreeNode(
-          'Node0',
-          builder: (context) => Text('Node0'),
+          'Node 0',
+          builder: (context) => Center(
+              child: Text(
+            'Node 1 -> 3 -> 0',
+            style: textTheme.title,
+          )),
         ),
         TreeNode(
-          'Node1',
-          builder: (context) => Text('Node1'),
+          'Node 1',
+          builder: (context) => Center(
+              child: Text(
+            'Node 1 -> 3 -> 1',
+            style: textTheme.title,
+          )),
         ),
         // TreeNode('Breadcrumb',
         //     builder: (context) => BreadcrumbPage()),
@@ -53,17 +77,29 @@ Tree(
       //     builder: (context) => BreadcrumbPage()),
     ]),
     TreeNode(
-      'Node2',
-      builder: (context) => Text('Node2'),
+      'Node 2',
+      builder: (context) => Center(
+          child: Text(
+        'Node 2 ',
+        style: textTheme.title,
+      )),
     ),
-    TreeNode('Node3', children: [
+    TreeNode('Node 3', children: [
       TreeNode(
-        'Node0',
-        builder: (context) => Text('Node0'),
+        'Node 0',
+        builder: (context) => Center(
+            child: Text(
+          'Node 3 -> 0',
+          style: textTheme.title,
+        )),
       ),
       TreeNode(
-        'Node1',
-        builder: (context) => Text('Node1'),
+        'Node 1',
+        builder: (context) => Center(
+            child: Text(
+          'Node 3 -> 1',
+          style: textTheme.title,
+        )),
       ),
       // TreeNode('Breadcrumb',
       //     builder: (context) => BreadcrumbPage()),
@@ -71,6 +107,9 @@ Tree(
   ],
 )
 ''';
+
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Defaults.createHeader(context, 'Tree'),
@@ -81,35 +120,59 @@ Tree(
               title: Builder(
                 builder: (context) => Text(
                   'Tree',
-                  style: Theme.of(context).textTheme.body2,
+                  style: textTheme.body2,
                 ),
               ),
               nodes: [
                 TreeNode(
-                  'Node0',
-                  builder: (context) => Text('Node0'),
+                  'Node 0',
+                  builder: (context) => Center(
+                      child: Text(
+                    'Node 0',
+                    style: textTheme.title,
+                  )),
                 ),
-                TreeNode('Node1', children: [
+                TreeNode('Node 1', children: [
                   TreeNode(
-                    'Node0',
-                    builder: (context) => Text('Node0'),
+                    'Node 0',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 1 -> 0',
+                      style: textTheme.title,
+                    )),
                   ),
                   TreeNode(
-                    'Node1',
-                    builder: (context) => Text('Node1'),
+                    'Node 1',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 1 -> 1',
+                      style: textTheme.title,
+                    )),
                   ),
                   TreeNode(
-                    'Node2',
-                    builder: (context) => Text('Node2'),
+                    'Node 2',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 1 -> 2',
+                      style: textTheme.title,
+                    )),
                   ),
                   TreeNode('Node3', children: [
                     TreeNode(
-                      'Node0',
-                      builder: (context) => Text('Node0'),
+                      'Node 0',
+                      builder: (context) => Center(
+                          child: Text(
+                        'Node 1 -> 3 -> 0',
+                        style: textTheme.title,
+                      )),
                     ),
                     TreeNode(
-                      'Node1',
-                      builder: (context) => Text('Node1'),
+                      'Node 1',
+                      builder: (context) => Center(
+                          child: Text(
+                        'Node 1 -> 3 -> 1',
+                        style: textTheme.title,
+                      )),
                     ),
                     // TreeNode('Breadcrumb',
                     //     builder: (context) => BreadcrumbPage()),
@@ -118,17 +181,29 @@ Tree(
                   //     builder: (context) => BreadcrumbPage()),
                 ]),
                 TreeNode(
-                  'Node2',
-                  builder: (context) => Text('Node2'),
+                  'Node 2',
+                  builder: (context) => Center(
+                      child: Text(
+                    'Node 2 ',
+                    style: textTheme.title,
+                  )),
                 ),
-                TreeNode('Node3', children: [
+                TreeNode('Node 3', children: [
                   TreeNode(
-                    'Node0',
-                    builder: (context) => Text('Node0'),
+                    'Node 0',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 3 -> 0',
+                      style: textTheme.title,
+                    )),
                   ),
                   TreeNode(
-                    'Node1',
-                    builder: (context) => Text('Node1'),
+                    'Node 1',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 3 -> 1',
+                      style: textTheme.title,
+                    )),
                   ),
                   // TreeNode('Breadcrumb',
                   //     builder: (context) => BreadcrumbPage()),

@@ -15,6 +15,28 @@ typedef TextCallback = void Function(String);
 const double _kHeight = 32.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
+/// Navigation using breadcrumbs.
+///
+/// ```dart
+/// Breadcrumb(
+///   initialRoute: 'Page0/',
+///   routeBuilder: (context, settings) {
+///     switch (settings.name) {
+///       case 'Page0/':
+///         return DesktopPageRoute(
+///           fullscreenDialog: false,
+///           builder: (context) => HomePage(),
+///           settings: RouteSettings(name: settings.name),
+///         );
+///       default:
+///         return DesktopPageRoute(
+///           fullscreenDialog: false,
+///           builder: (context) => Page(settings.arguments),
+///           settings: RouteSettings(name: settings.name),
+///         );
+///     }
+///   },
+/// )```
 class Breadcrumb extends StatefulWidget {
   const Breadcrumb({
     Key? key,
@@ -27,12 +49,15 @@ class Breadcrumb extends StatefulWidget {
 
   final String initialRoute;
 
+  /// Callback called whenever a route is pushed into the current [Navigator].
   final TextCallback? routeNameChanged;
 
   final RouteBuilder routeBuilder;
 
+  /// Widget placed after any items.
   final Widget? trailing;
 
+  /// Widget placed before any items.
   final Widget? leading;
 
   @override
@@ -290,7 +315,7 @@ class _TabGroupState extends State<_TabGroup> {
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
       final HSLColor foreground =
           widget.index == index || _pressedIndex == index
-              ? colorScheme.primary
+              ? colorScheme.primary2
               : _hoveredIndex == index
                   ? textTheme.textMedium
                   : textTheme.textLow;

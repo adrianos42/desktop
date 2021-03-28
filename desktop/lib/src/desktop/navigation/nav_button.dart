@@ -59,8 +59,6 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     final highlightColor = colorScheme.primary1;
 
     for (int index = 0; index < widget.navItems.length; index++) {
-      final navItem = widget.navItems[index];
-
       final bool active = widget.index == index;
 
       BoxConstraints constraints;
@@ -94,7 +92,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
                 hoverColor: active ? highlightColor : hoverColor,
                 textStyle: textStyle,
                 iconThemeData: iconThemeData,
-                bodyPadding: EdgeInsets.zero,
+                //bodyPadding: EdgeInsets.zero,
               ),
               child: Button(
                 body: widget.navWidgets(context, index),
@@ -399,9 +397,9 @@ class NavMenuButton extends StatelessWidget {
     final highlightColor = colorScheme.primary1;
 
     final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
-      final IconThemeData iconThemeData = navThemeData.iconThemeData;
-      final color = colorScheme.shade4;
-      final hoverColor = colorScheme.shade;
+    final IconThemeData iconThemeData = navThemeData.iconThemeData;
+    final color = colorScheme.shade4;
+    final hoverColor = colorScheme.shade;
 
     return ButtonTheme.merge(
       data: ButtonThemeData(
@@ -410,7 +408,7 @@ class NavMenuButton extends StatelessWidget {
         hoverColor: active ? highlightColor : hoverColor,
         textStyle: textStyle,
         iconThemeData: iconThemeData,
-        bodyPadding: EdgeInsets.zero,
+        //bodyPadding: EdgeInsets.zero,
       ),
       child: Button(
         onPressed: onPressed,

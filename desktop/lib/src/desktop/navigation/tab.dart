@@ -1,8 +1,6 @@
-import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/services.dart';
 
 import '../theme/theme.dart';
 
@@ -13,24 +11,6 @@ import 'nav_scope.dart';
 const int _kIntialIndexValue = 0;
 const double _kTabHeight = 38.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 8.0);
-
-// class SetTabAction extends Action {
-//   const SetTabAction() : super(key);
-
-//   static const LocalKey key = ValueKey<Type>(SetTabAction);
-
-//   @override
-//   void invoke(FocusNode node, SetTabIntent intent) =>
-//       Tab._of(node.context)._indexChanged(intent.index);
-// }
-
-// class SetTabIntent extends Intent {
-//   const SetTabIntent(this.index)
-//       : assert(index != null),
-//         super(SetTabAction.key);
-
-//   final int index;
-// }
 
 class TabItem {
   const TabItem({
@@ -46,23 +26,51 @@ class TabItem {
   final Widget title;
 }
 
+/// Navigation tab.
+///
+/// The difference with [Nav], is that [Tab] is simpler and only support horizontal axis for the item.
+/// Widget may also be used as tabs, meanwhile only text can be used in [Nav] bar.
+///
+/// ```dart
+/// Tab(
+///   items: [
+///     TabItem(
+///       builder: (context) => Center(child: Text('page1')),
+///       title: Text('page1'),
+///     ),
+///     TabItem(
+///       builder: (context) => Center(child: Text('page2')),
+///       title: Text('page2'),
+///     ),
+///     TabItem(
+///       builder: (context) => Center(child: Text('page3')),
+///       title: Text('page3'),
+///     ),
+///   ],
+/// )```
 class Tab extends StatefulWidget {
   const Tab({
     Key? key,
     required this.items,
     this.trailing,
+    this.focusNode,
+    this.autofocus = true,
   })  : assert(items.length > 0),
         super(key: key);
 
+  /// Tab items.
   final List<TabItem> items;
 
+  /// The trailing widget that will placed at the end of the tab bar.
   final WidgetBuilder? trailing;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  final bool autofocus;
 
   @override
   _TabState createState() => _TabState();
-
-  static _TabState? _of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_TabScope>()?.tabState;
 }
 
 class _TabScope extends InheritedWidget {
@@ -87,9 +95,15 @@ class _TabState extends State<Tab> {
 
   int _index = _kIntialIndexValue;
 
+  late Map<Type, Action<Intent>> _actionMap;
+
   int get _length => widget.items.length;
 
-  NavigatorState? get _currentNavigator => _navigators[_index].currentState;
+  FocusNode? _focusNode;
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode());
+
+  // FIXME NavigatorState? get _currentNavigator => _navigators[_index].currentState;
 
   void _nextView() => _indexChanged((_index + 1) % _length);
 
@@ -136,6 +150,13 @@ class _TabState extends State<Tab> {
   @override
   void initState() {
     super.initState();
+
+    _actionMap = <Type, Action<Intent>>{
+      NextTabIntent:
+          CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
+      PreviousTabIntent:
+          CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
+    };
 
     _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
         _length, (_) => GlobalKey<NavigatorState>()));
@@ -242,7 +263,19 @@ class _TabState extends State<Tab> {
       navAxis: Axis.horizontal,
     );
 
-    return result;
+    return FocusableActionDetector(
+      child: result,
+      focusNode: _effectiveFocusNode,
+      autofocus: widget.autofocus,
+      onShowFocusHighlight: (_) {},
+      onFocusChange: (_) {},
+      onShowHoverHighlight: (value) {
+        if (value) {
+          FocusScope.of(context).requestFocus(_effectiveFocusNode);
+        }
+      },
+      actions: _actionMap,
+    );
   }
 }
 
@@ -292,13 +325,15 @@ class _TabGroupState extends State<_TabGroup> {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
-      final HSLColor foreground = widget.index == index || _pressedIndex == index
-          ? colorScheme.primary
-          : _hoveredIndex == index
-              ? textTheme.textHigh
-              : textTheme.textLow;
+      final HSLColor foreground =
+          widget.index == index || _pressedIndex == index
+              ? colorScheme.primary1
+              : _hoveredIndex == index
+                  ? textTheme.textHigh
+                  : textTheme.textLow;
 
-      final TextStyle textStyle = textTheme.body2.copyWith(color: foreground.toColor());
+      final TextStyle textStyle =
+          textTheme.body2.copyWith(color: foreground.toColor());
       final IconThemeData iconThemeData = IconThemeData(
         color: foreground.toColor(),
         size: 18.0,
@@ -340,7 +375,7 @@ class _TabGroupState extends State<_TabGroup> {
           children: <Widget>[
             ...list,
             Spacer(),
-            if (widget.trailing != null) widget.trailing!(context), // TODO
+            if (widget.trailing != null) widget.trailing!(context),
           ],
         ),
       ),

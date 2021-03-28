@@ -123,7 +123,7 @@ class DialogTheme extends InheritedTheme {
 
     assert(dialogThemeData!.isConcrete);
 
-    return dialogThemeData!; // TODO
+    return dialogThemeData!; // FIXME
   }
 
   @override
