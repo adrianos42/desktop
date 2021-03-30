@@ -41,7 +41,7 @@ class ToggleButton<T> extends StatelessWidget {
         'Cannot have more than one item with the same value');
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -49,7 +49,6 @@ class ToggleButton<T> extends StatelessWidget {
           bool isSelected = value == e.value;
           return ButtonTheme.merge(
             data: ButtonThemeData(
-              bodyPadding: EdgeInsets.symmetric(horizontal: 6.0),
               buttonPadding: EdgeInsets.zero,
               hoverColor: isSelected ? colorScheme.primary1 : null,
               highlightColor: isSelected ? colorScheme.primary1 : null,

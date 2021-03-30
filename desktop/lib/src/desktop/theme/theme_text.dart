@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'dart:ui' show Brightness;
 import 'color_scheme.dart';
 
-
-
 class _TextThemes {
   static const TextStyle header = TextStyle(
     inherit: false,
@@ -94,9 +92,9 @@ class TextTheme {
 
     switch (colorScheme.brightness) {
       case Brightness.dark:
-      final foreground = colorScheme.shade.toColor();
+        final foreground = colorScheme.shade.toColor();
         result = TextTheme._raw(
-         header: _TextThemes.header.apply(color: foreground),
+          header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
           subtitle: _TextThemes.subtitle.apply(color: foreground),
           title: _TextThemes.title.apply(color: foreground),

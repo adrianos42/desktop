@@ -127,7 +127,6 @@ class PrimaryColor extends HSLColor {
       : super.fromAHSL(alpha, hue, saturation, lightness);
 }
 
-
 // class _Colors {
 //   static const aliceBlue = HSLColor.fromAHSL(1.0, 208, 1.0, 0.97);
 //   static const antiqueWhite = HSLColor.fromAHSL(1.0, 34.0, 0.78, 0.91);

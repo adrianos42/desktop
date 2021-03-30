@@ -20,8 +20,16 @@ class _ButtonTogglePageState extends State<ButtonTogglePage> {
     return Defaults.createItemsWithTitle(
       context,
       items: [
-        ItemTitle(body: (context) => Text(''), codeText: enabledCode, title: 'Enabled', height: 400.0),
-        ItemTitle(body: (context) => Text(''), codeText: disabledCode, title: 'Disabled', height: 400.0),
+        ItemTitle(
+            body: (context) => Text(''),
+            codeText: enabledCode,
+            title: 'Enabled',
+            height: 400.0),
+        ItemTitle(
+            body: (context) => Text(''),
+            codeText: disabledCode,
+            title: 'Disabled',
+            height: 400.0),
       ],
       header: 'Toggle button',
     );

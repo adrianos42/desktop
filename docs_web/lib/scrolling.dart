@@ -179,7 +179,8 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
-    final replace = widget.requestPrevious!(replaceAssetName ?? widget.assetName);
+    final replace =
+        widget.requestPrevious!(replaceAssetName ?? widget.assetName);
     if (replace != null) {
       setState(() => replaceAssetName = replace);
     }

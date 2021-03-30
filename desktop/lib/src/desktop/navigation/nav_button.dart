@@ -88,11 +88,11 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
             child: ButtonTheme.merge(
               data: ButtonThemeData(
                 color: active ? highlightColor : color,
-                highlightColor: active ? highlightColor : hoverColor,
+                highlightColor: highlightColor,
                 hoverColor: active ? highlightColor : hoverColor,
                 textStyle: textStyle,
                 iconThemeData: iconThemeData,
-                //bodyPadding: EdgeInsets.zero,
+                bodyPadding: EdgeInsets.zero,
               ),
               child: Button(
                 body: widget.navWidgets(context, index),
@@ -404,11 +404,11 @@ class NavMenuButton extends StatelessWidget {
     return ButtonTheme.merge(
       data: ButtonThemeData(
         color: active ? highlightColor : color,
-        highlightColor: active ? highlightColor : hoverColor,
+        highlightColor: highlightColor,
         hoverColor: active ? highlightColor : hoverColor,
         textStyle: textStyle,
         iconThemeData: iconThemeData,
-        //bodyPadding: EdgeInsets.zero,
+        bodyPadding: EdgeInsets.zero,
       ),
       child: Button(
         onPressed: onPressed,

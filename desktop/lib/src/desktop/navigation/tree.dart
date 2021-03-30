@@ -324,7 +324,6 @@ class _TreeColumnState extends State<_TreeColumn> {
               bodyPadding: EdgeInsets.zero,
               trailingPadding: EdgeInsets.only(left: 8.0),
               buttonPadding: EdgeInsets.zero,
-              // color: Theme.of(context).textTheme.textHigh,
             ),
             child: Button(
               body: Text(widget.node.title),

@@ -15,7 +15,9 @@ class _StatusBarPageState extends State<StatusBarPage> {
       children: [
         Defaults.createHeader(context, 'Status bar'),
         Expanded(
-          child: Center(child: Text(''),),
+          child: Center(
+            child: Text(''),
+          ),
         ),
       ],
     );

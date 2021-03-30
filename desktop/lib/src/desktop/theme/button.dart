@@ -6,7 +6,7 @@ import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
-const double _kSidePadding = 6.0;
+const double _kSidePadding = 4.0;
 const double _kHeight = 32.0;
 const double _kIconSize = 22.0;
 const double _kFontSize = 14.0;
@@ -14,12 +14,11 @@ const double _kMinWidth = 12.0;
 
 class ButtonThemeData {
   const ButtonThemeData({
-    //this.colorScheme,
     this.height = _kHeight,
-    this.leadingPadding = const EdgeInsets.only(left: _kSidePadding),
-    this.trailingPadding = const EdgeInsets.only(right: _kSidePadding),
+    this.leadingPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
+    this.trailingPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
     this.bodyPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.buttonPadding = const EdgeInsets.all(0.0),
+    this.buttonPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
     this.minWidth = _kMinWidth,
     this.textStyle,
     this.iconThemeData,
@@ -77,7 +76,6 @@ class ButtonThemeData {
     return ButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
       iconThemeData: iconThemeData ?? this.iconThemeData,
-      //colorScheme: colorScheme ?? this.colorScheme,
       leadingPadding: leadingPadding ?? this.leadingPadding,
       trailingPadding: trailingPadding ?? this.trailingPadding,
       bodyPadding: bodyPadding ?? this.bodyPadding,
@@ -97,7 +95,6 @@ class ButtonThemeData {
     return copyWith(
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
-      //colorScheme: other.colorScheme,
       leadingPadding: other.leadingPadding,
       trailingPadding: other.trailingPadding,
       bodyPadding: other.bodyPadding,
@@ -115,7 +112,6 @@ class ButtonThemeData {
   bool get isConcrete {
     return textStyle != null &&
         iconThemeData != null &&
-        //colorScheme != null &&
         disabledColor != null &&
         color != null &&
         focusColor != null &&
@@ -128,7 +124,6 @@ class ButtonThemeData {
     return hashValues(
       textStyle,
       iconThemeData,
-      //colorScheme,
       leadingPadding,
       trailingPadding,
       bodyPadding,
