@@ -56,7 +56,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     final bool enabled = widget.enabled;
-    final highlightColor = colorScheme.primary1;
+    final highlightColor = colorScheme.shade;
 
     for (int index = 0; index < widget.navItems.length; index++) {
       final bool active = widget.index == index;
@@ -394,7 +394,7 @@ class NavMenuButton extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    final highlightColor = colorScheme.primary1;
+    final highlightColor = colorScheme.shade;
 
     final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
     final IconThemeData iconThemeData = navThemeData.iconThemeData;
