@@ -40,7 +40,7 @@ class ColorScheme {
       .withLightness(primary.lightness - 0.2);
 
   HSLColor get background => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
   HSLColor get background1 => brightness == Brightness.light
