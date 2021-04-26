@@ -3,10 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
-import 'nav_scope.dart';
+import 'tab_scope.dart';
 
-class NavDialog extends StatefulWidget {
-  NavDialog({
+class TabDialog extends StatefulWidget {
+  TabDialog({
     required this.child,
     this.height,
     this.width,
@@ -22,14 +22,14 @@ class NavDialog extends StatefulWidget {
   final double? width;
 
   @override
-  _NavDialogState createState() => _NavDialogState();
+  _TabDialogState createState() => _TabDialogState();
 }
 
-class _NavDialogState extends State<NavDialog> {
+class _TabDialogState extends State<TabDialog> {
   @override
   Widget build(BuildContext context) {
-    final navScope = NavigationScope.of(context)!;
-    final axis = navScope.navAxis;
+    final navScope = TabScope.of(context)!;
+    final axis = navScope.axis;
 
     return Container(
       height: axis == Axis.horizontal

@@ -52,8 +52,9 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     var titleItems = List<Widget>.empty(growable: true);
 
     final NavThemeData navThemeData = NavTheme.of(context);
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
 
     final bool enabled = widget.enabled;
     final highlightColor = colorScheme.shade;
@@ -62,40 +63,54 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
       final bool active = widget.index == index;
 
       BoxConstraints constraints;
-      var onLayout;
+      final buttonBodyPadding;
+      final buttonHeight;
+      double? buttonWidth;
+      final onLayout;
 
       if (axis == Axis.horizontal) {
         constraints = BoxConstraints.tightFor(height: navThemeData.height);
         onLayout = (Size value) => itemLengths[index] = value.width;
+        buttonBodyPadding =
+            EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
+        buttonHeight = navThemeData.height;
       } else {
         constraints = BoxConstraints.tightFor(
           width: navThemeData.width,
           height: navThemeData.width,
         );
         onLayout = (Size value) => itemLengths[index] = value.height;
+        buttonBodyPadding = EdgeInsets.zero;
+        buttonHeight = navThemeData.width;
+        buttonWidth = navThemeData.width;
       }
 
       final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
       final IconThemeData iconThemeData = navThemeData.iconThemeData;
-      final color = colorScheme.shade4;
-      final hoverColor = colorScheme.shade;
+      final color = textTheme.textLow;
+      final hoverColor = textTheme.textHigh;
 
       titleItems.add(
         _NavButtonItem(
           onLayout: onLayout,
           button: Container(
             constraints: constraints,
-            child: ButtonTheme.merge(
+            alignment: Alignment.center,
+            child: ButtonTheme(
               data: ButtonThemeData(
                 color: active ? highlightColor : color,
                 highlightColor: highlightColor,
                 hoverColor: active ? highlightColor : hoverColor,
                 textStyle: textStyle,
                 iconThemeData: iconThemeData,
-                bodyPadding: EdgeInsets.zero,
+                height: buttonHeight,
+                minWidth: buttonWidth,
               ),
               child: Button(
                 body: widget.navWidgets(context, index),
+                padding: EdgeInsets.zero,
+                bodyPadding: buttonBodyPadding,
+                axis: axis,
                 onPressed: enabled ? () => widget.onChanged(index) : null,
                 //tooltip: navItem.title,
               ),
@@ -377,6 +392,7 @@ class NavMenuButton extends StatelessWidget {
     Key? key,
     this.tooltip,
     this.onPressed,
+    required this.axis,
     required this.active,
   }) : super(key: key);
 
@@ -388,18 +404,35 @@ class NavMenuButton extends StatelessWidget {
 
   final bool active;
 
+  final Axis axis;
+
   @override
   Widget build(BuildContext context) {
     final NavThemeData navThemeData = NavTheme.of(context);
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
 
     final highlightColor = colorScheme.shade;
 
     final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
     final IconThemeData iconThemeData = navThemeData.iconThemeData;
-    final color = colorScheme.shade4;
+    final color = textTheme.textLow;
     final hoverColor = colorScheme.shade;
+
+    final buttonBodyPadding;
+    final buttonHeight;
+    double? buttonWidth;
+
+    if (axis == Axis.horizontal) {
+      buttonBodyPadding =
+          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
+      buttonHeight = navThemeData.height;
+    } else {
+      buttonBodyPadding = EdgeInsets.zero;
+      buttonHeight = navThemeData.width;
+      buttonWidth = navThemeData.width;
+    }
 
     return ButtonTheme.merge(
       data: ButtonThemeData(
@@ -407,13 +440,17 @@ class NavMenuButton extends StatelessWidget {
         highlightColor: highlightColor,
         hoverColor: active ? highlightColor : hoverColor,
         textStyle: textStyle,
+        height: buttonHeight,
+        minWidth: buttonWidth,
         iconThemeData: iconThemeData,
-        bodyPadding: EdgeInsets.zero,
       ),
       child: Button(
+        padding: EdgeInsets.zero,
+        bodyPadding: buttonBodyPadding,
         onPressed: onPressed,
         tooltip: tooltip,
         body: child,
+        axis: axis,
       ),
     );
   }

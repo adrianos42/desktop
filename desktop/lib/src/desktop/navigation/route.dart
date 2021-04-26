@@ -5,6 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart' show Curves;
 
+import '../localizations.dart';
+
 class NextTabIntent extends Intent {
   /// Creates an intent that is used with [NextTabIntent].
   const NextTabIntent();
@@ -108,6 +110,7 @@ abstract class ContextRoute<T> extends ModalRoute<T> {
 class _DialogRoute<T> extends PopupRoute<T> {
   _DialogRoute({
     required RoutePageBuilder pageBuilder,
+    required BuildContext context,
     bool barrierDismissible = true,
     String? barrierLabel,
     Color barrierColor = const Color(0x80000000),
@@ -117,7 +120,7 @@ class _DialogRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel,
+        _barrierLabel = barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor,
         _transitionDuration = transitionDuration,
         _transitionBuilder = transitionBuilder,
@@ -180,6 +183,7 @@ Future<T?> showDesktopPopup<T>({
 }) {
   return Navigator.of(context, rootNavigator: false).push<T>(
     _DialogRoute<T>(
+      context: context,
       pageBuilder: pageBuilder,
       barrierDismissible: barrierDismissible,
       barrierLabel: barrierLabel,

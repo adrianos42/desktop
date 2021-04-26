@@ -1,3 +1,4 @@
+import 'package:desktop/src/desktop/navigation/tab_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -6,12 +7,12 @@ import '../theme/theme.dart';
 import '../icons.dart';
 import '../input/button_icon.dart';
 
-import 'nav_view.dart';
-import 'nav_scope.dart';
+import 'tab_scope.dart';
 import 'nav_button.dart';
-export 'nav_view.dart' show NavMenuRoute;
-export 'nav_scope.dart' show NavigationScope, RouteBuilder;
+export 'tab_scope.dart' show TabScope, RouteBuilder;
 import 'route.dart' show NextTabIntent, PreviousTabIntent;
+
+import 'tab_view.dart';
 
 const int _kIntialIndexValue = 0;
 
@@ -38,7 +39,7 @@ class NavItem {
 
 /// Navigation widget [Nav]...
 ///
-/// ```dart
+///```dart
 /// Nav(
 ///   trailingMenu: [
 ///     NavItem(
@@ -89,7 +90,7 @@ class NavItem {
 ///     ),
 ///   ],
 /// )
-/// ```
+///```
 class Nav extends StatefulWidget {
   const Nav({
     Key? key,
@@ -207,8 +208,10 @@ class _NavState extends State<Nav> {
         _menus = item.route;
 
         _currentNavigator
-            .push<dynamic>(NavMenuRoute(
+            .push<dynamic>(TabMenuRoute(
+          context: context,
           axis: widget.navAxis,
+          barrierColor: DialogTheme.of(context).barrierColor!,
           settings: RouteSettings(name: item.route),
           pageBuilder: item.builder,
         ))
@@ -231,6 +234,7 @@ class _NavState extends State<Nav> {
         children: items.map((item) {
           return NavMenuButton(
             Icon(item.icon),
+            axis: widget.navAxis,
             active: _menus == item.route,
             onPressed: _menus == null || _menus == item.route
                 ? () => _showMenu(item)
@@ -263,7 +267,7 @@ class _NavState extends State<Nav> {
 
     final NavThemeData navThemeData = NavTheme.of(context);
 
-    //final backgroundColor = navThemeData.background;
+    final backgroundColor = colorScheme.background;
 
     BoxConstraints constraints;
     EdgeInsets itemsSpacing;
@@ -282,10 +286,16 @@ class _NavState extends State<Nav> {
     if (widget.back) {
       final enabled = _isBack || _index != _kIntialIndexValue || _menus != null;
 
-      final value = IconButton(
-        Icons.arrow_back,
-        onPressed: enabled ? () => _goBack() : null,
-        tooltip: 'Back',
+      final value = Container(
+        alignment: Alignment.center,
+        padding: itemsSpacing,
+        child: NavMenuButton(
+          Icon(Icons.arrow_back),
+          axis: widget.navAxis,
+          active: false,
+          onPressed: enabled ? () => _goBack() : null,
+          tooltip: 'Back',
+        ),
       );
 
       navList.add(value);
@@ -293,10 +303,13 @@ class _NavState extends State<Nav> {
 
     if (widget.leadingMenu != null && widget.leadingMenu!.length > 0) {
       navList.add(
-          _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!));
+        _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
+      );
     }
 
-    navList.add(_createNavItems(itemsSpacing, navThemeData));
+    navList.add(
+      _createNavItems(itemsSpacing, navThemeData),
+    );
     navList.add(Spacer());
 
     if (widget.trailingMenu != null && widget.trailingMenu!.length > 0) {
@@ -304,8 +317,9 @@ class _NavState extends State<Nav> {
           _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!));
     }
 
-    Widget result = ConstrainedBox(
+    Widget result = Container(
       constraints: constraints,
+      color: backgroundColor.toColor(),
       child: Flex(
         direction: widget.navAxis,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -316,7 +330,6 @@ class _NavState extends State<Nav> {
 
     result = ButtonTheme.merge(
       data: ButtonThemeData(
-        buttonPadding: itemsSpacing,
         height: navThemeData.height,
         iconThemeData: navThemeData.iconThemeData,
         color: colorScheme.shade4,
@@ -445,10 +458,10 @@ class _NavState extends State<Nav> {
             child: Builder(
               builder: (context) {
                 return _shouldBuildView[index]
-                    ? NavigationView(
+                    ? TabView(
                         builder: widget.items[index].builder,
                         navigatorKey: _navigators[index],
-                        navigatorObserver: _NavObserver(this),
+                        navigatorObservers: [_NavObserver(this)],
                       )
                     : Container();
               },
@@ -472,9 +485,9 @@ class _NavState extends State<Nav> {
       ],
     );
 
-    result = NavigationScope(
-      navigatorKey: _navigators[_index],
-      navAxis: widget.navAxis,
+    result = TabScope(
+      axis: widget.navAxis,
+      currentIndex: _index,
       child: result,
     );
 

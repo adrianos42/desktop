@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/theme.dart';
 import '../component.dart';
 
-import 'tab_i.dart';
+import 'tab_view.dart';
 
 //import 'nav_view.dart';
 //import 'nav_scope.dart';
@@ -160,7 +160,6 @@ class _TabListState extends State<TabList> {
                         builder: widget.tabItems[index].builder,
                         //name: widget.navItems[index].route,
                         navigatorKey: _navigators[index],
-                        navigatorObserver: TabObserver(),
                       )
                     : Container();
               },
@@ -217,9 +216,10 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
   int _pressedIndex = -1;
 
   List<Widget> createList() {
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
     final TextStyle textStyle = textTheme.body1.copyWith(fontSize: 14.0);
-    final colorScheme = Theme.of(context).colorScheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
     final HSLColor selectedColor = colorScheme.primary1;
 
     return List<Widget>.generate(widget.items.length, (index) {

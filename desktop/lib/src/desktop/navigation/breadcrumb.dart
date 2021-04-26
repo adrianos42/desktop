@@ -8,7 +8,7 @@ import '../theme/theme.dart';
 import '../input/button.dart';
 import '../icons.dart';
 
-import 'nav_scope.dart' show RouteBuilder, NavigationScope;
+import 'tab_scope.dart' show RouteBuilder, TabScope;
 
 typedef TextCallback = void Function(String);
 
@@ -113,8 +113,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
   Widget _createBarNavigation() {
     final themeData = Theme.of(context);
     final colorScheme = themeData.colorScheme;
+    final textTheme = themeData.textTheme;
 
     var items = List<Widget>.empty(growable: true);
+
+    final foreground =  textTheme.textLow;
 
     for (int i = 0; i < _names.length; i++) {
       var isLast = i == _names.length - 1;
@@ -127,13 +130,13 @@ class _BreadcrumbState extends State<Breadcrumb> {
               disabledColor: isLast ? colorScheme.primary : null,
               hoverColor: colorScheme.shade,
               highlightColor: colorScheme.primary,
-              color: colorScheme.shade4,
-              bodyPadding: EdgeInsets.zero,
-              buttonPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              color: foreground,
             ),
             child: Builder(
               builder: (context) => Button(
                 body: Text(_names[i]),
+                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                bodyPadding: EdgeInsets.zero,
                 onPressed: isLast ? null : () => _popByIndex(i),
               ),
             ),
@@ -145,7 +148,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
         items.add(
           Icon(
             Icons.chevron_right,
-            color: colorScheme.shade4.toColor(),
+            color: foreground.toColor(),
             size: 20.0,
           ),
         );
@@ -181,10 +184,9 @@ class _BreadcrumbState extends State<Breadcrumb> {
       ),
     );
 
-    result = NavigationScope(
+    result = TabScope(
       child: result,
-      navigatorKey: _navigatorKey,
-      navAxis: Axis.horizontal,
+      axis: Axis.horizontal,
     );
 
     return result;
@@ -309,8 +311,9 @@ class _TabGroupState extends State<_TabGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+    final ColorScheme colorScheme = themeData.colorScheme;
+    final TextTheme textTheme = themeData.textTheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
       final HSLColor foreground =

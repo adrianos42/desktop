@@ -17,6 +17,11 @@ class Button extends StatefulWidget {
     this.tooltip,
     this.color,
     this.onPressed,
+    this.leadingPadding,
+    this.padding,
+    this.bodyPadding,
+    this.trailingPadding,
+    this.axis = Axis.horizontal,
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
 
@@ -32,6 +37,16 @@ class Button extends StatefulWidget {
   final VoidCallback? onPressed;
 
   final HSLColor? color;
+
+  final Axis axis;
+
+  final EdgeInsets? leadingPadding;
+
+  final EdgeInsets? trailingPadding;
+
+  final EdgeInsets? bodyPadding;
+
+  final EdgeInsets? padding;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -135,11 +150,54 @@ class _ButtonState extends State<Button>
         begin: _color?.end ?? foregroundColor.toColor(),
         end: foregroundColor.toColor());
 
+    final itemSpacing = buttonThemeData.itemSpacing!;
+
+    final constraints;
+    final leadingPadding;
+    final trailingPadding;
+    final bodyPadding;
+    final buttonPadding;
+    double? height;
+    double? width;
+
+    if (widget.axis == Axis.horizontal) {
+      constraints = BoxConstraints(
+        maxHeight: buttonThemeData.height!,
+        minHeight: buttonThemeData.height!,
+        minWidth: buttonThemeData.minWidth!,
+      );
+      height = buttonThemeData.height;
+      leadingPadding = widget.leadingPadding ??
+          EdgeInsets.symmetric(horizontal: itemSpacing);
+      trailingPadding = widget.trailingPadding ??
+          EdgeInsets.symmetric(horizontal: itemSpacing);
+      bodyPadding =
+          widget.bodyPadding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
+      buttonPadding =
+          widget.padding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
+    } else {
+      constraints = BoxConstraints(
+        maxWidth: buttonThemeData.height!,
+        minWidth: buttonThemeData.height!,
+        minHeight: buttonThemeData.minWidth!,
+      );
+      width = buttonThemeData.height;
+      leadingPadding =
+          widget.leadingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
+      trailingPadding =
+          widget.trailingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
+      bodyPadding =
+          widget.bodyPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
+      buttonPadding =
+          widget.padding ?? EdgeInsets.symmetric(vertical: itemSpacing);
+    }
+
     Widget result = AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
         final foreground =
             _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
+
         final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
           color: foreground,
         );
@@ -153,23 +211,25 @@ class _ButtonState extends State<Button>
           style: textStyle,
           child: IconTheme(
             data: iconThemeData,
-            child: Row(
+            child: Flex(
+              direction: widget.axis,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (widget.leading != null)
                   Padding(
-                    padding: buttonThemeData.leadingPadding,
+                    padding: leadingPadding,
                     child: widget.leading,
                   ),
                 // The widget that is always placed in the button.
                 Padding(
-                  padding: buttonThemeData.bodyPadding,
+                  padding: bodyPadding,
                   child: widget.body,
                 ),
                 if (widget.trailing != null)
                   Padding(
-                    padding: buttonThemeData.trailingPadding,
+                    padding: trailingPadding,
                     child: widget.trailing,
                   ),
               ],
@@ -181,7 +241,9 @@ class _ButtonState extends State<Button>
 
     result = Container(
       child: result,
-      height: buttonThemeData.height,
+      height: height,
+      width: width,
+      //alignment: widget.alignment,
     );
 
     result = MouseRegion(
@@ -221,13 +283,8 @@ class _ButtonState extends State<Button>
     return Semantics(
       button: true,
       child: Container(
-        padding: buttonThemeData.buttonPadding,
-        //alignment: Alignment.center,
-        constraints: BoxConstraints(
-          maxHeight: buttonThemeData.height,
-          minHeight: buttonThemeData.height,
-          minWidth: buttonThemeData.minWidth,
-        ),
+        padding: buttonPadding,
+        constraints: constraints,
         child: result,
       ),
     );

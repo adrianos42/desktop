@@ -6,12 +6,16 @@ import 'theme_data.dart';
 import 'color_scheme.dart';
 
 const double _kLineThickness = 1.0;
+const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
+const HSLColor _kDefaultColorHover = HSLColor.fromAHSL(1.0, 210, 0.9, 0.66);
+const HSLColor _kDefaultColorHighlight = HSLColor.fromAHSL(1.0, 210, 0.8, 0.76);
 
 class HyperlinkButtonThemeData {
   const HyperlinkButtonThemeData({
     this.color,
     this.hoverColor,
     this.textStyle,
+    this.highlightColor,
   });
 
   final HSLColor? color;
@@ -19,6 +23,8 @@ class HyperlinkButtonThemeData {
   final HSLColor? hoverColor;
 
   final TextStyle? textStyle;
+
+  final HSLColor? highlightColor;
 
   HyperlinkButtonThemeData copyWidth({
     HSLColor? color,
@@ -30,11 +36,15 @@ class HyperlinkButtonThemeData {
       color: color ?? this.color,
       textStyle: textStyle ?? this.textStyle,
       hoverColor: hoverColor ?? this.hoverColor,
+      highlightColor: highlightColor ?? this.highlightColor,
     );
   }
 
   bool get isConcrete {
-    return textStyle != null && color != null && hoverColor != null;
+    return textStyle != null &&
+        color != null &&
+        hoverColor != null &&
+        highlightColor != null;
   }
 
   @override
@@ -43,6 +53,7 @@ class HyperlinkButtonThemeData {
       color,
       textStyle,
       hoverColor,
+      highlightColor,
     );
   }
 
@@ -53,7 +64,8 @@ class HyperlinkButtonThemeData {
     return other is HyperlinkButtonThemeData &&
         other.color == color &&
         other.textStyle == textStyle &&
-        other.hoverColor == hoverColor;
+        other.hoverColor == hoverColor &&
+        other.highlightColor == highlightColor;
   }
 }
 
@@ -82,17 +94,19 @@ class HyperlinkButtonTheme extends InheritedTheme {
             decorationThickness: _kLineThickness,
           );
 
-      final HSLColor color =
-          hyperlinkThemeData.color ?? PrimaryColors.dodgerBlue;
+      final HSLColor color = hyperlinkThemeData.color ?? _kDefaultColor;
 
-      final HSLColor hoverColor = hyperlinkThemeData.hoverColor ??
-          PrimaryColors.dodgerBlue
-              .withLightness(PrimaryColors.dodgerBlue.lightness + 0.2);
+      final HSLColor hoverColor =
+          hyperlinkThemeData.hoverColor ?? _kDefaultColorHover;
+
+      final HSLColor highlightColor =
+          hyperlinkThemeData.highlightColor ?? _kDefaultColorHighlight;
 
       hyperlinkThemeData = hyperlinkThemeData.copyWidth(
         textStyle: textStyle,
         color: color,
         hoverColor: hoverColor,
+        highlightColor: highlightColor,
       );
     }
 

@@ -14,12 +14,9 @@ const double _kMinWidth = 12.0;
 
 class ButtonThemeData {
   const ButtonThemeData({
-    this.height = _kHeight,
-    this.leadingPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.trailingPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.bodyPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.buttonPadding = const EdgeInsets.symmetric(horizontal: _kSidePadding),
-    this.minWidth = _kMinWidth,
+    this.height,
+    this.itemSpacing,
+    this.minWidth,
     this.textStyle,
     this.iconThemeData,
     this.disabledColor,
@@ -33,17 +30,11 @@ class ButtonThemeData {
 
   //final ColorScheme colorScheme;
 
-  final EdgeInsets leadingPadding;
+  final double? itemSpacing;
 
-  final EdgeInsets trailingPadding;
+  final double? height;
 
-  final EdgeInsets bodyPadding;
-
-  final EdgeInsets buttonPadding;
-
-  final double height;
-
-  final double minWidth;
+  final double? minWidth;
 
   final TextStyle? textStyle;
 
@@ -61,10 +52,7 @@ class ButtonThemeData {
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     ColorScheme? colorScheme,
-    EdgeInsets? leadingPadding,
-    EdgeInsets? trailingPadding,
-    EdgeInsets? bodyPadding,
-    EdgeInsets? buttonPadding,
+    double? itemSpacing,
     double? height,
     double? minWidth,
     HSLColor? disabledColor,
@@ -76,10 +64,7 @@ class ButtonThemeData {
     return ButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
       iconThemeData: iconThemeData ?? this.iconThemeData,
-      leadingPadding: leadingPadding ?? this.leadingPadding,
-      trailingPadding: trailingPadding ?? this.trailingPadding,
-      bodyPadding: bodyPadding ?? this.bodyPadding,
-      buttonPadding: buttonPadding ?? this.buttonPadding,
+      itemSpacing: itemSpacing ?? this.itemSpacing,
       height: height ?? this.height,
       minWidth: minWidth ?? this.minWidth,
       disabledColor: disabledColor ?? this.disabledColor,
@@ -95,10 +80,7 @@ class ButtonThemeData {
     return copyWith(
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
-      leadingPadding: other.leadingPadding,
-      trailingPadding: other.trailingPadding,
-      bodyPadding: other.bodyPadding,
-      buttonPadding: other.buttonPadding,
+      itemSpacing: other.itemSpacing,
       height: other.height,
       minWidth: other.minWidth,
       disabledColor: other.disabledColor,
@@ -116,6 +98,9 @@ class ButtonThemeData {
         color != null &&
         focusColor != null &&
         hoverColor != null &&
+        itemSpacing != null &&
+        height != null &&
+        minWidth != null &&
         highlightColor != null;
   }
 
@@ -124,10 +109,7 @@ class ButtonThemeData {
     return hashValues(
       textStyle,
       iconThemeData,
-      leadingPadding,
-      trailingPadding,
-      bodyPadding,
-      buttonPadding,
+      itemSpacing,
       height,
       minWidth,
       disabledColor,
@@ -145,10 +127,7 @@ class ButtonThemeData {
     return other is ButtonThemeData &&
         other.textStyle == textStyle &&
         other.iconThemeData == iconThemeData &&
-        other.leadingPadding == leadingPadding &&
-        other.trailingPadding == trailingPadding &&
-        other.bodyPadding == bodyPadding &&
-        other.buttonPadding == buttonPadding &&
+        other.itemSpacing == itemSpacing &&
         other.height == height &&
         other.minWidth == minWidth &&
         other.disabledColor == disabledColor &&
@@ -198,13 +177,13 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = buttonThemeData.color ?? colorScheme.shade4;
+      final HSLColor color = buttonThemeData.color ?? textTheme.textLow;
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? colorScheme.shade2;
+          buttonThemeData.hoverColor ?? textTheme.textMedium;
 
       final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? colorScheme.shade;
+          buttonThemeData.highlightColor ?? textTheme.textHigh;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
@@ -214,6 +193,11 @@ class ButtonTheme extends InheritedTheme {
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: color.toColor());
 
+      final double height = buttonThemeData.height ?? _kHeight;
+      final double itemSpacing = buttonThemeData.itemSpacing ?? _kSidePadding;
+      final double minWidth = buttonThemeData.minWidth ?? _kMinWidth;
+      
+
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,
         textStyle: textStyle,
@@ -222,12 +206,9 @@ class ButtonTheme extends InheritedTheme {
         focusColor: focusColor,
         hoverColor: hoverColor,
         highlightColor: highlightColor,
-        leadingPadding: buttonThemeData.leadingPadding,
-        trailingPadding: buttonThemeData.trailingPadding,
-        bodyPadding: buttonThemeData.bodyPadding,
-        buttonPadding: buttonThemeData.buttonPadding,
-        height: buttonThemeData.height,
-        minWidth: buttonThemeData.minWidth,
+        height: height,
+        itemSpacing: itemSpacing,
+        minWidth: minWidth,
       );
     }
 

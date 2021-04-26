@@ -5,11 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'theme_data.dart';
 import 'color_scheme.dart';
 
-const double _kNavWidth = 38.0;
+const double _kNavWidth = 36.0;
 const double _kNavHeight = 42.0;
 const double _kPadding = 8.0;
 const double _kSideWidth = 2.0;
-const double _kNavItemsSpacing = 12.0;
+const double _kNavItemsSpacing = 6.0;
 
 const Duration _kChangeDuration = Duration(milliseconds: 200);
 

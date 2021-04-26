@@ -1,23 +1,31 @@
-0.1.1-2.12.0-0
+# Changelog
 
-- Initial version
+## 2.0.0
 
-1.0.0
+- Fix button padding.
+- Fix dialog barrier color.
+- Add button `padding` and `axis` fields.
+- Add `router` contructor for `DesktopApp`.
+- Add base class for locales usage.
+- Fix nav buttons spacing and placement.
 
-- Initial
+## 1.0.4
 
-1.0.1-2.12.0-0
+- Fix tooltip position.
 
-- Fix buttons
+---
 
-1.0.2
+## 1.0.3
 
-- Read
+- Fix button animations.
+- Add option for nav menu.
 
-1.0.3
+---
 
-- Fix button animations. Add option for nav menu
+## 1.0.1-2.12.0-0
 
-1.0.4
+- Fix buttons.
 
-- Fix tooltip position
+## 0.1.1-2.12.0-0
+
+- Initial version.

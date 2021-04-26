@@ -7,7 +7,8 @@ import '../theme/theme.dart';
 import '../icons.dart';
 import '../scrolling/scrollbar.dart';
 
-import 'tab_i.dart';
+import 'tab_view.dart';
+
 
 class TreeNode {
   final List<TreeNode>? children;
@@ -55,11 +56,7 @@ class TreeNode {
 ///           'Node1',
 ///           builder: (context) => Text('Node1'),
 ///         ),
-///         // TreeNode('Breadcrumb',
-///         //     builder: (context) => BreadcrumbPage()),
 ///       ]),
-///       // TreeNode('Breadcrumb',
-///       //     builder: (context) => BreadcrumbPage()),
 ///     ]),
 ///     TreeNode(
 ///       'Node2',
@@ -74,8 +71,6 @@ class TreeNode {
 ///         'Node1',
 ///         builder: (context) => Text('Node1'),
 ///       ),
-///       // TreeNode('Breadcrumb',
-///       //     builder: (context) => BreadcrumbPage()),
 ///     ]),
 ///   ],
 /// )```
@@ -189,7 +184,6 @@ class _TreeState extends State<Tree> {
                           child: TabView(
                             navigatorKey: entry.value.navigator,
                             builder: entry.value.builder,
-                            navigatorObserver: NavigatorObserver(),
                           ),
                         )
                       : Container();
@@ -288,7 +282,9 @@ class _TreeColumnState extends State<_TreeColumn> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final ThemeData themeData = Theme.of(context);
+    final colorScheme = themeData.colorScheme;
+    final textTheme = themeData.textTheme;
 
     if (widget.node.title.isEmpty) {
       throw Exception('Title in tree cannot be null');
@@ -318,14 +314,14 @@ class _TreeColumnState extends State<_TreeColumn> {
         children: [
           ButtonTheme.merge(
             data: ButtonThemeData(
-              color: colorScheme.shade4,
+              color: textTheme.textLow,
               hoverColor: colorScheme.shade,
               highlightColor: colorScheme.shade,
-              bodyPadding: EdgeInsets.zero,
-              trailingPadding: EdgeInsets.only(left: 8.0),
-              buttonPadding: EdgeInsets.zero,
             ),
             child: Button(
+              bodyPadding: EdgeInsets.zero,
+              trailingPadding: EdgeInsets.only(left: 8.0),
+              padding: EdgeInsets.zero,
               body: Text(widget.node.title),
               trailing: Icon(iconCollpased),
               onPressed: () => setState(() => _collapsed = !_collapsed),
@@ -339,20 +335,20 @@ class _TreeColumnState extends State<_TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
-      final hoverColor = active ? colorScheme.primary1 : colorScheme.shade;
-      final activeColor = active ? colorScheme.primary1 : colorScheme.shade4;
+      final hoverColor = active ? colorScheme.primary1 : textTheme.textHigh;
+      final activeColor = active ? colorScheme.primary1 : textTheme.textLow;
       final highlightColor = colorScheme.primary1;
 
       return ButtonTheme.merge(
         data: ButtonThemeData(
           color: activeColor,
-          buttonPadding: EdgeInsets.zero,
-          bodyPadding: EdgeInsets.zero,
           highlightColor: highlightColor,
           hoverColor: hoverColor,
           focusColor: hoverColor,
         ),
         child: Button(
+          padding: EdgeInsets.zero,
+          bodyPadding: EdgeInsets.zero,
           body: Text(widget.node.title),
           onPressed: () {
             Tree._of(context)!.setPage(name);

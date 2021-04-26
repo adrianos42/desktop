@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/animation.dart' show Curves;
 
+import '../localizations.dart';
 import '../theme/theme.dart';
 
 class Dialog extends StatelessWidget {
@@ -73,25 +74,19 @@ class Dialog extends StatelessWidget {
             ],
           ),
           if (menus != null)
-            ButtonTheme.merge(
-              data: ButtonThemeData(
-                bodyPadding: EdgeInsets.zero,
-                buttonPadding: EdgeInsets.only(left: 16.0),
-              ),
-              child: Padding(
-                padding: dialogThemeData.menuPadding,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    // constraints: BoxConstraints(
-                    //   maxHeight: 26.0,
-                    //   minHeight: 26.0,
-                    // ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: menus!, // FIXME what?
-                    ),
+            Padding(
+              padding: dialogThemeData.menuPadding,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  // constraints: BoxConstraints(
+                  //   maxHeight: 26.0,
+                  //   minHeight: 26.0,
+                  // ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: menus!, // FIXME what?
                   ),
                 ),
               ),
@@ -116,6 +111,7 @@ class Dialog extends StatelessWidget {
 class DialogRoute<T> extends PopupRoute<T> {
   DialogRoute({
     required RoutePageBuilder pageBuilder,
+    required BuildContext context,
     bool barrierDismissible = true,
     String? barrierLabel,
     RouteSettings? settings,
@@ -123,7 +119,7 @@ class DialogRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel,
+        _barrierLabel = barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor,
         super(settings: settings, filter: filter);
 
@@ -193,6 +189,7 @@ PopupRoute<T> createDialogRoute<T>({
   bool barrierDismissible = true,
   ImageFilter? filter,
   HSLColor? barrierColor,
+  String? barrierLabel,
 }) {
   final DialogThemeData dialogThemeData = DialogTheme.of(context);
   final Color color =
@@ -200,7 +197,9 @@ PopupRoute<T> createDialogRoute<T>({
 
   return DialogRoute<T>(
     barrierColor: color,
+    context: context,
     barrierDismissible: barrierDismissible,
+    barrierLabel: barrierLabel,
     filter: filter,
     pageBuilder: (context, _, __) => builder(context),
   );

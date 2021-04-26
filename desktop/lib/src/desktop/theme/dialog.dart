@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -116,8 +118,11 @@ class DialogTheme extends InheritedTheme {
       }
 
       if (dialogThemeData.barrierColor == null) {
-        dialogThemeData = dialogThemeData.copyWidth(
-            barrierColor: HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.1));
+        final barrierColor =
+            themeData.colorScheme.brightness == Brightness.light
+                ? HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
+                : HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2);
+        dialogThemeData = dialogThemeData.copyWidth(barrierColor: barrierColor);
       }
     }
 

@@ -6,142 +6,211 @@ import 'package:flutter/widgets.dart';
 
 import 'theme/theme.dart';
 import 'navigation/route.dart';
+import 'input/button_icon.dart';
+import 'icons.dart';
+import 'localizations.dart';
 
 class DesktopApp extends StatefulWidget {
+  /// Creates a [DesktopApp].
+  ///
+  /// At least one of [home], [routes], [onGenerateRoute], or [builder] must be
+  /// non-null. If only [routes] is given, it must include an entry for the
+  /// [Navigator.defaultRouteName] (`/`), since that is the route used when the
+  /// application is launched with an intent that specifies an otherwise
+  /// unsupported route.
+  ///
+  /// This class creates an instance of [WidgetApp].
   const DesktopApp({
     Key? key,
-    required this.home,
+    this.navigatorKey,
+    this.home,
     this.theme,
-    this.title = '',
-    this.showPerformanceOverlay = false,
-    this.showSemanticsDebugger = false,
-    this.checkerboardRasterCacheImages = false,
-    this.checkerboardOffscreenLayers = false,
-    this.debugShowCheckedModeBanner = false,
-    this.supportedLocales = const <Locale>[Locale('en', 'US')],
-    this.locale,
-    this.localeResolutionCallback,
-    this.localeListResolutionCallback,
-    this.localizationsDelegates,
-    this.onGenerateTitle,
-    this.builder,
     this.routes = const <String, WidgetBuilder>{},
     this.initialRoute,
-    this.onUnknownRoute,
-    this.navigatorKey,
-    this.navigatorObservers = const <NavigatorObserver>[],
-    this.shortcuts,
-    // this.actions,
     this.onGenerateRoute,
-  }) : super(key: key);
+    this.onGenerateInitialRoutes,
+    this.onUnknownRoute,
+    this.navigatorObservers = const <NavigatorObserver>[],
+    this.builder,
+    this.title = '',
+    this.onGenerateTitle,
+    this.color,
+    this.locale,
+    this.localizationsDelegates,
+    this.localeResolutionCallback,
+    this.localeListResolutionCallback,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
+    this.showSemanticsDebugger = false,
+    this.debugShowCheckedModeBanner = false,
+    this.shortcuts,
+    this.actions,
+    this.scrollBehavior,
+    this.restorationScopeId,
+  })  : assert(routes != null),
+        assert(navigatorObservers != null),
+        routeInformationParser = null,
+        routeInformationProvider = null,
+        routerDelegate = null,
+        backButtonDispatcher = null,
+        super(key: key);
+
+  /// Creates a [DesktopApp] that uses the [Router] instead of a [Navigator].
+  const DesktopApp.router({
+    Key? key,
+    required RouteInformationParser<Object> this.routeInformationParser,
+    required RouterDelegate<Object> this.routerDelegate,
+    this.routeInformationProvider,
+    this.backButtonDispatcher,
+    this.theme,
+    this.builder,
+    this.title = '',
+    this.onGenerateTitle,
+    this.color,
+    this.locale,
+    this.localizationsDelegates,
+    this.localeListResolutionCallback,
+    this.localeResolutionCallback,
+    this.supportedLocales = const <Locale>[Locale('en', 'US')],
+    this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
+    this.showSemanticsDebugger = false,
+    this.debugShowCheckedModeBanner = false,
+    this.shortcuts,
+    this.actions,
+    this.scrollBehavior,
+    this.restorationScopeId,
+  })  : navigatorObservers = null,
+        navigatorKey = null,
+        onGenerateRoute = null,
+        home = null,
+        onGenerateInitialRoutes = null,
+        onUnknownRoute = null,
+        routes = null,
+        initialRoute = null,
+        super(key: key);
 
   static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
         NextTabIntent(),
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
         LogicalKeyboardKey.tab): PreviousTabIntent(),
-    // LogicalKeySet(LogicalKeyboardKey.escape): Intent(DismissModalAction.key),
-    // LogicalKeySet(LogicalKeyboardKey.escape): Intent(NavItemCloseAction.key),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
-    //     Intent(NextNavViewAction.key),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-    //     LogicalKeyboardKey.tab): Intent(PreviousNavViewAction.key),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit1):
-    //     SetViewIntent(0),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit2):
-    //     SetViewIntent(1),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit3):
-    //     SetViewIntent(2),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit4):
-    //     SetViewIntent(3),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit5):
-    //     SetViewIntent(4),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit6):
-    //     SetViewIntent(5),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit7):
-    //     SetViewIntent(6),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit8):
-    //     SetViewIntent(7),
-    // LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.digit9):
-    //     SetViewIntent(8),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit1):
-    //     SetTabIntent(0),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit2):
-    //     SetTabIntent(1),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit3):
-    //     SetTabIntent(2),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit4):
-    //     SetTabIntent(3),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit5):
-    //     SetTabIntent(4),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit6):
-    //     SetTabIntent(5),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit7):
-    //     SetTabIntent(6),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit8):
-    //     SetTabIntent(7),
-    // LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.digit9):
-    //     SetTabIntent(8),
   };
 
-  // static final Map<LocalKey, ActionFactory> _actions =
-  //     <LocalKey, ActionFactory>{
-  //   SetTabAction.key: () => const SetTabAction(),
-  //   DismissModalAction.key: () => DismissModalAction(),
-  //   NavItemCloseAction.key: () => const NavItemCloseAction(),
-  //   NextNavViewAction.key: () => const NextNavViewAction(),
-  //   PreviousNavViewAction.key: () => const PreviousNavViewAction(),
-  //   SetViewAction.key: () => const SetViewAction(),
-  //   ShowNavMenuAction.key: () => const ShowNavMenuAction(),
-  // };
-
+  /// {@macro flutter.widgets.widgetsApp.navigatorKey}
   final GlobalKey<NavigatorState>? navigatorKey;
 
-  final Map<String, WidgetBuilder> routes;
+  /// {@macro flutter.widgets.widgetsApp.home}
+  final Widget? home;
 
+  /// The [DesktopTheme] style.
+  final ThemeData? theme;
+
+  /// The application's top-level routing table.
+  ///
+  /// When a named route is pushed with [Navigator.pushNamed], the route name is
+  /// looked up in this map. If the name is present, the associated
+  /// [WidgetBuilder] is used to construct a [CupertinoPageRoute] that performs
+  /// an appropriate transition, including [Hero] animations, to the new route.
+  ///
+  /// {@macro flutter.widgets.widgetsApp.routes}
+  final Map<String, WidgetBuilder>? routes;
+
+  /// {@macro flutter.widgets.widgetsApp.initialRoute}
   final String? initialRoute;
 
+  /// {@macro flutter.widgets.widgetsApp.onGenerateInitialRoutes}
   final RouteFactory? onGenerateRoute;
 
+  /// {@macro flutter.widgets.widgetsApp.onGenerateInitialRoutes}
+  final InitialRouteListFactory? onGenerateInitialRoutes;
+
+  /// {@macro flutter.widgets.widgetsApp.onUnknownRoute}
   final RouteFactory? onUnknownRoute;
 
-  final List<NavigatorObserver> navigatorObservers;
+  /// {@macro flutter.widgets.widgetsApp.navigatorObservers}
+  final List<NavigatorObserver>? navigatorObservers;
 
+  /// {@macro flutter.widgets.widgetsApp.routeInformationProvider}
+  final RouteInformationProvider? routeInformationProvider;
+
+  /// {@macro flutter.widgets.widgetsApp.routeInformationParser}
+  final RouteInformationParser<Object>? routeInformationParser;
+
+  /// {@macro flutter.widgets.widgetsApp.routerDelegate}
+  final RouterDelegate<Object>? routerDelegate;
+
+  /// {@macro flutter.widgets.widgetsApp.backButtonDispatcher}
+  final BackButtonDispatcher? backButtonDispatcher;
+
+  /// {@macro flutter.widgets.widgetsApp.builder}
   final TransitionBuilder? builder;
 
+  /// {@macro flutter.widgets.widgetsApp.title}
+  final String title;
+
+  /// {@macro flutter.widgets.widgetsApp.onGenerateTitle}
   final GenerateAppTitle? onGenerateTitle;
 
+  /// {@macro flutter.widgets.widgetsApp.color}
+  final Color? color;
+
+  /// {@macro flutter.widgets.widgetsApp.locale}
   final Locale? locale;
 
+  /// {@macro flutter.widgets.widgetsApp.localizationsDelegates}
   final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
 
+  /// {@macro flutter.widgets.widgetsApp.localeListResolutionCallback}
+  ///
+  /// This callback is passed along to the [WidgetsApp] built by this widget.
   final LocaleListResolutionCallback? localeListResolutionCallback;
 
+  /// {@macro flutter.widgets.LocaleResolutionCallback}
+  ///
+  /// This callback is passed along to the [WidgetsApp] built by this widget.
   final LocaleResolutionCallback? localeResolutionCallback;
 
+  /// {@macro flutter.widgets.widgetsApp.supportedLocales}
+  ///
+  /// It is passed along unmodified to the [WidgetsApp] built by this widget.
   final Iterable<Locale> supportedLocales;
 
+  /// Turns on a performance overlay.
+  ///
+  /// See also:
+  ///
+  ///  * <https://flutter.dev/debugging/#performanceoverlay>
+  final bool showPerformanceOverlay;
+
+  /// Turns on checkerboarding of raster cache images.
   final bool checkerboardRasterCacheImages;
 
+  /// Turns on checkerboarding of layers rendered to offscreen bitmaps.
   final bool checkerboardOffscreenLayers;
 
   /// Turns on an overlay that shows the accessibility information
   /// reported by the framework.
   final bool showSemanticsDebugger;
 
+  /// {@macro flutter.widgets.widgetsApp.debugShowCheckedModeBanner}
+  /// Turned off by default.
   final bool debugShowCheckedModeBanner;
 
-  final Widget home;
-
-  final ThemeData? theme;
-
-  final String title;
-
-  final bool showPerformanceOverlay;
-
-  // final Map<LocalKey, ActionFactory> actions;
-
+  /// {@macro flutter.widgets.widgetsApp.shortcuts}
   final Map<LogicalKeySet, Intent>? shortcuts;
+
+  /// {@macro flutter.widgets.widgetsApp.actions}
+  final Map<Type, Action<Intent>>? actions;
+
+  /// {@macro flutter.widgets.widgetsApp.restorationScopeId}
+  final String? restorationScopeId;
+
+  /// When null, defaults to [DesktopScrollBehavior].
+  final ScrollBehavior? scrollBehavior;
 
   @override
   _DesktopAppState createState() => _DesktopAppState();
@@ -160,8 +229,92 @@ class _DesktopAppState extends State<DesktopApp> {
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationDelegates sync* {
     if (widget.localizationsDelegates != null) {
-      yield* widget.localizationsDelegates!; // FIXME
+      yield* widget.localizationsDelegates!; // FIXME NOW!!!!
     }
+
+    yield DefaultDesktopLocalizations.delegate;
+  }
+
+  Widget _inspectorSelectButtonBuilder(
+    BuildContext context,
+    VoidCallback onPressed,
+  ) =>
+      IconButton(
+        Icons.search,
+        onPressed: onPressed,
+      );
+
+  WidgetsApp _buildWidgetApp(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final Color color = widget.color ?? themeData.colorScheme.primary.toColor();
+
+    final shortcuts = <LogicalKeySet, Intent>{
+      ...WidgetsApp.defaultShortcuts,
+      ...DesktopApp._shortcuts,
+      ...widget.shortcuts ?? {},
+    };
+
+    if (widget.routerDelegate != null) {
+      return WidgetsApp.router(
+        key: GlobalObjectKey(this),
+        routeInformationParser: widget.routeInformationParser!,
+        routerDelegate: widget.routerDelegate!,
+        routeInformationProvider: widget.routeInformationProvider,
+        backButtonDispatcher: widget.backButtonDispatcher,
+        builder: widget.builder,
+        title: widget.title,
+        onGenerateTitle: widget.onGenerateTitle,
+        textStyle: themeData.textTheme.body1,
+        color: color,
+        locale: widget.locale,
+        localizationsDelegates: _localizationDelegates,
+        localeResolutionCallback: widget.localeResolutionCallback,
+        localeListResolutionCallback: widget.localeListResolutionCallback,
+        supportedLocales: widget.supportedLocales,
+        showPerformanceOverlay: widget.showPerformanceOverlay,
+        checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
+        checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+        showSemanticsDebugger: widget.showSemanticsDebugger,
+        debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+        inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,
+        shortcuts: shortcuts,
+        actions: widget.actions,
+        restorationScopeId: widget.restorationScopeId,
+      );
+    }
+
+    return WidgetsApp(
+      key: GlobalObjectKey(this),
+      navigatorKey: widget.navigatorKey,
+      navigatorObservers: widget.navigatorObservers!,
+      pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) =>
+          DesktopPageRoute<T>(settings: settings, builder: builder),
+      home: widget.home!,
+      routes: widget.routes!,
+      initialRoute: widget.initialRoute,
+      onGenerateRoute: widget.onGenerateRoute,
+      onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
+      onUnknownRoute: widget.onUnknownRoute,
+      builder: widget.builder,
+      title: widget.title,
+      onGenerateTitle: widget.onGenerateTitle,
+      textStyle: themeData.textTheme.body1,
+      color: color,
+      locale: widget.locale,
+      localizationsDelegates: _localizationDelegates,
+      localeResolutionCallback: widget.localeResolutionCallback,
+      localeListResolutionCallback: widget.localeListResolutionCallback,
+      supportedLocales: widget.supportedLocales,
+      showPerformanceOverlay: widget.showPerformanceOverlay,
+      checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
+      checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+      showSemanticsDebugger: widget.showSemanticsDebugger,
+      debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+      inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,
+      shortcuts: shortcuts,
+      actions: widget.actions,
+      restorationScopeId: widget.restorationScopeId,
+    );
   }
 
   @override
@@ -171,54 +324,15 @@ class _DesktopAppState extends State<DesktopApp> {
 
     return Theme(
       data: effectiveThemeData,
-      child: Builder(builder: (BuildContext context) {
-        final Widget result = ScrollConfiguration(
-            behavior: _DesktopScrollBehavior(), child: widget.home);
-
-        return WidgetsApp(
-          key: GlobalObjectKey(this),
-          navigatorKey: widget.navigatorKey,
-          navigatorObservers: widget.navigatorObservers,
-          pageRouteBuilder:
-              <T>(RouteSettings settings, WidgetBuilder builder) =>
-                  DesktopPageRoute<T>(settings: settings, builder: builder),
-          routes: widget.routes,
-          initialRoute: widget.initialRoute,
-          onGenerateRoute: widget.onGenerateRoute,
-          onUnknownRoute: widget.onUnknownRoute,
-          builder: widget.builder,
-          onGenerateTitle: widget.onGenerateTitle,
-          locale: widget.locale,
-          localizationsDelegates: _localizationDelegates,
-          localeResolutionCallback: widget.localeResolutionCallback,
-          localeListResolutionCallback: widget.localeListResolutionCallback,
-          supportedLocales: widget.supportedLocales,
-          showPerformanceOverlay: widget.showPerformanceOverlay,
-          checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
-          checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
-          showSemanticsDebugger: widget.showSemanticsDebugger,
-          debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-          home: Container(
-            color: effectiveThemeData.colorScheme.background.toColor(),
-            child: result,
+      child: ScrollConfiguration(
+        behavior: widget.scrollBehavior ?? _DesktopScrollBehavior(),
+        child: Container(
+          color: effectiveThemeData.colorScheme.background.toColor(),
+          child: Builder(
+            builder: _buildWidgetApp,
           ),
-          title: widget.title,
-          color: effectiveThemeData.colorScheme.primary.toColor(),
-          shortcuts: <LogicalKeySet, Intent>{
-            ...WidgetsApp.defaultShortcuts,
-            ...DesktopApp._shortcuts,
-          },
-          // actions: <LocalKey, ActionFactory>{
-          //   ...WidgetsApp.defaultActions,
-          //   ...DesktopApp._actions,
-          // },
-          // shortcuts: <LogicalKeySet, Intent>{
-          //   ...WidgetsApp.defaultShortcuts,
-          //   ...DesktopApp._shortcuts,
-          // },
-          textStyle: null,
-        );
-      }),
+        ),
+      ),
     );
   }
 }

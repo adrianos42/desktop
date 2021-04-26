@@ -165,17 +165,17 @@ class ThemeData {
     return ThemeData._raw(
       brightness: inverseBrightness,
       colorScheme: invertedColorScheme,
-      navTheme: const NavThemeData(),
+      navTheme: navTheme,
       textTheme: TextTheme(invertedColorScheme),
-      buttonTheme: const ButtonThemeData(),
-      dropDownButtonTheme: const DropDownButtonThemeData(),
-      dialogTheme: const DialogThemeData(),
-      hyperlinkButtonTheme: const HyperlinkButtonThemeData(),
-      radioButtonTheme: const RadioButtonThemeData(),
-      checkboxTheme: const CheckboxThemeData(),
-      toggleSwitchTheme: const ToggleSwitchThemeData(),
-      sliderTheme: const SliderThemeData(),
-      scrollbarTheme: const ScrollbarThemeData(),
+      buttonTheme: buttonTheme,
+      dropDownButtonTheme: dropDownButtonTheme,
+      dialogTheme: dialogTheme,
+      hyperlinkButtonTheme: hyperlinkButtonTheme,
+      radioButtonTheme: radioButtonTheme,
+      checkboxTheme: checkboxTheme,
+      toggleSwitchTheme: toggleSwitchTheme,
+      sliderTheme: sliderTheme,
+      scrollbarTheme: scrollbarTheme,
     );
   }
 }

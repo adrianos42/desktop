@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/theme.dart';
 import '../navigation/route.dart';
 import '../component.dart';
+import '../localizations.dart';
 
 const Duration _kMenuDuration = Duration(microseconds: 200);
 const double _kDividerThickness = 1.0;
@@ -114,9 +115,9 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
-    final colorScheme = Theme.of(context).colorScheme;
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
 
     final bool selected = widget.selected(context);
 
@@ -407,6 +408,7 @@ Future<T?> showMenu<T>({
   required RouteSettings settings,
   double? width,
   String? semanticLabel,
+  String? barrierLabel,
   T? initialValue,
 }) {
   assert(items.isNotEmpty);
@@ -421,6 +423,7 @@ Future<T?> showMenu<T>({
       position: position,
       width: width,
       settings: settings,
+      barrierLabel: barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel
     ),
   );
 }

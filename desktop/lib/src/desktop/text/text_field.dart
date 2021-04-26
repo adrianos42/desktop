@@ -21,6 +21,7 @@ class TextField extends StatefulWidget {
     this.strutStyle,
     this.showCursor,
     this.minLines,
+    this.decoration,
     this.maxLength,
     this.onChanged,
     this.onEditingComplete,
@@ -46,6 +47,9 @@ class TextField extends StatefulWidget {
   final TextStyle? placeholderStyle;
 
   final bool autofocus;
+
+  /// Controls the [BoxDecoration] of the box behind the text input.
+  final BoxDecoration? decoration;
 
   final TextEditingController? controller;
 
@@ -210,12 +214,13 @@ class _TextFieldState extends State<TextField>
       color: characterColor.toColor(),
     );
 
-    final decoration = BoxDecoration(
-      color: background.toColor(),
-      border: enabled
-          ? Border.all(color: borderColor.toColor(), width: _kBorderWidth)
-          : null,
-    );
+    final decoration = widget.decoration ??
+        BoxDecoration(
+          color: background.toColor(),
+          border: enabled
+              ? Border.all(color: borderColor.toColor(), width: _kBorderWidth)
+              : null,
+        );
 
     final editable = EditableText(
       key: editableTextKey,

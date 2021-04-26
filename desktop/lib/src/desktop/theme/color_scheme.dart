@@ -40,23 +40,23 @@ class ColorScheme {
       .withLightness(primary.lightness - 0.2);
 
   HSLColor get background => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
   HSLColor get background1 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.85)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.95)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.05);
 
   HSLColor get background2 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.80)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1);
 
   HSLColor get background3 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.75)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.85)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.15);
 
   HSLColor get disabled => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.7)
+      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8)
       : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
 
   HSLColor get shade => brightness == Brightness.light

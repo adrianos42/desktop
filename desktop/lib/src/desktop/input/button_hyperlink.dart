@@ -32,6 +32,7 @@ class HyperlinkButton extends StatelessWidget {
         textStyle: hyperlinkButtonThemeData.textStyle,
         color: hyperlinkButtonThemeData.color,
         hoverColor: hyperlinkButtonThemeData.hoverColor,
+        highlightColor: hyperlinkButtonThemeData.highlightColor,
       ),
       child: Button(
         body: Text(text),

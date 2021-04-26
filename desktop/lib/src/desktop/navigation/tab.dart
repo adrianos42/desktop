@@ -5,31 +5,54 @@ import 'package:flutter/widgets.dart';
 import '../theme/theme.dart';
 
 import 'route.dart';
-import 'tab_i.dart';
-import 'nav_scope.dart';
+import 'tab_view.dart';
+import 'tab_scope.dart';
+import '../component.dart';
 
 const int _kIntialIndexValue = 0;
 const double _kTabHeight = 38.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 8.0);
 
+typedef TabItemBuilder = Widget Function(
+    BuildContext context, int index, bool isActive);
+
 class TabItem {
   const TabItem({
     required this.builder,
-    required this.title,
-    this.tabTrailing,
+    required this.tabItemBuilder,
   });
 
-  final WidgetBuilder builder;
+  /// The 'page' used for the tab.
+  final IndexedWidgetBuilder builder;
 
-  final WidgetBuilder? tabTrailing;
+  /// A custom item to be built for the tab bar.
+  final TabItemBuilder tabItemBuilder;
 
-  final Widget title;
+  factory TabItem.text(String text, {required IndexedWidgetBuilder builder}) {
+    return TabItem(
+      builder: builder,
+      tabItemBuilder: (context, _, isActive) => _TabItemButton(
+        Text(text),
+        active: isActive,
+      ),
+    );
+  }
+
+  factory TabItem.icon(IconData icon, {required IndexedWidgetBuilder builder}) {
+    return TabItem(
+      builder: builder,
+      tabItemBuilder: (context, _, isActive) => _TabItemButton(
+        Icon(icon),
+        active: isActive,
+      ),
+    );
+  }
 }
 
 /// Navigation tab.
 ///
-/// The difference with [Nav], is that [Tab] is simpler and only support horizontal axis for the item.
-/// Widget may also be used as tabs, meanwhile only text can be used in [Nav] bar.
+/// The difference with [Nav], is that [Tab] is simpler and only supports horizontal axis for the item
+/// and widgets may also be used as tabs, meanwhile only text can be used in [Nav] bar.
 ///
 /// ```dart
 /// Tab(
@@ -54,6 +77,7 @@ class Tab extends StatefulWidget {
     required this.items,
     this.trailing,
     this.focusNode,
+    this.color,
     this.autofocus = true,
   })  : assert(items.length > 0),
         super(key: key);
@@ -69,29 +93,17 @@ class Tab extends StatefulWidget {
 
   final bool autofocus;
 
+  /// The background color for the tab bar.
+  final HSLColor? color;
+
   @override
   _TabState createState() => _TabState();
-}
-
-class _TabScope extends InheritedWidget {
-  const _TabScope({
-    Key? key,
-    required this.tabState,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  final _TabState tabState;
-
-  @override
-  bool updateShouldNotify(_TabScope old) => old.tabState != tabState;
 }
 
 class _TabState extends State<Tab> {
   final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
   final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   final List<bool> _shouldBuildView = <bool>[];
-  final List<GlobalKey<NavigatorState>> _navigators =
-      <GlobalKey<NavigatorState>>[];
 
   int _index = _kIntialIndexValue;
 
@@ -102,8 +114,6 @@ class _TabState extends State<Tab> {
   FocusNode? _focusNode;
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
-
-  // FIXME NavigatorState? get _currentNavigator => _navigators[_index].currentState;
 
   void _nextView() => _indexChanged((_index + 1) % _length);
 
@@ -158,8 +168,6 @@ class _TabState extends State<Tab> {
           CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
     };
 
-    _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-        _length, (_) => GlobalKey<NavigatorState>()));
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
   }
 
@@ -181,14 +189,6 @@ class _TabState extends State<Tab> {
           widget.items.length, _shouldBuildView.length);
     }
 
-    if (widget.items.length - _navigators.length > 0) {
-      _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-          widget.items.length - _navigators.length,
-          (index) => GlobalKey<NavigatorState>()));
-    } else {
-      _navigators.removeRange(widget.items.length, _navigators.length);
-    }
-
     _focusView();
   }
 
@@ -196,8 +196,8 @@ class _TabState extends State<Tab> {
   void dispose() {
     super.dispose();
 
-    for (var focusNode in _focusNodes) focusNode.dispose();
-    for (var focusNode in _disposedFocusNodes) focusNode.dispose();
+    for (final focusNode in _focusNodes) focusNode.dispose();
+    for (final focusNode in _disposedFocusNodes) focusNode.dispose();
   }
 
   @override
@@ -216,12 +216,7 @@ class _TabState extends State<Tab> {
             child: Builder(
               builder: (context) {
                 return _shouldBuildView[index]
-                    ? TabView(
-                        builder: widget.items[index].builder,
-                        //name: widget.items[index].route,
-                        navigatorKey: _navigators[index],
-                        navigatorObserver: TabObserver(),
-                      )
+                    ? widget.items[index].builder(context, index)
                     : Container();
               },
             ),
@@ -237,30 +232,27 @@ class _TabState extends State<Tab> {
       children: <Widget>[
         _TabGroup(
           index: _index,
-          trailing: widget.items[_index].tabTrailing ?? widget.trailing,
+          trailing: widget.trailing,
+          color: widget.color,
           changeIndex: (value) => _indexChanged(value),
-          items: List<Widget>.generate(
+          items: List<TabItemBuilder>.generate(
             _length,
-            (index) => widget.items[index].title,
+            (index) => widget.items[index].tabItemBuilder,
           ),
         ),
         Expanded(
           child: Stack(
             children: list,
+            fit: StackFit.expand,
           ),
         ),
       ],
     );
 
-    result = _TabScope(
+    result = TabScope(
       child: result,
-      tabState: this,
-    );
-
-    result = NavigationScope(
-      child: result,
-      navigatorKey: _navigators[_index],
-      navAxis: Axis.horizontal,
+      currentIndex: _index,
+      axis: Axis.horizontal,
     );
 
     return FocusableActionDetector(
@@ -285,102 +277,211 @@ class _TabGroup extends StatefulWidget {
     required this.index,
     required this.items,
     required this.changeIndex,
+    this.color,
     this.trailing,
   }) : super(key: key);
 
   final int index;
 
-  final List<Widget> items;
+  final List<TabItemBuilder> items;
 
   final WidgetBuilder? trailing;
 
   final ValueChanged<int> changeIndex;
+
+  final HSLColor? color;
 
   @override
   _TabGroupState createState() => _TabGroupState();
 }
 
 class _TabGroupState extends State<_TabGroup> {
-  int _hoveredIndex = -1;
-  int _pressedIndex = -1;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(_TabGroup oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+    final ColorScheme colorScheme = themeData.colorScheme;
 
     List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
-      final HSLColor foreground =
-          widget.index == index || _pressedIndex == index
-              ? colorScheme.primary1
-              : _hoveredIndex == index
-                  ? textTheme.textHigh
-                  : textTheme.textLow;
-
-      final TextStyle textStyle =
-          textTheme.body2.copyWith(color: foreground.toColor());
-      final IconThemeData iconThemeData = IconThemeData(
-        color: foreground.toColor(),
-        size: 18.0,
-      );
-
-      return Padding(
-        padding: EdgeInsets.only(right: 16.0),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => setState(() => _hoveredIndex = index),
-          onExit: (_) => setState(() => _hoveredIndex = -1),
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapDown: (_) => setState(() => _pressedIndex = index),
-            onTapUp: (_) => setState(() => _pressedIndex = -1),
-            onTapCancel: () => setState(() => _pressedIndex = -1),
-            onTap: () => widget.changeIndex(index),
-            child: DefaultTextStyle(
-              style: textStyle,
-              child: IconTheme(
-                data: iconThemeData,
-                child: widget.items[index],
-              ),
-            ),
-          ),
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => widget.changeIndex(index),
+          child: widget.items[index](context, index, index == widget.index),
         ),
       );
     });
 
     Widget result = Container(
       height: _kTabHeight,
-      color: colorScheme.background.toColor(),
-      child: Padding(
-        padding: _khorizontalPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            ...list,
-            Spacer(),
-            if (widget.trailing != null) widget.trailing!(context),
-          ],
-        ),
+      color: widget.color?.toColor() ?? colorScheme.background.toColor(),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          ...list,
+          Spacer(),
+          if (widget.trailing != null) widget.trailing!(context),
+        ],
       ),
     );
 
     return result;
+  }
+}
+
+class _TabItemButton extends StatefulWidget {
+  const _TabItemButton(
+    this.child, {
+    Key? key,
+    required this.active,
+  }) : super(key: key);
+
+  final Widget child;
+
+  final bool active;
+
+  @override
+  _TabItemButtonState createState() => _TabItemButtonState();
+}
+
+class _TabItemButtonState extends State<_TabItemButton>
+    with ComponentStateMixin, SingleTickerProviderStateMixin {
+  void _handleHoverEntered() {
+    if (!hovered && (pressed || !_globalPointerDown)) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => hovered = true);
+    }
+  }
+
+  void _handleHoverExited() {
+    if (hovered) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => hovered = false);
+    }
+  }
+
+  void _handleTapUp(TapUpDetails event) {
+    if (pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = false);
+    }
+  }
+
+  void _handleTapDown(TapDownDetails event) {
+    if (!pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = true);
+    }
+  }
+
+  void _handleTapCancel() {
+    if (pressed) {
+      _controller.reset();
+      _controller.forward();
+      setState(() => pressed = false);
+    }
+  }
+
+  bool _globalPointerDown = false;
+
+  void _mouseRoute(event) => _globalPointerDown = event.down;
+
+  late AnimationController _controller;
+
+  ColorTween? _color;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 50),
+    );
+
+    _controller.forward();
+
+    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _color = null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
+
+    final highlightColor = colorScheme.primary1;
+    final color = textTheme.textLow;
+    final hoverColor = textTheme.textHigh;
+
+    final HSLColor foregroundColor =
+        pressed || hovered && widget.active || widget.active
+            ? highlightColor
+            : hovered
+                ? hoverColor
+                : color;
+
+    _color = ColorTween(
+        begin: _color?.end ?? foregroundColor.toColor(),
+        end: foregroundColor.toColor());
+
+    Widget result = AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final foreground =
+            _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
+
+        final TextStyle textStyle = textTheme.body2.copyWith(color: foreground);
+        final IconThemeData iconThemeData =
+            IconThemeData(size: 18.0, color: foreground);
+
+        return DefaultTextStyle(
+          style: textStyle,
+          child: IconTheme(
+            data: iconThemeData,
+            child: Container(
+              alignment: Alignment.center,
+              padding: _khorizontalPadding,
+              child: widget.child,
+            ),
+          ),
+        );
+      },
+    );
+
+    result = MouseRegion(
+      onEnter: (_) => _handleHoverEntered(),
+      onExit: (_) => _handleHoverExited(),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        //onTapDown: _handleTapDown,
+        //onTapUp: _handleTapUp,
+        //onTapCancel: _handleTapCancel,
+        child: result,
+      ),
+    );
+
+    return Semantics(
+      button: true,
+      child: result,
+    );
   }
 }
