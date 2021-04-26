@@ -13,8 +13,6 @@ class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     final enabledText = ''' 
 ContextMenuButton(
   Icons.place,
@@ -115,48 +113,51 @@ ContextMenuButton(
           height: 400.0,
         ),
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              child: Row(
-                children: [
-                  ContextMenuButton(
-                    Icons.place,
-                    value: firstValue,
-                    enabled: false,
-                    itemBuilder: (context) => [
-                      ContextMenuItem(
-                        child: Text('Florianópolis'),
-                        value: 'Florianópolis',
-                      ),
-                      ContextMenuItem(
-                        child: Text('Joinville'),
-                        value: 'Joinville',
-                      ),
-                      ContextMenuItem(
-                        child: Text('Blumenau'),
-                        value: 'Blumenau',
-                      ),
-                      ContextMenuItem(
-                        child: Text('São Paulo'),
-                        value: 'São Paulo',
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      firstValue,
-                      style: textTheme.body1.copyWith(
-                        color: textTheme.textDisabled.toColor(),
+          body: (context) {
+            final textTheme = Theme.of(context).textTheme;
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Row(
+                  children: [
+                    ContextMenuButton(
+                      Icons.place,
+                      value: firstValue,
+                      enabled: false,
+                      itemBuilder: (context) => [
+                        ContextMenuItem(
+                          child: Text('Florianópolis'),
+                          value: 'Florianópolis',
+                        ),
+                        ContextMenuItem(
+                          child: Text('Joinville'),
+                          value: 'Joinville',
+                        ),
+                        ContextMenuItem(
+                          child: Text('Blumenau'),
+                          value: 'Blumenau',
+                        ),
+                        ContextMenuItem(
+                          child: Text('São Paulo'),
+                          value: 'São Paulo',
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        firstValue,
+                        style: textTheme.body1.copyWith(
+                          color: textTheme.textDisabled.toColor(),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
           codeText: disabledText,
           title: 'Disabled',
           height: 400.0,

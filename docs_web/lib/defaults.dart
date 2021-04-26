@@ -24,20 +24,22 @@ class Defaults {
     BuildContext context, {
     required WidgetBuilder builder,
     required String codeText,
+    bool hasBorder = true,
   }) {
     final textController = TextEditingController(text: codeText);
 
     return Tab(
       items: [
-        TabItem(
-          builder: (context) => Container(
-            decoration: Defaults.itemDecoration(context),
+        TabItem.icon(
+          Icons.visibility,
+          builder: (context, _) => Container(
+            decoration: hasBorder ? Defaults.itemDecoration(context) : null,
             child: builder(context),
           ),
-          title: Icon(Icons.visibility),
         ),
-        TabItem(
-          builder: (context) => Container(
+        TabItem.icon(
+          Icons.code,
+          builder: (context, _) => Container(
             alignment: Alignment.topLeft,
             //decoration: Defaults.itemDecoration(context),
             child: TextField(
@@ -47,7 +49,6 @@ class Defaults {
               style: Theme.of(context).textTheme.monospace,
             ),
           ),
-          title: Icon(Icons.code),
         ),
       ],
     );

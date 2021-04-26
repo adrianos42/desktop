@@ -4,7 +4,7 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "docs.png": "f9606f95519ac4aac78099a8873f5116",
-"main.dart.js": "c861eba25ce771762a3f42c708f9f92e",
+"main.dart.js": "a3d324038ede3ad182dbaf8426c4b229",
 "assets/fonts/sharp_material_icons.ttf": "7286a89ec4d461263d0cddb86fc16b61",
 "assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLightItalic.ttf": "3046cfbc0a34e7459330e0f1c41c0c63",
@@ -46,8 +46,8 @@ const RESOURCES = {
 "assets/fonts/IBM_Plex_Sans/IBMPlexSans-Light.ttf": "29047654270fd882ab9e9ec10e28f7c5",
 "assets/fonts/IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf": "453b2bbf7ad0bb52a93f64ac96641f24",
 "assets/fonts/mode.ttf": "7af27e3be7174ff453dd84b58017a7f1",
-"assets/AssetManifest.json": "defe841d7f97cc5c27225b7a747e021e",
-"assets/NOTICES": "c9d4d77881e398fb91503471b88cdc8b",
+"assets/AssetManifest.json": "47bf1643a70a70436d15543ecf1e3970",
+"assets/NOTICES": "fa8ae224d046d01806869292c8760b1b",
 "assets/packages/desktop/fonts/sharp_material_icons.ttf": "7286a89ec4d461263d0cddb86fc16b61",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLightItalic.ttf": "3046cfbc0a34e7459330e0f1c41c0c63",
@@ -130,8 +130,8 @@ const RESOURCES = {
 "assets/assets/cats/pexels-%25D0%25B0%25D0%25BB%25D0%25B5%25D0%25BA%25D1%2581%25D0%25B0%25D0%25BD%25D0%25B4%25D0%25B0%25D1%2580-%25D1%2586%25D0%25B2%25D0%25B5%25D1%2582%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25B8%25D1%259B-1440406.jpg": "d49b8aedde8300f7b635b7b214a7d12b",
 "assets/assets/cats/pexels-david-savochka-192384.jpg": "5a80fc5ad0733a9ee4f7b4969c7c9eba",
 "assets/assets/cats/pexels-pixabay-104827.jpg": "06bbec07792b3f215df21e82da5fd41f",
-"assets/assets/GitHub-Mark-120px-plus.png": "ef7a02b69836dc8b6a732a54c4200dcb",
-"assets/assets/GitHub-Mark-Light-120px-plus.png": "472739dfb5857b1f659f4c4c6b4568d0",
+"assets/assets/GitHub-Mark-32px.png": "f87561b8bb354ef83b09a66e54f70e08",
+"assets/assets/GitHub-Mark-Light-32px.png": "d56df49a807a9fd06eb1667a84d3810e",
 "assets/assets/cats_small/pexels-d%25C6%25B0%25C6%25A1ng-nh%25C3%25A2n-2817405.jpg": "9ff1b0b8da67b705e87e461bc2ac7c65",
 "assets/assets/cats_small/pexels-pixabay-45170.jpg": "85803c958a598f98a67417d52ee30534",
 "assets/assets/cats_small/pexels-piers-olphin-5044690.jpg": "b1c1770ce81ae5e9694c6ed6c9a6e70d",
@@ -177,8 +177,8 @@ const RESOURCES = {
 "assets/FontManifest.json": "91190a1bb93dda0da2fbf866fd4fc79e",
 "manifest.json": "728a7628da12f2b36b2879a3f7fa9938",
 "version.json": "341c101d4b678f29adc2e2fa68fd71f3",
-"index.html": "b79b1ba9142b245cc36ac64efad1557a",
-"/": "b79b1ba9142b245cc36ac64efad1557a",
+"index.html": "7c65dfc416756be9b8a9f26b502de905",
+"/": "7c65dfc416756be9b8a9f26b502de905",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116"
 };

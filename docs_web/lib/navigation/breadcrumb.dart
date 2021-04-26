@@ -42,8 +42,9 @@ Breadcrumb(
             constraints: BoxConstraints.tightFor(height: 600.0),
             child: Tab(
               items: [
-                TabItem(
-                  builder: (context) => Container(
+                TabItem.icon(
+                  Icons.visibility,
+                  builder: (context, _) => Container(
                     decoration: Defaults.itemDecoration(context),
                     child: Breadcrumb(
                       initialRoute: 'page_0/',
@@ -66,10 +67,10 @@ Breadcrumb(
                       },
                     ),
                   ),
-                  title: Icon(Icons.visibility),
                 ),
-                TabItem(
-                  builder: (context) => Container(
+                TabItem.icon(
+                  Icons.code,
+                  builder: (context, _) => Container(
                     alignment: Alignment.topLeft,
                     //decoration: Defaults.itemDecoration(context),
                     child: TextField(
@@ -79,7 +80,6 @@ Breadcrumb(
                       style: Theme.of(context).textTheme.monospace,
                     ),
                   ),
-                  title: Icon(Icons.code),
                 ),
               ],
             ),

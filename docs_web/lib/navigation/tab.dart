@@ -14,35 +14,39 @@ class _TabPageState extends State<TabPage> {
     final codeSample = '''
 Tab(
   items: [
-    TabItem(
-      builder: (context) => Center(
+    TabItem.text('page 0',
+      builder: (context, _) => TabView(
+        builder: (context) => Center(
           child: Text(
-        'page 0',
-        style: textTheme.title,
-      )),
-      title: Text('page 0'),
+            'page 0',
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+      ),
     ),
-    TabItem(
-      builder: (context) => Center(
+    TabItem.text('page 1',
+      builder: (context, _) => TabView(
+        builder: (context) => Center(
           child: Text(
-        'page 1',
-        style: textTheme.title,
-      )),
-      title: Text('page 1'),
+            'page 1',
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+      ),
     ),
-    TabItem(
-      builder: (context) => Center(
+    TabItem.text('page 2',
+      builder: (context, _) => TabView(
+        builder: (context) => Center(
           child: Text(
-        'page 2',
-        style: textTheme.title,
-      )),
-      title: Text('page 2'),
+            'page 2',
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+      ),
     ),
   ],
 )
 ''';
-
-    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       children: [
@@ -50,34 +54,98 @@ Tab(
         Expanded(
           child: Defaults.createCodeSession(
             context,
-            builder: (context) => Tab(
-              items: [
-                TabItem(
-                  builder: (context) => Center(
-                      child: Text(
-                    'page 0',
-                    style: textTheme.title,
-                  )),
-                  title: Text('page 0'),
-                ),
-                TabItem(
-                  builder: (context) => Center(
-                      child: Text(
-                    'page 1',
-                    style: textTheme.title,
-                  )),
-                  title: Text('page 1'),
-                ),
-                TabItem(
-                  builder: (context) => Center(
-                      child: Text(
-                    'page 2',
-                    style: textTheme.title,
-                  )),
-                  title: Text('page 2'),
-                ),
-              ],
-            ),
+            builder: (context) {
+              // return Tab(
+              //   color: Theme.of(context).colorScheme.background1,
+              //   items: [
+              //     TabItem(
+              //       builder: (context, _) => TabView(
+              //         builder: (context) => Center(
+              //           child: Text(
+              //             'page 0',
+              //             style: Theme.of(context).textTheme.title,
+              //           ),
+              //         ),
+              //       ),
+              //       tabItemBuilder: (context, index, active) => Container(
+              //         alignment: Alignment.center,
+              //         color: TabScope.of(context)!.currentIndex! == index
+              //             ? Theme.of(context).colorScheme.background.toColor()
+              //             : null,
+              //         child: Text('page 0'),
+              //       ),
+              //     ),
+              //     TabItem(
+              //       builder: (context, _) => TabView(
+              //         builder: (context) => Center(
+              //           child: Text(
+              //             'page 1',
+              //             style: Theme.of(context).textTheme.title,
+              //           ),
+              //         ),
+              //       ),
+              //       tabItemBuilder: (context, index, active) => Container(
+              //         alignment: Alignment.center,
+              //         color: TabScope.of(context)!.currentIndex == index
+              //             ? Theme.of(context).colorScheme.background.toColor()
+              //             : null,
+              //         child: Text('page 1'),
+              //       ),
+              //     ),
+              //     TabItem(
+              //       builder: (context, _) => TabView(
+              //         builder: (context) => Center(
+              //           child: Text(
+              //             'page 2',
+              //             style: Theme.of(context).textTheme.title,
+              //           ),
+              //         ),
+              //       ),
+              //       tabItemBuilder: (context, index, active) => Container(
+              //         alignment: Alignment.center,
+              //         color: TabScope.of(context)!.currentIndex == index
+              //             ? Theme.of(context).colorScheme.background.toColor()
+              //             : null,
+              //         child: Text('page 2'),
+              //       ),
+              //     ),
+              //   ],
+              // );
+              return Tab(
+                items: [
+                  TabItem.text('page 0',
+                    builder: (context, _) => TabView(
+                      builder: (context) => Center(
+                        child: Text(
+                          'page 0',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TabItem.text('page 1',
+                    builder: (context, _) => TabView(
+                      builder: (context) => Center(
+                        child: Text(
+                          'page 1',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TabItem.text('page 2',
+                    builder: (context, _) => TabView(
+                      builder: (context) => Center(
+                        child: Text(
+                          'page 2',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
             codeText: codeSample,
           ),
         ),

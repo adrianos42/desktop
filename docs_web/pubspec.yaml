@@ -1,5 +1,5 @@
 name: docs
-description: A new Flutter project.
+description: Docs for desktop.
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -13,7 +13,9 @@ dependencies:
   desktop:
     path: ../desktop
     
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.3
+
+  beamer: 0.12.3
 
 dev_dependencies:
   flutter_test:
@@ -23,8 +25,8 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/GitHub-Mark-120px-plus.png
-    - assets/GitHub-Mark-Light-120px-plus.png
+    - assets/GitHub-Mark-32px.png
+    - assets/GitHub-Mark-Light-32px.png
     
     - assets/cats/pexels-akbar-nemati-5622738.jpg
     - assets/cats/pexels-aleksandr-nadyojin-4492149.jpg
