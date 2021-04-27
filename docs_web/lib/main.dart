@@ -3,8 +3,6 @@ import 'package:desktop/desktop.dart';
 import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:beamer/beamer.dart';
-
 import 'defaults.dart';
 import 'data/list_table.dart';
 import 'navigation/tree.dart';
