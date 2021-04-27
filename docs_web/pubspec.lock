@@ -15,13 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0"
-  beamer:
-    dependency: "direct main"
-    description:
-      name: beamer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.12.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -70,7 +63,7 @@ packages:
       path: "../desktop"
       relative: true
     source: path
-    version: "1.0.4"
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -289,5 +282,5 @@ packages:
     source: hosted
     version: "3.0.0"
 sdks:
-  dart: ">=2.12.0 <3.0.0"
+  dart: ">=2.12.0-259.9.beta <3.0.0"
   flutter: ">=1.22.0"

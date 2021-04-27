@@ -15,8 +15,6 @@ dependencies:
     
   url_launcher: ^6.0.3
 
-  beamer: 0.12.3
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

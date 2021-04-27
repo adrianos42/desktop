@@ -274,16 +274,8 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
-    final routerDelegate = BeamerRouterDelegate(
-        locationBuilder: SimpleLocationBuilder(routes: {
-      '/': (context) => _createHome(),
-    }));
-
-    return DesktopApp.router(
-      routeInformationParser: BeamerRouteInformationParser(),
-      backButtonDispatcher:
-          BeamerBackButtonDispatcher(delegate: routerDelegate),
-      routerDelegate: routerDelegate,
+    return DesktopApp(
+      home: _createHome(),
       theme: themeData,
     );
   }
