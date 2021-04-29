@@ -6,13 +6,14 @@ import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
-// FIXME
+// TODO(as): ???
 // const double _kSidePadding = 6.0;
 // const double _kHeight = 32.0;
 const double _kIconSize = 19.0;
 const double _kFontSize = 14.0;
 // const double _kMinWidth = 12.0;
 
+@immutable
 class DropDownButtonThemeData {
   const DropDownButtonThemeData({
     this.textStyle,
@@ -64,7 +65,9 @@ class DropDownButtonThemeData {
   }
 
   DropDownButtonThemeData merge(DropDownButtonThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
@@ -104,8 +107,12 @@ class DropDownButtonThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is DropDownButtonThemeData &&
         other.textStyle == textStyle &&
         other.iconThemeData == iconThemeData &&
@@ -118,7 +125,7 @@ class DropDownButtonThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class DropDownButtonTheme extends InheritedTheme {
   const DropDownButtonTheme({
     Key? key,

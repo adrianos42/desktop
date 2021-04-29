@@ -13,7 +13,7 @@ import 'tab_view.dart';
 //export 'nav_view.dart' show NavMenuRoute;
 //export 'nav_scope.dart' show NavScope;
 
-// FIXME
+// TODO(as): ???
 // const Duration _kMenuDuration = Duration(microseconds: 200);
 // const double _kDividerThickness = 1.0;
 const double _kMenuWidthStep = 120.0;
@@ -134,8 +134,12 @@ class _TabListState extends State<TabList> {
 
   @override
   void dispose() {
-    for (var focusNode in _focusNodes) focusNode.dispose();
-    for (var focusNode in _disposedFocusNodes) focusNode.dispose();
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    for (final focusNode in _disposedFocusNodes) {
+      focusNode.dispose();
+    }
 
     super.dispose();
   }
@@ -169,7 +173,7 @@ class _TabListState extends State<TabList> {
       );
     });
 
-    Widget result = Row(
+    final Widget result = Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -186,7 +190,7 @@ class _TabListState extends State<TabList> {
     );
 
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         height: 600.0,
         child: result,
       ),
@@ -208,6 +212,7 @@ class _MenuItem extends StatefulWidget {
 
   final ValueChanged<int> changeIndex;
 
+  @override
   _MenuItemState createState() => _MenuItemState();
 }
 
@@ -228,7 +233,7 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
       final hovered = _hoveredIndex == index;
 
       final HSLColor? background = selected
-          ? (selectedColor)
+          ? selectedColor
           : pressed
               ? colorScheme.background2
               : hovered
@@ -248,7 +253,7 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
           padding:
               const EdgeInsets.symmetric(horizontal: _kMenuHorizontalPadding),
           alignment: AlignmentDirectional.centerStart,
-          constraints: BoxConstraints(minHeight: _kDefaultItemHeight),
+          constraints: const BoxConstraints(minHeight: _kDefaultItemHeight),
           child: widget.items[index](context),
         ),
       );
@@ -277,7 +282,7 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
     final colorScheme = Theme.of(context).colorScheme;
 
     final Widget child = ConstrainedBox(
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         minWidth: _kMinMenuWidth,
         maxWidth: _kMaxMenuWidth,
       ),

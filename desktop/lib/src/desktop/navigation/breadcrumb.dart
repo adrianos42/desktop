@@ -79,8 +79,8 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
   void _popName(String name) {
     if (mounted) {
-      var names = _names;
-      assert(names.length > 1, "Cannot pop the first route");
+      final names = _names;
+      assert(names.length > 1, 'Cannot pop the first route');
 
       names.removeLast();
       widget.routeNameChanged?.call(names.last);
@@ -89,7 +89,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
   }
 
   void _popByIndex(int index) {
-    var names = _names;
+    final names = _names;
 
     // Pops until the name index
     while (names.length - 1 > index) {
@@ -115,12 +115,12 @@ class _BreadcrumbState extends State<Breadcrumb> {
     final colorScheme = themeData.colorScheme;
     final textTheme = themeData.textTheme;
 
-    var items = List<Widget>.empty(growable: true);
+    final items = List<Widget>.empty(growable: true);
 
-    final foreground =  textTheme.textLow;
+    final foreground = textTheme.textLow;
 
     for (int i = 0; i < _names.length; i++) {
-      var isLast = i == _names.length - 1;
+      final isLast = i == _names.length - 1;
 
       items.add(
         Align(
@@ -135,7 +135,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
             child: Builder(
               builder: (context) => Button(
                 body: Text(_names[i]),
-                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 bodyPadding: EdgeInsets.zero,
                 onPressed: isLast ? null : () => _popByIndex(i),
               ),
@@ -156,7 +156,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
     }
 
     Widget result = Container(
-      constraints: BoxConstraints.tightFor(height: _kHeight),
+      constraints: const BoxConstraints.tightFor(height: _kHeight),
       color: Theme.of(context).colorScheme.background.toColor(),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,7 +166,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
           if (widget.leading != null) widget.leading!,
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 6.0),
+              padding: const EdgeInsets.symmetric(horizontal: 6.0),
               alignment: Alignment.centerLeft,
               child: SingleChildScrollView(
                 reverse: true,
@@ -196,7 +196,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
   void initState() {
     super.initState();
 
-    var name = _formatNavText(widget.initialRoute);
+    final name = _formatNavText(widget.initialRoute);
     _names.add(name);
     _navigatorKey = GlobalKey<NavigatorState>();
   }
@@ -218,7 +218,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = Column(
+    final Widget result = Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -246,12 +246,12 @@ class _BreadcrumbState extends State<Breadcrumb> {
 class _NavObserver extends NavigatorObserver {
   _NavObserver(this._navState);
 
-  _BreadcrumbState _navState;
+  final _BreadcrumbState _navState;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (!route.isFirst && route is PageRoute<dynamic>) {
-      _navState._pushName(route.settings.name!); // FIXME
+      _navState._pushName(route.settings.name!); // TODO(as): ??
     }
   }
 
@@ -315,7 +315,8 @@ class _TabGroupState extends State<_TabGroup> {
     final ColorScheme colorScheme = themeData.colorScheme;
     final TextTheme textTheme = themeData.textTheme;
 
-    List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
+    final List<Widget> list =
+        List<Widget>.generate(widget.items.length, (index) {
       final HSLColor foreground =
           widget.index == index || _pressedIndex == index
               ? colorScheme.primary2
@@ -327,9 +328,7 @@ class _TabGroupState extends State<_TabGroup> {
           textTheme.body2.copyWith(color: foreground.toColor());
 
       return Padding(
-        padding: EdgeInsets.only(
-          right: 22.0,
-        ),
+        padding: const EdgeInsets.only(right: 22.0),
         child: MouseRegion(
           onEnter: (_) => setState(() => _hoveredIndex = index),
           onExit: (_) => setState(() => _hoveredIndex = -1),
@@ -348,7 +347,7 @@ class _TabGroupState extends State<_TabGroup> {
       );
     });
 
-    Widget result = Container(
+    final Widget result = Container(
       height: _kHeight,
       color: colorScheme.background.toColor(),
       child: Padding(
@@ -359,8 +358,8 @@ class _TabGroupState extends State<_TabGroup> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             ...list,
-            Spacer(),
-            if (widget.trailing != null) widget.trailing!, // FIXME
+            const Spacer(),
+            if (widget.trailing != null) widget.trailing!, // TODO(as): ???
           ],
         ),
       ),
@@ -410,7 +409,7 @@ class _NavigationViewState extends State<_NavigationView> {
   Route<dynamic> _onUnknownRoute(RouteSettings settings) {
     final name = settings.name!.replaceFirst(r'/', '');
 
-    ThemeData themeData = Theme.invertedThemeOf(context);
+    final ThemeData themeData = Theme.invertedThemeOf(context);
 
     return DesktopPageRoute(
       builder: (context) => Container(

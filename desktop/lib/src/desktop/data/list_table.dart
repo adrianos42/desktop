@@ -1,10 +1,10 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
-import '../theme/theme.dart';
 import '../component.dart';
+import '../theme/theme.dart';
 
 const _kHeaderHeight = 38.0;
 const _kMinColumnWidth = 38.0;
@@ -73,7 +73,7 @@ class ListTable extends StatefulWidget {
 }
 
 class _ListTableState extends State<ListTable> implements _TableDragUpdate {
-  var columnWidths = Map<int, TableColumnWidth>();
+  var columnWidths = {};
   bool hasHiddenColumns = false;
 
   int hoveredIndex = -1;
@@ -81,14 +81,16 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   int waitingIndex = -1;
 
   Widget createHeader() {
-    TableBorder? tableBorder = widget.tableBorder;
-    bool hasBorder = tableBorder != null && tableBorder.top != BorderSide.none;
+    final TableBorder? tableBorder = widget.tableBorder;
+    final bool hasBorder =
+        tableBorder != null && tableBorder.top != BorderSide.none;
 
-    int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
+    final int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
 
     return Container(
       decoration: hasBorder
-          ? BoxDecoration(border: Border(bottom: tableBorder.top)) // FIXME
+          ? BoxDecoration(
+              border: Border(bottom: tableBorder.top)) // TODO(as): ???
           : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -155,7 +157,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   }
 
   Widget createList(int index) {
-    int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
+    final int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
 
     return MouseRegion(
       onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
@@ -170,9 +172,12 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             ? null
             : () {
                 if (widget.onPressed != null) {
-                  if (waitingIndex == index) return;
+                  if (waitingIndex == index) {
+                    return;
+                  }
                   waitingIndex = index;
-                  dynamic result = widget.onPressed!(index) as dynamic; // FIXME
+                  final dynamic result = widget.onPressed!(index)
+                      as dynamic; // TODO(as): fix dynamic
 
                   if (result is Future) {
                     setState(() => waitingIndex = index);
@@ -202,7 +207,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
             final colorScheme = Theme.of(context).colorScheme;
 
-            HSLColor? backgroundColor =
+            final HSLColor? backgroundColor =
                 pressedIndex == index || waitingIndex == index
                     ? colorScheme.background3
                     : hoveredIndex == index
@@ -212,7 +217,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             BoxDecoration decoration =
                 BoxDecoration(color: backgroundColor?.toColor());
 
-            // FIXME
+            // TODO(as): !!
             if (widget.tableBorder != null &&
                 (widget.tableBorder!.horizontalInside != BorderSide.none ||
                     widget.tableBorder!.verticalInside != BorderSide.none)) {
@@ -277,18 +282,18 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         delta = delta.clamp(0.0, previousWidth!);
       }
 
-      double newWidth = previousColSizes![col] + delta;
+      final double newWidth = previousColSizes![col] + delta;
       colFraction![col] = newWidth / totalWidth!;
 
-      int totalRemain = colCount - (col + 1);
+      final int totalRemain = colCount - (col + 1);
 
       if (totalRemain > 0) {
-        double valueEach = delta / totalRemain;
+        final double valueEach = delta / totalRemain;
         double remWidth = previousWidth! - newWidth;
 
         for (int i = col + 1; i < colCount; i++) {
           if (remWidth >= _kMinColumnWidth) {
-            double newWidth = (previousColSizes![i] - valueEach)
+            final double newWidth = (previousColSizes![i] - valueEach)
                 .clamp(_kMinColumnWidth, remWidth);
             colFraction![i] = newWidth / totalWidth!;
             remWidth -= newWidth;
@@ -349,19 +354,20 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   Widget build(BuildContext context) {
     Widget result = LayoutBuilder(
       builder: (context, constraints) {
-        int colCount = widget.colCount;
-        colFraction ??=
-            Map<int, double>.from(widget.colFraction ?? Map<int, double>());
+        final int colCount = widget.colCount;
+        colFraction ??= Map<int, double>.from(widget.colFraction ?? {});
         colSizes = List<double>.filled(colCount, 0);
 
-        double totalWidth = constraints.maxWidth;
+        final double totalWidth = constraints.maxWidth;
         double remWidth = totalWidth;
 
-        // FIXME: make sure this is considering only the valid indexes
+        // TODO(as): make sure this is considering only the valid indexes
         int nfactors = 0;
-        colFraction!.keys.forEach((value) {
-          if (value < colCount) nfactors += 1;
-        });
+        for (final value in colFraction!.keys) {
+          if (value < colCount) {
+            nfactors += 1;
+          }
+        }
 
         if (nfactors > 0) {
           for (int i = 0; i < colCount; i++) {
@@ -379,7 +385,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                   break;
                 }
 
-                double width = (colFraction![i]! * totalWidth)
+                final double width = (colFraction![i]! * totalWidth)
                     .roundToDouble()
                     .clamp(_kMinColumnWidth, remWidth);
                 colSizes[i] = width;
@@ -488,7 +494,7 @@ abstract class _TableDragUpdate {
 }
 
 class _TableColHandler extends StatefulWidget {
-  _TableColHandler({
+  const _TableColHandler({
     required this.tableDragUpdate,
     required this.col,
     required this.hasIndicator,
@@ -569,7 +575,7 @@ class _TableColHandlerState extends State<_TableColHandler>
     final draggedColor = colorScheme.shade4;
 
     BorderSide? border = widget.border;
-    bool hasFocus = hovered || dragged || widget.hasIndicator;
+    final bool hasFocus = hovered || dragged || widget.hasIndicator;
 
     if (border != null && border != BorderSide.none) {
       final HSLColor borderColor = dragged

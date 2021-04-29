@@ -4,11 +4,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'theme/theme.dart';
-import 'navigation/route.dart';
-import 'input/button_icon.dart';
 import 'icons.dart';
+import 'input/button_icon.dart';
 import 'localizations.dart';
+import 'navigation/route.dart';
+import 'theme/theme.dart';
 
 class DesktopApp extends StatefulWidget {
   /// Creates a [DesktopApp].
@@ -95,9 +95,9 @@ class DesktopApp extends StatefulWidget {
 
   static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
-        NextTabIntent(),
+        const NextTabIntent(),
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-        LogicalKeyboardKey.tab): PreviousTabIntent(),
+        LogicalKeyboardKey.tab): const PreviousTabIntent(),
   };
 
   /// {@macro flutter.widgets.widgetsApp.navigatorKey}
@@ -113,7 +113,7 @@ class DesktopApp extends StatefulWidget {
   ///
   /// When a named route is pushed with [Navigator.pushNamed], the route name is
   /// looked up in this map. If the name is present, the associated
-  /// [WidgetBuilder] is used to construct a [CupertinoPageRoute] that performs
+  /// [WidgetBuilder] is used to construct a [DesktopPageRoute] that performs
   /// an appropriate transition, including [Hero] animations, to the new route.
   ///
   /// {@macro flutter.widgets.widgetsApp.routes}
@@ -229,7 +229,7 @@ class _DesktopAppState extends State<DesktopApp> {
 
   Iterable<LocalizationsDelegate<dynamic>> get _localizationDelegates sync* {
     if (widget.localizationsDelegates != null) {
-      yield* widget.localizationsDelegates!; // FIXME NOW!!!!
+      yield* widget.localizationsDelegates!;
     }
 
     yield DefaultDesktopLocalizations.delegate;
@@ -346,7 +346,7 @@ class _DesktopScrollBehavior extends ScrollBehavior {
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) {
-    return _ClampingScrollPhysics();
+    return const _ClampingScrollPhysics();
   }
 }
 

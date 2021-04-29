@@ -49,7 +49,7 @@ abstract class ProgressIndicator extends StatefulWidget {
     String? expandedSemanticsValue = semanticsValue;
 
     if (value != null) {
-      expandedSemanticsValue ??= '${(value! * 100).round()}%'; // FIXME
+      expandedSemanticsValue ??= '${(value! * 100).round()}%'; // TODO(as): ???
     }
 
     return Semantics(
@@ -196,15 +196,17 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
     paint.color = valueColor;
 
     void drawBar(double x, double width) {
-      if (width <= 0.0) return;
+      if (width <= 0.0) {
+        return;
+      }
 
-      double left = x;
+      final double left = x;
 
       canvas.drawRect(Offset(left, 0.0) & Size(width, size.height), paint);
     }
 
     if (value != null) {
-      drawBar(0.0, value!.clamp(0.0, 1.0) * size.width); // FIXME
+      drawBar(0.0, value!.clamp(0.0, 1.0) * size.width); // TODO(as): ???
     } else {
       final double x1 = size.width * line1Tail.transform(animationValue);
       final double width1 =
@@ -275,7 +277,9 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
       duration: const Duration(seconds: 6),
       vsync: this,
     );
-    if (widget.value == null) _controller.repeat();
+    if (widget.value == null) {
+      _controller.repeat();
+    }
   }
 
   @override
@@ -336,7 +340,9 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) return _buildIndicator(context, 0.0, 0.0, 0, 0.0);
+    if (widget.value != null) {
+      return _buildIndicator(context, 0.0, 0.0, 0, 0.0);
+    }
     return _buildAnimation();
   }
 }
@@ -387,13 +393,15 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
     if (backgroundColor != null) {
       final Paint backgroundPaint = Paint()
-        ..color = backgroundColor! // FIXME
+        ..color = backgroundColor! // TODO(as): ???
         ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke;
       canvas.drawArc(Offset.zero & size, 0, _sweep, false, backgroundPaint);
     }
 
-    if (value == null) paint.strokeCap = StrokeCap.square;
+    if (value == null) {
+      paint.strokeCap = StrokeCap.square;
+    }
 
     canvas.drawArc(Offset.zero & size, arcStart, arcSweep, false, paint);
   }

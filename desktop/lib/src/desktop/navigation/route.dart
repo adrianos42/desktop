@@ -120,7 +120,8 @@ class _DialogRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel,
+        _barrierLabel = barrierLabel ??
+            DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor,
         _transitionDuration = transitionDuration,
         _transitionBuilder = transitionBuilder,
@@ -171,7 +172,7 @@ class _DialogRoute<T> extends PopupRoute<T> {
           child: child);
     } // Some default transition
     return _transitionBuilder!(
-        context, animation, secondaryAnimation, child); // FIXME
+        context, animation, secondaryAnimation, child); // TODO(as): ???
   }
 }
 

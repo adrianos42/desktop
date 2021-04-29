@@ -1,20 +1,21 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
-import 'color_scheme.dart';
-import 'theme_text.dart';
-import 'nav.dart';
 import 'button.dart';
-import 'button_hyperlink.dart';
-import 'dialog.dart';
 import 'button_drop_down.dart';
-import 'checkbox.dart';
-import 'toggle_switch.dart';
-import 'slider.dart';
+import 'button_hyperlink.dart';
 import 'button_radio.dart';
+import 'checkbox.dart';
+import 'color_scheme.dart';
+import 'dialog.dart';
+import 'nav.dart';
 import 'scrollbar.dart';
+import 'slider.dart';
+import 'theme_text.dart';
+import 'toggle_switch.dart';
 
+@immutable
 class Theme extends StatelessWidget {
   const Theme({
     Key? key,
@@ -82,6 +83,7 @@ class _InheritedTheme extends InheritedTheme {
   bool updateShouldNotify(_InheritedTheme old) => theme.data != old.theme.data;
 }
 
+@immutable
 class ThemeData {
   factory ThemeData({
     required Brightness brightness,

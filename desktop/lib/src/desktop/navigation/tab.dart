@@ -2,12 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../input/button.dart';
 import '../theme/theme.dart';
-
 import 'route.dart';
-import 'tab_view.dart';
 import 'tab_scope.dart';
-import '../component.dart';
 
 const int _kIntialIndexValue = 0;
 const double _kTabHeight = 38.0;
@@ -21,12 +19,6 @@ class TabItem {
     required this.builder,
     required this.tabItemBuilder,
   });
-
-  /// The 'page' used for the tab.
-  final IndexedWidgetBuilder builder;
-
-  /// A custom item to be built for the tab bar.
-  final TabItemBuilder tabItemBuilder;
 
   factory TabItem.text(String text, {required IndexedWidgetBuilder builder}) {
     return TabItem(
@@ -47,6 +39,12 @@ class TabItem {
       ),
     );
   }
+
+  /// The 'page' used for the tab.
+  final IndexedWidgetBuilder builder;
+
+  /// A custom item to be built for the tab bar.
+  final TabItemBuilder tabItemBuilder;
 }
 
 /// Navigation tab.
@@ -91,6 +89,7 @@ class Tab extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
+  /// If the widget receives focus automatically.
   final bool autofocus;
 
   /// The background color for the tab bar.
@@ -123,7 +122,9 @@ class _TabState extends State<Tab> {
     if (index != _index) {
       if (index < 0 ||
           index >= _length ||
-          Navigator.of(context, rootNavigator: true).canPop()) return false;
+          Navigator.of(context, rootNavigator: true).canPop()) {
+        return false;
+      }
 
       setState(() {
         _index = index;
@@ -196,8 +197,12 @@ class _TabState extends State<Tab> {
   void dispose() {
     super.dispose();
 
-    for (final focusNode in _focusNodes) focusNode.dispose();
-    for (final focusNode in _disposedFocusNodes) focusNode.dispose();
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    for (final focusNode in _disposedFocusNodes) {
+      focusNode.dispose();
+    }
   }
 
   @override
@@ -301,18 +306,16 @@ class _TabGroupState extends State<_TabGroup> {
     final ThemeData themeData = Theme.of(context);
     final ColorScheme colorScheme = themeData.colorScheme;
 
-    List<Widget> list = List<Widget>.generate(widget.items.length, (index) {
+    final List<Widget> list =
+        List<Widget>.generate(widget.items.length, (index) {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => widget.changeIndex(index),
-          child: widget.items[index](context, index, index == widget.index),
-        ),
+        opaque: false,
+        child: widget.items[index](context, index, index == widget.index),
       );
     });
 
-    Widget result = Container(
+    final Widget result = Container(
       height: _kTabHeight,
       color: widget.color?.toColor() ?? colorScheme.background.toColor(),
       child: Row(
@@ -321,7 +324,7 @@ class _TabGroupState extends State<_TabGroup> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           ...list,
-          Spacer(),
+          const Spacer(),
           if (widget.trailing != null) widget.trailing!(context),
         ],
       ),
@@ -331,7 +334,7 @@ class _TabGroupState extends State<_TabGroup> {
   }
 }
 
-class _TabItemButton extends StatefulWidget {
+class _TabItemButton extends StatelessWidget {
   const _TabItemButton(
     this.child, {
     Key? key,
@@ -343,145 +346,30 @@ class _TabItemButton extends StatefulWidget {
   final bool active;
 
   @override
-  _TabItemButtonState createState() => _TabItemButtonState();
-}
-
-class _TabItemButtonState extends State<_TabItemButton>
-    with ComponentStateMixin, SingleTickerProviderStateMixin {
-  void _handleHoverEntered() {
-    if (!hovered && (pressed || !_globalPointerDown)) {
-      _controller.reset();
-      _controller.forward();
-      setState(() => hovered = true);
-    }
-  }
-
-  void _handleHoverExited() {
-    if (hovered) {
-      _controller.reset();
-      _controller.forward();
-      setState(() => hovered = false);
-    }
-  }
-
-  void _handleTapUp(TapUpDetails event) {
-    if (pressed) {
-      _controller.reset();
-      _controller.forward();
-      setState(() => pressed = false);
-    }
-  }
-
-  void _handleTapDown(TapDownDetails event) {
-    if (!pressed) {
-      _controller.reset();
-      _controller.forward();
-      setState(() => pressed = true);
-    }
-  }
-
-  void _handleTapCancel() {
-    if (pressed) {
-      _controller.reset();
-      _controller.forward();
-      setState(() => pressed = false);
-    }
-  }
-
-  bool _globalPointerDown = false;
-
-  void _mouseRoute(event) => _globalPointerDown = event.down;
-
-  late AnimationController _controller;
-
-  ColorTween? _color;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 50),
-    );
-
-    _controller.forward();
-
-    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _color = null;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
-    final highlightColor = colorScheme.primary1;
+    final highlightColor = colorScheme.primary;
+
     final color = textTheme.textLow;
-    final hoverColor = textTheme.textHigh;
+    final hoverColor = colorScheme.shade;
 
-    final HSLColor foregroundColor =
-        pressed || hovered && widget.active || widget.active
-            ? highlightColor
-            : hovered
-                ? hoverColor
-                : color;
+    const EdgeInsets buttonBodyPadding = _khorizontalPadding;
 
-    _color = ColorTween(
-        begin: _color?.end ?? foregroundColor.toColor(),
-        end: foregroundColor.toColor());
-
-    Widget result = AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        final foreground =
-            _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
-
-        final TextStyle textStyle = textTheme.body2.copyWith(color: foreground);
-        final IconThemeData iconThemeData =
-            IconThemeData(size: 18.0, color: foreground);
-
-        return DefaultTextStyle(
-          style: textStyle,
-          child: IconTheme(
-            data: iconThemeData,
-            child: Container(
-              alignment: Alignment.center,
-              padding: _khorizontalPadding,
-              child: widget.child,
-            ),
-          ),
-        );
-      },
-    );
-
-    result = MouseRegion(
-      onEnter: (_) => _handleHoverEntered(),
-      onExit: (_) => _handleHoverExited(),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        //onTapDown: _handleTapDown,
-        //onTapUp: _handleTapUp,
-        //onTapCancel: _handleTapCancel,
-        child: result,
+    return ButtonTheme.merge(
+      data: ButtonThemeData(
+        color: active ? highlightColor : color,
+        highlightColor: highlightColor,
+        hoverColor: active ? highlightColor : hoverColor,
       ),
-    );
-
-    return Semantics(
-      button: true,
-      child: result,
+      child: Button(
+        padding: EdgeInsets.zero,
+        bodyPadding: buttonBodyPadding,
+        onPressed: () {},
+        body: child,
+      ),
     );
   }
 }

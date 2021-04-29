@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 
+@immutable
 class ScrollbarThemeData {
   const ScrollbarThemeData({
     this.disabledColor,
@@ -46,7 +47,9 @@ class ScrollbarThemeData {
   }
 
   ScrollbarThemeData merge(ScrollbarThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       disabledColor: other.disabledColor,
       color: other.color,
@@ -80,8 +83,12 @@ class ScrollbarThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is ScrollbarThemeData &&
         other.disabledColor == disabledColor &&
         other.color == color &&
@@ -92,7 +99,7 @@ class ScrollbarThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class ScrollbarTheme extends InheritedTheme {
   const ScrollbarTheme({
     Key? key,

@@ -1,11 +1,11 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../component.dart';
 import '../dialogs/context_menu.dart';
 import '../dialogs/tooltip.dart';
 import '../icons.dart';
 import '../theme/theme.dart';
-import '../component.dart';
 
 class DropDownButton<T> extends StatefulWidget {
   const DropDownButton({
@@ -67,9 +67,11 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       initialValue: widget.value,
       position: position,
       width: button.size.width,
-      settings: RouteSettings(),
+      settings: const RouteSettings(),
     ).then<void>((T? newValue) {
-      if (!mounted) return null;
+      if (!mounted) {
+        return null;
+      }
 
       if (newValue == null) {
         if (widget.onCanceled != null) widget.onCanceled!();
@@ -83,23 +85,33 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   }
 
   void _handleHoverEntered() {
-    if (!hovered) setState(() => hovered = true);
+    if (!hovered) {
+      setState(() => hovered = true);
+    }
   }
 
   void _handleHoverExited() {
-    if (hovered) setState(() => hovered = false);
+    if (hovered) {
+      setState(() => hovered = false);
+    }
   }
 
   void _handleTapDown(TapDownDetails event) {
-    if (!pressed) setState(() => pressed = true);
+    if (!pressed) {
+      setState(() => pressed = true);
+    }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      setState(() => pressed = false);
+    }
   }
 
   void _handleTapCancel() {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      setState(() => pressed = false);
+    }
   }
 
   @override
@@ -164,7 +176,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               child: child,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Icon(
                 Icons.expand_more,
                 size: 18.0,
@@ -199,7 +211,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     if (widget.tooltip != null) {
       result = Tooltip(
-        message: widget.tooltip!, // FIXME
+        message: widget.tooltip!, // TODO(as): ???
         child: result,
       );
     }

@@ -1,18 +1,16 @@
-import 'package:desktop/src/desktop/navigation/tab_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../theme/theme.dart';
 import '../icons.dart';
-import '../input/button_icon.dart';
-
-import 'tab_scope.dart';
+import '../theme/theme.dart';
 import 'nav_button.dart';
-export 'tab_scope.dart' show TabScope, RouteBuilder;
 import 'route.dart' show NextTabIntent, PreviousTabIntent;
-
+import 'tab_route.dart';
+import 'tab_scope.dart';
 import 'tab_view.dart';
+
+export 'tab_scope.dart' show TabScope, RouteBuilder;
 
 const int _kIntialIndexValue = 0;
 
@@ -168,7 +166,9 @@ class _NavState extends State<Nav> {
       if (index < 0 ||
           index >= _length ||
           _menus != null ||
-          Navigator.of(context, rootNavigator: true).canPop()) return false;
+          Navigator.of(context, rootNavigator: true).canPop()) {
+        return false;
+      }
 
       setState(() {
         _index = index;
@@ -183,7 +183,7 @@ class _NavState extends State<Nav> {
 
   void _updateBackButton() {
     if (mounted) {
-      bool value = _currentNavigator.canPop();
+      final bool value = _currentNavigator.canPop();
 
       if (value != _isBack) {
         setState(() => _isBack = value);
@@ -290,7 +290,7 @@ class _NavState extends State<Nav> {
         alignment: Alignment.center,
         padding: itemsSpacing,
         child: NavMenuButton(
-          Icon(Icons.arrow_back),
+          const Icon(Icons.arrow_back),
           axis: widget.navAxis,
           active: false,
           onPressed: enabled ? () => _goBack() : null,
@@ -301,7 +301,7 @@ class _NavState extends State<Nav> {
       navList.add(value);
     }
 
-    if (widget.leadingMenu != null && widget.leadingMenu!.length > 0) {
+    if (widget.leadingMenu != null && widget.leadingMenu!.isNotEmpty) {
       navList.add(
         _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
       );
@@ -310,9 +310,9 @@ class _NavState extends State<Nav> {
     navList.add(
       _createNavItems(itemsSpacing, navThemeData),
     );
-    navList.add(Spacer());
+    navList.add(const Spacer());
 
-    if (widget.trailingMenu != null && widget.trailingMenu!.length > 0) {
+    if (widget.trailingMenu != null && widget.trailingMenu!.isNotEmpty) {
       navList.add(
           _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!));
     }
@@ -436,8 +436,12 @@ class _NavState extends State<Nav> {
 
   @override
   void dispose() {
-    for (var focusNode in _focusNodes) focusNode.dispose();
-    for (var focusNode in _disposedFocusNodes) focusNode.dispose();
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    for (final focusNode in _disposedFocusNodes) {
+      focusNode.dispose();
+    }
 
     super.dispose();
   }
@@ -510,7 +514,7 @@ class _NavState extends State<Nav> {
 class _NavObserver extends NavigatorObserver {
   _NavObserver(this._navState);
 
-  _NavState _navState;
+  final _NavState _navState;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

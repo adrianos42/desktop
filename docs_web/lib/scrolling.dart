@@ -228,7 +228,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // FIXME Better way to do this?
+    // TODO(as): ??? Better way to do this?
     if (firstBuild) {
       _startFadeoutTimer();
       firstBuild = false;

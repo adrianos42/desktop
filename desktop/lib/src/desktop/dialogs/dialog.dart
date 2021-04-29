@@ -59,7 +59,7 @@ class Dialog extends StatelessWidget {
                 Padding(
                   padding: dialogThemeData.titlePadding,
                   child: DefaultTextStyle(
-                    child: title!, // FIXME
+                    child: title!, // TODO(as): ???
                     textAlign: TextAlign.start,
                     style: textTheme.title,
                   ),
@@ -78,16 +78,10 @@ class Dialog extends StatelessWidget {
               padding: dialogThemeData.menuPadding,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Container(
-                  // constraints: BoxConstraints(
-                  //   maxHeight: 26.0,
-                  //   minHeight: 26.0,
-                  // ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: menus!, // FIXME what?
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: menus!, // TODO(as): ???
                 ),
               ),
             ),
@@ -119,7 +113,8 @@ class DialogRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel,
+        _barrierLabel = barrierLabel ??
+            DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor,
         super(settings: settings, filter: filter);
 

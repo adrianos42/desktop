@@ -15,18 +15,21 @@ abstract class DesktopLocalizations {
 
   static DesktopLocalizations of(BuildContext context) {
     //assert(debugCheckHasDesktopLocalizations(context));
-    return Localizations.of<DesktopLocalizations>(context, DesktopLocalizations)!;
+    return Localizations.of<DesktopLocalizations>(
+        context, DesktopLocalizations)!;
   }
 }
 
-class _DesktopLocalizationsDelegate extends LocalizationsDelegate<DesktopLocalizations> {
+class _DesktopLocalizationsDelegate
+    extends LocalizationsDelegate<DesktopLocalizations> {
   const _DesktopLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => locale.languageCode == 'en';
 
   @override
-  Future<DesktopLocalizations> load(Locale locale) => DefaultDesktopLocalizations.load(locale);
+  Future<DesktopLocalizations> load(Locale locale) =>
+      DefaultDesktopLocalizations.load(locale);
 
   @override
   bool shouldReload(_DesktopLocalizationsDelegate old) => false;
@@ -50,8 +53,10 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
   String get modalBarrierDismissLabel => 'Dismiss';
 
   static Future<DesktopLocalizations> load(Locale locale) {
-    return SynchronousFuture<DesktopLocalizations>(const DefaultDesktopLocalizations());
+    return SynchronousFuture<DesktopLocalizations>(
+        const DefaultDesktopLocalizations());
   }
 
-  static const LocalizationsDelegate<DesktopLocalizations> delegate = _DesktopLocalizationsDelegate();
+  static const LocalizationsDelegate<DesktopLocalizations> delegate =
+      _DesktopLocalizationsDelegate();
 }

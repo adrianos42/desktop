@@ -13,6 +13,7 @@ const EdgeInsets _kOutsidePadding = EdgeInsets.symmetric(vertical: 32.0);
 const double _kMinDialogWidth = 640.0;
 const double _kMinDialogHeight = 120.0;
 
+@immutable
 class DialogThemeData {
   const DialogThemeData({
     this.dialogPadding = _kDialogPadding,
@@ -80,8 +81,12 @@ class DialogThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is DialogThemeData &&
         other.constraints == constraints &&
         other.menuPadding == menuPadding &&
@@ -93,6 +98,7 @@ class DialogThemeData {
   }
 }
 
+@immutable
 class DialogTheme extends InheritedTheme {
   const DialogTheme({
     required this.data,
@@ -120,15 +126,15 @@ class DialogTheme extends InheritedTheme {
       if (dialogThemeData.barrierColor == null) {
         final barrierColor =
             themeData.colorScheme.brightness == Brightness.light
-                ? HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
-                : HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2);
+                ? const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
+                : const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2);
         dialogThemeData = dialogThemeData.copyWidth(barrierColor: barrierColor);
       }
     }
 
     assert(dialogThemeData!.isConcrete);
 
-    return dialogThemeData!; // FIXME
+    return dialogThemeData!; // TODO(as): ???
   }
 
   @override

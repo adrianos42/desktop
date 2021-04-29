@@ -94,10 +94,10 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
         ? theme.inactiveHoverColor!
         : theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
-    final focusColor = theme.activeHoverColor!; // FIXME
-    final disabledColor = theme.disabledColor!; // FIXME
+    final focusColor = theme.activeHoverColor!; // TODO(as): ???
+    final disabledColor = theme.disabledColor!; // TODO(as): ???
 
-    final Size size = Size.square(_kCheckboxWidth + 2);
+    const Size size = Size.square(_kCheckboxWidth + 2);
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
@@ -233,7 +233,7 @@ class _RenderCheckbox extends RenderToggleable {
   }
 
   RRect _outerRectAt(Offset origin) {
-    final double size = _kEdgeSize;
+    const double size = _kEdgeSize;
     final Rect rect = Rect.fromLTWH(origin.dx, origin.dy, size, size);
     return RRect.fromRectAndRadius(rect, Radius.zero);
   }

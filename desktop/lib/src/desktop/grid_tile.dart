@@ -28,14 +28,14 @@ class GridTile extends StatelessWidget {
             top: 0.0,
             left: 0.0,
             right: 0.0,
-            child: header!, // FIXME
+            child: header!, // TODO(as): ???
           ),
         if (footer != null)
           Positioned(
             left: 0.0,
             bottom: 0.0,
             right: 0.0,
-            child: footer!, // FIXME
+            child: footer!, // TODO(as): ???
           ),
       ],
     );

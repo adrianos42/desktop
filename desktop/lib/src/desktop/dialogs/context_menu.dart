@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../theme/theme.dart';
-import '../navigation/route.dart';
 import '../component.dart';
 import '../localizations.dart';
+import '../navigation/route.dart';
+import '../theme/theme.dart';
 
 const Duration _kMenuDuration = Duration(microseconds: 200);
 const double _kDividerThickness = 1.0;
@@ -50,12 +51,12 @@ class _RenderMenuItem extends RenderShiftedBox {
     if (child == null) {
       size = Size.zero;
     } else {
-      //// FIXME
+      // TODO(as): ???
       child!.layout(constraints, parentUsesSize: true);
       size = constraints.constrain(child!.size);
 
-      // FIXME
-      final BoxParentData childParentData = child!.parentData as BoxParentData;
+      // TODO(as): ???
+      final BoxParentData childParentData = child!.parentData! as BoxParentData;
       childParentData.offset = Offset.zero;
     }
   }
@@ -122,16 +123,18 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     final bool selected = widget.selected(context);
 
     final HSLColor? background = pressed
-        ? (selected ? colorScheme.primary : colorScheme.background3) // FIXME
+        ? (selected
+            ? colorScheme.primary
+            : colorScheme.background3) // TODO(as): ???
         : selected
             ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
             : hovered
-                ? colorScheme.background2 // FIXME
+                ? colorScheme.background2 // TODO(as): ???
                 : null;
 
     final foreground = selected
         ? TextTheme(colorScheme.withBrightness(Brightness.dark))
-            .textHigh // FIXME ???
+            .textHigh // TODO(as): ???
         : textTheme.textHigh;
 
     final TextStyle textStyle = textTheme.body1.copyWith(
@@ -195,7 +198,7 @@ class ContextMenuDivider extends ContextMenuEntry<Null> {
 class _ContextMenuDividerState extends State<ContextMenuDivider> {
   @override
   Widget build(BuildContext context) {
-    HSLColor background = Theme.of(context).colorScheme.background;
+    final HSLColor background = Theme.of(context).colorScheme.background;
 
     return SizedBox(
         height: widget.height,
@@ -242,7 +245,7 @@ class _ContextMenu<T> extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     final children = route.items.map((item) {
-      final selected;
+      final bool selected;
 
       if (route.value != null) {
         selected = item.represents(route.value!);
@@ -333,11 +336,13 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
       for (int index = 0;
           selectedItemIndex == null && index < items.length;
           index += 1) {
-        if (items[index].represents(value!)) selectedItemIndex = index;
+        if (items[index].represents(value!)) {
+          selectedItemIndex = index;
+        }
       }
     }
 
-    Widget menu = _ContextMenu<T>(
+    final Widget menu = _ContextMenu<T>(
       route: this,
       semanticLabel: semanticLabel,
     );
@@ -392,7 +397,7 @@ class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
 
     assert(x != null, 'could not fit width');
 
-    return Offset(x!, y!); // FIXME
+    return Offset(x!, y!); // TODO(as): ???
   }
 
   @override
@@ -413,18 +418,18 @@ Future<T?> showMenu<T>({
 }) {
   assert(items.isNotEmpty);
 
-  String? label = semanticLabel;
+  final String? label = semanticLabel;
 
   return Navigator.of(context, rootNavigator: false).push(
     _ContextMenuRoute<T>(
-      items: items,
-      value: initialValue,
-      semanticLabel: label,
-      position: position,
-      width: width,
-      settings: settings,
-      barrierLabel: barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel
-    ),
+        items: items,
+        value: initialValue,
+        semanticLabel: label,
+        position: position,
+        width: width,
+        settings: settings,
+        barrierLabel: barrierLabel ??
+            DesktopLocalizations.of(context).modalBarrierDismissLabel),
   );
 }
 

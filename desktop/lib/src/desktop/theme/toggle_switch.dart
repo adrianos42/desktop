@@ -6,6 +6,7 @@ import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
+@immutable
 class ToggleSwitchThemeData {
   const ToggleSwitchThemeData({
     this.disabledColor,
@@ -47,7 +48,9 @@ class ToggleSwitchThemeData {
   }
 
   ToggleSwitchThemeData merge(ToggleSwitchThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       disabledColor: other.disabledColor,
       activeColor: other.activeColor,
@@ -81,8 +84,12 @@ class ToggleSwitchThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is ToggleSwitchThemeData &&
         other.disabledColor == disabledColor &&
         other.activeColor == activeColor &&
@@ -93,7 +100,7 @@ class ToggleSwitchThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class ToggleSwitchTheme extends InheritedTheme {
   const ToggleSwitchTheme({
     Key? key,
@@ -132,7 +139,7 @@ class ToggleSwitchTheme extends InheritedTheme {
       final HSLColor foreground =
           toggleSwitchThemeData.foreground ?? textTheme.textHigh;
 
-       final HSLColor activeHoverColor =
+      final HSLColor activeHoverColor =
           toggleSwitchThemeData.activeHoverColor ?? colorScheme.primary;
 
       final HSLColor activeColor =

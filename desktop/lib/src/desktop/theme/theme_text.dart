@@ -1,6 +1,8 @@
+import 'dart:ui' show Brightness;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:ui' show Brightness;
+
 import 'color_scheme.dart';
 
 class _TextThemes {

@@ -1,7 +1,3 @@
-// Copyright 2014 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:flutter/gestures.dart';
@@ -331,8 +327,8 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
     final ThemeData themeData = Theme.of(context).invertedTheme;
 
-    TextStyle defaultTextStyle = themeData.textTheme.caption;
-    Color defaultDecoration = themeData.colorScheme.background.toColor();
+    final TextStyle defaultTextStyle = themeData.textTheme.caption;
+    final Color defaultDecoration = themeData.colorScheme.background.toColor();
 
     height = widget.height ?? _kTooltipHeight;
     maxWidth = widget.maxWidth ?? _kTooltipMaxWidth;

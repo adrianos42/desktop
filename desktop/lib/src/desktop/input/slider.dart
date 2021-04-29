@@ -245,7 +245,9 @@ class _RenderSlider extends RenderConstrainedBox {
   double get value => _value;
   set value(double newValue) {
     assert(newValue >= 0.0 && newValue <= 1.0);
-    if (newValue == _value) return;
+    if (newValue == _value) {
+      return;
+    }
     _value = newValue;
     _position.value = newValue;
     markNeedsSemanticsUpdate();
@@ -254,7 +256,9 @@ class _RenderSlider extends RenderConstrainedBox {
   Color _activeColor;
   Color get activeColor => _activeColor;
   set activeColor(Color value) {
-    if (value == _activeColor) return;
+    if (value == _activeColor) {
+      return;
+    }
     _activeColor = value;
     markNeedsPaint();
   }
@@ -262,7 +266,9 @@ class _RenderSlider extends RenderConstrainedBox {
   Color _thumbColor;
   Color get thumbColor => _thumbColor;
   set thumbColor(Color value) {
-    if (value == _thumbColor) return;
+    if (value == _thumbColor) {
+      return;
+    }
     _thumbColor = value;
     markNeedsPaint();
   }
@@ -270,7 +276,9 @@ class _RenderSlider extends RenderConstrainedBox {
   Color _trackColor;
   Color get trackColor => _trackColor;
   set trackColor(Color value) {
-    if (value == _trackColor) return;
+    if (value == _trackColor) {
+      return;
+    }
     _trackColor = value;
     markNeedsPaint();
   }
@@ -278,10 +286,14 @@ class _RenderSlider extends RenderConstrainedBox {
   ValueChanged<double>? _onChanged;
   ValueChanged<double>? get onChanged => _onChanged;
   set onChanged(ValueChanged<double>? value) {
-    if (value == _onChanged) return;
+    if (value == _onChanged) {
+      return;
+    }
     final bool wasInteractive = isInteractive;
     _onChanged = value;
-    if (wasInteractive != isInteractive) markNeedsSemanticsUpdate();
+    if (wasInteractive != isInteractive) {
+      markNeedsSemanticsUpdate();
+    }
   }
 
   bool get isInteractive => onChanged != null;
@@ -292,13 +304,15 @@ class _RenderSlider extends RenderConstrainedBox {
   TextDirection _textDirection;
   TextDirection get textDirection => _textDirection;
   set textDirection(TextDirection value) {
-    if (_textDirection == value) return;
+    if (_textDirection == value) {
+      return;
+    }
     _textDirection = value;
     markNeedsPaint();
   }
 
   double get _discretizedCurrentDragValue {
-    double dragValue = _currentDragValue.clamp(0.0, 1.0);
+    final double dragValue = _currentDragValue.clamp(0.0, 1.0);
     return dragValue;
   }
 
@@ -368,7 +382,7 @@ class _RenderSlider extends RenderConstrainedBox {
     if (isInteractive) {
       _active = true;
       if (onChangeStart != null) {
-        onChangeStart!(_discretizedCurrentDragValue); // FIXME
+        onChangeStart!(_discretizedCurrentDragValue); // TODO(as): ???
       }
       _currentDragValue = _getValueFromGlobalPosition(globalPosition);
       onChanged!(_discretizedCurrentDragValue);
@@ -377,7 +391,7 @@ class _RenderSlider extends RenderConstrainedBox {
 
   void _endInteraction() {
     if (onChangeEnd != null) {
-      onChangeEnd!(_discretizedCurrentDragValue); // FIXME
+      onChangeEnd!(_discretizedCurrentDragValue); // TODO(as): ???
     }
 
     _active = false;

@@ -6,6 +6,7 @@ import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
+@immutable
 class CheckboxThemeData {
   const CheckboxThemeData({
     this.disabledColor,
@@ -47,7 +48,9 @@ class CheckboxThemeData {
   }
 
   CheckboxThemeData merge(CheckboxThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       disabledColor: other.disabledColor,
       activeColor: other.activeColor,
@@ -81,8 +84,12 @@ class CheckboxThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is CheckboxThemeData &&
         other.disabledColor == disabledColor &&
         other.activeColor == activeColor &&
@@ -93,7 +100,7 @@ class CheckboxThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class CheckboxTheme extends InheritedTheme {
   const CheckboxTheme({
     Key? key,
@@ -127,10 +134,10 @@ class CheckboxTheme extends InheritedTheme {
       checkboxThemeData ??= themeData.checkboxTheme;
 
       final ColorScheme colorScheme = themeData.colorScheme;
-      final TextTheme textTheme = Theme.of(context).textTheme;  // TODO
+      final TextTheme textTheme = Theme.of(context).textTheme; // TODO(as): ???
 
-      final HSLColor foreground =
-          checkboxThemeData.foreground ?? HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
+      final HSLColor foreground = checkboxThemeData.foreground ??
+          const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
 
       final HSLColor activeHoverColor =
           checkboxThemeData.activeHoverColor ?? colorScheme.primary;

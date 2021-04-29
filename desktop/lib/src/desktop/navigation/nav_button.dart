@@ -49,7 +49,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final axis = widget.axis;
 
-    var titleItems = List<Widget>.empty(growable: true);
+    final titleItems = List<Widget>.empty(growable: true);
 
     final NavThemeData navThemeData = NavTheme.of(context);
     final ThemeData themeData = Theme.of(context);
@@ -63,10 +63,10 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
       final bool active = widget.index == index;
 
       BoxConstraints constraints;
-      final buttonBodyPadding;
-      final buttonHeight;
+      final EdgeInsets buttonBodyPadding;
+      final double buttonHeight;
       double? buttonWidth;
-      final onLayout;
+      final Function(Size) onLayout;
 
       if (axis == Axis.horizontal) {
         constraints = BoxConstraints.tightFor(height: navThemeData.height);
@@ -292,7 +292,9 @@ class _RenderIconSide extends RenderConstrainedBox {
   int get index => _index;
   int _index;
   set index(int value) {
-    if (value == _index) return;
+    if (value == _index) {
+      return;
+    }
     _oldIndex = _index;
     _index = value;
 
@@ -300,7 +302,7 @@ class _RenderIconSide extends RenderConstrainedBox {
 
     _positionController.value = 0.0;
 
-    _position..curve = Curves.easeOut;
+    _position.curve = Curves.easeOut;
 
     _positionController.forward();
   }
@@ -321,7 +323,9 @@ class _RenderIconSide extends RenderConstrainedBox {
   TickerProvider get vsync => _vsync;
   TickerProvider _vsync;
   set vsync(TickerProvider value) {
-    if (value == _vsync) return;
+    if (value == _vsync) {
+      return;
+    }
     _vsync = value;
     positionController.resync(vsync);
   }
@@ -380,7 +384,7 @@ class _RenderIconSide extends RenderConstrainedBox {
       _rectNew = Rect.fromLTWH(dx, dy, sideLength, length);
     }
 
-    RectTween _rectTween = RectTween(begin: _rectLast, end: _rectNew);
+    final RectTween _rectTween = RectTween(begin: _rectLast, end: _rectNew);
 
     canvas.drawRect(_rectTween.lerp(position.value)!, paint);
   }
@@ -420,8 +424,8 @@ class NavMenuButton extends StatelessWidget {
     final color = textTheme.textLow;
     final hoverColor = colorScheme.shade;
 
-    final buttonBodyPadding;
-    final buttonHeight;
+    final EdgeInsets buttonBodyPadding;
+    final double buttonHeight;
     double? buttonWidth;
 
     if (axis == Axis.horizontal) {

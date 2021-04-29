@@ -105,7 +105,7 @@ abstract class DesktopTextSelectionGestureDetectorBuilderDelegate {
 class _TextFieldState extends State<TextField>
     with AutomaticKeepAliveClientMixin<TextField>, RestorationMixin
     implements DesktopTextSelectionGestureDetectorBuilderDelegate {
-  // FIXME final GlobalKey _clearGlobalKey = GlobalKey();
+  // TODO(as): final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
   TextEditingController get _effectiveController =>
@@ -228,7 +228,7 @@ class _TextFieldState extends State<TextField>
       //autocorrectionTextRectColor: ,
       //autofillHints: ,
       autofocus: widget.autofocus,
-      backgroundCursorColor: background.toColor(), // FIXME
+      backgroundCursorColor: background.toColor(), // TODO(as): ???
       controller: _effectiveController,
       cursorColor: characterColor.toColor(),
       //cursorHeight: ,
@@ -275,7 +275,7 @@ class _TextFieldState extends State<TextField>
       //toolbarOptions: ,
     );
 
-    Widget result = IgnorePointer(
+    final Widget result = IgnorePointer(
       ignoring: !enabled,
       child: MouseRegion(
         cursor: SystemMouseCursors.text,
@@ -289,7 +289,8 @@ class _TextFieldState extends State<TextField>
                 widthFactor: 1.0,
                 heightFactor: 1.0,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 4.0, vertical: 4.0),
                   child: editable,
                 ),
               ),

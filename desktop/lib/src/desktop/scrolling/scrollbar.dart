@@ -10,7 +10,7 @@ import '../component.dart';
 
 const double _kScrollbarThickness = 8.0;
 const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1800);
-// FIXME const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
+// TODO(as): ??? const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
 const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
 const double _kScrollTapIncrement = 0.05;
 const double _kScrollbarMinOverscrollLength = 8.0;
@@ -125,14 +125,13 @@ class _ScrollbarState extends State<Scrollbar>
         customPaintKey: _customPaintKey,
       ),
       (_TapGestureRecognizer instance) {
-        instance
-          ..onTap = () {
-            if (instance.region == _TapRegion.down) {
-              _handleIncrement(_kScrollTapIncrement);
-            } else if (instance.region == _TapRegion.up) {
-              _handleIncrement(-_kScrollTapIncrement);
-            }
-          };
+        instance.onTap = () {
+          if (instance.region == _TapRegion.down) {
+            _handleIncrement(_kScrollTapIncrement);
+          } else if (instance.region == _TapRegion.up) {
+            _handleIncrement(-_kScrollTapIncrement);
+          }
+        };
       },
     );
 
@@ -191,7 +190,7 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  // FIXME
+  // TODO(as): ???
   // void _startShowTimer() {
   //   _showTimer?.cancel();
 
@@ -263,7 +262,7 @@ class _ScrollbarState extends State<Scrollbar>
 
     _drag?.end(DragEndDetails(
       primaryVelocity: -0,
-      velocity: Velocity(pixelsPerSecond: Offset(0.0, -0)),
+      velocity: const Velocity(pixelsPerSecond: Offset(0.0, -0)),
     ));
 
     _handleDragScrollEnd();
@@ -294,11 +293,11 @@ class _ScrollbarState extends State<Scrollbar>
   double _scrollInitialPosition = 0.0;
 
   void _handleIncrement(double value) {
-    double totalContentExtent = _position.maxScrollExtent -
+    final double totalContentExtent = _position.maxScrollExtent -
         _position.minScrollExtent +
         _position.viewportDimension;
 
-    _position.moveTo(_position.pixels + (totalContentExtent) * value,
+    _position.moveTo(_position.pixels + totalContentExtent * value,
         curve: _kAnimationCurveIncrement,
         duration: _kAnimationDurationIncrement);
   }
@@ -306,7 +305,7 @@ class _ScrollbarState extends State<Scrollbar>
   Timer? _scrollTimer;
 
   void _targetScrollOffsetForPointerScroll(PointerScrollEvent event) {
-    double delta = _position.axis == Axis.horizontal
+    final double delta = _position.axis == Axis.horizontal
         ? event.scrollDelta.dx
         : event.scrollDelta.dy;
 
@@ -327,7 +326,7 @@ class _ScrollbarState extends State<Scrollbar>
       _scrollInitialPosition = _position.pixels;
     }
 
-    _scrollTimer = Timer(Duration(milliseconds: 1000), () {
+    _scrollTimer = Timer(const Duration(milliseconds: 1000), () {
       _scrollTimer = null;
     });
 
@@ -491,9 +490,7 @@ class _ScrollbarState extends State<Scrollbar>
     _fadeoutAnimationController.dispose();
     _showTimer?.cancel();
     _painter?.dispose();
-    _positionAnimation
-      //..removeListener(_updateScroll)
-      ..removeStatusListener(_handlePositionStateChanged);
+    _positionAnimation.removeStatusListener(_handlePositionStateChanged);
     super.dispose();
   }
 
@@ -526,7 +523,7 @@ class _ScrollbarState extends State<Scrollbar>
                 onExit: _handleMouseExit,
                 onHover: _handleMouseHover,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(1.0, 0.0, 1.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 1.0, 0.0),
                   //padding: EdgeInsets.zero,
                   child: CustomPaint(
                     key: _customPaintKey,
@@ -602,13 +599,13 @@ class _TapGestureRecognizer extends TapGestureRecognizer {
   GlobalKey get customPaintKey => _customPaintKey;
 
   RenderBox get renderBox =>
-      _customPaintKey.currentContext!.findRenderObject() as RenderBox;
+      _customPaintKey.currentContext!.findRenderObject()! as RenderBox;
 
   CustomPaint get customPaint =>
       _customPaintKey.currentContext!.widget as CustomPaint;
 
   DesktopScrollbarPainter get painter =>
-      customPaint.foregroundPainter as DesktopScrollbarPainter;
+      customPaint.foregroundPainter! as DesktopScrollbarPainter;
 
   Offset localOffset(Offset value) => renderBox.globalToLocal(value);
 
@@ -644,9 +641,9 @@ bool _hitTest(GlobalKey customPaintKey, Offset offset) {
   final CustomPaint customPaint =
       customPaintKey.currentContext!.widget as CustomPaint;
   final DesktopScrollbarPainter painter =
-      customPaint.foregroundPainter as DesktopScrollbarPainter;
+      customPaint.foregroundPainter! as DesktopScrollbarPainter;
   final RenderBox renderBox =
-      customPaintKey.currentContext!.findRenderObject() as RenderBox;
+      customPaintKey.currentContext!.findRenderObject()! as RenderBox;
 
   final Offset localOffset = renderBox.globalToLocal(offset);
   return painter.hitTest(localOffset);

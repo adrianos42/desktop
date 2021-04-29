@@ -88,7 +88,7 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
     final focusColor = theme.activeHoverColor!;
     final disabledColor = theme.disabledColor!;
 
-    final Size size = Size.square(Radio.outerRadius * 2.0);
+    const Size size = Size.square(Radio.outerRadius * 2.0);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
@@ -108,7 +108,7 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
             disabledColor: disabledColor.toColor(),
             onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
             foregroundColor: foregroundColor.toColor(),
-            focusColor: focusColor.toColor(), // FIXME
+            focusColor: focusColor.toColor(), // TODO(as): ???
             vsync: this,
             hasFocus: _focused,
             hovering: _hovering,

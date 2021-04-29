@@ -88,10 +88,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         ? theme.inactiveHoverColor!
         : theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
-    final focusColor = theme.activeHoverColor!; // FIXME
-    final disabledColor = theme.disabledColor!; // FIXME
+    final focusColor = theme.activeHoverColor!; // TODO(as): ???
+    final disabledColor = theme.disabledColor!; // TODO(as): ???
 
-    final Size size = Size(ToggleSwitch.width, ToggleSwitch.height);
+    const Size size = Size(ToggleSwitch.width, ToggleSwitch.height);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
@@ -217,7 +217,9 @@ class _RenderToggleSwitch extends RenderToggleable {
 
   @override
   set value(bool? newValue) {
-    if (newValue == value) return;
+    if (newValue == value) {
+      return;
+    }
     super.value = newValue;
   }
 
@@ -228,8 +230,8 @@ class _RenderToggleSwitch extends RenderToggleable {
   }
 
   RRect _rect(Offset origin) {
-    final double width = _width;
-    final double height = _height;
+    const double width = _width;
+    const double height = _height;
     final Rect rect = Rect.fromLTWH(origin.dx, origin.dy, width, height);
     return RRect.fromRectAndRadius(rect, _radius);
   }
@@ -251,8 +253,8 @@ class _RenderToggleSwitch extends RenderToggleable {
     // As t goes from 0.0 to 1.0, animate the horizontal line from the
     // mid point outwards.
 
-    final double space = _strokeWidth;
-    double radius = (_height - _strokeWidth * 2) / 2;
+    const double space = _strokeWidth;
+    const double radius = (_height - _strokeWidth * 2) / 2;
 
     final double dy = origin.dy + space + radius;
 

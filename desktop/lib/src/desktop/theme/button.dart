@@ -12,6 +12,7 @@ const double _kIconSize = 22.0;
 const double _kFontSize = 14.0;
 const double _kMinWidth = 12.0;
 
+@immutable
 class ButtonThemeData {
   const ButtonThemeData({
     this.height,
@@ -76,7 +77,9 @@ class ButtonThemeData {
   }
 
   ButtonThemeData merge(ButtonThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
@@ -122,8 +125,12 @@ class ButtonThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is ButtonThemeData &&
         other.textStyle == textStyle &&
         other.iconThemeData == iconThemeData &&
@@ -138,7 +145,7 @@ class ButtonThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class ButtonTheme extends InheritedTheme {
   const ButtonTheme({
     Key? key,
@@ -188,7 +195,7 @@ class ButtonTheme extends InheritedTheme {
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
 
-      final HSLColor focusColor = hoverColor; // FIXME
+      final HSLColor focusColor = hoverColor; // TODO(as): ???
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: color.toColor());
@@ -196,7 +203,6 @@ class ButtonTheme extends InheritedTheme {
       final double height = buttonThemeData.height ?? _kHeight;
       final double itemSpacing = buttonThemeData.itemSpacing ?? _kSidePadding;
       final double minWidth = buttonThemeData.minWidth ?? _kMinWidth;
-      
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,

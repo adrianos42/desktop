@@ -1,22 +1,50 @@
 import 'dart:collection';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../input/button.dart';
-import '../theme/theme.dart';
 import '../icons.dart';
+import '../input/button.dart';
 import '../scrolling/scrollbar.dart';
-
+import '../theme/theme.dart';
 import 'tab_view.dart';
 
-
+@immutable
 class TreeNode {
+  /// Creates a tree node with the page title, and child or children.
+  const TreeNode(this.title, {this.builder, this.children})
+      : assert(builder == null || children == null);
+
+  /// Creates a child with a [TabView].
+  /// /// See also:
+  ///   [TabView] for the arguments.
+  factory TreeNode.child(
+    String title, {
+    WidgetBuilder? builder,
+    GlobalKey<NavigatorState>? navigatorKey,
+    String? defaultTitle,
+    Map<String, WidgetBuilder>? routes,
+    RouteFactory? onGenerateRoute,
+    RouteFactory? onUnknownRoute,
+    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+  }) {
+    return TreeNode(
+      title,
+      builder: (BuildContext context) => TabView(
+        builder: builder,
+        navigatorKey: navigatorKey,
+        routes: routes,
+        onGenerateRoute: onGenerateRoute,
+        onUnknownRoute: onUnknownRoute,
+        defaultTitle: defaultTitle,
+        navigatorObservers: navigatorObservers,
+      ),
+    );
+  }
+
   final List<TreeNode>? children;
   final WidgetBuilder? builder;
   final String title;
-
-  const TreeNode(this.title, {this.builder, this.children})
-      : assert(builder == null || children == null);
 }
 
 /// Tree
@@ -97,7 +125,6 @@ class _BuildTreePage {
   _BuildTreePage(this.builder);
 
   final WidgetBuilder builder;
-  final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
   final FocusScopeNode focusScopeNode = FocusScopeNode(skipTraversal: true);
   bool shouldBuild = false;
 }
@@ -111,7 +138,7 @@ class _TreeState extends State<Tree> {
     final nameResult = '''$name${node.title}''';
 
     if (node.children != null) {
-      for (var child in node.children!) {
+      for (final child in node.children!) {
         _createEntries(nameResult, child);
       }
     } else if (node.builder != null) {
@@ -125,21 +152,13 @@ class _TreeState extends State<Tree> {
   void didUpdateWidget(Tree oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // FIXME!!!!!!!
+    // TODO(as): !!!!!!!
     // if (widget.items.length - _shouldBuildView.length > 0) {
     //   _shouldBuildView.addAll(List<bool>.filled(
     //       widget.items.length - _shouldBuildView.length, false));
     // } else {
     //   _shouldBuildView.removeRange(
     //       widget.items.length, _shouldBuildView.length);
-    // }
-
-    // if (widget.items.length - _navigators.length > 0) {
-    //   _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-    //       widget.items.length - _navigators.length,
-    //       (index) => GlobalKey<NavigatorState>()));
-    // } else {
-    //   _navigators.removeRange(widget.items.length, _navigators.length);
     // }
 
     //  _focusView();
@@ -153,7 +172,7 @@ class _TreeState extends State<Tree> {
       throw Exception('Nodes cannot be empty');
     }
 
-    for (var node in widget.nodes) {
+    for (final node in widget.nodes) {
       _createEntries('', node);
     }
   }
@@ -164,7 +183,7 @@ class _TreeState extends State<Tree> {
 
     _current ??= widget.nodes.first.title;
 
-    for (var entry in _pages.entries) {
+    for (final entry in _pages.entries) {
       final active = entry.key == _current!;
       entry.value.shouldBuild = active || entry.value.shouldBuild;
 
@@ -181,10 +200,7 @@ class _TreeState extends State<Tree> {
                   return entry.value.shouldBuild
                       ? Padding(
                           padding: widget.pagePadding ?? EdgeInsets.zero,
-                          child: TabView(
-                            navigatorKey: entry.value.navigator,
-                            builder: entry.value.builder,
-                          ),
+                          child: entry.value.builder(context),
                         )
                       : Container();
                 },
@@ -207,14 +223,14 @@ class _TreeState extends State<Tree> {
             child: SingleChildScrollView(
               controller: controller,
               child: Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (widget.title != null)
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: widget.title!,
                       ),
                     Column(
@@ -262,7 +278,7 @@ class _TreeScope extends InheritedWidget {
 }
 
 class _TreeColumn extends StatefulWidget {
-  _TreeColumn({
+  const _TreeColumn({
     required this.node,
     required this.parentName,
     Key? key,
@@ -276,7 +292,7 @@ class _TreeColumn extends StatefulWidget {
 }
 
 class _TreeColumnState extends State<_TreeColumn> {
-  var _collapsed = true;
+  bool _collapsed = true;
 
   String get name => '${widget.parentName}${widget.node.title}';
 
@@ -293,7 +309,7 @@ class _TreeColumnState extends State<_TreeColumn> {
     if (widget.node.children != null) {
       final iconCollpased = _collapsed ? Icons.expand_more : Icons.expand_less;
       final chidrenWidget = Padding(
-        padding: EdgeInsets.only(left: 16.0),
+        padding: const EdgeInsets.only(left: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -320,7 +336,7 @@ class _TreeColumnState extends State<_TreeColumn> {
             ),
             child: Button(
               bodyPadding: EdgeInsets.zero,
-              trailingPadding: EdgeInsets.only(left: 8.0),
+              trailingPadding: const EdgeInsets.only(left: 8.0),
               padding: EdgeInsets.zero,
               body: Text(widget.node.title),
               trailing: Icon(iconCollpased),

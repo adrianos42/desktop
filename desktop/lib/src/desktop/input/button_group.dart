@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import 'button.dart';
 import '../theme/theme.dart';
+import 'button.dart';
 
 typedef ToggleButtonItemSelected<T> = void Function(T value);
 
@@ -41,12 +41,12 @@ class ToggleButton<T> extends StatelessWidget {
         'Cannot have more than one item with the same value');
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: items.map((e) {
-          bool isSelected = value == e.value;
+        children: items.map((ToggleItem<dynamic> e) {
+          final bool isSelected = value == e.value;
           return ButtonTheme.merge(
             data: ButtonThemeData(
               hoverColor: isSelected ? colorScheme.primary1 : null,
@@ -57,7 +57,8 @@ class ToggleButton<T> extends StatelessWidget {
               padding: EdgeInsets.zero,
               body: e.builder(context),
               tooltip: e.tooltip,
-              onPressed: onSelected != null ? () => onSelected!(e.value) : null,
+              onPressed:
+                  onSelected != null ? () => onSelected!(e.value as T) : null,
             ),
           );
         }).toList(),

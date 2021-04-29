@@ -27,9 +27,7 @@ class ColorScheme {
   HSLColor get overlay4 => background.withAlpha(0.6);
   HSLColor get overlay5 => background.withAlpha(0.5);
 
-  HSLColor get primary => brightness == Brightness.light
-      ? _primary.withLightness(_primary.lightness - 0.1)
-      : _primary.withLightness(_primary.lightness + 0.1);
+  HSLColor get primary => _primary;
 
   HSLColor get primary1 => primary
       .withSaturation(primary.saturation - 0.1)
@@ -40,48 +38,48 @@ class ColorScheme {
       .withLightness(primary.lightness - 0.2);
 
   HSLColor get background => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
 
   HSLColor get background1 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.95)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.05);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.95)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.05);
 
   HSLColor get background2 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1);
 
   HSLColor get background3 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.85)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.15);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.85)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.15);
 
   HSLColor get disabled => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
 
   HSLColor get shade => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
   HSLColor get shade1 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9);
   HSLColor get shade2 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
   HSLColor get shade3 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.3)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.7);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.3)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.7);
   HSLColor get shade4 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
   HSLColor get shade5 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
   HSLColor get shade6 => brightness == Brightness.light
-      ? HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6)
-      : HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
 
-  HSLColor get error => HSLColor.fromAHSL(1.0, 0, 0.9, 0.5);
+  HSLColor get error => const HSLColor.fromAHSL(1.0, 0, 0.9, 0.5);
 }
 
 class PrimaryColors {
@@ -116,6 +114,7 @@ class PrimaryColors {
   static const red = PrimaryColor.fromAHSL('Red', 1.0, 347.0, 0.9, 0.6);
 }
 
+@immutable
 class PrimaryColor extends HSLColor {
   @override
   String toString() => name;

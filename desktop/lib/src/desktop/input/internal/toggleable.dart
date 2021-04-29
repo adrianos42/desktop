@@ -1,7 +1,3 @@
-// Copyright 2014 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -41,7 +37,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
         _vsync = vsync,
         super(additionalConstraints: additionalConstraints) {
     _tap = TapGestureRecognizer()..onTap = _handleTap;
-    // FIXME
+    // TODO(as): ???
     // ..onTapDown = _handleTapDown
     //..onTapUp = _handleTapUp
     //..onTapCancel = _handleTapCancel;
@@ -86,7 +82,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool get hasFocus => _hasFocus;
   bool _hasFocus;
   set hasFocus(bool value) {
-    if (value == _hasFocus) return;
+    if (value == _hasFocus) {
+      return;
+    }
     _hasFocus = value;
     if (_hasFocus) {
 //      _reactionFocusFadeController.forward();
@@ -100,7 +98,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool get hovering => _hovering;
   bool _hovering;
   set hovering(bool value) {
-    if (value == _hovering) return;
+    if (value == _hovering) {
+      return;
+    }
     _hovering = value;
     if (_hovering) {
       //  _reactionHoverFadeController.forward();
@@ -114,7 +114,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   TickerProvider get vsync => _vsync;
   TickerProvider _vsync;
   set vsync(TickerProvider value) {
-    if (value == _vsync) return;
+    if (value == _vsync) {
+      return;
+    }
     _vsync = value;
     positionController.resync(vsync);
     // reactionController.resync(vsync);
@@ -133,7 +135,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool? _value;
   set value(bool? value) {
     assert(tristate! || value != null);
-    if (value == _value) return;
+    if (value == _value) {
+      return;
+    }
     _value = value;
     markNeedsSemanticsUpdate();
 
@@ -167,7 +171,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool? _tristate;
   set tristate(bool? value) {
     assert(tristate != null);
-    if (value == _tristate) return;
+    if (value == _tristate) {
+      return;
+    }
     _tristate = value;
     markNeedsSemanticsUpdate();
   }
@@ -178,7 +184,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   Color get activeColor => _activeColor;
   Color _activeColor;
   set activeColor(Color value) {
-    if (value == _activeColor) return;
+    if (value == _activeColor) {
+      return;
+    }
     _activeColor = value;
     markNeedsPaint();
   }
@@ -189,7 +197,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   Color get inactiveColor => _inactiveColor;
   Color _inactiveColor;
   set inactiveColor(Color value) {
-    if (value == _inactiveColor) return;
+    if (value == _inactiveColor) {
+      return;
+    }
     _inactiveColor = value;
     markNeedsPaint();
   }
@@ -203,7 +213,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   Color get disabledColor => _disabledColor;
   Color _disabledColor;
   set disabledColor(Color value) {
-    if (value == _disabledColor) return;
+    if (value == _disabledColor) {
+      return;
+    }
     _disabledColor = value;
     markNeedsPaint();
   }
@@ -217,7 +229,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   Color get focusColor => _focusColor;
   Color _focusColor;
   set focusColor(Color value) {
-    if (value == _focusColor) return;
+    if (value == _focusColor) {
+      return;
+    }
     _focusColor = value;
     markNeedsPaint();
   }
@@ -236,7 +250,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   ValueChanged<bool?>? get onChanged => _onChanged;
   ValueChanged<bool?>? _onChanged;
   set onChanged(ValueChanged<bool?>? value) {
-    if (value == _onChanged) return;
+    if (value == _onChanged) {
+      return;
+    }
     final bool wasInteractive = isInteractive;
     _onChanged = value;
     if (wasInteractive != isInteractive) {
@@ -254,7 +270,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   bool get isInteractive => onChanged != null;
 
   late TapGestureRecognizer _tap;
-  // FIXME Offset? _downPosition;
+  // TODO(as): Offset? _downPosition;
 
   @override
   void attach(PipelineOwner owner) {
@@ -284,7 +300,7 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     }
   }
 
-  // FIXME
+  // TODO(as): ???
   // void _handleTapDown(TapDownDetails details) {
   //   if (isInteractive) {
   //     _downPosition = globalToLocal(details.globalPosition);
@@ -292,7 +308,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   // }
 
   void _handleTap() {
-    if (!isInteractive) return;
+    if (!isInteractive) {
+      return;
+    }
     switch (value) {
       case false:
         onChanged!(true);
@@ -308,8 +326,8 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     sendSemanticsEvent(const TapSemanticEvent());
   }
 
-  // FIXME void _handleTapUp(TapUpDetails details) => _downPosition = null;
-  // void _handleTapCancel() => _downPosition = null;
+  // TODO(as): ??? void _handleTapUp(TapUpDetails details) => _downPosition = null;
+  // TODO(as): ??? void _handleTapCancel() => _downPosition = null;
 
   @override
   bool hitTestSelf(Offset position) => true;
@@ -317,7 +335,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
   @override
   void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
     assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent && isInteractive) _tap.addPointer(event);
+    if (event is PointerDownEvent && isInteractive) {
+      _tap.addPointer(event);
+    }
   }
 
   @override
@@ -325,7 +345,9 @@ abstract class RenderToggleable extends RenderConstrainedBox {
     super.describeSemanticsConfiguration(config);
 
     config.isEnabled = isInteractive;
-    if (isInteractive) config.onTap = _handleTap;
+    if (isInteractive) {
+      config.onTap = _handleTap;
+    }
   }
 
   @override

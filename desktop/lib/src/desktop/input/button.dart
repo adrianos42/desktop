@@ -96,7 +96,7 @@ class _ButtonState extends State<Button>
 
   bool _globalPointerDown = false;
 
-  void _mouseRoute(event) => _globalPointerDown = event.down;
+  void _mouseRoute(PointerEvent event) => _globalPointerDown = event.down;
 
   late AnimationController _controller;
 
@@ -107,7 +107,7 @@ class _ButtonState extends State<Button>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 50),
     );
 
     _controller.forward();
@@ -152,11 +152,11 @@ class _ButtonState extends State<Button>
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 
-    final constraints;
-    final leadingPadding;
-    final trailingPadding;
-    final bodyPadding;
-    final buttonPadding;
+    final BoxConstraints constraints;
+    final EdgeInsets leadingPadding;
+    final EdgeInsets trailingPadding;
+    final EdgeInsets bodyPadding;
+    final EdgeInsets buttonPadding;
     double? height;
     double? width;
 
@@ -239,7 +239,7 @@ class _ButtonState extends State<Button>
       },
     );
 
-    result = Container(
+    result = SizedBox(
       child: result,
       height: height,
       width: width,
@@ -257,10 +257,13 @@ class _ButtonState extends State<Button>
         onTapCancel: _handleTapCancel,
         onTap: enabled
             ? () async {
-                if (waiting) return;
+                if (waiting) {
+                  return;
+                }
                 setState(() => waiting = true);
 
-                dynamic result = widget.onPressed!() as dynamic; // FIXME
+                final dynamic result =
+                    widget.onPressed!() as dynamic; // TODO(as): fix dynamic
 
                 if (result is Future<void>) {
                   await result;

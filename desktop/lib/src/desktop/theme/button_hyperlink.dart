@@ -3,13 +3,13 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
 import 'theme_data.dart';
-import 'color_scheme.dart';
 
 const double _kLineThickness = 1.0;
 const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
 const HSLColor _kDefaultColorHover = HSLColor.fromAHSL(1.0, 210, 0.9, 0.66);
 const HSLColor _kDefaultColorHighlight = HSLColor.fromAHSL(1.0, 210, 0.8, 0.76);
 
+@immutable
 class HyperlinkButtonThemeData {
   const HyperlinkButtonThemeData({
     this.color,
@@ -59,8 +59,12 @@ class HyperlinkButtonThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is HyperlinkButtonThemeData &&
         other.color == color &&
         other.textStyle == textStyle &&
@@ -69,6 +73,7 @@ class HyperlinkButtonThemeData {
   }
 }
 
+@immutable
 class HyperlinkButtonTheme extends InheritedTheme {
   const HyperlinkButtonTheme({
     required this.data,

@@ -29,7 +29,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   Color get color => _color;
   late Color _color;
   set color(Color value) {
-    if (color == value) return;
+    if (color == value) {
+      return;
+    }
 
     _color = value;
     notifyListeners();
@@ -40,7 +42,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   TextDirection get textDirection => _textDirection;
   late TextDirection _textDirection;
   set textDirection(TextDirection value) {
-    if (textDirection == value) return;
+    if (textDirection == value) {
+      return;
+    }
 
     _textDirection = value;
     notifyListeners();
@@ -77,7 +81,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   EdgeInsets get padding => _padding;
   late EdgeInsets _padding;
   set padding(EdgeInsets value) {
-    if (padding == value) return;
+    if (padding == value) {
+      return;
+    }
 
     //_padding = value;
     notifyListeners();
@@ -273,7 +279,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (_lastAxisDirection == null ||
         _lastMetrics == null ||
-        fadeoutOpacityAnimation.value == 0.0) return;
+        fadeoutOpacityAnimation.value == 0.0) {
+      return;
+    }
 
     // Skip painting if there's not enough space.
     if (_lastMetrics!.viewportDimension <= _mainAxisPadding ||

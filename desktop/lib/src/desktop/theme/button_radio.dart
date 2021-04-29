@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 
+@immutable
 class RadioButtonThemeData {
   const RadioButtonThemeData({
     this.disabledColor,
@@ -46,7 +47,9 @@ class RadioButtonThemeData {
   }
 
   RadioButtonThemeData merge(RadioButtonThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       disabledColor: other.disabledColor,
       activeColor: other.activeColor,
@@ -80,8 +83,12 @@ class RadioButtonThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is RadioButtonThemeData &&
         other.disabledColor == disabledColor &&
         other.activeColor == activeColor &&
@@ -92,7 +99,7 @@ class RadioButtonThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class RadioButtonTheme extends InheritedTheme {
   const RadioButtonTheme({
     Key? key,
@@ -130,7 +137,7 @@ class RadioButtonTheme extends InheritedTheme {
       final HSLColor foreground =
           radioButtonThemeData.foreground ?? colorScheme.shade;
 
-       final HSLColor activeHoverColor =
+      final HSLColor activeHoverColor =
           radioButtonThemeData.activeHoverColor ?? colorScheme.primary;
 
       final HSLColor activeColor =

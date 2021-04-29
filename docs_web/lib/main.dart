@@ -54,7 +54,7 @@ class _DocAppState extends State<DocApp> {
   PrimaryColor primaryColor = PrimaryColors.dodgerBlue;
 
   Widget _createHome() {
-    var githubImage;
+    final githubImage;
     if (themeData.brightness == Brightness.dark) {
       githubImage = Image.asset(
         'assets/GitHub-Mark-Light-32px.png',
@@ -165,42 +165,42 @@ class _DocAppState extends State<DocApp> {
                   ),
                 ),
                 nodes: [
-                  TreeNode(
+                  TreeNode.child(
                     'Overview',
                     builder: (context) => OverviewPage(),
                   ),
                   TreeNode('Navigation', children: [
-                    TreeNode('Breadcrumb',
+                    TreeNode.child('Breadcrumb',
                         builder: (context) => BreadcrumbPage()),
-                    TreeNode('Nav', builder: (context) => NavPage()),
-                    TreeNode('Tab', builder: (context) => TabPage()),
-                    TreeNode('Tree', builder: (context) => TreePage()),
+                    TreeNode.child('Nav', builder: (context) => NavPage()),
+                    TreeNode.child('Tab', builder: (context) => TabPage()),
+                    TreeNode.child('Tree', builder: (context) => TreePage()),
                   ]),
                   TreeNode('Data', children: [
-                    TreeNode('List Table',
+                    TreeNode.child('List Table',
                         builder: (context) => ListTablePage()),
                   ]),
                   TreeNode('Dialogs', children: [
-                    TreeNode('Dialog', builder: (context) => DialogPage()),
+                    TreeNode.child('Dialog', builder: (context) => DialogPage()),
                   ]),
                   TreeNode('Input', children: [
-                    TreeNode(
+                    TreeNode.child(
                       'Button',
                       builder: (context) => ButtonPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Context menu',
                       builder: (context) => ButtonContextMenuPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Drop down menu',
                       builder: (context) => ButtonDropDownPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Icon button',
                       builder: (context) => ButtonIconPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Text button',
                       builder: (context) => ButtonTextPage(),
                     ),
@@ -208,56 +208,56 @@ class _DocAppState extends State<DocApp> {
                     //   'Toggle button',
                     //   builder: (context) => ButtonTogglePage(),
                     // ),
-                    TreeNode(
+                    TreeNode.child(
                       'Hyperlink',
                       builder: (context) => ButtonHyperlinkPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Radio',
                       builder: (context) => ButtonRadioPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Checkbox',
                       builder: (context) => CheckboxPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Slider',
                       builder: (context) => SliderPage(),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Toggle switch',
                       builder: (context) => ToggleSwitchPage(),
                     ),
                   ]),
                   TreeNode('Status', children: [
-                    TreeNode(
+                    TreeNode.child(
                       'Progress indicator',
                       builder: (context) => ProgressIndicatorPage(),
                     ),
-                    // TreeNode(
+                    // TreeNode.view(
                     //   'Status bar',
                     //   builder: (context) => StatusBarPage(),
                     // ),
-                    TreeNode(
+                    TreeNode.child(
                       'Tooltip',
                       builder: (context) => TooltipPage(),
                     ),
                   ]),
                   TreeNode('Text', children: [
-                    TreeNode(
+                    TreeNode.child(
                       'Text field',
                       builder: (context) => TextFieldPage(),
                     ),
                   ]),
-                  TreeNode(
+                  TreeNode.child(
                     'Scrolling',
                     builder: (context) => ScrollingPage(),
                   ),
-                  TreeNode(
+                  TreeNode.child(
                     'Typography',
                     builder: (context) => TypographyPage(),
                   ),
-                  TreeNode(
+                  TreeNode.child(
                     'Color Scheme',
                     builder: (context) => ColorschemePage(),
                   ),
@@ -317,7 +317,7 @@ class _ThemeToggleState extends State<ThemeToggle> {
   }
 }
 
-// FIXME Move this class to its own file.
+// TODO(as): Move this class to its own file.
 class OverviewPage extends StatefulWidget {
   OverviewPage({Key? key}) : super(key: key);
 

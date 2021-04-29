@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 
+@immutable
 class SliderThemeData {
   const SliderThemeData({
     this.disabledColor,
@@ -36,7 +37,9 @@ class SliderThemeData {
   }
 
   SliderThemeData merge(SliderThemeData? other) {
-    if (other == null) return this;
+    if (other == null) {
+      return this;
+    }
     return copyWith(
       disabledColor: other.disabledColor,
       activeColor: other.activeColor,
@@ -64,8 +67,12 @@ class SliderThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is SliderThemeData &&
         other.disabledColor == disabledColor &&
         other.activeColor == activeColor &&
@@ -74,7 +81,7 @@ class SliderThemeData {
   }
 }
 
-// Examples can assume:
+@immutable
 class SliderTheme extends InheritedTheme {
   const SliderTheme({
     Key? key,

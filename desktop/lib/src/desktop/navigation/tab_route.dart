@@ -10,8 +10,9 @@ class TabMenuRoute<T> extends PopupRoute<T> {
     RouteSettings? settings,
     required HSLColor barrierColor,
     this.axis = Axis.horizontal,
-  })   : _pageBuilder = pageBuilder,
-        _barrierLabel = barrierLabel ?? DesktopLocalizations.of(context).modalBarrierDismissLabel,
+  })  : _pageBuilder = pageBuilder,
+        _barrierLabel = barrierLabel ??
+            DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor.toColor(),
         super(settings: settings);
 
@@ -48,9 +49,10 @@ class TabMenuRoute<T> extends PopupRoute<T> {
       reverseCurve: _animationCurve,
     );
 
-    final Offset begin =
-        axis == Axis.vertical ? Offset(-1.0, 0.0) : Offset(0.0, -1.0);
-    final Offset end = Offset(0.0, 0.0);
+    final Offset begin = axis == Axis.vertical
+        ? const Offset(-1.0, 0.0)
+        : const Offset(0.0, -1.0);
+    const Offset end = Offset(0.0, 0.0);
 
     _offsetTween = Tween<Offset>(
       begin: begin,

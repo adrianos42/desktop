@@ -34,14 +34,14 @@ class _TabDialogState extends State<TabDialog> {
     return Container(
       height: axis == Axis.horizontal
           ? widget.height
-          : null, //// FIXME Set this in theme.
+          : null, // TODO(as): Set this in theme.
       width: axis == Axis.vertical
           ? widget.width
-          : null, //// FIXME Set this in theme.
+          : null, // TODO(as): Set this in theme.
       color: Theme.of(context)
           .colorScheme
           .background
-          .toColor(), //// FIXME Set this in theme.
+          .toColor(), // TODO(as): Set this in theme.
       child: widget.child,
     );
   }

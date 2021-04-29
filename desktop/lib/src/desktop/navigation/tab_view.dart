@@ -29,6 +29,7 @@ class TabView extends StatefulWidget {
   /// as [builder] takes its place.
   final WidgetBuilder? builder;
 
+  /// The navigator key.
   final GlobalKey<NavigatorState>? navigatorKey;
 
   /// The title of the default route.
@@ -56,10 +57,10 @@ class TabView extends StatefulWidget {
   final String? restorationScopeId;
 
   @override
-  TabViewState createState() => TabViewState();
+  _TabViewState createState() => _TabViewState();
 }
 
-class TabViewState extends State<TabView> {
+class _TabViewState extends State<TabView> {
   @override
   Widget build(BuildContext context) {
     return Navigator(
@@ -98,13 +99,13 @@ class TabViewState extends State<TabView> {
       return widget.onUnknownRoute!(settings);
     }
 
-    ThemeData themeData = Theme.of(context);
+    final ThemeData themeData = Theme.of(context);
 
-    return TabMenuRoute(
+    return TabMenuRoute<dynamic>(
       context: context,
       barrierColor: themeData.colorScheme.background,
       axis: TabScope.of(context)!.axis,
-      pageBuilder: (context) => Container(
+      pageBuilder: (BuildContext context) => Container(
         alignment: Alignment.center,
         color: themeData.colorScheme.background.toColor(),
         child: Text(

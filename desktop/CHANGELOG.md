@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Fixed icons
+
 ## 2.0.0
 
 - Fix button padding.
@@ -13,14 +17,10 @@
 
 - Fix tooltip position.
 
----
-
 ## 1.0.3
 
 - Fix button animations.
 - Add option for nav menu.
-
----
 
 ## 1.0.1-2.12.0-0
 

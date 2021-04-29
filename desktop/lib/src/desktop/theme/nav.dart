@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
-import 'theme_data.dart';
 import 'color_scheme.dart';
+import 'theme_data.dart';
 
 const double _kNavWidth = 36.0;
 const double _kNavHeight = 42.0;
@@ -13,6 +13,7 @@ const double _kNavItemsSpacing = 6.0;
 
 const Duration _kChangeDuration = Duration(milliseconds: 200);
 
+@immutable
 class NavThemeData {
   const NavThemeData({
     this.colorScheme,
@@ -88,8 +89,12 @@ class NavThemeData {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other.runtimeType != runtimeType) return false;
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
     return other is NavThemeData &&
         //other._background == _background &&
         //other._foreground == _foreground &&
@@ -101,6 +106,7 @@ class NavThemeData {
   }
 }
 
+@immutable
 class NavTheme extends InheritedTheme {
   const NavTheme({
     required this.data,
