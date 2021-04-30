@@ -123,7 +123,7 @@ Tree(
                   ),
                 ),
                 nodes: [
-                  TreeNode(
+                  TreeNode.child(
                     'Node 0',
                     builder: (context) => Center(
                         child: Text(
@@ -131,8 +131,8 @@ Tree(
                       style: Theme.of(context).textTheme.title,
                     )),
                   ),
-                  TreeNode('Node 1', children: [
-                    TreeNode(
+                  TreeNode.children('Node 1', children: [
+                    TreeNode.child(
                       'Node 0',
                       builder: (context) => Center(
                           child: Text(
@@ -140,7 +140,7 @@ Tree(
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Node 1',
                       builder: (context) => Center(
                           child: Text(
@@ -148,7 +148,7 @@ Tree(
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Node 2',
                       builder: (context) => Center(
                           child: Text(
@@ -156,8 +156,8 @@ Tree(
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
-                    TreeNode('Node3', children: [
-                      TreeNode(
+                    TreeNode.children('Node3', children: [
+                      TreeNode.child(
                         'Node 0',
                         builder: (context) => Center(
                             child: Text(
@@ -165,7 +165,7 @@ Tree(
                           style: Theme.of(context).textTheme.title,
                         )),
                       ),
-                      TreeNode(
+                      TreeNode.child(
                         'Node 1',
                         builder: (context) => Center(
                             child: Text(
@@ -179,7 +179,7 @@ Tree(
                     // TreeNode('Breadcrumb',
                     //     builder: (context) => BreadcrumbPage()),
                   ]),
-                  TreeNode(
+                  TreeNode.child(
                     'Node 2',
                     builder: (context) => Center(
                         child: Text(
@@ -187,8 +187,8 @@ Tree(
                       style: Theme.of(context).textTheme.title,
                     )),
                   ),
-                  TreeNode('Node 3', children: [
-                    TreeNode(
+                  TreeNode.children('Node 3', children: [
+                    TreeNode.child(
                       'Node 0',
                       builder: (context) => Center(
                           child: Text(
@@ -196,7 +196,7 @@ Tree(
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
-                    TreeNode(
+                    TreeNode.child(
                       'Node 1',
                       builder: (context) => Center(
                           child: Text(

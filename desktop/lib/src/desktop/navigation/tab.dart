@@ -2,41 +2,97 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../input/button.dart';
 import '../theme/theme.dart';
 import 'route.dart';
 import 'tab_scope.dart';
+import 'tab_view.dart';
 
 const int _kIntialIndexValue = 0;
-const double _kTabHeight = 38.0;
+const double _kTabHeight = 32.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 8.0);
 
-typedef TabItemBuilder = Widget Function(
-    BuildContext context, int index, bool isActive);
-
+/// Represents a item in a tab bar.
+/// See:
+///   [Tab]
 class TabItem {
+  /// If it's necessary to use the index of each tab, then use this builder.
   const TabItem({
     required this.builder,
     required this.tabItemBuilder,
   });
 
-  factory TabItem.text(String text, {required IndexedWidgetBuilder builder}) {
+  /// Creates a tab item with text.
+  factory TabItem.text(
+    String text, {
+    WidgetBuilder? builder,
+    GlobalKey<NavigatorState>? navigatorKey,
+    String? defaultTitle,
+    Map<String, WidgetBuilder>? routes,
+    RouteFactory? onGenerateRoute,
+    RouteFactory? onUnknownRoute,
+    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+  }) {
     return TabItem(
-      builder: builder,
-      tabItemBuilder: (context, _, isActive) => _TabItemButton(
-        Text(text),
-        active: isActive,
+      builder: (BuildContext context, _) => TabView(
+        builder: builder,
+        navigatorKey: navigatorKey,
+        routes: routes,
+        onGenerateRoute: onGenerateRoute,
+        onUnknownRoute: onUnknownRoute,
+        defaultTitle: defaultTitle,
+        navigatorObservers: navigatorObservers,
       ),
+      tabItemBuilder: (context, _) => TabItemText(text),
     );
   }
 
-  factory TabItem.icon(IconData icon, {required IndexedWidgetBuilder builder}) {
+  /// Creates a tab item with a icon.
+  factory TabItem.icon(
+    IconData icon, {
+    WidgetBuilder? builder,
+    GlobalKey<NavigatorState>? navigatorKey,
+    String? defaultTitle,
+    Map<String, WidgetBuilder>? routes,
+    RouteFactory? onGenerateRoute,
+    RouteFactory? onUnknownRoute,
+    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+  }) {
     return TabItem(
-      builder: builder,
-      tabItemBuilder: (context, _, isActive) => _TabItemButton(
-        Icon(icon),
-        active: isActive,
+      builder: (BuildContext context, _) => TabView(
+        builder: builder,
+        navigatorKey: navigatorKey,
+        routes: routes,
+        onGenerateRoute: onGenerateRoute,
+        onUnknownRoute: onUnknownRoute,
+        defaultTitle: defaultTitle,
+        navigatorObservers: navigatorObservers,
       ),
+      tabItemBuilder: (context, _) => TabItemIcon(icon),
+    );
+  }
+
+  /// Creates a tab item with a custom widget.
+  factory TabItem.custom(
+    IndexedWidgetBuilder tabBuilder, {
+    WidgetBuilder? builder,
+    GlobalKey<NavigatorState>? navigatorKey,
+    String? defaultTitle,
+    Map<String, WidgetBuilder>? routes,
+    RouteFactory? onGenerateRoute,
+    RouteFactory? onUnknownRoute,
+    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+  }) {
+    return TabItem(
+      builder: (BuildContext context, _) => TabView(
+        builder: builder,
+        navigatorKey: navigatorKey,
+        routes: routes,
+        onGenerateRoute: onGenerateRoute,
+        onUnknownRoute: onUnknownRoute,
+        defaultTitle: defaultTitle,
+        navigatorObservers: navigatorObservers,
+      ),
+      tabItemBuilder: tabBuilder,
     );
   }
 
@@ -44,7 +100,43 @@ class TabItem {
   final IndexedWidgetBuilder builder;
 
   /// A custom item to be built for the tab bar.
-  final TabItemBuilder tabItemBuilder;
+  final IndexedWidgetBuilder tabItemBuilder;
+}
+
+/// The default text style used for tab item. Use [TabItem.text] instead.
+class TabItemText extends StatelessWidget {
+  ///
+  const TabItemText(this.text, {Key? key}) : super(key: key);
+
+  /// The displayed in the tab.
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: _khorizontalPadding,
+      child: Text(text),
+    );
+  }
+}
+
+/// The default icon style used for tab item. Use [TabItem.icon] instead.
+class TabItemIcon extends StatelessWidget {
+  ///
+  const TabItemIcon(this.icon, {Key? key}) : super(key: key);
+
+  /// The displayed in the tab.
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: _khorizontalPadding,
+      child: Icon(icon),
+    );
+  }
 }
 
 /// Navigation tab.
@@ -70,6 +162,7 @@ class TabItem {
 ///   ],
 /// )```
 class Tab extends StatefulWidget {
+  ///
   const Tab({
     Key? key,
     required this.items,
@@ -240,7 +333,7 @@ class _TabState extends State<Tab> {
           trailing: widget.trailing,
           color: widget.color,
           changeIndex: (value) => _indexChanged(value),
-          items: List<TabItemBuilder>.generate(
+          items: List<IndexedWidgetBuilder>.generate(
             _length,
             (index) => widget.items[index].tabItemBuilder,
           ),
@@ -288,7 +381,7 @@ class _TabGroup extends StatefulWidget {
 
   final int index;
 
-  final List<TabItemBuilder> items;
+  final List<IndexedWidgetBuilder> items;
 
   final WidgetBuilder? trailing;
 
@@ -301,17 +394,50 @@ class _TabGroup extends StatefulWidget {
 }
 
 class _TabGroupState extends State<_TabGroup> {
+  int _hoveredIndex = -1;
+  int _pressedIndex = -1;
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final ColorScheme colorScheme = themeData.colorScheme;
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
     final List<Widget> list =
         List<Widget>.generate(widget.items.length, (index) {
+      final HSLColor foreground =
+          widget.index == index || _pressedIndex == index
+              ? colorScheme.primary1
+              : _hoveredIndex == index
+                  ? textTheme.textHigh
+                  : textTheme.textLow;
+
+      final TextStyle textStyle =
+          textTheme.body2.copyWith(color: foreground.toColor());
+      final IconThemeData iconThemeData = IconThemeData(
+        color: foreground.toColor(),
+        size: 18.0,
+      );
+
       return MouseRegion(
         cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hoveredIndex = index),
+        onExit: (_) => setState(() => _hoveredIndex = -1),
         opaque: false,
-        child: widget.items[index](context, index, index == widget.index),
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTapDown: (_) => setState(() => _pressedIndex = index),
+          onTapUp: (_) => setState(() => _pressedIndex = -1),
+          onTapCancel: () => setState(() => _pressedIndex = -1),
+          onTap: () => widget.changeIndex(index),
+          child: DefaultTextStyle(
+            style: textStyle,
+            child: IconTheme(
+              data: iconThemeData,
+              child: widget.items[index](context, index),
+            ),
+          ),
+        ),
       );
     });
 
@@ -331,45 +457,5 @@ class _TabGroupState extends State<_TabGroup> {
     );
 
     return result;
-  }
-}
-
-class _TabItemButton extends StatelessWidget {
-  const _TabItemButton(
-    this.child, {
-    Key? key,
-    required this.active,
-  }) : super(key: key);
-
-  final Widget child;
-
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
-    final ColorScheme colorScheme = themeData.colorScheme;
-
-    final highlightColor = colorScheme.primary;
-
-    final color = textTheme.textLow;
-    final hoverColor = colorScheme.shade;
-
-    const EdgeInsets buttonBodyPadding = _khorizontalPadding;
-
-    return ButtonTheme.merge(
-      data: ButtonThemeData(
-        color: active ? highlightColor : color,
-        highlightColor: highlightColor,
-        hoverColor: active ? highlightColor : hoverColor,
-      ),
-      child: Button(
-        padding: EdgeInsets.zero,
-        bodyPadding: buttonBodyPadding,
-        onPressed: () {},
-        body: child,
-      ),
-    );
   }
 }

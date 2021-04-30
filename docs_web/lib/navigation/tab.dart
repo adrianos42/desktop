@@ -114,7 +114,7 @@ Tab(
               return Tab(
                 items: [
                   TabItem.text('page 0',
-                    builder: (context, _) => TabView(
+                    builder: (context) => TabView(
                       builder: (context) => Center(
                         child: Text(
                           'page 0',
@@ -124,7 +124,7 @@ Tab(
                     ),
                   ),
                   TabItem.text('page 1',
-                    builder: (context, _) => TabView(
+                    builder: (context) => TabView(
                       builder: (context) => Center(
                         child: Text(
                           'page 1',
@@ -134,7 +134,7 @@ Tab(
                     ),
                   ),
                   TabItem.text('page 2',
-                    builder: (context, _) => TabView(
+                    builder: (context) => TabView(
                       builder: (context) => Center(
                         child: Text(
                           'page 2',

@@ -169,21 +169,21 @@ class _DocAppState extends State<DocApp> {
                     'Overview',
                     builder: (context) => OverviewPage(),
                   ),
-                  TreeNode('Navigation', children: [
+                  TreeNode.children('Navigation', children: [
                     TreeNode.child('Breadcrumb',
                         builder: (context) => BreadcrumbPage()),
                     TreeNode.child('Nav', builder: (context) => NavPage()),
                     TreeNode.child('Tab', builder: (context) => TabPage()),
                     TreeNode.child('Tree', builder: (context) => TreePage()),
                   ]),
-                  TreeNode('Data', children: [
+                  TreeNode.children('Data', children: [
                     TreeNode.child('List Table',
                         builder: (context) => ListTablePage()),
                   ]),
-                  TreeNode('Dialogs', children: [
+                  TreeNode.children('Dialogs', children: [
                     TreeNode.child('Dialog', builder: (context) => DialogPage()),
                   ]),
-                  TreeNode('Input', children: [
+                  TreeNode.children('Input', children: [
                     TreeNode.child(
                       'Button',
                       builder: (context) => ButtonPage(),
@@ -229,7 +229,7 @@ class _DocAppState extends State<DocApp> {
                       builder: (context) => ToggleSwitchPage(),
                     ),
                   ]),
-                  TreeNode('Status', children: [
+                  TreeNode.children('Status', children: [
                     TreeNode.child(
                       'Progress indicator',
                       builder: (context) => ProgressIndicatorPage(),
@@ -243,7 +243,7 @@ class _DocAppState extends State<DocApp> {
                       builder: (context) => TooltipPage(),
                     ),
                   ]),
-                  TreeNode('Text', children: [
+                  TreeNode.children('Text', children: [
                     TreeNode.child(
                       'Text field',
                       builder: (context) => TextFieldPage(),

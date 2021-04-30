@@ -10,6 +10,7 @@ import 'tab_scope.dart';
 
 /// A tab view with a [Navigator] history.
 class TabView extends StatefulWidget {
+  ///
   const TabView({
     this.builder,
     this.navigatorKey,

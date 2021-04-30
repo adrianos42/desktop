@@ -32,14 +32,14 @@ class Defaults {
       items: [
         TabItem.icon(
           Icons.visibility,
-          builder: (context, _) => Container(
+          builder: (context) => Container(
             decoration: hasBorder ? Defaults.itemDecoration(context) : null,
             child: builder(context),
           ),
         ),
         TabItem.icon(
           Icons.code,
-          builder: (context, _) => Container(
+          builder: (context) => Container(
             alignment: Alignment.topLeft,
             //decoration: Defaults.itemDecoration(context),
             child: TextField(
