@@ -2,7 +2,11 @@
 
 ## 2.0.1
 
-- Fixed icons
+- Fixed icons.
+
+- Fixed tab.
+
+- Add option create a tab with routes.
 
 ## 2.0.0
 
