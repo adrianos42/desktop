@@ -12,7 +12,7 @@ class _ButtonIconPageState extends State<ButtonIconPage> {
   @override
   Widget build(BuildContext context) {
     final enabledCode = '''
-conButton(
+IconButton(
   Icons.place,
   onPressed: () {},
 )

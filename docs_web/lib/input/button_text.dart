@@ -19,9 +19,7 @@ TextButton(
 ''';
 
     final disabledCode = '''
-TextButton(
-  'Click me',
-)
+TextButton('Click me')
 ''';
 
     return Defaults.createItemsWithTitle(
