@@ -15,7 +15,7 @@ class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
   Widget build(BuildContext context) {
     final enabledText = ''' 
 ContextMenuButton(
-  Icons.place,
+  Icon(Icons.place),
   value: firstValue,
   onSelected: (String value) =>
       setState(() => firstValue = value),
@@ -29,12 +29,12 @@ ContextMenuButton(
       value: 'Joinville',
     ),
     ContextMenuItem(
-      child: Text('Blumenau'),
-      value: 'Blumenau',
+      child: Text('Tubarão'),
+      value: 'Tubarão',
     ),
     ContextMenuItem(
-      child: Text('São Paulo'),
-      value: 'São Paulo',
+      child: Text('São José'),
+      value: 'São José',
     ),
   ],
 ),
@@ -42,7 +42,7 @@ ContextMenuButton(
 
     final disabledText = '''
 ContextMenuButton(
-  Icons.place,
+  Icon(Icons.place),
   value: firstValue,
   enabled: false,
   itemBuilder: (context) => [
@@ -55,12 +55,12 @@ ContextMenuButton(
       value: 'Joinville',
     ),
     ContextMenuItem(
-      child: Text('Blumenau'),
-      value: 'Blumenau',
+      child: Text('Tubarão'),
+      value: 'Tubarão',
     ),
     ContextMenuItem(
-      child: Text('São Paulo'),
-      value: 'São Paulo',
+      child: Text('São José'),
+      value: 'São José',
     ),
   ],
 ),
@@ -76,7 +76,7 @@ ContextMenuButton(
               child: Row(
                 children: [
                   ContextMenuButton(
-                    Icons.place,
+                    Icon(Icons.place),
                     value: firstValue,
                     onSelected: (String value) =>
                         setState(() => firstValue = value),
@@ -90,12 +90,12 @@ ContextMenuButton(
                         value: 'Joinville',
                       ),
                       ContextMenuItem(
-                        child: Text('Blumenau'),
-                        value: 'Blumenau',
+                        child: Text('Tubarão'),
+                        value: 'Tubarão',
                       ),
                       ContextMenuItem(
-                        child: Text('São Paulo'),
-                        value: 'São Paulo',
+                        child: Text('São José'),
+                        value: 'São José',
                       ),
                     ],
                   ),
@@ -121,7 +121,7 @@ ContextMenuButton(
                 child: Row(
                   children: [
                     ContextMenuButton(
-                      Icons.place,
+                      Icon(Icons.place),
                       value: firstValue,
                       enabled: false,
                       itemBuilder: (context) => [
@@ -134,12 +134,12 @@ ContextMenuButton(
                           value: 'Joinville',
                         ),
                         ContextMenuItem(
-                          child: Text('Blumenau'),
-                          value: 'Blumenau',
+                          child: Text('Tubarão'),
+                          value: 'Tubarão',
                         ),
                         ContextMenuItem(
-                          child: Text('São Paulo'),
-                          value: 'São Paulo',
+                          child: Text('São José'),
+                          value: 'São José',
                         ),
                       ],
                     ),

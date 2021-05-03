@@ -56,14 +56,14 @@ packages:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   desktop:
     dependency: "direct main"
     description:
       path: "../desktop"
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -156,7 +156,7 @@ packages:
       name: process
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -210,7 +210,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:
@@ -273,7 +273,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1-nullsafety.1"
+    version: "6.1.0+1"
   webdriver:
     dependency: transitive
     description:
@@ -282,5 +282,5 @@ packages:
     source: hosted
     version: "3.0.0"
 sdks:
-  dart: ">=2.12.0-259.9.beta <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.22.0"

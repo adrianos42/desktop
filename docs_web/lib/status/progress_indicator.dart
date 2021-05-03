@@ -38,12 +38,12 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
                       children: [
                         Row(
                           children: [
-                            IconButton(
+                            Button.icon(
                               Icons.minus,
                               onPressed: () => setState(() => progressValue =
                                   (progressValue - 0.05).clamp(0.0, 1.0)),
                             ),
-                            IconButton(
+                            Button.icon(
                               Icons.plus,
                               onPressed: () => setState(() => progressValue =
                                   (progressValue + 0.05).clamp(0.0, 1.0)),

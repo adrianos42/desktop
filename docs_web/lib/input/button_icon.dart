@@ -12,14 +12,14 @@ class _ButtonIconPageState extends State<ButtonIconPage> {
   @override
   Widget build(BuildContext context) {
     final enabledCode = '''
-IconButton(
+Button.icon(
   Icons.place,
   onPressed: () {},
 )
 ''';
 
     final disabledCode = '''
-IconButton(Icons.place)
+Button.icon(Icons.place)
 ''';
 
     return Defaults.createItemsWithTitle(
@@ -28,7 +28,7 @@ IconButton(Icons.place)
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: IconButton(
+            child: Button.icon(
               Icons.place,
               onPressed: () {},
             ),
@@ -40,7 +40,7 @@ IconButton(Icons.place)
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: IconButton(Icons.place),
+            child: Button.icon(Icons.place),
           ),
           codeText: disabledCode,
           title: 'Disabled',

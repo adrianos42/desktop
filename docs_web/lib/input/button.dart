@@ -37,7 +37,6 @@ Button(
             child: Container(
               child: Button(
                 body: Text('Button'),
-                trailing: Icon(Icons.phone),
                 leading: Icon(Icons.control_camera),
                 onPressed: () {},
               ),
@@ -53,7 +52,6 @@ Button(
             child: Container(
               child: Button(
                 body: Text('Button'),
-                trailing: Icon(Icons.phone),
                 leading: Icon(Icons.control_camera),
               ),
             ),

@@ -32,11 +32,11 @@ Container(
         value: 1,
       ),
       ContextMenuItem(
-        child: Text('Blumenau'),
+        child: Text('Tubarão'),
         value: 2,
       ),
       ContextMenuItem(
-        child: Text('São Paulo'),
+        child: Text('São José'),
         value: 3,
       ),
     ],
@@ -59,12 +59,12 @@ Container(
         child: Text('Joinville'),
         value: 1,
       ),
-      ContextMenuItem(
-        child: Text('Blumenau'),
+      ContextMenuItem(_
+        child: Text('Tubarão'),
         value: 2,
       ),
       ContextMenuItem(
-        child: Text('São Paulo'),
+        child: Text('São José'),
         value: 3,
       ),
     ],
@@ -87,7 +87,7 @@ Container(
                   setState(() => initialValue = value);
                 },
                 value: initialValue,
-                isField: true,
+                // isField: true,
                 itemBuilder: (context) => [
                   ContextMenuItem(
                     child: Text('Florianópolis'),
@@ -98,11 +98,11 @@ Container(
                     value: 1,
                   ),
                   ContextMenuItem(
-                    child: Text('Blumenau'),
+                    child: Text('Tubarão'),
                     value: 2,
                   ),
                   ContextMenuItem(
-                    child: Text('São Paulo'),
+                    child: Text('São José'),
                     value: 3,
                   ),
                 ],
@@ -122,7 +122,7 @@ Container(
               margin: EdgeInsets.all(16.0),
               child: DropDownButton(
                 enabled: false,
-                isField: true,
+                // isField: true,
                 itemBuilder: (context) => [
                   ContextMenuItem(
                     child: Text('Florianópolis'),
@@ -133,11 +133,11 @@ Container(
                     value: 1,
                   ),
                   ContextMenuItem(
-                    child: Text('Blumenau'),
+                    child: Text('Tubarão'),
                     value: 2,
                   ),
                   ContextMenuItem(
-                    child: Text('São Paulo'),
+                    child: Text('São José'),
                     value: 3,
                   ),
                 ],

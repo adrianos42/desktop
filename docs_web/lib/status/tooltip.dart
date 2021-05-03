@@ -16,7 +16,7 @@ class _TooltipPageState extends State<TooltipPage> {
         Defaults.createHeader(context, 'Tooltip'),
         Expanded(
           child: Center(
-            child: TextButton(
+            child: Button.text(
               'Text button with tooltip',
               tooltip: 'Text button with tooltip',
               onPressed: () {},

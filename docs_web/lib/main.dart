@@ -14,7 +14,6 @@ import 'input/button_hyperlink.dart';
 import 'input/button_icon.dart';
 import 'input/button_radio.dart';
 import 'input/button_text.dart';
-import 'input/button_toggle.dart';
 import 'input/checkbox.dart';
 import 'input/toggle_switch.dart';
 import 'input/slider.dart';
@@ -22,7 +21,6 @@ import 'navigation/nav.dart';
 import 'navigation/tab.dart';
 import 'navigation/breadcrumb.dart';
 import 'status/progress_indicator.dart';
-import 'status/status_bar.dart';
 import 'status/tooltip.dart';
 import 'text/text_field.dart';
 import 'scrolling.dart';
@@ -181,7 +179,8 @@ class _DocAppState extends State<DocApp> {
                         builder: (context) => ListTablePage()),
                   ]),
                   TreeNode.children('Dialogs', children: [
-                    TreeNode.child('Dialog', builder: (context) => DialogPage()),
+                    TreeNode.child('Dialog',
+                        builder: (context) => DialogPage()),
                   ]),
                   TreeNode.children('Input', children: [
                     TreeNode.child(
@@ -213,16 +212,16 @@ class _DocAppState extends State<DocApp> {
                       builder: (context) => ButtonHyperlinkPage(),
                     ),
                     TreeNode.child(
-                      'Radio',
-                      builder: (context) => ButtonRadioPage(),
+                      'Slider',
+                      builder: (context) => SliderPage(),
                     ),
                     TreeNode.child(
                       'Checkbox',
                       builder: (context) => CheckboxPage(),
                     ),
                     TreeNode.child(
-                      'Slider',
-                      builder: (context) => SliderPage(),
+                      'Radio',
+                      builder: (context) => ButtonRadioPage(),
                     ),
                     TreeNode.child(
                       'Toggle switch',
@@ -273,7 +272,10 @@ class _DocAppState extends State<DocApp> {
   @override
   Widget build(BuildContext context) {
     return DesktopApp(
-      home: _createHome(),
+      home: FocusTraversalGroup(
+        policy: ReadingOrderTraversalPolicy(), // TODO(as): Set default focus.
+        child: _createHome(),
+      ),
       theme: themeData,
     );
   }

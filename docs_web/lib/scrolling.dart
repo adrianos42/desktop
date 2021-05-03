@@ -293,7 +293,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                                   child: Row(
                                     children: [
                                       if (widget.requestPrevious != null)
-                                        IconButton(
+                                        Button.icon(
                                           Icons.navigate_before,
                                           onPressed: canRequestPrevious
                                               ? _requestPrevious
@@ -301,7 +301,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                                           tooltip: 'Previous',
                                         ),
                                       if (widget.requestNext != null)
-                                        IconButton(
+                                        Button.icon(
                                           Icons.navigate_next,
                                           onPressed: canRequestNext
                                               ? _requestNext
@@ -311,7 +311,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                                     ],
                                   ),
                                 ),
-                                IconButton(
+                                Button.icon(
                                   Icons.close,
                                   onPressed: () => Navigator.pop(context),
                                   tooltip: 'Close',

@@ -18,10 +18,10 @@ showDialog(
   builder: (context) => Dialog(
     title: Text(''),
     menus: [
-      TextButton(
+      Button.text(
         'Remove',
       ),
-      TextButton(
+      Button.text(
         'Close',
         onPressed: () => Dialog.close(context),
       ),
@@ -58,7 +58,7 @@ showDialog(
               child: Defaults.createCodeSession(
                 context,
                 builder: (context) => Center(
-                  child: TextButton(
+                  child: Button.text(
                     'Open dialog',
                     onPressed: () async {
                       await showDialog(
@@ -66,10 +66,10 @@ showDialog(
                         barrierDismissible: false,
                         builder: (context) => Dialog(
                           menus: [
-                            TextButton(
+                            Button.text(
                               'Remove',
                             ),
-                            TextButton(
+                            Button.text(
                               'Close',
                               onPressed: () => Dialog.close(context),
                             ),
@@ -100,7 +100,7 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
               child: Defaults.createCodeSession(
                 context,
                 builder: (context) => Center(
-                  child: TextButton(
+                  child: Button.text(
                     'Open dialog',
                     onPressed: () async {
                       await showDialog(

@@ -29,6 +29,7 @@ class Defaults {
     final textController = TextEditingController(text: codeText);
 
     return Tab(
+      padding: EdgeInsets.zero,
       items: [
         TabItem.icon(
           Icons.visibility,
