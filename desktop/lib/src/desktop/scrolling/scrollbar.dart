@@ -473,7 +473,7 @@ class _ScrollbarState extends State<Scrollbar>
 
     WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
       if (!_hideScroll) {
-        assert(widget.controller != null); // TODO(as): 
+        assert(widget.controller != null); // TODO(as):
         widget.controller!.position.didUpdateScrollPositionBy(0);
       }
     });
@@ -564,7 +564,7 @@ class _ThumbVerticalDragGestureRecognizer
     PointerDeviceKind? kind,
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })  : _customPaintKey = customPaintKey,
+  })   : _customPaintKey = customPaintKey,
         super(
           kind: kind,
           debugOwner: debugOwner,
@@ -590,7 +590,7 @@ class _TapGestureRecognizer extends TapGestureRecognizer {
   _TapGestureRecognizer({
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })  : _customPaintKey = customPaintKey,
+  })   : _customPaintKey = customPaintKey,
         super(
           debugOwner: debugOwner,
         );

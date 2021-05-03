@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.4
+
+- Button color.
+
 ## 2.0.3
 
 - Fixed button highlight color.

@@ -272,7 +272,7 @@ class _RenderIconSide extends RenderConstrainedBox {
     required this.axis,
     required this.crossLength,
     required this.lengths,
-  })  : _oldIndex = index,
+  })   : _oldIndex = index,
         _index = index,
         _vsync = vsync,
         super(additionalConstraints: additionalConstraints) {

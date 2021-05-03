@@ -189,8 +189,8 @@ class ButtonTheme extends InheritedTheme {
       final HSLColor hoverColor =
           buttonThemeData.hoverColor ?? textTheme.textHigh;
 
-      final HSLColor highlightColor = buttonThemeData.highlightColor ??
-          colorScheme.shadeColorFromLightness(colorScheme.primary);
+      final HSLColor highlightColor =
+          buttonThemeData.highlightColor ?? colorScheme.primary;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

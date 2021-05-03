@@ -357,7 +357,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     required this.stepValue,
     required this.rotationValue,
     required this.strokeWidth,
-  })  : arcStart = value != null
+  })   : arcStart = value != null
             ? _startAngle
             : _startAngle +
                 tailValue * 3 / 2 * math.pi +
