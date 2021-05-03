@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 
 import '../input/input.dart';
 import '../theme/theme.dart';
-import 'route.dart';
 import 'tab_scope.dart';
 import 'tab_view.dart';
 
@@ -216,9 +215,9 @@ class _TabState extends State<Tab> {
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
 
-  void _nextView() => _indexChanged((_index + 1) % _length);
+  // void _nextView() => _indexChanged((_index + 1) % _length);
 
-  void _previousView() => _indexChanged((_index - 1) % _length);
+  // void _previousView() => _indexChanged((_index - 1) % _length);
 
   bool _indexChanged(int index) {
     if (index != _index) {

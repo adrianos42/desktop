@@ -79,7 +79,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   /// Defaults to [EdgeInsets.zero]. Must not be null and offsets from all four
   /// directions must be greater than or equal to zero.
   EdgeInsets get padding => _padding;
-  late EdgeInsets _padding;
+  final EdgeInsets _padding;
   set padding(EdgeInsets value) {
     if (padding == value) {
       return;

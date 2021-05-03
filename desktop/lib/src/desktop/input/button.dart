@@ -81,7 +81,7 @@ class Button extends StatefulWidget {
   /// Called when button is pressed.
   final VoidCallback? onPressed;
 
-  /// The color of the button.
+  /// The color of the button. The [ButtonThemeData.highlightColor] is ignored.
   final HSLColor? color;
 
   /// The button axis.
@@ -187,12 +187,18 @@ class _ButtonState extends State<Button>
 
     if (widget.color != null) {
       final HSLColor color = widget.color!;
+
       enabledForeground = color;
+      if (color.lightness < 0.4 || color.lightness > 0.7) {
+        throw Exception('Button must have lightness between 40% and 70%');
+      }
+      pressedForeground =
+          Theme.of(context).colorScheme.shadeColorFromLightness(color);
     } else {
       enabledForeground = buttonThemeData.color!;
+      pressedForeground = buttonThemeData.highlightColor!;
     }
 
-    pressedForeground = buttonThemeData.highlightColor!;
     hoveredForeground = buttonThemeData.hoverColor!;
 
     final HSLColor disabledForeground = buttonThemeData.disabledColor!;

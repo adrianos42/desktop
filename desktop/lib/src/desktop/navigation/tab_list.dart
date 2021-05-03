@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../theme/theme.dart';
 import '../component.dart';
-
+import '../theme/theme.dart';
 import 'tab_view.dart';
 
 //import 'nav_view.dart';

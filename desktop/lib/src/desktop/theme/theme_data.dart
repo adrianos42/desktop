@@ -5,14 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'button.dart';
 import 'button_drop_down.dart';
 import 'button_hyperlink.dart';
-import 'radio.dart';
 import 'checkbox.dart';
 import 'color_scheme.dart';
 import 'dialog.dart';
 import 'nav.dart';
-import 'tab.dart';
+import 'radio.dart';
 import 'scrollbar.dart';
 import 'slider.dart';
+import 'tab.dart';
 import 'theme_text.dart';
 import 'toggle_switch.dart';
 
@@ -49,7 +49,7 @@ class Theme extends StatelessWidget {
   }
 
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
     return _InheritedTheme(
       theme: this,
       child: Builder(
@@ -95,7 +95,7 @@ class ThemeData {
     return ThemeData._raw(
       brightness: brightness,
       colorScheme: colorScheme,
-      textTheme: TextTheme(colorScheme),
+      textTheme: TextTheme.withColorScheme(colorScheme),
       navTheme: const NavThemeData(),
       buttonTheme: const ButtonThemeData(),
       dropDownButtonTheme: const DropDownButtonThemeData(),
@@ -173,7 +173,7 @@ class ThemeData {
       brightness: inverseBrightness,
       colorScheme: invertedColorScheme,
       navTheme: navTheme,
-      textTheme: TextTheme(invertedColorScheme),
+      textTheme: TextTheme.withColorScheme(invertedColorScheme),
       buttonTheme: buttonTheme,
       dropDownButtonTheme: dropDownButtonTheme,
       dialogTheme: dialogTheme,

@@ -9,9 +9,9 @@ import 'theme_data.dart';
 const double _kLineThickness = 1.0;
 const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
 const HSLColor _kDefaultLightColorHighlight =
-    HSLColor.fromAHSL(1.0, 210, 1.0, 0.36);
+    HSLColor.fromAHSL(1.0, 210, 1.0, 0.3);
 const HSLColor _kDefaultDarkColorHighlight =
-    HSLColor.fromAHSL(1.0, 210, 1.0, 0.76);
+    HSLColor.fromAHSL(1.0, 210, 1.0, 0.8);
 
 @immutable
 class HyperlinkButtonThemeData {
@@ -83,7 +83,7 @@ class HyperlinkButtonTheme extends InheritedTheme {
     required this.data,
     required Widget child,
     Key? key,
-  }) : super(child: child);
+  }) : super(child: child, key: key);
 
   final HyperlinkButtonThemeData data;
 

@@ -243,7 +243,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       debugRequiredFor: widget,
     )!;
 
-    final RenderBox box = context.findRenderObject() as RenderBox;
+    final RenderBox box = context.findRenderObject()! as RenderBox;
     final Offset target = box.localToGlobal(
       box.size.center(Offset.zero),
       ancestor: overlayState.context.findRenderObject(),
@@ -311,7 +311,9 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
         .removeGlobalRoute(_handlePointerEvent);
     RendererBinding.instance!.mouseTracker
         .removeListener(_handleMouseTrackerChange);
-    if (_entry != null) _removeEntry();
+    if (_entry != null) {
+      _removeEntry();
+    }
     _controller.dispose();
     super.dispose();
   }

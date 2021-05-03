@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'scroll_painter.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/widgets.dart';
 
-import '../theme/theme.dart';
-import '../theme/scrollbar.dart';
 import '../component.dart';
+import '../theme/scrollbar.dart';
+import '../theme/theme.dart';
+import 'scroll_painter.dart';
 
 const double _kScrollbarThickness = 8.0;
 const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1800);
@@ -473,7 +473,7 @@ class _ScrollbarState extends State<Scrollbar>
 
     WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
       if (!_hideScroll) {
-        assert(widget.controller != null); // TODO
+        assert(widget.controller != null); // TODO(as): 
         widget.controller!.position.didUpdateScrollPositionBy(0);
       }
     });

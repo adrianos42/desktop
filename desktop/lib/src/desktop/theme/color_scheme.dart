@@ -17,6 +17,15 @@ class ColorScheme {
     return ColorScheme(brightness, _primary);
   }
 
+  /// Calculates a color lightness according to the current brightness.
+  HSLColor shadeColorFromLightness(HSLColor value) {
+    // TODO(as): See the contrast in colors.
+    if (brightness == Brightness.dark) {
+      return value.withLightness(0.8);
+    }
+    return value.withLightness(0.3);
+  }
+
   final Brightness brightness;
 
   final HSLColor _primary;
@@ -94,7 +103,7 @@ class PrimaryColors {
       PrimaryColor.fromAHSL('Dodger Blue', 1.0, 210, 1.0, 0.56);
   static const goldenrod =
       PrimaryColor.fromAHSL('Goldenrod', 1.0, 43, 0.74, 0.49);
-  static const hotPink = PrimaryColor.fromAHSL('Hot Pink', 1.0, 330, 1.0, 0.71);
+  static const hotPink = PrimaryColor.fromAHSL('Hot Pink', 1.0, 330, 1.0, 0.7);
   static const purple = PrimaryColor.fromAHSL('Purple', 1.0, 260, 0.6, 0.65);
   static const orange = PrimaryColor.fromAHSL('Orange', 1.0, 33, 1.0, 0.5);
   static const orchid = PrimaryColor.fromAHSL('Orchid', 1.0, 302, 0.59, 0.65);
@@ -106,24 +115,24 @@ class PrimaryColors {
       PrimaryColor.fromAHSL('Slate Blue', 1.0, 248, 0.53, 0.58);
   // static const steelBlue =
   //     PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
-  static const violet = PrimaryColor.fromAHSL('Violet', 1.0, 300, 0.76, 0.72);
+  static const violet = PrimaryColor.fromAHSL('Violet', 1.0, 300, 0.76, 0.7);
   static const springGreen =
       PrimaryColor.fromAHSL('Spring Green', 1.0, 150, 1.0, 0.4);
   static const violetRed =
-      PrimaryColor.fromAHSL('Violet Red', 1.0, 333, 1.0, 0.60);
+      PrimaryColor.fromAHSL('Violet Red', 1.0, 333, 1.0, 0.6);
   static const red = PrimaryColor.fromAHSL('Red', 1.0, 347.0, 0.9, 0.6);
 }
 
 @immutable
 class PrimaryColor extends HSLColor {
+  const PrimaryColor.fromAHSL(
+      this.name, double alpha, double hue, double saturation, double lightness)
+      : super.fromAHSL(alpha, hue, saturation, lightness);
+
   @override
   String toString() => name;
 
   final String name;
-
-  const PrimaryColor.fromAHSL(
-      this.name, double alpha, double hue, double saturation, double lightness)
-      : super.fromAHSL(alpha, hue, saturation, lightness);
 }
 
 // class _Colors {

@@ -2,12 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import 'route.dart';
-
-import '../theme/theme.dart';
-import '../input/button.dart';
 import '../icons.dart';
-
+import '../input/button.dart';
+import '../theme/theme.dart';
+import 'route.dart';
 import 'tab_scope.dart' show RouteBuilder, TabScope;
 
 typedef TextCallback = void Function(String);

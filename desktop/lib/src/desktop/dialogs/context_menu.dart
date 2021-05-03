@@ -99,19 +99,27 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 
   void _handleHoverChanged(bool value) {
-    if (hovered != value) setState(() => hovered = value);
+    if (hovered != value) {
+      setState(() => hovered = value);
+    }
   }
 
   void _handleTapDown(TapDownDetails event) {
-    if (!pressed) setState(() => pressed = true);
+    if (!pressed) {
+      setState(() => pressed = true);
+    }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      setState(() => pressed = false);
+    }
   }
 
   void _handleTapCancel() {
-    if (pressed) setState(() => pressed = false);
+    if (pressed) {
+      setState(() => pressed = false);
+    }
   }
 
   @override
@@ -133,7 +141,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
                 : null;
 
     final foreground = selected
-        ? TextTheme(colorScheme.withBrightness(Brightness.dark))
+        ? TextTheme.withColorScheme(colorScheme.withBrightness(Brightness.dark))
             .textHigh // TODO(as): ???
         : textTheme.textHigh;
 
@@ -182,7 +190,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 }
 
-class ContextMenuDivider extends ContextMenuEntry<Null> {
+class ContextMenuDivider extends ContextMenuEntry {
   const ContextMenuDivider({Key? key}) : super(key: key);
 
   @override

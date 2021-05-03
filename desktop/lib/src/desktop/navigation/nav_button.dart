@@ -9,7 +9,7 @@ import '../theme/theme.dart';
 import 'nav.dart';
 
 class NavGroup extends StatefulWidget {
-  NavGroup({
+  const NavGroup({
     Key? key,
     required this.navItems,
     required this.enabled,

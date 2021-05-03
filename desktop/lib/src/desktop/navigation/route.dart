@@ -60,7 +60,7 @@ class DesktopPageRoute<T> extends PageRoute<T> {
       Animation<double> secondaryAnimation) {
     final Widget child = builder(context);
 
-    Widget result = Semantics(
+    final Widget result = Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
       child: child,

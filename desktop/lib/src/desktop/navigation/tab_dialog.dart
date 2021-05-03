@@ -6,7 +6,7 @@ import '../theme/theme.dart';
 import 'tab_scope.dart';
 
 class TabDialog extends StatefulWidget {
-  TabDialog({
+  const TabDialog({
     required this.child,
     this.height,
     this.width,

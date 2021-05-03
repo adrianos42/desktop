@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import '../icons.dart';
 import '../theme/theme.dart';
 import 'nav_button.dart';
-import 'route.dart' show NextTabIntent, PreviousTabIntent;
 import 'tab_route.dart';
 import 'tab_scope.dart';
 import 'tab_view.dart';
@@ -157,9 +156,9 @@ class _NavState extends State<Nav> {
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
 
-  void _nextView() => _indexChanged((_index + 1) % _length);
+  // void _nextView() => _indexChanged((_index + 1) % _length);
 
-  void _previousView() => _indexChanged((_index - 1) % _length);
+  // void _previousView() => _indexChanged((_index - 1) % _length);
 
   bool _indexChanged(int index) {
     if (index != _index) {

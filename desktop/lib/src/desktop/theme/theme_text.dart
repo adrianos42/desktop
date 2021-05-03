@@ -89,7 +89,7 @@ class TextTheme {
     required this.monospace,
   });
 
-  factory TextTheme(ColorScheme colorScheme) {
+  factory TextTheme.withColorScheme(ColorScheme colorScheme) {
     TextTheme result;
 
     switch (colorScheme.brightness) {

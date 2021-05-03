@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+- Fixed button highlight color.
+
 ## 2.0.2
 
 - Fixed the button size.

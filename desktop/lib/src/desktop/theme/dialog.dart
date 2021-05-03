@@ -104,7 +104,7 @@ class DialogTheme extends InheritedTheme {
     required this.data,
     required Widget child,
     Key? key,
-  }) : super(child: child);
+  }) : super(child: child, key: key);
 
   final DialogThemeData data;
 

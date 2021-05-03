@@ -20,7 +20,7 @@ class TabMenuRoute<T> extends PopupRoute<T> {
 
   final WidgetBuilder _pageBuilder;
 
-  Tween<Offset>? _offsetTween;
+  late Tween<Offset> _offsetTween;
 
   Animation<double>? _animation;
 
@@ -80,7 +80,7 @@ class TabMenuRoute<T> extends PopupRoute<T> {
         alignment: Alignment.topLeft,
         heightFactor: 1.0,
         child: FractionalTranslation(
-          translation: _offsetTween!.evaluate(_animation!),
+          translation: _offsetTween.evaluate(_animation!),
           child: child,
         ),
       ),
