@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'icons.dart';
-import 'input/button_icon.dart';
+import 'input/button.dart';
 import 'localizations.dart';
 import 'navigation/route.dart';
 import 'theme/theme.dart';
@@ -239,7 +239,7 @@ class _DesktopAppState extends State<DesktopApp> {
     BuildContext context,
     VoidCallback onPressed,
   ) =>
-      IconButton(
+      Button.icon(
         Icons.search,
         onPressed: onPressed,
       );

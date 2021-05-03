@@ -7,8 +7,9 @@ import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
 
-// Generic button used for other kinds
+///
 class Button extends StatefulWidget {
+  ///
   const Button({
     Key? key,
     this.body,
@@ -25,27 +26,77 @@ class Button extends StatefulWidget {
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
 
+  /// Creates a button with a text.
+  factory Button.text(
+    String text, {
+    String? tooltip,
+    HSLColor? color,
+    VoidCallback? onPressed,
+    EdgeInsets? padding,
+    Key? key,
+  }) {
+    return Button(
+      body: Text(text),
+      padding: padding,
+      bodyPadding: padding != null ? EdgeInsets.zero : null,
+      color: color,
+      tooltip: tooltip,
+      onPressed: onPressed,
+      key: key,
+    );
+  }
+
+  /// Creates a button with a icon.
+  factory Button.icon(
+    IconData icon, {
+    String? tooltip,
+    HSLColor? color,
+    VoidCallback? onPressed,
+    EdgeInsets? padding,
+    Key? key,
+  }) {
+    return Button(
+      body: Icon(icon),
+      padding: padding,
+      bodyPadding: padding != null ? EdgeInsets.zero : null,
+      color: color,
+      tooltip: tooltip,
+      onPressed: onPressed,
+      key: key,
+    );
+  }
+
+  /// The button tooltip.
   final String? tooltip;
 
+  /// The main widget placed in the button.
   final Widget? body;
 
   /// Widget to place at the end of the button.
   final Widget? trailing;
 
+  /// Widget to place at the beginning of the button.
   final Widget? leading;
 
+  /// Called when button is pressed.
   final VoidCallback? onPressed;
 
+  /// The color of the button.
   final HSLColor? color;
 
+  /// The button axis.
   final Axis axis;
 
+  /// The leading padding.
   final EdgeInsets? leadingPadding;
 
+  /// The trailing padding.
   final EdgeInsets? trailingPadding;
 
+  /// The body padding.
   final EdgeInsets? bodyPadding;
 
+  /// Padding of the button.
   final EdgeInsets? padding;
 
   @override
@@ -72,24 +123,21 @@ class _ButtonState extends State<Button>
 
   void _handleTapUp(TapUpDetails event) {
     if (pressed) {
-      _controller.reset();
-      _controller.forward();
+      _controller.forward(from: 0.5);
       setState(() => pressed = false);
     }
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!pressed) {
-      _controller.reset();
-      _controller.forward();
+      _controller.forward(from: 0.5);
       setState(() => pressed = true);
     }
   }
 
   void _handleTapCancel() {
     if (pressed) {
-      _controller.reset();
-      _controller.forward();
+      _controller.forward(from: 0.5);
       setState(() => pressed = false);
     }
   }
@@ -107,7 +155,7 @@ class _ButtonState extends State<Button>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 50),
+      duration: const Duration(milliseconds: 100),
     );
 
     _controller.forward();
@@ -133,9 +181,20 @@ class _ButtonState extends State<Button>
     final bool enabled = widget.onPressed != null;
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
-    final HSLColor pressedForeground = buttonThemeData.highlightColor!;
-    final HSLColor hoveredForeground = buttonThemeData.hoverColor!;
+    final HSLColor enabledForeground;
+    final HSLColor pressedForeground;
+    final HSLColor hoveredForeground;
+
+    if (widget.color != null) {
+      final HSLColor color = widget.color!;
+      enabledForeground = color;
+    } else {
+      enabledForeground = buttonThemeData.color!;
+    }
+
+    pressedForeground = buttonThemeData.highlightColor!;
+    hoveredForeground = buttonThemeData.hoverColor!;
+
     final HSLColor disabledForeground = buttonThemeData.disabledColor!;
 
     final HSLColor foregroundColor = enabled
@@ -251,7 +310,7 @@ class _ButtonState extends State<Button>
       onEnter: enabled ? (_) => _handleHoverEntered() : null,
       onExit: (_) => _handleHoverExited(),
       child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.translucent,
         onTapDown: enabled ? _handleTapDown : null,
         onTapUp: enabled ? _handleTapUp : null,
         onTapCancel: _handleTapCancel,

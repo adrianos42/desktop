@@ -2,7 +2,7 @@ name: desktop
 description: Flutter design standard for desktop. Just simple, usable wigdets to create apps. See the galery for examples of the components used.
 repository: https://github.com/adrianos42/desktop
 homepage: https://adrianos42.github.io/desktop
-version: 2.0.1
+version: 2.0.2
 
 environment:
   sdk: '>=2.12.0-0 <3.0.0'

@@ -7,7 +7,10 @@ import '../dialogs/tooltip.dart';
 import '../icons.dart';
 import '../theme/theme.dart';
 
+/// Button that shows a list of [ContextMenuItem] when pressed.
+/// The current value defines the selected item.
 class DropDownButton<T> extends StatefulWidget {
+  ///
   const DropDownButton({
     Key? key,
     required this.itemBuilder,
@@ -15,22 +18,25 @@ class DropDownButton<T> extends StatefulWidget {
     this.onSelected,
     this.onCanceled,
     this.tooltip,
-    this.isField = false,
     this.enabled = true,
   }) : super(key: key);
 
+  /// The list of [ContextMenuItem] used for the context menu.
   final ContextMenuItemBuilder<T> itemBuilder;
 
+  /// The current value in the context menu.
   final T? value;
 
+  /// Called when the context menu selection changes.
   final ContextMenuItemSelected<T>? onSelected;
 
+  /// Called when the user cancels the context menu selection.
   final ContextMenuCanceled? onCanceled;
 
+  /// The button tooltip;
   final String? tooltip;
 
-  final bool isField;
-
+  /// If this button is enabled.
   final bool enabled;
 
   @override
@@ -39,7 +45,7 @@ class DropDownButton<T> extends StatefulWidget {
 
 class _DropDownButtonState<T> extends State<DropDownButton<T>>
     with ComponentStateMixin {
-  void showButtonMenu() async {
+  Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
     final RenderBox overlay =
         Overlay.of(context)!.context.findRenderObject()! as RenderBox;
@@ -74,11 +80,15 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       }
 
       if (newValue == null) {
-        if (widget.onCanceled != null) widget.onCanceled!();
+        if (widget.onCanceled != null) {
+          widget.onCanceled!();
+        }
         return null;
       }
 
-      if (widget.onSelected != null) widget.onSelected!(newValue);
+      if (widget.onSelected != null) {
+        widget.onSelected!(newValue);
+      }
     });
 
     setState(() => waiting = false);

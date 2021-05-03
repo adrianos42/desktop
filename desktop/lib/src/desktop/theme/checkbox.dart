@@ -96,6 +96,7 @@ class CheckboxThemeData {
         other.activeHoverColor == activeHoverColor &&
         other.inactiveHoverColor == inactiveHoverColor &&
         other.inactiveColor == inactiveColor &&
+        other.activeHoverColor == activeHoverColor &&
         other.foreground == foreground;
   }
 }
@@ -136,14 +137,14 @@ class CheckboxTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
       final TextTheme textTheme = Theme.of(context).textTheme; // TODO(as): ???
 
-      final HSLColor foreground = checkboxThemeData.foreground ??
-          const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
+      final HSLColor foreground =
+          checkboxThemeData.foreground ?? colorScheme.background;
 
       final HSLColor activeHoverColor =
-          checkboxThemeData.activeHoverColor ?? colorScheme.primary;
+          checkboxThemeData.activeHoverColor ?? textTheme.textHigh;
 
       final HSLColor activeColor =
-          checkboxThemeData.activeColor ?? colorScheme.primary2;
+          checkboxThemeData.activeColor ?? colorScheme.primary;
 
       final HSLColor inactiveHoverColor =
           checkboxThemeData.inactiveHoverColor ?? textTheme.textHigh;

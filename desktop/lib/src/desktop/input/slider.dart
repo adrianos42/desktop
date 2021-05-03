@@ -5,7 +5,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
+
+const double _kThumbRadius = 6.0;
+const double _kSliderWidth = 180.0;
+const double _kSliderHeight = 2.0 * _kThumbRadius;
+const Duration _kDuration = Duration(milliseconds: 100);
 
 class Slider extends StatefulWidget {
   const Slider({
@@ -18,6 +24,7 @@ class Slider extends StatefulWidget {
     this.max = 1.0,
     this.focusNode,
     this.autofocus = false,
+    this.enableTooltip = false,
   })  : assert(value >= min && value <= max),
         super(key: key);
 
@@ -37,11 +44,65 @@ class Slider extends StatefulWidget {
 
   final bool autofocus;
 
+  final bool enableTooltip;
+
   @override
   _SliderState createState() => _SliderState();
 }
 
 class _SliderState extends State<Slider> with TickerProviderStateMixin {
+  late CurvedAnimation _position;
+  late CurvedAnimation _hoverPosition;
+  late AnimationController _positionController;
+  late AnimationController _hoverPositionController;
+
+  late TapGestureRecognizer _tap;
+  late HorizontalDragGestureRecognizer _drag;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final GestureArenaTeam team = GestureArenaTeam();
+
+    _drag = HorizontalDragGestureRecognizer();
+    _drag.team = team;
+
+    _tap = TapGestureRecognizer();
+    _tap.team = team;
+
+    _hoverPositionController = AnimationController(
+      duration: _kDuration,
+      value: 0.0,
+      vsync: this,
+    );
+
+    _hoverPosition = CurvedAnimation(
+      parent: _hoverPositionController,
+      curve: Curves.linear,
+    );
+
+    _positionController = AnimationController(
+      duration: _kDuration,
+      value: 0.0,
+      vsync: this,
+    );
+
+    _position = CurvedAnimation(
+      parent: _positionController,
+      curve: Curves.linear,
+    );
+  }
+
+  @override
+  void dispose() {
+    _drag.dispose();
+    _tap.dispose();
+    _positionController.dispose();
+    _hoverPositionController.dispose();
+    super.dispose();
+  }
+
   void _handleChanged(double value) {
     final double? lerpValue = lerpDouble(widget.min, widget.max, value);
     if (lerpValue != widget.value) {
@@ -51,17 +112,36 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
   bool _dragging = false;
   void _handleDragChanged(bool dragging) {
-    setState(() => _dragging = dragging);
+    if (dragging != _dragging) {
+      if (dragging) {
+        _positionController.forward();
+      } else {
+        _positionController.reverse();
+      }
+      setState(() => _dragging = dragging);
+    }
   }
 
   bool _hovering = false;
   void _handleHoverChanged(bool hovering) {
-    setState(() => _hovering = hovering);
+    if (hovering != _hovering) {
+      if (hovering || _focused) {
+        _hoverPositionController.forward();
+      } else {
+        _hoverPositionController.reverse();
+      }
+      setState(() => _hovering = hovering);
+    }
   }
 
   bool _focused = false;
   void _handleFocusHighlightChanged(bool focused) {
     if (focused != _focused) {
+      if (focused || _hovering) {
+        _hoverPositionController.forward();
+      } else {
+        _hoverPositionController.reverse();
+      }
       setState(() => _focused = focused);
     }
   }
@@ -71,63 +151,67 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final active = widget.onChanged != null;
     final theme = SliderTheme.of(context);
 
-    final HSLColor activeColor = active
-        ? (_hovering || _focused || _dragging
-            ? theme.activeHoverColor!
-            : theme.activeColor!)
-        : theme.disabledColor!;
+    final HSLColor activeColor = theme.activeColor!;
+    final hoverColor = theme.activeHoverColor!;
+    final disabledColor = theme.disabledColor!;
 
     final HSLColor trackColor = theme.trackColor!;
 
-    return FocusableActionDetector(
+    final Widget result = FocusableActionDetector(
       focusNode: widget.focusNode,
       autofocus: widget.autofocus,
       enabled: active,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
+      mouseCursor: SystemMouseCursors.click,
       child: Builder(
         builder: (BuildContext context) {
           return _SliderRenderObjectWidget(
+            state: this,
             value: (widget.value - widget.min) / (widget.max - widget.min),
             activeColor: activeColor.toColor(),
-            thumbColor: activeColor.toColor(),
             trackColor: trackColor.toColor(),
+            disabledColor: disabledColor.toColor(),
+            hoverColor: hoverColor.toColor(),
+            hovering: _hovering || _focused,
             onChanged: active ? _handleChanged : null,
             onChangeStart: (value) {
               if (active) {
                 _handleDragChanged(true);
-                if (widget.onChangeStart != null) {
-                  widget.onChangeStart!(lerpDouble(
+                widget.onChangeStart?.call(
+                  lerpDouble(
                     widget.min,
                     widget.max,
                     value,
-                  )!);
-                }
+                  )!,
+                );
               }
             },
             onChangeEnd: (value) {
               if (active) {
                 _handleDragChanged(false);
-                if (widget.onChangeEnd != null) {
-                  widget.onChangeEnd!(lerpDouble(
-                    widget.min,
-                    widget.max,
-                    value,
-                  )!);
-                }
+                widget.onChangeEnd?.call(lerpDouble(
+                  widget.min,
+                  widget.max,
+                  value,
+                )!);
               }
             },
-            vsync: this,
           );
         },
       ),
     );
 
-    // return Tooltip(
-    //   message: (widget.value * 100).round().toString(),
-    //   child: result,
-    //   preferBelow: false,
-    // );
+    if (widget.enableTooltip) {
+      return Tooltip(
+        message: (widget.value * 100).round().toString(),
+        child: result,
+        height: 14.0,
+        preferBelow: false,
+      );
+    } else {
+      return result;
+    }
   }
 }
 
@@ -135,10 +219,12 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   const _SliderRenderObjectWidget({
     Key? key,
     required this.value,
-    required this.vsync,
+    required this.state,
     required this.activeColor,
-    required this.thumbColor,
     required this.trackColor,
+    required this.disabledColor,
+    required this.hoverColor,
+    required this.hovering,
     this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
@@ -146,25 +232,29 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
 
   final double value;
   final Color activeColor;
-  final Color thumbColor;
   final Color trackColor;
   final ValueChanged<double>? onChanged;
   final ValueChanged<double>? onChangeStart;
   final ValueChanged<double>? onChangeEnd;
-  final TickerProvider vsync;
+  final Color disabledColor;
+  final Color hoverColor;
+  final bool hovering;
+  final _SliderState state;
 
   @override
   _RenderSlider createRenderObject(BuildContext context) {
     return _RenderSlider(
       value: value,
+      state: state,
       activeColor: activeColor,
-      thumbColor: thumbColor,
       trackColor: trackColor,
       onChanged: onChanged,
       onChangeStart: onChangeStart,
       onChangeEnd: onChangeEnd,
+      disabledColor: disabledColor,
+      hoverColor: hoverColor,
+      hovering: hovering,
       textDirection: Directionality.of(context),
-      vsync: vsync,
     );
   }
 
@@ -173,83 +263,70 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
     renderObject
       ..value = value
       ..activeColor = activeColor
-      ..thumbColor = thumbColor
       ..trackColor = trackColor
       ..onChanged = onChanged
       ..onChangeStart = onChangeStart
       ..onChangeEnd = onChangeEnd
+      ..disabledColor = disabledColor
+      ..hoverColor = hoverColor
+      ..hovering = hovering
       ..textDirection = Directionality.of(context);
   }
 }
 
-const double _kThumbRadius = 6.0;
-const double _kSliderWidth = 180.0;
-const double _kSliderHeight = 2.0 * _kThumbRadius;
-const Duration _kDiscreteTransitionDuration = Duration(milliseconds: 500);
-//const double _kThumbWidth = 24.0;
-//const Radius _kThumbRadius = const Radius.circular(8.0);
-
 class _RenderSlider extends RenderConstrainedBox {
   _RenderSlider({
-    required double value,
-    required Color activeColor,
-    required Color thumbColor,
-    required Color trackColor,
-    ValueChanged<double>? onChanged,
     this.onChangeStart,
     this.onChangeEnd,
-    required TickerProvider vsync,
+    ValueChanged<double>? onChanged,
+    required _SliderState state,
+    required double value,
+    required Color activeColor,
+    required Color disabledColor,
+    required Color hoverColor,
+    required bool hovering,
+    required Color trackColor,
     required TextDirection textDirection,
-  })   : assert(value >= 0.0 && value <= 1.0),
+  })  : assert(value >= 0.0 && value <= 1.0),
+        _disabledColor = disabledColor,
+        _hoverColor = hoverColor,
+        _hovering = hovering,
+        _state = state,
         _value = value,
         _activeColor = activeColor,
-        _thumbColor = thumbColor,
         _trackColor = trackColor,
         _onChanged = onChanged,
         _textDirection = textDirection,
         super(
             additionalConstraints: const BoxConstraints.tightFor(
                 width: _kSliderWidth, height: _kSliderHeight)) {
-    final GestureArenaTeam team = GestureArenaTeam();
+    state._drag.onStart = _handleDragStart;
+    state._drag.onUpdate = _handleDragUpdate;
+    state._drag.onCancel = _endInteraction;
+    state._drag.onEnd = _handleDragEnd;
 
-    _drag = HorizontalDragGestureRecognizer()
-      ..team = team
-      ..onStart = _handleDragStart
-      ..onUpdate = _handleDragUpdate
-      ..onCancel = _endInteraction
-      ..onEnd = _handleDragEnd;
-
-    _tap = TapGestureRecognizer()
-      ..team = team
-      ..onTapDown = _handleTapDown
-      ..onTapUp = _handleTapUp
-      ..onTapCancel = _endInteraction;
-
-    _position = AnimationController(
-      value: value,
-      duration: _kDiscreteTransitionDuration,
-      vsync: vsync,
-    )..addListener(markNeedsPaint);
+    state._tap.onTapDown = _handleTapDown;
+    state._tap.onTapUp = _handleTapUp;
+    state._tap.onTapCancel = _endInteraction;
   }
 
-  late AnimationController _position;
+  final _SliderState _state;
 
-  late TapGestureRecognizer _tap;
-  late HorizontalDragGestureRecognizer _drag;
   double _currentDragValue = 0.0;
-  bool _active = false;
+  bool _dragging = false;
 
   bool get isDiscrete => false;
 
   double _value;
   double get value => _value;
-  set value(double newValue) {
-    assert(newValue >= 0.0 && newValue <= 1.0);
-    if (newValue == _value) {
+  set value(double value) {
+    assert(value >= 0.0 && value <= 1.0);
+    if (value == _value) {
       return;
     }
-    _value = newValue;
-    _position.value = newValue;
+    _value = value;
+
+    markNeedsPaint();
     markNeedsSemanticsUpdate();
   }
 
@@ -263,16 +340,6 @@ class _RenderSlider extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
-  Color _thumbColor;
-  Color get thumbColor => _thumbColor;
-  set thumbColor(Color value) {
-    if (value == _thumbColor) {
-      return;
-    }
-    _thumbColor = value;
-    markNeedsPaint();
-  }
-
   Color _trackColor;
   Color get trackColor => _trackColor;
   set trackColor(Color value) {
@@ -283,15 +350,48 @@ class _RenderSlider extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
+  Color get disabledColor => _disabledColor;
+  Color _disabledColor;
+  set disabledColor(Color value) {
+    if (value == _disabledColor) {
+      return;
+    }
+    _disabledColor = value;
+    markNeedsPaint();
+  }
+
+  Color get hoverColor => _hoverColor;
+  Color _hoverColor;
+  set hoverColor(Color value) {
+    if (value == _hoverColor) {
+      return;
+    }
+    _hoverColor = value;
+    markNeedsPaint();
+  }
+
+  bool get hovering => _hovering;
+  bool _hovering;
+  set hovering(bool value) {
+    if (value == _hovering) {
+      return;
+    }
+    _hovering = value;
+    markNeedsPaint();
+  }
+
   ValueChanged<double>? _onChanged;
   ValueChanged<double>? get onChanged => _onChanged;
   set onChanged(ValueChanged<double>? value) {
     if (value == _onChanged) {
       return;
     }
+
     final bool wasInteractive = isInteractive;
     _onChanged = value;
+
     if (wasInteractive != isInteractive) {
+      markNeedsPaint();
       markNeedsSemanticsUpdate();
     }
   }
@@ -320,6 +420,7 @@ class _RenderSlider extends RenderConstrainedBox {
 
   double get _trackLeft => 0.0;
   double get _trackRight => size.width;
+
   double get _thumbCenter {
     double visualPosition;
     switch (textDirection) {
@@ -335,13 +436,9 @@ class _RenderSlider extends RenderConstrainedBox {
         visualPosition)!;
   }
 
-  Paint get _thumbPaintColor {
-    final paint = Paint()..color = _active ? _thumbColor : _activeColor;
-    return paint;
+  void _handleDragStart(DragStartDetails details) {
+    _startInteraction(details.globalPosition);
   }
-
-  void _handleDragStart(DragStartDetails details) =>
-      _startInteraction(details.globalPosition);
 
   void _handleDragUpdate(DragUpdateDetails details) {
     if (isInteractive) {
@@ -380,21 +477,17 @@ class _RenderSlider extends RenderConstrainedBox {
 
   void _startInteraction(Offset globalPosition) {
     if (isInteractive) {
-      _active = true;
-      if (onChangeStart != null) {
-        onChangeStart!(_discretizedCurrentDragValue); // TODO(as): ???
-      }
+      _dragging = true;
+      onChangeStart?.call(_discretizedCurrentDragValue);
       _currentDragValue = _getValueFromGlobalPosition(globalPosition);
       onChanged!(_discretizedCurrentDragValue);
     }
   }
 
   void _endInteraction() {
-    if (onChangeEnd != null) {
-      onChangeEnd!(_discretizedCurrentDragValue); // TODO(as): ???
-    }
+    onChangeEnd?.call(_discretizedCurrentDragValue);
 
-    _active = false;
+    _dragging = false;
 
     _currentDragValue = 0.0;
 
@@ -407,6 +500,68 @@ class _RenderSlider extends RenderConstrainedBox {
 
   void _handleTapUp(TapUpDetails details) => _endInteraction();
 
+  Paint get _thumbPaintColor {
+    Color color;
+
+    if (!isInteractive) {
+      color = disabledColor;
+    } else {
+      color = activeColor;
+
+      if (hovering || _state._hoverPositionController.isAnimating) {
+        color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
+      }
+
+      if (_dragging || _state._positionController.isAnimating) {
+        color = Color.lerp(color, hoverColor, _state._position.value)!;
+      }
+    }
+
+    return Paint()..color = color;
+  }
+
+  Paint get _activeTrackPaintColor {
+    Color color;
+
+    if (!isInteractive) {
+      color = disabledColor;
+    } else {
+      color = activeColor;
+
+      if (hovering || _state._hoverPositionController.isAnimating) {
+        color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
+      }
+
+      if (_dragging || _state._positionController.isAnimating) {
+        color = Color.lerp(color, activeColor, _state._position.value)!;
+      }
+    }
+
+    return Paint()..color = color;
+  }
+
+  Paint get _trackPaintColor {
+    if (!isInteractive) {
+      return Paint()..color = disabledColor;
+    } else {
+      return Paint()..color = trackColor;
+    }
+  }
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    _state._hoverPositionController.addListener(markNeedsPaint);
+    _state._positionController.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _state._hoverPositionController.removeListener(markNeedsPaint);
+    _state._positionController.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
   @override
   bool hitTestSelf(Offset offset) => true;
 
@@ -414,27 +569,27 @@ class _RenderSlider extends RenderConstrainedBox {
   void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
     assert(debugHandleEvent(event, entry));
     if (event is PointerDownEvent && isInteractive) {
-      _drag.addPointer(event);
-      _tap.addPointer(event);
+      _state._drag.addPointer(event);
+      _state._tap.addPointer(event);
     }
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
     double visualPosition;
-    Color leftColor;
-    Color rightColor;
+    final Paint leftPaintColor;
+    final Paint rightPaintColor;
 
     switch (textDirection) {
       case TextDirection.rtl:
-        visualPosition = 1.0 - _position.value;
-        leftColor = _activeColor;
-        rightColor = trackColor;
+        visualPosition = 1.0 - value;
+        leftPaintColor = _trackPaintColor;
+        rightPaintColor = _activeTrackPaintColor;
         break;
       case TextDirection.ltr:
-        visualPosition = _position.value;
-        leftColor = trackColor;
-        rightColor = _activeColor;
+        visualPosition = value;
+        leftPaintColor = _activeTrackPaintColor;
+        rightPaintColor = _trackPaintColor;
         break;
     }
 
@@ -448,13 +603,13 @@ class _RenderSlider extends RenderConstrainedBox {
     final double trackActive = offset.dx + _thumbCenter;
 
     if (visualPosition > 0.0) {
-      final Paint paint = Paint()..color = rightColor;
+      final Paint paint = leftPaintColor;
       canvas.drawRect(
           Rect.fromLTRB(trackLeft, trackTop, trackActive, trackBottom), paint);
     }
 
     if (visualPosition < 1.0) {
-      final Paint paint = Paint()..color = leftColor;
+      final Paint paint = rightPaintColor;
       canvas.drawRect(
           Rect.fromLTRB(trackActive, trackTop, trackRight, trackBottom), paint);
     }

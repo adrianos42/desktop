@@ -1,46 +1,41 @@
-import 'dart:math' as math;
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
 
 const Duration _kToggleDuration = Duration(milliseconds: 120);
 const Duration _kHoverDuration = Duration(milliseconds: 100);
-const double _kCheckboxWidth = 14.0;
-const double _kEdgeSize = _kCheckboxWidth;
 const double _kStrokeWidth = 2.0;
+const double _kOuterRadius = 7.0;
+const double _kInnerRadius = 4.0;
 
-// thicc checkbox, maybe add option for mobile usage
-// _kCheckboxWidth = 16.0;
+// thicc radio button, maybe add option for mobile usage
+// outerRadius = 8.0;
+// innerRadius = outerRadius - (strokeWidth * 2.0);
 
-class Checkbox extends StatefulWidget {
-  const Checkbox({
+class Radio extends StatefulWidget {
+  const Radio({
     Key? key,
-    this.value,
-    this.tristate = false,
+    required this.value,
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  }) : super(key: key);
 
-  final bool? value;
+  final bool value;
 
-  final ValueChanged<bool?>? onChanged;
-
-  final bool tristate;
+  final ValueChanged<bool>? onChanged;
 
   final FocusNode? focusNode;
 
   final bool autofocus;
 
   @override
-  _CheckboxState createState() => _CheckboxState();
+  _RadioState createState() => _RadioState();
 }
 
-class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
+class _RadioState extends State<Radio> with TickerProviderStateMixin {
   bool get enabled => widget.onChanged != null;
   late Map<Type, Action<Intent>> _actionMap;
 
@@ -55,7 +50,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _actionMap = <Type, Action<Intent>>{
-      ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
+      ActivateIntent: CallbackAction(onInvoke: _actionHandler),
     };
 
     _tap = TapGestureRecognizer()..onTap = _handleTap;
@@ -94,57 +89,26 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Checkbox oldWidget) {
+  void didUpdateWidget(Radio oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
-      if (oldWidget.value != widget.value) {
-        switch (_positionController.status) {
-          case AnimationStatus.forward:
-          case AnimationStatus.completed:
-            _positionController.reverse();
-            break;
-          default:
-            _positionController.forward();
-        }
+      if (widget.value) {
+        _positionController.forward();
+      } else {
+        _positionController.reverse();
       }
     }
   }
 
   bool get isInteractive => widget.onChanged != null;
 
-  void _actionHandler(ActivateIntent intent) {
+  void _actionHandler(Intent intent) {
     if (isInteractive) {
-      switch (widget.value) {
-        case false:
-          widget.onChanged!(true);
-          break;
-        case true:
-          widget.onChanged!(widget.tristate ? null : false);
-          break;
-        default:
-          widget.onChanged!(false);
-          break;
-      }
+      widget.onChanged!(!widget.value);
     }
 
     final RenderObject renderObject = context.findRenderObject()!;
     renderObject.sendSemanticsEvent(const TapSemanticEvent());
-  }
-
-  void _handleTap() {
-    if (isInteractive) {
-      switch (widget.value) {
-        case false:
-          widget.onChanged!(true);
-          break;
-        case true:
-          widget.onChanged!(widget.tristate ? null : false);
-          break;
-        default:
-          widget.onChanged!(false);
-          break;
-      }
-    }
   }
 
   bool _hovering = false;
@@ -171,20 +135,26 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
     }
   }
 
+  void _handleTap() {
+    if (isInteractive) {
+      widget.onChanged!(!widget.value);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = CheckboxTheme.of(context);
+    final theme = RadioButtonTheme.of(context);
 
     final activeColor = theme.activeColor!;
-    final hoverColor = widget.value != false
-        ? theme.activeHoverColor!
-        : theme.inactiveHoverColor!;
+    final hoverColor =
+        widget.value ? theme.activeHoverColor! : theme.inactiveHoverColor!;
     final inactiveColor = theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
     // TODO(as): final focusColor = theme.activeHoverColor!;
     final disabledColor = theme.disabledColor!;
 
-    const Size size = Size.square(_kCheckboxWidth + 2);
+    const Size size = Size.square(_kOuterRadius * 2.0);
+
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
@@ -194,10 +164,10 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
       enabled: enabled,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
-      mouseCursor: SystemMouseCursors.click,
+      mouseCursor: !widget.value ? SystemMouseCursors.click : MouseCursor.defer,
       child: Builder(
         builder: (BuildContext context) {
-          return _CheckboxRenderObjectWidget(
+          return _RadioRenderObjectWidget(
             value: widget.value,
             state: this,
             activeColor: activeColor.toColor(),
@@ -215,11 +185,11 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
   }
 }
 
-class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
-  const _CheckboxRenderObjectWidget({
+class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
+  const _RadioRenderObjectWidget({
     Key? key,
     this.onChanged,
-    this.value,
+    required this.value,
     required this.state,
     required this.activeColor,
     required this.foregroundColor,
@@ -230,8 +200,8 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.additionalConstraints,
   }) : super(key: key);
 
-  final bool? value;
-  final _CheckboxState state;
+  final bool value;
+  final _RadioState state;
   final Color activeColor;
   final Color foregroundColor;
   final Color inactiveColor;
@@ -242,7 +212,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   final BoxConstraints additionalConstraints;
 
   @override
-  _RenderCheckbox createRenderObject(BuildContext context) => _RenderCheckbox(
+  _RenderRadio createRenderObject(BuildContext context) => _RenderRadio(
         value: value,
         state: state,
         activeColor: activeColor,
@@ -256,7 +226,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
       );
 
   @override
-  void updateRenderObject(BuildContext context, _RenderCheckbox renderObject) {
+  void updateRenderObject(BuildContext context, _RenderRadio renderObject) {
     renderObject
       ..value = value
       ..activeColor = activeColor
@@ -270,11 +240,10 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   }
 }
 
-class _RenderCheckbox extends RenderConstrainedBox {
-  _RenderCheckbox({
-    bool? value,
-    ValueChanged<bool>? onChanged,
-    required _CheckboxState state,
+class _RenderRadio extends RenderConstrainedBox {
+  _RenderRadio({
+    required bool value,
+    required _RadioState state,
     required Color activeColor,
     required Color foregroundColor,
     required Color inactiveColor,
@@ -282,9 +251,9 @@ class _RenderCheckbox extends RenderConstrainedBox {
     required Color hoverColor,
     required bool hovering,
     required BoxConstraints additionalConstraints,
+    ValueChanged<bool>? onChanged,
   })  : _state = state,
         _value = value,
-        _oldValue = value,
         _activeColor = activeColor,
         _disabledColor = disabledColor,
         _foregroundColor = foregroundColor,
@@ -294,16 +263,14 @@ class _RenderCheckbox extends RenderConstrainedBox {
         _onChanged = onChanged,
         super(additionalConstraints: additionalConstraints);
 
-  final _CheckboxState _state;
+  final _RadioState _state;
 
-  bool? get value => _value;
-  bool? _value;
-  bool? _oldValue;
-  set value(bool? value) {
+  bool get value => _value;
+  bool _value;
+  set value(bool value) {
     if (value == _value) {
       return;
     }
-    _oldValue = _value;
     _value = value;
     markNeedsSemanticsUpdate();
   }
@@ -358,6 +325,16 @@ class _RenderCheckbox extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
+  // Color get focusColor => _focusColor;
+  // Color _focusColor;
+  // set focusColor(Color value) {
+  //   if (value == _focusColor) {
+  //     return;
+  //   }
+  //   _focusColor = value;
+  //   markNeedsPaint();
+  // }
+
   bool get hovering => _hovering;
   bool _hovering;
   set hovering(bool value) {
@@ -385,6 +362,20 @@ class _RenderCheckbox extends RenderConstrainedBox {
   bool get isInteractive => onChanged != null;
 
   @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    _state._hoverPositionController.addListener(markNeedsPaint);
+    _state._positionController.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _state._hoverPositionController.removeListener(markNeedsPaint);
+    _state._positionController.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
+  @override
   bool hitTestSelf(Offset position) => true;
 
   @override
@@ -406,12 +397,6 @@ class _RenderCheckbox extends RenderConstrainedBox {
     config.isEnabled = isInteractive;
   }
 
-  RRect _outerRectAt(Offset origin) {
-    const double size = _kEdgeSize;
-    final Rect rect = Rect.fromLTWH(origin.dx, origin.dy, size, size);
-    return RRect.fromRectAndRadius(rect, Radius.zero);
-  }
-
   Color _colorAt(double t) {
     if (!isInteractive) {
       return disabledColor;
@@ -426,123 +411,24 @@ class _RenderCheckbox extends RenderConstrainedBox {
     return color;
   }
 
-  Paint _createStrokePaint() {
-    return Paint()
-      ..color = foregroundColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = _kStrokeWidth;
-  }
-
-  void _drawBorder(Canvas canvas, RRect outer, double t, Paint paint) {
-    assert(t >= 0.0 && t <= 0.5);
-    final double size = outer.width;
-    final RRect inner =
-        outer.deflate(math.min(size / 2.0, _kStrokeWidth + size * t));
-    canvas.drawDRRect(outer, inner, paint);
-  }
-
-  void _drawCheck(Canvas canvas, Offset origin, double t, Paint paint) {
-    assert(t >= 0.0 && t <= 1.0);
-    // As t goes from 0.0 to 1.0, animate the two check mark strokes from the
-    // short side to the long side.
-    final Path path = Path();
-    const Offset start = Offset(_kEdgeSize * 0.15, _kEdgeSize * 0.45);
-    const Offset mid = Offset(_kEdgeSize * 0.4, _kEdgeSize * 0.7);
-    const Offset end = Offset(_kEdgeSize * 0.85, _kEdgeSize * 0.25);
-
-    if (t < 0.5) {
-      final double strokeT = t * 2.0;
-      final Offset drawMid = Offset.lerp(start, mid, strokeT)!;
-      path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
-      path.lineTo(origin.dx + drawMid.dx, origin.dy + drawMid.dy);
-    } else {
-      final double strokeT = (t - 0.5) * 2.0;
-      final Offset drawEnd = Offset.lerp(mid, end, strokeT)!;
-      path.moveTo(origin.dx + start.dx, origin.dy + start.dy);
-      path.lineTo(origin.dx + mid.dx, origin.dy + mid.dy);
-      path.lineTo(origin.dx + drawEnd.dx, origin.dy + drawEnd.dy);
-    }
-
-    canvas.drawPath(path, paint);
-  }
-
-  void _drawInside(Canvas canvas, Offset origin, double t, Paint paint) {
-    const Offset start = Offset(_kEdgeSize * 0.2, _kEdgeSize * 0.5);
-    const Offset mid = Offset(_kEdgeSize * 0.5, _kEdgeSize * 0.5);
-    const Offset end = Offset(_kEdgeSize * 0.8, _kEdgeSize * 0.5);
-    final Offset drawStart = Offset.lerp(start, mid, 1.0 - t)!;
-    final Offset drawEnd = Offset.lerp(mid, end, t)!;
-    canvas.drawLine(origin + drawStart, origin + drawEnd, paint);
-  }
-
-  @override
-  void attach(PipelineOwner owner) {
-    super.attach(owner);
-    _state._hoverPositionController.addListener(markNeedsPaint);
-    _state._positionController.addListener(markNeedsPaint);
-  }
-
-  @override
-  void detach() {
-    _state._hoverPositionController.removeListener(markNeedsPaint);
-    _state._positionController.removeListener(markNeedsPaint);
-    super.detach();
-  }
-
   @override
   void paint(PaintingContext context, Offset offset) {
     final Canvas canvas = context.canvas;
 
-    final Paint strokePaint = _createStrokePaint();
+    final Offset center = (offset & size).center;
 
-    final Offset origin = (offset & size).topLeft;
+    final Paint borderPaint = Paint()
+      ..color = _colorAt(_state._position.value)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = _kStrokeWidth;
 
-    final AnimationStatus status = _state._position.status;
-    final double tNormalized =
-        status == AnimationStatus.forward || status == AnimationStatus.completed
-            ? _state._position.value
-            : 1.0 - _state._position.value;
+    final Paint strokePaint = Paint()
+      ..color = onChanged == null ? disabledColor : foregroundColor;
 
-    if (_oldValue == false || value == false) {
-      final double t = value == false ? 1.0 - tNormalized : tNormalized;
+    canvas.drawCircle(center, _kOuterRadius, borderPaint);
 
-      final RRect outer = _outerRectAt(origin);
-
-      final Paint paint = Paint()..color = _colorAt(t);
-
-      if (t <= 0.5) {
-        _drawBorder(canvas, outer, t, paint);
-      } else {
-        canvas.drawRRect(outer, paint);
-
-        final double tShrink = (t - 0.5) * 2.0;
-        if (_oldValue == null || value == null) {
-          _drawInside(canvas, origin, tShrink, strokePaint);
-        } else {
-          _drawCheck(canvas, origin, tShrink, strokePaint);
-        }
-      }
-    } else {
-      // Two cases: null to true, true to null
-      final RRect outer = _outerRectAt(origin);
-      final Paint paint = Paint()..color = _colorAt(1.0);
-      canvas.drawRRect(outer, paint);
-
-      if (tNormalized <= 0.5) {
-        final double tShrink = 1.0 - tNormalized * 2.0;
-        if (_oldValue == true) {
-          _drawCheck(canvas, origin, tShrink, strokePaint);
-        } else {
-          _drawInside(canvas, origin, tShrink, strokePaint);
-        }
-      } else {
-        final double tExpand = (tNormalized - 0.5) * 2.0;
-        if (value == true) {
-          _drawCheck(canvas, origin, tExpand, strokePaint);
-        } else {
-          _drawInside(canvas, origin, tExpand, strokePaint);
-        }
-      }
+    if (!_state._position.isDismissed) {
+      canvas.drawCircle(center, _kInnerRadius, strokePaint);
     }
   }
 }

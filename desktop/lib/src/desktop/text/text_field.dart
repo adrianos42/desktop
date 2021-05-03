@@ -300,12 +300,12 @@ class _TextFieldState extends State<TextField>
       ),
     );
 
-    if (kIsWeb) {
-      return Shortcuts(
-        shortcuts: scrollShortcutOverrides,
-        child: result,
-      );
-    }
+    // if (kIsWeb) {
+    //   return Shortcuts(
+    //     shortcuts: scrollShortcutOverrides,
+    //     child: result,
+    //   );
+    // }
 
     return result;
   }

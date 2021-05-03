@@ -4,7 +4,20 @@ import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
 
-import 'internal/toggleable.dart';
+const Duration _kToggleDuration = Duration(milliseconds: 120);
+const Duration _kHoverDuration = Duration(milliseconds: 100);
+
+// The width of dat toggle
+const double _kWidth = 26.0;
+const double _kHeight = 14.0;
+const double _kDefaultRadius = 8.0;
+const Radius _kRadius = Radius.circular(_kDefaultRadius);
+const double _kStrokeWidth = 2.0;
+
+// thicc one, maybe add option for mobile
+// width = 32.0;
+// height = 16.0;
+// radius = 6.0;
 
 class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({
@@ -23,12 +36,6 @@ class ToggleSwitch extends StatefulWidget {
 
   final bool autofocus;
 
-  // The width of dat toggle
-  static const double width = 32.0;
-  static const double height = 16.0;
-  static const double radius = 8.0;
-  static const double strokeWidth = 2.0;
-
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
 }
@@ -38,25 +45,71 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   bool get enabled => widget.onChanged != null;
   late Map<Type, Action<Intent>> _actionMap;
 
+  late CurvedAnimation _position;
+  late CurvedAnimation _hoverPosition;
+  late AnimationController _positionController;
+  late AnimationController _hoverPositionController;
+
+  late TapGestureRecognizer _tap;
+
   @override
   void initState() {
     super.initState();
     _actionMap = <Type, Action<Intent>>{
       ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
     };
+
+    _tap = TapGestureRecognizer()..onTap = _handleTap;
+
+    _hoverPositionController = AnimationController(
+      duration: _kHoverDuration,
+      value: 0.0,
+      vsync: this,
+    );
+
+    _hoverPosition = CurvedAnimation(
+      parent: _hoverPositionController,
+      curve: Curves.linear,
+    );
+
+    _positionController = AnimationController(
+      duration: _kToggleDuration,
+      value: widget.value == false ? 0.0 : 1.0,
+      vsync: this,
+    );
+
+    _position = CurvedAnimation(
+      parent: _positionController,
+      curve: Curves.easeIn,
+      reverseCurve: Curves.easeOut,
+    );
   }
 
-  void _actionHandler(Intent intent) {
-    if (widget.onChanged != null) {
-      switch (widget.value) {
-        case false:
-          widget.onChanged!(true);
-          break;
-        case true:
-          widget.onChanged!(false);
-          break;
+  @override
+  void dispose() {
+    _tap.dispose();
+
+    _positionController.dispose();
+    _hoverPositionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(ToggleSwitch oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      if (widget.value) {
+        _positionController.forward();
+      } else {
+        _positionController.reverse();
       }
     }
+  }
+
+  bool get isInteractive => widget.onChanged != null;
+
+  void _actionHandler(Intent intent) {
+    widget.onChanged?.call(!widget.value);
 
     final RenderObject renderObject = context.findRenderObject()!;
     renderObject.sendSemanticsEvent(const TapSemanticEvent());
@@ -64,17 +117,31 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   bool _hovering = false;
   void _handleHoverChanged(bool hovering) {
-    setState(() {
-      _hovering = hovering;
-    });
+    if (hovering != _hovering) {
+      if (hovering || _focused) {
+        _hoverPositionController.forward();
+      } else {
+        _hoverPositionController.reverse();
+      }
+      setState(() => _hovering = hovering);
+    }
   }
 
   bool _focused = false;
   void _handleFocusHighlightChanged(bool focused) {
     if (focused != _focused) {
-      setState(() {
-        _focused = focused;
-      });
+      if (focused || _hovering) {
+        _hoverPositionController.forward();
+      } else {
+        _hoverPositionController.reverse();
+      }
+      setState(() => _focused = focused);
+    }
+  }
+
+  void _handleTap() {
+    if (isInteractive) {
+      widget.onChanged!(!widget.value);
     }
   }
 
@@ -82,16 +149,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   Widget build(BuildContext context) {
     final theme = ToggleSwitchTheme.of(context);
 
-    final activeColor =
-        _hovering || _focused ? theme.activeHoverColor! : theme.activeColor!;
-    final inactiveColor = _hovering || _focused
-        ? theme.inactiveHoverColor!
-        : theme.inactiveColor!;
+    final activeColor = theme.activeColor!;
+    final hoverColor = theme.activeHoverColor!;
+    final inactiveColor = theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
-    final focusColor = theme.activeHoverColor!; // TODO(as): ???
-    final disabledColor = theme.disabledColor!; // TODO(as): ???
+    // TODO(as): final focusColor = theme.activeHoverColor!;
+    final disabledColor = theme.disabledColor!;
 
-    const Size size = Size(ToggleSwitch.width, ToggleSwitch.height);
+    const Size size = Size(_kWidth, _kHeight);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
@@ -102,19 +167,19 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       enabled: enabled,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
+      mouseCursor: SystemMouseCursors.click,
       child: Builder(
         builder: (BuildContext context) {
           return _ToggleSwitchRenderObjectWidget(
             value: widget.value,
+            state: this,
             activeColor: activeColor.toColor(),
             inactiveColor: inactiveColor.toColor(),
             disabledColor: disabledColor.toColor(),
+            hoverColor: hoverColor.toColor(),
             onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
             foregroundColor: foregroundColor.toColor(),
-            vsync: this,
-            hasFocus: _focused,
-            focusColor: focusColor.toColor(),
-            hovering: _hovering,
+            hovering: _hovering || _focused,
             additionalConstraints: additionalConstraints,
           );
         },
@@ -126,44 +191,42 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   const _ToggleSwitchRenderObjectWidget({
     Key? key,
+    this.onChanged,
     required this.value,
+    required this.state,
     required this.activeColor,
     required this.foregroundColor,
     required this.inactiveColor,
     required this.disabledColor,
-    required this.onChanged,
-    required this.vsync,
-    required this.hasFocus,
+    required this.hoverColor,
     required this.hovering,
-    required this.focusColor,
     required this.additionalConstraints,
   }) : super(key: key);
 
   final bool value;
-  final bool hasFocus;
-  final bool hovering;
+  final _ToggleSwitchState state;
   final Color activeColor;
   final Color foregroundColor;
   final Color inactiveColor;
   final Color disabledColor;
-  final Color focusColor;
   final ValueChanged<bool?>? onChanged;
-  final TickerProvider vsync;
+  final Color hoverColor;
+  final bool hovering;
   final BoxConstraints additionalConstraints;
 
   @override
   _RenderToggleSwitch createRenderObject(BuildContext context) =>
       _RenderToggleSwitch(
         value: value,
-        hasFocus: hasFocus,
+        state: state,
         activeColor: activeColor,
         foregroundColor: foregroundColor,
         inactiveColor: inactiveColor,
         disabledColor: disabledColor,
         onChanged: onChanged,
-        vsync: vsync,
+        hoverColor: hoverColor,
+        hovering: hovering,
         additionalConstraints: additionalConstraints,
-        focusColor: focusColor,
       );
 
   @override
@@ -176,90 +239,207 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..inactiveColor = inactiveColor
       ..disabledColor = disabledColor
       ..onChanged = onChanged
-      ..additionalConstraints = additionalConstraints
-      ..vsync = vsync;
+      ..hoverColor = hoverColor
+      ..hovering = hovering
+      ..additionalConstraints = additionalConstraints;
   }
 }
 
-class _RenderToggleSwitch extends RenderToggleable {
+class _RenderToggleSwitch extends RenderConstrainedBox {
   _RenderToggleSwitch({
-    bool? value,
+    ValueChanged<bool>? onChanged,
+    required bool value,
+    required _ToggleSwitchState state,
     required Color activeColor,
-    required this.foregroundColor,
+    required Color foregroundColor,
     required Color inactiveColor,
-    required Color focusColor,
     required Color disabledColor,
-    ValueChanged<bool?>? onChanged,
-    bool hasFocus = false,
-    bool hovering = false,
-    required TickerProvider vsync,
+    required Color hoverColor,
+    required bool hovering,
     required BoxConstraints additionalConstraints,
-  }) : super(
-          tristate: false,
-          value: value,
-          activeColor: activeColor,
-          inactiveColor: inactiveColor,
-          focusColor: focusColor,
-          disabledColor: disabledColor,
-          onChanged: onChanged,
-          hasFocus: hasFocus,
-          hovering: hovering,
-          vsync: vsync,
-          additionalConstraints: additionalConstraints,
-        );
+  })  : _state = state,
+        _value = value,
+        _activeColor = activeColor,
+        _disabledColor = disabledColor,
+        _foregroundColor = foregroundColor,
+        _inactiveColor = inactiveColor,
+        _hoverColor = hoverColor,
+        _hovering = hovering,
+        _onChanged = onChanged,
+        super(additionalConstraints: additionalConstraints);
 
-  Color foregroundColor;
+  final _ToggleSwitchState _state;
 
-  static const double _width = ToggleSwitch.width;
-  static const double _height = ToggleSwitch.height;
-  static const double _strokeWidth = ToggleSwitch.strokeWidth;
-  static const Radius _radius = Radius.circular(ToggleSwitch.radius);
-
-  @override
-  set value(bool? newValue) {
-    if (newValue == value) {
+  bool get value => _value;
+  bool _value;
+  set value(bool value) {
+    if (value == _value) {
       return;
     }
-    super.value = newValue;
+    _value = value;
+    markNeedsSemanticsUpdate();
+  }
+
+  Color get activeColor => _activeColor;
+  Color _activeColor;
+  set activeColor(Color value) {
+    if (value == _activeColor) {
+      return;
+    }
+    _activeColor = value;
+    markNeedsPaint();
+  }
+
+  Color get foregroundColor => _foregroundColor;
+  Color _foregroundColor;
+  set foregroundColor(Color value) {
+    if (value == _foregroundColor) {
+      return;
+    }
+    _foregroundColor = value;
+    markNeedsPaint();
+  }
+
+  Color get inactiveColor => _inactiveColor;
+  Color _inactiveColor;
+  set inactiveColor(Color value) {
+    if (value == _inactiveColor) {
+      return;
+    }
+    _inactiveColor = value;
+    markNeedsPaint();
+  }
+
+  Color get disabledColor => _disabledColor;
+  Color _disabledColor;
+  set disabledColor(Color value) {
+    if (value == _disabledColor) {
+      return;
+    }
+    _disabledColor = value;
+    markNeedsPaint();
+  }
+
+  Color get hoverColor => _hoverColor;
+  Color _hoverColor;
+  set hoverColor(Color value) {
+    if (value == _hoverColor) {
+      return;
+    }
+    _hoverColor = value;
+    markNeedsPaint();
+  }
+
+  bool get hovering => _hovering;
+  bool _hovering;
+  set hovering(bool value) {
+    if (value == _hovering) {
+      return;
+    }
+    _hovering = value;
+    markNeedsPaint();
+  }
+
+  ValueChanged<bool>? get onChanged => _onChanged;
+  ValueChanged<bool>? _onChanged;
+  set onChanged(ValueChanged<bool>? value) {
+    if (value == _onChanged) {
+      return;
+    }
+    final bool wasInteractive = isInteractive;
+    _onChanged = value;
+    if (wasInteractive != isInteractive) {
+      markNeedsPaint();
+      markNeedsSemanticsUpdate();
+    }
+  }
+
+  bool get isInteractive => onChanged != null;
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    _state._hoverPositionController.addListener(markNeedsPaint);
+    _state._positionController.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _state._hoverPositionController.removeListener(markNeedsPaint);
+    _state._positionController.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
+  @override
+  bool hitTestSelf(Offset position) => true;
+
+  @override
+  void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
+    assert(debugHandleEvent(event, entry));
+    if (event is PointerDownEvent && isInteractive) {
+      _state._tap.addPointer(event);
+    }
   }
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
     super.describeSemanticsConfiguration(config);
+    if (isInteractive) {
+      config.onTap = _state._handleTap;
+    }
+
     config.isChecked = value == true;
+    config.isEnabled = isInteractive;
   }
 
   RRect _rect(Offset origin) {
-    const double width = _width;
-    const double height = _height;
+    const double width = _kWidth;
+    const double height = _kHeight;
     final Rect rect = Rect.fromLTWH(origin.dx, origin.dy, width, height);
-    return RRect.fromRectAndRadius(rect, _radius);
+    return RRect.fromRectAndRadius(rect, _kRadius);
   }
 
   Color _colorAt(double t) {
-    return onChanged == null
-        ? disabledColor
-        : (t >= 0.25
-            ? activeColor
-            : Color.lerp(inactiveColor, activeColor, t * 4.0)!);
+    if (!isInteractive) {
+      return disabledColor;
+    }
+
+    final color = Color.lerp(inactiveColor, activeColor, t)!;
+
+    if (hovering || _state._hoverPositionController.isAnimating) {
+      return Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
+    }
+
+    return color;
   }
 
   Paint _createStrokePaint() {
-    return Paint()..color = onChanged == null ? disabledColor : foregroundColor;
+    Color color;
+
+    if (!isInteractive) {
+      color = disabledColor;
+    } else {
+      if (hovering) {
+        color =
+            Color.lerp(inactiveColor, foregroundColor, _state._position.value)!;
+      } else {
+        color = foregroundColor;
+      }
+    }
+
+    return Paint()..color = color;
   }
 
   void _drawTrack(Canvas canvas, Offset origin, double t, Paint paint) {
     assert(t >= 0.0 && t <= 1.0);
-    // As t goes from 0.0 to 1.0, animate the horizontal line from the
-    // mid point outwards.
 
-    const double space = _strokeWidth;
-    const double radius = (_height - _strokeWidth * 2) / 2;
+    const double space = _kStrokeWidth;
+    const double radius = (_kHeight - _kStrokeWidth * 2) / 2;
 
     final double dy = origin.dy + space + radius;
 
     final Offset initialOrigin = Offset(origin.dx + radius + space, dy);
-    final Offset finalOrigin = Offset(origin.dx + _width - radius - space, dy);
+    final Offset finalOrigin = Offset(origin.dx + _kWidth - radius - space, dy);
 
     final Offset circleOrigin = Offset.lerp(initialOrigin, finalOrigin, t)!;
 
@@ -274,11 +454,11 @@ class _RenderToggleSwitch extends RenderToggleable {
 
     final Offset origin = (offset & size).topLeft;
 
-    final AnimationStatus status = position.status;
+    final AnimationStatus status = _state._position.status;
     final double tNormalized =
         status == AnimationStatus.forward || status == AnimationStatus.completed
-            ? position.value
-            : 1.0 - position.value;
+            ? _state._position.value
+            : 1.0 - _state._position.value;
 
     final double t = value == false ? 1.0 - tNormalized : tNormalized;
 
@@ -287,7 +467,7 @@ class _RenderToggleSwitch extends RenderToggleable {
     final Paint borderPaint = Paint()
       ..color = _colorAt(t)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = _strokeWidth;
+      ..strokeWidth = _kStrokeWidth;
 
     canvas.drawRRect(rect, borderPaint);
 

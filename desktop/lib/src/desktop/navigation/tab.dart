@@ -1,15 +1,16 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import '../input/input.dart';
 import '../theme/theme.dart';
 import 'route.dart';
 import 'tab_scope.dart';
 import 'tab_view.dart';
 
 const int _kIntialIndexValue = 0;
-const double _kTabHeight = 32.0;
-const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 8.0);
 
 /// Represents a item in a tab bar.
 /// See:
@@ -115,7 +116,9 @@ class TabItemText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: _khorizontalPadding,
+      padding: EdgeInsets.symmetric(
+        horizontal: TabTheme.of(context).itemSpacing!,
+      ),
       child: Text(text),
     );
   }
@@ -133,7 +136,9 @@ class TabItemIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: _khorizontalPadding,
+      padding: EdgeInsets.symmetric(
+        horizontal: TabTheme.of(context).itemSpacing!,
+      ),
       child: Icon(icon),
     );
   }
@@ -168,8 +173,9 @@ class Tab extends StatefulWidget {
     required this.items,
     this.trailing,
     this.focusNode,
-    this.color,
-    this.autofocus = true,
+    this.backgroundColor,
+    this.padding,
+    this.autofocus = false,
   })  : assert(items.length > 0),
         super(key: key);
 
@@ -186,7 +192,10 @@ class Tab extends StatefulWidget {
   final bool autofocus;
 
   /// The background color for the tab bar.
-  final HSLColor? color;
+  final HSLColor? backgroundColor;
+
+  /// The tab bar padding.
+  final EdgeInsets? padding;
 
   @override
   _TabState createState() => _TabState();
@@ -199,13 +208,13 @@ class _TabState extends State<Tab> {
 
   int _index = _kIntialIndexValue;
 
-  late Map<Type, Action<Intent>> _actionMap;
+  // late Map<Type, Action<Intent>> _actionMap;
 
   int get _length => widget.items.length;
 
   FocusNode? _focusNode;
   FocusNode get _effectiveFocusNode =>
-      widget.focusNode ?? (_focusNode ??= FocusNode());
+      widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
 
   void _nextView() => _indexChanged((_index + 1) % _length);
 
@@ -255,12 +264,12 @@ class _TabState extends State<Tab> {
   void initState() {
     super.initState();
 
-    _actionMap = <Type, Action<Intent>>{
-      NextTabIntent:
-          CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
-      PreviousTabIntent:
-          CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
-    };
+    // _actionMap = <Type, Action<Intent>>{
+    //   NextTabIntent:
+    //       CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
+    //   PreviousTabIntent:
+    //       CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
+    // };
 
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
   }
@@ -278,24 +287,27 @@ class _TabState extends State<Tab> {
     if (widget.items.length - _shouldBuildView.length > 0) {
       _shouldBuildView.addAll(List<bool>.filled(
           widget.items.length - _shouldBuildView.length, false));
-    } else {
+    } else if (widget.items.length - _shouldBuildView.length < 0) {
       _shouldBuildView.removeRange(
           widget.items.length, _shouldBuildView.length);
     }
+
+    // TODO(as): See if this is correct when changing the tree.
+    _index = math.min(_index, widget.items.length - 1);
 
     _focusView();
   }
 
   @override
   void dispose() {
-    super.dispose();
-
     for (final focusNode in _focusNodes) {
       focusNode.dispose();
     }
     for (final focusNode in _disposedFocusNodes) {
       focusNode.dispose();
     }
+
+    super.dispose();
   }
 
   @override
@@ -331,8 +343,9 @@ class _TabState extends State<Tab> {
         _TabGroup(
           index: _index,
           trailing: widget.trailing,
-          color: widget.color,
+          background: widget.backgroundColor,
           changeIndex: (value) => _indexChanged(value),
+          padding: widget.padding,
           items: List<IndexedWidgetBuilder>.generate(
             _length,
             (index) => widget.items[index].tabItemBuilder,
@@ -357,14 +370,12 @@ class _TabState extends State<Tab> {
       child: result,
       focusNode: _effectiveFocusNode,
       autofocus: widget.autofocus,
-      onShowFocusHighlight: (_) {},
-      onFocusChange: (_) {},
-      onShowHoverHighlight: (value) {
-        if (value) {
-          FocusScope.of(context).requestFocus(_effectiveFocusNode);
-        }
-      },
-      actions: _actionMap,
+      // onShowHoverHighlight: (value) {
+      //   if (value) {
+      //     FocusScope.of(context).requestFocus(_effectiveFocusNode);
+      //   }
+      // },
+      // actions: _actionMap,
     );
   }
 }
@@ -375,8 +386,9 @@ class _TabGroup extends StatefulWidget {
     required this.index,
     required this.items,
     required this.changeIndex,
-    this.color,
+    this.background,
     this.trailing,
+    this.padding,
   }) : super(key: key);
 
   final int index;
@@ -387,63 +399,50 @@ class _TabGroup extends StatefulWidget {
 
   final ValueChanged<int> changeIndex;
 
-  final HSLColor? color;
+  final HSLColor? background;
+
+  final EdgeInsets? padding;
 
   @override
   _TabGroupState createState() => _TabGroupState();
 }
 
 class _TabGroupState extends State<_TabGroup> {
-  int _hoveredIndex = -1;
-  int _pressedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final ColorScheme colorScheme = themeData.colorScheme;
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final TabThemeData tabThemeData = TabTheme.of(context);
 
     final List<Widget> list =
         List<Widget>.generate(widget.items.length, (index) {
-      final HSLColor foreground =
-          widget.index == index || _pressedIndex == index
-              ? colorScheme.primary1
-              : _hoveredIndex == index
-                  ? textTheme.textHigh
-                  : textTheme.textLow;
+      final active = widget.index == index;
 
-      final TextStyle textStyle =
-          textTheme.body2.copyWith(color: foreground.toColor());
-      final IconThemeData iconThemeData = IconThemeData(
-        color: foreground.toColor(),
-        size: 18.0,
-      );
+      final highlightColor = tabThemeData.highlightColor!;
+      final hoverColor = active ? highlightColor : tabThemeData.hoverColor!;
+      final activeColor = active ? highlightColor : tabThemeData.color!;
 
-      return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(() => _hoveredIndex = index),
-        onExit: (_) => setState(() => _hoveredIndex = -1),
-        opaque: false,
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTapDown: (_) => setState(() => _pressedIndex = index),
-          onTapUp: (_) => setState(() => _pressedIndex = -1),
-          onTapCancel: () => setState(() => _pressedIndex = -1),
-          onTap: () => widget.changeIndex(index),
-          child: DefaultTextStyle(
-            style: textStyle,
-            child: IconTheme(
-              data: iconThemeData,
-              child: widget.items[index](context, index),
-            ),
-          ),
+      return ButtonTheme.merge(
+        data: ButtonThemeData(
+          color: activeColor,
+          highlightColor: highlightColor,
+          hoverColor: hoverColor,
+        ),
+        child: Button(
+          onPressed: () => widget.changeIndex(index),
+          body: widget.items[index](context, index),
+          bodyPadding: EdgeInsets.zero,
+          leadingPadding: EdgeInsets.zero,
+          trailingPadding: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
         ),
       );
     });
 
     final Widget result = Container(
-      height: _kTabHeight,
-      color: widget.color?.toColor() ?? colorScheme.background.toColor(),
+      padding: widget.padding ??
+          EdgeInsets.symmetric(horizontal: tabThemeData.itemSpacing!),
+      height: tabThemeData.height!,
+      color: widget.background?.toColor() ??
+          tabThemeData.backgroundColor!.toColor(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

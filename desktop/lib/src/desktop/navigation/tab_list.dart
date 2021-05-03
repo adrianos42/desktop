@@ -44,7 +44,7 @@ class TabList extends StatefulWidget {
   const TabList({
     Key? key,
     required this.tabItems,
-  })   : assert(tabItems.length > 0),
+  })  : assert(tabItems.length > 0),
         super(key: key);
 
   final List<TabListItem> tabItems;

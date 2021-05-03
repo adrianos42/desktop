@@ -5,11 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'button.dart';
 import 'button_drop_down.dart';
 import 'button_hyperlink.dart';
-import 'button_radio.dart';
+import 'radio.dart';
 import 'checkbox.dart';
 import 'color_scheme.dart';
 import 'dialog.dart';
 import 'nav.dart';
+import 'tab.dart';
 import 'scrollbar.dart';
 import 'slider.dart';
 import 'theme_text.dart';
@@ -105,6 +106,7 @@ class ThemeData {
       toggleSwitchTheme: const ToggleSwitchThemeData(),
       sliderTheme: const SliderThemeData(),
       scrollbarTheme: const ScrollbarThemeData(),
+      tabTheme: const TabThemeData(),
     );
   }
 
@@ -122,6 +124,7 @@ class ThemeData {
     required this.sliderTheme,
     required this.toggleSwitchTheme,
     required this.scrollbarTheme,
+    required this.tabTheme,
   });
 
   factory ThemeData.light([HSLColor primaryColor = kDefaultPrimary]) =>
@@ -139,6 +142,8 @@ class ThemeData {
   final TextTheme textTheme;
 
   final NavThemeData navTheme;
+
+  final TabThemeData tabTheme;
 
   final ButtonThemeData buttonTheme;
 
@@ -178,6 +183,7 @@ class ThemeData {
       toggleSwitchTheme: toggleSwitchTheme,
       sliderTheme: sliderTheme,
       scrollbarTheme: scrollbarTheme,
+      tabTheme: tabTheme,
     );
   }
 }

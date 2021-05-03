@@ -1,34 +1,41 @@
 # Changelog
 
+## 2.0.2
+
+- Fixed the button size.
+- Added `TabTheme`.
+- Changed the type of child for `ButtonDropDown`.
+- Removed `TextButton` and `IconButton`. The factories `Button.text` and `Button.icon` are used instead.
+- Fixed `Button` animations.
+- Fixed `Checkbox`, `Radio` and `ToggleSwitch` buttons.
+
 ## 2.0.1
 
 - Fixed icons.
-
 - Fixed tab.
-
-- Add option create a tab with routes.
+- Added option create a tab with routes.
 
 ## 2.0.0
 
-- Fix button padding.
-- Fix dialog barrier color.
-- Add button `padding` and `axis` fields.
-- Add `router` contructor for `DesktopApp`.
-- Add base class for locales usage.
-- Fix nav buttons spacing and placement.
+- Fixed button padding.
+- Fixed dialog barrier color.
+- Added button `padding` and `axis` fields.
+- Added `router` contructor for `DesktopApp`.
+- Added base class for locales usage.
+- Fixed nav buttons spacing and placement.
 
 ## 1.0.4
 
-- Fix tooltip position.
+- Fixed tooltip position.
 
 ## 1.0.3
 
-- Fix button animations.
-- Add option for nav menu.
+- Fixed button animations.
+- Added option for nav menu.
 
 ## 1.0.1-2.12.0-0
 
-- Fix buttons.
+- Fixed buttons.
 
 ## 0.1.1-2.12.0-0
 

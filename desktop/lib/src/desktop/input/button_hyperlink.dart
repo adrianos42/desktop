@@ -5,20 +5,32 @@ import '../theme/theme.dart';
 
 import 'button.dart';
 
+/// Callback that with [String] parameter.
 typedef FunctionStringCallback = void Function(String);
 
+/// A button with a default 'hyperlink' style.
 class HyperlinkButton extends StatelessWidget {
+  ///
   const HyperlinkButton(
     this.text, {
     Key? key,
     this.onPressed,
+    this.padding,
     this.tooltip,
   }) : super(key: key);
 
+  /// The text for the button.
   final String text;
 
+  /// The button tooltip.
   final String? tooltip;
 
+  /// The button padding.
+  final EdgeInsets? padding;
+
+  /// Called when button is pressed, with the text as an argument.
+  /// This helps in the case the full url was used,
+  /// and then use the url text when the hyperlink is pressed.
   final FunctionStringCallback? onPressed;
 
   @override
@@ -37,6 +49,8 @@ class HyperlinkButton extends StatelessWidget {
       child: Button(
         body: Text(text),
         tooltip: tooltip,
+        padding: padding,
+        bodyPadding: padding != null ? EdgeInsets.zero : null,
         onPressed: onPressed != null ? () => onPressed!(text) : null,
       ),
     );

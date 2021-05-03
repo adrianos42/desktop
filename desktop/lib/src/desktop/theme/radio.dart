@@ -141,7 +141,7 @@ class RadioButtonTheme extends InheritedTheme {
           radioButtonThemeData.activeHoverColor ?? colorScheme.primary;
 
       final HSLColor activeColor =
-          radioButtonThemeData.activeColor ?? colorScheme.primary2;
+          radioButtonThemeData.activeColor ?? colorScheme.primary;
 
       final HSLColor inactiveHoverColor =
           radioButtonThemeData.inactiveHoverColor ?? colorScheme.shade;

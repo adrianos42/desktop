@@ -139,7 +139,7 @@ class _NavState extends State<Nav> {
   //   PreviousFocusAction.key: () => PreviousFocusViewAction(),
   // };
 
-  late Map<Type, Action<Intent>> _actionMap;
+  // late Map<Type, Action<Intent>> _actionMap;
 
   bool _isBack = false;
 
@@ -365,12 +365,13 @@ class _NavState extends State<Nav> {
   void initState() {
     super.initState();
 
-    _actionMap = <Type, Action<Intent>>{
-      NextTabIntent:
-          CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
-      PreviousTabIntent:
-          CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
-    };
+    // TODO(as): See why this is not behaving as expected.
+    // _actionMap = <Type, Action<Intent>>{
+    //   NextTabIntent:
+    //       CallbackAction<NextTabIntent>(onInvoke: (_) => _nextView()),
+    //   PreviousTabIntent:
+    //       CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
+    // };
 
     _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
         _length, (_) => GlobalKey<NavigatorState>()));
@@ -501,12 +502,12 @@ class _NavState extends State<Nav> {
       autofocus: widget.autofocus,
       onShowFocusHighlight: (_) {},
       onFocusChange: (_) {},
-      onShowHoverHighlight: (value) {
-        if (value) {
-          FocusScope.of(context).requestFocus(_effectiveFocusNode);
-        }
-      },
-      actions: _actionMap,
+      // onShowHoverHighlight: (value) {
+      //   if (value) {
+      //     FocusScope.of(context).requestFocus(_effectiveFocusNode);
+      //   }
+      // },
+      // actions: _actionMap,
     );
   }
 }

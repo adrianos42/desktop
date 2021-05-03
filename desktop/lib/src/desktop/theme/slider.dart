@@ -120,10 +120,10 @@ class SliderTheme extends InheritedTheme {
           sliderThemeData.trackColor ?? colorScheme.shade6;
 
       final HSLColor activeHoverColor =
-          sliderThemeData.activeHoverColor ?? colorScheme.primary;
+          sliderThemeData.activeHoverColor ?? colorScheme.shade;
 
       final HSLColor activeColor =
-          sliderThemeData.activeColor ?? colorScheme.primary2;
+          sliderThemeData.activeColor ?? colorScheme.primary;
 
       final HSLColor disabledColor =
           sliderThemeData.disabledColor ?? colorScheme.disabled;

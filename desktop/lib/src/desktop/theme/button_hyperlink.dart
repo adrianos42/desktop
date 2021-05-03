@@ -1,3 +1,5 @@
+import 'dart:ui' show Brightness;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -6,8 +8,10 @@ import 'theme_data.dart';
 
 const double _kLineThickness = 1.0;
 const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
-const HSLColor _kDefaultColorHover = HSLColor.fromAHSL(1.0, 210, 0.9, 0.66);
-const HSLColor _kDefaultColorHighlight = HSLColor.fromAHSL(1.0, 210, 0.8, 0.76);
+const HSLColor _kDefaultLightColorHighlight =
+    HSLColor.fromAHSL(1.0, 210, 1.0, 0.36);
+const HSLColor _kDefaultDarkColorHighlight =
+    HSLColor.fromAHSL(1.0, 210, 1.0, 0.76);
 
 @immutable
 class HyperlinkButtonThemeData {
@@ -102,10 +106,12 @@ class HyperlinkButtonTheme extends InheritedTheme {
       final HSLColor color = hyperlinkThemeData.color ?? _kDefaultColor;
 
       final HSLColor hoverColor =
-          hyperlinkThemeData.hoverColor ?? _kDefaultColorHover;
+          hyperlinkThemeData.hoverColor ?? themeData.textTheme.textHigh;
 
-      final HSLColor highlightColor =
-          hyperlinkThemeData.highlightColor ?? _kDefaultColorHighlight;
+      final HSLColor highlightColor = hyperlinkThemeData.highlightColor ??
+          (themeData.brightness == Brightness.dark
+              ? _kDefaultDarkColorHighlight
+              : _kDefaultLightColorHighlight);
 
       hyperlinkThemeData = hyperlinkThemeData.copyWidth(
         textStyle: textStyle,

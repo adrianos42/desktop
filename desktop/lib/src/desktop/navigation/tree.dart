@@ -18,7 +18,7 @@ class TreeNode {
             (builder != null || nodes != null));
 
   /// Creates a node with a default text and a [Navigator] history.
-  /// /// See also:
+  /// See also:
   ///   * [TabView] for the arguments.
   ///   * [Navigator]
   factory TreeNode.child(
@@ -98,11 +98,10 @@ class TreeNode {
   /// The children in a node.
   final List<TreeNode>? nodes;
 
-
   /// The child in the node.
   final WidgetBuilder? builder;
 
-  /// The name of the node. Can be a [Widget] or a [Text] with a pre-defined style.
+  ///
   final String title;
 }
 
@@ -167,6 +166,8 @@ class Tree extends StatefulWidget {
     this.title,
     required this.nodes,
     this.pagePadding,
+    this.focusNode,
+    this.autofocus = false,
     Key? key,
   }) : super(key: key);
 
@@ -179,6 +180,12 @@ class Tree extends StatefulWidget {
   /// Padding for the the page used in a node.
   final EdgeInsets? pagePadding;
 
+  /// If the widget receives focus automatically.
+  final bool autofocus;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
   @override
   _TreeState createState() => _TreeState();
 
@@ -187,17 +194,29 @@ class Tree extends StatefulWidget {
 }
 
 class _BuildTreePage {
-  _BuildTreePage(this.builder);
+  _BuildTreePage({
+    required this.builder,
+    required this.focusScopeNode,
+  });
 
   final WidgetBuilder builder;
-  final FocusScopeNode focusScopeNode = FocusScopeNode(skipTraversal: true);
+  final FocusScopeNode focusScopeNode;
   bool shouldBuild = false;
 }
 
 class _TreeState extends State<Tree> {
   final _pages = HashMap<String, _BuildTreePage>();
+  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   String? _current;
-  void setPage(String name) => setState(() => _current = name);
+
+  FocusNode? _focusNode;
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
+
+  void setPage(String name) {
+    setState(() => _current = name);
+    _focusView();
+  }
 
   void _createEntries(String name, TreeNode node) {
     final nameResult = '''$name${node.title}''';
@@ -207,9 +226,23 @@ class _TreeState extends State<Tree> {
         _createEntries(nameResult, child);
       }
     } else if (node.builder != null) {
-      _pages[nameResult] = _BuildTreePage(node.builder!);
+      if (!_pages.containsKey(nameResult)) {
+        _pages[nameResult] = _BuildTreePage(
+          builder: node.builder!,
+          focusScopeNode: FocusScopeNode(
+            skipTraversal: true,
+            debugLabel: 'Tree $nameResult',
+          ),
+        );
+      }
     } else {
-      throw Exception('Either builder or children must be non null');
+      throw Exception('Either builder or children must be not null');
+    }
+  }
+
+  void _focusView() {
+    if (_pages.containsKey(_current)) {
+      FocusScope.of(context).setFirstFocus(_pages[_current]!.focusScopeNode);
     }
   }
 
@@ -217,16 +250,60 @@ class _TreeState extends State<Tree> {
   void didUpdateWidget(Tree oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // TODO(as): !!!!!!!
-    // if (widget.items.length - _shouldBuildView.length > 0) {
-    //   _shouldBuildView.addAll(List<bool>.filled(
-    //       widget.items.length - _shouldBuildView.length, false));
-    // } else {
-    //   _shouldBuildView.removeRange(
-    //       widget.items.length, _shouldBuildView.length);
-    // }
+    final oldPages = HashMap.of(_pages);
 
-    //  _focusView();
+    if (widget.nodes.isEmpty) {
+      throw Exception('Nodes cannot be empty');
+    }
+
+    if (_verifyDuplicates(widget.nodes)) {
+      throw Exception('Cannot have duplicate routes');
+    }
+
+    for (final node in widget.nodes) {
+      _createEntries('', node);
+    }
+
+    oldPages.removeWhere((key, value) => _pages.containsKey(key));
+    _disposedFocusNodes
+        .addAll(oldPages.values.map((value) => value.focusScopeNode));
+
+    _focusView();
+  }
+
+  @override
+  void dispose() {
+    for (final value in _pages.values) {
+      value.focusScopeNode.dispose();
+    }
+    for (final focusScopeNode in _disposedFocusNodes) {
+      focusScopeNode.dispose();
+    }
+
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _focusView();
+  }
+
+  // Returns true if any route is a duplicate.
+  bool _verifyDuplicates(List<TreeNode> nodes) {
+    for (final node in nodes) {
+      if (node.nodes != null) {
+        if (_verifyDuplicates(node.nodes!)) {
+          return true;
+        }
+
+        if (nodes.where((element) => node.title == element.title).length != 1) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -235,6 +312,10 @@ class _TreeState extends State<Tree> {
 
     if (widget.nodes.isEmpty) {
       throw Exception('Nodes cannot be empty');
+    }
+
+    if (_verifyDuplicates(widget.nodes)) {
+      throw Exception('Cannot have duplicate routes');
     }
 
     for (final node in widget.nodes) {
@@ -325,7 +406,11 @@ class _TreeState extends State<Tree> {
       treeState: this,
     );
 
-    return result;
+    return FocusableActionDetector(
+      child: result,
+      focusNode: _effectiveFocusNode,
+      autofocus: widget.autofocus,
+    );
   }
 }
 

@@ -3,12 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
+import 'constants.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
 const double _kSidePadding = 4.0;
 const double _kHeight = 32.0;
-const double _kIconSize = 22.0;
 const double _kFontSize = 14.0;
 const double _kMinWidth = 12.0;
 
@@ -187,10 +187,10 @@ class ButtonTheme extends InheritedTheme {
       final HSLColor color = buttonThemeData.color ?? textTheme.textLow;
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? textTheme.textMedium;
+          buttonThemeData.hoverColor ?? textTheme.textHigh;
 
       final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? textTheme.textHigh;
+          buttonThemeData.highlightColor ?? colorScheme.primary;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
@@ -198,7 +198,7 @@ class ButtonTheme extends InheritedTheme {
       final HSLColor focusColor = hoverColor; // TODO(as): ???
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
-          IconThemeData(size: _kIconSize, color: color.toColor());
+          IconThemeData(size: kIconSize, color: color.toColor());
 
       final double height = buttonThemeData.height ?? _kHeight;
       final double itemSpacing = buttonThemeData.itemSpacing ?? _kSidePadding;
