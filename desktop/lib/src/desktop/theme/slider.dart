@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 import 'theme_data.dart';
+import 'theme_text.dart';
 
 @immutable
 class SliderThemeData {
@@ -115,6 +116,7 @@ class SliderTheme extends InheritedTheme {
       sliderThemeData ??= themeData.sliderTheme;
 
       final ColorScheme colorScheme = themeData.colorScheme;
+      final TextTheme textTheme = themeData.textTheme;
 
       final HSLColor trackColor =
           sliderThemeData.trackColor ?? colorScheme.shade6;
@@ -123,7 +125,7 @@ class SliderTheme extends InheritedTheme {
           sliderThemeData.activeHoverColor ?? colorScheme.shade;
 
       final HSLColor activeColor =
-          sliderThemeData.activeColor ?? colorScheme.primary;
+          sliderThemeData.activeColor ?? textTheme.textPrimary;
 
       final HSLColor disabledColor =
           sliderThemeData.disabledColor ?? colorScheme.disabled;

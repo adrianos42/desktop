@@ -125,9 +125,9 @@ class _BreadcrumbState extends State<Breadcrumb> {
           alignment: Alignment.centerLeft,
           child: ButtonTheme.merge(
             data: ButtonThemeData(
-              disabledColor: isLast ? colorScheme.primary : null,
+              disabledColor: isLast ? textTheme.textPrimary : null,
               hoverColor: colorScheme.shade,
-              highlightColor: colorScheme.primary,
+              highlightColor: textTheme.textPrimary,
               color: foreground,
             ),
             child: Builder(
@@ -265,106 +265,6 @@ class _NavObserver extends NavigatorObserver {
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {}
-}
-
-class _TabGroup extends StatefulWidget {
-  const _TabGroup({
-    Key? key,
-    required this.index,
-    required this.items,
-    required this.changeIndex,
-    this.trailing,
-  }) : super(key: key);
-
-  final int index;
-
-  final List<String> items;
-
-  final ValueChanged<int> changeIndex;
-
-  final Widget? trailing;
-
-  @override
-  _TabGroupState createState() => _TabGroupState();
-}
-
-class _TabGroupState extends State<_TabGroup> {
-  late int _hoveredIndex;
-  late int _pressedIndex;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(_TabGroup oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final ColorScheme colorScheme = themeData.colorScheme;
-    final TextTheme textTheme = themeData.textTheme;
-
-    final List<Widget> list =
-        List<Widget>.generate(widget.items.length, (index) {
-      final HSLColor foreground =
-          widget.index == index || _pressedIndex == index
-              ? colorScheme.primary2
-              : _hoveredIndex == index
-                  ? textTheme.textMedium
-                  : textTheme.textLow;
-
-      final TextStyle textStyle =
-          textTheme.body2.copyWith(color: foreground.toColor());
-
-      return Padding(
-        padding: const EdgeInsets.only(right: 22.0),
-        child: MouseRegion(
-          onEnter: (_) => setState(() => _hoveredIndex = index),
-          onExit: (_) => setState(() => _hoveredIndex = -1),
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapDown: (_) => setState(() => _pressedIndex = index),
-            onTapUp: (_) => setState(() => _pressedIndex = -1),
-            onTapCancel: () => setState(() => _pressedIndex = -1),
-            onTap: () => widget.changeIndex(index),
-            child: Text(
-              widget.items[index],
-              style: textStyle,
-            ),
-          ),
-        ),
-      );
-    });
-
-    final Widget result = Container(
-      height: _kHeight,
-      color: colorScheme.background.toColor(),
-      child: Padding(
-        padding: _khorizontalPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            ...list,
-            const Spacer(),
-            if (widget.trailing != null) widget.trailing!, // TODO(as): ???
-          ],
-        ),
-      ),
-    );
-
-    return result;
-  }
 }
 
 class _NavigationView extends StatefulWidget {

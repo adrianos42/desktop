@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 import 'theme_data.dart';
+import 'theme_text.dart';
 
 @immutable
 class RadioButtonThemeData {
@@ -130,6 +131,8 @@ class RadioButtonTheme extends InheritedTheme {
 
     if (radioButtonThemeData == null || !radioButtonThemeData.isConcrete) {
       final ThemeData themeData = Theme.of(context);
+      final TextTheme textTheme = themeData.textTheme;
+
       radioButtonThemeData ??= themeData.radioButtonTheme;
 
       final ColorScheme colorScheme = themeData.colorScheme;
@@ -138,10 +141,10 @@ class RadioButtonTheme extends InheritedTheme {
           radioButtonThemeData.foreground ?? colorScheme.shade;
 
       final HSLColor activeHoverColor =
-          radioButtonThemeData.activeHoverColor ?? colorScheme.primary;
+          radioButtonThemeData.activeHoverColor ?? textTheme.textPrimary;
 
       final HSLColor activeColor =
-          radioButtonThemeData.activeColor ?? colorScheme.primary;
+          radioButtonThemeData.activeColor ?? textTheme.textPrimary;
 
       final HSLColor inactiveHoverColor =
           radioButtonThemeData.inactiveHoverColor ?? colorScheme.shade;

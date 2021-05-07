@@ -190,7 +190,7 @@ class ButtonTheme extends InheritedTheme {
           buttonThemeData.hoverColor ?? textTheme.textHigh;
 
       final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? colorScheme.primary;
+          buttonThemeData.highlightColor ?? textTheme.textPrimary;
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

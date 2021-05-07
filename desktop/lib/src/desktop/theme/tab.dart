@@ -152,7 +152,7 @@ class TabTheme extends InheritedTheme {
       final HSLColor hoverColor = tabThemeData.hoverColor ?? textTheme.textHigh;
 
       final HSLColor highlightColor =
-          tabThemeData.highlightColor ?? colorScheme.primary1;
+          tabThemeData.highlightColor ?? textTheme.textPrimary;
 
       final IconThemeData iconThemeData =
           tabThemeData.iconThemeData ?? const IconThemeData(size: kIconSize);

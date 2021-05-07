@@ -88,7 +88,7 @@ class _InheritedTheme extends InheritedTheme {
 class ThemeData {
   factory ThemeData({
     required Brightness brightness,
-    HSLColor primaryColor = kDefaultPrimary,
+    PrimaryColor? primaryColor,
   }) {
     final colorScheme = ColorScheme(brightness, primaryColor);
 
@@ -127,10 +127,10 @@ class ThemeData {
     required this.tabTheme,
   });
 
-  factory ThemeData.light([HSLColor primaryColor = kDefaultPrimary]) =>
+  factory ThemeData.light([PrimaryColor? primaryColor]) =>
       ThemeData(brightness: Brightness.light, primaryColor: primaryColor);
 
-  factory ThemeData.dark([HSLColor primaryColor = kDefaultPrimary]) =>
+  factory ThemeData.dark([PrimaryColor? primaryColor]) =>
       ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
 
   factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);

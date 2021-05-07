@@ -3,15 +3,14 @@ import 'dart:ui' show Brightness;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-const PrimaryColor kDefaultPrimary = PrimaryColors.dodgerBlue;
+const PrimaryColor kDefaultPrimary = PrimaryColor.dodgerBlue;
 
 @immutable
 class ColorScheme {
-  ColorScheme(this.brightness, [HSLColor primary = kDefaultPrimary])
-      : assert(primary.lightness >= 0.4),
-        assert(primary.lightness <= 0.8),
-        assert(primary.saturation >= 0.5),
-        _primary = primary;
+  ///
+  ColorScheme(this.brightness, [PrimaryColor? primary])
+      : assert(primary == null || primary[50].saturation >= 0.4),
+        _primary = primary ?? kDefaultPrimary;
 
   ColorScheme withBrightness(Brightness brightness) {
     return ColorScheme(brightness, _primary);
@@ -28,23 +27,15 @@ class ColorScheme {
 
   final Brightness brightness;
 
-  final HSLColor _primary;
+  final PrimaryColor _primary;
+
+  PrimaryColor get primary => _primary;
 
   HSLColor get overlay1 => background.withAlpha(0.9);
   HSLColor get overlay2 => background.withAlpha(0.8);
   HSLColor get overlay3 => background.withAlpha(0.7);
   HSLColor get overlay4 => background.withAlpha(0.6);
   HSLColor get overlay5 => background.withAlpha(0.5);
-
-  HSLColor get primary => _primary;
-
-  HSLColor get primary1 => primary
-      .withSaturation(primary.saturation - 0.1)
-      .withLightness(primary.lightness - 0.1);
-
-  HSLColor get primary2 => primary
-      .withSaturation(primary.saturation - 0.2)
-      .withLightness(primary.lightness - 0.2);
 
   HSLColor get background => brightness == Brightness.light
       ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
@@ -91,50 +82,71 @@ class ColorScheme {
   HSLColor get error => const HSLColor.fromAHSL(1.0, 0, 0.9, 0.5);
 }
 
-class PrimaryColors {
-  static const coral = PrimaryColor.fromAHSL('Coral', 1.0, 16, 1.0, 0.66);
-  static const cornflowerBlue =
-      PrimaryColor.fromAHSL('Cornflower Blue', 1.0, 219, 0.79, 0.66);
-  static const turquoise =
-      PrimaryColor.fromAHSL('Turquoise', 1.0, 181, 1.0, 0.41);
-  static const deepSkyBlue =
-      PrimaryColor.fromAHSL('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
-  static const dodgerBlue =
-      PrimaryColor.fromAHSL('Dodger Blue', 1.0, 210, 1.0, 0.56);
-  static const goldenrod =
-      PrimaryColor.fromAHSL('Goldenrod', 1.0, 43, 0.74, 0.49);
-  static const hotPink = PrimaryColor.fromAHSL('Hot Pink', 1.0, 330, 1.0, 0.7);
-  static const purple = PrimaryColor.fromAHSL('Purple', 1.0, 260, 0.6, 0.65);
-  static const orange = PrimaryColor.fromAHSL('Orange', 1.0, 33, 1.0, 0.5);
-  static const orchid = PrimaryColor.fromAHSL('Orchid', 1.0, 302, 0.59, 0.65);
-  static const royalBlue =
-      PrimaryColor.fromAHSL('Royal Blue', 1.0, 225, 0.73, 0.57);
-  static const sandyBrown =
-      PrimaryColor.fromAHSL('Sandy Brown', 1.0, 20, 0.87, 0.67);
-  static const slateBlue =
-      PrimaryColor.fromAHSL('Slate Blue', 1.0, 248, 0.53, 0.58);
-  // static const steelBlue =
-  //     PrimaryColor.fromAHSL('Steel Blue', 1.0, 207, 0.44, 0.49);
-  static const violet = PrimaryColor.fromAHSL('Violet', 1.0, 300, 0.76, 0.7);
-  static const springGreen =
-      PrimaryColor.fromAHSL('Spring Green', 1.0, 150, 1.0, 0.4);
-  static const violetRed =
-      PrimaryColor.fromAHSL('Violet Red', 1.0, 333, 1.0, 0.6);
-  static const red = PrimaryColor.fromAHSL('Red', 1.0, 347.0, 0.9, 0.6);
-}
-
-@immutable
+/// Primary color used for color scheme.
 class PrimaryColor extends HSLColor {
-  const PrimaryColor.fromAHSL(
-      this.name, double alpha, double hue, double saturation, double lightness)
-      : super.fromAHSL(alpha, hue, saturation, lightness);
+  const PrimaryColor._(
+    this._name,
+    double alpha,
+    double hue,
+    double saturation,
+    double lightness,
+  ) : super.fromAHSL(
+          alpha,
+          hue,
+          saturation,
+          lightness,
+        );
+
+  /// Returns a primary color.
+  PrimaryColor operator [](int index) {
+    switch (index) {
+      case 20:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.2);
+      case 30:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.3);
+      case 40:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.4);
+      case 50:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.5);
+      case 60:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.6);
+      case 70:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.7);
+      case 80:
+        return PrimaryColor._(_name, alpha, hue, saturation, 0.8);
+      default:
+        throw Exception('Wrong index for primary color');
+    }
+  }
+
+  final String _name;
 
   @override
-  String toString() => name;
+  String toString() => _name.toString();
 
-  final String name;
+  static const coral = PrimaryColor._('Coral', 1.0, 16, 1.0, 0.66);
+  static const cornflowerBlue =
+      PrimaryColor._('Cornflower Blue', 1.0, 219, 0.79, 0.66);
+  static const turquoise = PrimaryColor._('Turquoise', 1.0, 181, 1.0, 0.41);
+  static const deepSkyBlue =
+      PrimaryColor._('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
+  static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 1.0, 0.56);
+  static const goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
+  static const hotPink = PrimaryColor._('Hot Pink', 1.0, 330, 1.0, 0.7);
+  static const purple = PrimaryColor._('Purple', 1.0, 260, 0.6, 0.65);
+  static const orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
+  static const orchid = PrimaryColor._('Orchid', 1.0, 302, 0.59, 0.65);
+  static const royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);
+  static const sandyBrown = PrimaryColor._('Sandy Brown', 1.0, 20, 0.87, 0.67);
+  static const slateBlue = PrimaryColor._('Slate Blue', 1.0, 248, 0.53, 0.58);
+  static const steelBlue = PrimaryColor._('Steel Blue', 1.0, 207, 0.44, 0.49);
+  static const violet = PrimaryColor._('Violet', 1.0, 300, 0.76, 0.7);
+  static const springGreen = PrimaryColor._('Spring Green', 1.0, 150, 1.0, 0.4);
+  static const violetRed = PrimaryColor._('Violet Red', 1.0, 333, 1.0, 0.6);
+  static const red = PrimaryColor._('Red', 1.0, 347.0, 0.9, 0.6);
 }
 
+  
 // class _Colors {
 //   static const aliceBlue = HSLColor.fromAHSL(1.0, 208, 1.0, 0.97);
 //   static const antiqueWhite = HSLColor.fromAHSL(1.0, 34.0, 0.78, 0.91);

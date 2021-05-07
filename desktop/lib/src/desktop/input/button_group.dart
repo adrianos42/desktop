@@ -49,9 +49,9 @@ class ToggleButton<T> extends StatelessWidget {
           final bool isSelected = value == e.value;
           return ButtonTheme.merge(
             data: ButtonThemeData(
-              hoverColor: isSelected ? colorScheme.primary1 : null,
-              highlightColor: isSelected ? colorScheme.primary1 : null,
-              color: isSelected ? colorScheme.primary1 : null,
+              hoverColor: isSelected ? colorScheme.primary[50] : null,
+              highlightColor: isSelected ? colorScheme.primary[50] : null,
+              color: isSelected ? colorScheme.primary[50] : null,
             ),
             child: Button(
               padding: EdgeInsets.zero,

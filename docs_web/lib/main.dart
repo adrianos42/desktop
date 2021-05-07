@@ -49,7 +49,7 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColors.dodgerBlue;
+  PrimaryColor primaryColor = PrimaryColor.dodgerBlue;
 
   Widget _createHome() {
     final githubImage;
@@ -89,7 +89,7 @@ class _DocAppState extends State<DocApp> {
                         style: Theme.of(context).textTheme.title.copyWith(
                             color: Theme.of(context)
                                 .colorScheme
-                                .primary
+                                .primary[60]
                                 .toColor()),
                       );
                     },
@@ -100,8 +100,8 @@ class _DocAppState extends State<DocApp> {
                   width: 200.0,
                   child: DropDownButtonTheme.merge(
                     data: DropDownButtonThemeData(
-                      color: Theme.of(context).colorScheme.primary1,
-                      hoverColor: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primary[50],
+                      hoverColor: Theme.of(context).colorScheme.primary[80],
                     ),
                     child: DropDownButton<PrimaryColor>(
                       value: primaryColor,
@@ -109,23 +109,23 @@ class _DocAppState extends State<DocApp> {
                         setState(() => primaryColor = value);
                       },
                       itemBuilder: (context) => [
-                        _menuItemPrimaryColor(PrimaryColors.coral),
-                        _menuItemPrimaryColor(PrimaryColors.sandyBrown),
-                        _menuItemPrimaryColor(PrimaryColors.orange),
-                        _menuItemPrimaryColor(PrimaryColors.goldenrod),
-                        _menuItemPrimaryColor(PrimaryColors.springGreen),
-                        _menuItemPrimaryColor(PrimaryColors.turquoise),
-                        _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
-                        _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
-                        _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
-                        _menuItemPrimaryColor(PrimaryColors.royalBlue),
-                        _menuItemPrimaryColor(PrimaryColors.slateBlue),
-                        _menuItemPrimaryColor(PrimaryColors.purple),
-                        _menuItemPrimaryColor(PrimaryColors.violet),
-                        _menuItemPrimaryColor(PrimaryColors.orchid),
-                        _menuItemPrimaryColor(PrimaryColors.hotPink),
-                        _menuItemPrimaryColor(PrimaryColors.violetRed),
-                        _menuItemPrimaryColor(PrimaryColors.red),
+                        _menuItemPrimaryColor(PrimaryColor.coral),
+                        _menuItemPrimaryColor(PrimaryColor.sandyBrown),
+                        _menuItemPrimaryColor(PrimaryColor.orange),
+                        _menuItemPrimaryColor(PrimaryColor.goldenrod),
+                        _menuItemPrimaryColor(PrimaryColor.springGreen),
+                        _menuItemPrimaryColor(PrimaryColor.turquoise),
+                        _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),
+                        _menuItemPrimaryColor(PrimaryColor.dodgerBlue),
+                        _menuItemPrimaryColor(PrimaryColor.cornflowerBlue),
+                        _menuItemPrimaryColor(PrimaryColor.royalBlue),
+                        _menuItemPrimaryColor(PrimaryColor.slateBlue),
+                        _menuItemPrimaryColor(PrimaryColor.purple),
+                        _menuItemPrimaryColor(PrimaryColor.violet),
+                        _menuItemPrimaryColor(PrimaryColor.orchid),
+                        _menuItemPrimaryColor(PrimaryColor.hotPink),
+                        _menuItemPrimaryColor(PrimaryColor.violetRed),
+                        _menuItemPrimaryColor(PrimaryColor.red),
                       ],
                     ),
                   ),

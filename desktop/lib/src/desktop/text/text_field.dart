@@ -206,7 +206,7 @@ class _TextFieldState extends State<TextField>
         : colorScheme.shade1;
     final HSLColor characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final HSLColor selectionColor = enabled ? colorScheme.primary2 : background;
+    final HSLColor selectionColor = enabled ? colorScheme.primary[60] : background;
     final HSLColor borderColor =
         _effectiveFocusNode.hasFocus ? colorScheme.shade5 : colorScheme.shade6;
 

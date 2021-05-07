@@ -501,9 +501,9 @@ class _TreeColumnState extends State<_TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
-      final hoverColor = active ? colorScheme.primary1 : textTheme.textHigh;
-      final activeColor = active ? colorScheme.primary1 : textTheme.textLow;
-      final highlightColor = colorScheme.primary1;
+      final hoverColor = active ? textTheme.textPrimary : textTheme.textHigh;
+      final activeColor = active ? textTheme.textPrimary : textTheme.textLow;
+      final highlightColor = textTheme.textPrimary;
 
       return ButtonTheme.merge(
         data: ButtonThemeData(

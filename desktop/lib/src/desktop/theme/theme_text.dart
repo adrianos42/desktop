@@ -86,6 +86,7 @@ class TextTheme {
     required this.textMedium,
     required this.colorScheme,
     required this.textDisabled,
+    required this.textPrimary,
     required this.monospace,
   });
 
@@ -104,6 +105,7 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
+          textPrimary: colorScheme.primary[60],
           textLow: colorScheme.shade4,
           textMedium: colorScheme.shade2,
           textHigh: colorScheme.shade,
@@ -123,6 +125,7 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
+          textPrimary: colorScheme.primary[40],
           textLow: colorScheme.shade5,
           textMedium: colorScheme.shade3,
           textHigh: colorScheme.shade,
@@ -158,6 +161,8 @@ class TextTheme {
   final HSLColor textLow;
 
   final HSLColor textDisabled;
+
+  final PrimaryColor textPrimary;
 
   final ColorScheme colorScheme;
 

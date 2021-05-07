@@ -144,7 +144,7 @@ class CheckboxTheme extends InheritedTheme {
           checkboxThemeData.activeHoverColor ?? textTheme.textHigh;
 
       final HSLColor activeColor =
-          checkboxThemeData.activeColor ?? colorScheme.primary;
+          checkboxThemeData.activeColor ?? textTheme.textPrimary;
 
       final HSLColor inactiveHoverColor =
           checkboxThemeData.inactiveHoverColor ?? textTheme.textHigh;

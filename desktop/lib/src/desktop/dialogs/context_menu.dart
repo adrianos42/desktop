@@ -132,10 +132,10 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
     final HSLColor? background = pressed
         ? (selected
-            ? colorScheme.primary
+            ? colorScheme.primary[40]
             : colorScheme.background3) // TODO(as): ???
         : selected
-            ? (hovered ? colorScheme.primary1 : colorScheme.primary2)
+            ? (hovered ? colorScheme.primary[30] : colorScheme.primary[20])
             : hovered
                 ? colorScheme.background2 // TODO(as): ???
                 : null;

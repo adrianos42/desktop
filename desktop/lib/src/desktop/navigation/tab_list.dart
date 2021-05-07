@@ -224,7 +224,7 @@ class _MenuItemState extends State<_MenuItem> with ComponentStateMixin {
     final TextTheme textTheme = themeData.textTheme;
     final TextStyle textStyle = textTheme.body1.copyWith(fontSize: 14.0);
     final ColorScheme colorScheme = themeData.colorScheme;
-    final HSLColor selectedColor = colorScheme.primary1;
+    final HSLColor selectedColor = colorScheme.primary[60];
 
     return List<Widget>.generate(widget.items.length, (index) {
       final bool selected = index == widget.index;
