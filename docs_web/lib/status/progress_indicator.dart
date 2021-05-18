@@ -26,6 +26,7 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
               Defaults.createTitle(context, 'Linear'),
               Container(
                 height: 200.0,
+                width: 600.0,
                 child: Defaults.createCodeSession(
                   context,
                   builder: (context) => Container(
@@ -53,7 +54,7 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
                               style: Theme.of(context).textTheme.body1.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .shade4
+                                        .shade[60]
                                         .toColor(),
                                   ),
                             ),
@@ -68,9 +69,25 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
                   codeText: linearCodeExample,
                 ),
               ),
+              Defaults.createTitle(context, 'Linear indeterminate'),
+              Container(
+                height: 200.0,
+                width: 600.0,
+                child: Defaults.createCodeSession(
+                  context,
+                  builder: (context) => Container(
+                    alignment: Alignment.center,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                    child: LinearProgressIndicator(),
+                  ),
+                  codeText: linearCodeExample,
+                ),
+              ),
               Defaults.createTitle(context, 'Circular'),
               Container(
                 height: 200.0,
+                width: 600.0,
                 child: Defaults.createCodeSession(
                   context,
                   builder: (context) => Container(

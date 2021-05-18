@@ -51,6 +51,8 @@ class _DocAppState extends State<DocApp> {
 
   PrimaryColor primaryColor = PrimaryColor.dodgerBlue;
 
+  double backgroundColorLightness = 0.0;
+
   Widget _createHome() {
     final githubImage;
     if (themeData.brightness == Brightness.dark) {
@@ -89,7 +91,7 @@ class _DocAppState extends State<DocApp> {
                         style: Theme.of(context).textTheme.title.copyWith(
                             color: Theme.of(context)
                                 .colorScheme
-                                .primary[60]
+                                .primary[70]
                                 .toColor()),
                       );
                     },
@@ -98,10 +100,11 @@ class _DocAppState extends State<DocApp> {
                 Spacer(),
                 Container(
                   width: 200.0,
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: DropDownButtonTheme.merge(
                     data: DropDownButtonThemeData(
-                      color: Theme.of(context).colorScheme.primary[50],
-                      hoverColor: Theme.of(context).colorScheme.primary[80],
+                      color: Theme.of(context).textTheme.textPrimaryLow,
+                      hoverColor: Theme.of(context).textTheme.textPrimaryHigh,
                     ),
                     child: DropDownButton<PrimaryColor>(
                       value: primaryColor,
@@ -124,7 +127,6 @@ class _DocAppState extends State<DocApp> {
                         _menuItemPrimaryColor(PrimaryColor.violet),
                         _menuItemPrimaryColor(PrimaryColor.orchid),
                         _menuItemPrimaryColor(PrimaryColor.hotPink),
-                        _menuItemPrimaryColor(PrimaryColor.violetRed),
                         _menuItemPrimaryColor(PrimaryColor.red),
                       ],
                     ),

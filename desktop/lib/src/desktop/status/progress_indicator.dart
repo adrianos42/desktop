@@ -30,10 +30,10 @@ abstract class ProgressIndicator extends StatefulWidget {
   final String? semanticsValue;
 
   HSLColor _getBackgroundColor(BuildContext context) =>
-      backgroundColor ?? Theme.of(context).colorScheme.shade6;
+      backgroundColor ?? Theme.of(context).colorScheme.shade[30];
 
   HSLColor _getValueColor(BuildContext context) =>
-      valueColor ?? Theme.of(context).colorScheme.primary[50];
+      valueColor ?? Theme.of(context).colorScheme.primary[60];
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -357,7 +357,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     required this.stepValue,
     required this.rotationValue,
     required this.strokeWidth,
-  })   : arcStart = value != null
+  })  : arcStart = value != null
             ? _startAngle
             : _startAngle +
                 tailValue * 3 / 2 * math.pi +

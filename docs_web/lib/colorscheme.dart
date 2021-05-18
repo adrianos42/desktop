@@ -63,7 +63,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final light = ColorScheme(Brightness.dark).shade;
+    final light = ColorScheme(Brightness.dark).shade[100];
     final dark = ColorScheme(Brightness.dark).background;
 
     final controller = ScrollController();
@@ -82,23 +82,58 @@ class _ColorschemePageState extends State<ColorschemePage> {
                 children: [
                   _createItemForColor(
                     context,
-                    colorScheme.background,
-                    'Background',
+                    colorScheme.background[0],
+                    'Background 0',
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.background1,
-                    'Background 1',
-                  ),
-                  _createItemForColor(
-                    context,
-                    colorScheme.background2,
+                    colorScheme.background[2],
                     'Background 2',
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.background3,
-                    'Background 3',
+                    colorScheme.background[4],
+                    'Background 4',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[6],
+                    'Background 6',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[8],
+                    'Background 8',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[10],
+                    'Background 10',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[12],
+                    'Background 12',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[14],
+                    'Background 14',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[16],
+                    'Background 16',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[18],
+                    'Background 18',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[20],
+                    'Background 20',
                   ),
                   _createItemForColor(
                     context,
@@ -107,86 +142,74 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade6,
-                    'Shade 6',
+                    colorScheme.shade[40],
+                    'Shade 40',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade5,
-                    'Shade 5',
+                    colorScheme.shade[50],
+                    'Shade 50',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade4,
-                    'Shade 4',
+                    colorScheme.shade[60],
+                    'Shade 60',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade3,
-                    'Shade 3',
+                    colorScheme.shade[70],
+                    'Shade 70',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade2,
-                    'Shade 2',
+                    colorScheme.shade[80],
+                    'Shade 80',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade1,
-                    'Shade 1',
+                    colorScheme.shade[90],
+                    'Shade 90',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.shade,
-                    'Shade',
+                    colorScheme.shade[100],
+                    'Shade 100',
                     colorScheme.background,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.primary[20],
-                    'Primary 20',
-                    light,
-                  ),
-                  _createItemForColor(
-                    context,
-                    colorScheme.primary[20],
+                    colorScheme.primary[30],
                     'Primary 30',
                     light,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.primary[20],
+                    colorScheme.primary[40],
                     'Primary 40',
                     light,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.primary[20],
+                    colorScheme.primary[50],
                     'Primary 50',
                     light,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.primary[20],
+                    colorScheme.primary[60],
                     'Primary 60',
                     light,
                   ),
                   _createItemForColor(
                     context,
-                    colorScheme.primary[20],
+                    colorScheme.primary[70],
                     'Primary 70',
-                    light,
-                  ),
-                  _createItemForColor(
-                    context,
-                    colorScheme.primary[20],
-                    'Primary 80',
                     light,
                   ),
                   _createItemForColor(
@@ -218,7 +241,6 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   _itemPrimary(context, PrimaryColor.violet, light),
                   _itemPrimary(context, PrimaryColor.orchid, light),
                   _itemPrimary(context, PrimaryColor.hotPink, light),
-                  _itemPrimary(context, PrimaryColor.violetRed, light),
                   _itemPrimary(context, PrimaryColor.red, light),
                 ],
               ),

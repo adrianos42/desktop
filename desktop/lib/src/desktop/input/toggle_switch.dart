@@ -167,7 +167,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       enabled: enabled,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
-      mouseCursor: SystemMouseCursors.click,
+      mouseCursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
       child: Builder(
         builder: (BuildContext context) {
           return _ToggleSwitchRenderObjectWidget(
@@ -257,7 +257,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     required Color hoverColor,
     required bool hovering,
     required BoxConstraints additionalConstraints,
-  })   : _state = state,
+  })  : _state = state,
         _value = value,
         _activeColor = activeColor,
         _disabledColor = disabledColor,
@@ -419,12 +419,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     if (!isInteractive) {
       color = disabledColor;
     } else {
-      if (hovering) {
-        color =
-            Color.lerp(inactiveColor, foregroundColor, _state._position.value)!;
-      } else {
-        color = foregroundColor;
-      }
+      color = foregroundColor;
     }
 
     return Paint()..color = color;

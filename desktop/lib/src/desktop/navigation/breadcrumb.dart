@@ -125,9 +125,9 @@ class _BreadcrumbState extends State<Breadcrumb> {
           alignment: Alignment.centerLeft,
           child: ButtonTheme.merge(
             data: ButtonThemeData(
-              disabledColor: isLast ? textTheme.textPrimary : null,
-              hoverColor: colorScheme.shade,
-              highlightColor: textTheme.textPrimary,
+              disabledColor: isLast ? textTheme.textPrimaryHigh : null,
+              hoverColor: colorScheme.shade[100],
+              highlightColor: textTheme.textPrimaryHigh,
               color: foreground,
             ),
             child: Builder(

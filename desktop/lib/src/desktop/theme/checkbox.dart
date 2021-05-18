@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
+import 'constants.dart';
 
 @immutable
 class CheckboxThemeData {
@@ -135,22 +136,22 @@ class CheckboxTheme extends InheritedTheme {
       checkboxThemeData ??= themeData.checkboxTheme;
 
       final ColorScheme colorScheme = themeData.colorScheme;
-      final TextTheme textTheme = Theme.of(context).textTheme; // TODO(as): ???
+      // final TextTheme textTheme = Theme.of(context).textTheme; // TODO(as): ???
 
       final HSLColor foreground =
-          checkboxThemeData.foreground ?? colorScheme.background;
+          checkboxThemeData.foreground ?? colorScheme.background[0];
 
       final HSLColor activeHoverColor =
-          checkboxThemeData.activeHoverColor ?? textTheme.textHigh;
+          checkboxThemeData.activeHoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor activeColor =
-          checkboxThemeData.activeColor ?? textTheme.textPrimary;
+          checkboxThemeData.activeColor ?? colorScheme.primary[kHighlightColorIndex];
 
       final HSLColor inactiveHoverColor =
-          checkboxThemeData.inactiveHoverColor ?? textTheme.textHigh;
+          checkboxThemeData.inactiveHoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor inactiveColor =
-          checkboxThemeData.inactiveColor ?? textTheme.textLow;
+          checkboxThemeData.inactiveColor ?? colorScheme.shade[kInactiveColorIndex];
 
       final HSLColor disabledColor =
           checkboxThemeData.disabledColor ?? colorScheme.disabled;

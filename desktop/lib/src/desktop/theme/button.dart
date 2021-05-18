@@ -1,3 +1,5 @@
+import 'dart:ui' show Brightness;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -143,6 +145,39 @@ class ButtonThemeData {
         other.hoverColor == hoverColor &&
         other.highlightColor == highlightColor;
   }
+
+  /// Returns a proper custom color.
+  HSLColor customColor(BuildContext context, HSLColor color) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    switch (colorScheme.brightness) {
+      case Brightness.dark:
+        return color.withLightness(0.6);
+      case Brightness.light:
+        return color.withLightness(0.4);
+    }
+  }
+
+  /// Returns a proper custom hover color.
+  HSLColor customHoverColor(BuildContext context, HSLColor color) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    switch (colorScheme.brightness) {
+      case Brightness.dark:
+        return color.withLightness(0.8);
+      case Brightness.light:
+        return color.withLightness(0.2);
+    }
+  }
+
+  /// Returns a proper custom highlight color.
+  HSLColor customHighlightColor(BuildContext context, HSLColor color) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    switch (colorScheme.brightness) {
+      case Brightness.dark:
+        return color.withLightness(0.6);
+      case Brightness.light:
+        return color.withLightness(0.4);
+    }
+  }
 }
 
 @immutable
@@ -184,13 +219,14 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = buttonThemeData.color ?? textTheme.textLow;
+      final HSLColor color =
+          buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? textTheme.textHigh;
+          buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor highlightColor =
-          buttonThemeData.highlightColor ?? textTheme.textPrimary;
+      final HSLColor highlightColor = buttonThemeData.highlightColor ??
+          colorScheme.primary[kHighlightColorIndex];
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

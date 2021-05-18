@@ -29,8 +29,8 @@ ContextMenuButton(
       value: 'Joinville',
     ),
     ContextMenuItem(
-      child: Text('Tubarão'),
-      value: 'Tubarão',
+      child: Text('Palhoça'),
+      value: 'Palhoça',
     ),
     ContextMenuItem(
       child: Text('São José'),
@@ -55,8 +55,8 @@ ContextMenuButton(
       value: 'Joinville',
     ),
     ContextMenuItem(
-      child: Text('Tubarão'),
-      value: 'Tubarão',
+      child: Text('Palhoça'),
+      value: 'Palhoça',
     ),
     ContextMenuItem(
       child: Text('São José'),
@@ -90,8 +90,8 @@ ContextMenuButton(
                         value: 'Joinville',
                       ),
                       ContextMenuItem(
-                        child: Text('Tubarão'),
-                        value: 'Tubarão',
+                        child: Text('Palhoça'),
+                        value: 'Palhoça',
                       ),
                       ContextMenuItem(
                         child: Text('São José'),
@@ -134,8 +134,8 @@ ContextMenuButton(
                           value: 'Joinville',
                         ),
                         ContextMenuItem(
-                          child: Text('Tubarão'),
-                          value: 'Tubarão',
+                          child: Text('Palhoça'),
+                          value: 'Palhoça',
                         ),
                         ContextMenuItem(
                           child: Text('São José'),

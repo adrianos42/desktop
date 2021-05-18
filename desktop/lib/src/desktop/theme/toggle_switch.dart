@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
+import 'constants.dart';
 
 @immutable
 class ToggleSwitchThemeData {
@@ -133,23 +134,22 @@ class ToggleSwitchTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       toggleSwitchThemeData ??= themeData.toggleSwitchTheme;
 
-      final ColorScheme colorScheme = themeData.colorScheme;
-      final TextTheme textTheme = Theme.of(context).textTheme;
+      final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
       final HSLColor foreground =
-          toggleSwitchThemeData.foreground ?? textTheme.textHigh;
+          toggleSwitchThemeData.foreground ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor activeHoverColor =
-          toggleSwitchThemeData.activeHoverColor ?? textTheme.textHigh;
+          toggleSwitchThemeData.activeHoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor activeColor =
-          toggleSwitchThemeData.activeColor ?? textTheme.textPrimary;
+          toggleSwitchThemeData.activeColor ?? colorScheme.primary[kHighlightColorIndex];
 
       final HSLColor inactiveHoverColor =
-          toggleSwitchThemeData.inactiveHoverColor ?? textTheme.textHigh;
+          toggleSwitchThemeData.inactiveHoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor inactiveColor =
-          toggleSwitchThemeData.inactiveColor ?? textTheme.textLow;
+          toggleSwitchThemeData.inactiveColor ?? colorScheme.shade[kInactiveColorIndex];
 
       final HSLColor disabledColor =
           toggleSwitchThemeData.disabledColor ?? colorScheme.disabled;

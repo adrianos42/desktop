@@ -163,7 +163,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
       enabled: active,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
-      mouseCursor: SystemMouseCursors.click,
+      mouseCursor: active ? SystemMouseCursors.click : MouseCursor.defer,
       child: Builder(
         builder: (BuildContext context) {
           return _SliderRenderObjectWidget(
@@ -513,7 +513,7 @@ class _RenderSlider extends RenderConstrainedBox {
       }
 
       if (_dragging || _state._positionController.isAnimating) {
-        color = Color.lerp(color, hoverColor, _state._position.value)!;
+        color = Color.lerp(color, activeColor, _state._position.value)!;
       }
     }
 
@@ -529,11 +529,11 @@ class _RenderSlider extends RenderConstrainedBox {
       color = activeColor;
 
       if (hovering || _state._hoverPositionController.isAnimating) {
-        color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
+        //color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
       }
 
       if (_dragging || _state._positionController.isAnimating) {
-        color = Color.lerp(color, activeColor, _state._position.value)!;
+        //color = Color.lerp(color, activeColor, _state._position.value)!;
       }
     }
 

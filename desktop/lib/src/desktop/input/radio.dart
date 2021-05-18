@@ -164,7 +164,9 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
       enabled: enabled,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
-      mouseCursor: !widget.value ? SystemMouseCursors.click : MouseCursor.defer,
+      mouseCursor: !widget.value && enabled
+          ? SystemMouseCursors.click
+          : MouseCursor.defer,
       child: Builder(
         builder: (BuildContext context) {
           return _RadioRenderObjectWidget(

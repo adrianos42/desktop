@@ -44,7 +44,7 @@ class DropDownButton<T> extends StatefulWidget {
 }
 
 class _DropDownButtonState<T> extends State<DropDownButton<T>>
-    with ComponentStateMixin {
+    with ComponentStateMixin, SingleTickerProviderStateMixin {
   Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
     final RenderBox overlay =
@@ -95,38 +95,74 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   }
 
   void _handleHoverEntered() {
-    if (!hovered) {
+    if (!hovered && (pressed || !_globalPointerDown)) {
+      _controller.reset();
+      _controller.forward();
       setState(() => hovered = true);
     }
   }
 
   void _handleHoverExited() {
     if (hovered) {
+      _controller.reset();
+      _controller.forward();
       setState(() => hovered = false);
-    }
-  }
-
-  void _handleTapDown(TapDownDetails event) {
-    if (!pressed) {
-      setState(() => pressed = true);
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
     if (pressed) {
+      //_controller.forward(from: 0.5);
       setState(() => pressed = false);
+    }
+  }
+
+  void _handleTapDown(TapDownDetails event) {
+    if (!pressed) {
+      //_controller.forward(from: 0.5);
+      setState(() => pressed = true);
     }
   }
 
   void _handleTapCancel() {
     if (pressed) {
+      //_controller.forward(from: 0.5);
       setState(() => pressed = false);
     }
+  }
+
+  bool _globalPointerDown = false;
+
+  void _mouseRoute(PointerEvent event) => _globalPointerDown = event.down;
+
+  late AnimationController _controller;
+
+  ColorTween? _color;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+
+    _controller.forward();
+
+    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _color = null;
   }
 
   @override
@@ -136,66 +172,79 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     final enabled = widget.enabled;
 
-    Widget child;
+    Widget bodyChild;
     HSLColor? inactiveBackground;
 
     if (widget.value != null) {
-      child = widget
+      bodyChild = widget
           .itemBuilder(context)
           .firstWhere((value) => value.represents(widget.value!));
       inactiveBackground = buttonThemeData.inactiveColor;
     } else {
-      child = Container();
+      bodyChild = Container();
     }
 
     final waitingBackground = buttonThemeData.waitingColor!;
 
     final borderColor = enabled
-        ? waiting
-            ? waitingBackground
-            : hovered
-                ? buttonThemeData.hoverColor!
-                : buttonThemeData.color!
+        ? waiting || hovered
+            ? buttonThemeData.hoverColor!
+            : buttonThemeData.color!
         : buttonThemeData.disabledColor!;
 
-    final border = Border.all(color: borderColor.toColor(), width: 1.0);
-    final background = waiting ? waitingBackground : inactiveBackground;
+    _color = ColorTween(
+        begin: _color?.end ?? borderColor.toColor(),
+        end: borderColor.toColor());
 
-    Widget result = DefaultTextStyle(
-      style: buttonThemeData.textStyle!.copyWith(
-          color: !enabled ? buttonThemeData.disabledColor!.toColor() : null),
-      child: Container(
-        constraints: const BoxConstraints(
-          minHeight: kMinMenuHeight,
-          minWidth: kMinMenuWidth,
-          maxHeight: kMaxMenuHeight,
-          maxWidth: kMaxMenuWidth,
-        ),
-        decoration: BoxDecoration(
-          color: background?.toColor(),
-          border: border,
-        ),
-        //constraints: constraints,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            IgnorePointer(
-              ignoring: true,
-              child: child,
+    Widget result = AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final borderColor =
+            _color!.evaluate(AlwaysStoppedAnimation(_controller.value))!;
+        final border = Border.all(
+          color: waiting ? waitingBackground.toColor() : borderColor,
+          width: 1.0,
+        );
+        final background = waiting ? waitingBackground : inactiveBackground;
+
+        return DefaultTextStyle(
+          style: buttonThemeData.textStyle!.copyWith(
+              color:
+                  !enabled ? buttonThemeData.disabledColor!.toColor() : null),
+          child: Container(
+            constraints: const BoxConstraints(
+              minHeight: kMinMenuHeight,
+              minWidth: kMinMenuWidth,
+              maxHeight: kMaxMenuHeight,
+              maxWidth: kMaxMenuWidth,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Icon(
-                Icons.expand_more,
-                size: 18.0,
-                color: buttonThemeData.textStyle!.color,
-              ),
+            decoration: BoxDecoration(
+              color: background?.toColor(),
+              border: border,
             ),
-          ],
-        ),
-      ),
+            //constraints: constraints,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                IgnorePointer(
+                  ignoring: true,
+                  child: bodyChild,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Icon(
+                    waiting ? Icons.expand_less : Icons.expand_more,
+                    size: 18.0,
+                    color: buttonThemeData.hoverColor!.toColor(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
 
     if (enabled) {
@@ -205,9 +254,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         onExit: (_) => _handleHoverExited(),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTapDown: _handleTapDown,
-          onTapUp: _handleTapUp,
-          onTapCancel: _handleTapCancel,
+          //onTapDown: _handleTapDown,
+          //onTapUp: _handleTapUp,
+          //onTapCancel: _handleTapCancel,
           onTap: showButtonMenu,
           child: result,
         ),

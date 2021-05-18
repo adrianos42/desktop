@@ -4,7 +4,7 @@ import 'package:desktop/desktop.dart';
 class Defaults {
   static BoxDecoration itemDecoration(BuildContext context) => BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).colorScheme.shade6.toColor(),
+          color: Theme.of(context).colorScheme.shade[40].toColor(),
           width: 1.0,
         ),
       );

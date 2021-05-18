@@ -194,7 +194,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
       enabled: enabled,
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
-      mouseCursor: SystemMouseCursors.click,
+      mouseCursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
       child: Builder(
         builder: (BuildContext context) {
           return _CheckboxRenderObjectWidget(

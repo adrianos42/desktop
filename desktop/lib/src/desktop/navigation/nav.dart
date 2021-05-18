@@ -331,7 +331,7 @@ class _NavState extends State<Nav> {
       data: ButtonThemeData(
         height: navThemeData.height,
         iconThemeData: navThemeData.iconThemeData,
-        color: colorScheme.shade4,
+        color: colorScheme.shade[60],
       ),
       child: result,
     );

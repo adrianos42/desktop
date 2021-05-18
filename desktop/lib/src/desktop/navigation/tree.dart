@@ -448,9 +448,7 @@ class _TreeColumnState extends State<_TreeColumn> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final colorScheme = themeData.colorScheme;
-    final textTheme = themeData.textTheme;
+    final treeTheme = TreeTheme.of(context);
 
     if (widget.node.title.isEmpty) {
       throw Exception('Title in tree cannot be empty');
@@ -480,9 +478,9 @@ class _TreeColumnState extends State<_TreeColumn> {
         children: [
           ButtonTheme.merge(
             data: ButtonThemeData(
-              color: textTheme.textLow,
-              hoverColor: colorScheme.shade,
-              highlightColor: colorScheme.shade,
+              color: treeTheme.color,
+              hoverColor: treeTheme.hoverColor,
+              highlightColor: treeTheme.highlightColor,
             ),
             child: Button(
               bodyPadding: EdgeInsets.zero,
@@ -501,9 +499,9 @@ class _TreeColumnState extends State<_TreeColumn> {
       );
     } else {
       final active = Tree._of(context)!._current == name;
-      final hoverColor = active ? textTheme.textPrimary : textTheme.textHigh;
-      final activeColor = active ? textTheme.textPrimary : textTheme.textLow;
-      final highlightColor = textTheme.textPrimary;
+      final highlightColor = treeTheme.highlightColor;
+      final hoverColor = active ? highlightColor : treeTheme.hoverColor;
+      final activeColor = active ? highlightColor : treeTheme.color;
 
       return ButtonTheme.merge(
         data: ButtonThemeData(

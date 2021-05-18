@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'color_scheme.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
+import 'constants.dart';
 
 // TODO(as): ???
 // const double _kSidePadding = 6.0;
@@ -167,12 +168,14 @@ class DropDownButtonTheme extends InheritedTheme {
             color: textTheme.textMedium.toColor(),
           );
 
-      final HSLColor color = buttonThemeData.color ?? colorScheme.shade6;
+      final HSLColor color =
+          buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
+
       final HSLColor hoverColor =
-          buttonThemeData.hoverColor ?? colorScheme.shade5;
+          buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor waitingColor =
-          buttonThemeData.waitingColor ?? colorScheme.background2;
+          buttonThemeData.waitingColor ?? colorScheme.background[8];
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

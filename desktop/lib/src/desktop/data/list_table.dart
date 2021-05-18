@@ -209,9 +209,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
             final HSLColor? backgroundColor =
                 pressedIndex == index || waitingIndex == index
-                    ? colorScheme.background3
+                    ? colorScheme.primary[60]
                     : hoveredIndex == index
-                        ? colorScheme.background2
+                        ? colorScheme.shade[100]
                         : null;
 
             BoxDecoration decoration =
@@ -571,8 +571,8 @@ class _TableColHandlerState extends State<_TableColHandler>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final hoveredColor = colorScheme.shade5;
-    final draggedColor = colorScheme.shade4;
+    final hoveredColor = colorScheme.shade[50];
+    final draggedColor = colorScheme.shade[60];
 
     BorderSide? border = widget.border;
     final bool hasFocus = hovered || dragged || widget.hasIndicator;
@@ -590,7 +590,7 @@ class _TableColHandlerState extends State<_TableColHandler>
               ? border.width + (border.width / 2.0).roundToDouble()
               : border.width);
     } else {
-      final color = colorScheme.shade6;
+      final color = colorScheme.shade[40];
       final width = hasFocus ? 2.0 : 1.0;
       final borderColor = dragged
           ? draggedColor

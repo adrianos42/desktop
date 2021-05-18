@@ -203,12 +203,12 @@ class _TextFieldState extends State<TextField>
         ? _effectiveFocusNode.hasFocus
             ? colorScheme.background
             : colorScheme.background.withAlpha(0.0)
-        : colorScheme.shade1;
+        : colorScheme.shade[90];
     final HSLColor characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
     final HSLColor selectionColor = enabled ? colorScheme.primary[60] : background;
     final HSLColor borderColor =
-        _effectiveFocusNode.hasFocus ? colorScheme.shade5 : colorScheme.shade6;
+        _effectiveFocusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[40];
 
     final textStyle = textTheme.body1.copyWith(
       color: characterColor.toColor(),

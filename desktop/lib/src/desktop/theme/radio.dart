@@ -131,26 +131,25 @@ class RadioButtonTheme extends InheritedTheme {
 
     if (radioButtonThemeData == null || !radioButtonThemeData.isConcrete) {
       final ThemeData themeData = Theme.of(context);
+      final ColorScheme colorScheme = themeData.colorScheme;
       final TextTheme textTheme = themeData.textTheme;
 
       radioButtonThemeData ??= themeData.radioButtonTheme;
 
-      final ColorScheme colorScheme = themeData.colorScheme;
-
       final HSLColor foreground =
-          radioButtonThemeData.foreground ?? colorScheme.shade;
+          radioButtonThemeData.foreground ?? colorScheme.shade[100];
 
       final HSLColor activeHoverColor =
-          radioButtonThemeData.activeHoverColor ?? textTheme.textPrimary;
+          radioButtonThemeData.activeHoverColor ?? colorScheme.primary[60];
 
       final HSLColor activeColor =
-          radioButtonThemeData.activeColor ?? textTheme.textPrimary;
+          radioButtonThemeData.activeColor ?? colorScheme.primary[60];
 
       final HSLColor inactiveHoverColor =
-          radioButtonThemeData.inactiveHoverColor ?? colorScheme.shade;
+          radioButtonThemeData.inactiveHoverColor ?? colorScheme.shade[100];
 
       final HSLColor inactiveColor =
-          radioButtonThemeData.inactiveColor ?? colorScheme.shade4;
+          radioButtonThemeData.inactiveColor ?? colorScheme.shade[50];
 
       final HSLColor disabledColor =
           radioButtonThemeData.disabledColor ?? colorScheme.disabled;

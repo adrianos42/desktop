@@ -28,6 +28,19 @@ Button(
 )
 ''';
 
+    final customCode = '''
+Button.text(
+  'Custom',
+  color: HSLColor.fromAHSL(1.0, 150, 0.8, 0.4),
+  hoverColor: HSLColor.fromAHSL(1.0, 150, 0.8, 0.6),
+  highlightColor: HSLColor.fromAHSL(1.0, 150, 0.8, 0.4),
+  onPressed: () {},
+)
+''';
+
+    final customColor = HSLColor.fromAHSL(1.0, 150, 0.6, 0.5);
+    final buttonTheme = Theme.of(context).buttonTheme;
+
     return Defaults.createItemsWithTitle(
       context,
       items: [
@@ -60,8 +73,27 @@ Button(
           title: 'Disabled',
           height: 200.0,
         ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Button(
+                body: Text('Custom'),
+                // Uses a recommended color for the button.
+                color: buttonTheme.customColor(context, customColor),
+                hoverColor: buttonTheme.customHoverColor(context, customColor),
+                highlightColor:
+                    buttonTheme.customHighlightColor(context, customColor),
+                onPressed: () {},
+              ),
+            ),
+          ),
+          codeText: customCode,
+          title: 'Enabled',
+          height: 200.0,
+        ),
       ],
-      header: 'Button',
+      header: 'Button with custom color',
     );
   }
 }

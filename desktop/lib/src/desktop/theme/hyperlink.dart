@@ -7,11 +7,11 @@ import 'package:flutter/widgets.dart';
 import 'theme_data.dart';
 
 const double _kLineThickness = 1.0;
-const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
+const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 0.9, 0.56);
 const HSLColor _kDefaultLightColorHighlight =
-    HSLColor.fromAHSL(1.0, 210, 1.0, 0.3);
+    HSLColor.fromAHSL(1.0, 210, 0.9, 0.3);
 const HSLColor _kDefaultDarkColorHighlight =
-    HSLColor.fromAHSL(1.0, 210, 1.0, 0.8);
+    HSLColor.fromAHSL(1.0, 210, 0.9, 0.8);
 
 @immutable
 class HyperlinkButtonThemeData {

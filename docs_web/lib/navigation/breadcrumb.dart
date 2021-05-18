@@ -40,28 +40,25 @@ Breadcrumb(
         Expanded(
           child: Defaults.createCodeSession(
             context,
-            builder: (context) => Container(
-              decoration: Defaults.itemDecoration(context),
-              child: Breadcrumb(
-                initialRoute: 'page_0/',
-                routeBuilder: (context, settings) {
-                  switch (settings.name) {
-                    case 'page_0/':
-                      return DesktopPageRoute(
-                        fullscreenDialog: false,
-                        builder: (context) => _MainPage(0),
-                        settings: RouteSettings(name: settings.name),
-                      );
-                    default:
-                      final count = settings.arguments as int;
-                      return DesktopPageRoute(
-                        fullscreenDialog: false,
-                        builder: (context) => _MainPage(count),
-                        settings: RouteSettings(name: settings.name),
-                      );
-                  }
-                },
-              ),
+            builder: (context) => Breadcrumb(
+              initialRoute: 'page_0/',
+              routeBuilder: (context, settings) {
+                switch (settings.name) {
+                  case 'page_0/':
+                    return DesktopPageRoute(
+                      fullscreenDialog: false,
+                      builder: (context) => _MainPage(0),
+                      settings: RouteSettings(name: settings.name),
+                    );
+                  default:
+                    final count = settings.arguments as int;
+                    return DesktopPageRoute(
+                      fullscreenDialog: false,
+                      builder: (context) => _MainPage(count),
+                      settings: RouteSettings(name: settings.name),
+                    );
+                }
+              },
             ),
             codeText: textController.text,
           ),

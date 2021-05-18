@@ -93,7 +93,8 @@ class DesktopApp extends StatefulWidget {
         initialRoute = null,
         super(key: key);
 
-  static final Map<LogicalKeySet, Intent> _shortcuts = <LogicalKeySet, Intent>{
+  static final Map<ShortcutActivator, Intent> _shortcuts =
+      <ShortcutActivator, Intent>{
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
         const NextTabIntent(),
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
@@ -246,9 +247,10 @@ class _DesktopAppState extends State<DesktopApp> {
 
   WidgetsApp _buildWidgetApp(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final Color color = widget.color ?? themeData.colorScheme.primary[50].toColor();
+    final Color color =
+        widget.color ?? themeData.colorScheme.primary[50].toColor();
 
-    final shortcuts = <LogicalKeySet, Intent>{
+    final shortcuts = <ShortcutActivator, Intent>{
       ...WidgetsApp.defaultShortcuts,
       ...DesktopApp._shortcuts,
       ...widget.shortcuts ?? {},

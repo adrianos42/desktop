@@ -133,9 +133,9 @@ class TabTheme extends InheritedTheme {
 
   ///
   static TabThemeData of(BuildContext context) {
-    final TabTheme? navTheme =
+    final TabTheme? tabTheme =
         context.dependOnInheritedWidgetOfExactType<TabTheme>();
-    TabThemeData? tabThemeData = navTheme?.data;
+    TabThemeData? tabThemeData = tabTheme?.data;
 
     if (tabThemeData == null || !tabThemeData.isConcrete) {
       final ThemeData themeData = Theme.of(context);
@@ -147,12 +147,13 @@ class TabTheme extends InheritedTheme {
       final TextStyle textStyle = tabThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = tabThemeData.color ?? textTheme.textLow;
+      final HSLColor color = tabThemeData.color ?? colorScheme.shade[50];
 
-      final HSLColor hoverColor = tabThemeData.hoverColor ?? textTheme.textHigh;
+      final HSLColor hoverColor =
+          tabThemeData.hoverColor ?? colorScheme.shade[100];
 
       final HSLColor highlightColor =
-          tabThemeData.highlightColor ?? textTheme.textPrimary;
+          tabThemeData.highlightColor ?? colorScheme.primary[60];
 
       final IconThemeData iconThemeData =
           tabThemeData.iconThemeData ?? const IconThemeData(size: kIconSize);

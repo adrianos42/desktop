@@ -7,7 +7,7 @@ import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
 
-///
+/// Base button used to create other kinds of buttons.
 class Button extends StatefulWidget {
   ///
   const Button({
@@ -17,6 +17,8 @@ class Button extends StatefulWidget {
     this.leading,
     this.tooltip,
     this.color,
+    this.hoverColor,
+    this.highlightColor,
     this.onPressed,
     this.leadingPadding,
     this.padding,
@@ -31,6 +33,8 @@ class Button extends StatefulWidget {
     String text, {
     String? tooltip,
     HSLColor? color,
+    HSLColor? highlightColor,
+    HSLColor? hoverColor,
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
@@ -40,6 +44,8 @@ class Button extends StatefulWidget {
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       color: color,
+      highlightColor: highlightColor,
+      hoverColor: hoverColor,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -51,6 +57,8 @@ class Button extends StatefulWidget {
     IconData icon, {
     String? tooltip,
     HSLColor? color,
+    HSLColor? highlightColor,
+    HSLColor? hoverColor,
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
@@ -60,6 +68,8 @@ class Button extends StatefulWidget {
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       color: color,
+      highlightColor: highlightColor,
+      hoverColor: hoverColor,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -81,8 +91,14 @@ class Button extends StatefulWidget {
   /// Called when button is pressed.
   final VoidCallback? onPressed;
 
-  /// The color of the button. The [ButtonThemeData.highlightColor] is ignored.
+  /// The color of the button.
   final HSLColor? color;
+
+  /// The color of the button when the is hovering it.
+  final HSLColor? hoverColor;
+
+  /// The color of the button when it's been pressed.
+  final HSLColor? highlightColor;
 
   /// The button axis.
   final Axis axis;
@@ -181,25 +197,11 @@ class _ButtonState extends State<Button>
     final bool enabled = widget.onPressed != null;
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final HSLColor enabledForeground;
-    final HSLColor pressedForeground;
-    final HSLColor hoveredForeground;
-
-    if (widget.color != null) {
-      final HSLColor color = widget.color!;
-
-      enabledForeground = color;
-      if (color.lightness < 0.4 || color.lightness > 0.7) {
-        throw Exception('Button must have lightness between 40% and 70%');
-      }
-      pressedForeground =
-          Theme.of(context).colorScheme.shadeColorFromLightness(color);
-    } else {
-      enabledForeground = buttonThemeData.color!;
-      pressedForeground = buttonThemeData.highlightColor!;
-    }
-
-    hoveredForeground = buttonThemeData.hoverColor!;
+    final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
+    final HSLColor pressedForeground =
+        widget.highlightColor ?? buttonThemeData.highlightColor!;
+    final HSLColor hoveredForeground =
+        widget.hoverColor ?? buttonThemeData.hoverColor!;
 
     final HSLColor disabledForeground = buttonThemeData.disabledColor!;
 

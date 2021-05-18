@@ -81,12 +81,13 @@ class TextTheme {
     required this.body1,
     required this.body2,
     required this.caption,
-    required this.textHigh,
     required this.textLow,
     required this.textMedium,
-    required this.colorScheme,
+    required this.textHigh,
+    required this.textPrimaryHigh,
+    required this.textPrimaryLow,
     required this.textDisabled,
-    required this.textPrimary,
+    required this.colorScheme,
     required this.monospace,
   });
 
@@ -95,7 +96,7 @@ class TextTheme {
 
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        final foreground = colorScheme.shade.toColor();
+        final foreground = colorScheme.shade[100].toColor();
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -105,17 +106,18 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
-          textPrimary: colorScheme.primary[60],
-          textLow: colorScheme.shade4,
-          textMedium: colorScheme.shade2,
-          textHigh: colorScheme.shade,
+          textPrimaryHigh: colorScheme.primary[60],
+          textPrimaryLow: colorScheme.primary[40],
+          textLow: colorScheme.shade[40],
+          textMedium: colorScheme.shade[70],
+          textHigh: colorScheme.shade[100],
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
         break;
 
       case Brightness.light:
-        final foreground = colorScheme.shade.toColor();
+        final foreground = colorScheme.shade[100].toColor();
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -125,10 +127,11 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: foreground),
           body2: _TextThemes.body2.apply(color: foreground),
           caption: _TextThemes.caption.apply(color: foreground),
-          textPrimary: colorScheme.primary[40],
-          textLow: colorScheme.shade5,
-          textMedium: colorScheme.shade3,
-          textHigh: colorScheme.shade,
+          textPrimaryHigh: colorScheme.primary[60],
+          textPrimaryLow: colorScheme.primary[40],
+          textLow: colorScheme.shade[40],
+          textMedium: colorScheme.shade[70],
+          textHigh: colorScheme.shade[100],
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
@@ -162,7 +165,9 @@ class TextTheme {
 
   final HSLColor textDisabled;
 
-  final PrimaryColor textPrimary;
+  final HSLColor textPrimaryHigh;
+
+  final HSLColor textPrimaryLow;
 
   final ColorScheme colorScheme;
 

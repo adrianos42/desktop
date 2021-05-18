@@ -59,6 +59,7 @@ Container(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text('Slider value: ${first.toStringAsPrecision(1)}'),
                   Slider(
                     value: first,
                     onChanged: (value) {

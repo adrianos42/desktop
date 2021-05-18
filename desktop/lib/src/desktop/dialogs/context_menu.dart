@@ -132,18 +132,15 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
     final HSLColor? background = pressed
         ? (selected
-            ? colorScheme.primary[40]
-            : colorScheme.background3) // TODO(as): ???
+            ? colorScheme.primary[60]
+            : colorScheme.background[4]) // TODO(as): ???
         : selected
-            ? (hovered ? colorScheme.primary[30] : colorScheme.primary[20])
+            ? (hovered ? colorScheme.primary[40] : colorScheme.primary[30])
             : hovered
-                ? colorScheme.background2 // TODO(as): ???
+                ? colorScheme.background[16] // TODO(as): ???
                 : null;
 
-    final foreground = selected
-        ? TextTheme.withColorScheme(colorScheme.withBrightness(Brightness.dark))
-            .textHigh // TODO(as): ???
-        : textTheme.textHigh;
+    final foreground = textTheme.textHigh;
 
     final TextStyle textStyle = textTheme.body1.copyWith(
       fontSize: 14.0,
@@ -292,7 +289,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colorScheme.background1.toColor(),
+        color: colorScheme.background[4].withAlpha(0.95).toColor(),
       ),
       position: DecorationPosition.background,
       child: child,

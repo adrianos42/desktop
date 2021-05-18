@@ -3,15 +3,20 @@ import 'dart:ui' show Brightness;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-const PrimaryColor kDefaultPrimary = PrimaryColor.dodgerBlue;
+const PrimaryColor _kDefaultPrimary = PrimaryColor.dodgerBlue;
 
+/// Color scheme used for the theme data.
 @immutable
 class ColorScheme {
   ///
-  ColorScheme(this.brightness, [PrimaryColor? primary])
-      : assert(primary == null || primary[50].saturation >= 0.4),
-        _primary = primary ?? kDefaultPrimary;
+  const ColorScheme(
+    this.brightness, [
+    PrimaryColor? primary,
+    BackgroundColor? backgroundColor,
+  ]) : _primary = primary ?? _kDefaultPrimary,
+      _background = backgroundColor ?? const BackgroundColor._(0.0);
 
+  /// Returns a color scheme with a different brightness.
   ColorScheme withBrightness(Brightness brightness) {
     return ColorScheme(brightness, _primary);
   }
@@ -22,64 +27,202 @@ class ColorScheme {
     if (brightness == Brightness.dark) {
       return value.withLightness(0.8);
     }
-    return value.withLightness(0.3);
-  }
-
-  final Brightness brightness;
+    return value.withLightness(0.2);
+  } 
 
   final PrimaryColor _primary;
 
-  PrimaryColor get primary => _primary;
+  final BackgroundColor _background;
 
-  HSLColor get overlay1 => background.withAlpha(0.9);
-  HSLColor get overlay2 => background.withAlpha(0.8);
-  HSLColor get overlay3 => background.withAlpha(0.7);
-  HSLColor get overlay4 => background.withAlpha(0.6);
-  HSLColor get overlay5 => background.withAlpha(0.5);
+  /// The color scheme brightness.
+  final Brightness brightness;
 
-  HSLColor get background => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
+  /// The background lightness percentage difference.
+  //final double backgroundDifference;
 
-  HSLColor get background1 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.95)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.05);
+  /// Primary color.
+  PrimaryColor get primary => _primary._withBrightness(brightness);
 
-  HSLColor get background2 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1);
+  /// Background color.
+  BackgroundColor get background {
+    final BackgroundColor color = _background.withBrightness(brightness);
+    if (brightness == Brightness.dark && color.lightness > 0.1 ||
+        brightness == Brightness.light && color.lightness < 0.9) {
+      throw Exception('Invalid background color lightness.');
+    }
+    return color;
+  }
 
-  HSLColor get background3 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.85)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.15);
-
+  /// Disabled color.
   HSLColor get disabled => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2);
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.75)
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25);
 
-  HSLColor get shade => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 1.0);
-  HSLColor get shade1 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.1)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.9);
-  HSLColor get shade2 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.2)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.8);
-  HSLColor get shade3 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.3)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.7);
-  HSLColor get shade4 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6);
-  HSLColor get shade5 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5);
-  HSLColor get shade6 => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.6)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.4);
+  /// Error color.
+  HSLColor get error => const HSLColor.fromAHSL(1.0, 0, 0.8, 0.5);
 
-  HSLColor get error => const HSLColor.fromAHSL(1.0, 0, 0.9, 0.5);
+  /// Shade color.
+  ShadeColor get shade => ShadeColor._withBrightness(brightness);
+}
+
+/// Shade color used for color scheme.
+class ShadeColor extends HSLColor {
+  const ShadeColor._(
+    double lightness, {
+    Brightness? brightness,
+  })  : _brightness = brightness,
+        super.fromAHSL(
+          1.0,
+          0.0,
+          0.0,
+          lightness,
+        );
+
+  factory ShadeColor._withBrightness(Brightness brightness) {
+    switch (brightness) {
+      case Brightness.dark:
+        return ShadeColor._(1.0, brightness: brightness);
+      case Brightness.light:
+        return ShadeColor._(0.0, brightness: brightness);
+    }
+  }
+
+  /// Returns a shade color.
+  HSLColor operator [](int index) {
+    switch (_brightness!) {
+      case Brightness.dark:
+        switch (index) {
+          case 30:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+          case 40:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+          case 50:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+          case 60:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+          case 70:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+          case 80:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.8);
+          case 90:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.9);
+          case 100:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 1.0);
+          default:
+            throw Exception('Wrong index for shade color');
+        }
+      case Brightness.light:
+        switch (index) {
+          case 30:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+          case 40:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+          case 50:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+          case 60:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+          case 70:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+          case 80:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.2);
+          case 90:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.1);
+          case 100:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.0);
+          default:
+            throw Exception('Wrong index for shade color');
+        }
+    }
+  }
+
+  final Brightness? _brightness;
+}
+
+/// Background color used for color scheme.
+class BackgroundColor extends HSLColor {
+  ///
+  const BackgroundColor._(
+    double lightness, {
+    Brightness? brightness,
+  })  : _brightness = brightness,
+        super.fromAHSL(
+          1.0,
+          0.0,
+          0.0,
+          lightness,
+        );
+
+  /// Override this function to return a custom background color.
+  BackgroundColor withBrightness(Brightness brightness) {
+    switch (brightness) {
+      case Brightness.dark:
+        return BackgroundColor._(0.0, brightness: brightness);
+      case Brightness.light:
+        return BackgroundColor._(1.0, brightness: brightness);
+    }
+  }
+
+  /// Returns a background color.
+  HSLColor operator [](int index) {
+    switch (_brightness!) {
+      case Brightness.dark:
+        switch (index) {
+          case 0:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.0);
+          case 2:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.02);
+          case 4:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.04);
+          case 6:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.06);
+          case 8:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.08);
+          case 10:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.1);
+          case 12:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.12);
+          case 14:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.14);
+          case 16:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.16);
+          case 18:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.18);
+          case 20:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.2);
+          default:
+            throw Exception('Wrong index for backgrount color');
+        }
+      case Brightness.light:
+        switch (index) {
+          case 0:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness);
+          case 2:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.02);
+          case 4:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.04);
+          case 6:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.06);
+          case 8:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.08);
+          case 10:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.1);
+          case 12:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.12);
+          case 14:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.14);
+          case 16:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.16);
+          case 18:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.18);
+          case 20:
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.2);
+          default:
+            throw Exception('Wrong index for backgrount color');
+        }
+    }
+  }
+
+  final Brightness? _brightness;
 }
 
 /// Primary color used for color scheme.
@@ -89,8 +232,10 @@ class PrimaryColor extends HSLColor {
     double alpha,
     double hue,
     double saturation,
-    double lightness,
-  ) : super.fromAHSL(
+    double lightness, {
+    Brightness? brightness,
+  })  : _brightness = brightness,
+        super.fromAHSL(
           alpha,
           hue,
           saturation,
@@ -98,183 +243,103 @@ class PrimaryColor extends HSLColor {
         );
 
   /// Returns a primary color.
-  PrimaryColor operator [](int index) {
-    switch (index) {
-      case 20:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.2);
-      case 30:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.3);
-      case 40:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.4);
-      case 50:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.5);
-      case 60:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.6);
-      case 70:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.7);
-      case 80:
-        return PrimaryColor._(_name, alpha, hue, saturation, 0.8);
-      default:
-        throw Exception('Wrong index for primary color');
+  HSLColor operator [](int index) {
+    switch (_brightness!) {
+      case Brightness.dark:
+        switch (index) {
+          case 30:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+          case 40:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+          case 50:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+          case 60:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+          case 70:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+          default:
+            throw Exception('Wrong index for primary color');
+        }
+      case Brightness.light:
+        switch (index) {
+          case 30:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+          case 40:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+          case 50:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+          case 60:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+          case 70:
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+          default:
+            throw Exception('Wrong index for primary color');
+        }
     }
+  }
+
+  PrimaryColor _withBrightness(Brightness brightness) {
+    return PrimaryColor._(_name, alpha, hue, saturation, 0.5,
+        brightness: brightness);
   }
 
   final String _name;
 
+  final Brightness? _brightness;
+
   @override
   String toString() => _name.toString();
 
+  /// Coral color.
   static const coral = PrimaryColor._('Coral', 1.0, 16, 1.0, 0.66);
+
+  /// Cornflower blue color.
   static const cornflowerBlue =
       PrimaryColor._('Cornflower Blue', 1.0, 219, 0.79, 0.66);
-  static const turquoise = PrimaryColor._('Turquoise', 1.0, 181, 1.0, 0.41);
+
+  /// Turquoise color.
+  static const turquoise = PrimaryColor._('Turquoise', 1.0, 181, 0.8, 0.41);
+
+  /// Deep sky blue color.
   static const deepSkyBlue =
       PrimaryColor._('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
-  static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 1.0, 0.56);
+
+  /// Dodger blue color.
+  static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
+
+  /// Golden rod color.
   static const goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
+
+  /// Hot pink color.
   static const hotPink = PrimaryColor._('Hot Pink', 1.0, 330, 1.0, 0.7);
+
+  /// Purple color.
   static const purple = PrimaryColor._('Purple', 1.0, 260, 0.6, 0.65);
+
+  /// Orange color.
   static const orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
+
+  /// Orchid color.
   static const orchid = PrimaryColor._('Orchid', 1.0, 302, 0.59, 0.65);
+
+  /// Royal blue color.
   static const royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);
+
+  /// Sandy brown color.
   static const sandyBrown = PrimaryColor._('Sandy Brown', 1.0, 20, 0.87, 0.67);
+
+  /// Slate blue color.
   static const slateBlue = PrimaryColor._('Slate Blue', 1.0, 248, 0.53, 0.58);
+
+  /// Steel blue color.
   static const steelBlue = PrimaryColor._('Steel Blue', 1.0, 207, 0.44, 0.49);
+
+  /// Violet color.
   static const violet = PrimaryColor._('Violet', 1.0, 300, 0.76, 0.7);
-  static const springGreen = PrimaryColor._('Spring Green', 1.0, 150, 1.0, 0.4);
-  static const violetRed = PrimaryColor._('Violet Red', 1.0, 333, 1.0, 0.6);
+
+  /// Spring green color.
+  static const springGreen = PrimaryColor._('Spring Green', 1.0, 150, 0.8, 0.4);
+
+  /// Red color.
   static const red = PrimaryColor._('Red', 1.0, 347.0, 0.9, 0.6);
 }
-
-  
-// class _Colors {
-//   static const aliceBlue = HSLColor.fromAHSL(1.0, 208, 1.0, 0.97);
-//   static const antiqueWhite = HSLColor.fromAHSL(1.0, 34.0, 0.78, 0.91);
-//   static const aquamarine = HSLColor.fromAHSL(1.0, 160, 1.0, 0.75);
-//   static const azure = HSLColor.fromAHSL(1.0, 180.0, 1.0, 0.97);
-//   static const beige = HSLColor.fromAHSL(1.0, 60, 0.56, 0.91);
-//   static const bisque = HSLColor.fromAHSL(1.0, 33.0, 1.0, 0.88);
-//   static const black = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.0);
-//   static const blanchedAlmond = HSLColor.fromAHSL(1.0, 36.0, 1.0, 0.9);
-//   static const blue = HSLColor.fromAHSL(1.0, 240, 1.0, 0.5);
-//   static const blueViolet = HSLColor.fromAHSL(1.0, 271, 0.76, 0.53);
-//   static const brown = HSLColor.fromAHSL(1.0, 0, 0.59, 0.41);
-//   static const burlywood = HSLColor.fromAHSL(1.0, 34, 0.57, 0.7);
-//   static const cadetBlue = HSLColor.fromAHSL(1.0, 182, 0.25, 0.5);
-//   static const chartreuse = HSLColor.fromAHSL(1.0, 90, 1.0, 0.5);
-//   static const chocolate = HSLColor.fromAHSL(1.0, 25, 0.75, 0.47);
-//   static const coral = HSLColor.fromAHSL(1.0, 16, 1.0, 0.66);
-//   static const cornflowerBlue = HSLColor.fromAHSL(1.0, 219, 0.79, 0.66);
-//   static const cornsilk = HSLColor.fromAHSL(1.0, 48.0, 1.0, 0.93);
-//   static const cyan = HSLColor.fromAHSL(1.0, 180, 1.0, 0.5);
-//   static const darkGoldenrod = HSLColor.fromAHSL(1.0, 43, 0.89, 0.38);
-//   static const darkGreen = HSLColor.fromAHSL(1.0, 120, 1.0, 0.2);
-//   static const darkKhaki = HSLColor.fromAHSL(1.0, 56, 0.38, 0.58);
-//   static const darkOliveGreen = HSLColor.fromAHSL(1.0, 82, 0.39, 0.3);
-//   static const darkOrange = HSLColor.fromAHSL(1.0, 33, 1.0, 0.5);
-//   static const darkOrchid = HSLColor.fromAHSL(1.0, 280, 0.61, 0.5);
-//   static const darkSalmon = HSLColor.fromAHSL(1.0, 15, 0.72, 0.7);
-//   static const darkSeaGreen = HSLColor.fromAHSL(1.0, 120, 0.25, 0.65);
-//   static const darkSlateBlue = HSLColor.fromAHSL(1.0, 248, 0.39, 0.39);
-//   static const darkSlateGray = HSLColor.fromAHSL(1.0, 25, 0.25, 0.25);
-//   static const darkTurquoise = HSLColor.fromAHSL(1.0, 181, 1.0, 0.41);
-//   static const darkViolet = HSLColor.fromAHSL(1.0, 282, 1.0, 0.41);
-//   static const deepPink = HSLColor.fromAHSL(1.0, 328, 1.0, 0.54);
-//   static const deepSkyBlue = HSLColor.fromAHSL(1.0, 195, 1.0, 0.5);
-//   static const dimGray = HSLColor.fromAHSL(1.0, 0, 0.0, 0.41);
-//   static const dodgerBlue = HSLColor.fromAHSL(1.0, 210, 1.0, 0.56);
-//   static const firebrick = HSLColor.fromAHSL(1.0, 0, 0.68, 0.42);
-//   static const floralWhite = HSLColor.fromAHSL(1.0, 40.0, 1.0, 0.97);
-//   static const forestGreen = HSLColor.fromAHSL(1.0, 120, 0.61, 0.34);
-//   static const gainsboro = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.86);
-//   static const ghostWhite = HSLColor.fromAHSL(1.0, 240.0, 1.0, 0.99);
-//   static const gold = HSLColor.fromAHSL(1.0, 51, 1.0, 0.5);
-//   static const goldenrod = HSLColor.fromAHSL(1.0, 43, 0.74, 0.49);
-//   static const gray = HSLColor.fromAHSL(1.0, 0.0, 0, 0.75);
-//   static const green = HSLColor.fromAHSL(1.0, 120, 1.0, 0.5);
-//   static const greenYellow = HSLColor.fromAHSL(1.0, 84, 1.0, 0.59);
-//   static const honeydew = HSLColor.fromAHSL(1.0, 120.0, 1.0, 0.97);
-//   static const hotPink = HSLColor.fromAHSL(1.0, 330, 1.0, 0.71);
-//   static const indianRed = HSLColor.fromAHSL(1.0, 0, 0.53, 0.58);
-//   static const ivory = HSLColor.fromAHSL(1.0, 60.0, 1.0, 0.97);
-//   static const khaki = HSLColor.fromAHSL(1.0, 54, 0.77, 0.75);
-//   static const lavender = HSLColor.fromAHSL(1.0, 240, 0.67, 0.94);
-//   static const lavenderBlush = HSLColor.fromAHSL(1.0, 340, 1.0, 0.97);
-//   static const lawnGreen = HSLColor.fromAHSL(1.0, 90, 1.0, 0.5);
-//   static const lemonChiffon = HSLColor.fromAHSL(1.0, 54.0, 1.0, 0.9);
-//   static const lightBlue = HSLColor.fromAHSL(1.0, 195, 0.53, 0.79);
-//   static const lightCoral = HSLColor.fromAHSL(1.0, 0, 0.79, 0.72);
-//   static const lightCyan = HSLColor.fromAHSL(1.0, 180, 1.0, 0.94);
-//   static const lightGoldenrod = HSLColor.fromAHSL(1.0, 51, 0.76, 0.72);
-//   static const lightGoldenrodYellow = HSLColor.fromAHSL(1.0, 60, 0.8, 0.9);
-//   static const lightGray = HSLColor.fromAHSL(1.0, 0, 0.0, 0.83);
-//   static const lightPink = HSLColor.fromAHSL(1.0, 351, 1.0, 0.86);
-//   static const lightSalmon = HSLColor.fromAHSL(1.0, 17, 1.0, 0.74);
-//   static const lightSeaGreen = HSLColor.fromAHSL(1.0, 177, 0.7, 0.41);
-//   static const lightSkyBlue = HSLColor.fromAHSL(1.0, 203, 0.92, 0.75);
-//   static const lightSlateBlue = HSLColor.fromAHSL(1.0, 248, 1.0, 0.72);
-//   static const lightSlateGray = HSLColor.fromAHSL(1.0, 210, 0.14, 0.53);
-//   static const lightSteelBlue = HSLColor.fromAHSL(1.0, 214, 0.41, 0.78);
-//   static const lightYellow = HSLColor.fromAHSL(1.0, 60, 1.0, 0.94);
-//   static const limeGreen = HSLColor.fromAHSL(1.0, 120, 0.61, 0.5);
-//   static const linen = HSLColor.fromAHSL(1.0, 30.0, 0.67, 0.94);
-//   static const magenta = HSLColor.fromAHSL(1.0, 300, 1.0, 0.5);
-//   static const maroon = HSLColor.fromAHSL(1.0, 338, 0.57, 0.44);
-//   static const mediumAquamarine = HSLColor.fromAHSL(1.0, 160, 0.5, 0.6);
-//   static const mediumBlue = HSLColor.fromAHSL(1.0, 240, 1.0, 0.4);
-//   static const mediumOrchid = HSLColor.fromAHSL(1.0, 288, 0.59, 0.58);
-//   static const mediumPurple = HSLColor.fromAHSL(1.0, 260, 0.6, 0.65);
-//   static const mediumSeaGreen = HSLColor.fromAHSL(1.0, 147, 0.5, 0.47);
-//   static const mediumSlateBlue = HSLColor.fromAHSL(1.0, 249, 0.8, 0.67);
-//   static const mediumSpringGreen = HSLColor.fromAHSL(1.0, 157, 1.0, 0.5);
-//   static const mediumTurquoise = HSLColor.fromAHSL(1.0, 178, 0.6, 0.55);
-//   static const mediumVioletRed = HSLColor.fromAHSL(1.0, 322, 0.81, 0.43);
-//   static const midnightBlue = HSLColor.fromAHSL(1.0, 240, 0.64, 0.27);
-//   static const mintCream = HSLColor.fromAHSL(1.0, 150.0, 1.0, 0.98);
-//   static const mistyRose = HSLColor.fromAHSL(1.0, 6.0, 1.0, 0.94);
-//   static const moccasin = HSLColor.fromAHSL(1.0, 38.0, 1.0, 0.85);
-//   static const navajoWhite = HSLColor.fromAHSL(1.0, 36.0, 1.0, 0.84);
-//   static const navyBlue = HSLColor.fromAHSL(1.0, 240, 1.0, 0.25);
-//   static const oldLace = HSLColor.fromAHSL(1.0, 39.0, 0.85, 0.95);
-//   static const oliveDrab = HSLColor.fromAHSL(1.0, 80, 0.6, 0.35);
-//   static const orange = HSLColor.fromAHSL(1.0, 39, 1.0, 0.5);
-//   static const orangeRed = HSLColor.fromAHSL(1.0, 16, 1.0, 0.5);
-//   static const orchid = HSLColor.fromAHSL(1.0, 302, 0.59, 0.65);
-//   static const paleGoldenrod = HSLColor.fromAHSL(1.0, 55, 0.67, 0.8);
-//   static const paleGreen = HSLColor.fromAHSL(1.0, 120, 0.93, 0.79);
-//   static const paleTurquoise = HSLColor.fromAHSL(1.0, 180, 0.65, 0.81);
-//   static const paleVioletRed = HSLColor.fromAHSL(1.0, 340, 0.6, 0.65);
-//   static const papayaWhip = HSLColor.fromAHSL(1.0, 37.0, 1.0, 0.92);
-//   static const peachPuff = HSLColor.fromAHSL(1.0, 28.0, 1.0, 0.86);
-//   static const peru = HSLColor.fromAHSL(1.0, 30, 0.59, 0.53);
-//   static const pink = HSLColor.fromAHSL(1.0, 350, 1.0, 0.88);
-//   static const plum = HSLColor.fromAHSL(1.0, 300, 0.47, 0.75);
-//   static const powderBlue = HSLColor.fromAHSL(1.0, 187, 0.52, 0.8);
-//   static const purple = HSLColor.fromAHSL(1.0, 277, 0.87, 0.53);
-//   static const red = HSLColor.fromAHSL(1.0, 0, 1.0, 0.5);
-//   static const rosyBrown = HSLColor.fromAHSL(1.0, 0, 0.25, 0.65);
-//   static const royalBlue = HSLColor.fromAHSL(1.0, 225, 0.73, 0.57);
-//   static const saddleBrown = HSLColor.fromAHSL(1.0, 25, 0.76, 0.31);
-//   static const salmon = HSLColor.fromAHSL(1.0, 6, 0.93, 0.71);
-//   static const sandyBrown = HSLColor.fromAHSL(1.0, 20, 0.87, 0.67);
-//   static const seaGreen = HSLColor.fromAHSL(1.0, 146, 0.5, 0.36);
-//   static const seashell = HSLColor.fromAHSL(1.0, 25.0, 1.0, 0.97);
-//   static const sienna = HSLColor.fromAHSL(1.0, 19, 0.56, 0.4);
-//   static const skyBlue = HSLColor.fromAHSL(1.0, 197, 0.71, 0.73);
-//   static const slateBlue = HSLColor.fromAHSL(1.0, 248, 0.53, 0.58);
-//   static const slateGray = HSLColor.fromAHSL(1.0, 210, 0.13, 0.5);
-//   static const snow = HSLColor.fromAHSL(1.0, 0.0, 1.0, 0.99);
-//   static const springGreen = HSLColor.fromAHSL(1.0, 150, 1.0, 0.5);
-//   static const steelBlue = HSLColor.fromAHSL(1.0, 207, 0.44, 0.49);
-//   static const tan = HSLColor.fromAHSL(1.0, 34, 0.44, 0.69);
-//   static const thistle = HSLColor.fromAHSL(1.0, 300, 0.24, 0.8);
-//   static const tomato = HSLColor.fromAHSL(1.0, 9, 1.0, 0.64);
-//   static const turquoise = HSLColor.fromAHSL(1.0, 174, 0.72, 0.56);
-//   static const violet = HSLColor.fromAHSL(1.0, 300, 0.76, 0.72);
-//   static const violetRed = HSLColor.fromAHSL(1.0, 322, 0.73, 0.47);
-//   static const wheat = HSLColor.fromAHSL(1.0, 39, 0.77, 0.83);
-//   static const white = HSLColor.fromAHSL(1.0, 0.0, 1.0, 1.0);
-//   static const whiteSmoke = HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.96);
-//   static const yellow = HSLColor.fromAHSL(1.0, 60, 1.0, 0.5);
-//   static const yellowGreen = HSLColor.fromAHSL(1.0, 80, 0.61, 0.5);
-// }

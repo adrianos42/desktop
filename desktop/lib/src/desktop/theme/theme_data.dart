@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'button.dart';
-import 'button_drop_down.dart';
-import 'button_hyperlink.dart';
 import 'checkbox.dart';
 import 'color_scheme.dart';
 import 'dialog.dart';
+import 'drop_down.dart';
+import 'hyperlink.dart';
 import 'nav.dart';
 import 'radio.dart';
 import 'scrollbar.dart';
@@ -15,6 +15,7 @@ import 'slider.dart';
 import 'tab.dart';
 import 'theme_text.dart';
 import 'toggle_switch.dart';
+import 'tree.dart';
 
 @immutable
 class Theme extends StatelessWidget {
@@ -89,8 +90,9 @@ class ThemeData {
   factory ThemeData({
     required Brightness brightness,
     PrimaryColor? primaryColor,
+    BackgroundColor? backgroundColor,
   }) {
-    final colorScheme = ColorScheme(brightness, primaryColor);
+    final colorScheme = ColorScheme(brightness, primaryColor, backgroundColor);
 
     return ThemeData._raw(
       brightness: brightness,
@@ -107,6 +109,7 @@ class ThemeData {
       sliderTheme: const SliderThemeData(),
       scrollbarTheme: const ScrollbarThemeData(),
       tabTheme: const TabThemeData(),
+      treeTheme: const TreeThemeData(),
     );
   }
 
@@ -125,6 +128,7 @@ class ThemeData {
     required this.toggleSwitchTheme,
     required this.scrollbarTheme,
     required this.tabTheme,
+    required this.treeTheme,
   });
 
   factory ThemeData.light([PrimaryColor? primaryColor]) =>
@@ -144,6 +148,8 @@ class ThemeData {
   final NavThemeData navTheme;
 
   final TabThemeData tabTheme;
+
+  final TreeThemeData treeTheme;
 
   final ButtonThemeData buttonTheme;
 
@@ -184,6 +190,7 @@ class ThemeData {
       sliderTheme: sliderTheme,
       scrollbarTheme: scrollbarTheme,
       tabTheme: tabTheme,
+      treeTheme: treeTheme,
     );
   }
 }
