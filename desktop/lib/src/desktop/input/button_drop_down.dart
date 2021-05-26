@@ -112,21 +112,21 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   void _handleTapUp(TapUpDetails event) {
     if (pressed) {
-      //_controller.forward(from: 0.5);
+      _controller.forward(from: 0.5);
       setState(() => pressed = false);
     }
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!pressed) {
-      //_controller.forward(from: 0.5);
+      _controller.forward(from: 0.5);
       setState(() => pressed = true);
     }
   }
 
   void _handleTapCancel() {
     if (pressed) {
-      //_controller.forward(from: 0.5);
+      _controller.forward(from: 0.5);
       setState(() => pressed = false);
     }
   }
@@ -138,6 +138,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   late AnimationController _controller;
 
   ColorTween? _color;
+  ColorTween? _backgroundColor;
 
   @override
   void initState() {
@@ -163,6 +164,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   void didChangeDependencies() {
     super.didChangeDependencies();
     _color = null;
+    _backgroundColor = null;
   }
 
   @override
@@ -187,14 +189,26 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     final waitingBackground = buttonThemeData.waitingColor!;
 
     final borderColor = enabled
-        ? waiting || hovered
-            ? buttonThemeData.hoverColor!
-            : buttonThemeData.color!
+        ? waiting
+            ? waitingBackground
+            : hovered
+                ? buttonThemeData.hoverColor!
+                : buttonThemeData.color!
         : buttonThemeData.disabledColor!;
+
+    final foreground = enabled
+        ? buttonThemeData.iconThemeData!.color!
+        : buttonThemeData.disabledColor!.toColor();
 
     _color = ColorTween(
         begin: _color?.end ?? borderColor.toColor(),
         end: borderColor.toColor());
+
+    final HSLColor? background =
+        waiting ? waitingBackground : inactiveBackground;
+    _backgroundColor = ColorTween(
+        begin: _backgroundColor?.end ?? background?.toColor(),
+        end: background?.toColor());
 
     Widget result = AnimatedBuilder(
       animation: _controller,
@@ -202,10 +216,11 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         final borderColor =
             _color!.evaluate(AlwaysStoppedAnimation(_controller.value))!;
         final border = Border.all(
-          color: waiting ? waitingBackground.toColor() : borderColor,
+          color: borderColor,
           width: 1.0,
         );
-        final background = waiting ? waitingBackground : inactiveBackground;
+        final background = _backgroundColor!
+            .evaluate(AlwaysStoppedAnimation(_controller.value));
 
         return DefaultTextStyle(
           style: buttonThemeData.textStyle!.copyWith(
@@ -219,7 +234,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               maxWidth: kMaxMenuWidth,
             ),
             decoration: BoxDecoration(
-              color: background?.toColor(),
+              color: background,
               border: border,
             ),
             //constraints: constraints,
@@ -237,7 +252,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                   child: Icon(
                     waiting ? Icons.expand_less : Icons.expand_more,
                     size: 18.0,
-                    color: buttonThemeData.hoverColor!.toColor(),
+                    color: foreground,
                   ),
                 ),
               ],
@@ -254,9 +269,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         onExit: (_) => _handleHoverExited(),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          //onTapDown: _handleTapDown,
-          //onTapUp: _handleTapUp,
-          //onTapCancel: _handleTapCancel,
+          onTapDown: _handleTapDown,
+          onTapUp: _handleTapUp,
+          onTapCancel: _handleTapCancel,
           onTap: showButtonMenu,
           child: result,
         ),

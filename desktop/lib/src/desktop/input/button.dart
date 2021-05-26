@@ -31,6 +31,7 @@ class Button extends StatefulWidget {
   /// Creates a button with a text.
   factory Button.text(
     String text, {
+    double? fontSize,
     String? tooltip,
     HSLColor? color,
     HSLColor? highlightColor,
@@ -40,7 +41,10 @@ class Button extends StatefulWidget {
     Key? key,
   }) {
     return Button(
-      body: Text(text),
+      body: Text(
+        text,
+        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
+      ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       color: color,
@@ -56,6 +60,7 @@ class Button extends StatefulWidget {
   factory Button.icon(
     IconData icon, {
     String? tooltip,
+    double? size,
     HSLColor? color,
     HSLColor? highlightColor,
     HSLColor? hoverColor,
@@ -64,7 +69,7 @@ class Button extends StatefulWidget {
     Key? key,
   }) {
     return Button(
-      body: Icon(icon),
+      body: Icon(icon, size: size),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       color: color,
@@ -224,16 +229,13 @@ class _ButtonState extends State<Button>
     final EdgeInsets trailingPadding;
     final EdgeInsets bodyPadding;
     final EdgeInsets buttonPadding;
-    double? height;
-    double? width;
 
     if (widget.axis == Axis.horizontal) {
       constraints = BoxConstraints(
-        maxHeight: buttonThemeData.height!,
         minHeight: buttonThemeData.height!,
         minWidth: buttonThemeData.minWidth!,
       );
-      height = buttonThemeData.height;
+
       leadingPadding = widget.leadingPadding ??
           EdgeInsets.symmetric(horizontal: itemSpacing);
       trailingPadding = widget.trailingPadding ??
@@ -248,7 +250,7 @@ class _ButtonState extends State<Button>
         minWidth: buttonThemeData.height!,
         minHeight: buttonThemeData.minWidth!,
       );
-      width = buttonThemeData.height;
+
       leadingPadding =
           widget.leadingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
       trailingPadding =
@@ -304,13 +306,6 @@ class _ButtonState extends State<Button>
           ),
         );
       },
-    );
-
-    result = SizedBox(
-      child: result,
-      height: height,
-      width: width,
-      //alignment: widget.alignment,
     );
 
     result = MouseRegion(

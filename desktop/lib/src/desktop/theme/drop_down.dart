@@ -185,7 +185,7 @@ class DropDownButtonTheme extends InheritedTheme {
           buttonThemeData.inactiveColor ?? colorScheme.background;
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
-          IconThemeData(size: _kIconSize, color: color.toColor());
+          IconThemeData(size: _kIconSize, color: hoverColor.toColor());
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,

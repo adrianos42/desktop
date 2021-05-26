@@ -289,7 +289,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colorScheme.background[4].withAlpha(0.95).toColor(),
+        color: colorScheme.background[4].toColor(),
       ),
       position: DecorationPosition.background,
       child: child,
