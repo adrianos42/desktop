@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.1
+
+- Input changes.
+
 ## 2.0.4
 
 - Button color.

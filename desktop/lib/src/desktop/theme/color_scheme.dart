@@ -13,8 +13,8 @@ class ColorScheme {
     this.brightness, [
     PrimaryColor? primary,
     BackgroundColor? backgroundColor,
-  ]) : _primary = primary ?? _kDefaultPrimary,
-      _background = backgroundColor ?? const BackgroundColor._(0.0);
+  ])  : _primary = primary ?? _kDefaultPrimary,
+        _background = backgroundColor ?? const BackgroundColor._(0.0);
 
   /// Returns a color scheme with a different brightness.
   ColorScheme withBrightness(Brightness brightness) {
@@ -28,7 +28,7 @@ class ColorScheme {
       return value.withLightness(0.8);
     }
     return value.withLightness(0.2);
-  } 
+  }
 
   final PrimaryColor _primary;
 
