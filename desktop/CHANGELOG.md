@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.3
+
+- Fixes font package.
+
 ## 3.0.0-dev.2
 
 - Removes flutter prerelease dependency.

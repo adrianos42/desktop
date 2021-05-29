@@ -5,10 +5,15 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 
+const _kFontFamily = 'IBM Plex Sans';
+const _kFontFamilyMono = 'IBM Plex Mono';
+const _kFontPackage = 'desktop';
+
 class _TextThemes {
   static const TextStyle header = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w300,
     fontSize: 44.0,
     //height: 1.2,
@@ -16,7 +21,8 @@ class _TextThemes {
 
   static const TextStyle subheader = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w300,
     fontSize: 34.0,
     //height: 1.2,
@@ -24,7 +30,8 @@ class _TextThemes {
 
   static const TextStyle title = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 24.0,
     //height: 1.2,
@@ -32,7 +39,8 @@ class _TextThemes {
 
   static const TextStyle subtitle = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 20.0,
     //height: 1.2,
@@ -40,8 +48,8 @@ class _TextThemes {
 
   static const TextStyle body1 = TextStyle(
     inherit: false,
-    //fontFamily: 'IBM Plex Sans',
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
     //height: 1.2,
@@ -49,7 +57,8 @@ class _TextThemes {
 
   static const TextStyle body2 = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
     //height: 1.2,
@@ -57,7 +66,8 @@ class _TextThemes {
 
   static const TextStyle caption = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: _kFontFamily,
+    package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
     //height: 1.2,
@@ -65,7 +75,8 @@ class _TextThemes {
 
   static const TextStyle monospace = TextStyle(
     inherit: false,
-    fontFamily: 'IBM Plex Mono',
+    fontFamily: _kFontFamilyMono,
+    package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 13.0,
   );
@@ -170,76 +181,4 @@ class TextTheme {
   final HSLColor textPrimaryLow;
 
   final ColorScheme colorScheme;
-
-  HSLColor effectiveForeground(HSLColor background) {
-    // HSLColor effectiveForeground = background;
-
-    // if (background == colorScheme.overlay1) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay2) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay3) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay4) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay5) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay6) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay7) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay8) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay9) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.overlay10) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.primary) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.primary2) {
-    //   effectiveForeground = textHigh;
-    // } else if (background == colorScheme.primary3) {
-    //   effectiveForeground = textHigh;
-    // } else {
-    //   effectiveForeground = textMedium;
-    // }Q
-
-    return textHigh;
-  }
-
-  HSLColor effectiveDisabledForeground(HSLColor background) {
-    // HSLColor effectiveForeground = background;
-
-    // if (background == colorScheme.overlay1) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay2) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay3) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay4) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay5) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay6) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay7) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay8) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay9) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.overlay10) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.primary) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.primary2) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else if (background == colorScheme.primary3) {
-    //   effectiveForeground = colorScheme.overlay6;
-    // } else {
-    //   effectiveForeground = colorScheme.overlay6;
-    // }
-
-    return textDisabled;
-  }
 }
