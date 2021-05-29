@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.2
+
+- Removes flutter prerelease dependency.
+
 ## 3.0.0-dev.1
 
 - Input changes.
