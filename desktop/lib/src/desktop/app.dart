@@ -93,8 +93,7 @@ class DesktopApp extends StatefulWidget {
         initialRoute = null,
         super(key: key);
 
-  static final Map<ShortcutActivator, Intent> _shortcuts =
-      <ShortcutActivator, Intent>{
+  static final _shortcuts = {
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
         const NextTabIntent(),
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
@@ -250,7 +249,7 @@ class _DesktopAppState extends State<DesktopApp> {
     final Color color =
         widget.color ?? themeData.colorScheme.primary[50].toColor();
 
-    final shortcuts = <ShortcutActivator, Intent>{
+    final shortcuts = {
       ...WidgetsApp.defaultShortcuts,
       ...DesktopApp._shortcuts,
       ...widget.shortcuts ?? {},
@@ -327,7 +326,7 @@ class _DesktopAppState extends State<DesktopApp> {
     return Theme(
       data: effectiveThemeData,
       child: ScrollConfiguration(
-        behavior: widget.scrollBehavior ?? _DesktopScrollBehavior(),
+        behavior: widget.scrollBehavior ?? const _DesktopScrollBehavior(),
         child: Container(
           color: effectiveThemeData.colorScheme.background.toColor(),
           child: Builder(
@@ -340,6 +339,8 @@ class _DesktopAppState extends State<DesktopApp> {
 }
 
 class _DesktopScrollBehavior extends ScrollBehavior {
+  const _DesktopScrollBehavior();
+
   @override
   Widget buildViewportChrome(
       BuildContext context, Widget child, AxisDirection axisDirection) {
