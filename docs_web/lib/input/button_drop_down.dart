@@ -101,6 +101,10 @@ Container(
                     child: Text('Palhoça'),
                     value: 2,
                   ),
+                  ContextMenuItem(
+                    child: Text('São José'),
+                    value: 3,
+                  ),
                 ],
               ),
             ),

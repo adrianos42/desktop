@@ -18,7 +18,7 @@ const double _kMenuWidthStep = 120.0;
 const double _kDividerHeight = 1.0;
 
 const double kMenuHorizontalPadding = 16.0;
-const double kMinMenuWidth = _kMenuWidthStep;
+const double kMinMenuWidth = 2.0 * _kMenuWidthStep;
 const double kMaxMenuWidth = 6.0 * _kMenuWidthStep;
 const double kDefaultItemHeight = 34.0;
 const double kMinMenuHeight = kDefaultItemHeight;
