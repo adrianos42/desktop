@@ -104,8 +104,6 @@ class Defaults {
     required List<ItemTitle> items,
     required String header,
   }) {
-    final controller = ScrollController();
-
     final result = [];
 
     for (final e in items) {
@@ -122,20 +120,17 @@ class Defaults {
       ]);
     }
 
-    return Scrollbar(
-      controller: controller,
-      child: SingleChildScrollView(
-        controller: controller,
-        child: Container(
-          alignment: Alignment.center,
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Defaults.createHeader(context, 'Context menu'),
-                ...result
-              ]),
-        ),
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.topLeft,
+        margin: EdgeInsets.only(right: 8.0),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Defaults.createHeader(context, header),
+              ...result
+            ]),
       ),
     );
   }

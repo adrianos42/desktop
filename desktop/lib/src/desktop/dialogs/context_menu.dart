@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -9,6 +10,7 @@ import '../component.dart';
 import '../localizations.dart';
 import '../navigation/route.dart';
 import '../theme/theme.dart';
+import '../scrolling/scrollbar.dart';
 
 const Duration _kMenuDuration = Duration(microseconds: 200);
 const double _kDividerThickness = 1.0;
@@ -16,7 +18,7 @@ const double _kMenuWidthStep = 120.0;
 const double _kDividerHeight = 1.0;
 
 const double kMenuHorizontalPadding = 16.0;
-const double kMinMenuWidth = 2.0 * _kMenuWidthStep;
+const double kMinMenuWidth = _kMenuWidthStep;
 const double kMaxMenuWidth = 6.0 * _kMenuWidthStep;
 const double kDefaultItemHeight = 34.0;
 const double kMinMenuHeight = kDefaultItemHeight;
@@ -47,15 +49,20 @@ class _RenderMenuItem extends RenderShiftedBox {
   _RenderMenuItem([RenderBox? child]) : super(child);
 
   @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    if (child == null) {
+      return Size.zero;
+    }
+    return child!.getDryLayout(constraints);
+  }
+
+  @override
   void performLayout() {
     if (child == null) {
       size = Size.zero;
     } else {
-      // TODO(as): ???
       child!.layout(constraints, parentUsesSize: true);
       size = constraints.constrain(child!.size);
-
-      // TODO(as): ???
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
       childParentData.offset = Offset.zero;
     }
@@ -159,7 +166,10 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
           padding:
               const EdgeInsets.symmetric(horizontal: kMenuHorizontalPadding),
           alignment: AlignmentDirectional.centerStart,
-          constraints: BoxConstraints(minHeight: widget.height),
+          constraints: BoxConstraints(
+            minHeight: widget.height,
+            maxHeight: widget.height,
+          ),
           child: buildChild(),
         ),
       ),
@@ -206,13 +216,14 @@ class _ContextMenuDividerState extends State<ContextMenuDivider> {
     final HSLColor background = Theme.of(context).colorScheme.background;
 
     return SizedBox(
-        height: widget.height,
-        child: Center(
-          child: Container(
-            height: _kDividerThickness,
-            color: background.toColor(),
-          ),
-        ));
+      height: widget.height,
+      child: Center(
+        child: Container(
+          height: _kDividerThickness,
+          color: background.toColor(),
+        ),
+      ),
+    );
   }
 }
 
@@ -271,16 +282,20 @@ class _ContextMenu<T> extends StatelessWidget {
         minWidth: route.width ?? kMinMenuWidth,
         maxWidth: route.width ?? kMaxMenuWidth,
       ),
-      child: IntrinsicWidth(
-        //stepWidth: kMenuWidthStep,
-        child: Semantics(
-          scopesRoute: true,
-          namesRoute: true,
-          explicitChildNodes: true,
-          label: semanticLabel,
-          child: SingleChildScrollView(
-            child: ListBody(
-              children: children,
+      child: Semantics(
+        scopesRoute: true,
+        namesRoute: true,
+        explicitChildNodes: true,
+        label: semanticLabel,
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: Scrollbar(
+            isAlwaysShown: false,
+            child: IntrinsicWidth(
+              stepWidth: route.width == null ? _kMenuWidthStep : null,
+              child: SingleChildScrollView(
+                child: ListBody(children: children),
+              ),
             ),
           ),
         ),
@@ -290,6 +305,7 @@ class _ContextMenu<T> extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colorScheme.background[4].toColor(),
+        //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
       ),
       position: DecorationPosition.background,
       child: child,
@@ -304,6 +320,7 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
     this.barrierLabel,
     this.semanticLabel,
     this.width,
+    required this.rootNavigator,
     required this.position,
     required RouteSettings settings,
   }) : super(settings: settings);
@@ -313,6 +330,7 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
   final String? semanticLabel;
   final Rect position;
   final double? width;
+  final bool rootNavigator;
 
   @override
   bool get opaque => false;
@@ -353,7 +371,7 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
     );
 
     return CustomSingleChildLayout(
-      delegate: _ContextMenuRouteLayout(position),
+      delegate: _ContextMenuRouteLayout(position, rootNavigator),
       child: menu,
     );
   }
@@ -373,36 +391,46 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
 class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
   _ContextMenuRouteLayout(
     this.position,
+    this.rootNavigator,
   );
 
   final Rect position;
+  final bool rootNavigator;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    return BoxConstraints.loose(constraints.smallest);
+    final double maxHeight = constraints.maxHeight;
+    final double maxWidth = constraints.maxWidth;
+    final Size size = Size(
+      max(position.left, maxWidth - position.right),
+      max(position.top, maxHeight - position.bottom),
+    );
+    return BoxConstraints.loose(size);
   }
 
   @override
   Offset getPositionForChild(Size size, Size childSize) {
-    double? y;
+    double y;
     if (size.height - position.bottom >= childSize.height) {
       y = position.bottom;
     } else if (childSize.height <= position.top) {
       y = position.top - childSize.height;
+    } else {
+      y = 0;
+      throw Exception('Could not fit height for menu');
     }
 
-    assert(y != null, 'could not fit height');
-
-    double? x;
+    double x;
     if (size.width - position.left >= childSize.width) {
       x = position.left;
     } else if (childSize.width <= position.right) {
       x = position.right - childSize.width;
+    } else {
+      x = 0;
+      throw Exception('Could not fit width for menu');
     }
 
-    assert(x != null, 'could not fit width');
-
-    return Offset(x!, y!); // TODO(as): ???
+    return Offset(x, y);
   }
 
   @override
@@ -411,6 +439,7 @@ class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
   }
 }
 
+/// Shows a menu given a relative position for the target.
 Future<T?> showMenu<T>({
   required BuildContext context,
   required List<ContextMenuEntry<T>> items,
@@ -420,21 +449,24 @@ Future<T?> showMenu<T>({
   String? semanticLabel,
   String? barrierLabel,
   T? initialValue,
+  bool rootNavigator = true,
 }) {
   assert(items.isNotEmpty);
 
   final String? label = semanticLabel;
 
-  return Navigator.of(context, rootNavigator: false).push(
+  return Navigator.of(context, rootNavigator: rootNavigator).push(
     _ContextMenuRoute<T>(
-        items: items,
-        value: initialValue,
-        semanticLabel: label,
-        position: position,
-        width: width,
-        settings: settings,
-        barrierLabel: barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel),
+      items: items,
+      value: initialValue,
+      semanticLabel: label,
+      position: position,
+      width: width,
+      settings: settings,
+      rootNavigator: rootNavigator,
+      barrierLabel: barrierLabel ??
+          DesktopLocalizations.of(context).modalBarrierDismissLabel,
+    ),
   );
 }
 

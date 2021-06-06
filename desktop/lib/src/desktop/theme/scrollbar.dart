@@ -14,6 +14,7 @@ class ScrollbarThemeData {
     this.hoverColor,
     this.highlightColor,
     this.inhoverColor,
+    this.trackColor,
   });
 
   final HSLColor? disabledColor;
@@ -28,6 +29,8 @@ class ScrollbarThemeData {
 
   final HSLColor? foreground;
 
+  final HSLColor? trackColor;
+
   ScrollbarThemeData copyWith({
     HSLColor? disabledColor,
     HSLColor? color,
@@ -35,6 +38,7 @@ class ScrollbarThemeData {
     HSLColor? hoverColor,
     HSLColor? highlightColor,
     HSLColor? inhoverColor,
+    HSLColor? trackColor,
   }) {
     return ScrollbarThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -43,6 +47,7 @@ class ScrollbarThemeData {
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
       inhoverColor: inhoverColor ?? this.inhoverColor,
+      trackColor: trackColor,
     );
   }
 
@@ -57,6 +62,7 @@ class ScrollbarThemeData {
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
       inhoverColor: inhoverColor,
+      trackColor: trackColor,
     );
   }
 
@@ -66,6 +72,7 @@ class ScrollbarThemeData {
         hoverColor != null &&
         inhoverColor != null &&
         highlightColor != null &&
+        trackColor != null &&
         foreground != null;
   }
 
@@ -77,6 +84,7 @@ class ScrollbarThemeData {
       foreground,
       hoverColor,
       highlightColor,
+      trackColor,
       inhoverColor,
     );
   }
@@ -95,6 +103,7 @@ class ScrollbarThemeData {
         other.hoverColor == hoverColor &&
         other.inhoverColor == inhoverColor &&
         other.highlightColor == highlightColor &&
+        other.trackColor == trackColor &&
         other.foreground == foreground;
   }
 }
@@ -134,19 +143,23 @@ class ScrollbarTheme extends InheritedTheme {
 
       final ColorScheme colorScheme = themeData.colorScheme;
 
-      final HSLColor color = scrollbarThemeData.color ?? colorScheme.shade[40];
+      final HSLColor color =
+          scrollbarThemeData.color ?? colorScheme.shade[40].withAlpha(0.8);
 
       final HSLColor hoverColor =
-          scrollbarThemeData.hoverColor ?? colorScheme.shade[50];
+          scrollbarThemeData.hoverColor ?? colorScheme.shade[80].withAlpha(0.8);
 
       final HSLColor highlightColor =
-          scrollbarThemeData.color ?? colorScheme.shade[60];
+          scrollbarThemeData.color ?? colorScheme.shade[60].withAlpha(0.8);
 
       final HSLColor foreground =
           scrollbarThemeData.foreground ?? colorScheme.shade[100];
 
       final HSLColor inhoverColor =
           scrollbarThemeData.hoverColor ?? colorScheme.shade[70];
+
+      final HSLColor trackColor =
+          scrollbarThemeData.trackColor ?? colorScheme.background[10];
 
       final HSLColor disabledColor =
           scrollbarThemeData.disabledColor ?? colorScheme.disabled;
@@ -158,6 +171,7 @@ class ScrollbarTheme extends InheritedTheme {
         hoverColor: hoverColor,
         inhoverColor: inhoverColor,
         highlightColor: highlightColor,
+        trackColor: trackColor,
       );
     }
 

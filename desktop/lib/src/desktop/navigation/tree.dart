@@ -168,6 +168,7 @@ class Tree extends StatefulWidget {
     this.pagePadding,
     this.focusNode,
     this.autofocus = false,
+    this.isScrollbarAlwaysShown = true,
     Key? key,
   }) : super(key: key);
 
@@ -185,6 +186,8 @@ class Tree extends StatefulWidget {
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  final bool isScrollbarAlwaysShown;
 
   @override
   _TreeState createState() => _TreeState();
@@ -323,6 +326,8 @@ class _TreeState extends State<Tree> {
     }
   }
 
+  final controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
@@ -357,38 +362,55 @@ class _TreeState extends State<Tree> {
       );
     }
 
-    final controller = ScrollController();
-
     Widget result = Row(
       children: [
         Container(
           alignment: Alignment.topLeft,
           width: 200.0,
-          child: Scrollbar(
-            controller: controller,
-            child: SingleChildScrollView(
-              controller: controller,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (widget.title != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: widget.title!,
-                      ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widget.nodes
-                          .map((e) => _TreeColumn(node: e, parentName: ''))
-                          .toList(),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              scrollbars: false,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.title != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: widget.title!,
                     ),
-                  ],
-                ),
+                  Expanded(
+                    child: Scrollbar(
+                      isAlwaysShown: false,
+                      controller: controller,
+                      child: SingleChildScrollView(
+                        controller: controller,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: widget.nodes
+                              .map(
+                                (e) => _TreeColumn(
+                                  node: e,
+                                  parentName: '',
+                                  updatePage: () {
+                                    setState(
+                                        () {}); // TODO(as): See scroll notification without rebuilding.
+                                    //controller.position.;
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -431,11 +453,13 @@ class _TreeColumn extends StatefulWidget {
   const _TreeColumn({
     required this.node,
     required this.parentName,
+    required this.updatePage,
     Key? key,
   }) : super(key: key);
 
   final TreeNode node;
   final String parentName;
+  final VoidCallback updatePage;
 
   @override
   _TreeColumnState createState() => _TreeColumnState();
@@ -466,6 +490,7 @@ class _TreeColumnState extends State<_TreeColumn> {
               .map((e) => _TreeColumn(
                     node: e,
                     parentName: name,
+                    updatePage: widget.updatePage,
                   ))
               .toList(),
         ),
@@ -488,7 +513,10 @@ class _TreeColumnState extends State<_TreeColumn> {
               padding: EdgeInsets.zero,
               body: Text(widget.node.title),
               trailing: Icon(iconCollpased),
-              onPressed: () => setState(() => _collapsed = !_collapsed),
+              onPressed: () {
+                widget.updatePage();
+                setState(() => _collapsed = !_collapsed);
+              },
             ),
           ),
           Offstage(
@@ -503,20 +531,25 @@ class _TreeColumnState extends State<_TreeColumn> {
       final hoverColor = active ? highlightColor : treeTheme.hoverColor;
       final activeColor = active ? highlightColor : treeTheme.color;
 
-      return ButtonTheme.merge(
-        data: ButtonThemeData(
-          color: activeColor,
-          highlightColor: highlightColor,
-          hoverColor: hoverColor,
-          focusColor: hoverColor,
-        ),
-        child: Button(
-          padding: EdgeInsets.zero,
-          bodyPadding: EdgeInsets.zero,
-          body: Text(widget.node.title),
-          onPressed: () {
-            Tree._of(context)!.setPage(name);
-          },
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: ButtonTheme.merge(
+          data: ButtonThemeData(
+            color: activeColor,
+            highlightColor: highlightColor,
+            hoverColor: hoverColor,
+            focusColor: hoverColor,
+          ),
+          child: Button(
+            padding: EdgeInsets.zero,
+            bodyPadding: EdgeInsets.zero,
+            body: Text(
+              widget.node.title,
+            ),
+            onPressed: () {
+              Tree._of(context)!.setPage(name);
+            },
+          ),
         ),
       );
     }

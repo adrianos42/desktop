@@ -3,37 +3,63 @@ import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
 
+const double _kMinInteractiveSize = 48.0;
+
+/// Scroll painter for desktop.
 class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
+  /// Creates a [DesktopScrollbarPainter].
   DesktopScrollbarPainter({
-    required Color color,
+    required ColorTween thumbColor,
     required TextDirection textDirection,
-    required this.thickness,
+    required double thickness,
     required this.fadeoutOpacityAnimation,
+    required this.thumbColorAnimation,
     EdgeInsets padding = EdgeInsets.zero,
     this.mainAxisMargin = 0.0,
     this.crossAxisMargin = 0.0,
-    required this.minLength,
+    required double minLength,
     double? minOverscrollLength,
+    Color? trackColor,
   })  : assert(minLength >= 0),
         assert(minOverscrollLength == null || minOverscrollLength <= minLength),
         assert(minOverscrollLength == null || minOverscrollLength >= 0),
         assert(padding.isNonNegative),
-        _color = color,
+        _thumbColor = thumbColor,
+        _trackColor = trackColor,
+        _thickness = thickness,
         _textDirection = textDirection,
         _padding = padding,
-        minOverscrollLength = minOverscrollLength ?? minLength {
+        _minLength = minLength,
+        _minOverscrollLength = minOverscrollLength ?? minLength {
     fadeoutOpacityAnimation.addListener(notifyListeners);
+    thumbColorAnimation.addListener(notifyListeners);
   }
 
+  late double _thumbOffset;
+
+  /// Thumb offset.
+  double get thumbOffset => _thumbOffset;
+
   /// [Color] of the thumb.
-  Color get color => _color;
-  late Color _color;
-  set color(Color value) {
-    if (color == value) {
+  ColorTween get thumbColor => _thumbColor;
+  ColorTween _thumbColor;
+  set thumbColor(ColorTween value) {
+    if (thumbColor == value) {
       return;
     }
 
-    _color = value;
+    _thumbColor = value;
+    notifyListeners();
+  }
+
+  Color? get trackColor => _trackColor;
+  Color? _trackColor;
+  set trackColor(Color? value) {
+    if (trackColor == value) {
+      return;
+    }
+
+    _trackColor = value;
     notifyListeners();
   }
 
@@ -51,22 +77,28 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   }
 
   /// Thickness of the scrollbar in its cross-axis in logical pixels.
-  double thickness;
+  double get thickness => _thickness;
+  double _thickness;
+  set thickness(double value) {
+    if (thickness == value) {
+      return;
+    }
 
-  /// An opacity [Animation] that dictates the opacity of the thumb.
-  /// Changes in value of this [Listenable] will automatically trigger repaints.
-  ///
+    _thickness = value;
+    notifyListeners();
+  }
+
+  /// An [Animation] that dictates the opacity of the thumb.
   final Animation<double> fadeoutOpacityAnimation;
+
+  /// A [Animation] that dictates the color of the thumb.
+  final Animation<double> thumbColorAnimation;
 
   /// Distance from the scrollbar's start and end to the edge of the viewport
   /// in logical pixels. It affects the amount of available paint area.
-  ///
-  /// Mustn't be null and defaults to 0.
   final double mainAxisMargin;
 
   /// Distance from the scrollbar's side to the nearest edge in logical pixels.
-  ///
-  /// Must not be null and defaults to 0.
   final double crossAxisMargin;
 
   /// The amount of space by which to inset the scrollbar's start and end, as
@@ -79,13 +111,13 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   /// Defaults to [EdgeInsets.zero]. Must not be null and offsets from all four
   /// directions must be greater than or equal to zero.
   EdgeInsets get padding => _padding;
-  final EdgeInsets _padding;
+  EdgeInsets _padding;
   set padding(EdgeInsets value) {
     if (padding == value) {
       return;
     }
 
-    //_padding = value;
+    _padding = value;
     notifyListeners();
   }
 
@@ -97,10 +129,16 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   /// to fit in the available paint area. E.g., when [minLength] is
   /// `double.infinity`, it will not be respected if [viewportDimension] and
   /// [mainAxisMargin] are finite.
-  ///
-  /// Mustn't be null and the value has to be within the range of 0 to
-  /// [minOverscrollLength], inclusive. Defaults to 18.0.
-  final double minLength;
+  double get minLength => _minLength;
+  double _minLength;
+  set minLength(double value) {
+    if (minLength == value) {
+      return;
+    }
+
+    _minLength = value;
+    notifyListeners();
+  }
 
   /// The preferred smallest size the scrollbar can shrink to when viewport is
   /// overscrolled.
@@ -109,14 +147,21 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   /// than [minOverscrollLength] to fit in the available paint area. E.g., when
   /// [minOverscrollLength] is `double.infinity`, it will not be respected if
   /// the [viewportDimension] and [mainAxisMargin] are finite.
-  ///
-  /// The value is less than or equal to [minLength] and greater than or equal to 0.
-  /// If unspecified or set to null, it will defaults to the value of [minLength].
-  final double minOverscrollLength;
+  double get minOverscrollLength => _minOverscrollLength;
+  double _minOverscrollLength;
+  set minOverscrollLength(double value) {
+    if (minOverscrollLength == value) {
+      return;
+    }
+
+    _minOverscrollLength = value;
+    notifyListeners();
+  }
 
   ScrollMetrics? _lastMetrics;
   AxisDirection? _lastAxisDirection;
   Rect? _thumbRect;
+  Rect? _trackRect;
 
   /// Update with new [ScrollMetrics]. The scrollbar will show and redraw itself
   /// based on these new metrics.
@@ -138,15 +183,21 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   }
 
   Paint get _paint {
+    final color = thumbColor.evaluate(thumbColorAnimation)!;
     return Paint()
       ..color =
           color.withOpacity(color.opacity * fadeoutOpacityAnimation.value);
   }
 
+  Paint get _trackPaint {
+    return Paint()..color = trackColor!;
+  }
+
   void _paintThumbCrossAxis(Canvas canvas, Size size, double thumbOffset,
       double thumbExtent, AxisDirection direction) {
-    double x, y;
-    Size thumbSize;
+    final double x, y;
+    final Size thumbSize, trackSize;
+    final Offset trackOffset;
 
     switch (direction) {
       case AxisDirection.down:
@@ -155,6 +206,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
             ? crossAxisMargin + padding.left
             : size.width - thickness - crossAxisMargin - padding.right;
         y = thumbOffset;
+
+        trackSize = Size(thickness + 2 * crossAxisMargin, _trackExtent);
+        trackOffset = Offset(x - crossAxisMargin, 0.0);
         break;
       case AxisDirection.up:
         thumbSize = Size(thickness, thumbExtent);
@@ -162,17 +216,32 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
             ? crossAxisMargin + padding.left
             : size.width - thickness - crossAxisMargin - padding.right;
         y = thumbOffset;
+
+        trackSize = Size(thickness + 2 * crossAxisMargin, _trackExtent);
+        trackOffset = Offset(x - crossAxisMargin, 0.0);
         break;
       case AxisDirection.left:
         thumbSize = Size(thumbExtent, thickness);
         x = thumbOffset;
         y = size.height - thickness - crossAxisMargin - padding.bottom;
+
+        trackSize = Size(_trackExtent, thickness + 2 * crossAxisMargin);
+        trackOffset = Offset(0.0, y - crossAxisMargin);
         break;
       case AxisDirection.right:
         thumbSize = Size(thumbExtent, thickness);
         x = thumbOffset;
         y = size.height - thickness - crossAxisMargin - padding.bottom;
+
+        trackSize = Size(_trackExtent, thickness + 2 * crossAxisMargin);
+        trackOffset = Offset(0.0, y - crossAxisMargin);
         break;
+    }
+
+    _trackRect = trackOffset & trackSize;
+
+    if (trackColor != null) {
+      canvas.drawRect(_trackRect!, _trackPaint);
     }
 
     _thumbRect = Offset(x, y) & thumbSize;
@@ -220,6 +289,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   @override
   void dispose() {
     fadeoutOpacityAnimation.removeListener(notifyListeners);
+    thumbColorAnimation.removeListener(notifyListeners);
     super.dispose();
   }
 
@@ -277,9 +347,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (_lastAxisDirection == null ||
-        _lastMetrics == null ||
-        fadeoutOpacityAnimation.value == 0.0) {
+    if (_lastAxisDirection == null || _lastMetrics == null) {
       return;
     }
 
@@ -293,32 +361,47 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     final double thumbExtent = _thumbExtent();
     final double thumbOffsetLocal =
         _getScrollToTrack(_lastMetrics!, thumbExtent);
-    final double thumbOffset =
-        thumbOffsetLocal + mainAxisMargin + beforePadding;
+    _thumbOffset = thumbOffsetLocal + mainAxisMargin + beforePadding;
+
+    if (_lastMetrics!.maxScrollExtent.isInfinite) {
+      return;
+    }
 
     return _paintThumbCrossAxis(
-        canvas, size, thumbOffset, thumbExtent, _lastAxisDirection!);
+        canvas, size, _thumbOffset, thumbExtent, _lastAxisDirection!);
   }
 
-  // /// Same as hitTest, but includes some padding to make sure that the region
-  // /// isn't too small to be interacted with by the user.
-  // bool hitTestInteractive(Offset position) {
-  //   if (_thumbRect == null) {
-  //     return false;
-  //   }
-  //   // The thumb is not able to be hit when transparent.
-  //   if (fadeoutOpacityAnimation.value == 0.0) {
-  //     return false;
-  //   }
-  //   final Rect interactiveThumbRect = _thumbRect.expandToInclude(
-  //     Rect.fromCircle(
-  //         center: _thumbRect.center, radius: _kMinInteractiveSize / 2),
-  //   );
-  //   return interactiveThumbRect.contains(position);
-  // }
+  /// Same as hitTest, but includes some padding when the [PointerEvent] is
+  /// caused by [PointerDeviceKind.touch] to make sure that the region
+  /// isn't too small to be interacted with by the user.
+  bool hitTestInteractive(Offset position, PointerDeviceKind kind) {
+    if (_thumbRect == null) {
+      return false;
+    }
+    // The scrollbar is not able to be hit when transparent.
+    if (fadeoutOpacityAnimation.value == 0.0) {
+      return false;
+    }
 
-  @override
-  bool hitTest(Offset position) {
+    final Rect interactiveRect = _trackRect ?? _thumbRect!;
+    switch (kind) {
+      case PointerDeviceKind.touch:
+        final Rect touchScrollbarRect = interactiveRect.expandToInclude(
+          Rect.fromCircle(
+              center: _thumbRect!.center, radius: _kMinInteractiveSize / 2),
+        );
+        return touchScrollbarRect.contains(position);
+      case PointerDeviceKind.mouse:
+      case PointerDeviceKind.stylus:
+      case PointerDeviceKind.invertedStylus:
+      case PointerDeviceKind.unknown:
+        return interactiveRect.contains(position);
+    }
+  }
+
+  /// Same as hitTestInteractive, but excludes the track portion of the scrollbar.
+  /// Used to evaluate interactions with only the scrollbar thumb.
+  bool hitTestOnlyThumbInteractive(Offset position, PointerDeviceKind kind) {
     if (_thumbRect == null) {
       return false;
     }
@@ -326,22 +409,48 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     if (fadeoutOpacityAnimation.value == 0.0) {
       return false;
     }
+
+    switch (kind) {
+      case PointerDeviceKind.touch:
+        final Rect touchThumbRect = _thumbRect!.expandToInclude(
+          Rect.fromCircle(
+              center: _thumbRect!.center, radius: _kMinInteractiveSize / 2),
+        );
+        return touchThumbRect.contains(position);
+      case PointerDeviceKind.mouse:
+      case PointerDeviceKind.stylus:
+      case PointerDeviceKind.invertedStylus:
+      case PointerDeviceKind.unknown:
+        return _thumbRect!.contains(position);
+    }
+  }
+
+  @override
+  bool hitTest(Offset position) {
+    if (_thumbRect == null) {
+      return false;
+    }
+    if (fadeoutOpacityAnimation.value == 0.0) {
+      return false;
+    }
     return _thumbRect!.contains(position);
   }
 
+  /// The thumb [Rect].
   Rect? get thumbRect {
     return _thumbRect;
   }
 
   @override
   bool shouldRepaint(DesktopScrollbarPainter old) {
-    return color != old.color ||
+    return thumbColor != old.thumbColor ||
         textDirection != old.textDirection ||
         thickness != old.thickness ||
         fadeoutOpacityAnimation != old.fadeoutOpacityAnimation ||
         mainAxisMargin != old.mainAxisMargin ||
         crossAxisMargin != old.crossAxisMargin ||
         minLength != old.minLength ||
+        minOverscrollLength != old.minOverscrollLength ||
         padding != old.padding;
   }
 

@@ -8,115 +8,133 @@ import '../theme/scrollbar.dart';
 import '../theme/theme.dart';
 import 'scroll_painter.dart';
 
-const double _kScrollbarThickness = 8.0;
-const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1800);
-// TODO(as): ??? const Duration _kScrollbarTimeToShow = Duration(milliseconds: 400);
-const Duration _kScrollbarFadeDuration = Duration(milliseconds: 250);
-const double _kScrollTapIncrement = 0.05;
-const double _kScrollbarMinOverscrollLength = 8.0;
-const Duration _kAnimationDuration = Duration(milliseconds: 200);
-const Curve _kAnimationCurve = Curves.linear;
-const Duration _kAnimationDurationIncrement = Duration(milliseconds: 160);
-const Curve _kAnimationCurveIncrement = Curves.easeOutQuad;
-
 const double _kMinThumbExtent = 32.0;
-const double _kScrollbarMinLength = _kMinThumbExtent;
 
-// class PageUpAction extends Action {
-//   PageUpAction() : super(key);
+const double _kScrollbarThickness = 8.0;
 
-//   static const LocalKey key = ValueKey<Type>(PageUpAction);
+const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1200);
+const Duration _kScrollbarFadeDuration = Duration(milliseconds: 300);
 
-//   @override
-//   void invoke(FocusNode node, Intent intent) => {};
-// }
+const double _kScrollbarMinOverscrollLength = 8.0;
 
-// class PageDownAction extends Action {
-//   PageDownAction() : super(key);
+const Duration _kAnimationDurationIncrement = Duration(milliseconds: 200);
+const Curve _kAnimationCurveIncrement = Curves.easeOut;
 
-//   static const LocalKey key = ValueKey<Type>(PageDownAction);
-
-//   @override
-//   void invoke(FocusNode node, Intent intent) => {};
-// }
-
+/// A scrollbar thumb indicates which portion of a [ScrollView] is actually
+/// visible.
 class Scrollbar extends StatefulWidget {
+  /// Creates a desktop [Scrollbar].
   const Scrollbar({
     Key? key,
     required this.child,
     this.controller,
-    this.enabled = true,
     this.autofocus = false,
     this.focusNode,
+    this.isAlwaysShown = true,
+    this.thickness,
+    this.notificationPredicate = defaultScrollNotificationPredicate,
   }) : super(key: key);
 
+  /// {@template flutter.widgets.Scrollbar.controller}
+  /// The [ScrollController] used to implement Scrollbar dragging.
   final ScrollController? controller;
 
+  /// The thickness of the scrollbar in the cross axis of the scrollable.
+  ///
+  /// Will default to 6.0 pixels if null.
+  final double? thickness;
+
+  /// The widget below this widget in the tree.
   final Widget child;
 
+  /// TODO(as): Focus.
   final bool autofocus;
 
-  final bool enabled;
-
+  /// TODO(as): Focus.
   final FocusNode? focusNode;
+
+  /// A check that specifies whether a [ScrollNotification] should be
+  /// handled by this widget.
+  final ScrollNotificationPredicate notificationPredicate;
+
+  /// Indicates that the scrollbar should be visible, even when a scroll is not
+  /// underway. Defaults to true.
+  final bool isAlwaysShown;
 
   @override
   _ScrollbarState createState() => _ScrollbarState();
 }
 
 class _ScrollbarState extends State<Scrollbar>
-    with TickerProviderStateMixin, WidgetsBindingObserver, ComponentStateMixin {
+    with TickerProviderStateMixin, ComponentStateMixin {
   final GlobalKey _customPaintKey = GlobalKey();
   DesktopScrollbarPainter? _painter;
   Timer? _fadeoutTimer;
-  Timer? _showTimer;
 
+  late AnimationController _fadeoutAnimationController;
+  late Animation<double> _fadeoutOpacityAnimation;
+  late AnimationController _thumbAnimationController;
+  late Animation<double> _thumbAnimation;
   late Map<Type, Action<Intent>> _actionMap;
+  ScrollController? _currentController;
+  double? _dragScrollbarPosition;
 
-  HSLColor get _trackColor {
+  ColorTween get _thumbColor {
     final theme = ScrollbarTheme.of(context);
-    return pressed
+
+    final HSLColor color = pressed
         ? theme.highlightColor!
         : hovered
             ? theme.hoverColor!
             : theme.color!;
+
+    _color = ColorTween(
+      begin: _color?.end ?? color.toColor(),
+      end: color.toColor(),
+    );
+    return _color!;
   }
 
-  late AnimationController _fadeoutAnimationController;
-  late Animation<double> _fadeoutOpacityAnimation;
-  double? _dragScrollbarPositionY;
-  Drag? _drag;
+  ColorTween? _color;
 
-  final bool _hideScroll = false;
+  HSLColor? get _trackColor {
+    return null;
+    if (!_hideScroll) {
+      final theme = ScrollbarTheme.of(context);
+      return theme.trackColor!;
+    }
 
-  ScrollController? _currentController;
-  ScrollController get _controller =>
-      widget.controller ?? (_currentController ??= ScrollController());
+    return null;
+  }
 
-  ScrollPosition get _position => _controller.position;
+  bool get _hideScroll => !widget.isAlwaysShown;
 
   Map<Type, GestureRecognizerFactory> get _gestures {
     final Map<Type, GestureRecognizerFactory> gestures =
         <Type, GestureRecognizerFactory>{};
 
-    gestures[_ThumbVerticalDragGestureRecognizer] =
-        GestureRecognizerFactoryWithHandlers<
-            _ThumbVerticalDragGestureRecognizer>(
-      () => _ThumbVerticalDragGestureRecognizer(
+    final ScrollController? controller =
+        widget.controller ?? PrimaryScrollController.of(context);
+    if (controller == null) {
+      return gestures;
+    }
+
+    gestures[_ThumbPressGestureRecognizer] =
+        GestureRecognizerFactoryWithHandlers<_ThumbPressGestureRecognizer>(
+      () => _ThumbPressGestureRecognizer(
         debugOwner: this,
         customPaintKey: _customPaintKey,
       ),
-      (_ThumbVerticalDragGestureRecognizer instance) {
-        instance
-          ..onStart = _handleDragStart
-          ..onDown = _handleDragDown
-          ..onUpdate = _handleDragUpdate
-          ..onCancel = _handleDragCancel
-          ..onEnd = _handleDragEnd;
+      (_ThumbPressGestureRecognizer instance) {
+        instance.onLongPress = _handleThumbPress;
+        instance.onLongPressEnd = (LongPressEndDetails details) =>
+            _handleThumbPressEnd(details.localPosition, details.velocity);
+        instance.onLongPressMoveUpdate = (LongPressMoveUpdateDetails details) =>
+            _handleThumbPressUpdate(details.localPosition);
+        instance.onLongPressStart = (LongPressStartDetails details) =>
+            _handleThumbPressStart(details.localPosition);
       },
     );
-
-    //_ThumbDragGestureRecognizer
 
     gestures[_TapGestureRecognizer] =
         GestureRecognizerFactoryWithHandlers<_TapGestureRecognizer>(
@@ -125,12 +143,49 @@ class _ScrollbarState extends State<Scrollbar>
         customPaintKey: _customPaintKey,
       ),
       (_TapGestureRecognizer instance) {
-        instance.onTap = () {
-          if (instance.region == _TapRegion.down) {
-            _handleIncrement(_kScrollTapIncrement);
-          } else if (instance.region == _TapRegion.up) {
-            _handleIncrement(-_kScrollTapIncrement);
+        instance.onTapDown = (details) {
+          _currentController =
+              widget.controller ?? PrimaryScrollController.of(context);
+          double scrollIncrement;
+          final ScrollIncrementCalculator? scrollIncrementCalculator =
+              Scrollable.of(
+                      _currentController!.position.context.notificationContext!)
+                  ?.widget
+                  .incrementCalculator;
+          if (scrollIncrementCalculator != null) {
+            scrollIncrement = scrollIncrementCalculator(ScrollIncrementDetails(
+              type: ScrollIncrementType.page,
+              metrics: _currentController!.position,
+            ));
+          } else {
+            scrollIncrement =
+                0.8 * _currentController!.position.viewportDimension;
           }
+
+          switch (_currentController!.position.axisDirection) {
+            case AxisDirection.up:
+              if (details.localPosition.dy > _painter!.thumbOffset) {
+                scrollIncrement = -scrollIncrement;
+              }
+              break;
+            case AxisDirection.right:
+              if (details.localPosition.dx < _painter!.thumbOffset) {
+                scrollIncrement = -scrollIncrement;
+              }
+              break;
+            case AxisDirection.down:
+              if (details.localPosition.dy < _painter!.thumbOffset) {
+                scrollIncrement = -scrollIncrement;
+              }
+              break;
+            case AxisDirection.left:
+              if (details.localPosition.dx > _painter!.thumbOffset) {
+                scrollIncrement = -scrollIncrement;
+              }
+              break;
+          }
+
+          _handleIncrement(scrollIncrement);
         };
       },
     );
@@ -138,51 +193,66 @@ class _ScrollbarState extends State<Scrollbar>
     return gestures;
   }
 
-  void _updateTrackColor() {
-    _painter?.color = _trackColor.toColor();
-  }
-
   void _handleHoverChanged(bool value) {
     if (hovered != value) {
+      if (value) {
+        _fadeoutTimer?.cancel();
+        _fadeoutAnimationController.forward();
+      } else {
+        _startFadeoutTimer();
+      }
       hovered = value;
-      _updateTrackColor();
+
+      _painter!.thumbColor = _thumbColor;
+      _thumbAnimationController.forward(from: 0.0);
     }
   }
 
   void _handlePressedChanged(bool value) {
     if (pressed != value) {
       pressed = value;
-      _updateTrackColor();
+
+      _painter!.thumbColor = _thumbColor;
+      _thumbAnimationController.forward(from: 0.5);
     }
   }
 
   void _handleMouseEnter(PointerEnterEvent event) {
-    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
+    _handleHoverChanged(_hitTest(event.position, event.kind));
   }
 
   void _handleMouseHover(PointerHoverEvent event) {
-    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
+    _handleHoverChanged(_hitTest(event.position, event.kind));
   }
 
   void _handleMouseExit(PointerExitEvent event) {
-    _handleHoverChanged(_hitTest(_customPaintKey, event.position));
+    _handleHoverChanged(_hitTest(event.position, event.kind));
+  }
+
+  bool _hitTest(Offset offset, PointerDeviceKind kind) {
+    final RenderBox renderBox =
+        _customPaintKey.currentContext!.findRenderObject()! as RenderBox;
+
+    final Offset localOffset = renderBox.globalToLocal(offset);
+    return _painter!.hitTestOnlyThumbInteractive(localOffset, kind);
   }
 
   DesktopScrollbarPainter _buildScrollbarPainter(BuildContext context) {
     return DesktopScrollbarPainter(
-      color: _trackColor.toColor(),
+      thumbColor: _thumbColor,
+      thumbColorAnimation: _thumbAnimation,
+      trackColor: _trackColor?.toColor(),
       thickness: _kScrollbarThickness,
       textDirection: Directionality.of(context),
       minOverscrollLength: _kScrollbarMinOverscrollLength,
-      minLength: _kScrollbarMinLength,
+      minLength: _kMinThumbExtent,
       fadeoutOpacityAnimation: _fadeoutOpacityAnimation,
     );
   }
 
   void _startFadeoutTimer() {
-    _fadeoutTimer?.cancel();
-
     if (_hideScroll) {
+      _fadeoutTimer?.cancel();
       _fadeoutTimer = Timer(_kScrollbarTimeToFade, () {
         _fadeoutAnimationController.reverse();
         _fadeoutTimer = null;
@@ -190,190 +260,116 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  // TODO(as): ???
-  // void _startShowTimer() {
-  //   _showTimer?.cancel();
+  Axis? get _scrollbarDirection {
+    assert(_currentController != null);
 
-  //   _showTimer = Timer(_kScrollbarTimeToShow, () {
-  //     if (_position.maxScrollExtent <= _position.minScrollExtent) {
-  //       return;
-  //     }
+    if (_currentController!.hasClients) {
+      return _currentController!.position.axis;
+    }
 
-  //     _fadeoutAnimationController.forward();
+    return null;
+  }
 
-  //     _painter!.update(_position, _position.axisDirection);
-  //   });
-  // }
+  void _updateScrollPosition(double primaryDelta) {
+    assert(_currentController != null);
+    final ScrollPosition position = _currentController!.position;
 
-  void _dragScrollbar(double primaryDelta) {
-    if (_position.maxScrollExtent <= 0.0) {
+    final double scrollOffsetLocal = _painter!.getTrackToScroll(primaryDelta);
+    final double scrollOffsetGlobal = scrollOffsetLocal + position.pixels;
+    if (scrollOffsetGlobal != position.pixels) {
+      final double physicsAdjustment = position.physics
+          .applyBoundaryConditions(position, scrollOffsetGlobal);
+      position.jumpTo(scrollOffsetGlobal - physicsAdjustment);
+    }
+  }
+
+  void _handleThumbPress() {
+    if (_scrollbarDirection == null) {
+      return;
+    }
+    _fadeoutTimer?.cancel();
+  }
+
+  void _handleThumbPressStart(Offset localPosition) {
+    _currentController =
+        widget.controller ?? PrimaryScrollController.of(context);
+
+    final Axis? direction = _scrollbarDirection;
+    if (direction == null) {
       return;
     }
 
-    final double scrollOffsetLocal =
-        _painter!.getTrackToScroll(primaryDelta).roundToDouble();
-    final double scrollOffsetGlobal = scrollOffsetLocal + _position.pixels;
+    _fadeoutTimer?.cancel();
+    _fadeoutAnimationController.forward();
 
-    if (_drag == null) {
-      _drag = _position.drag(
-        DragStartDetails(
-          globalPosition: Offset(0.0, scrollOffsetGlobal),
-        ),
-        () {},
-      );
-    } else {
-      _drag!.update(DragUpdateDetails(
-        globalPosition: Offset(0.0, scrollOffsetGlobal),
-        delta: Offset(0.0, -scrollOffsetLocal),
-        primaryDelta: -scrollOffsetLocal,
-      ));
+    switch (direction) {
+      case Axis.vertical:
+        _dragScrollbarPosition = localPosition.dy;
+        break;
+      case Axis.horizontal:
+        _dragScrollbarPosition = localPosition.dx;
+        break;
+    }
+
+    _handlePressedChanged(true);
+  }
+
+  void _handleThumbPressUpdate(Offset localPosition) {
+    final Axis? direction = _scrollbarDirection;
+
+    if (direction == null) {
+      return;
+    }
+
+    switch (direction) {
+      case Axis.vertical:
+        _updateScrollPosition(localPosition.dy - _dragScrollbarPosition!);
+        _dragScrollbarPosition = localPosition.dy;
+        break;
+      case Axis.horizontal:
+        _updateScrollPosition(localPosition.dx - _dragScrollbarPosition!);
+        _dragScrollbarPosition = localPosition.dx;
+        break;
     }
   }
 
-  void _handleDragStart(DragStartDetails details) {
-    _drag = null;
+  void _handleThumbPressEnd(Offset localPosition, Velocity velocity) {
+    final Axis? direction = _scrollbarDirection;
 
-    _fadeoutTimer?.cancel();
-    _fadeoutAnimationController.forward();
-    _dragScrollbar(details.localPosition.dy);
-    _dragScrollbarPositionY = details.localPosition.dy;
+    if (direction == null) {
+      return;
+    }
 
-    _handlePressedChanged(true);
-    _fadeoutTimer?.cancel();
-  }
-
-  void _handleDragDown(DragDownDetails details) {}
-
-  void _handleDragUpdate(DragUpdateDetails details) {
-    assert(_dragScrollbarPositionY != null);
-
-    _dragScrollbar(details.localPosition.dy - _dragScrollbarPositionY!);
-    _dragScrollbarPositionY = details.localPosition.dy;
-  }
-
-  void _handleDragEnd(DragEndDetails details) {
-    // final double scrollVelocityY =
-    //     _painter!.getTrackToScroll(details.velocity.pixelsPerSecond.dy);
-
-    // _drag?.end(DragEndDetails(
-    //   primaryVelocity: -scrollVelocityY,
-    //   velocity: Velocity(pixelsPerSecond: Offset(0.0, -scrollVelocityY)),
-    // ));
-
-    _drag?.end(DragEndDetails(
-      primaryVelocity: -0,
-      velocity: const Velocity(pixelsPerSecond: Offset(0.0, -0)),
-    ));
-
-    _handleDragScrollEnd();
-
-    _handlePressedChanged(false);
-  }
-
-  void _handleDragCancel() {
-    _drag?.cancel();
-    _handleDragScrollEnd();
-  }
-
-  void _handleDragScrollEnd() {
     _startFadeoutTimer();
-    _dragScrollbarPositionY = null;
-
-    _drag = null;
+    _dragScrollbarPosition = null;
+    _currentController = null;
 
     _handlePressedChanged(false);
   }
 
   void _receivedPointerSignal(PointerSignalEvent event) {
-    if (event is PointerScrollEvent) {
-      _targetScrollOffsetForPointerScroll(event);
-    }
+    if (event is PointerScrollEvent) {}
   }
 
-  double _scrollInitialPosition = 0.0;
-
   void _handleIncrement(double value) {
-    final double totalContentExtent = _position.maxScrollExtent -
-        _position.minScrollExtent +
-        _position.viewportDimension;
-
-    _position.moveTo(_position.pixels + totalContentExtent * value,
+    final _currentController =
+        widget.controller ?? PrimaryScrollController.of(context);
+    final _position = _currentController!.position;
+    _position.moveTo(_position.pixels + value,
         curve: _kAnimationCurveIncrement,
         duration: _kAnimationDurationIncrement);
   }
 
-  Timer? _scrollTimer;
-
-  void _targetScrollOffsetForPointerScroll(PointerScrollEvent event) {
-    final double delta = _position.axis == Axis.horizontal
-        ? event.scrollDelta.dx
-        : event.scrollDelta.dy;
-
-    _scrollTimer?.cancel();
-
-    if (_scrollTimer != null) {
-      if (_scrollInitialPosition.isNegative != delta.isNegative) {
-        _scrollInitialPosition = _position.pixels;
-      }
-
-      _scrollInitialPosition += delta;
-
-      _position.moveTo(_scrollInitialPosition);
-
-      // _position.animateTo(_scrollInitialPosition,
-      //     duration: Duration(milliseconds: 400), curve: Curves.ease);
-    } else {
-      _scrollInitialPosition = _position.pixels;
-    }
-
-    _scrollTimer = Timer(const Duration(milliseconds: 1000), () {
-      _scrollTimer = null;
-    });
-
-    // if (_drag == null) {
-    //   _targetScrollOffset = delta;
-    // } else {
-    //   if (delta.isFinite != _targetScrollOffset.isFinite) {
-    //     _handleDragCancel();
-    //   }
-
-    //   _targetScrollOffset += delta;
-    // }
-  }
-
-  void _scrollScrollbar(double primaryDelta) {
-    if (_position.maxScrollExtent <= 0.0) {
-      return;
-    }
-
-    final double scrollOffsetLocal = primaryDelta;
-    final double scrollOffsetGlobal =
-        scrollOffsetLocal + _scrollInitialPosition;
-
-    if (_drag == null) {
-      _drag = _position.drag(
-        DragStartDetails(
-          globalPosition: Offset(0.0, scrollOffsetGlobal),
-        ),
-        () {},
-      );
-    } else {
-      _drag!.update(DragUpdateDetails(
-        globalPosition: Offset(0.0, scrollOffsetGlobal),
-        delta: Offset(0.0, -scrollOffsetLocal),
-        primaryDelta: -scrollOffsetLocal,
-      ));
-    }
-  }
-
-  void _handlePositionStateChanged(AnimationStatus status) {
-    if (status == AnimationStatus.completed) {}
-  }
-
   bool _handleScrollNotification(ScrollNotification notification) {
+    if (!widget.notificationPredicate(notification)) {
+      return false;
+    }
+
     final ScrollMetrics metrics = notification.metrics;
 
     if (metrics.maxScrollExtent <= metrics.minScrollExtent) {
+      _fadeoutAnimationController.reverse();
+      _painter!.update(metrics, metrics.axisDirection);
       return false;
     }
 
@@ -386,7 +382,7 @@ class _ScrollbarState extends State<Scrollbar>
       _fadeoutTimer?.cancel();
       _painter!.update(metrics, metrics.axisDirection);
     } else if (notification is ScrollEndNotification) {
-      if (_dragScrollbarPositionY == null) {
+      if (_dragScrollbarPosition == null) {
         _startFadeoutTimer();
       }
     }
@@ -394,38 +390,44 @@ class _ScrollbarState extends State<Scrollbar>
     return false;
   }
 
-  late AnimationController _positionController;
-  late CurvedAnimation _positionAnimation;
+  void _updateScrollbarPainter() {
+    _painter!
+      ..thumbColor = _thumbColor
+      ..trackColor = _trackColor?.toColor()
+      ..textDirection = Directionality.of(context)
+      ..thickness = widget.thickness ?? _kScrollbarThickness
+      ..padding = MediaQuery.of(context).padding;
+  }
+
+  void _maybeTriggerScrollbar() {
+    WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
+      final ScrollController scrollController =
+          widget.controller ?? PrimaryScrollController.of(context)!;
+      scrollController.position.didUpdateScrollPositionBy(0);
+
+      if (!_hideScroll) {
+        _fadeoutTimer?.cancel();
+      } else {
+        _startFadeoutTimer();
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _positionController = AnimationController(
-      vsync: this,
-      duration: _kAnimationDuration,
-    );
-
-    _positionAnimation =
-        CurvedAnimation(parent: _positionController, curve: _kAnimationCurve)
-          // ..addListener(_updateScroll)
-          ..addStatusListener(_handlePositionStateChanged);
-
     _actionMap = <Type, Action<Intent>>{
       ScrollIntent: CallbackAction<ScrollIntent>(onInvoke: (action) {
         switch (action.direction) {
           case AxisDirection.down:
-            _scrollScrollbar(120.0);
             break;
           case AxisDirection.up:
-            _scrollScrollbar(-120.0);
             break;
           default:
         }
       }),
     };
-
-    WidgetsBinding.instance!.addObserver(this);
 
     _fadeoutAnimationController = AnimationController(
       vsync: this,
@@ -434,163 +436,162 @@ class _ScrollbarState extends State<Scrollbar>
 
     _fadeoutOpacityAnimation = CurvedAnimation(
       parent: _fadeoutAnimationController,
-      curve: Curves.easeInOutSine,
+      curve: Curves.easeIn,
     );
-  }
 
-  @override
-  void didChangeMetrics() {
-    if (mounted) {
-      setState(() {
-        _painter!
-          ..textDirection = Directionality.of(context)
-          ..padding = EdgeInsets.zero
-          ..color = _trackColor.toColor();
-      });
+    _thumbAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
 
-      if (_position.maxScrollExtent <= _position.minScrollExtent) {
-        _fadeoutAnimationController.reverse();
-      } else if (!_hideScroll) {
-        _fadeoutAnimationController.forward();
+    _thumbAnimation = CurvedAnimation(
+      parent: _thumbAnimationController,
+      curve: Curves.linear,
+    );
 
-        _painter!.update(_position, _position.axisDirection);
-      }
-    }
+    _thumbAnimationController.forward();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    _color = null;
+
     if (_painter == null) {
       _painter = _buildScrollbarPainter(context);
     } else {
       _painter!
         ..textDirection = Directionality.of(context)
-        //..padding = MediaQuery.of(context).padding
-        ..color = _trackColor.toColor();
+        ..padding = MediaQuery.of(context).padding
+        ..thumbColor = _thumbColor;
     }
 
-    WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
-      if (!_hideScroll) {
-        assert(widget.controller != null); // TODO(as):
-        widget.controller!.position.didUpdateScrollPositionBy(0);
-      }
-    });
+    final _ = MediaQuery.of(context).size;
+
+    _maybeTriggerScrollbar();
   }
 
   @override
   void didUpdateWidget(Scrollbar oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    if (widget.isAlwaysShown != oldWidget.isAlwaysShown) {
+      if (widget.isAlwaysShown) {
+        _fadeoutAnimationController.forward();
+        _maybeTriggerScrollbar();
+      } else {
+        _fadeoutAnimationController.reverse();
+      }
+    }
   }
 
   @override
   void dispose() {
     _fadeoutTimer?.cancel();
     _fadeoutAnimationController.dispose();
-    _showTimer?.cancel();
+    _thumbAnimationController.dispose();
     _painter?.dispose();
-    _positionAnimation.removeStatusListener(_handlePositionStateChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget result = NotificationListener<ScrollNotification>(
-      onNotification: _handleScrollNotification,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
+    _updateScrollbarPainter();
+
+    final Axis? axis = _currentController != null ? _scrollbarDirection : null;
+
+    final Widget result = MouseRegion(
+      opaque: true,
+      onEnter: _handleMouseEnter,
+      onExit: _handleMouseExit,
+      onHover: _handleMouseHover,
+      child: RawGestureDetector(
+        gestures: _gestures,
+        behavior: HitTestBehavior.opaque,
+        child: CustomPaint(
+          key: _customPaintKey,
+          foregroundPainter: _painter,
+          child: RepaintBoundary(
             child: Listener(
               child: Container(
-                // margin: EdgeInsets.only(right: _kScrollbarThickness),
                 child: widget.child,
+                margin: widget.isAlwaysShown
+                    ? const EdgeInsets.only(right: _kScrollbarThickness)
+                    : EdgeInsets.zero,
               ),
               behavior: HitTestBehavior.deferToChild,
               onPointerSignal: _receivedPointerSignal,
             ),
           ),
-          RepaintBoundary(
-            child: RawGestureDetector(
-              gestures: _gestures,
-              behavior: HitTestBehavior.deferToChild,
-              child: MouseRegion(
-                opaque: true,
-                onEnter: _handleMouseEnter,
-                onExit: _handleMouseExit,
-                onHover: _handleMouseHover,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(1.0, 0.0, 1.0, 0.0),
-                  //padding: EdgeInsets.zero,
-                  child: CustomPaint(
-                    key: _customPaintKey,
-                    foregroundPainter: widget.enabled ? _painter : null,
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        width: _kScrollbarThickness,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
 
-    result = FocusableActionDetector(
+    return NotificationListener<ScrollNotification>(
+      onNotification: _handleScrollNotification,
       child: result,
-      actions: _actionMap,
-      // shortcuts: _shortcuts,
-      autofocus: widget.autofocus,
-      focusNode: widget.focusNode,
-      onShowFocusHighlight: (value) {},
-      onShowHoverHighlight: (_) {},
-      onFocusChange: (value) {},
     );
+
+    // result = FocusableActionDetector(
+    //   child: result,
+    //   actions: _actionMap,
+    //   // shortcuts: _shortcuts,
+    //   autofocus: widget.autofocus,
+    //   focusNode: widget.focusNode,
+    //   onShowFocusHighlight: (value) {},
+    //   onShowHoverHighlight: (_) {},
+    //   onFocusChange: (value) {},
+    // );
 
     return result;
   }
 }
 
-class _ThumbVerticalDragGestureRecognizer
-    extends VerticalDragGestureRecognizer {
-  _ThumbVerticalDragGestureRecognizer({
+class _ThumbPressGestureRecognizer extends LongPressGestureRecognizer {
+  _ThumbPressGestureRecognizer({
     PointerDeviceKind? kind,
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })   : _customPaintKey = customPaintKey,
+  })  : _customPaintKey = customPaintKey,
         super(
           kind: kind,
           debugOwner: debugOwner,
+          duration: Duration.zero,
         );
 
   final GlobalKey _customPaintKey;
 
   @override
-  bool isPointerAllowed(PointerEvent event) {
-    if (!_hitTest(_customPaintKey, event.position)) {
+  bool isPointerAllowed(PointerDownEvent event) {
+    if (!_hitTest(_customPaintKey, event.position, event.kind)) {
       return false;
     }
     return super.isPointerAllowed(event);
   }
-}
 
-enum _TapRegion {
-  up,
-  down,
+  bool _hitTest(
+      GlobalKey customPaintKey, Offset offset, PointerDeviceKind kind) {
+    if (customPaintKey.currentContext == null) {
+      return false;
+    }
+    final CustomPaint customPaint =
+        customPaintKey.currentContext!.widget as CustomPaint;
+    final DesktopScrollbarPainter painter =
+        customPaint.foregroundPainter! as DesktopScrollbarPainter;
+    final RenderBox renderBox =
+        customPaintKey.currentContext!.findRenderObject()! as RenderBox;
+
+    final Offset localOffset = renderBox.globalToLocal(offset);
+    return painter.hitTestOnlyThumbInteractive(localOffset, kind);
+  }
 }
 
 class _TapGestureRecognizer extends TapGestureRecognizer {
   _TapGestureRecognizer({
     Object? debugOwner,
     required GlobalKey customPaintKey,
-  })   : _customPaintKey = customPaintKey,
+  })  : _customPaintKey = customPaintKey,
         super(
           debugOwner: debugOwner,
         );
@@ -609,42 +610,28 @@ class _TapGestureRecognizer extends TapGestureRecognizer {
 
   Offset localOffset(Offset value) => renderBox.globalToLocal(value);
 
-  _TapRegion? _region;
-  _TapRegion? get region => _region;
-
   @override
   bool isPointerAllowed(PointerDownEvent event) {
-    if (_customPaintKey.currentContext == null) {
+    if (!_hitTest(_customPaintKey, event.position, event.kind)) {
       return false;
     }
-
-    if (painter.thumbRect!.top >= localOffset(event.position).dy &&
-        painter.thumbRect!.left <= localOffset(event.position).dx &&
-        painter.thumbRect!.right >= localOffset(event.position).dx) {
-      _region = _TapRegion.up;
-    } else if (painter.thumbRect!.bottom <= localOffset(event.position).dy &&
-        painter.thumbRect!.left <= localOffset(event.position).dx &&
-        painter.thumbRect!.right >= localOffset(event.position).dx) {
-      _region = _TapRegion.down;
-    } else {
-      return false;
-    }
-
     return super.isPointerAllowed(event);
   }
-}
 
-bool _hitTest(GlobalKey customPaintKey, Offset offset) {
-  if (customPaintKey.currentContext == null) {
-    return false;
+  bool _hitTest(
+      GlobalKey customPaintKey, Offset offset, PointerDeviceKind kind) {
+    if (customPaintKey.currentContext == null) {
+      return false;
+    }
+    final CustomPaint customPaint =
+        customPaintKey.currentContext!.widget as CustomPaint;
+    final DesktopScrollbarPainter painter =
+        customPaint.foregroundPainter! as DesktopScrollbarPainter;
+    final RenderBox renderBox =
+        customPaintKey.currentContext!.findRenderObject()! as RenderBox;
+
+    final Offset localOffset = renderBox.globalToLocal(offset);
+    return painter.hitTestInteractive(localOffset, kind) &&
+        !painter.hitTestOnlyThumbInteractive(localOffset, kind);
   }
-  final CustomPaint customPaint =
-      customPaintKey.currentContext!.widget as CustomPaint;
-  final DesktopScrollbarPainter painter =
-      customPaint.foregroundPainter! as DesktopScrollbarPainter;
-  final RenderBox renderBox =
-      customPaintKey.currentContext!.findRenderObject()! as RenderBox;
-
-  final Offset localOffset = renderBox.globalToLocal(offset);
-  return painter.hitTest(localOffset);
 }

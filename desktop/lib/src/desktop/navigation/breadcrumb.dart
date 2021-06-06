@@ -36,6 +36,7 @@ const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 16.0);
 ///   },
 /// )```
 class Breadcrumb extends StatefulWidget {
+  /// Creates a [Breadcrumb].
   const Breadcrumb({
     Key? key,
     required this.routeBuilder,
@@ -47,7 +48,7 @@ class Breadcrumb extends StatefulWidget {
 
   final String initialRoute;
 
-  /// Callback called whenever a route is pushed into the current [Navigator].
+  /// Called whenever a route is pushed into the current [Navigator].
   final TextCallback? routeNameChanged;
 
   final RouteBuilder routeBuilder;
@@ -166,13 +167,17 @@ class _BreadcrumbState extends State<Breadcrumb> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),
               alignment: Alignment.centerLeft,
-              child: SingleChildScrollView(
-                reverse: true,
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: items,
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  scrollbars: false,
+                ),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: items,
+                  ),
                 ),
               ),
             ),

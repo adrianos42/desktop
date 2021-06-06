@@ -93,10 +93,6 @@ ContextMenuButton(
                         child: Text('Palhoça'),
                         value: 'Palhoça',
                       ),
-                      ContextMenuItem(
-                        child: Text('São José'),
-                        value: 'São José',
-                      ),
                     ],
                   ),
                   Container(

@@ -287,7 +287,7 @@ class _RenderSlider extends RenderConstrainedBox {
     required bool hovering,
     required Color trackColor,
     required TextDirection textDirection,
-  })   : assert(value >= 0.0 && value <= 1.0),
+  })  : assert(value >= 0.0 && value <= 1.0),
         _disabledColor = disabledColor,
         _hoverColor = hoverColor,
         _hovering = hovering,

@@ -9,6 +9,7 @@ import 'input/button.dart';
 import 'localizations.dart';
 import 'navigation/route.dart';
 import 'theme/theme.dart';
+import 'scrolling/scrolling.dart';
 
 class DesktopApp extends StatefulWidget {
   /// Creates a [DesktopApp].
@@ -326,7 +327,7 @@ class _DesktopAppState extends State<DesktopApp> {
     return Theme(
       data: effectiveThemeData,
       child: ScrollConfiguration(
-        behavior: widget.scrollBehavior ?? const _DesktopScrollBehavior(),
+        behavior: widget.scrollBehavior ?? const DesktopScrollBehavior(),
         child: Container(
           color: effectiveThemeData.colorScheme.background.toColor(),
           child: Builder(
@@ -338,31 +339,27 @@ class _DesktopAppState extends State<DesktopApp> {
   }
 }
 
-class _DesktopScrollBehavior extends ScrollBehavior {
-  const _DesktopScrollBehavior();
+/// Default [ScrollBehavior] for desktop.
+class DesktopScrollBehavior extends ScrollBehavior {
+  /// Creates a [DesktopScrollBehavior].
+  const DesktopScrollBehavior() : super();
 
+  /// Applies a [Scrollbar] to the child widget.
   @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
-  }
-
-  @override
-  ScrollPhysics getScrollPhysics(BuildContext context) {
-    return const _ClampingScrollPhysics();
-  }
-}
-
-class _ClampingScrollPhysics extends ClampingScrollPhysics {
-  const _ClampingScrollPhysics({ScrollPhysics? parent}) : super(parent: parent);
-
-  @override
-  bool shouldAcceptUserOffset(ScrollMetrics position) {
-    return false;
-  }
-
-  @override
-  _ClampingScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return _ClampingScrollPhysics(parent: buildParent(ancestor));
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    switch (getPlatform(context)) {
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+        return Scrollbar(
+          child: child,
+          controller: details.controller,
+        );
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.iOS:
+        return child;
+    }
   }
 }

@@ -57,8 +57,6 @@ class ScrollingPage extends StatefulWidget {
 }
 
 class _ScrollingPageState extends State<ScrollingPage> {
-  final controller = ScrollController();
-
   String? _requestPrevious(String name) {
     final lastIndex = _kFileNames.indexOf(name);
 
@@ -93,43 +91,39 @@ class _ScrollingPageState extends State<ScrollingPage> {
       children: [
         Defaults.createHeader(context, 'Scrolling'),
         Expanded(
-          child: Scrollbar(
-            controller: controller,
-            child: GridView.custom(
-              controller: controller,
-              padding: const EdgeInsets.all(4.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 4.0,
-                crossAxisSpacing: 4.0,
-              ),
-              childrenDelegate:
-                  SliverChildListDelegate.fixed(_kFileNames.map((assetName) {
-                return GestureDetector(
-                  onTap: () async {
-                    showDialog(
-                      context: context,
-                      barrierColor: Theme.of(context).colorScheme.background,
-                      barrierDismissible: true,
-                      builder: (context) {
-                        return _ImagePage(
-                          assetName,
-                          requestNext: _requestNext,
-                          requestPrevious: _requestPrevious,
-                        );
-                      },
-                    );
-                  },
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return Image.asset(
-                      'assets/cats_small/$assetName.jpg',
-                      frameBuilder: _frameBuilder,
-                      fit: BoxFit.cover,
-                    );
-                  }),
-                );
-              }).toList()),
+          child: GridView.custom(
+            padding: const EdgeInsets.all(4.0),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 4.0,
+              crossAxisSpacing: 4.0,
             ),
+            childrenDelegate:
+                SliverChildListDelegate.fixed(_kFileNames.map((assetName) {
+              return GestureDetector(
+                onTap: () async {
+                  showDialog(
+                    context: context,
+                    barrierColor: Theme.of(context).colorScheme.background,
+                    barrierDismissible: true,
+                    builder: (context) {
+                      return _ImagePage(
+                        assetName,
+                        requestNext: _requestNext,
+                        requestPrevious: _requestPrevious,
+                      );
+                    },
+                  );
+                },
+                child: LayoutBuilder(builder: (context, constraints) {
+                  return Image.asset(
+                    'assets/cats_small/$assetName.jpg',
+                    frameBuilder: _frameBuilder,
+                    fit: BoxFit.cover,
+                  );
+                }),
+              );
+            }).toList()),
           ),
         ),
       ],

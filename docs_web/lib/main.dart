@@ -167,7 +167,6 @@ class _DocAppState extends State<DocApp> {
                 nodes: [
                   TreeNode.child(
                     'Overview',
-                    //builder: (context) => ScrollingPage(),
                     builder: (context) => OverviewPage(),
                   ),
                   TreeNode.children('Navigation', children: [
@@ -333,10 +332,8 @@ class OverviewPage extends StatefulWidget {
 class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
 
     return SingleChildScrollView(
-      controller: controller,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

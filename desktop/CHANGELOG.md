@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.4
+
+- Fixes scrolling and context menu.
+
 ## 3.0.0-dev.3
 
 - Fixes font package.

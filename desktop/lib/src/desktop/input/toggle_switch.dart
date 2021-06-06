@@ -257,7 +257,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     required Color hoverColor,
     required bool hovering,
     required BoxConstraints additionalConstraints,
-  })   : _state = state,
+  })  : _state = state,
         _value = value,
         _activeColor = activeColor,
         _disabledColor = disabledColor,

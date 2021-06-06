@@ -55,8 +55,9 @@ class ContextMenuButton<T> extends StatefulWidget {
 class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
   Future<void> showButtonMenu(BuildContext context) async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay =
-        Overlay.of(context)!.context.findRenderObject()! as RenderBox;
+    final RenderBox overlay = Navigator.of(context, rootNavigator: true)
+        .context
+        .findRenderObject()! as RenderBox;
 
     final Rect position = Rect.fromPoints(
       button.localToGlobal(
@@ -79,6 +80,7 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
       initialValue: widget.value,
       position: position,
       settings: const RouteSettings(),
+      rootNavigator: true,
     ).then<void>((T? newValue) {
       if (!mounted) {
         return null;
