@@ -12,25 +12,17 @@ import '../navigation/route.dart';
 import '../theme/theme.dart';
 import '../scrolling/scrollbar.dart';
 
-const Duration _kMenuDuration = Duration(microseconds: 200);
-const double _kDividerThickness = 1.0;
-const double _kMenuWidthStep = 120.0;
 const double _kDividerHeight = 1.0;
-
-const double kMenuHorizontalPadding = 16.0;
-const double kMinMenuWidth = 2.0 * _kMenuWidthStep;
-const double kMaxMenuWidth = 6.0 * _kMenuWidthStep;
-const double kDefaultItemHeight = 34.0;
-const double kMinMenuHeight = kDefaultItemHeight;
-const double kMaxMenuHeight = kDefaultItemHeight;
+const double _kDividerThickness = 1.0;
+const Duration _kMenuDuration = Duration(milliseconds: 100);
 
 abstract class ContextMenuEntry<T> extends StatefulWidget {
   const ContextMenuEntry({Key? key}) : super(key: key);
 
-  double get height;
-
+  /// If the item represents the same given value.
   bool represents(T value);
 
+  /// If the item is selected.
   bool selected(BuildContext context) =>
       _MenuItemSelected.itemSelected(context) ?? false;
 }
@@ -74,7 +66,7 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
     Key? key,
     required this.value,
     this.enabled = true,
-    this.height = kDefaultItemHeight,
+    this.height,
     required this.child,
   }) : super(key: key);
 
@@ -82,8 +74,7 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
 
   final bool enabled;
 
-  @override
-  final double height;
+  final double? height;
 
   final Widget child;
 
@@ -100,75 +91,86 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   @protected
   Widget buildChild() => widget.child;
 
-  @protected
-  void handleTap() {
-    Navigator.pop<T>(context, widget.value);
+  void _handleHoverEntered() {
+    if (!hovered && (pressed || !_globalPointerDown)) {
+      setState(() => hovered = true);
+    }
   }
 
-  void _handleHoverChanged(bool value) {
-    if (hovered != value) {
-      setState(() => hovered = value);
+  void _handleHoverExited() {
+    if (hovered) {
+      setState(() => hovered = false);
     }
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!pressed) {
-      setState(() => pressed = true);
+      setState(() {
+        pressed = true;
+      } );
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (pressed) {
-      setState(() => pressed = false);
-    }
+    Navigator.pop<T>(context, widget.value);
   }
 
   void _handleTapCancel() {
     if (pressed) {
-      setState(() => pressed = false);
+      setState(() {
+        pressed = false;
+      } );
     }
+  }
+
+  bool _globalPointerDown = false;
+
+  void _mouseRoute(PointerEvent event) => _globalPointerDown = event.down;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
-    final ColorScheme colorScheme = themeData.colorScheme;
+    final ContextMenuThemeData contextMenuThemeData =
+        ContextMenuTheme.of(context);
 
     final bool selected = widget.selected(context);
 
     final HSLColor? background = pressed
         ? (selected
-            ? colorScheme.primary[60]
-            : colorScheme.background[4]) // TODO(as): ???
+            ? contextMenuThemeData.selectedHighlightColor!
+            : contextMenuThemeData.highlightColor!) // TODO(as): ???
         : selected
-            ? (hovered ? colorScheme.primary[40] : colorScheme.primary[30])
+            ? (hovered
+                ? contextMenuThemeData.selectedHoverColor!
+                : contextMenuThemeData.selectedColor!)
             : hovered
-                ? colorScheme.background[16] // TODO(as): ???
+                ? contextMenuThemeData.hoverColor! // TODO(as): ???
                 : null;
 
-    final foreground = textTheme.textHigh;
-
-    final TextStyle textStyle = textTheme.body1.copyWith(
-      fontSize: 14.0,
-      color: foreground.toColor(),
-    );
-
     Widget item = DefaultTextStyle(
-      style: textStyle,
+      style: contextMenuThemeData.textStyle!,
       child: IconTheme(
-        data: IconThemeData(
-          color: foreground.toColor(),
-          size: 18.0,
-        ),
+        data: contextMenuThemeData.iconThemeData!,
         child: Container(
           color: background?.toColor(),
-          padding:
-              const EdgeInsets.symmetric(horizontal: kMenuHorizontalPadding),
+          padding: EdgeInsets.symmetric(
+            horizontal: contextMenuThemeData.menuHorizontalPadding!,
+          ),
           alignment: AlignmentDirectional.centerStart,
           constraints: BoxConstraints(
-            minHeight: widget.height,
-            maxHeight: widget.height,
+            minHeight: widget.height ?? contextMenuThemeData.itemHeight!,
+            maxHeight: widget.height ?? contextMenuThemeData.itemHeight!,
           ),
           child: buildChild(),
         ),
@@ -179,15 +181,14 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
       ignoring: !widget.enabled, //|| selected == null,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        onEnter: (event) => _handleHoverChanged(true),
-        onExit: (event) => _handleHoverChanged(false),
+        onEnter: widget.enabled ? (event) => _handleHoverEntered() : null,
+        onExit: widget.enabled ? (event) => _handleHoverExited() : null,
         opaque: false,
         child: GestureDetector(
           behavior: HitTestBehavior.deferToChild,
-          onTap: widget.enabled ? handleTap : null,
-          onTapDown: _handleTapDown,
-          onTapUp: _handleTapUp,
-          onTapCancel: _handleTapCancel,
+          onTapDown: widget.enabled ? _handleTapDown : null,
+          onTapUp: widget.enabled ? _handleTapUp : null,
+          onTapCancel: widget.enabled ? _handleTapCancel : null,
           child: item,
         ),
       ),
@@ -197,11 +198,10 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 }
 
+/// A divider used in context menu.
 class ContextMenuDivider extends ContextMenuEntry {
+  /// Creates a [ContextMenuDivider].
   const ContextMenuDivider({Key? key}) : super(key: key);
-
-  @override
-  double get height => _kDividerHeight;
 
   @override
   bool represents(void value) => false;
@@ -216,7 +216,7 @@ class _ContextMenuDividerState extends State<ContextMenuDivider> {
     final HSLColor background = Theme.of(context).colorScheme.background;
 
     return SizedBox(
-      height: widget.height,
+      height: _kDividerHeight,
       child: Center(
         child: Container(
           height: _kDividerThickness,
@@ -258,7 +258,8 @@ class _ContextMenu<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final ContextMenuThemeData contextMenuThemeData =
+        ContextMenuTheme.of(context);
 
     final children = route.items.map((item) {
       final bool selected;
@@ -279,8 +280,8 @@ class _ContextMenu<T> extends StatelessWidget {
 
     final Widget child = ConstrainedBox(
       constraints: BoxConstraints(
-        minWidth: route.width ?? kMinMenuWidth,
-        maxWidth: route.width ?? kMaxMenuWidth,
+        minWidth: route.width ?? contextMenuThemeData.minMenuWidth!,
+        maxWidth: route.width ?? contextMenuThemeData.maxMenuWidth!,
       ),
       child: Semantics(
         scopesRoute: true,
@@ -292,7 +293,9 @@ class _ContextMenu<T> extends StatelessWidget {
           child: Scrollbar(
             isAlwaysShown: false,
             child: IntrinsicWidth(
-              stepWidth: route.width == null ? _kMenuWidthStep : null,
+              stepWidth: route.width == null
+                  ? contextMenuThemeData.menuWidthStep!
+                  : null,
               child: SingleChildScrollView(
                 child: ListBody(children: children),
               ),
@@ -304,7 +307,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: colorScheme.background[4].toColor(),
+        color: contextMenuThemeData.background!.toColor(),
         //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
       ),
       position: DecorationPosition.background,
@@ -344,6 +347,9 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
   @override
   Duration get transitionDuration => _kMenuDuration;
 
+  //@override
+  //Color? get barrierColor => const HSLColor.fromAHSL(0.1, 0.0, 0.0, 1.0).toColor();
+
   @override
   Color? get barrierColor => null;
 
@@ -382,7 +388,8 @@ class _ContextMenuRoute<T> extends ContextRoute<T> {
     return FadeTransition(
         opacity: CurvedAnimation(
           parent: animation,
-          curve: Curves.linear,
+          curve: Curves.easeOut,
+          reverseCurve: Curves.easeOut.flipped,
         ),
         child: child);
   } // Some default transition

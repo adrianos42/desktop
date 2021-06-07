@@ -173,6 +173,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   Widget build(BuildContext context) {
     final DropDownButtonThemeData buttonThemeData =
         DropDownButtonTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData =
+        ContextMenuTheme.of(context);
 
     final enabled = widget.enabled;
 
@@ -229,11 +231,11 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               color:
                   !enabled ? buttonThemeData.disabledColor!.toColor() : null),
           child: Container(
-            constraints: const BoxConstraints(
-              minHeight: kMinMenuHeight,
-              minWidth: kMinMenuWidth,
-              maxHeight: kMaxMenuHeight,
-              maxWidth: kMaxMenuWidth,
+            constraints: BoxConstraints(
+              minHeight: contextMenuThemeData.itemHeight!,
+              minWidth: contextMenuThemeData.minMenuWidth!,
+              maxHeight: contextMenuThemeData.itemHeight!,
+              maxWidth: contextMenuThemeData.maxMenuWidth!,
             ),
             decoration: BoxDecoration(
               color: background,

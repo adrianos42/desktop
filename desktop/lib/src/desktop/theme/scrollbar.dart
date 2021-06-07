@@ -144,13 +144,13 @@ class ScrollbarTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final HSLColor color =
-          scrollbarThemeData.color ?? colorScheme.shade[40].withAlpha(0.8);
+          scrollbarThemeData.color ?? colorScheme.shade[30].withAlpha(0.8);
 
       final HSLColor hoverColor =
-          scrollbarThemeData.hoverColor ?? colorScheme.shade[80].withAlpha(0.8);
+          scrollbarThemeData.hoverColor ?? colorScheme.shade[50].withAlpha(0.8);
 
       final HSLColor highlightColor =
-          scrollbarThemeData.color ?? colorScheme.shade[60].withAlpha(0.8);
+          scrollbarThemeData.color ?? colorScheme.shade[40].withAlpha(0.8);
 
       final HSLColor foreground =
           scrollbarThemeData.foreground ?? colorScheme.shade[100];

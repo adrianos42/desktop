@@ -7,7 +7,10 @@ import 'package:flutter/animation.dart' show Curves;
 import '../localizations.dart';
 import '../theme/theme.dart';
 
+const Duration _kDialogDuration = Duration(milliseconds: 300);
+
 class Dialog extends StatelessWidget {
+  /// Creates a [Dialog].
   const Dialog({
     Key? key,
     this.title,
@@ -103,6 +106,7 @@ class Dialog extends StatelessWidget {
 }
 
 class DialogRoute<T> extends PopupRoute<T> {
+  /// Creates a [DialogRoute].
   DialogRoute({
     required RoutePageBuilder pageBuilder,
     required BuildContext context,
@@ -115,12 +119,13 @@ class DialogRoute<T> extends PopupRoute<T> {
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor,
+        _barrierColor =
+            barrierColor ?? DialogTheme.of(context).barrierColor!.toColor(),
         super(settings: settings, filter: filter);
 
   final RoutePageBuilder _pageBuilder;
 
-  final _curve = Curves.linear;
+  final _curve = Curves.easeOut;
 
   @override
   bool get barrierDismissible => _barrierDismissible;
@@ -135,7 +140,7 @@ class DialogRoute<T> extends PopupRoute<T> {
   final Color? _barrierColor;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
+  Duration get transitionDuration => _kDialogDuration;
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
@@ -162,6 +167,7 @@ class DialogRoute<T> extends PopupRoute<T> {
   }
 }
 
+/// Shows a dialog with default [DialogRoute].
 Future<T?> showDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -169,33 +175,11 @@ Future<T?> showDialog<T>({
   ImageFilter? filter,
   HSLColor? barrierColor,
 }) {
-  return Navigator.of(context, rootNavigator: true).push<T>(createDialogRoute(
-    builder: builder,
-    context: context,
-    barrierDismissible: barrierDismissible,
-    filter: filter,
-    barrierColor: barrierColor,
-  ));
-}
-
-PopupRoute<T> createDialogRoute<T>({
-  required BuildContext context,
-  required WidgetBuilder builder,
-  bool barrierDismissible = true,
-  ImageFilter? filter,
-  HSLColor? barrierColor,
-  String? barrierLabel,
-}) {
-  final DialogThemeData dialogThemeData = DialogTheme.of(context);
-  final Color color =
-      barrierColor?.toColor() ?? dialogThemeData.barrierColor!.toColor();
-
-  return DialogRoute<T>(
-    barrierColor: color,
-    context: context,
-    barrierDismissible: barrierDismissible,
-    barrierLabel: barrierLabel,
-    filter: filter,
+  return Navigator.of(context, rootNavigator: true).push<T>(DialogRoute<T>(
     pageBuilder: (context, _, __) => builder(context),
-  );
+    context: context,
+    barrierDismissible: barrierDismissible,
+    filter: filter,
+    barrierColor: barrierColor?.toColor(),
+  ));
 }

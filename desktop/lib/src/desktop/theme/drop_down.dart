@@ -175,7 +175,7 @@ class DropDownButtonTheme extends InheritedTheme {
           buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final HSLColor waitingColor =
-          buttonThemeData.waitingColor ?? colorScheme.background[8];
+          buttonThemeData.waitingColor ?? colorScheme.background[10];
 
       final HSLColor disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;

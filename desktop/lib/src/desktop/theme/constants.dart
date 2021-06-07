@@ -1,3 +1,6 @@
+/// Default font size.
+const double kFontSize = 14.0;
+
 /// Default icon size.
 const double kIconSize = 18.0;
 

@@ -11,7 +11,6 @@ import 'theme_text.dart';
 
 const double _kSidePadding = 4.0;
 const double _kHeight = 32.0;
-const double _kFontSize = 14.0;
 const double _kMinWidth = 12.0;
 
 @immutable
@@ -54,7 +53,6 @@ class ButtonThemeData {
   ButtonThemeData copyWith({
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
-    ColorScheme? colorScheme,
     double? itemSpacing,
     double? height,
     double? minWidth,
@@ -217,7 +215,7 @@ class ButtonTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final TextStyle textStyle = buttonThemeData.textStyle ??
-          textTheme.body2.copyWith(fontSize: _kFontSize);
+          textTheme.body2.copyWith(fontSize: kFontSize);
 
       final HSLColor color =
           buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];

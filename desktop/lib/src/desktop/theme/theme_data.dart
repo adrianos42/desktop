@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'button.dart';
 import 'checkbox.dart';
 import 'color_scheme.dart';
+import 'context_menu.dart';
 import 'dialog.dart';
 import 'drop_down.dart';
 import 'hyperlink.dart';
@@ -87,6 +88,7 @@ class _InheritedTheme extends InheritedTheme {
 
 @immutable
 class ThemeData {
+  /// Creates a [ThemeData].
   factory ThemeData({
     required Brightness brightness,
     PrimaryColor? primaryColor,
@@ -102,6 +104,7 @@ class ThemeData {
       buttonTheme: const ButtonThemeData(),
       dropDownButtonTheme: const DropDownButtonThemeData(),
       dialogTheme: const DialogThemeData(),
+      contextMenuTheme: const ContextMenuThemeData(),
       hyperlinkButtonTheme: const HyperlinkButtonThemeData(),
       radioButtonTheme: const RadioButtonThemeData(),
       checkboxTheme: const CheckboxThemeData(),
@@ -121,6 +124,7 @@ class ThemeData {
     required this.buttonTheme,
     required this.dropDownButtonTheme,
     required this.dialogTheme,
+    required this.contextMenuTheme,
     required this.hyperlinkButtonTheme,
     required this.radioButtonTheme,
     required this.checkboxTheme,
@@ -157,6 +161,8 @@ class ThemeData {
 
   final DialogThemeData dialogTheme;
 
+  final ContextMenuThemeData contextMenuTheme;
+
   final HyperlinkButtonThemeData hyperlinkButtonTheme;
 
   final RadioButtonThemeData radioButtonTheme;
@@ -183,6 +189,7 @@ class ThemeData {
       buttonTheme: buttonTheme,
       dropDownButtonTheme: dropDownButtonTheme,
       dialogTheme: dialogTheme,
+      contextMenuTheme: contextMenuTheme,
       hyperlinkButtonTheme: hyperlinkButtonTheme,
       radioButtonTheme: radioButtonTheme,
       checkboxTheme: checkboxTheme,
