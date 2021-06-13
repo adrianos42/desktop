@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.7
+
+- Scrollbar track.
+
 ## 3.0.0-dev.6
 
 - Fixes tree scrollbar.
