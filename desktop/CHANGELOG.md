@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0-dev.6
+
+- Fixes tree scrollbar.
+
 ## 3.0.0-dev.5
 
 - Fixes context menu min width.

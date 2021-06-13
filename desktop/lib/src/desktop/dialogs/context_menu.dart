@@ -98,7 +98,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 
   void _handleHoverExited() {
-    if (hovered) {
+    if (hovered && !_globalPointerDown) {
       setState(() => hovered = false);
     }
   }
@@ -180,9 +180,10 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     item = IgnorePointer(
       ignoring: !widget.enabled, //|| selected == null,
       child: MouseRegion(
-        cursor: SystemMouseCursors.click,
+        cursor: widget.enabled ?  SystemMouseCursors.click : MouseCursor.defer,
         onEnter: widget.enabled ? (event) => _handleHoverEntered() : null,
         onExit: widget.enabled ? (event) => _handleHoverExited() : null,
+        onHover: widget.enabled ? (event) => _handleHoverEntered() : null,
         opaque: false,
         child: GestureDetector(
           behavior: HitTestBehavior.deferToChild,

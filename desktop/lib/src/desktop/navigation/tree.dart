@@ -326,8 +326,6 @@ class _TreeState extends State<Tree> {
     }
   }
 
-  final controller = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
@@ -367,51 +365,41 @@ class _TreeState extends State<Tree> {
         Container(
           alignment: Alignment.topLeft,
           width: 200.0,
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(
-              scrollbars: false,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.title != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: widget.title!,
-                    ),
-                  Expanded(
-                    child: Scrollbar(
-                      isAlwaysShown: false,
-                      controller: controller,
-                      child: SingleChildScrollView(
-                        controller: controller,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: widget.nodes
-                              .map(
-                                (e) => _TreeColumn(
-                                  node: e,
-                                  parentName: '',
-                                  updatePage: () {
-                                    setState(
-                                        () {}); // TODO(as): See scroll notification without rebuilding.
-                                    //controller.position.;
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.title != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: widget.title!,
+                  ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: widget.nodes
+                          .map(
+                            (e) => _TreeColumn(
+                              node: e,
+                              parentName: '',
+                              updatePage: () {
+                                setState(
+                                    () {}); // TODO(as): See scroll notification without rebuilding.
+                                //controller.position.;
+                              },
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

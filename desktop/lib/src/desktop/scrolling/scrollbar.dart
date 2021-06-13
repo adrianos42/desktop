@@ -508,7 +508,7 @@ class _ScrollbarState extends State<Scrollbar>
       onHover: _handleMouseHover,
       child: RawGestureDetector(
         gestures: _gestures,
-        behavior: HitTestBehavior.opaque,
+        behavior: HitTestBehavior.deferToChild,
         child: CustomPaint(
           key: _customPaintKey,
           foregroundPainter: _painter,

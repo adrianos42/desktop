@@ -10,6 +10,7 @@ class ProgressIndicatorPage extends StatefulWidget {
 
 class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
   final linearCodeExample = 'LinearProgressIndicator(value: 0.4)';
+  final linearIndeterminateCodeExample = 'LinearProgressIndicator()';
   final circurlarCodeExample = 'CircularProgressIndicator()';
 
   double progressValue = 0.4;
@@ -66,6 +67,16 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
             child: LinearProgressIndicator(),
+          ),
+          codeText: linearIndeterminateCodeExample,
+          title: 'Linear indeterminate',
+          height: 200.0,
+        ),
+        ItemTitle(
+          body: (context) => Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            child: CircularProgressIndicator(),
           ),
           codeText: circurlarCodeExample,
           title: 'Circular',
