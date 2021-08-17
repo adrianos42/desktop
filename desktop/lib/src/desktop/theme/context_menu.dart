@@ -95,6 +95,27 @@ class ContextMenuThemeData {
     );
   }
 
+  ContextMenuThemeData merge(ContextMenuThemeData? other) {
+    if (other == null) {
+      return this;
+    }
+    return copyWith(
+      textStyle: other.textStyle,
+      iconThemeData: other.iconThemeData,
+      menuWidthStep: other.minMenuWidth,
+      itemHeight: other.itemHeight,
+      minMenuWidth: other.minMenuWidth,
+      maxMenuWidth: other.maxMenuWidth,
+      selectedColor: other.selectedColor,
+      selectedHighlightColor: other.selectedHighlightColor,
+      selectedHoverColor: other.selectedHoverColor,
+      hoverColor: other.hoverColor,
+      highlightColor: other.highlightColor,
+      background: other.background,
+      menuHorizontalPadding: other.menuHorizontalPadding,
+    );
+  }
+
   bool get isConcrete {
     return textStyle != null &&
         iconThemeData != null &&
@@ -249,4 +270,43 @@ class ContextMenuTheme extends InheritedTheme {
 
   @override
   bool updateShouldNotify(ContextMenuTheme oldWidget) => data != oldWidget.data;
+
+  static Widget merge(
+    BuildContext context,
+    Widget child, {
+    TextStyle? textStyle,
+    IconThemeData? iconThemeData,
+    ColorScheme? colorScheme,
+    double? menuWidthStep,
+    double? itemHeight,
+    double? minMenuWidth,
+    double? maxMenuWidth,
+    double? menuHorizontalPadding,
+    HSLColor? selectedColor,
+    HSLColor? selectedHighlightColor,
+    HSLColor? selectedHoverColor,
+    HSLColor? hoverColor,
+    HSLColor? highlightColor,
+    HSLColor? background,
+  }) {
+    return ContextMenuTheme(
+      child: child,
+      data: ContextMenuTheme.of(context).copyWith(
+        textStyle: textStyle,
+        iconThemeData: iconThemeData,
+        colorScheme: colorScheme,
+        menuWidthStep: menuWidthStep,
+        itemHeight: itemHeight,
+        minMenuWidth: minMenuWidth,
+        maxMenuWidth: maxMenuWidth,
+        menuHorizontalPadding: menuHorizontalPadding,
+        selectedColor: selectedColor,
+        selectedHighlightColor: selectedHighlightColor,
+        selectedHoverColor: selectedHoverColor,
+        hoverColor: hoverColor,
+        highlightColor: highlightColor,
+        background: background,
+      ),
+    );
+  }
 }

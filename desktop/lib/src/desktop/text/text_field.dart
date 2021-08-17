@@ -2,56 +2,86 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
 
 import '../theme/theme.dart';
-//import 'internal/editable_text.dart';
+
+//import 'editable_text.dart';
+
+export 'package:flutter/services.dart'
+    show
+        TextInputType,
+        TextInputAction,
+        TextCapitalization,
+        SmartQuotesType,
+        SmartDashesType;
 
 const double _kCursorWidth = 1.0;
 const double _kBorderWidth = 1.0;
 
+/// Desktop text field.
+///
+/// See also:
+///
+///  * [EditableText], which is the raw text editing control.
 class TextField extends StatefulWidget {
+  /// Creates a desktop text field.
   const TextField({
     Key? key,
+    this.autocorrect = true,
+    this.autofocus = false,
     this.controller,
-    this.focusNode,
-    this.placeholder,
-    this.placeholderStyle,
-    this.style,
-    this.strutStyle,
-    this.showCursor,
-    this.minLines,
+    this.cursorWidth = 2.0,
     this.decoration,
+    this.enabled = true,
+    this.expands = false,
+    this.focusNode,
+    this.inputFormatters,
+    this.keyboardType = TextInputType.text,
+    this.scrollController,
     this.maxLength,
+    this.maxLines = 1,
+    this.minLines,
     this.onChanged,
     this.onEditingComplete,
-    this.inputFormatters,
     this.onSubmitted,
     this.onTap,
-    this.enabled = true,
-    this.textAlign = TextAlign.start,
-    this.autofocus = false,
+    this.placeholder,
+    this.placeholderStyle,
     this.readOnly = false,
-    this.keyboardType = TextInputType.text,
-    this.maxLines = 1,
     this.restorationId,
-  }) : super(key: key);
+    this.showCursor,
+    this.strutStyle,
+    this.style,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.textAlign = TextAlign.start,
+  })  : assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        super(key: key);
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
   final String? placeholder;
 
-  final TextAlign textAlign;
-
   final TextStyle? placeholderStyle;
 
+  /// {@macro flutter.widgets.editableText.textAlign}
+  final TextAlign textAlign;
+
+  /// {@macro flutter.widgets.editableText.autofocus}
   final bool autofocus;
 
   /// Controls the [BoxDecoration] of the box behind the text input.
   final BoxDecoration? decoration;
 
   final TextEditingController? controller;
+
+  /// {@macro flutter.widgets.editableText.obscuringCharacter}
+  final String obscuringCharacter;
+
+  /// {@macro flutter.widgets.editableText.obscureText}
+  final bool obscureText;
 
   /// {@macro flutter.widgets.editableText.strutStyle}
   final StrutStyle? strutStyle;
@@ -62,50 +92,66 @@ class TextField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.inputFormatters}
   final List<TextInputFormatter>? inputFormatters;
 
+  /// {@macro flutter.widgets.editableText.autocorrect}
+  final bool autocorrect;
+
   final TextStyle? style;
 
+  /// {@macro flutter.widgets.editableText.readOnly}
   final bool readOnly;
 
+  /// {@macro flutter.services.lengthLimitingTextInputFormatter.maxLength}
   final int? maxLength;
 
+  /// {@macro flutter.widgets.editableText.expands}
+  final bool expands;
+
+  /// {@macro flutter.widgets.editableText.minLines}
   final int? minLines;
 
+  /// {@macro flutter.widgets.editableText.maxLines}
   final int? maxLines;
 
+  /// {@macro flutter.widgets.editableText.onChanged}
   final ValueChanged<String>? onChanged;
 
+  /// {@macro flutter.widgets.editableText.onEditingComplete}
   final VoidCallback? onEditingComplete;
 
+  /// {@macro flutter.widgets.editableText.onSubmitted}
+  ///
+  /// See also:
+  ///
+  ///  * [TextInputAction.next] and [TextInputAction.previous], which
+  ///    automatically shift the focus to the next/previous focusable item when
+  ///    the user is done editing.
   final ValueChanged<String>? onSubmitted;
 
   final bool enabled;
 
+  /// {@macro flutter.widgets.editableText.cursorWidth}
+  final double cursorWidth;
+
+  /// {@macro flutter.material.textfield.onTap}
   final GestureTapCallback? onTap;
 
+  /// {@macro flutter.material.textfield.restorationId}
   final String? restorationId;
 
+  /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType keyboardType;
+
+  /// {@macro flutter.widgets.editableText.scrollController}
+  final ScrollController? scrollController;
 
   @override
   _TextFieldState createState() => _TextFieldState();
 }
 
-abstract class DesktopTextSelectionGestureDetectorBuilderDelegate {
-  /// [GlobalKey] to the [EditableText] for which the
-  /// [TextSelectionGestureDetectorBuilder] will build a [TextSelectionGestureDetector].
-  GlobalKey<EditableTextState> get editableTextKey;
-
-  /// Whether the textfield should respond to force presses.
-  bool get forcePressEnabled;
-
-  /// Whether the user may select text in the textfield.
-  bool get selectionEnabled;
-}
-
 class _TextFieldState extends State<TextField>
     with AutomaticKeepAliveClientMixin<TextField>, RestorationMixin
-    implements DesktopTextSelectionGestureDetectorBuilderDelegate {
-  // TODO(as): final GlobalKey _clearGlobalKey = GlobalKey();
+    implements TextSelectionGestureDetectorBuilderDelegate {
+  final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
   TextEditingController get _effectiveController =>
@@ -193,6 +239,9 @@ class _TextFieldState extends State<TextField>
   Widget build(BuildContext context) {
     super.build(context);
 
+    final TextEditingController controller = _effectiveController;
+    final FocusNode focusNode = _effectiveFocusNode;
+
     final ThemeData theme = Theme.of(context);
     final bool enabled = widget.enabled;
 
@@ -200,17 +249,16 @@ class _TextFieldState extends State<TextField>
     final colorScheme = theme.colorScheme;
 
     final HSLColor background = enabled
-        ? _effectiveFocusNode.hasFocus
+        ? focusNode.hasFocus
             ? colorScheme.background
             : colorScheme.background.withAlpha(0.0)
         : colorScheme.shade[90];
     final HSLColor characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
     final HSLColor selectionColor =
-        enabled ? colorScheme.primary[60] : background;
-    final HSLColor borderColor = _effectiveFocusNode.hasFocus
-        ? colorScheme.shade[50]
-        : colorScheme.shade[40];
+        enabled ? colorScheme.primary[30] : background;
+    final HSLColor borderColor =
+        focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[40];
 
     final textStyle = textTheme.body1.copyWith(
       color: characterColor.toColor(),
@@ -226,73 +274,57 @@ class _TextFieldState extends State<TextField>
 
     final editable = EditableText(
       key: editableTextKey,
-      //autocorrect: true,
-      //autocorrectionTextRectColor: ,
-      //autofillHints: ,
+      autocorrect: widget.autocorrect,
       autofocus: widget.autofocus,
       backgroundCursorColor: background.toColor(), // TODO(as): ???
-      controller: _effectiveController,
+      controller: controller,
       cursorColor: characterColor.toColor(),
-      //cursorHeight: ,
       cursorOffset: Offset.zero,
       cursorOpacityAnimates: false,
-      //cursorRadius: ,
       cursorWidth: _kCursorWidth,
-      //dragStartBehavior: ,
-      //enableInteractiveSelection: ,
-      expands: false,
-      focusNode: _effectiveFocusNode,
+      dragStartBehavior: DragStartBehavior.down,
+      enableInteractiveSelection: true,
+      expands: widget.expands,
+      focusNode: focusNode,
       inputFormatters: widget.inputFormatters,
-      //keyboardAppearance: ,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      //obscureText: ,
-      //obscuringCharacter: ,
+      obscureText: widget.obscureText,
+      obscuringCharacter: widget.obscuringCharacter,
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingComplete,
-      //onSelectionChanged: ,
       onSubmitted: widget.onSubmitted,
       paintCursorAboveText: false,
+      rendererIgnoresPointer: true,
       readOnly: widget.readOnly,
-      //rendererIgnoresPointer: ,
       restorationId: 'editable',
-      //scrollController: ,
-      //scrollPadding: ,
-      //scrollPhysics: ,
+      scrollController: widget.scrollController,
       selectionColor:
           enabled ? selectionColor.toColor() : colorScheme.background.toColor(),
-      //selectionControls: ,
-      //selectionHeightStyle: ,
-      //selectionWidthStyle: ,
       showCursor: widget.showCursor,
       showSelectionHandles: false,
-      //smartDashesType: ,
-      //smartQuotesType: ,
       strutStyle: widget.strutStyle,
       style: widget.style ?? textStyle,
       textAlign: widget.textAlign,
-      //textCapitalization: ,
-      //textInputAction: ,
-      //toolbarOptions: ,
     );
 
     final Widget result = IgnorePointer(
       ignoring: !enabled,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.text,
-        child: RepaintBoundary(
-          child: UnmanagedRestorationScope(
-            bucket: bucket,
-            child: Container(
-              decoration: decoration,
-              child: Align(
-                alignment: Alignment.center,
-                widthFactor: 1.0,
-                heightFactor: 1.0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 4.0, vertical: 4.0),
+      child: RepaintBoundary(
+        child: UnmanagedRestorationScope(
+          bucket: bucket,
+          child: Container(
+            decoration: decoration,
+            child: Align(
+              alignment: Alignment.center,
+              widthFactor: 1.0,
+              heightFactor: 1.0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+                child: TextSelectionGestureDetectorBuilder(delegate: this)
+                    .buildGestureDetector(
                   child: editable,
                 ),
               ),

@@ -169,6 +169,8 @@ class Tree extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.isScrollbarAlwaysShown = true,
+    this.collapsed = false,
+    this.visible = false,
     Key? key,
   }) : super(key: key);
 
@@ -188,6 +190,12 @@ class Tree extends StatefulWidget {
   final FocusNode? focusNode;
 
   final bool isScrollbarAlwaysShown;
+
+  /// If the tree is collapsed.
+  final bool collapsed;
+
+  /// If the tree is on top of the page. Ignored if `collapsed` is false.
+  final bool visible;
 
   @override
   _TreeState createState() => _TreeState();
@@ -326,6 +334,50 @@ class _TreeState extends State<Tree> {
     }
   }
 
+  Widget _createTree(BuildContext context) {
+    return Container(
+      alignment: Alignment.topLeft,
+      width: 200.0, // TODO(as): Use step width.
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (widget.title != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: widget.title!,
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: widget.nodes
+                      .map(
+                        (e) => _TreeColumn(
+                          node: e,
+                          parentName: '',
+                          updatePage: () {
+                            setState(
+                                () {}); // TODO(as): See scroll notification without rebuilding.
+                            //controller.position.;
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
@@ -360,56 +412,31 @@ class _TreeState extends State<Tree> {
       );
     }
 
-    Widget result = Row(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          width: 200.0,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (widget.title != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: widget.title!,
-                  ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: widget.nodes
-                          .map(
-                            (e) => _TreeColumn(
-                              node: e,
-                              parentName: '',
-                              updatePage: () {
-                                setState(
-                                    () {}); // TODO(as): See scroll notification without rebuilding.
-                                //controller.position.;
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: Stack(
-            children: pagesResult,
-          ),
-        )
-      ],
-    );
+    Widget result;
+
+    if (widget.collapsed) {
+      if (widget.visible) {
+        result = Row(
+          children: [
+            _createTree(context),
+            Expanded(
+              child: Stack(children: pagesResult),
+            )
+          ],
+        );
+      } else {
+        result = Stack(children: pagesResult);
+      }
+    } else {
+      result = Row(
+        children: [
+          _createTree(context),
+          Expanded(
+            child: Stack(children: pagesResult),
+          )
+        ],
+      );
+    }
 
     result = _TreeScope(
       child: result,

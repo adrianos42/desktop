@@ -4,11 +4,10 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "docs.png": "f9606f95519ac4aac78099a8873f5116",
-"main.dart.js": "5d52d168794c44ad5544bb843702daba",
-"assets/fonts/mode.ttf": "7af27e3be7174ff453dd84b58017a7f1",
-"assets/AssetManifest.json": "5ece75ec893aada032700a70f078b067",
-"assets/NOTICES": "34a1ac0b5474b6c72a566f2a464b87f6",
-"assets/packages/desktop/fonts/sharp_material_icons.ttf": "7286a89ec4d461263d0cddb86fc16b61",
+"main.dart.js": "d293e265bdbdfc99dd3a979c85da645a",
+"assets/AssetManifest.json": "04d3a62c5e1af1d0ec40b3971172a7ea",
+"assets/NOTICES": "664c6dee7ab124ee72172b1268fde22e",
+"assets/packages/desktop/fonts/Material_Icons_Sharp_Regular/MaterialIconsSharp-Regular.otf": "5257f80b95fdba0a233f61fef096b3f2",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLightItalic.ttf": "3046cfbc0a34e7459330e0f1c41c0c63",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Italic.ttf": "b38b47f1cb5acc36e0e232043be25f28",
@@ -134,11 +133,11 @@ const RESOURCES = {
 "assets/assets/cats_small/pexels-%25D0%25B0%25D0%25BB%25D0%25B5%25D0%25BA%25D1%2581%25D0%25B0%25D0%25BD%25D0%25B4%25D0%25B0%25D1%2580-%25D1%2586%25D0%25B2%25D0%25B5%25D1%2582%25D0%25B0%25D0%25BD%25D0%25BE%25D0%25B2%25D0%25B8%25D1%259B-1440406.jpg": "3400f2db63c70d75bb9019fe3f6bde00",
 "assets/assets/cats_small/pexels-david-savochka-192384.jpg": "86ef015ed5353520a573bd6b67f77b3b",
 "assets/assets/cats_small/pexels-pixabay-104827.jpg": "c652943766be78b2b6a9fe5334379f5d",
-"assets/FontManifest.json": "4f2b8e88558decd743a589d02a5fdbee",
-"manifest.json": "728a7628da12f2b36b2879a3f7fa9938",
+"assets/FontManifest.json": "690bd94bbfad2fd6d2e4b7ceb664a425",
+"manifest.json": "625fda5b332651ee804529166225fcfd",
 "version.json": "341c101d4b678f29adc2e2fa68fd71f3",
-"index.html": "91cbf24977600d7fe0af5cf6c1773e22",
-"/": "91cbf24977600d7fe0af5cf6c1773e22",
+"index.html": "1f70645921a92965f528af478ac60ec2",
+"/": "1f70645921a92965f528af478ac60ec2",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116"
 };

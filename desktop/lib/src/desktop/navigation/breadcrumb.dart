@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../input/button.dart';
+import '../input/button_context_menu.dart';
+import '../dialogs/context_menu.dart';
 import '../theme/theme.dart';
 import 'route.dart';
 import 'tab_scope.dart' show RouteBuilder, TabScope;
@@ -107,7 +109,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
     return capitalize(value.replaceAll('/', '').replaceAll('_', ' '));
   }
 
-  final scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   Widget _createBarNavigation() {
     final themeData = Theme.of(context);
@@ -154,6 +156,9 @@ class _BreadcrumbState extends State<Breadcrumb> {
       }
     }
 
+    final showEllipsis = _scrollController.hasClients &&
+        _scrollController.position.extentAfter > 0;
+
     Widget result = Container(
       constraints: const BoxConstraints.tightFor(height: _kHeight),
       color: Theme.of(context).colorScheme.background.toColor(),
@@ -163,6 +168,17 @@ class _BreadcrumbState extends State<Breadcrumb> {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (widget.leading != null) widget.leading!,
+          if (showEllipsis)
+            ContextMenuButton(
+              const Icon(Icons.more_horiz),
+              value: '',
+              onSelected: (String value) => setState(() {}),
+              itemBuilder: (context) => _names
+                  .map(
+                    (e) => ContextMenuItem(child: Text(e), value: e),
+                  )
+                  .toList(),
+            ),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -173,6 +189,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
                 ),
                 child: SingleChildScrollView(
                   reverse: true,
+                  controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,

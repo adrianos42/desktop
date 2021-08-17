@@ -16,7 +16,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w300,
     fontSize: 44.0,
-    //height: 1.2,
   );
 
   static const TextStyle subheader = TextStyle(
@@ -25,7 +24,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w300,
     fontSize: 34.0,
-    //height: 1.2,
   );
 
   static const TextStyle title = TextStyle(
@@ -34,7 +32,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 24.0,
-    //height: 1.2,
   );
 
   static const TextStyle subtitle = TextStyle(
@@ -43,7 +40,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 20.0,
-    //height: 1.2,
   );
 
   static const TextStyle body1 = TextStyle(
@@ -52,7 +48,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 14.0,
-    //height: 1.2,
   );
 
   static const TextStyle body2 = TextStyle(
@@ -61,7 +56,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
-    //height: 1.2,
   );
 
   static const TextStyle caption = TextStyle(
@@ -70,7 +64,6 @@ class _TextThemes {
     package: _kFontPackage,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
-    //height: 1.2,
   );
 
   static const TextStyle monospace = TextStyle(

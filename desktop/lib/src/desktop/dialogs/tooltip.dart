@@ -42,15 +42,11 @@ class Tooltip extends StatefulWidget {
   final String message;
 
   /// The height of the tooltip's [child].
-  ///
-  /// If the [child] is null, then this is the tooltip's intrinsic height.
   final double? height;
 
   final double? maxWidth;
 
   /// The amount of space by which to inset the tooltip's [child].
-  ///
-  /// Defaults to 16.0 logical pixels in each direction.
   final EdgeInsetsGeometry? padding;
 
   /// The empty space that surrounds the tooltip.
@@ -106,13 +102,13 @@ class Tooltip extends StatefulWidget {
   /// Once the pointer leaves the widget, the tooltip will immediately
   /// disappear.
   ///
-  /// Defaults to 0 milliseconds (tooltips are shown immediately upon hover).
+  /// Defaults to 800 milliseconds.
   final Duration? waitDuration;
 
   /// The length of time that the tooltip will be shown after a long press
   /// is released.
   ///
-  /// Defaults to 1.5 seconds.
+  /// Defaults to 1.2 seconds.
   final Duration? showDuration;
 
   final bool? visible;
@@ -226,7 +222,6 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     _showTimer?.cancel();
     _showTimer = null;
     if (_entry != null) {
-      // Stop trying to hide, if we were.
       _hideTimer?.cancel();
       _hideTimer = null;
       _controller.forward();
@@ -348,7 +343,8 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
     Widget result = GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onLongPress: _handleLongPress,
+      // TODO(as): Support for touch.
+      // onLongPress: _handleLongPress,
       excludeFromSemantics: true,
       child: Semantics(
         label: excludeFromSemantics ? null : widget.message,

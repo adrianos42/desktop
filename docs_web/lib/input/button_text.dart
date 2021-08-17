@@ -13,13 +13,13 @@ class _ButtonTextPageState extends State<ButtonTextPage> {
   Widget build(BuildContext context) {
     final enabledCode = '''
 Button.text(
-  'Click me',
+  'Click Me',
   onPressed: () {},
 )
 ''';
 
     final disabledCode = '''
-Button.text('Click me')
+Button.text('Click Me')
 ''';
 
     return Defaults.createItemsWithTitle(
@@ -29,7 +29,7 @@ Button.text('Click me')
           body: (context) => Align(
             alignment: Alignment.centerLeft,
             child: Button.text(
-              'Click me',
+              'Click Me',
               onPressed: () {},
             ),
           ),
@@ -40,7 +40,7 @@ Button.text('Click me')
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Button.text('Click me'),
+            child: Button.text('Click Me'),
           ),
           codeText: disabledCode,
           title: 'Disabled',

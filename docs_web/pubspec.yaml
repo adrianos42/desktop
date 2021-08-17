@@ -14,6 +14,7 @@ dependencies:
     path: ../desktop
     
   url_launcher: ^6.0.3
+  beamer: '0.14.1'
 
 dev_dependencies:
   flutter_test:
@@ -111,8 +112,3 @@ flutter:
     - assets/cats_small/pexels-xue-guangjian-1687831.jpg
     - assets/cats_small/pexels-zhang-kaiyv-4858815.jpg
     - assets/cats_small/pexels-александар-цветановић-1440406.jpg
-
-  fonts:
-    - family: mode
-      fonts:
-        - asset: fonts/mode.ttf

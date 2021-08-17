@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
+import 'dart:ui' show Brightness;
 
 const double _kLinearProgressIndicatorHeight = 4.0;
 const int _kIndeterminateLinearDuration = 1400;
@@ -29,8 +30,19 @@ abstract class ProgressIndicator extends StatefulWidget {
 
   final String? semanticsValue;
 
-  HSLColor _getBackgroundColor(BuildContext context) =>
-      backgroundColor ?? Theme.of(context).colorScheme.shade[30];
+  HSLColor _getBackgroundColor(BuildContext context) {
+    if (backgroundColor != null) {
+      return backgroundColor!;
+    }
+
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    if (colorScheme.brightness == Brightness.light) {
+      return colorScheme.primary[60].withSaturation(0.4).withLightness(0.9);
+    } else {
+      return colorScheme.primary[60].withSaturation(0.4).withLightness(0.1);
+    }
+  }
 
   HSLColor _getValueColor(BuildContext context) =>
       valueColor ?? Theme.of(context).colorScheme.primary[60];
@@ -308,7 +320,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
         ),
         child: CustomPaint(
           painter: _CircularProgressIndicatorPainter(
-            backgroundColor: widget.backgroundColor?.toColor(),
+            backgroundColor: widget._getBackgroundColor(context).toColor(),
             valueColor: widget._getValueColor(context).toColor(),
             value: widget.value, // may be null
             headValue:

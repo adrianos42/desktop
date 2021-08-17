@@ -75,11 +75,9 @@ class _TabViewState extends State<TabView> {
   Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
     final String? name = settings.name;
     WidgetBuilder? routeBuilder;
-    String? title;
 
     if (name == Navigator.defaultRouteName && widget.builder != null) {
       routeBuilder = widget.builder;
-      title = widget.defaultTitle;
     } else if (widget.routes != null) {
       routeBuilder = widget.routes![name];
     }
@@ -87,7 +85,6 @@ class _TabViewState extends State<TabView> {
     if (routeBuilder != null) {
       return DesktopPageRoute<dynamic>(
         builder: routeBuilder,
-        title: title,
         settings: settings,
       );
     }

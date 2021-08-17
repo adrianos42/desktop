@@ -155,4 +155,4 @@ flutter:
 
     - family: SharpMaterialIcons
       fonts:
-        - asset: fonts/sharp_material_icons.ttf
+        - asset: fonts/Material_Icons_Sharp_Regular/MaterialIconsSharp-Regular.otf

@@ -4,28 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'defaults.dart';
-import 'data/list_table.dart';
-import 'navigation/tree.dart';
-import 'dialogs/dialog.dart';
-import 'input/button.dart';
-import 'input/button_context_menu.dart';
-import 'input/button_drop_down.dart';
-import 'input/button_hyperlink.dart';
-import 'input/button_icon.dart';
-import 'input/button_radio.dart';
-import 'input/button_text.dart';
-import 'input/checkbox.dart';
-import 'input/toggle_switch.dart';
-import 'input/slider.dart';
-import 'navigation/nav.dart';
-import 'navigation/tab.dart';
-import 'navigation/breadcrumb.dart';
-import 'status/progress_indicator.dart';
-import 'status/tooltip.dart';
-import 'text/text_field.dart';
+import 'data/data.dart';
+import 'navigation/navigation.dart';
+import 'dialogs/dialogs.dart';
+import 'input/input.dart';
+import 'status/status.dart';
+import 'text/text.dart';
 import 'scrolling.dart';
 import 'typography.dart';
 import 'colorscheme.dart';
+import 'overview.dart';
 
 void main() => runApp(DocApp());
 
@@ -38,6 +26,7 @@ class DocApp extends StatefulWidget {
 
 class _DocAppState extends State<DocApp> {
   ThemeData _themeData = ThemeData(brightness: Brightness.dark);
+
   ThemeData get themeData =>
       ThemeData(brightness: _themeData.brightness, primaryColor: primaryColor);
 
@@ -49,28 +38,55 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColor.dodgerBlue;
+  PrimaryColor primaryColor = PrimaryColor.royalBlue;
 
   double backgroundColorLightness = 0.0;
 
-  Widget _createHome() {
-    final githubImage;
-    if (themeData.brightness == Brightness.dark) {
-      githubImage = Image.asset(
-        'assets/GitHub-Mark-Light-32px.png',
-        width: 19.0,
-        height: 19.0,
-      );
-    } else {
-      githubImage = Image.asset(
-        'assets/GitHub-Mark-32px.png',
-        width: 19.0,
-        height: 19.0,
-      );
-    }
+  bool isShowingTree = false;
+
+  Widget _createColorButton() {
+    final itemBuilder = (context) => [
+          _menuItemPrimaryColor(PrimaryColor.coral),
+          _menuItemPrimaryColor(PrimaryColor.sandyBrown),
+          _menuItemPrimaryColor(PrimaryColor.orange),
+          _menuItemPrimaryColor(PrimaryColor.goldenrod),
+          _menuItemPrimaryColor(PrimaryColor.springGreen),
+          _menuItemPrimaryColor(PrimaryColor.turquoise),
+          _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),
+          _menuItemPrimaryColor(PrimaryColor.dodgerBlue),
+          _menuItemPrimaryColor(PrimaryColor.cornflowerBlue),
+          _menuItemPrimaryColor(PrimaryColor.royalBlue),
+          _menuItemPrimaryColor(PrimaryColor.slateBlue),
+          _menuItemPrimaryColor(PrimaryColor.purple),
+          _menuItemPrimaryColor(PrimaryColor.violet),
+          _menuItemPrimaryColor(PrimaryColor.orchid),
+          _menuItemPrimaryColor(PrimaryColor.hotPink),
+          _menuItemPrimaryColor(PrimaryColor.red),
+        ];
 
     return Builder(
-      builder: (context) => Container(
+      builder: (context) => ButtonTheme.merge(
+        data: ButtonThemeData(
+          color: Theme.of(context).textTheme.textPrimaryHigh,
+          highlightColor: ButtonTheme.of(context).color,
+        ),
+        child: ContextMenuButton(
+          Icon(Icons.palette),
+          itemBuilder: itemBuilder,
+          value: primaryColor,
+          onSelected: (PrimaryColor value) {
+            setState(() => primaryColor = value);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _createHome() {
+    return Builder(builder: (context) {
+      final orientation = MediaQuery.maybeOf(context)?.orientation;
+
+      return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 16.0),
         child: Column(
@@ -79,7 +95,24 @@ class _DocAppState extends State<DocApp> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                if (orientation == Orientation.portrait)
+                  Container(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Button.icon(
+                      Icons.menu,
+                      color: isShowingTree
+                          ? ButtonTheme.of(context).highlightColor
+                          : null,
+                      hoverColor: isShowingTree
+                          ? ButtonTheme.of(context).highlightColor
+                          : null,
+                      size: 22,
+                      onPressed: () =>
+                          setState(() => isShowingTree = !isShowingTree),
+                    ),
+                  ),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding:
@@ -89,67 +122,55 @@ class _DocAppState extends State<DocApp> {
                       return Text(
                         'Desktop',
                         style: Theme.of(context).textTheme.title.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary[70]
-                                .toColor()),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary[70]
+                                  .toColor(),
+                            ),
                       );
                     },
                   ),
                 ),
                 Spacer(),
                 Container(
-                  width: 200.0,
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: DropDownButtonTheme.merge(
-                    data: DropDownButtonThemeData(
-                      color: Theme.of(context).textTheme.textPrimaryLow,
-                      hoverColor: Theme.of(context).textTheme.textPrimaryHigh,
-                    ),
-                    child: DropDownButton<PrimaryColor>(
-                      value: primaryColor,
-                      onSelected: (PrimaryColor value) {
-                        setState(() => primaryColor = value);
-                      },
-                      itemBuilder: (context) => [
-                        _menuItemPrimaryColor(PrimaryColor.coral),
-                        _menuItemPrimaryColor(PrimaryColor.sandyBrown),
-                        _menuItemPrimaryColor(PrimaryColor.orange),
-                        _menuItemPrimaryColor(PrimaryColor.goldenrod),
-                        _menuItemPrimaryColor(PrimaryColor.springGreen),
-                        _menuItemPrimaryColor(PrimaryColor.turquoise),
-                        _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),
-                        _menuItemPrimaryColor(PrimaryColor.dodgerBlue),
-                        _menuItemPrimaryColor(PrimaryColor.cornflowerBlue),
-                        _menuItemPrimaryColor(PrimaryColor.royalBlue),
-                        _menuItemPrimaryColor(PrimaryColor.slateBlue),
-                        _menuItemPrimaryColor(PrimaryColor.purple),
-                        _menuItemPrimaryColor(PrimaryColor.violet),
-                        _menuItemPrimaryColor(PrimaryColor.orchid),
-                        _menuItemPrimaryColor(PrimaryColor.hotPink),
-                        _menuItemPrimaryColor(PrimaryColor.red),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
                     children: [
+                      _createColorButton(),
                       ThemeToggle(
                         onPressed: () => setState(
                             () => _themeData = Theme.invertedThemeOf(context)),
                       ),
-                      Button(
-                        body: githubImage,
-                        onPressed: () async {
-                          final urlRepository =
-                              'https://github.com/adrianos42/desktop';
-                          if (await canLaunch(urlRepository)) {
-                            await launch(urlRepository);
-                          }
-                        },
-                      ),
+                      Builder(builder: (context) {
+                        final githubImage;
+                        final color = ButtonTheme.of(context).color;
+                        if (themeData.brightness == Brightness.dark) {
+                          githubImage = Image.asset(
+                            'assets/GitHub-Mark-Light-32px.png',
+                            width: 18.0,
+                            height: 18.0,
+                            color: color!.toColor(),
+                          );
+                        } else {
+                          githubImage = Image.asset(
+                            'assets/GitHub-Mark-32px.png',
+                            width: 18.0,
+                            height: 18.0,
+                            color: color!.toColor(),
+                          );
+                        }
+
+                        return Button(
+                          body: githubImage,
+                          onPressed: () async {
+                            final urlRepository =
+                                'https://github.com/adrianos42/desktop';
+                            if (await canLaunch(urlRepository)) {
+                              await launch(urlRepository);
+                            }
+                          },
+                        );
+                      }),
                     ],
                   ),
                 )
@@ -157,7 +178,9 @@ class _DocAppState extends State<DocApp> {
             ),
             Expanded(
               child: Tree(
-                pagePadding: EdgeInsets.only(left: 8.0),
+                pagePadding: EdgeInsets.only(left: 16.0),
+                collapsed: orientation == Orientation.portrait,
+                visible: isShowingTree,
                 title: Builder(
                   builder: (context) => Text(
                     'Documentation',
@@ -168,6 +191,9 @@ class _DocAppState extends State<DocApp> {
                   TreeNode.child(
                     'Overview',
                     builder: (context) => OverviewPage(),
+                    ////builder: (context) => TextFieldPage(),
+                    /// builder: (context) => NavPage(),
+                    //builder: (context) => ButtonGroupPage(),
                   ),
                   TreeNode.children('Navigation', children: [
                     TreeNode.child('Breadcrumb',
@@ -183,6 +209,12 @@ class _DocAppState extends State<DocApp> {
                   TreeNode.children('Dialogs', children: [
                     TreeNode.child('Dialog',
                         builder: (context) => DialogPage()),
+                    TreeNode.child('Message',
+                        builder: (context) => DialogMessagePage()),
+                    TreeNode.child(
+                      'Tooltip',
+                      builder: (context) => TooltipPage(),
+                    ),
                   ]),
                   TreeNode.children('Input', children: [
                     TreeNode.child(
@@ -239,10 +271,6 @@ class _DocAppState extends State<DocApp> {
                     //   'Status bar',
                     //   builder: (context) => StatusBarPage(),
                     // ),
-                    TreeNode.child(
-                      'Tooltip',
-                      builder: (context) => TooltipPage(),
-                    ),
                   ]),
                   TreeNode.children('Text', children: [
                     TreeNode.child(
@@ -267,8 +295,8 @@ class _DocAppState extends State<DocApp> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 
   @override
@@ -302,101 +330,17 @@ class _ThemeToggleState extends State<ThemeToggle> {
     final iconForeground = themeData.textTheme.textHigh;
     switch (themeData.brightness) {
       case Brightness.dark:
-        return Button(
+        return Button.icon(
+          Icons.dark_mode,
           onPressed: widget.onPressed,
-          body: Icon(
-            IconData(0x61, fontFamily: 'mode'),
-            color: iconForeground.toColor(),
-          ),
+          //color: iconForeground,
         );
       case Brightness.light:
-        return Button(
+        return Button.icon(
+          Icons.light_mode,
           onPressed: widget.onPressed,
-          body: Icon(
-            IconData(0x62, fontFamily: 'mode'),
-            color: iconForeground.toColor(),
-          ),
+          //color: iconForeground,
         );
     }
-  }
-}
-
-// TODO(as): Move this class to its own file.
-class OverviewPage extends StatefulWidget {
-  OverviewPage({Key? key}) : super(key: key);
-
-  @override
-  _OverviewPageState createState() => _OverviewPageState();
-}
-
-class _OverviewPageState extends State<OverviewPage> {
-  @override
-  Widget build(BuildContext context) {
-
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Defaults.createHeader(context, 'Overview'),
-          // Text.rich(
-          //   TextSpan(
-          //     children: [
-          //       TextSpan(
-          //           style: Theme.of(context).textTheme.body1.copyWith(),
-          //           text: 'Flutter wigdets for desktop usage'),
-          //     ],
-          //   ),
-          // ),
-          // Defaults.createTitle(context, 'Resources'),
-          // HyperlinkButton(
-          //   'Github',
-          //   onPressed: (_) async {
-          //     final link = 'https://github.com/adrianos42/desktop';
-          //     if (await canLaunch(link)) {
-          //       await launch(link);
-          //     }
-          //   },
-          // ),
-          // HyperlinkButton(
-          //   'Figma',
-          //   onPressed: (_) async {
-          //     final link =
-          //         'https://www.figma.com/file/WQCf5O9Jh7cLtOY4zRDL0U/Model?node-id=2%3A0';
-          //     if (await canLaunch(link)) {
-          //       await launch(link);
-          //     }
-          //   },
-          // ),
-          Defaults.createTitle(context, 'Flutter resources'),
-          HyperlinkButton(
-            'Desktop support for Flutter',
-            onPressed: (_) async {
-              final link = 'https://flutter.dev/desktop';
-              if (await canLaunch(link)) {
-                await launch(link);
-              }
-            },
-          ),
-          HyperlinkButton(
-            'Build and release a Linux app',
-            onPressed: (_) async {
-              final link = 'https://flutter.dev/docs/deployment/linux';
-              if (await canLaunch(link)) {
-                await launch(link);
-              }
-            },
-          ),
-          HyperlinkButton(
-            'Build and release a web app',
-            onPressed: (_) async {
-              final link = 'https://flutter.dev/docs/deployment/web';
-              if (await canLaunch(link)) {
-                await launch(link);
-              }
-            },
-          ),
-        ],
-      ),
-    );
   }
 }

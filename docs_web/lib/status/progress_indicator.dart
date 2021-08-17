@@ -8,15 +8,25 @@ class ProgressIndicatorPage extends StatefulWidget {
   _ProgressIndicatorPageState createState() => _ProgressIndicatorPageState();
 }
 
-class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
-  final linearCodeExample = 'LinearProgressIndicator(value: 0.4)';
-  final linearIndeterminateCodeExample = 'LinearProgressIndicator()';
-  final circurlarCodeExample = 'CircularProgressIndicator()';
+class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 6),
+  )..repeat();
 
-  double progressValue = 0.4;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    const linearCodeExample = 'LinearProgressIndicator(value: 0.4)';
+    const linearIndeterminateCodeExample = 'LinearProgressIndicator()';
+    const circurlarCodeExample = 'CircularProgressIndicator()';
+
     return Defaults.createItemsWithTitle(
       context,
       header: 'Progress indicator',
@@ -25,37 +35,11 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage> {
           body: (context) => Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Button.icon(
-                      Icons.minus,
-                      onPressed: () => setState(() => progressValue =
-                          (progressValue - 0.05).clamp(0.0, 1.0)),
-                    ),
-                    Button.icon(
-                      Icons.plus,
-                      onPressed: () => setState(() => progressValue =
-                          (progressValue + 0.05).clamp(0.0, 1.0)),
-                    ),
-                    Text(
-                      'value: ${(progressValue * 100).round()}%',
-                      style: Theme.of(context).textTheme.body1.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .shade[60]
-                                .toColor(),
-                          ),
-                    ),
-                  ],
-                ),
-                LinearProgressIndicator(
-                  value: progressValue,
-                ),
-              ],
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, _) => LinearProgressIndicator(
+                value: _controller.value,
+              ),
             ),
           ),
           codeText: linearCodeExample,

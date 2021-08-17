@@ -9,7 +9,7 @@ const double _kNavWidth = 36.0;
 const double _kNavHeight = 42.0;
 const double _kPadding = 8.0;
 const double _kSideWidth = 2.0;
-const double _kNavItemsSpacing = 6.0;
+const double _kNavItemsSpacing = 8.0;
 
 const Duration _kChangeDuration = Duration(milliseconds: 200);
 
@@ -32,10 +32,10 @@ class NavThemeData {
 
   // The space between items inside the navbar
   // In this order
-  // - the back button does not have it
-  // - if it has a leading, as a top or left padding
-  // - the navigation items have at both side
-  // - if it has a trailing, as a bottom or right padding
+  // - The back button does not have it.
+  // - If it has a leading menu, as a top or left padding.
+  // - The navigation items have at both side.
+  // - If it has a trailing menu, as a bottom or right padding.
   final double itemsSpacing;
 
   // final Color _background;

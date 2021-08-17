@@ -17,37 +17,12 @@ class PreviousTabIntent extends Intent {
   const PreviousTabIntent();
 }
 
-class DesktopPageRoute<T> extends PageRoute<T> {
-  DesktopPageRoute({
-    required this.builder,
-    this.title,
-    required RouteSettings settings,
-    bool fullscreenDialog = true,
-    this.maintainState = true,
-  }) : super(settings: settings, fullscreenDialog: fullscreenDialog);
-
-  final WidgetBuilder builder;
-
-  final String? title;
-
-  final ValueNotifier<String> _previousTitle = ValueNotifier<String>('');
-
-  ValueListenable<String> get previousTitle => _previousTitle;
+mixin _DesktopRouteTransitionMixin<T> on PageRoute<T> {
+  @protected
+  Widget buildContent(BuildContext context);
 
   @override
-  void didChangePrevious(Route<dynamic>? previousRoute) {
-    final String previousTitleString =
-        previousRoute is DesktopPageRoute ? previousRoute.title ?? '' : '';
-    _previousTitle.value = previousTitleString;
-
-    super.didChangePrevious(previousRoute);
-  }
-
-  @override
-  final bool maintainState;
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 0);
+  Duration get transitionDuration => const Duration(milliseconds: 200);
 
   @override
   Color? get barrierColor => null;
@@ -56,17 +31,32 @@ class DesktopPageRoute<T> extends PageRoute<T> {
   String? get barrierLabel => null;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    final Widget child = builder(context);
+  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
+    return nextRoute is _DesktopRouteTransitionMixin &&
+        !nextRoute.fullscreenDialog;
+  }
 
-    final Widget result = Semantics(
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    final Widget result = buildContent(context);
+    assert(() {
+      if (result == null) {
+        throw FlutterError(
+          'The builder for route "${settings.name}" returned null.\n'
+          'Route builders must never return null.',
+        );
+      }
+      return true;
+    }());
+    return Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
-      child: child,
+      child: result,
     );
-
-    return result;
   }
 
   @override
@@ -90,6 +80,77 @@ class DesktopPageRoute<T> extends PageRoute<T> {
         ),
         child: child);
   }
+}
+
+class DesktopPageRoute<T> extends PageRoute<T>
+    with _DesktopRouteTransitionMixin {
+  DesktopPageRoute({
+    required this.builder,
+    RouteSettings? settings,
+    bool fullscreenDialog = true,
+    this.maintainState = true,
+  }) : super(settings: settings, fullscreenDialog: fullscreenDialog);
+
+  final WidgetBuilder builder;
+
+  @override
+  Widget buildContent(BuildContext context) => builder(context);
+
+  @override
+  final bool maintainState;
+
+  @override
+  String get debugLabel => '${super.debugLabel}(${settings.name})';
+}
+
+class DesktopPage<T> extends Page<T> {
+  const DesktopPage({
+    required this.child,
+    this.maintainState = true,
+    this.fullscreenDialog = false,
+    LocalKey? key,
+    String? name,
+    Object? arguments,
+    String? restorationId,
+  }) : super(
+          key: key,
+          name: name,
+          arguments: arguments,
+          restorationId: restorationId,
+        );
+
+  final Widget child;
+
+  final bool maintainState;
+
+  final bool fullscreenDialog;
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return _PageBasedDesktopPageRoute<T>(page: this);
+  }
+}
+
+class _PageBasedDesktopPageRoute<T> extends PageRoute<T>
+    with _DesktopRouteTransitionMixin<T> {
+  _PageBasedDesktopPageRoute({required DesktopPage<T> page})
+      : super(settings: page);
+
+  DesktopPage<T> get _page => settings as DesktopPage<T>;
+
+  @override
+  Widget buildContent(BuildContext context) {
+    return _page.child;
+  }
+
+  @override
+  bool get maintainState => _page.maintainState;
+
+  @override
+  bool get fullscreenDialog => _page.fullscreenDialog;
+
+  @override
+  String get debugLevel => '${super.debugLabel}(${_page.name})';
 }
 
 abstract class ContextRoute<T> extends ModalRoute<T> {

@@ -263,58 +263,50 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                   child: MouseRegion(
                     onEnter: (_) => setState(() => menuFocus = true),
                     onExit: (_) => setState(() => menuFocus = false),
-                    child: ButtonTheme.merge(
-                      data: ButtonThemeData(
-                        color: textTheme.textLow,
-                        hoverColor: textTheme.textMedium,
-                        highlightColor: textTheme.textHigh,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(assetName),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Row(
-                                    children: [
-                                      if (widget.requestPrevious != null)
-                                        Button.icon(
-                                          Icons.navigate_before,
-                                          onPressed: canRequestPrevious
-                                              ? _requestPrevious
-                                              : null,
-                                          tooltip: 'Previous',
-                                        ),
-                                      if (widget.requestNext != null)
-                                        Button.icon(
-                                          Icons.navigate_next,
-                                          onPressed: canRequestNext
-                                              ? _requestNext
-                                              : null,
-                                          tooltip: 'Next',
-                                        ),
-                                    ],
-                                  ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(assetName),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Row(
+                                  children: [
+                                    if (widget.requestPrevious != null)
+                                      Button.icon(
+                                        Icons.navigate_before,
+                                        onPressed: canRequestPrevious
+                                            ? _requestPrevious
+                                            : null,
+                                        tooltip: 'Previous',
+                                      ),
+                                    if (widget.requestNext != null)
+                                      Button.icon(
+                                        Icons.navigate_next,
+                                        onPressed: canRequestNext
+                                            ? _requestNext
+                                            : null,
+                                        tooltip: 'Next',
+                                      ),
+                                  ],
                                 ),
-                                Button.icon(
-                                  Icons.close,
-                                  onPressed: () => Navigator.pop(context),
-                                  tooltip: 'Close',
-                                ),
-                              ],
-                            ),
+                              ),
+                              Button.icon(
+                                Icons.close,
+                                onPressed: () => Navigator.pop(context),
+                                tooltip: 'Close',
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

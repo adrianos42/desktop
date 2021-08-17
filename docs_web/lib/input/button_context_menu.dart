@@ -33,8 +33,8 @@ ContextMenuButton(
       value: 'Palhoça',
     ),
     ContextMenuItem(
-      child: Text('São José'),
-      value: 'São José',
+      child: Text('Pedra Branca'),
+      value: 'Pedra Branca',
     ),
   ],
 ),
@@ -59,8 +59,8 @@ ContextMenuButton(
       value: 'Palhoça',
     ),
     ContextMenuItem(
-      child: Text('São José'),
-      value: 'São José',
+      child: Text('Pedra Branca'),
+      value: 'Pedra Branca',
     ),
   ],
 ),
@@ -94,8 +94,8 @@ ContextMenuButton(
                         value: 'Palhoça',
                       ),
                       ContextMenuItem(
-                        child: Text('São José'),
-                        value: 'São José',
+                        child: Text('Pedra Branca'),
+                        value: 'Pedra Branca',
                       ),
                     ],
                   ),
@@ -138,8 +138,8 @@ ContextMenuButton(
                           value: 'Palhoça',
                         ),
                         ContextMenuItem(
-                          child: Text('São José'),
-                          value: 'São José',
+                          child: Text('Pedra Branca'),
+                          value: 'Pedra Branca',
                         ),
                       ],
                     ),

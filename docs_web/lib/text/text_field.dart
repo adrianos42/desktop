@@ -11,34 +11,47 @@ class TextFieldPage extends StatefulWidget {
 class _TextFieldPageState extends State<TextFieldPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Text field'),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  constraints: BoxConstraints.loose(Size(300.0, 300.0)),
-                  padding: EdgeInsets.all(16.0),
-                  child: TextField(
-                    maxLines: 3,
-                    minLines: 3,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  constraints: BoxConstraints.loose(Size(300.0, 300.0)),
-                  padding: EdgeInsets.all(16.0),
-                  child: TextField(),
-                ),
-              ),
-            ],
+    const multiLineExample = '''
+  TextField(
+    maxLines: 3,
+    minLines: 3,
+  )
+    ''';
+
+    const basicExample = 'TextField()';
+
+    return Defaults.createItemsWithTitle(
+      context,
+      header: 'Text field',
+      items: [
+        ItemTitle(
+          body: (context) => Container(
+            margin: EdgeInsets.all(16.0),
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: 200.0,
+              child: TextField(),
+            ),
           ),
+          codeText: basicExample,
+          title: 'Basic example',
+          height: 300.0,
+        ),
+        ItemTitle(
+          body: (context) => Container(
+            margin: EdgeInsets.all(16.0),
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: 300.0,
+              child: TextField(
+                maxLines: 3,
+                minLines: 3,
+              ),
+            ),
+          ),
+          codeText: multiLineExample,
+          title: 'Multiline example',
+          height: 300.0,
         ),
       ],
     );

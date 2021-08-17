@@ -92,7 +92,7 @@ class Nav extends StatefulWidget {
   const Nav({
     Key? key,
     required this.items,
-    this.back = !kIsWeb,
+    this.backButton = !kIsWeb,
     this.navAxis = Axis.vertical,
     this.trailingMenu,
     this.leadingMenu,
@@ -111,7 +111,7 @@ class Nav extends StatefulWidget {
   final List<NavItem>? leadingMenu;
 
   /// If the back button is enabled. Defaults to true in linux.
-  final bool back;
+  final bool backButton;
 
   /// The axis of the nav bar.
   final Axis navAxis;
@@ -192,7 +192,7 @@ class _NavState extends State<Nav> {
 
   void _goBack() {
     if (_isBack) {
-      _currentNavigator.pop();
+      _currentNavigator.maybePop();
     } else if (_index != _kIntialIndexValue) {
       setState(() {
         _index = _kIntialIndexValue;
@@ -282,7 +282,7 @@ class _NavState extends State<Nav> {
 
     final navList = <Widget>[];
 
-    if (widget.back) {
+    if (widget.backButton) {
       final enabled = _isBack || _index != _kIntialIndexValue || _menus != null;
 
       final value = Container(

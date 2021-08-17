@@ -24,7 +24,7 @@ class TabMenuRoute<T> extends PopupRoute<T> {
 
   Animation<double>? _animation;
 
-  static final Curve _animationCurve = Curves.easeInOut;
+  static final Curve _animationCurve = Curves.easeInOutSine;
 
   @override
   bool get barrierDismissible => true;

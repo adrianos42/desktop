@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 
 const PrimaryColor _kDefaultPrimary = PrimaryColor.dodgerBlue;
 
+// final Color backgroundColor = Color(0xFFE60026);
+
 /// Color scheme used for the theme data.
 @immutable
 class ColorScheme {
