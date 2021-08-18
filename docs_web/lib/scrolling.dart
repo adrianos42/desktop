@@ -156,37 +156,37 @@ class _ImagePage extends StatefulWidget {
 
 class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   Timer? _fadeoutTimer;
-  bool offstage = false;
-  bool menuFocus = true;
+  bool _offstage = false;
+  bool _menuFocus = true;
 
   void _startFadeoutTimer() {
     _fadeoutTimer?.cancel();
 
     setState(() {
-      offstage = false;
+      _offstage = false;
       _fadeoutTimer = Timer(Duration(milliseconds: 2000), () {
         setState(() => _fadeoutTimer = null);
       });
     });
   }
 
-  String? replaceAssetName;
+  String? _replaceAssetName;
 
   late Map<Type, Action<Intent>> _actionMap;
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
     final replace =
-        widget.requestPrevious!(replaceAssetName ?? widget.assetName);
+        widget.requestPrevious!(_replaceAssetName ?? widget.assetName);
     if (replace != null) {
-      setState(() => replaceAssetName = replace);
+      setState(() => _replaceAssetName = replace);
     }
   }
 
   void _requestNext() {
-    final replace = widget.requestNext!(replaceAssetName ?? widget.assetName);
+    final replace = widget.requestNext!(_replaceAssetName ?? widget.assetName);
     if (replace != null) {
-      setState(() => replaceAssetName = replace);
+      setState(() => _replaceAssetName = replace);
     }
   }
 
@@ -227,7 +227,10 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   double _offset = 0.0;
 
   void onDragStart(DragStartDetails details) {
-    _offset = details.globalPosition.dx;
+    setState(() {
+      _menuFocus = false;
+      _offset = details.globalPosition.dx;
+    });
   }
 
   void onDragCancel() {
@@ -240,15 +243,16 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   void onDragEnd(DragEndDetails details) {
     // TODO(as): Calculate proper velocity.
     if (details.primaryVelocity != null) {
-      final assetName = replaceAssetName ?? widget.assetName;
+      final assetName = _replaceAssetName ?? widget.assetName;
 
-      final canRequestPrevious = widget.requestPrevious?.call(assetName) != null;
-    final canRequestNext = widget.requestNext?.call(assetName) != null;
+      final canRequestPrevious =
+          widget.requestPrevious?.call(assetName) != null;
+      final canRequestNext = widget.requestNext?.call(assetName) != null;
 
       if (details.primaryVelocity! < 0.0 && _xOffset < -100.0) {
-          if (canRequestNext) {
-            _requestNext();
-          }
+        if (canRequestNext) {
+          _requestNext();
+        }
       } else if (details.primaryVelocity! > 0.0 && _xOffset > 100.0) {
         if (canRequestPrevious) {
           _requestPrevious();
@@ -270,7 +274,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final assetName = replaceAssetName ?? widget.assetName;
+    final assetName = _replaceAssetName ?? widget.assetName;
 
     final canRequestPrevious = widget.requestPrevious?.call(assetName) != null;
     final canRequestNext = widget.requestNext?.call(assetName) != null;
@@ -304,7 +308,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
               );
             }),
             Offstage(
-              offstage: offstage,
+              offstage: _offstage,
               child: AnimatedOpacity(
                 child: Align(
                   alignment: Alignment.topCenter,
@@ -312,8 +316,8 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                     color: colorScheme.background.withAlpha(0.9).toColor(),
                     height: 60.0,
                     child: MouseRegion(
-                      onEnter: (_) => setState(() => menuFocus = true),
-                      onExit: (_) => setState(() => menuFocus = false),
+                      onEnter: (_) => setState(() => _menuFocus = true),
+                      onExit: (_) => setState(() => _menuFocus = false),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -352,13 +356,13 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                opacity: _fadeoutTimer == null && !menuFocus ? 0.0 : 1.0,
+                opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
                 duration: const Duration(milliseconds: 200),
-                curve: _fadeoutTimer == null && !menuFocus
+                curve: _fadeoutTimer == null && !_menuFocus
                     ? Curves.easeOut
                     : Curves.easeIn,
                 onEnd: () => setState(
-                    () => offstage = _fadeoutTimer == null && !menuFocus),
+                    () => _offstage = _fadeoutTimer == null && !_menuFocus),
                 //curve: Curves.easeOutSine,
               ),
             ),
