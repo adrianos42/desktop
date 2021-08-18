@@ -36449,7 +36449,7 @@ if(o!=null){s=p.r
 if(s==null)s=p.a.c
 r=p.a.e.$1(s)
 q=p.a.d.$1(s)
-if(o<0&&p.z<-100){if(q!=null)p.vA()}else if(o>0&&p.z>100)if(r!=null)p.vC()}p.K(new K.a1A(p))},
+if(o<0&&p.z<0){if(q!=null)p.vA()}else if(o>0&&p.z>0)if(r!=null)p.vC()}p.K(new K.a1A(p))},
 a4A(a){this.K(new K.a1C(this,a))},
 F(a,b){var s,r,q,p,o,n,m,l=this,k=null,j=l.r
 if(j==null)j=l.a.c

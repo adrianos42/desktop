@@ -249,11 +249,11 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
           widget.requestPrevious?.call(assetName) != null;
       final canRequestNext = widget.requestNext?.call(assetName) != null;
 
-      if (details.primaryVelocity! < 0.0 && _xOffset < -100.0) {
+      if (details.primaryVelocity! < 0.0 && _xOffset < 0.0) {
         if (canRequestNext) {
           _requestNext();
         }
-      } else if (details.primaryVelocity! > 0.0 && _xOffset > 100.0) {
+      } else if (details.primaryVelocity! > 0.0 && _xOffset > 0.0) {
         if (canRequestPrevious) {
           _requestPrevious();
         }
