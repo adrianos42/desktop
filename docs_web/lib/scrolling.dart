@@ -157,7 +157,7 @@ class _ImagePage extends StatefulWidget {
 class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   Timer? _fadeoutTimer;
   bool offstage = false;
-  bool menuFocus = false;
+  bool menuFocus = true;
 
   void _startFadeoutTimer() {
     _fadeoutTimer?.cancel();
@@ -223,6 +223,51 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  double _xOffset = 0.0;
+  double _offset = 0.0;
+
+  void onDragStart(DragStartDetails details) {
+    _offset = details.globalPosition.dx;
+  }
+
+  void onDragCancel() {
+    setState(() {
+      _offset = 0.0;
+      _xOffset = 0.0;
+    });
+  }
+
+  void onDragEnd(DragEndDetails details) {
+    // TODO(as): Calculate proper velocity.
+    if (details.primaryVelocity != null) {
+      final assetName = replaceAssetName ?? widget.assetName;
+
+      final canRequestPrevious = widget.requestPrevious?.call(assetName) != null;
+    final canRequestNext = widget.requestNext?.call(assetName) != null;
+
+      if (details.primaryVelocity! < 0.0 && _xOffset < -100.0) {
+          if (canRequestNext) {
+            _requestNext();
+          }
+      } else if (details.primaryVelocity! > 0.0 && _xOffset > 100.0) {
+        if (canRequestPrevious) {
+          _requestPrevious();
+        }
+      }
+    }
+
+    setState(() {
+      _offset = 0.0;
+      _xOffset = 0.0;
+    });
+  }
+
+  void onDragUpdate(DragUpdateDetails details) {
+    setState(() {
+      _xOffset = details.globalPosition.dx - _offset;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final assetName = replaceAssetName ?? widget.assetName;
@@ -236,6 +281,10 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
       onHover: (_) => _startFadeoutTimer(),
       child: GestureDetector(
         onTap: () => _startFadeoutTimer(),
+        onHorizontalDragStart: onDragStart,
+        onHorizontalDragCancel: onDragCancel,
+        onHorizontalDragEnd: onDragEnd,
+        onHorizontalDragUpdate: onDragUpdate,
         child: Stack(
           children: [
             LayoutBuilder(builder: (context, constraints) {
@@ -243,11 +292,14 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                 height: constraints.maxHeight,
                 color: Color(0x0),
                 alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/cats/$assetName.jpg',
-                  //frameBuilder: _frameBuilder,
-                  fit: BoxFit.contain,
-                  cacheHeight: constraints.maxHeight.toInt(),
+                child: Transform(
+                  transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
+                  child: Image.asset(
+                    'assets/cats/$assetName.jpg',
+                    //frameBuilder: _frameBuilder,
+                    fit: BoxFit.contain,
+                    cacheHeight: constraints.maxHeight.toInt(),
+                  ),
                 ),
               );
             }),
@@ -263,47 +315,36 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                       onEnter: (_) => setState(() => menuFocus = true),
                       onExit: (_) => setState(() => menuFocus = false),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Text(assetName),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Text(
+                                assetName,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ),
+                          if (widget.requestPrevious != null)
+                            Button.icon(
+                              Icons.navigate_before,
+                              onPressed:
+                                  canRequestPrevious ? _requestPrevious : null,
+                              tooltip: 'Previous',
+                            ),
+                          if (widget.requestNext != null)
+                            Button.icon(
+                              Icons.navigate_next,
+                              onPressed: canRequestNext ? _requestNext : null,
+                              tooltip: 'Next',
+                            ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Row(
-                                    children: [
-                                      if (widget.requestPrevious != null)
-                                        Button.icon(
-                                          Icons.navigate_before,
-                                          onPressed: canRequestPrevious
-                                              ? _requestPrevious
-                                              : null,
-                                          tooltip: 'Previous',
-                                        ),
-                                      if (widget.requestNext != null)
-                                        Button.icon(
-                                          Icons.navigate_next,
-                                          onPressed: canRequestNext
-                                              ? _requestNext
-                                              : null,
-                                          tooltip: 'Next',
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                Button.icon(
-                                  Icons.close,
-                                  onPressed: () => Navigator.pop(context),
-                                  tooltip: 'Close',
-                                ),
-                              ],
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Button.icon(
+                              Icons.close,
+                              onPressed: () => Navigator.pop(context),
+                              tooltip: 'Close',
                             ),
                           ),
                         ],
