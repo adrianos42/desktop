@@ -48,108 +48,55 @@ Tab(
 )
 ''';
 
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Tab'),
-        Expanded(
-          child: Defaults.createCodeSession(
-            context,
-            builder: (context) {
-              // return Tab(
-              //   color: Theme.of(context).colorScheme.background1,
-              //   items: [
-              //     TabItem(
-              //       builder: (context, _) => TabView(
-              //         builder: (context) => Center(
-              //           child: Text(
-              //             'page 0',
-              //             style: Theme.of(context).textTheme.title,
-              //           ),
-              //         ),
-              //       ),
-              //       tabItemBuilder: (context, index, active) => Container(
-              //         alignment: Alignment.center,
-              //         color: TabScope.of(context)!.currentIndex! == index
-              //             ? Theme.of(context).colorScheme.background.toColor()
-              //             : null,
-              //         child: Text('page 0'),
-              //       ),
-              //     ),
-              //     TabItem(
-              //       builder: (context, _) => TabView(
-              //         builder: (context) => Center(
-              //           child: Text(
-              //             'page 1',
-              //             style: Theme.of(context).textTheme.title,
-              //           ),
-              //         ),
-              //       ),
-              //       tabItemBuilder: (context, index, active) => Container(
-              //         alignment: Alignment.center,
-              //         color: TabScope.of(context)!.currentIndex == index
-              //             ? Theme.of(context).colorScheme.background.toColor()
-              //             : null,
-              //         child: Text('page 1'),
-              //       ),
-              //     ),
-              //     TabItem(
-              //       builder: (context, _) => TabView(
-              //         builder: (context) => Center(
-              //           child: Text(
-              //             'page 2',
-              //             style: Theme.of(context).textTheme.title,
-              //           ),
-              //         ),
-              //       ),
-              //       tabItemBuilder: (context, index, active) => Container(
-              //         alignment: Alignment.center,
-              //         color: TabScope.of(context)!.currentIndex == index
-              //             ? Theme.of(context).colorScheme.background.toColor()
-              //             : null,
-              //         child: Text('page 2'),
-              //       ),
-              //     ),
-              //   ],
-              // );
-              return Tab(
-                items: [
-                  TabItem.text('page 0',
-                    builder: (context) => TabView(
-                      builder: (context) => Center(
-                        child: Text(
-                          'page 0',
-                          style: Theme.of(context).textTheme.title,
-                        ),
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) {
+            return Tab(
+              items: [
+                TabItem.text(
+                  'page 0',
+                  builder: (context) => TabView(
+                    builder: (context) => Center(
+                      child: Text(
+                        'page 0',
+                        style: Theme.of(context).textTheme.title,
                       ),
                     ),
                   ),
-                  TabItem.text('page 1',
-                    builder: (context) => TabView(
-                      builder: (context) => Center(
-                        child: Text(
-                          'page 1',
-                          style: Theme.of(context).textTheme.title,
-                        ),
+                ),
+                TabItem.text(
+                  'page 1',
+                  builder: (context) => TabView(
+                    builder: (context) => Center(
+                      child: Text(
+                        'page 1',
+                        style: Theme.of(context).textTheme.title,
                       ),
                     ),
                   ),
-                  TabItem.text('page 2',
-                    builder: (context) => TabView(
-                      builder: (context) => Center(
-                        child: Text(
-                          'page 2',
-                          style: Theme.of(context).textTheme.title,
-                        ),
+                ),
+                TabItem.text(
+                  'page 2',
+                  builder: (context) => TabView(
+                    builder: (context) => Center(
+                      child: Text(
+                        'page 2',
+                        style: Theme.of(context).textTheme.title,
                       ),
                     ),
                   ),
-                ],
-              );
-            },
-            codeText: codeSample,
-          ),
+                ),
+              ],
+            );
+          },
+          codeText: codeSample,
+          title: 'Basic example',
+          height: 600.0,
         ),
       ],
+      header: 'Tab',
     );
   }
 }

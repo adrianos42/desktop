@@ -516,9 +516,9 @@ class _ScrollbarState extends State<Scrollbar>
             child: Listener(
               child: Container(
                 child: widget.child,
-                margin: widget.isAlwaysShown
-                    ? const EdgeInsets.only(right: _kScrollbarThickness)
-                    : EdgeInsets.zero,
+                // margin: widget.isAlwaysShown
+                //     ? const EdgeInsets.only(right: _kScrollbarThickness)
+                //     : EdgeInsets.zero,
               ),
               behavior: HitTestBehavior.deferToChild,
               onPointerSignal: _receivedPointerSignal,

@@ -108,91 +108,58 @@ Tree(
 )
 ''';
 
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Tree'),
-        Expanded(
-          child: Defaults.createCodeSession(
-            context,
-            builder: (context) {
-              return Tree(
-                title: Builder(
-                  builder: (context) => Text(
-                    'Tree',
-                    style: Theme.of(context).textTheme.body2,
-                  ),
+    return Defaults.createItemsWithTitle(
+      context,
+      items: [
+        ItemTitle(
+          body: (context) {
+            return Tree(
+              title: Builder(
+                builder: (context) => Text(
+                  'Tree',
+                  style: Theme.of(context).textTheme.body2,
                 ),
-                nodes: [
+              ),
+              nodes: [
+                TreeNode.child(
+                  'Node 0',
+                  builder: (context) => Center(
+                      child: Text(
+                    'Node 0',
+                    style: Theme.of(context).textTheme.title,
+                  )),
+                ),
+                TreeNode.children('Node 1', children: [
                   TreeNode.child(
                     'Node 0',
                     builder: (context) => Center(
                         child: Text(
-                      'Node 0',
+                      'Node 1 -> 0',
                       style: Theme.of(context).textTheme.title,
                     )),
                   ),
-                  TreeNode.children('Node 1', children: [
-                    TreeNode.child(
-                      'Node 0',
-                      builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 0',
-                        style: Theme.of(context).textTheme.title,
-                      )),
-                    ),
-                    TreeNode.child(
-                      'Node 1',
-                      builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 1',
-                        style: Theme.of(context).textTheme.title,
-                      )),
-                    ),
-                    TreeNode.child(
-                      'Node 2',
-                      builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 2',
-                        style: Theme.of(context).textTheme.title,
-                      )),
-                    ),
-                    TreeNode.children('Node3', children: [
-                      TreeNode.child(
-                        'Node 0',
-                        builder: (context) => Center(
-                            child: Text(
-                          'Node 1 -> 3 -> 0',
-                          style: Theme.of(context).textTheme.title,
-                        )),
-                      ),
-                      TreeNode.child(
-                        'Node 1',
-                        builder: (context) => Center(
-                            child: Text(
-                          'Node 1 -> 3 -> 1',
-                          style: Theme.of(context).textTheme.title,
-                        )),
-                      ),
-                      // TreeNode('Breadcrumb',
-                      //     builder: (context) => BreadcrumbPage()),
-                    ]),
-                    // TreeNode('Breadcrumb',
-                    //     builder: (context) => BreadcrumbPage()),
-                  ]),
+                  TreeNode.child(
+                    'Node 1',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 1 -> 1',
+                      style: Theme.of(context).textTheme.title,
+                    )),
+                  ),
                   TreeNode.child(
                     'Node 2',
                     builder: (context) => Center(
                         child: Text(
-                      'Node 2 ',
+                      'Node 1 -> 2',
                       style: Theme.of(context).textTheme.title,
                     )),
                   ),
-                  TreeNode.children('Node 3', children: [
+                  TreeNode.children('Node3', children: [
                     TreeNode.child(
                       'Node 0',
                       builder: (context) => Center(
                           child: Text(
-                        'Node 3 -> 0',
+                        'Node 1 -> 3 -> 0',
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
@@ -200,20 +167,53 @@ Tree(
                       'Node 1',
                       builder: (context) => Center(
                           child: Text(
-                        'Node 3 -> 1',
+                        'Node 1 -> 3 -> 1',
                         style: Theme.of(context).textTheme.title,
                       )),
                     ),
                     // TreeNode('Breadcrumb',
                     //     builder: (context) => BreadcrumbPage()),
                   ]),
-                ],
-              );
-            },
-            codeText: codeSample,
-          ),
+                  // TreeNode('Breadcrumb',
+                  //     builder: (context) => BreadcrumbPage()),
+                ]),
+                TreeNode.child(
+                  'Node 2',
+                  builder: (context) => Center(
+                      child: Text(
+                    'Node 2 ',
+                    style: Theme.of(context).textTheme.title,
+                  )),
+                ),
+                TreeNode.children('Node 3', children: [
+                  TreeNode.child(
+                    'Node 0',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 3 -> 0',
+                      style: Theme.of(context).textTheme.title,
+                    )),
+                  ),
+                  TreeNode.child(
+                    'Node 1',
+                    builder: (context) => Center(
+                        child: Text(
+                      'Node 3 -> 1',
+                      style: Theme.of(context).textTheme.title,
+                    )),
+                  ),
+                  // TreeNode('Breadcrumb',
+                  //     builder: (context) => BreadcrumbPage()),
+                ]),
+              ],
+            );
+          },
+          codeText: codeSample,
+          height: 600.0,
+          title: 'Basic example',
         ),
       ],
+      header: 'Tree',
     );
   }
 }

@@ -122,6 +122,7 @@ class _DocAppState extends State<DocApp> {
                       return Text(
                         'Desktop',
                         style: Theme.of(context).textTheme.title.copyWith(
+                              overflow: TextOverflow.ellipsis,
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary[70]
@@ -143,20 +144,17 @@ class _DocAppState extends State<DocApp> {
                       ),
                       Builder(builder: (context) {
                         final githubImage;
-                        final color = ButtonTheme.of(context).color;
                         if (themeData.brightness == Brightness.dark) {
                           githubImage = Image.asset(
                             'assets/GitHub-Mark-Light-32px.png',
                             width: 18.0,
                             height: 18.0,
-                            color: color!.toColor(),
                           );
                         } else {
                           githubImage = Image.asset(
                             'assets/GitHub-Mark-32px.png',
                             width: 18.0,
                             height: 18.0,
-                            color: color!.toColor(),
                           );
                         }
 
@@ -178,7 +176,6 @@ class _DocAppState extends State<DocApp> {
             ),
             Expanded(
               child: Tree(
-                pagePadding: EdgeInsets.only(left: 16.0),
                 collapsed: orientation == Orientation.portrait,
                 visible: isShowingTree,
                 title: Builder(
@@ -333,13 +330,13 @@ class _ThemeToggleState extends State<ThemeToggle> {
         return Button.icon(
           Icons.dark_mode,
           onPressed: widget.onPressed,
-          //color: iconForeground,
+          color: iconForeground,
         );
       case Brightness.light:
         return Button.icon(
           Icons.light_mode,
           onPressed: widget.onPressed,
-          //color: iconForeground,
+          color: iconForeground,
         );
     }
   }

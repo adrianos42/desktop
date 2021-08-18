@@ -89,10 +89,14 @@ class _ScrollingPageState extends State<ScrollingPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Defaults.createHeader(context, 'Scrolling'),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Defaults.createHeader(context, 'Scrolling'),
+        ),
         Expanded(
           child: GridView.custom(
-            padding: const EdgeInsets.all(4.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisSpacing: 4.0,
@@ -152,7 +156,6 @@ class _ImagePage extends StatefulWidget {
 
 class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   Timer? _fadeoutTimer;
-  bool firstBuild = true;
   bool offstage = false;
   bool menuFocus = false;
 
@@ -161,7 +164,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
     setState(() {
       offstage = false;
-      _fadeoutTimer = Timer(Duration(milliseconds: 1500), () {
+      _fadeoutTimer = Timer(Duration(milliseconds: 2000), () {
         setState(() => _fadeoutTimer = null);
       });
     });
@@ -222,12 +225,6 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(as): ??? Better way to do this?
-    if (firstBuild) {
-      _startFadeoutTimer();
-      firstBuild = false;
-    }
-
     final assetName = replaceAssetName ?? widget.assetName;
 
     final canRequestPrevious = widget.requestPrevious?.call(assetName) != null;
@@ -237,91 +234,95 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     final textTheme = Theme.of(context).textTheme;
     Widget result = MouseRegion(
       onHover: (_) => _startFadeoutTimer(),
-      child: Stack(
-        children: [
-          LayoutBuilder(builder: (context, constraints) {
-            return Container(
-              height: constraints.maxHeight,
-              color: Color(0x0),
-              alignment: Alignment.center,
-              child: Image.asset(
-                'assets/cats/$assetName.jpg',
-                //frameBuilder: _frameBuilder,
-                fit: BoxFit.contain,
-                cacheHeight: constraints.maxHeight.toInt(),
-              ),
-            );
-          }),
-          Offstage(
-            offstage: offstage,
-            child: AnimatedOpacity(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  color: colorScheme.background.withAlpha(0.9).toColor(),
-                  height: 60.0,
-                  child: MouseRegion(
-                    onEnter: (_) => setState(() => menuFocus = true),
-                    onExit: (_) => setState(() => menuFocus = false),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text(assetName),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                child: Row(
-                                  children: [
-                                    if (widget.requestPrevious != null)
-                                      Button.icon(
-                                        Icons.navigate_before,
-                                        onPressed: canRequestPrevious
-                                            ? _requestPrevious
-                                            : null,
-                                        tooltip: 'Previous',
-                                      ),
-                                    if (widget.requestNext != null)
-                                      Button.icon(
-                                        Icons.navigate_next,
-                                        onPressed: canRequestNext
-                                            ? _requestNext
-                                            : null,
-                                        tooltip: 'Next',
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              Button.icon(
-                                Icons.close,
-                                onPressed: () => Navigator.pop(context),
-                                tooltip: 'Close',
-                              ),
-                            ],
+      child: GestureDetector(
+        onTap: () => _startFadeoutTimer(),
+        child: Stack(
+          children: [
+            LayoutBuilder(builder: (context, constraints) {
+              return Container(
+                height: constraints.maxHeight,
+                color: Color(0x0),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/cats/$assetName.jpg',
+                  //frameBuilder: _frameBuilder,
+                  fit: BoxFit.contain,
+                  cacheHeight: constraints.maxHeight.toInt(),
+                ),
+              );
+            }),
+            Offstage(
+              offstage: offstage,
+              child: AnimatedOpacity(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    color: colorScheme.background.withAlpha(0.9).toColor(),
+                    height: 60.0,
+                    child: MouseRegion(
+                      onEnter: (_) => setState(() => menuFocus = true),
+                      onExit: (_) => setState(() => menuFocus = false),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(assetName),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Row(
+                                    children: [
+                                      if (widget.requestPrevious != null)
+                                        Button.icon(
+                                          Icons.navigate_before,
+                                          onPressed: canRequestPrevious
+                                              ? _requestPrevious
+                                              : null,
+                                          tooltip: 'Previous',
+                                        ),
+                                      if (widget.requestNext != null)
+                                        Button.icon(
+                                          Icons.navigate_next,
+                                          onPressed: canRequestNext
+                                              ? _requestNext
+                                              : null,
+                                          tooltip: 'Next',
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                Button.icon(
+                                  Icons.close,
+                                  onPressed: () => Navigator.pop(context),
+                                  tooltip: 'Close',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                opacity: _fadeoutTimer == null && !menuFocus ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 200),
+                curve: _fadeoutTimer == null && !menuFocus
+                    ? Curves.easeOut
+                    : Curves.easeIn,
+                onEnd: () => setState(
+                    () => offstage = _fadeoutTimer == null && !menuFocus),
+                //curve: Curves.easeOutSine,
               ),
-              opacity: _fadeoutTimer == null && !menuFocus ? 0.0 : 1.0,
-              duration: const Duration(milliseconds: 200),
-              curve: _fadeoutTimer == null && !menuFocus
-                  ? Curves.easeOut
-                  : Curves.easeIn,
-              onEnd: () => setState(
-                  () => offstage = _fadeoutTimer == null && !menuFocus),
-              //curve: Curves.easeOutSine,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 

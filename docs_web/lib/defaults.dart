@@ -16,11 +16,12 @@ class Defaults {
       child: Text(
         name,
         style: Theme.of(context).textTheme.header,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
 
-  static Widget createCodeSession(
+  static Widget _createCodeSession(
     BuildContext context, {
     required WidgetBuilder builder,
     required String codeText,
@@ -47,7 +48,7 @@ class Defaults {
               maxLines: 1000,
               controller: textController,
               keyboardType: TextInputType.multiline,
-              style: Theme.of(context).textTheme.monospace,
+              style: Theme.of(context).textTheme.monospace, 
             ),
           ),
         ),
@@ -62,6 +63,7 @@ class Defaults {
       child: Text(
         name,
         style: Theme.of(context).textTheme.subheader,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -73,6 +75,7 @@ class Defaults {
       child: Text(
         name,
         style: Theme.of(context).textTheme.title,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -84,6 +87,7 @@ class Defaults {
       child: Text(
         name,
         style: Theme.of(context).textTheme.subtitle,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -95,6 +99,7 @@ class Defaults {
       child: Text(
         name,
         style: Theme.of(context).textTheme.caption,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -111,7 +116,7 @@ class Defaults {
         Defaults.createTitle(context, e.title),
         Container(
           height: e.height,
-          child: Defaults.createCodeSession(
+          child: Defaults._createCodeSession(
             context,
             builder: e.body,
             codeText: e.codeText,
@@ -123,7 +128,7 @@ class Defaults {
     return SingleChildScrollView(
       child: Container(
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.only(right: 8.0),
+        margin: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -108,10 +108,8 @@ class HyperlinkButtonTheme extends InheritedTheme {
       final HSLColor hoverColor =
           hyperlinkThemeData.hoverColor ?? themeData.textTheme.textHigh;
 
-      final HSLColor highlightColor = hyperlinkThemeData.highlightColor ??
-          (themeData.brightness == Brightness.dark
-              ? _kDefaultDarkColorHighlight
-              : _kDefaultLightColorHighlight);
+      final HSLColor highlightColor =
+          hyperlinkThemeData.highlightColor ?? themeData.textTheme.textLow;
 
       hyperlinkThemeData = hyperlinkThemeData.copyWidth(
         textStyle: textStyle,
