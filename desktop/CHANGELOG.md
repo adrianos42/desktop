@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0-dev.9
+
+- Updated license.
+
+## 3.0.0-dev.8
+
+- Updated icons.
+
 ## 3.0.0-dev.7
 
 - Scrollbar track.
