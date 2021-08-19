@@ -24,8 +24,7 @@ typedef TableRowBuilder = Widget Function(
   BoxConstraints colConstraints,
 );
 
-//typedef RowMouseEvent = void Function(int row, MouseEvent event);
-
+///
 typedef RowPressedCallback = void Function(int index);
 
 class ListTable extends StatefulWidget {
@@ -158,40 +157,48 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
   Widget createList(int index) {
     final int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
+    final List<double> colElems = colSizes.where((e) => e > 0.0).toList();
 
     return MouseRegion(
       onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
       onExit: (_) => dragging ? null : setState(() => hoveredIndex = -1),
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
-        onTapDown:
-            dragging ? null : (_) => setState(() => pressedIndex = index),
-        onTapUp: dragging ? null : (_) => setState(() => pressedIndex = -1),
+        onTapDown: dragging
+            ? null
+            : widget.onPressed != null
+                ? (_) => setState(() => pressedIndex = index)
+                : null,
+        onTapUp: dragging
+            ? null
+            : widget.onPressed != null
+                ? (_) => setState(() => pressedIndex = -1)
+                : null,
         onTapCancel: dragging ? null : () => setState(() => pressedIndex = -1),
         onTap: dragging
             ? null
-            : () {
-                if (widget.onPressed != null) {
-                  if (waitingIndex == index) {
-                    return;
-                  }
-                  waitingIndex = index;
-                  final dynamic result = widget.onPressed!(index)
-                      as dynamic; // TODO(as): fix dynamic
+            : widget.onPressed != null
+                ? () {
+                    if (waitingIndex == index) {
+                      return;
+                    }
+                    waitingIndex = index;
+                    final dynamic result = widget.onPressed!(index)
+                        as dynamic; // TODO(as): fix dynamic
 
-                  if (result is Future) {
-                    setState(() => waitingIndex = index);
-                    result.then((_) => setState(() => waitingIndex = -1));
-                  } else {
-                    waitingIndex = -1;
+                    if (result is Future) {
+                      setState(() => waitingIndex = index);
+                      result.then((_) => setState(() => waitingIndex = -1));
+                    } else {
+                      waitingIndex = -1;
+                    }
                   }
-                }
-              },
+                : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
-          children: List<Widget>.generate(colCount, (col) {
+          children: List.generate(colElems.length, (col) {
             assert(col < colSizes.length);
 
             Widget result = LayoutBuilder(
@@ -205,13 +212,14 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
             result = Align(alignment: Alignment.bottomLeft, child: result);
 
-            final colorScheme = Theme.of(context).colorScheme;
+            final ListTableThemeData listTableThemeData =
+                ListTableTheme.of(context);
 
             final HSLColor? backgroundColor =
                 pressedIndex == index || waitingIndex == index
-                    ? colorScheme.primary[60]
+                    ? listTableThemeData.highlightColor
                     : hoveredIndex == index
-                        ? colorScheme.shade[100]
+                        ? listTableThemeData.hoverColor
                         : null;
 
             BoxDecoration decoration =
@@ -242,7 +250,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
               decoration: decoration,
               child: result,
             );
-          }),
+          }).toList(),
         ),
       ),
     );
@@ -341,10 +349,10 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     final ScrollMetrics metrics = notification.metrics;
 
     if (notification.depth == 0) {
-      final y = metrics.maxScrollExtent <= metrics.minScrollExtent;
-      if (hasExtent != y) {
-        setState(() => hasExtent = y);
-      }
+      // final y = metrics.maxScrollExtent <= metrics.minScrollExtent;
+      // if (hasExtent != y) { // TODO(as): Necessary to show bottom border?
+      //   setState(() => hasExtent = y);
+      // }
     }
 
     return false;
@@ -361,7 +369,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         final double totalWidth = constraints.maxWidth;
         double remWidth = totalWidth;
 
-        // TODO(as): make sure this is considering only the valid indexes
+        // TODO(as): Make sure this is considering only the valid indexes.
         int nfactors = 0;
         for (final value in colFraction!.keys) {
           if (value < colCount) {
@@ -378,7 +386,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
             if (colFraction!.containsKey(i)) {
               if (remWidth >= _kMinColumnWidth) {
-                // the last item
+                // The last item.
                 if (nfactors == colCount && i == colCount - 1) {
                   colSizes[i] = remWidth;
                   remWidth = 0.0;
@@ -398,7 +406,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           }
         }
 
-        // if there's no key for every index in columns
+        // If there's no key for every index in columns.
         if (nfactors < colCount) {
           int remNFactors = colCount - nfactors;
           double nonFactorWidth = (remWidth / remNFactors).roundToDouble();

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'dart:ui' show PointerDeviceKind;
 import 'package:desktop/desktop.dart';
 import 'package:flutter/services.dart';
 import 'defaults.dart';
@@ -106,15 +107,23 @@ class _ScrollingPageState extends State<ScrollingPage> {
                 SliverChildListDelegate.fixed(_kFileNames.map((assetName) {
               return GestureDetector(
                 onTap: () async {
+                  // TODO(as): Create a merge instead.
+                  final themeData = ThemeData.dark();
+
                   showDialog(
                     context: context,
-                    barrierColor: Theme.of(context).colorScheme.background,
+                    barrierColor: themeData.colorScheme.background,
                     barrierDismissible: true,
                     builder: (context) {
-                      return _ImagePage(
-                        assetName,
-                        requestNext: _requestNext,
-                        requestPrevious: _requestPrevious,
+                      return Theme(
+                        data: themeData,
+                        child: Builder(
+                          builder: (context) => _ImagePage(
+                            assetName,
+                            requestNext: _requestNext,
+                            requestPrevious: _requestPrevious,
+                          ),
+                        ),
                       );
                     },
                   );
@@ -179,14 +188,20 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     final replace =
         widget.requestPrevious!(_replaceAssetName ?? widget.assetName);
     if (replace != null) {
-      setState(() => _replaceAssetName = replace);
+      setState(() {
+        _menuFocus = true;
+        _replaceAssetName = replace;
+      });
     }
   }
 
   void _requestNext() {
     final replace = widget.requestNext!(_replaceAssetName ?? widget.assetName);
     if (replace != null) {
-      setState(() => _replaceAssetName = replace);
+      setState(() {
+        _menuFocus = true;
+        _replaceAssetName = replace;
+      });
     }
   }
 
@@ -224,52 +239,58 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   }
 
   double _xOffset = 0.0;
-  double _offset = 0.0;
+  double? _offset;
 
   void onDragStart(DragStartDetails details) {
-    setState(() {
-      _menuFocus = false;
-      _offset = details.globalPosition.dx;
-    });
+    if (details.kind == PointerDeviceKind.touch) {
+      setState(() {
+        _menuFocus = false;
+        _offset = details.globalPosition.dx;
+      });
+    }
   }
 
   void onDragCancel() {
     setState(() {
-      _offset = 0.0;
+      _offset = null;
       _xOffset = 0.0;
     });
   }
 
   void onDragEnd(DragEndDetails details) {
-    // TODO(as): Calculate proper velocity.
-    if (details.primaryVelocity != null) {
-      final assetName = _replaceAssetName ?? widget.assetName;
+    if (_offset != null) {
+      // TODO(as): Calculate proper velocity.
+      if (details.primaryVelocity != null) {
+        final assetName = _replaceAssetName ?? widget.assetName;
 
-      final canRequestPrevious =
-          widget.requestPrevious?.call(assetName) != null;
-      final canRequestNext = widget.requestNext?.call(assetName) != null;
+        final canRequestPrevious =
+            widget.requestPrevious?.call(assetName) != null;
+        final canRequestNext = widget.requestNext?.call(assetName) != null;
 
-      if (details.primaryVelocity! < 0.0 && _xOffset < -40.0) {
-        if (canRequestNext) {
-          _requestNext();
-        }
-      } else if (details.primaryVelocity! > 0.0 && _xOffset > 40.0) {
-        if (canRequestPrevious) {
-          _requestPrevious();
+        if (details.primaryVelocity! < 0.0 && _xOffset < -40.0) {
+          if (canRequestNext) {
+            _requestNext();
+          }
+        } else if (details.primaryVelocity! > 0.0 && _xOffset > 40.0) {
+          if (canRequestPrevious) {
+            _requestPrevious();
+          }
         }
       }
-    }
 
-    setState(() {
-      _offset = 0.0;
-      _xOffset = 0.0;
-    });
+      setState(() {
+        _offset = null;
+        _xOffset = 0.0;
+      });
+    }
   }
 
   void onDragUpdate(DragUpdateDetails details) {
-    setState(() {
-      _xOffset = details.globalPosition.dx - _offset;
-    });
+    if (_offset != null) {
+      setState(() {
+        _xOffset = details.globalPosition.dx - _offset!;
+      });
+    }
   }
 
   @override
@@ -281,6 +302,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
     Widget result = MouseRegion(
       onHover: (_) => _startFadeoutTimer(),
       child: GestureDetector(
@@ -300,7 +322,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                   transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
                   child: Image.asset(
                     'assets/cats/$assetName.jpg',
-                    //frameBuilder: _frameBuilder,
+                    frameBuilder: _frameBuilder,
                     fit: BoxFit.contain,
                     cacheHeight: constraints.maxHeight.toInt(),
                   ),
@@ -391,6 +413,6 @@ Widget _frameBuilder(
     child: child,
     opacity: frame == null ? 0 : 1,
     duration: const Duration(milliseconds: 200),
-    curve: Curves.easeOut,
+    curve: Curves.easeOutSine,
   );
 }

@@ -120,6 +120,7 @@ class Defaults {
             context,
             builder: e.body,
             codeText: e.codeText,
+            hasBorder: e.hasBorder,
           ),
         ),
       ]);
@@ -149,9 +150,11 @@ class ItemTitle {
     required this.codeText,
     required this.title,
     required this.height,
+    this.hasBorder = true,
   });
   final String title;
   final WidgetBuilder body;
   final double height;
   final String codeText;
+  final bool hasBorder;
 }

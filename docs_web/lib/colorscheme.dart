@@ -69,7 +69,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Defaults.createHeader(context, 'Color Scheme'),
+          Defaults.createHeader(context, 'Color scheme'),
           Container(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Column(

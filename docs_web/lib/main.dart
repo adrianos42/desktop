@@ -38,7 +38,7 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColor.royalBlue;
+  PrimaryColor primaryColor = PrimaryColor.dodgerBlue;
 
   double backgroundColorLightness = 0.0;
 
@@ -200,7 +200,7 @@ class _DocAppState extends State<DocApp> {
                     TreeNode.child('Tree', builder: (context) => TreePage()),
                   ]),
                   TreeNode.children('Data', children: [
-                    TreeNode.child('List Table',
+                    TreeNode.child('List table',
                         builder: (context) => ListTablePage()),
                   ]),
                   TreeNode.children('Dialogs', children: [
@@ -284,7 +284,7 @@ class _DocAppState extends State<DocApp> {
                     builder: (context) => TypographyPage(),
                   ),
                   TreeNode.child(
-                    'Color Scheme',
+                    'Color scheme',
                     builder: (context) => ColorschemePage(),
                   ),
                 ],

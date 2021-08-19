@@ -9,6 +9,7 @@ import 'context_menu.dart';
 import 'dialog.dart';
 import 'drop_down.dart';
 import 'hyperlink.dart';
+import 'list_table.dart';
 import 'nav.dart';
 import 'radio.dart';
 import 'scrollbar.dart';
@@ -113,6 +114,7 @@ class ThemeData {
       scrollbarTheme: const ScrollbarThemeData(),
       tabTheme: const TabThemeData(),
       treeTheme: const TreeThemeData(),
+      listTableTheme: const ListTableThemeData(),
     );
   }
 
@@ -133,6 +135,7 @@ class ThemeData {
     required this.scrollbarTheme,
     required this.tabTheme,
     required this.treeTheme,
+    required this.listTableTheme,
   });
 
   factory ThemeData.light([PrimaryColor? primaryColor]) =>
@@ -175,6 +178,8 @@ class ThemeData {
 
   final ScrollbarThemeData scrollbarTheme;
 
+  final ListTableThemeData listTableTheme;
+
   ThemeData get invertedTheme {
     final Brightness inverseBrightness =
         brightness == Brightness.dark ? Brightness.light : Brightness.dark;
@@ -198,6 +203,7 @@ class ThemeData {
       scrollbarTheme: scrollbarTheme,
       tabTheme: tabTheme,
       treeTheme: treeTheme,
+      listTableTheme: listTableTheme,
     );
   }
 }
