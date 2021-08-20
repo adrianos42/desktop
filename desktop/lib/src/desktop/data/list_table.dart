@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import '../component.dart';
 import '../theme/theme.dart';
 
-const _kHeaderHeight = 38.0;
-const _kMinColumnWidth = 38.0;
+const _kHeaderHeight = 40.0;
+const _kMinColumnWidth = 40.0;
 const _kHandlerWidth = 8.0;
 //const _kDefaultItemExtent = 40.0;
 
@@ -394,8 +394,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 }
 
                 final double width = (colFraction![i]! * totalWidth)
-                    .roundToDouble()
-                    .clamp(_kMinColumnWidth, remWidth);
+                    .clamp(_kMinColumnWidth, remWidth)
+                    .roundToDouble();
                 colSizes[i] = width;
                 remWidth -= width;
 
@@ -424,7 +424,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
               // last item
               if (i == colCount - 1 || remNFactors == 0) {
-                colSizes[i] = remWidth;
+                //colSizes[i] = remWidth.ceilToDouble();
                 colFraction![i] = remWidth / totalWidth;
                 remWidth = 0;
                 break;
@@ -436,8 +436,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
               colFraction![i] = nonFactorWidth / totalWidth;
 
-              colSizes[i] = nonFactorWidth;
-              remWidth -= nonFactorWidth;
+              //colSizes[i] = nonFactorWidth.ceilToDouble();
+              remWidth -= nonFactorWidth.ceilToDouble();
             }
           }
         }
@@ -446,6 +446,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           colSizes[colSizes.lastIndexWhere((value) => value > 0.0)] += remWidth;
           remWidth = 0.0;
         }
+
+        //print(totalWidth);
+        //print(colSizes);
 
         hasHiddenColumns = !colSizes.every((elem) => elem > 0.0);
 
@@ -579,8 +582,9 @@ class _TableColHandlerState extends State<_TableColHandler>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final hoveredColor = colorScheme.shade[50];
-    final draggedColor = colorScheme.shade[60];
+    final textTheme = Theme.of(context).textTheme;
+    final hoveredColor = textTheme.textHigh;
+    final draggedColor = textTheme.textPrimaryHigh;
 
     BorderSide? border = widget.border;
     final bool hasFocus = hovered || dragged || widget.hasIndicator;
@@ -617,9 +621,7 @@ class _TableColHandlerState extends State<_TableColHandler>
         onEnter: _handleMouseEnter,
         onExit: _handleMouseExit,
         child: Container(
-          margin: EdgeInsets.only(
-            left: (_kHandlerWidth - border.width).clamp(0.0, double.infinity),
-          ),
+          margin: const EdgeInsets.only(left: _kHandlerWidth),
           decoration: BoxDecoration(border: Border(right: border)),
         ),
       ),

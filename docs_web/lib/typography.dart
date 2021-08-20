@@ -14,12 +14,13 @@ class _TypographyPageState extends State<TypographyPage> {
     final textTheme = Theme.of(context).textTheme;
 
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Defaults.createHeader(context, 'Typography'),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Column(
+      child: Container(
+        alignment: Alignment.topLeft,
+        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Defaults.createHeader(context, 'Typography'),
+            Column(
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
@@ -87,53 +88,53 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
               ],
             ),
-          ),
-          Defaults.createTitle(context, 'Text'),
-          Container(
-            decoration: Defaults.itemDecoration(context),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Text High',
-                    style: textTheme.subtitle.copyWith(
-                      color: textTheme.textHigh.toColor(),
+            Defaults.createTitle(context, 'Text'),
+            Container(
+              decoration: Defaults.itemDecoration(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Text High',
+                      style: textTheme.subtitle.copyWith(
+                        color: textTheme.textHigh.toColor(),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Text Medium',
-                    style: textTheme.subtitle.copyWith(
-                      color: textTheme.textMedium.toColor(),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Text Medium',
+                      style: textTheme.subtitle.copyWith(
+                        color: textTheme.textMedium.toColor(),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Text Low',
-                    style: textTheme.subtitle.copyWith(
-                      color: textTheme.textLow.toColor(),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Text Low',
+                      style: textTheme.subtitle.copyWith(
+                        color: textTheme.textLow.toColor(),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Text Disabled',
-                    style: textTheme.subtitle.copyWith(
-                      color: textTheme.textDisabled.toColor(),
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Text Disabled',
+                      style: textTheme.subtitle.copyWith(
+                        color: textTheme.textDisabled.toColor(),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

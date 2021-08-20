@@ -67,180 +67,184 @@ class _ColorschemePageState extends State<ColorschemePage> {
     final dark = ColorScheme(Brightness.dark).background;
 
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Defaults.createHeader(context, 'Color scheme'),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _createItemForColor(
-                  context,
-                  colorScheme.background[0],
-                  'Background 0',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[2],
-                  'Background 2',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[4],
-                  'Background 4',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[6],
-                  'Background 6',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[8],
-                  'Background 8',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[10],
-                  'Background 10',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[12],
-                  'Background 12',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[14],
-                  'Background 14',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[16],
-                  'Background 16',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[18],
-                  'Background 18',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.background[20],
-                  'Background 20',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.disabled,
-                  'Disabled',
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[40],
-                  'Shade 40',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[50],
-                  'Shade 50',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[60],
-                  'Shade 60',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[70],
-                  'Shade 70',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[80],
-                  'Shade 80',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[90],
-                  'Shade 90',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.shade[100],
-                  'Shade 100',
-                  colorScheme.background,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.primary[30],
-                  'Primary 30',
-                  light,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.primary[40],
-                  'Primary 40',
-                  light,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.primary[50],
-                  'Primary 50',
-                  light,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.primary[60],
-                  'Primary 60',
-                  light,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.primary[70],
-                  'Primary 70',
-                  light,
-                ),
-                _createItemForColor(
-                  context,
-                  colorScheme.error,
-                  'Error',
-                  light,
-                ),
-              ],
+      child: Container(
+        alignment: Alignment.topLeft,
+        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Defaults.createHeader(context, 'Color scheme'),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[0],
+                    'Background 0',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[2],
+                    'Background 2',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[4],
+                    'Background 4',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[6],
+                    'Background 6',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[8],
+                    'Background 8',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[10],
+                    'Background 10',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[12],
+                    'Background 12',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[14],
+                    'Background 14',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[16],
+                    'Background 16',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[18],
+                    'Background 18',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.background[20],
+                    'Background 20',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.disabled,
+                    'Disabled',
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[40],
+                    'Shade 40',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[50],
+                    'Shade 50',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[60],
+                    'Shade 60',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[70],
+                    'Shade 70',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[80],
+                    'Shade 80',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[90],
+                    'Shade 90',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.shade[100],
+                    'Shade 100',
+                    colorScheme.background,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.primary[30],
+                    'Primary 30',
+                    light,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.primary[40],
+                    'Primary 40',
+                    light,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.primary[50],
+                    'Primary 50',
+                    light,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.primary[60],
+                    'Primary 60',
+                    light,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.primary[70],
+                    'Primary 70',
+                    light,
+                  ),
+                  _createItemForColor(
+                    context,
+                    colorScheme.error,
+                    'Error',
+                    light,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Column(
-              children: [
-                Defaults.createTitle(context, 'Primary Colors'),
-                _itemPrimary(context, PrimaryColor.coral, light),
-                _itemPrimary(context, PrimaryColor.sandyBrown, light),
-                _itemPrimary(context, PrimaryColor.orange, light),
-                _itemPrimary(context, PrimaryColor.goldenrod, light),
-                _itemPrimary(context, PrimaryColor.springGreen, light),
-                _itemPrimary(context, PrimaryColor.turquoise, light),
-                _itemPrimary(context, PrimaryColor.deepSkyBlue, light),
-                _itemPrimary(context, PrimaryColor.dodgerBlue, light),
-                _itemPrimary(context, PrimaryColor.cornflowerBlue, light),
-                _itemPrimary(context, PrimaryColor.royalBlue, light),
-                _itemPrimary(context, PrimaryColor.slateBlue, light),
-                _itemPrimary(context, PrimaryColor.purple, light),
-                _itemPrimary(context, PrimaryColor.violet, light),
-                _itemPrimary(context, PrimaryColor.orchid, light),
-                _itemPrimary(context, PrimaryColor.hotPink, light),
-                _itemPrimary(context, PrimaryColor.red, light),
-              ],
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                children: [
+                  Defaults.createTitle(context, 'Primary Colors'),
+                  _itemPrimary(context, PrimaryColor.coral, light),
+                  _itemPrimary(context, PrimaryColor.sandyBrown, light),
+                  _itemPrimary(context, PrimaryColor.orange, light),
+                  _itemPrimary(context, PrimaryColor.goldenrod, light),
+                  _itemPrimary(context, PrimaryColor.springGreen, light),
+                  _itemPrimary(context, PrimaryColor.turquoise, light),
+                  _itemPrimary(context, PrimaryColor.deepSkyBlue, light),
+                  _itemPrimary(context, PrimaryColor.dodgerBlue, light),
+                  _itemPrimary(context, PrimaryColor.cornflowerBlue, light),
+                  _itemPrimary(context, PrimaryColor.royalBlue, light),
+                  _itemPrimary(context, PrimaryColor.slateBlue, light),
+                  _itemPrimary(context, PrimaryColor.purple, light),
+                  _itemPrimary(context, PrimaryColor.violet, light),
+                  _itemPrimary(context, PrimaryColor.orchid, light),
+                  _itemPrimary(context, PrimaryColor.hotPink, light),
+                  _itemPrimary(context, PrimaryColor.red, light),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

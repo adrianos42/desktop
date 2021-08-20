@@ -103,40 +103,41 @@ class _ScrollingPageState extends State<ScrollingPage> {
               mainAxisSpacing: 4.0,
               crossAxisSpacing: 4.0,
             ),
-            childrenDelegate:
-                SliverChildListDelegate.fixed(_kFileNames.map((assetName) {
-              return GestureDetector(
-                onTap: () async {
-                  // TODO(as): Create a merge instead.
-                  final themeData = ThemeData.dark();
+            childrenDelegate: SliverChildListDelegate.fixed(
+              _kFileNames.map((assetName) {
+                return GestureDetector(
+                  onTap: () async {
+                    // TODO(as): Create a merge instead.
+                    final themeData = ThemeData.dark();
 
-                  showDialog(
-                    context: context,
-                    barrierColor: themeData.colorScheme.background,
-                    barrierDismissible: true,
-                    builder: (context) {
-                      return Theme(
-                        data: themeData,
-                        child: Builder(
-                          builder: (context) => _ImagePage(
-                            assetName,
-                            requestNext: _requestNext,
-                            requestPrevious: _requestPrevious,
+                    showDialog(
+                      context: context,
+                      barrierColor: themeData.colorScheme.background,
+                      barrierDismissible: true,
+                      builder: (context) {
+                        return Theme(
+                          data: themeData,
+                          child: Builder(
+                            builder: (context) => _ImagePage(
+                              assetName,
+                              requestNext: _requestNext,
+                              requestPrevious: _requestPrevious,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: LayoutBuilder(builder: (context, constraints) {
-                  return Image.asset(
-                    'assets/cats_small/$assetName.jpg',
-                    frameBuilder: _frameBuilder,
-                    fit: BoxFit.cover,
-                  );
-                }),
-              );
-            }).toList()),
+                        );
+                      },
+                    );
+                  },
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return Image.asset(
+                      'assets/cats_small/$assetName.jpg',
+                      frameBuilder: _frameBuilder,
+                      fit: BoxFit.cover,
+                    );
+                  }),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ],
