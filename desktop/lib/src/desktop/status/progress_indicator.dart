@@ -7,7 +7,7 @@ import '../theme/theme.dart';
 import 'dart:ui' show Brightness;
 
 const double _kLinearProgressIndicatorHeight = 4.0;
-const int _kIndeterminateLinearDuration = 1400;
+const int _kIndeterminateLinearDuration = 2000;
 const double _kMinCircularProgressIndicatorSize = 36.0;
 
 abstract class ProgressIndicator extends StatefulWidget {
@@ -112,6 +112,8 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     }
   }
 
+  double currentWidth = 0.0;
+
   Widget _buildIndicator(BuildContext context, double animationValue) {
     return widget._buildSemanticsWrapper(
       context: context,
@@ -133,10 +135,10 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     );
   }
 
-  // int totalDuration(double width) {
-  //   final prop = _kIndeterminateLinearDuration.toDouble() * width / 300.0;
-  //   return prop.clamp(700, 3600).round();
-  // }
+  int totalDuration(double width) {
+    final prop = (_kIndeterminateLinearDuration.toDouble() * width) / 60;
+    return prop.toInt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +147,17 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     }
 
     return LayoutBuilder(builder: (context, constraints) {
+      // currentWidth = constraints.maxWidth;
+      // print(currentWidth);
+      // _controller.duration =
+      //     Duration(microseconds: totalDuration(currentWidth));
+
+      // print(totalDuration(currentWidth));
+      // _controller.reset();
+      // _controller.repeat();
+
+      // print(_controller.value);
+
       return AnimatedBuilder(
         animation: _controller.view,
         builder: (BuildContext context, Widget? child) {
@@ -187,14 +200,14 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
 
   static const Curve line1Head = Interval(
     0.0,
-    0.5,
-    curve: Curves.linear,
+    0.4,
+    curve: Curves.decelerate
   );
 
   static const Curve line1Tail = Interval(
-    0.5,
+    0.4,
     1.0,
-    curve: Curves.linear,
+    curve: Curves.decelerate,
   );
 
   @override
