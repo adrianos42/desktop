@@ -11,12 +11,14 @@ const _kMinColumnWidth = 40.0;
 const _kHandlerWidth = 8.0;
 //const _kDefaultItemExtent = 40.0;
 
+/// The builder for the table header.
 typedef TableHeaderBuilder = Widget Function(
   BuildContext context,
   int col,
   BoxConstraints colConstraints,
 );
 
+/// The builder for the table row.
 typedef TableRowBuilder = Widget Function(
   BuildContext context,
   int row,
@@ -27,7 +29,9 @@ typedef TableRowBuilder = Widget Function(
 ///
 typedef RowPressedCallback = void Function(int index);
 
+/// A table with columns that can be resized.
 class ListTable extends StatefulWidget {
+  /// Creates a [ListTable].
   const ListTable({
     this.tableBorder,
     required this.colCount,
@@ -39,6 +43,7 @@ class ListTable extends StatefulWidget {
     this.controller,
     this.itemExtent = _kHeaderHeight,
     this.showHiddenColumnsIndicator = true,
+    this.collapseOnDrag = true,
     this.onPressed,
     Key? key,
   })  : assert(colCount > 0),
@@ -59,13 +64,17 @@ class ListTable extends StatefulWidget {
 
   final TableBorder? tableBorder;
 
-  final bool? showHiddenColumnsIndicator;
+  final bool showHiddenColumnsIndicator;
 
   final ScrollController? controller;
 
+  /// The height of item row.
   final double itemExtent;
 
   final RowPressedCallback? onPressed;
+
+  /// If the last column should collapse if it does not fit the minimum width anymore.
+  final bool collapseOnDrag;
 
   @override
   _ListTableState createState() => _ListTableState();
@@ -89,7 +98,10 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     return Container(
       decoration: hasBorder
           ? BoxDecoration(
-              border: Border(bottom: tableBorder.top)) // TODO(as): ???
+              border: Border(
+                bottom: tableBorder.top,
+              ),
+            ) // TODO(as): ???
           : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -121,7 +133,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 _TableColHandler(
                   tableDragUpdate: this,
                   col: col,
-                  hasIndicator: (widget.showHiddenColumnsIndicator ?? false) &&
+                  hasIndicator: widget.showHiddenColumnsIndicator &&
                       hasHiddenColumns &&
                       lastNonZero == col,
                   border:
@@ -225,7 +237,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             BoxDecoration decoration =
                 BoxDecoration(color: backgroundColor?.toColor());
 
-            // TODO(as): !!
+            // TODO(as): ???
             if (widget.tableBorder != null &&
                 (widget.tableBorder!.horizontalInside != BorderSide.none ||
                     widget.tableBorder!.verticalInside != BorderSide.none)) {
@@ -235,11 +247,35 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
               final horizontalInside = widget.tableBorder!.horizontalInside;
               final verticalInside = widget.tableBorder!.verticalInside;
 
-              final border = Border(
-                bottom: isBottom ? horizontalInside : BorderSide.none,
-                right: isRight ? verticalInside : BorderSide.none,
+              final bottom = isBottom ? horizontalInside : BorderSide.none;
+
+              // TODO(as): Put this shit somewhere else.
+              final headerColumnBorder = widget.headerColumnBorder ??
+                  widget.tableBorder?.verticalInside;
+              final dragBorderWidth = headerColumnBorder != null &&
+                      headerColumnBorder != BorderSide.none
+                  ? headerColumnBorder.width +
+                      (headerColumnBorder.width / 2.0).roundToDouble()
+                  : 2.0;
+
+              final right = dragging && colDragging == col
+                  ? BorderSide(
+                      color: listTableThemeData.borderHighlightColor!.toColor(),
+                      width: dragBorderWidth,
+                    )
+                  : isRight
+                      ? verticalInside
+                      : BorderSide.none;
+
+              final border = Border(bottom: bottom, right: right);
+              decoration = decoration.copyWith(border: border);
+            } else if (dragging && colDragging == col) {
+              final right = BorderSide(
+                color: listTableThemeData.borderHighlightColor!.toColor(),
+                width: 2.0,
               );
 
+              final border = Border(right: right);
               decoration = decoration.copyWith(border: border);
             }
 
@@ -260,6 +296,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   Map<int, double>? colFraction;
 
   bool dragging = false;
+  int? colDragging;
   double? previousWidth;
   double? totalWidth;
   List<double>? previousColSizes;
@@ -277,38 +314,57 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     previousColSizes = List<double>.from(colSizes);
 
     previousWidth = colSizes.sublist(col).reduce((v, e) => v + e);
-    totalWidth = colSizes.reduce((v, e) => v + e);
     dragging = true;
+    colDragging = col;
   }
 
   @override
   void dragUpdate(int col, double delta) {
     setState(() {
+      final int totalRemain = colCount - (col + 1);
+
       if (delta < 0) {
         delta = delta.clamp(-previousColSizes![col] + _kMinColumnWidth, 0.0);
       } else {
-        delta = delta.clamp(0.0, previousWidth!);
+        final maxDeltaWidth = widget.collapseOnDrag
+            ? previousWidth! - previousColSizes![col]
+            : previousWidth! -
+                (totalRemain * _kMinColumnWidth) -
+                previousColSizes![col];
+        if (maxDeltaWidth < 0.0) {
+          throw Exception('Invalid delta value in list table.');
+        }
+        delta = delta.clamp(0.0, maxDeltaWidth);
       }
 
       final double newWidth = previousColSizes![col] + delta;
       colFraction![col] = newWidth / totalWidth!;
 
-      final int totalRemain = colCount - (col + 1);
-
       if (totalRemain > 0) {
         final double valueEach = delta / totalRemain;
         double remWidth = previousWidth! - newWidth;
 
-        for (int i = col + 1; i < colCount; i++) {
+        for (var i = col + 1; i < colCount; i++) {
           if (remWidth >= _kMinColumnWidth) {
             final double newWidth = (previousColSizes![i] - valueEach)
                 .clamp(_kMinColumnWidth, remWidth);
             colFraction![i] = newWidth / totalWidth!;
+
             remWidth -= newWidth;
           } else {
             colFraction![i] = 0.0;
           }
         }
+
+        if (!widget.collapseOnDrag &&
+            colFraction!.values.any((e) => e == 0.0)) { // TODO(as); Proper calculation.
+              for (var i = colCount - 1; i >= col + 1; i--) {
+                if (colFraction![i] == 0.0) {
+                  colFraction![i] = _kMinColumnWidth / totalWidth!;
+                  colFraction![i - 1] = colFraction![i - 1]! - _kMinColumnWidth / totalWidth!;
+                }
+              }
+            }
       }
     });
   }
@@ -321,6 +377,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       previousWidth = null;
       previousColSizes = null;
       previousColFraction = null;
+      colDragging = null;
     });
   }
 
@@ -358,97 +415,131 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     return false;
   }
 
+  void calculateColFractions() {
+    final int colCount = widget.colCount;
+
+    colFraction ??= Map<int, double>.from(widget.colFraction ?? {});
+
+    if (totalWidth! < _kMinColumnWidth) {
+      return;
+    }
+
+    if (colCount == 0) {
+      throw Exception('The number of columns must not be zero.');
+    } else if (colCount == 1) {
+      return;
+    }
+
+    double remWidth = totalWidth!;
+
+    int nfactors = 0;
+    for (final value in colFraction!.keys) {
+      if (value < colCount) {
+        nfactors += 1;
+        final double fraction = colFraction![value]!.clamp(0.0, 1.0);
+        colFraction![value] = fraction;
+        remWidth -= (totalWidth! * fraction).floorToDouble();
+      }
+    }
+
+    // If there's no key for every index.
+    if (nfactors < colCount) {
+      int remNFactors = colCount - nfactors;
+      // The width for each remaining item.
+      final double nonFactorWidth =
+          remWidth > 0.0 ? (remWidth / remNFactors).floorToDouble() : 0.0;
+
+      for (var i = 0; i < colCount; i++) {
+        if (!colFraction!.containsKey(i)) {
+          remNFactors -= 1;
+
+          if (remWidth < _kMinColumnWidth) {
+            colFraction![i] = 0.0;
+            continue;
+          }
+
+          // last item
+          if (i == colCount - 1 || remNFactors == 0) {
+            colFraction![i] = remWidth / totalWidth!;
+            remWidth = 0;
+            break;
+          }
+
+          // if (nonFactorWidth > remWidth) {
+          //   nonFactorWidth = remWidth;
+          // }
+
+          final double fraction =
+              (nonFactorWidth / totalWidth!).clamp(0.0, 1.0);
+          colFraction![i] = fraction;
+          remWidth -= (totalWidth! * fraction).floorToDouble();
+        }
+      }
+    }
+  }
+
+  void calculateColSizes() {
+    final int colCount = widget.colCount;
+    colSizes = List<double>.filled(colCount, 0.0);
+
+    if (colCount == 1) {
+      colSizes[0] = totalWidth!;
+      return;
+    }
+
+    double remWidth = totalWidth!;
+
+    for (var i = 0; i < colCount; i++) {
+      if (remWidth <= 0.0) {
+        remWidth = 0.0;
+        break;
+      }
+
+      if (colFraction!.containsKey(i)) {
+        if (remWidth >= _kMinColumnWidth) {
+          // The last item.
+          if (i == colCount - 1) {
+            colSizes[i] = remWidth;
+            remWidth = 0.0;
+            break;
+          }
+
+          double width = (colFraction![i]! * totalWidth!)
+              .clamp(_kMinColumnWidth, remWidth);
+
+          if (dragging) {
+            colSizes[i] = width;
+          } else {
+            width = width.floorToDouble();
+            colSizes[i] = width;
+          }
+
+          remWidth -= width;
+
+          if (remWidth < 0.0) {
+            throw Exception(
+                'Wrong fraction value at $i value ${colFraction![i]}.');
+          }
+        } else {
+          break;
+        }
+      } else {
+        throw Exception('Could not find fraction for index $i.');
+      }
+    }
+
+    if (widget.collapseOnDrag && remWidth > 0.0) {
+      colSizes[colSizes.lastIndexWhere((value) => value > 0.0)] += remWidth;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget result = LayoutBuilder(
       builder: (context, constraints) {
-        final int colCount = widget.colCount;
-        colFraction ??= Map<int, double>.from(widget.colFraction ?? {});
-        colSizes = List<double>.filled(colCount, 0);
-
-        final double totalWidth = constraints.maxWidth;
-        double remWidth = totalWidth;
-
-        // TODO(as): Make sure this is considering only the valid indexes.
-        int nfactors = 0;
-        for (final value in colFraction!.keys) {
-          if (value < colCount) {
-            nfactors += 1;
-          }
-        }
-
-        if (nfactors > 0) {
-          for (int i = 0; i < colCount; i++) {
-            if (remWidth <= 0.0) {
-              remWidth = 0.0;
-              break;
-            }
-
-            if (colFraction!.containsKey(i)) {
-              if (remWidth >= _kMinColumnWidth) {
-                // The last item.
-                if (nfactors == colCount && i == colCount - 1) {
-                  colSizes[i] = remWidth;
-                  remWidth = 0.0;
-                  break;
-                }
-
-                final double width = (colFraction![i]! * totalWidth)
-                    .clamp(_kMinColumnWidth, remWidth)
-                    .roundToDouble();
-                colSizes[i] = width;
-                remWidth -= width;
-
-                assert(remWidth >= 0.0,
-                    'Wrong fraction value at $i value ${colFraction![i]}.');
-              }
-            }
-          }
-        }
-
-        // If there's no key for every index in columns.
-        if (nfactors < colCount) {
-          int remNFactors = colCount - nfactors;
-          double nonFactorWidth = (remWidth / remNFactors).roundToDouble();
-
-          assert(remWidth >= 0.0);
-
-          for (int i = 0; i < colCount; i++) {
-            if (!colFraction!.containsKey(i)) {
-              remNFactors -= 1;
-
-              if (remWidth < _kMinColumnWidth) {
-                colFraction![i] = 0.0;
-                continue;
-              }
-
-              // last item
-              if (i == colCount - 1 || remNFactors == 0) {
-                //colSizes[i] = remWidth.ceilToDouble();
-                colFraction![i] = remWidth / totalWidth;
-                remWidth = 0;
-                break;
-              }
-
-              if (nonFactorWidth > remWidth) {
-                nonFactorWidth = remWidth;
-              }
-
-              colFraction![i] = nonFactorWidth / totalWidth;
-
-              //colSizes[i] = nonFactorWidth.ceilToDouble();
-              remWidth -= nonFactorWidth.ceilToDouble();
-            }
-          }
-        }
-
-        if (remWidth > 0.0) {
-          colSizes[colSizes.lastIndexWhere((value) => value > 0.0)] += remWidth;
-          remWidth = 0.0;
-        }
-
-        //print(totalWidth);
-        //print(colSizes);
+        totalWidth = constraints.maxWidth;
+        calculateColFractions();
+        calculateColSizes();
 
         hasHiddenColumns = !colSizes.every((elem) => elem > 0.0);
 
@@ -581,34 +672,34 @@ class _TableColHandlerState extends State<_TableColHandler>
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final hoveredColor = textTheme.textHigh;
-    final draggedColor = textTheme.textPrimaryHigh;
+    final ListTableThemeData listTableTheme = ListTableTheme.of(context);
 
     BorderSide? border = widget.border;
-    final bool hasFocus = hovered || dragged || widget.hasIndicator;
+    final bool expanded = hovered || dragged || widget.hasIndicator;
 
     if (border != null && border != BorderSide.none) {
       final HSLColor borderColor = dragged
-          ? draggedColor
+          ? listTableTheme.borderHighlightColor!
           : hovered
-              ? hoveredColor
-              : HSLColor.fromColor(border.color);
+              ? listTableTheme.borderHoverColor!
+              : widget.hasIndicator
+                  ? listTableTheme.borderHighlightColor!
+                  : HSLColor.fromColor(border.color);
 
       border = border.copyWith(
           color: borderColor.toColor(),
-          width: hasFocus
+          width: expanded
               ? border.width + (border.width / 2.0).roundToDouble()
               : border.width);
     } else {
-      final color = colorScheme.shade[40];
-      final width = hasFocus ? 2.0 : 1.0;
+      final width = expanded ? 2.0 : 1.0;
       final borderColor = dragged
-          ? draggedColor
+          ? listTableTheme.borderHighlightColor!
           : hovered
-              ? hoveredColor
-              : color;
+              ? listTableTheme.borderHoverColor!
+              : widget.hasIndicator
+                  ? listTableTheme.borderHighlightColor!
+                  : listTableTheme.borderColor!;
       border = BorderSide(width: width, color: borderColor.toColor());
     }
 

@@ -111,6 +111,7 @@ ListTable(
     );
   },
   colFraction: {0: 0.5},
+  collapseOnDrag: false,
   headerColumnBorder: BorderSide(width: 2.0, color: borderColor),
   tableHeaderBuilder: (context, col, constraints) {
     return Container(
@@ -192,6 +193,7 @@ ListTable(
               );
             },
             colFraction: {0: 0.5},
+            collapseOnDrag: false,
             headerColumnBorder: BorderSide(width: 2.0, color: borderColor),
             tableHeaderBuilder: (context, col, constraints) {
               return Container(

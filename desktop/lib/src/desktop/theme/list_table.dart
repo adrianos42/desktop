@@ -24,6 +24,9 @@ class ListTableThemeData {
     this.hoverColor,
     this.highlightColor,
     this.background,
+    this.borderColor,
+    this.borderHighlightColor,
+    this.borderHoverColor,
   });
 
   final IconThemeData? iconThemeData;
@@ -44,6 +47,12 @@ class ListTableThemeData {
 
   final HSLColor? background;
 
+  final HSLColor? borderColor;
+
+  final HSLColor? borderHoverColor;
+
+  final HSLColor? borderHighlightColor;
+
   ListTableThemeData copyWith({
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
@@ -55,6 +64,9 @@ class ListTableThemeData {
     HSLColor? hoverColor,
     HSLColor? highlightColor,
     HSLColor? background,
+    HSLColor? borderColor,
+    HSLColor? borderHoverColor,
+    HSLColor? borderHighlightColor,
   }) {
     return ListTableThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -67,6 +79,9 @@ class ListTableThemeData {
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
       background: background ?? this.background,
+      borderColor: borderColor ?? this.borderColor,
+      borderHoverColor: borderHoverColor ?? this.borderHoverColor,
+      borderHighlightColor: borderHighlightColor ?? this.borderHighlightColor,
     );
   }
 
@@ -84,6 +99,9 @@ class ListTableThemeData {
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
       background: other.background,
+      borderColor: other.borderColor,
+      borderHoverColor: other.borderHoverColor,
+      borderHighlightColor: other.borderHighlightColor,
     );
   }
 
@@ -96,7 +114,10 @@ class ListTableThemeData {
         hoverColor != null &&
         itemHeight != null &&
         highlightColor != null &&
-        background != null;
+        background != null &&
+        borderColor != null &&
+        borderHoverColor != null &&
+        borderHighlightColor != null;
   }
 
   @override
@@ -111,6 +132,9 @@ class ListTableThemeData {
       hoverColor,
       highlightColor,
       background,
+      borderColor,
+      borderHoverColor,
+      borderHighlightColor,
     );
   }
 
@@ -131,7 +155,10 @@ class ListTableThemeData {
         other.selectedHoverColor == selectedHoverColor &&
         other.hoverColor == hoverColor &&
         other.highlightColor == highlightColor &&
-        other.background == background;
+        other.background == background &&
+        other.borderColor == borderColor &&
+        other.borderHoverColor == borderHoverColor &&
+        other.borderHighlightColor == borderHighlightColor;
   }
 }
 
@@ -163,8 +190,7 @@ class ListTableTheme extends InheritedTheme {
           textTheme.body1.copyWith(fontSize: kFontSize);
 
       final HSLColor selectedHighlightColor =
-          listTableThemeData.selectedHighlightColor ??
-              colorScheme.primary[60];
+          listTableThemeData.selectedHighlightColor ?? colorScheme.primary[60];
 
       final HSLColor hoverColor =
           listTableThemeData.hoverColor ?? colorScheme.background[20];
@@ -182,6 +208,12 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.selectedHoverColor ??
               colorScheme.primary[40]; // TODO(as): ???
 
+      final HSLColor borderColor =
+          listTableThemeData.borderColor ?? colorScheme.shade[40];
+      final HSLColor borderHoverColor = colorScheme.shade[kHoverColorIndex];
+      final HSLColor borderHighlightColor =
+          colorScheme.primary[kHighlightColorIndex];
+
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());
 
@@ -198,6 +230,9 @@ class ListTableTheme extends InheritedTheme {
         highlightColor: highlightColor,
         itemHeight: itemHeight,
         background: background,
+        borderColor: borderColor,
+        borderHoverColor: borderHoverColor,
+        borderHighlightColor: borderHighlightColor,
       );
     }
 
@@ -218,6 +253,7 @@ class ListTableTheme extends InheritedTheme {
   @override
   bool updateShouldNotify(ListTableTheme oldWidget) => data != oldWidget.data;
 
+  /// Merges with the nearest [ListTableTheme].
   static Widget merge(
     BuildContext context,
     Widget child, {
