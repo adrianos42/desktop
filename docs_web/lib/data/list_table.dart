@@ -167,7 +167,7 @@ ListTable(
 ''';
 
     final borderColor = Theme.of(context).colorScheme.shade[40].toColor();
-    final borderSide = BorderSide(color: borderColor, width: 2.0);
+    final borderSide = BorderSide(color: borderColor, width: 1.0);
 
     return Defaults.createItemsWithTitle(
       context,
@@ -194,7 +194,7 @@ ListTable(
             },
             colFraction: {0: 0.5},
             collapseOnDrag: false,
-            headerColumnBorder: BorderSide(width: 2.0, color: borderColor),
+            headerColumnBorder: BorderSide(width: 1.0, color: borderColor),
             tableHeaderBuilder: (context, col, constraints) {
               return Container(
                 constraints: constraints,

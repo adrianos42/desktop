@@ -217,7 +217,7 @@ class ContextMenuTheme extends InheritedTheme {
           contextMenuThemeData.selectedColor ?? colorScheme.primary[30];
 
       final HSLColor background =
-          contextMenuThemeData.background ?? colorScheme.background[4];
+          contextMenuThemeData.background ?? colorScheme.background[6];
 
       final HSLColor selectedHoverColor =
           contextMenuThemeData.selectedHoverColor ??

@@ -326,14 +326,17 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       if (delta < 0) {
         delta = delta.clamp(-previousColSizes![col] + _kMinColumnWidth, 0.0);
       } else {
+        // Calculates the maximum value for delta.
         final maxDeltaWidth = widget.collapseOnDrag
             ? previousWidth! - previousColSizes![col]
             : previousWidth! -
                 (totalRemain * _kMinColumnWidth) -
                 previousColSizes![col];
+
         if (maxDeltaWidth < 0.0) {
           throw Exception('Invalid delta value in list table.');
         }
+
         delta = delta.clamp(0.0, maxDeltaWidth);
       }
 
@@ -341,10 +344,17 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       colFraction![col] = newWidth / totalWidth!;
 
       if (totalRemain > 0) {
-        final double valueEach = delta / totalRemain;
+        final double valueEach = (delta / totalRemain).truncateToDouble();
         double remWidth = previousWidth! - newWidth;
 
-        for (var i = col + 1; i < colCount; i++) {
+        final double firstNewWidth =
+            (previousColSizes![col + 1] - (delta / totalRemain).roundToDouble())
+                .clamp(_kMinColumnWidth, remWidth);
+
+        colFraction![col + 1] = firstNewWidth / totalWidth!;
+        remWidth -= firstNewWidth;
+
+        for (var i = col + 2; i < colCount; i++) {
           if (remWidth >= _kMinColumnWidth) {
             final double newWidth = (previousColSizes![i] - valueEach)
                 .clamp(_kMinColumnWidth, remWidth);
@@ -356,15 +366,17 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           }
         }
 
-        if (!widget.collapseOnDrag &&
-            colFraction!.values.any((e) => e == 0.0)) { // TODO(as); Proper calculation.
-              for (var i = colCount - 1; i >= col + 1; i--) {
-                if (colFraction![i] == 0.0) {
-                  colFraction![i] = _kMinColumnWidth / totalWidth!;
-                  colFraction![i - 1] = colFraction![i - 1]! - _kMinColumnWidth / totalWidth!;
-                }
-              }
-            }
+        // if (!widget.collapseOnDrag &&
+        //     colFraction!.values.any((e) => e == 0.0)) {
+        //   // TODO(as): Proper calculation.
+        //   for (var i = colCount - 1; i >= col + 1; i--) {
+        //     if (colFraction![i] == 0.0) {
+        //       colFraction![i] = _kMinColumnWidth / totalWidth!;
+        //       colFraction![i - 1] =
+        //           colFraction![i - 1]! - _kMinColumnWidth / totalWidth!;
+        //     }
+        //   }
+        // }
       }
     });
   }
@@ -528,9 +540,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       }
     }
 
-    if (widget.collapseOnDrag && remWidth > 0.0) {
-      colSizes[colSizes.lastIndexWhere((value) => value > 0.0)] += remWidth;
-    }
+    // if (widget.collapseOnDrag && remWidth > 0.0) {
+    //   colSizes[colSizes.lastIndexWhere((value) => value > 0.0)] += remWidth;
+    // }
   }
 
   @override

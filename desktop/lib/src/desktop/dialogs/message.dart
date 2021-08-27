@@ -367,7 +367,7 @@ class _MessageDialogState extends State<_MessageDialog>
 
     //final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
-    final HSLColor backgroundColor = colorScheme.background[10];
+    final HSLColor backgroundColor = colorScheme.background[6];
     final HSLColor iconForeground;
     final IconData iconData;
 
