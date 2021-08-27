@@ -132,6 +132,22 @@ class _DocAppState extends State<DocApp> {
                     },
                   ),
                 ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding:
+                      EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  child: Builder(
+                    builder: (context) {
+                      return Text(
+                        'dev.9.1',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            .copyWith(overflow: TextOverflow.ellipsis),
+                      );
+                    },
+                  ),
+                ),
                 Spacer(),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
