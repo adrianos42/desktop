@@ -367,7 +367,7 @@ class _MessageDialogState extends State<_MessageDialog>
 
     //final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
-    final HSLColor backgroundColor = colorScheme.background[6];
+    final HSLColor backgroundColor = colorScheme.background[0];
     final HSLColor iconForeground;
     final IconData iconData;
 
@@ -394,7 +394,14 @@ class _MessageDialogState extends State<_MessageDialog>
       //constraints: constraints ?? dialogThemeData.constraints,
       //padding: dialogPadding ?? dialogThemeData.dialogPadding,
       padding: const EdgeInsets.all(18),
-      color: backgroundColor.toColor(),
+      decoration: BoxDecoration(
+        color: backgroundColor.toColor(),
+        border: Border(
+          top: BorderSide(
+            color: themeData.colorScheme.shade[30].toColor(),
+          ),
+        ),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

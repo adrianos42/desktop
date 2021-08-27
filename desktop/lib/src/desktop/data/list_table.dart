@@ -489,11 +489,11 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       }
     }
 
-    if (widget.collapseOnDrag && remWidth > 0.0) {
-      final int key =
-          colFraction!.entries.lastWhere((entry) => entry.value > 0.0).key;
-      colFraction![key] = colFraction![key]! + remWidth / totalWidth!;
-    }
+    // if (widget.collapseOnDrag && remWidth > 0.0) {
+    //   final int key =
+    //       colFraction!.entries.lastWhere((entry) => entry.value > 0.0).key;
+    //   colFraction![key] = colFraction![key]! + remWidth / totalWidth!;
+    // }
   }
 
   void calculateColSizes() {
