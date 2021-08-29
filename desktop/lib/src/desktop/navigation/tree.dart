@@ -382,6 +382,22 @@ class _TreeState extends State<Tree> {
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
 
+    pagesResult.add(
+      Offstage(
+        offstage: !widget.collapsed || widget.visible || true, // TODO
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: Theme.of(context).colorScheme.primary[50].toColor(),
+                width: 8,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     _current ??= widget.nodes.first.title;
 
     for (final entry in _pages.entries) {
@@ -416,19 +432,6 @@ class _TreeState extends State<Tree> {
 
     result = Row(
       children: [
-        Offstage(
-          offstage: !widget.collapsed || widget.visible,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: Theme.of(context).colorScheme.primary[40].toColor(),
-                  width: 1,
-                ),
-              ),
-            ),
-          ),
-        ),
         Offstage(
           offstage: widget.collapsed && !widget.visible,
           child: _createTree(context),

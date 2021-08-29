@@ -183,8 +183,8 @@ ListTable(
               right: borderSide,
               horizontalInside: borderSide.copyWith(width: 1.0),
             ),
-            onPressed: (row) {
-              showDialog(
+            onPressed: (row) async {
+              await showDialog(
                 context: context,
                 builder: (context) => Dialog(
                   body: Text(someDataTableRows[row][0]),
@@ -193,7 +193,7 @@ ListTable(
               );
             },
             colFraction: {0: 0.5},
-            collapseOnDrag: true,
+            //collapseOnDrag: true,
             headerColumnBorder: BorderSide(width: 1.0, color: borderColor),
             tableHeaderBuilder: (context, col, constraints) {
               return Container(

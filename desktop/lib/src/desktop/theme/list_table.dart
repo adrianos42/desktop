@@ -221,9 +221,9 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.borderColor ?? colorScheme.shade[40];
       final HSLColor borderHoverColor = colorScheme.shade[kHoverColorIndex];
       final HSLColor borderHighlightColor =
-          colorScheme.primary[60];
+          colorScheme.primary[50];
       final HSLColor borderIndicatorColor =
-          colorScheme.primary[40];
+          colorScheme.primary[50];
 
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());

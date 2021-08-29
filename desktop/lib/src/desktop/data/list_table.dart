@@ -42,7 +42,6 @@ class ListTable extends StatefulWidget {
     this.colFraction,
     this.controller,
     this.itemExtent = _kHeaderHeight,
-    this.collapseOnDrag = true,
     this.onPressed,
     Key? key,
   })  : assert(colCount > 0),
@@ -71,7 +70,7 @@ class ListTable extends StatefulWidget {
   final RowPressedCallback? onPressed;
 
   /// If the last column should collapse if it does not fit the minimum width anymore.
-  final bool collapseOnDrag;
+  // TODO(as): final bool collapseOnDrag;
 
   @override
   _ListTableState createState() => _ListTableState();
@@ -322,17 +321,17 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         delta = delta.clamp(-previousColSizes![col] + _kMinColumnWidth, 0.0);
       } else {
         // Calculates the maximum value for delta.
-        final maxDeltaWidth = widget.collapseOnDrag
-            ? previousWidth! - previousColSizes![col]
-            : previousWidth! -
-                (totalRemain * _kMinColumnWidth) -
-                previousColSizes![col];
+        // final maxDeltaWidth = true
+        //     ? previousWidth! - previousColSizes![col]
+        //     : previousWidth! -
+        //         (totalRemain * _kMinColumnWidth) -
+        //         previousColSizes![col];
 
-        if (maxDeltaWidth < 0.0) {
-          throw Exception('Invalid delta value in list table.');
-        }
+        // if (maxDeltaWidth < 0.0) {
+        //   throw Exception('Invalid delta value in list table.');
+        // }
 
-        delta = delta.clamp(0.0, maxDeltaWidth);
+        delta = delta.clamp(0.0, delta);
       }
 
       final double newWidth = previousColSizes![col] + delta;
@@ -342,15 +341,15 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         final double valueEach = (delta / totalRemain).truncateToDouble();
         double remWidth = previousWidth! - newWidth;
 
-        final double firstNewWidth =
-            (previousColSizes![col + 1] - (delta / totalRemain))
-                .clamp(_kMinColumnWidth, remWidth)
-                .truncateToDouble();
+        // final double firstNewWidth =
+        //     (previousColSizes![col + 1] - (delta / totalRemain))
+        //         .clamp(_kMinColumnWidth, remWidth)
+        //         .truncateToDouble();
 
-        colFraction![col + 1] = firstNewWidth / totalWidth!;
-        remWidth -= firstNewWidth;
+        // colFraction![col + 1] = firstNewWidth / totalWidth!;
+        // remWidth -= firstNewWidth;
 
-        for (var i = col + 2; i < colCount; i++) {
+        for (var i = col + 1; i < colCount; i++) {
           if (remWidth >= _kMinColumnWidth) {
             final double newWidth = (previousColSizes![i] - valueEach)
                 .clamp(_kMinColumnWidth, remWidth);
@@ -364,7 +363,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
         // if (!widget.collapseOnDrag &&
         //     colFraction!.values.any((e) => e == 0.0)) {
-        //   // TODO(as): Proper calculation.
+        // TODO(as): Proper calculation.
         //   for (var i = colCount - 1; i >= col + 1; i--) {
         //     if (colFraction![i] == 0.0) {
         //       colFraction![i] = _kMinColumnWidth / totalWidth!;
@@ -415,7 +414,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
     if (notification.depth == 0) {
       // final y = metrics.maxScrollExtent <= metrics.minScrollExtent;
-      // if (hasExtent != y) { // TODO(as): Necessary to show bottom border?
+      // if (hasExtent != y) { 
+      // TODO(as): Necessary to show bottom border?
       //   setState(() => hasExtent = y);
       // }
     }
@@ -532,7 +532,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       }
     }
 
-    if (widget.collapseOnDrag && remWidth > 0.0) {
+    if (remWidth > 0.0) {
       final int key =
           colSizes.lastIndexWhere((value) => value > 0.0);
       colSizes[key] = colSizes[key] + remWidth;
