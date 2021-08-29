@@ -42,7 +42,6 @@ class ListTable extends StatefulWidget {
     this.colFraction,
     this.controller,
     this.itemExtent = _kHeaderHeight,
-    this.showHiddenColumnsIndicator = true,
     this.collapseOnDrag = true,
     this.onPressed,
     Key? key,
@@ -63,8 +62,6 @@ class ListTable extends StatefulWidget {
   final TableHeaderBuilder tableHeaderBuilder;
 
   final TableBorder? tableBorder;
-
-  final bool showHiddenColumnsIndicator;
 
   final ScrollController? controller;
 
@@ -133,9 +130,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 _TableColHandler(
                   tableDragUpdate: this,
                   col: col,
-                  hasIndicator: widget.showHiddenColumnsIndicator &&
-                      hasHiddenColumns &&
-                      lastNonZero == col,
+                  hasIndicator: hasHiddenColumns && lastNonZero == col,
                   border:
                       widget.headerColumnBorder ?? tableBorder?.verticalInside,
                 ),
@@ -348,8 +343,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         double remWidth = previousWidth! - newWidth;
 
         final double firstNewWidth =
-            (previousColSizes![col + 1] - (delta / totalRemain).roundToDouble())
-                .clamp(_kMinColumnWidth, remWidth);
+            (previousColSizes![col + 1] - (delta / totalRemain))
+                .clamp(_kMinColumnWidth, remWidth)
+                .truncateToDouble();
 
         colFraction![col + 1] = firstNewWidth / totalWidth!;
         remWidth -= firstNewWidth;
@@ -450,7 +446,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         nfactors += 1;
         final double fraction = colFraction![value]!.clamp(0.0, 1.0);
         colFraction![value] = fraction;
-        remWidth -= (totalWidth! * fraction).floorToDouble();
+        remWidth -= (totalWidth! * fraction).truncateToDouble();
       }
     }
 
@@ -459,7 +455,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       int remNFactors = colCount - nfactors;
       // The width for each remaining item.
       final double nonFactorWidth =
-          remWidth > 0.0 ? (remWidth / remNFactors).floorToDouble() : 0.0;
+          remWidth > 0.0 ? (remWidth / remNFactors).truncateToDouble() : 0.0;
 
       for (var i = 0; i < colCount; i++) {
         if (!colFraction!.containsKey(i)) {
@@ -477,23 +473,13 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             break;
           }
 
-          // if (nonFactorWidth > remWidth) {
-          //   nonFactorWidth = remWidth;
-          // }
-
           final double fraction =
               (nonFactorWidth / totalWidth!).clamp(0.0, 1.0);
           colFraction![i] = fraction;
-          remWidth -= (totalWidth! * fraction).floorToDouble();
+          remWidth -= (totalWidth! * fraction).truncateToDouble();
         }
       }
     }
-
-    // if (widget.collapseOnDrag && remWidth > 0.0) {
-    //   final int key =
-    //       colFraction!.entries.lastWhere((entry) => entry.value > 0.0).key;
-    //   colFraction![key] = colFraction![key]! + remWidth / totalWidth!;
-    // }
   }
 
   void calculateColSizes() {
@@ -525,7 +511,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           double width = (colFraction![i]! * totalWidth!)
               .clamp(_kMinColumnWidth, remWidth);
 
-          if (dragging) {
+          if (dragging && false) {
             colSizes[i] = width;
           } else {
             width = width.floorToDouble();
@@ -544,6 +530,12 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       } else {
         throw Exception('Could not find fraction for index $i.');
       }
+    }
+
+    if (widget.collapseOnDrag && remWidth > 0.0) {
+      final int key =
+          colSizes.lastIndexWhere((value) => value > 0.0);
+      colSizes[key] = colSizes[key] + remWidth;
     }
   }
 
@@ -697,7 +689,7 @@ class _TableColHandlerState extends State<_TableColHandler>
           : hovered
               ? listTableTheme.borderHoverColor!
               : widget.hasIndicator
-                  ? listTableTheme.borderHighlightColor!
+                  ? listTableTheme.borderIndicatorColor!
                   : HSLColor.fromColor(border.color);
 
       border = border.copyWith(
@@ -712,7 +704,7 @@ class _TableColHandlerState extends State<_TableColHandler>
           : hovered
               ? listTableTheme.borderHoverColor!
               : widget.hasIndicator
-                  ? listTableTheme.borderHighlightColor!
+                  ? listTableTheme.borderIndicatorColor!
                   : listTableTheme.borderColor!;
       border = BorderSide(width: width, color: borderColor.toColor());
     }

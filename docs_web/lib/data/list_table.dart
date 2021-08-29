@@ -193,7 +193,7 @@ ListTable(
               );
             },
             colFraction: {0: 0.5},
-            collapseOnDrag: false,
+            collapseOnDrag: true,
             headerColumnBorder: BorderSide(width: 1.0, color: borderColor),
             tableHeaderBuilder: (context, col, constraints) {
               return Container(

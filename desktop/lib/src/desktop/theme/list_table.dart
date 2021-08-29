@@ -26,6 +26,7 @@ class ListTableThemeData {
     this.background,
     this.borderColor,
     this.borderHighlightColor,
+    this.borderIndicatorColor,
     this.borderHoverColor,
   });
 
@@ -53,6 +54,8 @@ class ListTableThemeData {
 
   final HSLColor? borderHighlightColor;
 
+  final HSLColor? borderIndicatorColor;
+
   ListTableThemeData copyWith({
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
@@ -67,6 +70,7 @@ class ListTableThemeData {
     HSLColor? borderColor,
     HSLColor? borderHoverColor,
     HSLColor? borderHighlightColor,
+    HSLColor? borderIndicatorColor,
   }) {
     return ListTableThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -82,6 +86,7 @@ class ListTableThemeData {
       borderColor: borderColor ?? this.borderColor,
       borderHoverColor: borderHoverColor ?? this.borderHoverColor,
       borderHighlightColor: borderHighlightColor ?? this.borderHighlightColor,
+      borderIndicatorColor: borderIndicatorColor ?? this.borderIndicatorColor,
     );
   }
 
@@ -102,6 +107,7 @@ class ListTableThemeData {
       borderColor: other.borderColor,
       borderHoverColor: other.borderHoverColor,
       borderHighlightColor: other.borderHighlightColor,
+      borderIndicatorColor: other.borderIndicatorColor,
     );
   }
 
@@ -117,7 +123,8 @@ class ListTableThemeData {
         background != null &&
         borderColor != null &&
         borderHoverColor != null &&
-        borderHighlightColor != null;
+        borderHighlightColor != null &&
+        borderIndicatorColor != null;
   }
 
   @override
@@ -135,6 +142,7 @@ class ListTableThemeData {
       borderColor,
       borderHoverColor,
       borderHighlightColor,
+      borderIndicatorColor,
     );
   }
 
@@ -158,7 +166,8 @@ class ListTableThemeData {
         other.background == background &&
         other.borderColor == borderColor &&
         other.borderHoverColor == borderHoverColor &&
-        other.borderHighlightColor == borderHighlightColor;
+        other.borderHighlightColor == borderHighlightColor &&
+        other.borderIndicatorColor == borderIndicatorColor;
   }
 }
 
@@ -212,7 +221,9 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.borderColor ?? colorScheme.shade[40];
       final HSLColor borderHoverColor = colorScheme.shade[kHoverColorIndex];
       final HSLColor borderHighlightColor =
-          colorScheme.primary[kHighlightColorIndex];
+          colorScheme.primary[60];
+      final HSLColor borderIndicatorColor =
+          colorScheme.primary[40];
 
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());
@@ -233,6 +244,7 @@ class ListTableTheme extends InheritedTheme {
         borderColor: borderColor,
         borderHoverColor: borderHoverColor,
         borderHighlightColor: borderHighlightColor,
+        borderIndicatorColor: borderIndicatorColor,
       );
     }
 

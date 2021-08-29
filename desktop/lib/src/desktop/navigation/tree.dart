@@ -414,29 +414,30 @@ class _TreeState extends State<Tree> {
 
     Widget result;
 
-    if (widget.collapsed) {
-      if (widget.visible) {
-        result = Row(
-          children: [
-            _createTree(context),
-            Expanded(
-              child: Stack(children: pagesResult),
-            )
-          ],
-        );
-      } else {
-        result = Stack(children: pagesResult);
-      }
-    } else {
-      result = Row(
-        children: [
-          _createTree(context),
-          Expanded(
-            child: Stack(children: pagesResult),
-          )
-        ],
-      );
-    }
+    result = Row(
+      children: [
+        Offstage(
+          offstage: !widget.collapsed || widget.visible,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: Theme.of(context).colorScheme.primary[40].toColor(),
+                  width: 1,
+                ),
+              ),
+            ),
+          ),
+        ),
+        Offstage(
+          offstage: widget.collapsed && !widget.visible,
+          child: _createTree(context),
+        ),
+        Expanded(
+          child: Stack(children: pagesResult),
+        )
+      ],
+    );
 
     result = _TreeScope(
       child: result,
