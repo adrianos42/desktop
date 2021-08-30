@@ -6,20 +6,21 @@ import 'package:flutter/widgets.dart';
 
 import 'theme_data.dart';
 
-const EdgeInsets _kDialogPadding = EdgeInsets.all(16.0);
-const EdgeInsets _kTitlePadding = EdgeInsets.only(bottom: 16.0);
-const EdgeInsets _kMenuPadding = EdgeInsets.only(top: 16.0);
-const EdgeInsets _kOutsidePadding = EdgeInsets.symmetric(vertical: 32.0);
+const EdgeInsets _kbodyPadding = EdgeInsets.all(16.0);
+const EdgeInsets _kTitlePadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0);
+const EdgeInsets _kMenuPadding =
+    EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0);
 const double _kMinDialogWidth = 640.0;
 const double _kMinDialogHeight = 120.0;
 
 @immutable
 class DialogThemeData {
   const DialogThemeData({
-    this.dialogPadding = _kDialogPadding,
-    this.outsidePadding = _kOutsidePadding,
+    this.bodyPadding = _kbodyPadding,
     this.titlePadding = _kTitlePadding,
     this.menuPadding = _kMenuPadding,
+    this.titleTextStyle,
+    this.bodyTextAlign,
     this.constraints = const BoxConstraints(
       minWidth: _kMinDialogWidth,
       minHeight: _kMinDialogHeight,
@@ -34,36 +35,43 @@ class DialogThemeData {
 
   final EdgeInsets titlePadding;
 
-  final EdgeInsets outsidePadding;
-
-  final EdgeInsets dialogPadding;
+  final EdgeInsets bodyPadding;
 
   final HSLColor? background;
 
   final HSLColor? barrierColor;
 
+  final TextStyle? titleTextStyle;
+
+  final TextAlign? bodyTextAlign;
+
   DialogThemeData copyWidth({
     BoxConstraints? constraints,
     EdgeInsets? menuPadding,
     EdgeInsets? titlePadding,
-    EdgeInsets? outsidePadding,
-    EdgeInsets? dialogPadding,
+    EdgeInsets? bodyPadding,
     HSLColor? background,
     HSLColor? barrierColor,
+    TextStyle? titleTextStyle,
+    TextAlign? bodyTextAlign,
   }) {
     return DialogThemeData(
       constraints: constraints ?? this.constraints,
       menuPadding: menuPadding ?? this.menuPadding,
       titlePadding: titlePadding ?? this.titlePadding,
-      outsidePadding: outsidePadding ?? this.outsidePadding,
-      dialogPadding: dialogPadding ?? this.dialogPadding,
+      bodyPadding: bodyPadding ?? this.bodyPadding,
       background: background ?? this.background,
       barrierColor: barrierColor ?? this.barrierColor,
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      bodyTextAlign: bodyTextAlign ?? this.bodyTextAlign,
     );
   }
 
   bool get isConcrete {
-    return background != null || barrierColor != null;
+    return background != null &&
+        barrierColor != null &&
+        titleTextStyle != null &&
+        bodyTextAlign != null;
   }
 
   @override
@@ -72,10 +80,11 @@ class DialogThemeData {
       constraints,
       menuPadding,
       titlePadding,
-      outsidePadding,
-      dialogPadding,
+      bodyPadding,
       background,
       barrierColor,
+      titleTextStyle,
+      bodyTextAlign,
     );
   }
 
@@ -91,10 +100,11 @@ class DialogThemeData {
         other.constraints == constraints &&
         other.menuPadding == menuPadding &&
         other.titlePadding == titlePadding &&
-        other.outsidePadding == outsidePadding &&
-        other.dialogPadding == dialogPadding &&
+        other.bodyPadding == bodyPadding &&
         other.background == background &&
-        other.barrierColor == barrierColor;
+        other.barrierColor == barrierColor &&
+        other.titleTextStyle == titleTextStyle &&
+        other.bodyTextAlign == bodyTextAlign;
   }
 }
 
@@ -113,28 +123,30 @@ class DialogTheme extends InheritedTheme {
         context.dependOnInheritedWidgetOfExactType<DialogTheme>();
     DialogThemeData? dialogThemeData = dialogTheme?.data;
 
-    if (dialogThemeData?.background == null ||
-        dialogThemeData?.barrierColor == null) {
+    if (dialogThemeData == null || !dialogThemeData.isConcrete) {
       final ThemeData themeData = Theme.of(context);
       dialogThemeData ??= themeData.dialogTheme;
 
-      if (dialogThemeData.background == null) {
-        dialogThemeData = dialogThemeData.copyWidth(
-            background: themeData.colorScheme.background);
-      }
+      final HSLColor background =
+          dialogThemeData.background ?? themeData.colorScheme.background;
+      final HSLColor barrierColor = dialogThemeData.barrierColor ??
+          (themeData.colorScheme.brightness == Brightness.light
+              ? const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
+              : const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2));
+      final TextStyle titleTextStyle =
+          dialogThemeData.titleTextStyle ?? themeData.textTheme.title;
+      final TextAlign bodyTextAlign =
+          dialogThemeData.bodyTextAlign ?? TextAlign.justify;
 
-      if (dialogThemeData.barrierColor == null) {
-        final barrierColor =
-            themeData.colorScheme.brightness == Brightness.light
-                ? const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
-                : const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2);
-        dialogThemeData = dialogThemeData.copyWidth(barrierColor: barrierColor);
-      }
+      dialogThemeData = dialogThemeData.copyWidth(
+        background: background,
+        barrierColor: barrierColor,
+        titleTextStyle: titleTextStyle,
+        bodyTextAlign: bodyTextAlign,
+      );
     }
 
-    assert(dialogThemeData!.isConcrete);
-
-    return dialogThemeData!; // TODO(as): ???
+    return dialogThemeData; // TODO(as): ???
   }
 
   @override

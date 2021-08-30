@@ -220,10 +220,8 @@ class ListTableTheme extends InheritedTheme {
       final HSLColor borderColor =
           listTableThemeData.borderColor ?? colorScheme.shade[40];
       final HSLColor borderHoverColor = colorScheme.shade[kHoverColorIndex];
-      final HSLColor borderHighlightColor =
-          colorScheme.primary[50];
-      final HSLColor borderIndicatorColor =
-          colorScheme.primary[50];
+      final HSLColor borderHighlightColor = colorScheme.primary[50];
+      final HSLColor borderIndicatorColor = colorScheme.primary[50];
 
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());
@@ -266,9 +264,24 @@ class ListTableTheme extends InheritedTheme {
   bool updateShouldNotify(ListTableTheme oldWidget) => data != oldWidget.data;
 
   /// Merges with the nearest [ListTableTheme].
-  static Widget merge(
-    BuildContext context,
-    Widget child, {
+  static Widget merge({
+    Key? key,
+    required ListTableThemeData data,
+    required Widget child,
+  }) {
+    return Builder(
+      builder: (context) => ListTableTheme(
+        key: key,
+        data: ListTableTheme.of(context).merge(data),
+        child: child,
+      ),
+    );
+  }
+
+  /// Copies with the nearest [ListTableTheme].
+  static Widget copyWith({
+    required Widget child,
+    Key? key,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     ColorScheme? colorScheme,
@@ -280,19 +293,22 @@ class ListTableTheme extends InheritedTheme {
     HSLColor? highlightColor,
     HSLColor? background,
   }) {
-    return ListTableTheme(
-      child: child,
-      data: ListTableTheme.of(context).copyWith(
-        textStyle: textStyle,
-        iconThemeData: iconThemeData,
-        colorScheme: colorScheme,
-        itemHeight: itemHeight,
-        selectedColor: selectedColor,
-        selectedHighlightColor: selectedHighlightColor,
-        selectedHoverColor: selectedHoverColor,
-        hoverColor: hoverColor,
-        highlightColor: highlightColor,
-        background: background,
+    return Builder(
+      key: key,
+      builder: (context) => ListTableTheme(
+        child: child,
+        data: ListTableTheme.of(context).copyWith(
+          textStyle: textStyle,
+          iconThemeData: iconThemeData,
+          colorScheme: colorScheme,
+          itemHeight: itemHeight,
+          selectedColor: selectedColor,
+          selectedHighlightColor: selectedHighlightColor,
+          selectedHoverColor: selectedHoverColor,
+          hoverColor: hoverColor,
+          highlightColor: highlightColor,
+          background: background,
+        ),
       ),
     );
   }

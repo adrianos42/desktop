@@ -9,20 +9,30 @@ class TooltipPage extends StatefulWidget {
 }
 
 class _TooltipPageState extends State<TooltipPage> {
+  final codeExample = '''
+Button.text(
+  'Button with tooltip',
+  tooltip: 'Button with tooltip',
+  onPressed: () {},
+)''';
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Defaults.createHeader(context, 'Tooltip'),
-        Expanded(
-          child: Center(
-            child: Button.text(
-              'Text button with tooltip',
-              tooltip: 'Text button with tooltip',
-              onPressed: () {},
-            ),
-          ),
-        ),
+    return Defaults.createItemsWithTitle(
+      context,
+      header: 'Tooltip',
+      items: [
+        ItemTitle(
+            body: (context) => Center(
+                  child: Button.text(
+                    'Button with tooltip',
+                    tooltip: 'Button with tooltip',
+                    onPressed: () {},
+                  ),
+                ),
+            codeText: codeExample,
+            title: 'Button with tooltip',
+            height: 200)
       ],
     );
   }

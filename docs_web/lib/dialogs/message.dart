@@ -11,32 +11,7 @@ class DialogMessagePage extends StatefulWidget {
 class _DialogPageState extends State<DialogMessagePage> {
   @override
   Widget build(BuildContext context) {
-    final requiresActionCode = '''
-showDialog(
-  context: context,
-  barrierDismissible: false,
-  builder: (context) => Dialog(
-    title: Text(''),
-    menus: [
-      Button.text(
-        'Close',
-        onPressed: () => Dialog.close(context),
-      ),
-    ],
-  ),
-  body: Text(''),
-)
-''';
-
     final dismissableDialog = '''
-showDialog(
-  context: context, 
-  barrierDismissible: true,
-  builder: (context) => Dialog(
-    title: Text(''),
-  ),
-  body: Text(''),
-)
 ''';
 
     return Defaults.createItemsWithTitle(
@@ -45,12 +20,31 @@ showDialog(
         ItemTitle(
           body: (context) => Center(
             child: Button.text(
-              'Open dialog',
+              'Error message',
               onPressed: () async {
                 showMessageDialog(
                   context: context,
                   title: 'Lorem Ipsum',
                   kind: MessageKind.error,
+                  message:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                );
+              },
+            ),
+          ),
+          codeText: dismissableDialog,
+          title: 'Error message',
+          height: 100.0,
+        ),
+        ItemTitle(
+          body: (context) => Center(
+            child: Button.text(
+              'Info message',
+              onPressed: () async {
+                showMessageDialog(
+                  context: context,
+                  title: 'Lorem Ipsum',
+                  kind: MessageKind.info,
                   message:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 );
@@ -58,11 +52,48 @@ showDialog(
             ),
           ),
           codeText: dismissableDialog,
-          title: 'Dismissible dialog',
-          height: 400.0,
+          title: 'Info message',
+          height: 100.0,
+        ),
+        ItemTitle(
+          body: (context) => Center(
+            child: Button.text(
+              'Warning message',
+              onPressed: () async {
+                showMessageDialog(
+                  context: context,
+                  title: 'Lorem Ipsum',
+                  kind: MessageKind.warning,
+                  message: 'Lorem ipsum dolor sit amet.',
+                );
+              },
+            ),
+          ),
+          codeText: dismissableDialog,
+          title: 'Warning message',
+          height: 100.0,
+        ),
+        ItemTitle(
+          body: (context) => Center(
+            child: Button.text(
+              'Success message',
+              onPressed: () async {
+                showMessageDialog(
+                  context: context,
+                  title: 'Lorem Ipsum',
+                  kind: MessageKind.success,
+                  message:
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                );
+              },
+            ),
+          ),
+          codeText: dismissableDialog,
+          title: 'Success message',
+          height: 100.0,
         )
       ],
-      header: 'Dialog',
+      header: 'Message',
     );
   }
 }

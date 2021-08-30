@@ -343,8 +343,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
     Widget result = GestureDetector(
       behavior: HitTestBehavior.opaque,
-      // TODO(as): Support for touch.
-      // onLongPress: _handleLongPress,
+      onLongPress: _handleLongPress,
       excludeFromSemantics: true,
       child: Semantics(
         label: excludeFromSemantics ? null : widget.message,

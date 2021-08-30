@@ -202,6 +202,50 @@ class ButtonTheme extends InheritedTheme {
     );
   }
 
+  /// Copies with the nearest [ButtonTheme].
+  static Widget copyWith({
+    Key? key,
+    required Widget child,
+    TextStyle? textStyle,
+    IconThemeData? iconThemeData,
+    double? itemSpacing,
+    double? height,
+    double? minWidth,
+    HSLColor? disabledColor,
+    HSLColor? color,
+    HSLColor? focusColor,
+    HSLColor? hoverColor,
+    HSLColor? highlightColor,
+  }) {
+    return Builder(
+      key: key,
+      builder: (context) => ButtonTheme(
+        child: child,
+        data: ButtonTheme.of(context).copyWith(
+          textStyle: textStyle,
+          iconThemeData: iconThemeData,
+          itemSpacing: itemSpacing,
+          height: height,
+          minWidth: minWidth,
+          disabledColor: disabledColor,
+          color: color,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          highlightColor: highlightColor,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget wrap(BuildContext context, Widget child) {
+    final ButtonTheme? buttonTheme =
+        context.findAncestorWidgetOfExactType<ButtonTheme>();
+    return identical(this, buttonTheme)
+        ? child
+        : ButtonTheme(data: data, child: child);
+  }
+
   static ButtonThemeData of(BuildContext context) {
     final ButtonTheme? buttonTheme =
         context.dependOnInheritedWidgetOfExactType<ButtonTheme>();
@@ -259,13 +303,4 @@ class ButtonTheme extends InheritedTheme {
 
   @override
   bool updateShouldNotify(ButtonTheme oldWidget) => data != oldWidget.data;
-
-  @override
-  Widget wrap(BuildContext context, Widget child) {
-    final ButtonTheme? buttonTheme =
-        context.findAncestorWidgetOfExactType<ButtonTheme>();
-    return identical(this, buttonTheme)
-        ? child
-        : ButtonTheme(data: data, child: child);
-  }
 }

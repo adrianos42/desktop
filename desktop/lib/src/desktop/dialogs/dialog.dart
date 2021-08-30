@@ -16,23 +16,28 @@ class Dialog extends StatelessWidget {
     this.title,
     this.menus,
     this.constraints,
-    this.padding,
-    this.dialogPadding,
+    //this.padding,
+    //this.dialogPadding,
     required this.body,
   }) : super(key: key);
 
+  /// The widget placed between the title and menus.
   final Widget body;
 
+  /// The widget placed above the body.
   final Widget? title;
 
+  /// Widgets to be placed at the bottom right of the dialog.
   final List<Widget>? menus;
 
+  /// The constraints for the dialog.
   final BoxConstraints? constraints;
 
-  final EdgeInsets? padding;
+  // final EdgeInsets? padding;
 
-  final EdgeInsets? dialogPadding;
+  //final EdgeInsets? dialogPadding;
 
+  // Closes the dialog.
   static void close(BuildContext context) => Navigator.of(context).pop();
 
   @override
@@ -46,55 +51,66 @@ class Dialog extends StatelessWidget {
 
     Widget result = Container(
       constraints: constraints ?? dialogThemeData.constraints,
-      padding: dialogPadding ?? dialogThemeData.dialogPadding,
       color: backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              if (title != null)
-                Padding(
-                  padding: dialogThemeData.titlePadding,
-                  child: DefaultTextStyle(
-                    child: title!, // TODO(as): ???
-                    textAlign: TextAlign.start,
-                    style: textTheme.title,
-                  ),
+          if (title != null)
+            Padding(
+              padding: dialogThemeData.titlePadding,
+              child: DefaultTextStyle(
+                child: title!, // TODO(as): ???
+                style: dialogThemeData.titleTextStyle!,
+              ),
+            ),
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                0.0,
+                dialogThemeData.bodyPadding.top,
+                0.0,
+                dialogThemeData.bodyPadding.bottom,
+              ),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(
+                  dialogThemeData.bodyPadding.left,
+                  0.0,
+                  dialogThemeData.bodyPadding.right,
+                  0.0,
                 ),
-              DefaultTextStyle(
-                child: body,
-                textAlign: TextAlign.justify,
-                style: themeData.textTheme.body1.copyWith(
-                  color: textTheme.textHigh.toColor(),
+                child: DefaultTextStyle(
+                  child: body,
+                  textAlign: dialogThemeData.bodyTextAlign!,
+                  style: textTheme.body1,
                 ),
               ),
-            ],
+            ),
           ),
           if (menus != null)
-            Padding(
+            Container(
+              alignment: Alignment.centerRight,
               padding: dialogThemeData.menuPadding,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: menus!, // TODO(as): ???
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: menus!, // TODO(as): ???
               ),
             ),
         ],
       ),
     );
 
-    result = Padding(
-      padding: padding ?? dialogThemeData.outsidePadding,
-      child: result,
+    result = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Spacer(flex: 2),
+        Flexible(child: result, flex: 8),
+        const Spacer(flex: 2),
+      ],
     );
 
     return Focus(
