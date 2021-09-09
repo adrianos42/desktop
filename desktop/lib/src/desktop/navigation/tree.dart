@@ -13,87 +13,105 @@ import 'tab_view.dart';
 @immutable
 class TreeNode {
   /// Creates a tree node with the page title, and child or children.
-  const TreeNode(this.title, {this.builder, this.nodes})
+  const TreeNode._(this.title, this.name, {this.builder, this.nodes})
       : assert((builder == null || nodes == null) &&
             (builder != null || nodes != null));
 
   /// Creates a node with a default text and a [Navigator] history.
-  /// See also:
-  ///   * [TabView] for the arguments.
-  ///   * [Navigator]
-  factory TreeNode.child(
-    String text, {
+  static TreeNode child<T, N>(
+    T title, {
+    N? name,
     WidgetBuilder? builder,
-    GlobalKey<NavigatorState>? navigatorKey,
-    String? defaultTitle,
-    Map<String, WidgetBuilder>? routes,
-    RouteFactory? onGenerateRoute,
-    RouteFactory? onUnknownRoute,
-    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+    // GlobalKey<NavigatorState>? navigatorKey,
+    // String? defaultTitle,
+    // Map<String, WidgetBuilder>? routes,
+    // RouteFactory? onGenerateRoute,
+    // RouteFactory? onUnknownRoute,
+    // List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
   }) {
-    return TreeNode(
-      text,
-      builder: (BuildContext context) => TabView(
-        builder: builder,
-        navigatorKey: navigatorKey,
-        routes: routes,
-        onGenerateRoute: onGenerateRoute,
-        onUnknownRoute: onUnknownRoute,
-        defaultTitle: defaultTitle,
-        navigatorObservers: navigatorObservers,
-      ),
-    );
-  }
+    if (title is String) {
+      final String nodeName;
 
-  // /// Creates a custom node with a [Navigator] history.
-  // /// /// See also:
-  // ///   * [TabView] for the arguments.
-  // ///   * [Navigator]
-  // factory TreeNode.customNode(
-  //   String title, {
-  //   WidgetBuilder? builder,
-  //   GlobalKey<NavigatorState>? navigatorKey,
-  //   String? defaultTitle,
-  //   Map<String, WidgetBuilder>? routes,
-  //   RouteFactory? onGenerateRoute,
-  //   RouteFactory? onUnknownRoute,
-  //   List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
-  // }) {
-  //   return TreeNode(
-  //     title,
-  //     builder: (BuildContext context) => TabView(
-  //       builder: builder,
-  //       navigatorKey: navigatorKey,
-  //       routes: routes,
-  //       onGenerateRoute: onGenerateRoute,
-  //       onUnknownRoute: onUnknownRoute,
-  //       defaultTitle: defaultTitle,
-  //       navigatorObservers: navigatorObservers,
-  //     ),
-  //   );
-  // }
+      if (name == null) {
+        nodeName = title;
+      } else {
+        nodeName = name.toString();
+      }
+
+      return TreeNode._(
+        Text(title),
+        nodeName,
+        builder: (BuildContext context) => TabView(
+          builder: builder,
+          // navigatorKey: navigatorKey,
+          // routes: routes,
+          // onGenerateRoute: onGenerateRoute,
+          // onUnknownRoute: onUnknownRoute,
+          // defaultTitle: defaultTitle,
+          // navigatorObservers: navigatorObservers,
+        ),
+      );
+    } else if (title is Widget) {
+      if (name == null) {
+        throw Exception('The name of the node cannot be null.');
+      }
+
+      final String nodeName = name.toString();
+
+      return TreeNode._(
+        title,
+        nodeName,
+        builder: (BuildContext context) => TabView(
+          builder: builder,
+          // navigatorKey: navigatorKey,
+          // routes: routes,
+          // onGenerateRoute: onGenerateRoute,
+          // onUnknownRoute: onUnknownRoute,
+          // defaultTitle: defaultTitle,
+          // navigatorObservers: navigatorObservers,
+        ),
+      );
+    } else {
+      throw Exception('Invalid type for tree node title.');
+    }
+  }
 
   /// Creates a node with children and default text.
-  factory TreeNode.children(
-    String text, {
+  static TreeNode children<T, N>(
+    T title, {
+    N? name,
     required List<TreeNode> children,
   }) {
-    return TreeNode(
-      text,
-      nodes: children,
-    );
-  }
+    if (title is String) {
+      final String nodeName;
 
-  // Creates a custom node with children and default text.
-  // factory TreeNode.customNodes(
-  //   String child, {
-  //   required List<TreeNode> children,
-  // }) {
-  //   return TreeNode(
-  //     child,
-  //     children: children,
-  //   );
-  // }
+      if (name == null) {
+        nodeName = title;
+      } else {
+        nodeName = name.toString();
+      }
+
+      return TreeNode._(
+        _TreeNodeTextCollapse(Text(title)),
+        nodeName,
+        nodes: children,
+      );
+    } else if (title is Widget) {
+      if (name == null) {
+        throw Exception('The name of the node cannot be null.');
+      }
+
+      final String nodeName = name.toString();
+
+      return TreeNode._(
+        title,
+        nodeName,
+        nodes: children,
+      );
+    } else {
+      throw Exception('Invalid type for tree node title.');
+    }
+  }
 
   /// The children in a node.
   final List<TreeNode>? nodes;
@@ -101,8 +119,61 @@ class TreeNode {
   /// The child in the node.
   final WidgetBuilder? builder;
 
+  /// The node identifier.
+  final String name;
+
+  /// The widget used in the node tree.
+  final Widget title;
+}
+
+/// Context to see if the node is collapsed or not.
+class TreeNodeCollapse extends InheritedWidget {
+  /// Creates a context for the tree node.
+  const TreeNodeCollapse(this.collapsed, {required Widget child, Key? key})
+      : super(key: key, child: child);
+
   ///
-  final String title;
+  static TreeNodeCollapse of(BuildContext context) {
+    final TreeNodeCollapse? result =
+        context.dependOnInheritedWidgetOfExactType<TreeNodeCollapse>();
+    if (result == null) {
+      throw Exception('`TreeNodeCollapse` cannot be null.');
+    }
+    return result;
+  }
+
+  /// If this node is collapsed.
+  final bool collapsed;
+
+  @override
+  bool updateShouldNotify(TreeNodeCollapse oldWidget) =>
+      collapsed != oldWidget.collapsed;
+}
+
+class _TreeNodeTextCollapse extends StatelessWidget {
+  const _TreeNodeTextCollapse(this.child);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final TreeNodeCollapse treeNodeCollapse = TreeNodeCollapse.of(context);
+    final iconCollpased =
+        treeNodeCollapse.collapsed ? Icons.expand_more : Icons.expand_less;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        child,
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Icon(iconCollpased),
+        )
+      ],
+    );
+  }
 }
 
 /// Tree
@@ -170,7 +241,8 @@ class Tree extends StatefulWidget {
     this.autofocus = false,
     this.isScrollbarAlwaysShown = true,
     this.collapsed = false,
-    this.visible = false,
+    this.visible,
+    this.showDraggingIndicator = true,
     Key? key,
   }) : super(key: key);
 
@@ -194,8 +266,11 @@ class Tree extends StatefulWidget {
   /// If the tree is collapsed.
   final bool collapsed;
 
-  /// If the tree is on top of the page. Ignored if `collapsed` is false.
-  final bool visible;
+  /// If the tree is visible even if it's collapsed.
+  final bool? visible;
+
+  /// If an indicator is shown when the tree is collapsed.
+  final bool showDraggingIndicator;
 
   @override
   _TreeState createState() => _TreeState();
@@ -224,13 +299,15 @@ class _TreeState extends State<Tree> {
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
 
+  bool _visible = false;
+
   void setPage(String name) {
     setState(() => _current = name);
     _focusView();
   }
 
   void _createEntries(String name, TreeNode node) {
-    final nameResult = '''$name${node.title}''';
+    final nameResult = '''$name${node.name}''';
 
     if (node.nodes != null) {
       for (final child in node.nodes!) {
@@ -308,7 +385,7 @@ class _TreeState extends State<Tree> {
           return true;
         }
 
-        if (nodes.where((element) => node.title == element.title).length != 1) {
+        if (nodes.where((element) => node.name == element.name).length != 1) {
           return true;
         }
       }
@@ -326,7 +403,7 @@ class _TreeState extends State<Tree> {
     }
 
     if (_verifyDuplicates(widget.nodes)) {
-      throw Exception('Cannot have duplicate routes');
+      throw Exception('Cannot have duplicate names');
     }
 
     for (final node in widget.nodes) {
@@ -337,7 +414,6 @@ class _TreeState extends State<Tree> {
   Widget _createTree(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      width: 200.0, // TODO(as): Use step width.
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0),
         child: Column(
@@ -355,7 +431,7 @@ class _TreeState extends State<Tree> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: widget.nodes
                       .map(
                         (e) => _TreeColumn(
@@ -382,23 +458,9 @@ class _TreeState extends State<Tree> {
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
 
-    pagesResult.add(
-      Offstage(
-        offstage: !widget.collapsed || widget.visible || true, // TODO
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: Theme.of(context).colorScheme.primary[50].toColor(),
-                width: 8,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    final visible = widget.visible ?? _visible;
 
-    _current ??= widget.nodes.first.title;
+    _current ??= widget.nodes.first.name;
 
     for (final entry in _pages.entries) {
       final active = entry.key == _current!;
@@ -428,12 +490,49 @@ class _TreeState extends State<Tree> {
       );
     }
 
+    pagesResult.add(
+      Offstage(
+        offstage: !widget.collapsed, // TODO(as):
+        child: Button(
+          padding: EdgeInsets.zero,
+          bodyPadding: EdgeInsets.zero,
+          onPressed: () => setState(() => _visible = !_visible),
+          body: Container(
+            alignment: Alignment.center,
+            // decoration: visible
+            //     ? BoxDecoration(
+            //         border: Border(
+            //           left: BorderSide(
+            //             color:
+            //                 Theme.of(context).colorScheme.primary[50].toColor(),
+            //             width: 0,
+            //           ),
+            //         ),
+            //       )
+            //     : BoxDecoration(
+            //         border: Border(
+            //           left: BorderSide(
+            //             color: Theme.of(context)
+            //                 .colorScheme
+            //                 .background[4]
+            //                 .toColor(),
+            //             width: 0,
+            //           ),
+            //         ),
+            //       ),
+            child:
+                Icon(visible ? Icons.arrow_upward : Icons.chevron_right),
+          ),
+        ),
+      ),
+    );
+
     Widget result;
 
     result = Row(
       children: [
         Offstage(
-          offstage: widget.collapsed && !widget.visible,
+          offstage: widget.collapsed && !visible,
           child: _createTree(context),
         ),
         Expanded(
@@ -487,18 +586,17 @@ class _TreeColumn extends StatefulWidget {
 class _TreeColumnState extends State<_TreeColumn> {
   bool _collapsed = true;
 
-  String get name => '${widget.parentName}${widget.node.title}';
+  String get name => '${widget.parentName}${widget.node.name}';
 
   @override
   Widget build(BuildContext context) {
     final treeTheme = TreeTheme.of(context);
 
-    if (widget.node.title.isEmpty) {
+    if (widget.node.name.isEmpty) {
       throw Exception('Title in tree cannot be empty');
     }
 
     if (widget.node.nodes != null) {
-      final iconCollpased = _collapsed ? Icons.expand_more : Icons.expand_less;
       final chidrenWidget = Padding(
         padding: const EdgeInsets.only(left: 16.0),
         child: Column(
@@ -528,10 +626,8 @@ class _TreeColumnState extends State<_TreeColumn> {
             ),
             child: Button(
               bodyPadding: EdgeInsets.zero,
-              trailingPadding: const EdgeInsets.only(left: 8.0),
-              padding: EdgeInsets.zero,
-              body: Text(widget.node.title),
-              trailing: Icon(iconCollpased),
+              padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
+              body: TreeNodeCollapse(_collapsed, child: widget.node.title),
               onPressed: () {
                 widget.updatePage();
                 setState(() => _collapsed = !_collapsed);
@@ -562,9 +658,7 @@ class _TreeColumnState extends State<_TreeColumn> {
           child: Button(
             padding: EdgeInsets.zero,
             bodyPadding: EdgeInsets.zero,
-            body: Text(
-              widget.node.title,
-            ),
+            body: widget.node.title,
             onPressed: () {
               Tree._of(context)!.setPage(name);
             },

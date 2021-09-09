@@ -233,7 +233,7 @@ class _ButtonState extends State<Button>
     if (widget.axis == Axis.horizontal) {
       constraints = BoxConstraints(
         minHeight: buttonThemeData.height!,
-        minWidth: buttonThemeData.minWidth!,
+       // minWidth: buttonThemeData.minWidth!,
       );
 
       leadingPadding = widget.leadingPadding ??
@@ -246,8 +246,8 @@ class _ButtonState extends State<Button>
           widget.padding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
     } else {
       constraints = BoxConstraints(
-        maxWidth: buttonThemeData.height!,
-        minWidth: buttonThemeData.height!,
+       // maxWidth: buttonThemeData.height!,
+       // minWidth: buttonThemeData.height!,
         minHeight: buttonThemeData.minWidth!,
       );
 
