@@ -1,11 +1,13 @@
 import 'dart:collection';
+import 'dart:ui' show PointerDeviceKind;
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import '../component.dart';
 import '../icons.dart';
 import '../input/button.dart';
-import '../scrolling/scrollbar.dart';
 import '../theme/theme.dart';
 import 'tab_view.dart';
 
@@ -124,30 +126,29 @@ class TreeNode {
 
   /// The widget used in the node tree.
   final Widget title;
+
+  /// If this node is collapsed.
+  static bool isCollapsed(BuildContext context) {
+    final _TreeNodeCollapse? result =
+        context.dependOnInheritedWidgetOfExactType<_TreeNodeCollapse>();
+    if (result == null) {
+      throw Exception('Must have a node with children in the tree.');
+    }
+    return result._collapsed;
+  }
 }
 
 /// Context to see if the node is collapsed or not.
-class TreeNodeCollapse extends InheritedWidget {
+class _TreeNodeCollapse extends InheritedWidget {
   /// Creates a context for the tree node.
-  const TreeNodeCollapse(this.collapsed, {required Widget child, Key? key})
+  const _TreeNodeCollapse(this._collapsed, {required Widget child, Key? key})
       : super(key: key, child: child);
 
-  ///
-  static TreeNodeCollapse of(BuildContext context) {
-    final TreeNodeCollapse? result =
-        context.dependOnInheritedWidgetOfExactType<TreeNodeCollapse>();
-    if (result == null) {
-      throw Exception('`TreeNodeCollapse` cannot be null.');
-    }
-    return result;
-  }
-
-  /// If this node is collapsed.
-  final bool collapsed;
+  final bool _collapsed;
 
   @override
-  bool updateShouldNotify(TreeNodeCollapse oldWidget) =>
-      collapsed != oldWidget.collapsed;
+  bool updateShouldNotify(_TreeNodeCollapse oldWidget) =>
+      _collapsed != oldWidget._collapsed;
 }
 
 class _TreeNodeTextCollapse extends StatelessWidget {
@@ -157,9 +158,8 @@ class _TreeNodeTextCollapse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TreeNodeCollapse treeNodeCollapse = TreeNodeCollapse.of(context);
     final iconCollpased =
-        treeNodeCollapse.collapsed ? Icons.expand_more : Icons.expand_less;
+        TreeNode.isCollapsed(context) ? Icons.expand_more : Icons.expand_less;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -241,7 +241,6 @@ class Tree extends StatefulWidget {
     this.autofocus = false,
     this.isScrollbarAlwaysShown = true,
     this.collapsed = false,
-    this.visible,
     this.showDraggingIndicator = true,
     Key? key,
   }) : super(key: key);
@@ -266,9 +265,6 @@ class Tree extends StatefulWidget {
   /// If the tree is collapsed.
   final bool collapsed;
 
-  /// If the tree is visible even if it's collapsed.
-  final bool? visible;
-
   /// If an indicator is shown when the tree is collapsed.
   final bool showDraggingIndicator;
 
@@ -290,7 +286,8 @@ class _BuildTreePage {
   bool shouldBuild = false;
 }
 
-class _TreeState extends State<Tree> {
+class _TreeState extends State<Tree>
+    with ComponentStateMixin, TickerProviderStateMixin {
   final _pages = HashMap<String, _BuildTreePage>();
   final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   String? _current;
@@ -305,6 +302,131 @@ class _TreeState extends State<Tree> {
     setState(() => _current = name);
     _focusView();
   }
+
+  void _handleHoverEntered() {
+    if (!hovered) {
+      _indicatorSizecontroller.animateTo(1.0,
+          duration: const Duration(milliseconds: 120));
+      setState(() => hovered = true);
+    }
+  }
+
+  void _handleHoverExited() {
+    if (hovered) {
+      _indicatorSizecontroller.animateBack(_indicatorSizeFactor,
+          duration: const Duration(milliseconds: 120));
+      setState(() => hovered = false);
+    }
+  }
+
+  double get _indicatorSizeFactor => _visible ? 0.25 : 0.5;
+
+  double _xOffset = 0.0;
+  double? _offset;
+
+  void _onDragStart(DragStartDetails details) {
+    return;
+    if (details.kind == PointerDeviceKind.mouse) {
+      setState(() {
+        _offset = details.globalPosition.dx;
+      });
+    }
+  }
+
+  void _onDragCancel() {
+    setState(() {
+      _offset = null;
+      _xOffset = 0.0;
+    });
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    if (_offset != null) {
+      if (details.primaryVelocity != null) {}
+
+      setState(() {
+        _offset = null;
+        _xOffset = 0.0;
+      });
+    }
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    if (_offset != null) {
+      setState(() {
+        _xOffset = details.globalPosition.dx - _offset!;
+      });
+    }
+  }
+
+  // Returns true if any route is a duplicate.
+  bool _verifyDuplicates(List<TreeNode> nodes) {
+    for (final node in nodes) {
+      if (node.nodes != null) {
+        if (_verifyDuplicates(node.nodes!)) {
+          return true;
+        }
+
+        if (nodes.where((element) => node.name == element.name).length != 1) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  Widget _createTree(BuildContext context) {
+    return Container(
+      alignment: Alignment.topLeft,
+      width: 200.0,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Transform(
+          transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.title != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: widget.title!,
+                ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widget.nodes
+                        .map(
+                          (e) => _TreeColumn(
+                            node: e,
+                            parentName: '',
+                            updatePage: () {
+                              setState(
+                                  () {}); // TODO(as): See scroll notification without rebuilding.
+                              //controller.position.;
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  late AnimationController _indicatorSizecontroller;
+  late AnimationController _columnController;
+
+  late CurvedAnimation _columnAnimation;
 
   void _createEntries(String name, TreeNode node) {
     final nameResult = '''$name${node.name}''';
@@ -368,30 +490,10 @@ class _TreeState extends State<Tree> {
       focusScopeNode.dispose();
     }
 
+    _indicatorSizecontroller.dispose();
+    _columnController.dispose();
+
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _focusView();
-  }
-
-  // Returns true if any route is a duplicate.
-  bool _verifyDuplicates(List<TreeNode> nodes) {
-    for (final node in nodes) {
-      if (node.nodes != null) {
-        if (_verifyDuplicates(node.nodes!)) {
-          return true;
-        }
-
-        if (nodes.where((element) => node.name == element.name).length != 1) {
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 
   @override
@@ -409,56 +511,34 @@ class _TreeState extends State<Tree> {
     for (final node in widget.nodes) {
       _createEntries('', node);
     }
+
+    _indicatorSizecontroller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      value: _indicatorSizeFactor,
+    );
+
+    _columnController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 120),
+      value: widget.collapsed && !_visible ? 0.0 : 1.0,
+    );
+
+    _columnAnimation = CurvedAnimation(
+      parent: _columnController,
+      curve: Curves.easeInOutSine,
+    );
   }
 
-  Widget _createTree(BuildContext context) {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.title != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: widget.title!,
-              ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: widget.nodes
-                      .map(
-                        (e) => _TreeColumn(
-                          node: e,
-                          parentName: '',
-                          updatePage: () {
-                            setState(
-                                () {}); // TODO(as): See scroll notification without rebuilding.
-                            //controller.position.;
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _focusView();
   }
 
   @override
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
-
-    final visible = widget.visible ?? _visible;
 
     _current ??= widget.nodes.first.name;
 
@@ -493,35 +573,45 @@ class _TreeState extends State<Tree> {
     pagesResult.add(
       Offstage(
         offstage: !widget.collapsed, // TODO(as):
-        child: Button(
-          padding: EdgeInsets.zero,
-          bodyPadding: EdgeInsets.zero,
-          onPressed: () => setState(() => _visible = !_visible),
-          body: Container(
-            alignment: Alignment.center,
-            // decoration: visible
-            //     ? BoxDecoration(
-            //         border: Border(
-            //           left: BorderSide(
-            //             color:
-            //                 Theme.of(context).colorScheme.primary[50].toColor(),
-            //             width: 0,
-            //           ),
-            //         ),
-            //       )
-            //     : BoxDecoration(
-            //         border: Border(
-            //           left: BorderSide(
-            //             color: Theme.of(context)
-            //                 .colorScheme
-            //                 .background[4]
-            //                 .toColor(),
-            //             width: 0,
-            //           ),
-            //         ),
-            //       ),
-            child:
-                Icon(visible ? Icons.arrow_upward : Icons.chevron_right),
+        child: FadeTransition(
+          //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
+          opacity: const AlwaysStoppedAnimation(1.0),
+          child: GestureDetector(
+            onTap: () => setState(() {
+              if (_visible) {
+                _columnController.reverse();
+              } else {
+                _columnController.forward();
+              }
+              _visible = !_visible;
+            }),
+            onHorizontalDragStart: _onDragStart,
+            onHorizontalDragCancel: _onDragCancel,
+            onHorizontalDragEnd: _onDragEnd,
+            onHorizontalDragUpdate: _onDragUpdate,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              onEnter: (_) => _handleHoverEntered(),
+              onExit: (_) => _handleHoverExited(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    //constraints: const BoxConstraints.tightForFinite(width: 4),
+                    color: hovered
+                        ? Theme.of(context).textTheme.textHigh.toColor()
+                        : Theme.of(context).colorScheme.primary[50].toColor(),
+                    margin: const EdgeInsets.only(right: 8),
+                    child: SizeTransition(
+                      axis: Axis.horizontal,
+                      sizeFactor: _indicatorSizecontroller,
+                      child: const SizedBox(width: 4),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -532,8 +622,15 @@ class _TreeState extends State<Tree> {
     result = Row(
       children: [
         Offstage(
-          offstage: widget.collapsed && !visible,
-          child: _createTree(context),
+          offstage:
+              widget.collapsed && !_visible && _columnController.isCompleted,
+          child: SizeTransition(
+            axis: Axis.horizontal,
+            sizeFactor: widget.collapsed
+                ? _columnAnimation
+                : const AlwaysStoppedAnimation(1.0),
+            child: _createTree(context),
+          ),
         ),
         Expanded(
           child: Stack(children: pagesResult),
@@ -627,7 +724,7 @@ class _TreeColumnState extends State<_TreeColumn> {
             child: Button(
               bodyPadding: EdgeInsets.zero,
               padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
-              body: TreeNodeCollapse(_collapsed, child: widget.node.title),
+              body: _TreeNodeCollapse(_collapsed, child: widget.node.title),
               onPressed: () {
                 widget.updatePage();
                 setState(() => _collapsed = !_collapsed);

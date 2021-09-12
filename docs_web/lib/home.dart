@@ -308,7 +308,13 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(data: themeData, child: _createHome());
+    return Theme(
+      data: themeData,
+      child: Container(
+        color: themeData.colorScheme.background.toColor(),
+        child: _createHome(),
+      ),
+    );
   }
 }
 
