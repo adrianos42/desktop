@@ -39,6 +39,8 @@ class _DocAppState extends State<DocApp> {
 
   double backgroundColorLightness = 0.0;
 
+  bool? _isShowingTree;
+
   Widget _createColorButton() {
     final itemBuilder = (context) => [
           _menuItemPrimaryColor(PrimaryColor.coral),
@@ -81,6 +83,9 @@ class _DocAppState extends State<DocApp> {
     return Builder(builder: (context) {
       final orientation = MediaQuery.maybeOf(context)?.orientation;
 
+      final isShowingTree =
+          _isShowingTree ?? orientation == Orientation.landscape;
+
       return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 16.0),
@@ -92,22 +97,21 @@ class _DocAppState extends State<DocApp> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // if (orientation == Orientation.portrait)
-                //   Container(
-                //     padding: EdgeInsets.only(left: 16.0),
-                //     child: Button.icon(
-                //       Icons.menu,
-                //       color: isShowingTree
-                //           ? ButtonTheme.of(context).highlightColor
-                //           : null,
-                //       hoverColor: isShowingTree
-                //           ? ButtonTheme.of(context).highlightColor
-                //           : null,
-                //       size: 22,
-                //       onPressed: () =>
-                //           setState(() => isShowingTree = !isShowingTree),
-                //     ),
-                //   ),
+                Container(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Button.icon(
+                    Icons.menu_open,
+                    color: isShowingTree
+                        ? ButtonTheme.of(context).highlightColor
+                        : null,
+                    hoverColor: isShowingTree
+                        ? ButtonTheme.of(context).highlightColor
+                        : null,
+                    size: 22,
+                    onPressed: () =>
+                        setState(() => _isShowingTree = !isShowingTree),
+                  ),
+                ),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding:
@@ -134,7 +138,7 @@ class _DocAppState extends State<DocApp> {
                   child: Builder(
                     builder: (context) {
                       return Text(
-                        'dev.9.3',
+                        'dev.9.4',
                         style: Theme.of(context)
                             .textTheme
                             .caption
@@ -187,7 +191,7 @@ class _DocAppState extends State<DocApp> {
             ),
             Expanded(
               child: Tree(
-                collapsed: orientation == Orientation.portrait,
+                collapsed: !isShowingTree,
                 title: Builder(
                   builder: (context) => Text(
                     'Documentation',

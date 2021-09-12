@@ -82,6 +82,7 @@ class TreeNode {
   static TreeNode children<T, N>(
     T title, {
     N? name,
+    bool hideColumnCollapsedIcon = false,
     required List<TreeNode> children,
   }) {
     if (title is String) {
@@ -106,7 +107,7 @@ class TreeNode {
       final String nodeName = name.toString();
 
       return TreeNode._(
-        title,
+        hideColumnCollapsedIcon ? title : _TreeNodeTextCollapse(title),
         nodeName,
         nodes: children,
       );
@@ -325,7 +326,7 @@ class _TreeState extends State<Tree>
   double? _offset;
 
   void _onDragStart(DragStartDetails details) {
-    return;
+    return; // TODO(as): Implement dragging.
     if (details.kind == PointerDeviceKind.mouse) {
       setState(() {
         _offset = details.globalPosition.dx;
@@ -479,6 +480,14 @@ class _TreeState extends State<Tree>
         .addAll(oldPages.values.map((value) => value.focusScopeNode));
 
     _focusView();
+
+    if (oldWidget.collapsed != widget.collapsed) {
+      if (widget.collapsed) {
+        _columnController.animateBack(0.0);
+      } else {
+        _columnController.animateTo(1.0);
+      }
+    }
   }
 
   @override
@@ -521,7 +530,7 @@ class _TreeState extends State<Tree>
     _columnController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 120),
-      value: widget.collapsed && !_visible ? 0.0 : 1.0,
+      value: widget.collapsed ? 0.0 : 1.0,
     );
 
     _columnAnimation = CurvedAnimation(
@@ -570,52 +579,52 @@ class _TreeState extends State<Tree>
       );
     }
 
-    pagesResult.add(
-      Offstage(
-        offstage: !widget.collapsed, // TODO(as):
-        child: FadeTransition(
-          //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
-          opacity: const AlwaysStoppedAnimation(1.0),
-          child: GestureDetector(
-            onTap: () => setState(() {
-              if (_visible) {
-                _columnController.reverse();
-              } else {
-                _columnController.forward();
-              }
-              _visible = !_visible;
-            }),
-            onHorizontalDragStart: _onDragStart,
-            onHorizontalDragCancel: _onDragCancel,
-            onHorizontalDragEnd: _onDragEnd,
-            onHorizontalDragUpdate: _onDragUpdate,
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              onEnter: (_) => _handleHoverEntered(),
-              onExit: (_) => _handleHoverExited(),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    //constraints: const BoxConstraints.tightForFinite(width: 4),
-                    color: hovered
-                        ? Theme.of(context).textTheme.textHigh.toColor()
-                        : Theme.of(context).colorScheme.primary[50].toColor(),
-                    margin: const EdgeInsets.only(right: 8),
-                    child: SizeTransition(
-                      axis: Axis.horizontal,
-                      sizeFactor: _indicatorSizecontroller,
-                      child: const SizedBox(width: 4),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    // pagesResult.add(
+    //   Offstage(
+    //     offstage: !widget.collapsed, // TODO(as):
+    //     child: FadeTransition(
+    //       //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
+    //       opacity: const AlwaysStoppedAnimation(1.0),
+    //       child: GestureDetector(
+    //         onTap: () => setState(() {
+    //           if (_visible) {
+    //             _columnController.reverse();
+    //           } else {
+    //             _columnController.forward();
+    //           }
+    //           _visible = !_visible;
+    //         }),
+    //         onHorizontalDragStart: _onDragStart,
+    //         onHorizontalDragCancel: _onDragCancel,
+    //         onHorizontalDragEnd: _onDragEnd,
+    //         onHorizontalDragUpdate: _onDragUpdate,
+    //         child: MouseRegion(
+    //           cursor: SystemMouseCursors.click,
+    //           onEnter: (_) => _handleHoverEntered(),
+    //           onExit: (_) => _handleHoverExited(),
+    //           child: Row(
+    //             mainAxisSize: MainAxisSize.min,
+    //             children: [
+    //               Container(
+    //                 alignment: Alignment.centerLeft,
+    //                 //constraints: const BoxConstraints.tightForFinite(width: 4),
+    //                 color: hovered
+    //                     ? Theme.of(context).textTheme.textHigh.toColor()
+    //                     : Theme.of(context).colorScheme.primary[50].toColor(),
+    //                 margin: const EdgeInsets.only(right: 8),
+    //                 child: SizeTransition(
+    //                   axis: Axis.horizontal,
+    //                   sizeFactor: _indicatorSizecontroller,
+    //                   child: const SizedBox(width: 4),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
 
     Widget result;
 
@@ -623,12 +632,10 @@ class _TreeState extends State<Tree>
       children: [
         Offstage(
           offstage:
-              widget.collapsed && !_visible && _columnController.isCompleted,
+              widget.collapsed && _columnController.isCompleted,
           child: SizeTransition(
             axis: Axis.horizontal,
-            sizeFactor: widget.collapsed
-                ? _columnAnimation
-                : const AlwaysStoppedAnimation(1.0),
+            sizeFactor: _columnAnimation,
             child: _createTree(context),
           ),
         ),
