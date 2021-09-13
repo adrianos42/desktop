@@ -12,7 +12,6 @@ class Defaults {
   static Widget createHeader(BuildContext context, String name) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
       child: Text(
         name,
         style: Theme.of(context).textTheme.header,
@@ -129,7 +128,7 @@ class Defaults {
     return SingleChildScrollView(
       child: Container(
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        margin: EdgeInsets.all(16.0),
         child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

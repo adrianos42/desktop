@@ -24,12 +24,6 @@ class TreeNode {
     T title, {
     N? name,
     WidgetBuilder? builder,
-    // GlobalKey<NavigatorState>? navigatorKey,
-    // String? defaultTitle,
-    // Map<String, WidgetBuilder>? routes,
-    // RouteFactory? onGenerateRoute,
-    // RouteFactory? onUnknownRoute,
-    // List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
   }) {
     if (title is String) {
       final String nodeName;
@@ -43,15 +37,7 @@ class TreeNode {
       return TreeNode._(
         Text(title),
         nodeName,
-        builder: (BuildContext context) => TabView(
-          builder: builder,
-          // navigatorKey: navigatorKey,
-          // routes: routes,
-          // onGenerateRoute: onGenerateRoute,
-          // onUnknownRoute: onUnknownRoute,
-          // defaultTitle: defaultTitle,
-          // navigatorObservers: navigatorObservers,
-        ),
+        builder: builder,
       );
     } else if (title is Widget) {
       if (name == null) {
@@ -63,15 +49,7 @@ class TreeNode {
       return TreeNode._(
         title,
         nodeName,
-        builder: (BuildContext context) => TabView(
-          builder: builder,
-          // navigatorKey: navigatorKey,
-          // routes: routes,
-          // onGenerateRoute: onGenerateRoute,
-          // onUnknownRoute: onUnknownRoute,
-          // defaultTitle: defaultTitle,
-          // navigatorObservers: navigatorObservers,
-        ),
+        builder: builder,
       );
     } else {
       throw Exception('Invalid type for tree node title.');
@@ -562,7 +540,6 @@ class _TreeState extends State<Tree>
             enabled: active,
             child: FocusScope(
               node: entry.value.focusScopeNode,
-              canRequestFocus: active,
               child: Builder(
                 builder: (context) {
                   return entry.value.shouldBuild
@@ -590,7 +567,7 @@ class _TreeState extends State<Tree>
     //           if (_visible) {
     //             _columnController.reverse();
     //           } else {
-    //             _columnController.forward();
+    //             _columnController.forward();0
     //           }
     //           _visible = !_visible;
     //         }),
@@ -631,8 +608,7 @@ class _TreeState extends State<Tree>
     result = Row(
       children: [
         Offstage(
-          offstage:
-              widget.collapsed && _columnController.isCompleted,
+          offstage: widget.collapsed && _columnController.isCompleted,
           child: SizeTransition(
             axis: Axis.horizontal,
             sizeFactor: _columnAnimation,
@@ -640,7 +616,7 @@ class _TreeState extends State<Tree>
           ),
         ),
         Expanded(
-          child: Stack(children: pagesResult),
+          child: Stack(fit: StackFit.expand, children: pagesResult),
         )
       ],
     );
