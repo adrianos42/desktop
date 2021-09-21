@@ -15,6 +15,7 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.symmetric(horizontal: 16.0),

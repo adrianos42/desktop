@@ -86,6 +86,8 @@ class _ScrollingPageState extends State<ScrollingPage> {
     return null;
   }
 
+  ScrollController _controler = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -96,6 +98,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
         ),
         Expanded(
           child: GridView.custom(
+            controller: _controler,
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -302,7 +305,6 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     final canRequestNext = widget.requestNext?.call(assetName) != null;
 
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     Widget result = MouseRegion(
       onHover: (_) => _startFadeoutTimer(),

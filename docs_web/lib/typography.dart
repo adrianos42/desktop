@@ -14,6 +14,7 @@ class _TypographyPageState extends State<TypographyPage> {
     final textTheme = Theme.of(context).textTheme;
 
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.symmetric(horizontal: 16.0),

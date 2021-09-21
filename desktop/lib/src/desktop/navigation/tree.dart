@@ -355,6 +355,8 @@ class _TreeState extends State<Tree>
     return false;
   }
 
+  final ScrollController _controller = ScrollController();
+
   Widget _createTree(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
@@ -375,6 +377,7 @@ class _TreeState extends State<Tree>
                 ),
               Expanded(
                 child: SingleChildScrollView(
+                  controller: _controller,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -74,6 +74,7 @@ class Dialog extends StatelessWidget {
                 dialogThemeData.bodyPadding.bottom,
               ),
               child: SingleChildScrollView(
+                controller: ScrollController(),
                 padding: EdgeInsets.fromLTRB(
                   dialogThemeData.bodyPadding.left,
                   0.0,

@@ -298,6 +298,7 @@ class _ContextMenu<T> extends StatelessWidget {
                   ? contextMenuThemeData.menuWidthStep!
                   : null,
               child: SingleChildScrollView(
+                controller: ScrollController(),
                 child: ListBody(children: children),
               ),
             ),

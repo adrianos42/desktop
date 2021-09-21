@@ -33,14 +33,14 @@ class Defaults {
       items: [
         TabItem.icon(
           Icons.visibility,
-          builder: (context) => Container(
+          builder: (context, _) => Container(
             decoration: hasBorder ? Defaults.itemDecoration(context) : null,
             child: builder(context),
           ),
         ),
         TabItem.icon(
           Icons.code,
-          builder: (context) => Container(
+          builder: (context, _) => Container(
             alignment: Alignment.topLeft,
             //decoration: Defaults.itemDecoration(context),
             child: TextField(
@@ -126,6 +126,7 @@ class Defaults {
     }
 
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.all(16.0),

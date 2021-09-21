@@ -8,8 +8,8 @@ import 'icons.dart';
 import 'input/button.dart';
 import 'localizations.dart';
 import 'navigation/route.dart';
-import 'theme/theme.dart';
 import 'scrolling/scrolling.dart';
+import 'theme/theme.dart';
 
 class DesktopApp extends StatefulWidget {
   /// Creates a [DesktopApp].
@@ -348,17 +348,14 @@ class DesktopScrollBehavior extends ScrollBehavior {
   @override
   Widget buildScrollbar(
       BuildContext context, Widget child, ScrollableDetails details) {
-    return RawScrollbar(
-      child: child,
-      controller: details.controller,
-      interactive: true,
-      isAlwaysShown: true,
-    );
     switch (getPlatform(context)) {
       case TargetPlatform.linux:
       case TargetPlatform.macOS:
       case TargetPlatform.windows:
-
+        return Scrollbar(
+          child: child,
+          controller: details.controller,
+        );
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
       case TargetPlatform.iOS:

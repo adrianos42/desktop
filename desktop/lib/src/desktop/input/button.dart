@@ -24,6 +24,7 @@ class Button extends StatefulWidget {
     this.padding,
     this.bodyPadding,
     this.trailingPadding,
+    this.active = false,
     this.axis = Axis.horizontal,
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
@@ -120,6 +121,9 @@ class Button extends StatefulWidget {
   /// Padding of the button.
   final EdgeInsets? padding;
 
+  /// Forces the button highlight.
+  final bool active;
+
   @override
   _ButtonState createState() => _ButtonState();
 }
@@ -196,6 +200,8 @@ class _ButtonState extends State<Button>
     super.didChangeDependencies();
     _color = null;
   }
+  
+  bool get active => waiting || widget.active;
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +217,7 @@ class _ButtonState extends State<Button>
     final HSLColor disabledForeground = buttonThemeData.disabledColor!;
 
     final HSLColor foregroundColor = enabled
-        ? waiting || pressed
+        ? active || pressed
             ? pressedForeground
             : hovered
                 ? hoveredForeground
@@ -233,7 +239,7 @@ class _ButtonState extends State<Button>
     if (widget.axis == Axis.horizontal) {
       constraints = BoxConstraints(
         minHeight: buttonThemeData.height!,
-       // minWidth: buttonThemeData.minWidth!,
+        // minWidth: buttonThemeData.minWidth!,
       );
 
       leadingPadding = widget.leadingPadding ??
@@ -246,8 +252,8 @@ class _ButtonState extends State<Button>
           widget.padding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
     } else {
       constraints = BoxConstraints(
-       // maxWidth: buttonThemeData.height!,
-       // minWidth: buttonThemeData.height!,
+        // maxWidth: buttonThemeData.height!,
+        // minWidth: buttonThemeData.height!,
         minHeight: buttonThemeData.minWidth!,
       );
 
@@ -345,6 +351,14 @@ class _ButtonState extends State<Button>
       );
     }
 
+    result = ButtonScope(
+      child: result,
+      hovered: enabled && hovered,
+      pressed: enabled && pressed,
+      active: enabled && active,
+      disabled: !enabled,
+    );
+
     return Semantics(
       button: true,
       child: Container(
@@ -353,5 +367,34 @@ class _ButtonState extends State<Button>
         child: result,
       ),
     );
+  }
+}
+
+/// A context with states for a [Button].
+class ButtonScope extends InheritedWidget {
+  /// Creates a [ButtonScope].
+  const ButtonScope({
+    Key? key,
+    required Widget child,
+    required this.hovered,
+    required this.pressed,
+    required this.active,
+    required this.disabled,
+  })  : super(key: key, child: child);
+
+  final bool hovered;
+
+  final bool pressed;
+
+  final bool active;
+
+  final bool disabled;
+
+  @override
+  bool updateShouldNotify(ButtonScope oldWidget) => true;
+
+  static ButtonScope? of(BuildContext context) {
+    return context
+            .dependOnInheritedWidgetOfExactType<ButtonScope>();
   }
 }

@@ -67,6 +67,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
     final dark = ColorScheme(Brightness.dark).background;
 
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.symmetric(horizontal: 16.0),

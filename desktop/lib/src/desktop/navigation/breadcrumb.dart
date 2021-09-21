@@ -168,17 +168,6 @@ class _BreadcrumbState extends State<Breadcrumb> {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (widget.leading != null) widget.leading!,
-          if (showEllipsis)
-            ContextMenuButton(
-              const Icon(Icons.more_horiz),
-              value: '',
-              onSelected: (String value) => setState(() {}),
-              itemBuilder: (context) => _names
-                  .map(
-                    (e) => ContextMenuItem(child: Text(e), value: e),
-                  )
-                  .toList(),
-            ),
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -199,6 +188,17 @@ class _BreadcrumbState extends State<Breadcrumb> {
               ),
             ),
           ),
+          if (showEllipsis)
+            ContextMenuButton(
+              const Icon(Icons.more_horiz),
+              value: '',
+              onSelected: (String value) => setState(() {}),
+              itemBuilder: (context) => _names
+                  .map(
+                    (e) => ContextMenuItem(child: Text(e), value: e),
+                  )
+                  .toList(),
+            ),
           if (widget.trailing != null) widget.trailing!,
         ],
       ),

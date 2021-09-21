@@ -24,24 +24,10 @@ class TabItem {
   /// Creates a tab item with text.
   factory TabItem.text(
     String text, {
-    WidgetBuilder? builder,
-    GlobalKey<NavigatorState>? navigatorKey,
-    String? defaultTitle,
-    Map<String, WidgetBuilder>? routes,
-    RouteFactory? onGenerateRoute,
-    RouteFactory? onUnknownRoute,
-    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+    required IndexedWidgetBuilder builder,
   }) {
     return TabItem(
-      builder: (BuildContext context, _) => TabView(
-        builder: builder,
-        navigatorKey: navigatorKey,
-        routes: routes,
-        onGenerateRoute: onGenerateRoute,
-        onUnknownRoute: onUnknownRoute,
-        defaultTitle: defaultTitle,
-        navigatorObservers: navigatorObservers,
-      ),
+      builder: builder,
       tabItemBuilder: (context, _) => TabItemText(text),
     );
   }
@@ -49,24 +35,10 @@ class TabItem {
   /// Creates a tab item with a icon.
   factory TabItem.icon(
     IconData icon, {
-    WidgetBuilder? builder,
-    GlobalKey<NavigatorState>? navigatorKey,
-    String? defaultTitle,
-    Map<String, WidgetBuilder>? routes,
-    RouteFactory? onGenerateRoute,
-    RouteFactory? onUnknownRoute,
-    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+    required IndexedWidgetBuilder builder,
   }) {
     return TabItem(
-      builder: (BuildContext context, _) => TabView(
-        builder: builder,
-        navigatorKey: navigatorKey,
-        routes: routes,
-        onGenerateRoute: onGenerateRoute,
-        onUnknownRoute: onUnknownRoute,
-        defaultTitle: defaultTitle,
-        navigatorObservers: navigatorObservers,
-      ),
+      builder: builder,
       tabItemBuilder: (context, _) => TabItemIcon(icon),
     );
   }
@@ -74,24 +46,10 @@ class TabItem {
   /// Creates a tab item with a custom widget.
   factory TabItem.custom(
     IndexedWidgetBuilder tabBuilder, {
-    WidgetBuilder? builder,
-    GlobalKey<NavigatorState>? navigatorKey,
-    String? defaultTitle,
-    Map<String, WidgetBuilder>? routes,
-    RouteFactory? onGenerateRoute,
-    RouteFactory? onUnknownRoute,
-    List<NavigatorObserver> navigatorObservers = const <NavigatorObserver>[],
+    required IndexedWidgetBuilder builder,
   }) {
     return TabItem(
-      builder: (BuildContext context, _) => TabView(
-        builder: builder,
-        navigatorKey: navigatorKey,
-        routes: routes,
-        onGenerateRoute: onGenerateRoute,
-        onUnknownRoute: onUnknownRoute,
-        defaultTitle: defaultTitle,
-        navigatorObservers: navigatorObservers,
-      ),
+      builder: builder,
       tabItemBuilder: tabBuilder,
     );
   }
@@ -118,7 +76,10 @@ class TabItemText extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: TabTheme.of(context).itemSpacing!,
       ),
-      child: Text(text),
+      child: Text(
+        text,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }
@@ -152,15 +113,15 @@ class TabItemIcon extends StatelessWidget {
 /// Tab(
 ///   items: [
 ///     TabItem(
-///       builder: (context) => Center(child: Text('page1')),
+///       builder: (context, _) => Center(child: Text('page1')),
 ///       title: Text('page1'),
 ///     ),
 ///     TabItem(
-///       builder: (context) => Center(child: Text('page2')),
+///       builder: (context, _) => Center(child: Text('page2')),
 ///       title: Text('page2'),
 ///     ),
 ///     TabItem(
-///       builder: (context) => Center(child: Text('page3')),
+///       builder: (context, _) => Center(child: Text('page3')),
 ///       title: Text('page3'),
 ///     ),
 ///   ],
@@ -291,7 +252,6 @@ class _TabState extends State<Tab> {
           widget.items.length, _shouldBuildView.length);
     }
 
-    // TODO(as): See if this is correct when changing the tree.
     _index = math.min(_index, widget.items.length - 1);
 
     _focusView();
@@ -337,7 +297,7 @@ class _TabState extends State<Tab> {
     Widget result = Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _TabGroup(
           index: _index,
@@ -407,6 +367,8 @@ class _TabGroup extends StatefulWidget {
 }
 
 class _TabGroupState extends State<_TabGroup> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     final TabThemeData tabThemeData = TabTheme.of(context);
@@ -427,7 +389,10 @@ class _TabGroupState extends State<_TabGroup> {
         ),
         child: Button(
           onPressed: () => widget.changeIndex(index),
-          body: widget.items[index](context, index),
+          active: active,
+          body: Builder(
+            builder: (context) => widget.items[index](context, index),
+          ),
           bodyPadding: EdgeInsets.zero,
           leadingPadding: EdgeInsets.zero,
           trailingPadding: EdgeInsets.zero,
@@ -437,18 +402,33 @@ class _TabGroupState extends State<_TabGroup> {
     });
 
     final Widget result = Container(
-      padding: widget.padding ??
-          EdgeInsets.symmetric(horizontal: tabThemeData.itemSpacing!),
+      padding: widget.padding ?? EdgeInsets.zero,
       height: tabThemeData.height!,
       color: widget.background?.toColor() ??
           tabThemeData.backgroundColor!.toColor(),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          ...list,
-          const Spacer(),
+          Expanded(
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                scrollbars: false,
+              ),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: list,
+                ),
+              ),
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // mainAxisSize: MainAxisSize.min,
+            ),
+          ),
           if (widget.trailing != null) widget.trailing!(context),
         ],
       ),

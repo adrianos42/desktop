@@ -202,7 +202,7 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.selectedHighlightColor ?? colorScheme.primary[60];
 
       final HSLColor hoverColor =
-          listTableThemeData.hoverColor ?? colorScheme.background[20];
+          listTableThemeData.hoverColor ?? colorScheme.shade[30];
 
       final HSLColor highlightColor =
           listTableThemeData.highlightColor ?? colorScheme.background[10];
