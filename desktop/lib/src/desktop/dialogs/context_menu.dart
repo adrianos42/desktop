@@ -107,7 +107,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     if (!pressed) {
       setState(() {
         pressed = true;
-      } );
+      });
     }
   }
 
@@ -119,7 +119,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     if (pressed) {
       setState(() {
         pressed = false;
-      } );
+      });
     }
   }
 
@@ -180,7 +180,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     item = IgnorePointer(
       ignoring: !widget.enabled, //|| selected == null,
       child: MouseRegion(
-        cursor: widget.enabled ?  SystemMouseCursors.click : MouseCursor.defer,
+        cursor: widget.enabled ? SystemMouseCursors.click : MouseCursor.defer,
         onEnter: widget.enabled ? (event) => _handleHoverEntered() : null,
         onExit: widget.enabled ? (event) => _handleHoverExited() : null,
         onHover: widget.enabled ? (event) => _handleHoverEntered() : null,
@@ -279,10 +279,16 @@ class _ContextMenu<T> extends StatelessWidget {
       );
     }).toList();
 
-    final Widget child = ConstrainedBox(
+    final Widget child = Container(
       constraints: BoxConstraints(
         minWidth: route.width ?? contextMenuThemeData.minMenuWidth!,
         maxWidth: route.width ?? contextMenuThemeData.maxMenuWidth!,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1.0,
+          color: Theme.of(context).textTheme.textLow.toColor(),
+        ),
       ),
       child: Semantics(
         scopesRoute: true,

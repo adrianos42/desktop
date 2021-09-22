@@ -147,7 +147,7 @@ class TabTheme extends InheritedTheme {
       final TextStyle textStyle = tabThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = tabThemeData.color ?? colorScheme.shade[50];
+      final HSLColor color = tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
       final HSLColor hoverColor =
           tabThemeData.hoverColor ?? colorScheme.shade[100];
