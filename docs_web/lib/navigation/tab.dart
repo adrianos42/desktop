@@ -20,7 +20,7 @@ class _TabPageState extends State<TabPage> {
           ? colorScheme.background
           : buttonScope.pressed
               ? colorScheme.background
-              : buttonScope.hovered
+              : buttonScope.highlighted
                   ? colorScheme.shade[30]
                   : colorScheme.background[10];
 

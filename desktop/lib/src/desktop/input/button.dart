@@ -26,6 +26,9 @@ class Button extends StatefulWidget {
     this.trailingPadding,
     this.active = false,
     this.axis = Axis.horizontal,
+    this.focusNode,
+    this.canRequestFocus = true,
+    this.autofocus = false,
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
 
@@ -40,6 +43,9 @@ class Button extends StatefulWidget {
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
+    FocusNode? focusNode,
+    bool canRequestFocus = true,
+    bool autofocus = false,
   }) {
     return Button(
       body: Text(
@@ -54,6 +60,9 @@ class Button extends StatefulWidget {
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
+      focusNode: focusNode,
+      canRequestFocus: canRequestFocus,
+      autofocus: autofocus,
     );
   }
 
@@ -68,6 +77,9 @@ class Button extends StatefulWidget {
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
+    FocusNode? focusNode,
+    bool canRequestFocus = true,
+    bool autofocus = false,
   }) {
     return Button(
       body: Icon(icon, size: size),
@@ -79,6 +91,9 @@ class Button extends StatefulWidget {
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
+      focusNode: focusNode,
+      canRequestFocus: canRequestFocus,
+      autofocus: autofocus,
     );
   }
 
@@ -123,6 +138,15 @@ class Button extends StatefulWidget {
 
   /// Forces the button highlight.
   final bool active;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.canRequestFocus}
+  final bool canRequestFocus;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -175,6 +199,71 @@ class _ButtonState extends State<Button>
 
   ColorTween? _color;
 
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _invoke),
+    ButtonActivateIntent:
+        CallbackAction<ButtonActivateIntent>(onInvoke: _invoke),
+  };
+
+  bool get _canRequestFocus {
+    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
+        NavigationMode.traditional;
+    switch (mode) {
+      case NavigationMode.traditional:
+        return enabled && widget.canRequestFocus;
+      case NavigationMode.directional:
+        return true;
+    }
+  }
+
+  bool get _shouldShowFocus {
+    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ?? NavigationMode.traditional;
+    switch (mode) {
+      case NavigationMode.traditional:
+        return enabled && focused;
+      case NavigationMode.directional:
+        return focused;
+    }
+  }
+
+  bool get _focusHighlight {
+    switch (FocusManager.instance.highlightMode) {
+      case FocusHighlightMode.touch:
+        return false;
+      case FocusHighlightMode.traditional:
+        return _shouldShowFocus;
+    }
+  }
+
+  void _invoke([Intent? intent]) {
+    _handleTap();
+  }
+
+  Future<void> _handleTap() async {
+    if (waiting) {
+      return;
+    }
+    setState(() => waiting = true);
+
+    final dynamic result =
+        widget.onPressed!() as dynamic; // TODO(as): fix dynamic
+
+    if (result is Future<void>) {
+      await result;
+    }
+
+    setState(() => waiting = false);
+  }
+
+  void _handleFocusUpdate(bool hasFocus) {
+    focused = hasFocus;
+  }
+
+
+  bool get active => waiting || widget.active;
+
+  bool get enabled => widget.onPressed != null;
+
   @override
   void initState() {
     super.initState();
@@ -200,12 +289,9 @@ class _ButtonState extends State<Button>
     super.didChangeDependencies();
     _color = null;
   }
-  
-  bool get active => waiting || widget.active;
 
   @override
   Widget build(BuildContext context) {
-    final bool enabled = widget.onPressed != null;
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
     final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
@@ -219,7 +305,7 @@ class _ButtonState extends State<Button>
     final HSLColor foregroundColor = enabled
         ? active || pressed
             ? pressedForeground
-            : hovered
+            : hovered || _focusHighlight
                 ? hoveredForeground
                 : enabledForeground
         : disabledForeground;
@@ -314,33 +400,26 @@ class _ButtonState extends State<Button>
       },
     );
 
-    result = MouseRegion(
-      cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
-      onEnter: enabled ? (_) => _handleHoverEntered() : null,
-      onExit: (_) => _handleHoverExited(),
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTapDown: enabled ? _handleTapDown : null,
-        onTapUp: enabled ? _handleTapUp : null,
-        onTapCancel: _handleTapCancel,
-        onTap: enabled
-            ? () async {
-                if (waiting) {
-                  return;
-                }
-                setState(() => waiting = true);
-
-                final dynamic result =
-                    widget.onPressed!() as dynamic; // TODO(as): fix dynamic
-
-                if (result is Future<void>) {
-                  await result;
-                }
-
-                setState(() => waiting = false);
-              }
-            : null,
-        child: result,
+    result = Actions(
+      actions: _actionMap,
+      child: Focus(
+        focusNode: widget.focusNode,
+        canRequestFocus: _canRequestFocus,
+        onFocusChange: _handleFocusUpdate,
+        autofocus: widget.autofocus,
+        child: MouseRegion(
+          cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
+          onEnter: enabled ? (_) => _handleHoverEntered() : null,
+          onExit: (_) => _handleHoverExited(),
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTapDown: enabled ? _handleTapDown : null,
+            onTapUp: enabled ? _handleTapUp : null,
+            onTapCancel: _handleTapCancel,
+            onTap: enabled ? _handleTap : null,
+            child: result,
+          ),
+        ),
       ),
     );
 
@@ -353,7 +432,7 @@ class _ButtonState extends State<Button>
 
     result = ButtonScope(
       child: result,
-      hovered: enabled && hovered,
+      highlighted: enabled && (hovered || _focusHighlight),
       pressed: enabled && pressed,
       active: enabled && active,
       disabled: !enabled,
@@ -376,13 +455,13 @@ class ButtonScope extends InheritedWidget {
   const ButtonScope({
     Key? key,
     required Widget child,
-    required this.hovered,
+    required this.highlighted,
     required this.pressed,
     required this.active,
     required this.disabled,
-  })  : super(key: key, child: child);
+  }) : super(key: key, child: child);
 
-  final bool hovered;
+  final bool highlighted;
 
   final bool pressed;
 
@@ -394,7 +473,6 @@ class ButtonScope extends InheritedWidget {
   bool updateShouldNotify(ButtonScope oldWidget) => true;
 
   static ButtonScope? of(BuildContext context) {
-    return context
-            .dependOnInheritedWidgetOfExactType<ButtonScope>();
+    return context.dependOnInheritedWidgetOfExactType<ButtonScope>();
   }
 }

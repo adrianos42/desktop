@@ -13,11 +13,12 @@ export 'tab_scope.dart' show TabScope, RouteBuilder;
 
 const int _kIntialIndexValue = 0;
 
+const Duration _kMenuTransitionDuration = Duration(milliseconds: 300);
+
 class NavItem {
   const NavItem({
     required this.builder,
     required this.title,
-    required this.route,
     required this.icon,
   });
 
@@ -29,9 +30,6 @@ class NavItem {
 
   /// The title shown in case the nav axis is horizontal.
   final String title;
-
-  /// Unique route name for the page created with `builder`.
-  final String route;
 }
 
 /// Navigation widget [Nav]...
@@ -41,7 +39,6 @@ class NavItem {
 ///   trailingMenu: [
 ///     NavItem(
 ///       title: 'home',
-///       route: '/home',
 ///       builder: (context) => NavDialog(
 ///         child: Container(
 ///           alignment: Alignment.center,
@@ -54,7 +51,6 @@ class NavItem {
 ///     ),
 ///     NavItem(
 ///       title: 'settings',
-///       route: '/settings',
 ///       builder: (context) => NavDialog(
 ///         child: Container(
 ///           alignment: Alignment.center,
@@ -71,18 +67,15 @@ class NavItem {
 ///       builder: (context) => Center(child: Text('page1')),
 ///       title: 'page1',
 ///       icon: Icons.today,
-///       route: '/page1',
 ///     ),
 ///     NavItem(
 ///       builder: (context) => Center(child: Text('page2')),
 ///       title: 'page2',
-///       route: '/page2',
 ///       icon: Icons.stars,
 ///     ),
 ///     NavItem(
 ///       builder: (context) => Center(child: Text('page3')),
 ///       title: 'page3',
-///       route: '/page3',
 ///       icon: Icons.share,
 ///     ),
 ///   ],
@@ -92,12 +85,11 @@ class Nav extends StatefulWidget {
   const Nav({
     Key? key,
     required this.items,
-    this.backButton = !kIsWeb,
     this.navAxis = Axis.vertical,
     this.trailingMenu,
-    this.leadingMenu,
     this.focusNode,
-    this.autofocus = true,
+    this.onPressBackButton,
+    this.isBackButtonEnabled,
   })  : assert(items.length > 0),
         super(key: key);
 
@@ -107,11 +99,11 @@ class Nav extends StatefulWidget {
   /// Menu before the navigation items.
   final List<NavItem>? trailingMenu;
 
-  /// Menu after the navigation items, usually at the end of the nav bar.
-  final List<NavItem>? leadingMenu;
+  /// Callback for the back button. Defaults to null.
+  final VoidCallback? onPressBackButton;
 
-  /// If the back button is enabled. Defaults to true in linux.
-  final bool backButton;
+  /// If the back button should respond to user input.
+  final bool? isBackButtonEnabled;
 
   /// The axis of the nav bar.
   final Axis navAxis;
@@ -119,18 +111,17 @@ class Nav extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  final bool autofocus;
-
   @override
   _NavState createState() => _NavState();
 }
 
-class _NavState extends State<Nav> {
+class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   int _index = _kIntialIndexValue;
 
   int get _length => widget.items.length;
 
   String? _menus;
+  OverlayEntry? _menuOverlay;
 
   // static final Map<LocalKey, ActionFactory> _actions =
   //     <LocalKey, ActionFactory>{
@@ -140,21 +131,45 @@ class _NavState extends State<Nav> {
 
   // late Map<Type, Action<Intent>> _actionMap;
 
-  bool _isBack = false;
-
-  NavigatorState get _currentNavigator => _navigators[_index].currentState!;
-
   final List<FocusScopeNode> _focusNodes =
       List<FocusScopeNode>.empty(growable: true);
   final List<FocusScopeNode> _disposedFocusNodes =
       List<FocusScopeNode>.empty(growable: true);
   final List<bool> _shouldBuildView = List<bool>.empty(growable: true);
-  final List<GlobalKey<NavigatorState>> _navigators =
-      List<GlobalKey<NavigatorState>>.empty(growable: true);
+
+  final List<OverlayEntry> _overlays = List<OverlayEntry>.empty(growable: true);
 
   FocusNode? _focusNode;
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
+
+  final GlobalKey<OverlayState> _overlayKey = GlobalKey<OverlayState>();
+
+  OverlayState get _overlay => _overlayKey.currentState!;
+
+  late Animation<double> _menuAnimation;
+  late AnimationController _menuController;
+  late Tween<Offset> _menuOffsetTween;
+
+  static final Curve _animationCurve = Curves.easeInOutSine;
+
+  void _createAnimation() {
+    _menuAnimation = CurvedAnimation(
+      parent: _menuController,
+      curve: _animationCurve,
+      reverseCurve: _animationCurve,
+    );
+
+    final Offset begin = widget.navAxis == Axis.vertical
+        ? const Offset(-1.0, 0.0)
+        : const Offset(0.0, -1.0);
+    const Offset end = Offset(0.0, 0.0);
+
+    _menuOffsetTween = Tween<Offset>(
+      begin: begin,
+      end: end,
+    );
+  }
 
   // void _nextView() => _indexChanged((_index + 1) % _length);
 
@@ -162,10 +177,7 @@ class _NavState extends State<Nav> {
 
   bool _indexChanged(int index) {
     if (index != _index) {
-      if (index < 0 ||
-          index >= _length ||
-          _menus != null ||
-          Navigator.of(context, rootNavigator: true).canPop()) {
+      if (index < 0 || index >= _length || _menus != null) {
         return false;
       }
 
@@ -180,45 +192,59 @@ class _NavState extends State<Nav> {
     return false;
   }
 
-  void _updateBackButton() {
-    if (mounted) {
-      final bool value = _currentNavigator.canPop();
-
-      if (value != _isBack) {
-        setState(() => _isBack = value);
-      }
-    }
-  }
-
-  void _goBack() {
-    if (_isBack) {
-      _currentNavigator.maybePop();
-    } else if (_index != _kIntialIndexValue) {
-      setState(() {
-        _index = _kIntialIndexValue;
-        _isBack = _currentNavigator.canPop();
-      });
+  void _handleMenuAnimationStatusChanged(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed && _menus == null) {
+      //!!! Only if only menus are inserted into the overlay.
+      _menuOverlay?.remove();
+      _menuOverlay = null;
     }
   }
 
   void _showMenu(NavItem item) {
     setState(() {
       if (_menus == null) {
-        _menus = item.route;
+        _menus = item.title;
 
-        _currentNavigator
-            .push<dynamic>(TabMenuRoute(
-          context: context,
-          axis: widget.navAxis,
-          barrierColor: DialogTheme.of(context).barrierColor!,
-          settings: RouteSettings(name: item.route),
-          pageBuilder: item.builder,
-        ))
-            .then((_) {
-          setState(() => _menus = null);
-        });
+        _menuOverlay = OverlayEntry(
+          maintainState: false,
+          builder: (context) => AnimatedBuilder(
+            animation: _menuAnimation,
+            builder: (context, _) => Container(
+              alignment: widget.navAxis == Axis.vertical
+                  ? Alignment.centerLeft
+                  : Alignment.topCenter,
+              color: DialogTheme.of(context)
+                  .barrierColor!
+                  .toColor()
+                  .withOpacity(_menuAnimation.value),
+              child: ClipRect(
+                child: FractionalTranslation(
+                  translation: _menuOffsetTween.evaluate(_menuAnimation),
+                  child: item.builder(context),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        _overlay.insert(_menuOverlay!);
+
+        _menuController.forward(from: 0.0);
+
+        // _currentNavigator
+        //     .push<dynamic>(TabMenuRoute(
+        //   context: context,
+        //   axis: widget.navAxis,
+        //   barrierColor: DialogTheme.of(context).barrierColor!,
+        //   settings: RouteSettings(name: item.route),
+        //   pageBuilder: item.builder,
+        // ))
+        //     .then((_) {
+        //   setState(() => _menus = null);
+        // });
       } else {
-        _currentNavigator.pop();
+        _menus = null;
+        _menuController.reverse();
       }
     });
   }
@@ -234,8 +260,8 @@ class _NavState extends State<Nav> {
           return NavMenuButton(
             Icon(item.icon),
             axis: widget.navAxis,
-            active: _menus == item.route,
-            onPressed: _menus == null || _menus == item.route
+            active: _menus == item.title,
+            onPressed: _menus == null || _menus == item.title
                 ? () => _showMenu(item)
                 : null,
           );
@@ -260,6 +286,13 @@ class _NavState extends State<Nav> {
     );
   }
 
+  void _goBack() {
+    if (_menus != null) {
+    } else {
+      widget.onPressBackButton!();
+    }
+  }
+
   Widget _createNavBar() {
     final ThemeData themeData = Theme.of(context);
     final ColorScheme colorScheme = themeData.colorScheme;
@@ -282,8 +315,8 @@ class _NavState extends State<Nav> {
 
     final navList = <Widget>[];
 
-    if (widget.backButton) {
-      final enabled = _isBack || _index != _kIntialIndexValue || _menus != null;
+    if (widget.onPressBackButton != null) {
+      final enabled = (widget.isBackButtonEnabled ?? true) || _menus != null;
 
       final value = Container(
         alignment: Alignment.center,
@@ -298,12 +331,6 @@ class _NavState extends State<Nav> {
       );
 
       navList.add(value);
-    }
-
-    if (widget.leadingMenu != null && widget.leadingMenu!.isNotEmpty) {
-      navList.add(
-        _createMenuItems(itemsSpacing, navThemeData, widget.leadingMenu!),
-      );
     }
 
     navList.add(
@@ -372,37 +399,41 @@ class _NavState extends State<Nav> {
     //       CallbackAction<PreviousTabIntent>(onInvoke: (_) => _previousView()),
     // };
 
-    _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-        _length, (_) => GlobalKey<NavigatorState>()));
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
 
-    widget.leadingMenu?.forEach((element) {
-      if (widget.leadingMenu!
-                  .where((other) => other.route == element.route)
-                  .length !=
-              1 ||
-          (widget.trailingMenu
-                      ?.where((other) => other.route == element.route)
-                      .length ??
-                  0) !=
-              0) {
-        throw Exception('Menu item must have unique route name.');
-      }
-    });
+    _overlays.addAll(List<OverlayEntry>.generate(
+        _length, (index) => _createPageOverlayEntry(index)));
 
-    widget.trailingMenu?.forEach((element) {
-      if (widget.trailingMenu!
-                  .where((other) => other.route == element.route)
-                  .length !=
-              1 ||
-          (widget.leadingMenu
-                      ?.where((other) => other.route == element.route)
-                      .length ??
-                  0) !=
-              0) {
-        throw Exception('Menu item must have unique route name.');
-      }
-    });
+    _menuController = AnimationController(
+      vsync: this,
+      duration: _kMenuTransitionDuration,
+    )..addStatusListener(_handleMenuAnimationStatusChanged);
+
+    _createAnimation();
+  }
+
+  OverlayEntry _createPageOverlayEntry(int index) {
+    return OverlayEntry(
+        maintainState: true,
+        builder: (context) {
+          final bool active = index == _index;
+          _shouldBuildView[index] = active || _shouldBuildView[index];
+          return Offstage(
+            offstage: !active,
+            child: TickerMode(
+              enabled: active,
+              child: FocusScope(
+                node: _focusNodes[index],
+                canRequestFocus: active,
+                child: Builder(
+                  builder: _shouldBuildView[index]
+                      ? widget.items[index].builder
+                      : (context) => Container(),
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -418,17 +449,26 @@ class _NavState extends State<Nav> {
     if (widget.items.length - _shouldBuildView.length > 0) {
       _shouldBuildView.addAll(List<bool>.filled(
           widget.items.length - _shouldBuildView.length, false));
+
+      for (int index = _overlays.length;
+          index < widget.items.length - _shouldBuildView.length;
+          index += 1) {
+        _overlays.add(_createPageOverlayEntry(index));
+      }
     } else {
       _shouldBuildView.removeRange(
           widget.items.length, _shouldBuildView.length);
+
+      for (final overlayEntry
+          in _overlays.getRange(widget.items.length, _overlays.length)) {
+        overlayEntry.remove();
+      }
+
+      _overlays.removeRange(widget.items.length, _overlays.length);
     }
 
-    if (widget.items.length - _navigators.length > 0) {
-      _navigators.addAll(List<GlobalKey<NavigatorState>>.generate(
-          widget.items.length - _navigators.length,
-          (index) => GlobalKey<NavigatorState>()));
-    } else {
-      _navigators.removeRange(widget.items.length, _navigators.length);
+    if (oldWidget.navAxis != widget.navAxis) {
+      _createAnimation();
     }
 
     _focusView();
@@ -443,37 +483,26 @@ class _NavState extends State<Nav> {
       focusNode.dispose();
     }
 
+    _menuController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final list = List<Widget>.generate(_length, (index) {
-      final bool active = index == _index;
-      _shouldBuildView[index] = active || _shouldBuildView[index];
-
-      return Offstage(
-        offstage: !active,
-        child: TickerMode(
-          enabled: active,
-          child: FocusScope(
-            node: _focusNodes[index],
-            canRequestFocus: active,
-            child: Builder(
-              builder: (context) {
-                return _shouldBuildView[index]
-                    ? TabView(
-                        builder: widget.items[index].builder,
-                        navigatorKey: _navigators[index],
-                        navigatorObservers: [_NavObserver(this)],
-                      )
-                    : Container();
-              },
-            ),
-          ),
-        ),
-      );
-    });
+    if (widget.trailingMenu != null && widget.trailingMenu!.isNotEmpty) {
+      // list.add(Offstage(
+      //   offstage: _menus == null,
+      //   child: TickerMode(
+      //     enabled: _menus != null,
+      //     child: Builder(
+      //       builder: (context) => const Center(
+      //         child: Text('nigger'),
+      //       ),
+      //     ),
+      //   ),
+      // ));
+    }
 
     final Axis navAxis = widget.navAxis;
 
@@ -484,7 +513,10 @@ class _NavState extends State<Nav> {
       children: <Widget>[
         _createNavBar(),
         Expanded(
-          child: Stack(children: list),
+          child: Overlay(
+            key: _overlayKey,
+            initialEntries: _overlays,
+          ),
         ),
       ],
     );
@@ -495,52 +527,6 @@ class _NavState extends State<Nav> {
       child: result,
     );
 
-    return FocusableActionDetector(
-      child: result,
-      focusNode: _effectiveFocusNode,
-      autofocus: widget.autofocus,
-      onShowFocusHighlight: (_) {},
-      onFocusChange: (_) {},
-      // onShowHoverHighlight: (value) {
-      //   if (value) {
-      //     FocusScope.of(context).requestFocus(_effectiveFocusNode);
-      //   }
-      // },
-      // actions: _actionMap,
-    );
+    return result;
   }
-}
-
-class _NavObserver extends NavigatorObserver {
-  _NavObserver(this._navState);
-
-  final _NavState _navState;
-
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    assert(route.navigator == _navState._currentNavigator);
-
-    if (!route.isFirst) {
-      if (route is PopupRoute<dynamic> || route is PageRoute<dynamic>) {
-        _navState._updateBackButton();
-      }
-    }
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    assert(route.navigator == _navState._currentNavigator);
-
-    if (!route.isFirst) {
-      if (route is PopupRoute<dynamic> || route is PageRoute<dynamic>) {
-        _navState._updateBackButton();
-      }
-    }
-  }
-
-  @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {}
-
-  @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {}
 }
