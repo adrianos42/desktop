@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,6 +10,7 @@ import 'navigation/route.dart';
 import 'scrolling/scrolling.dart';
 import 'theme/theme.dart';
 
+/// Base functionality for desktop apps.
 class DesktopApp extends StatefulWidget {
   /// Creates a [DesktopApp].
   ///
@@ -26,12 +26,10 @@ class DesktopApp extends StatefulWidget {
     this.navigatorKey,
     this.home,
     this.theme,
-    this.routes = const <String, WidgetBuilder>{},
     this.initialRoute,
     this.onGenerateRoute,
     this.onGenerateInitialRoutes,
     this.onUnknownRoute,
-    this.navigatorObservers = const <NavigatorObserver>[],
     this.builder,
     this.title = '',
     this.onGenerateTitle,
@@ -50,9 +48,10 @@ class DesktopApp extends StatefulWidget {
     this.actions,
     this.scrollBehavior,
     this.restorationScopeId,
-  })  : assert(routes != null),
-        assert(navigatorObservers != null),
-        routeInformationParser = null,
+    Map<String, WidgetBuilder> this.routes = const <String, WidgetBuilder>{},
+    List<NavigatorObserver> this.navigatorObservers =
+        const <NavigatorObserver>[],
+  })  : routeInformationParser = null,
         routeInformationProvider = null,
         routerDelegate = null,
         backButtonDispatcher = null,

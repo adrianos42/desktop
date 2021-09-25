@@ -1,13 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../theme/theme.dart';
 import 'nav_button.dart';
-import 'tab_route.dart';
 import 'tab_scope.dart';
-import 'tab_view.dart';
 
 export 'tab_scope.dart' show TabScope, RouteBuilder;
 
@@ -82,6 +78,7 @@ class NavItem {
 /// )
 ///```
 class Nav extends StatefulWidget {
+  /// Creates a navigation bar.
   const Nav({
     Key? key,
     required this.items,
@@ -139,10 +136,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   final List<OverlayEntry> _overlays = List<OverlayEntry>.empty(growable: true);
 
-  FocusNode? _focusNode;
-  FocusNode get _effectiveFocusNode =>
-      widget.focusNode ?? (_focusNode ??= FocusNode());
-
   final GlobalKey<OverlayState> _overlayKey = GlobalKey<OverlayState>();
 
   OverlayState get _overlay => _overlayKey.currentState!;
@@ -150,6 +143,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   late Animation<double> _menuAnimation;
   late AnimationController _menuController;
   late Tween<Offset> _menuOffsetTween;
+  final ColorTween _menuColorTween = ColorTween();
 
   static final Curve _animationCurve = Curves.easeInOutSine;
 
@@ -171,9 +165,9 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     );
   }
 
-  // void _nextView() => _indexChanged((_index + 1) % _length);
+  void nextView() => _indexChanged((_index + 1) % _length);
 
-  // void _previousView() => _indexChanged((_index - 1) % _length);
+  void previousView() => _indexChanged((_index - 1) % _length);
 
   bool _indexChanged(int index) {
     if (index != _index) {
@@ -194,33 +188,49 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   void _handleMenuAnimationStatusChanged(AnimationStatus status) {
     if (status == AnimationStatus.dismissed && _menus == null) {
-      //!!! Only if only menus are inserted into the overlay.
       _menuOverlay?.remove();
       _menuOverlay = null;
     }
   }
 
-  void _showMenu(NavItem item) {
+  void _hideMenu() {
     setState(() {
-      if (_menus == null) {
+      _menus = null;
+      _menuController.reverse();
+    });
+  }
+
+  void _showMenu(NavItem item) {
+    if (_menus == null) {
+      setState(() {
         _menus = item.title;
+
+        final Color barrierColor =
+            DialogTheme.of(context).barrierColor!.toColor();
+        _menuColorTween.begin = barrierColor.withOpacity(0.0);
+        _menuColorTween.end = barrierColor.withOpacity(0.8);
 
         _menuOverlay = OverlayEntry(
           maintainState: false,
           builder: (context) => AnimatedBuilder(
             animation: _menuAnimation,
-            builder: (context, _) => Container(
-              alignment: widget.navAxis == Axis.vertical
-                  ? Alignment.centerLeft
-                  : Alignment.topCenter,
-              color: DialogTheme.of(context)
-                  .barrierColor!
-                  .toColor()
-                  .withOpacity(_menuAnimation.value),
-              child: ClipRect(
-                child: FractionalTranslation(
-                  translation: _menuOffsetTween.evaluate(_menuAnimation),
-                  child: item.builder(context),
+            builder: (context, _) => GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTap: _hideMenu,
+              child: Container(
+                alignment: widget.navAxis == Axis.vertical
+                    ? Alignment.centerLeft
+                    : Alignment.topCenter,
+                color: _menuColorTween.evaluate(_menuAnimation),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.deferToChild,
+                  onTap: () {}, // TODO(as): Better way to do this?
+                  child: ClipRect(
+                    child: FractionalTranslation(
+                      translation: _menuOffsetTween.evaluate(_menuAnimation),
+                      child: item.builder(context),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -228,25 +238,11 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
         );
 
         _overlay.insert(_menuOverlay!);
-
         _menuController.forward(from: 0.0);
-
-        // _currentNavigator
-        //     .push<dynamic>(TabMenuRoute(
-        //   context: context,
-        //   axis: widget.navAxis,
-        //   barrierColor: DialogTheme.of(context).barrierColor!,
-        //   settings: RouteSettings(name: item.route),
-        //   pageBuilder: item.builder,
-        // ))
-        //     .then((_) {
-        //   setState(() => _menus = null);
-        // });
-      } else {
-        _menus = null;
-        _menuController.reverse();
-      }
-    });
+      });
+    } else {
+      _hideMenu();
+    }
   }
 
   Widget _createMenuItems(
@@ -490,20 +486,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.trailingMenu != null && widget.trailingMenu!.isNotEmpty) {
-      // list.add(Offstage(
-      //   offstage: _menus == null,
-      //   child: TickerMode(
-      //     enabled: _menus != null,
-      //     child: Builder(
-      //       builder: (context) => const Center(
-      //         child: Text('nigger'),
-      //       ),
-      //     ),
-      //   ),
-      // ));
-    }
-
     final Axis navAxis = widget.navAxis;
 
     Widget result = Flex(
