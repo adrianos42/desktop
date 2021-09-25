@@ -167,8 +167,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
               width: renderWidth,
             ),
             index: widget.index,
-            foreground:
-                (enabled ? highlightColor : colorScheme.disabled).toColor(),
+            foreground: enabled ? highlightColor : colorScheme.disabled,
           ),
         ],
       ),

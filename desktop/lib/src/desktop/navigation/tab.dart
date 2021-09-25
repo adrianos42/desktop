@@ -152,7 +152,7 @@ class Tab extends StatefulWidget {
   final bool autofocus;
 
   /// The background color for the tab bar.
-  final HSLColor? backgroundColor;
+  final Color? backgroundColor;
 
   /// The tab bar padding.
   final EdgeInsets? padding;
@@ -358,7 +358,7 @@ class _TabGroup extends StatefulWidget {
 
   final ValueChanged<int> changeIndex;
 
-  final HSLColor? background;
+  final Color? background;
 
   final EdgeInsets? padding;
 
@@ -404,8 +404,7 @@ class _TabGroupState extends State<_TabGroup> {
     final Widget result = Container(
       padding: widget.padding ?? EdgeInsets.zero,
       height: tabThemeData.height!,
-      color: widget.background?.toColor() ??
-          tabThemeData.backgroundColor!.toColor(),
+      color: widget.background ?? tabThemeData.backgroundColor!,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

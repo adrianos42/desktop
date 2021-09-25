@@ -160,36 +160,36 @@ class _MessageDialogState extends State<_MessageDialog>
 
     //final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
-    final HSLColor backgroundColor = colorScheme.background[0];
-    final HSLColor iconForeground;
+    final Color backgroundColor = colorScheme.background[0];
+    final Color iconForeground;
     final IconData iconData;
 
     switch (widget.kind) {
       case MessageKind.info:
         iconData = Icons.info;
-        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.0, 0.6);
+        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.0, 0.6).toColor();
         break;
       case MessageKind.error:
         iconData = Icons.error;
-        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.7, 0.55);
+        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.7, 0.55).toColor();
         break;
       case MessageKind.warning:
         iconData = Icons.warning;
-        iconForeground = const HSLColor.fromAHSL(1.0, 60, 0.7, 0.55);
+        iconForeground = const HSLColor.fromAHSL(1.0, 60, 0.7, 0.55).toColor();
         break;
       case MessageKind.success:
         iconData = Icons.done;
-        iconForeground = const HSLColor.fromAHSL(1.0, 120, 0.7, 0.55);
+        iconForeground = const HSLColor.fromAHSL(1.0, 120, 0.7, 0.55).toColor();
         break;
     }
 
     Widget result = Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: backgroundColor.toColor(),
+        color: backgroundColor,
         border: Border(
           top: BorderSide(
-            color: iconForeground.toColor(),
+            color: iconForeground,
           ),
         ),
       ),
@@ -203,7 +203,7 @@ class _MessageDialogState extends State<_MessageDialog>
                 padding: const EdgeInsets.only(right: 12),
                 child: Icon(
                   iconData,
-                  color: iconForeground.toColor(),
+                  color: iconForeground,
                 ),
               ),
               Expanded(

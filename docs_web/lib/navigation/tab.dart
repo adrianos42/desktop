@@ -16,17 +16,17 @@ class _TabPageState extends State<TabPage> {
       final buttonScope = ButtonScope.of(context)!;
 
       final foreground = colorScheme.shade;
-      final background = buttonScope.active
-          ? colorScheme.background
+      final Color background = buttonScope.active
+          ? colorScheme.background[0]
           : buttonScope.pressed
-              ? colorScheme.background
+              ? colorScheme.background[0]
               : buttonScope.highlighted
                   ? colorScheme.shade[30]
                   : colorScheme.background[10];
 
       return Container(
         alignment: Alignment.center,
-        color: background.toColor(),
+        color: background,
         padding: EdgeInsets.symmetric(
           horizontal: TabTheme.of(context).itemSpacing!,
         ),

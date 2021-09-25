@@ -31,27 +31,27 @@ class DropDownButtonThemeData {
 
   final TextStyle? textStyle;
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? color;
+  final Color? color;
 
-  final HSLColor? focusColor;
+  final Color? focusColor;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
-  final HSLColor? waitingColor;
+  final Color? waitingColor;
 
-  final HSLColor? inactiveColor;
+  final Color? inactiveColor;
 
   DropDownButtonThemeData copyWith({
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
-    HSLColor? disabledColor,
-    HSLColor? color,
-    HSLColor? focusColor,
-    HSLColor? hoverColor,
-    HSLColor? waitingColor,
-    HSLColor? inactiveColor,
+    Color? disabledColor,
+    Color? color,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? waitingColor,
+    Color? inactiveColor,
   }) {
     return DropDownButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -165,27 +165,27 @@ class DropDownButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           themeData.textTheme.body2.copyWith(
             fontSize: _kFontSize,
-            color: textTheme.textMedium.toColor(),
+            color: textTheme.textMedium,
           );
 
-      final HSLColor color =
+      final Color color =
           buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor waitingColor =
+      final Color waitingColor =
           buttonThemeData.waitingColor ?? colorScheme.background[10];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
-      final HSLColor focusColor = buttonThemeData.focusColor ?? waitingColor;
+      final Color focusColor = buttonThemeData.focusColor ?? waitingColor;
 
-      final HSLColor inactiveColor =
-          buttonThemeData.inactiveColor ?? colorScheme.background;
+      final Color inactiveColor =
+          buttonThemeData.inactiveColor ?? colorScheme.background[0];
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
-          IconThemeData(size: _kIconSize, color: hoverColor.toColor());
+          IconThemeData(size: _kIconSize, color: hoverColor);
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,

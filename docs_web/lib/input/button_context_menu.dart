@@ -149,7 +149,7 @@ ContextMenuButton(
                       child: Text(
                         firstValue,
                         style: textTheme.body1.copyWith(
-                          color: textTheme.textDisabled.toColor(),
+                          color: textTheme.textDisabled,
                         ),
                       ),
                     ),

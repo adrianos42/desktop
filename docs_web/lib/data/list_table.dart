@@ -166,7 +166,7 @@ ListTable(
 )
 ''';
 
-    final borderColor = Theme.of(context).colorScheme.shade[40].toColor();
+    final borderColor = Theme.of(context).colorScheme.shade[40];
     final borderSide = BorderSide(color: borderColor, width: 1.0);
 
     return Defaults.createItemsWithTitle(

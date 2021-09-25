@@ -248,27 +248,26 @@ class _TextFieldState extends State<TextField>
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    final HSLColor background = enabled
+    final Color background = enabled
         ? focusNode.hasFocus
-            ? colorScheme.background
-            : colorScheme.background.withAlpha(0.0)
+            ? colorScheme.background[0]
+            : colorScheme.background.withAlpha(0.0).toColor()
         : colorScheme.shade[90];
-    final HSLColor characterColor =
+    final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final HSLColor selectionColor =
-        enabled ? colorScheme.primary[30] : background;
-    final HSLColor borderColor =
+    final Color selectionColor = enabled ? colorScheme.primary[30] : background;
+    final Color borderColor =
         focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[40];
 
     final textStyle = textTheme.body1.copyWith(
-      color: characterColor.toColor(),
+      color: characterColor,
     );
 
     final decoration = widget.decoration ??
         BoxDecoration(
-          color: background.toColor(),
+          color: background,
           border: enabled
-              ? Border.all(color: borderColor.toColor(), width: _kBorderWidth)
+              ? Border.all(color: borderColor, width: _kBorderWidth)
               : null,
         );
 
@@ -276,9 +275,9 @@ class _TextFieldState extends State<TextField>
       key: editableTextKey,
       autocorrect: widget.autocorrect,
       autofocus: widget.autofocus,
-      backgroundCursorColor: background.toColor(), // TODO(as): ???
+      backgroundCursorColor: background, // TODO(as): ???
       controller: controller,
-      cursorColor: characterColor.toColor(),
+      cursorColor: characterColor,
       cursorOffset: Offset.zero,
       cursorOpacityAnimates: false,
       cursorWidth: _kCursorWidth,
@@ -300,8 +299,7 @@ class _TextFieldState extends State<TextField>
       readOnly: widget.readOnly,
       restorationId: 'editable',
       scrollController: widget.scrollController,
-      selectionColor:
-          enabled ? selectionColor.toColor() : colorScheme.background.toColor(),
+      selectionColor: enabled ? selectionColor : colorScheme.background[0],
       showCursor: widget.showCursor,
       showSelectionHandles: false,
       strutStyle: widget.strutStyle,

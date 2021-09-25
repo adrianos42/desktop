@@ -115,7 +115,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
 
                     showDialog(
                       context: context,
-                      barrierColor: themeData.colorScheme.background,
+                      barrierColor: themeData.colorScheme.background[0],
                       barrierDismissible: true,
                       builder: (context) {
                         return Theme(

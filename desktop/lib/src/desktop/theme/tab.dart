@@ -38,16 +38,16 @@ class TabThemeData {
   final double? height;
 
   /// The color of the tab item.
-  final HSLColor? color;
+  final Color? color;
 
   /// The hover color of the tab item.
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
   /// The background of the tab bar.
-  final HSLColor? backgroundColor;
+  final Color? backgroundColor;
 
   /// The highlight color of the tab item.
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
   ///
   TabThemeData copyWidth({
@@ -55,10 +55,10 @@ class TabThemeData {
     IconThemeData? iconThemeData,
     double? itemSpacing,
     double? height,
-    HSLColor? color,
-    HSLColor? hoverColor,
-    HSLColor? backgroundColor,
-    HSLColor? highlightColor,
+    Color? color,
+    Color? hoverColor,
+    Color? backgroundColor,
+    Color? highlightColor,
   }) {
     return TabThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -147,12 +147,12 @@ class TabTheme extends InheritedTheme {
       final TextStyle textStyle = tabThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color = tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
+      final Color color = tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           tabThemeData.hoverColor ?? colorScheme.shade[100];
 
-      final HSLColor highlightColor =
+      final Color highlightColor =
           tabThemeData.highlightColor ?? colorScheme.primary[60];
 
       final IconThemeData iconThemeData =
@@ -162,8 +162,8 @@ class TabTheme extends InheritedTheme {
 
       final double itemSpacing = tabThemeData.itemSpacing ?? _kPadding;
 
-      final HSLColor backgroundColor =
-          tabThemeData.backgroundColor ?? colorScheme.background;
+      final Color backgroundColor =
+          tabThemeData.backgroundColor ?? colorScheme.background[0];
 
       tabThemeData = tabThemeData.copyWidth(
         textStyle: textStyle,

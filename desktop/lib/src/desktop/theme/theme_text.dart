@@ -100,7 +100,7 @@ class TextTheme {
 
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        final foreground = colorScheme.shade[100].toColor();
+        final foreground = colorScheme.shade[100];
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -121,7 +121,7 @@ class TextTheme {
         break;
 
       case Brightness.light:
-        final foreground = colorScheme.shade[100].toColor();
+        final foreground = colorScheme.shade[100];
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -161,17 +161,17 @@ class TextTheme {
 
   final TextStyle monospace;
 
-  final HSLColor textHigh;
+  final Color textHigh;
 
-  final HSLColor textMedium;
+  final Color textMedium;
 
-  final HSLColor textLow;
+  final Color textLow;
 
-  final HSLColor textDisabled;
+  final Color textDisabled;
 
-  final HSLColor textPrimaryHigh;
+  final Color textPrimaryHigh;
 
-  final HSLColor textPrimaryLow;
+  final Color textPrimaryLow;
 
   final ColorScheme colorScheme;
 }

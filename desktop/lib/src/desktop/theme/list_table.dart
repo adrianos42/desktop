@@ -36,41 +36,41 @@ class ListTableThemeData {
 
   final TextStyle? textStyle;
 
-  final HSLColor? selectedColor;
+  final Color? selectedColor;
 
-  final HSLColor? selectedHighlightColor;
+  final Color? selectedHighlightColor;
 
-  final HSLColor? selectedHoverColor;
+  final Color? selectedHoverColor;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
-  final HSLColor? background;
+  final Color? background;
 
-  final HSLColor? borderColor;
+  final Color? borderColor;
 
-  final HSLColor? borderHoverColor;
+  final Color? borderHoverColor;
 
-  final HSLColor? borderHighlightColor;
+  final Color? borderHighlightColor;
 
-  final HSLColor? borderIndicatorColor;
+  final Color? borderIndicatorColor;
 
   ListTableThemeData copyWith({
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     ColorScheme? colorScheme,
     double? itemHeight,
-    HSLColor? selectedColor,
-    HSLColor? selectedHighlightColor,
-    HSLColor? selectedHoverColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
-    HSLColor? background,
-    HSLColor? borderColor,
-    HSLColor? borderHoverColor,
-    HSLColor? borderHighlightColor,
-    HSLColor? borderIndicatorColor,
+    Color? selectedColor,
+    Color? selectedHighlightColor,
+    Color? selectedHoverColor,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? background,
+    Color? borderColor,
+    Color? borderHoverColor,
+    Color? borderHighlightColor,
+    Color? borderIndicatorColor,
   }) {
     return ListTableThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -198,33 +198,33 @@ class ListTableTheme extends InheritedTheme {
       final TextStyle textStyle = listTableThemeData.textStyle ??
           textTheme.body1.copyWith(fontSize: kFontSize);
 
-      final HSLColor selectedHighlightColor =
+      final Color selectedHighlightColor =
           listTableThemeData.selectedHighlightColor ?? colorScheme.primary[60];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           listTableThemeData.hoverColor ?? colorScheme.shade[30];
 
-      final HSLColor highlightColor =
+      final Color highlightColor =
           listTableThemeData.highlightColor ?? colorScheme.background[10];
 
-      final HSLColor selectedColor =
+      final Color selectedColor =
           listTableThemeData.selectedColor ?? colorScheme.primary[30];
 
-      final HSLColor background =
+      final Color background =
           listTableThemeData.background ?? colorScheme.background[4];
 
-      final HSLColor selectedHoverColor =
+      final Color selectedHoverColor =
           listTableThemeData.selectedHoverColor ??
               colorScheme.primary[40]; // TODO(as): ???
 
-      final HSLColor borderColor =
+      final Color borderColor =
           listTableThemeData.borderColor ?? colorScheme.shade[40];
-      final HSLColor borderHoverColor = colorScheme.shade[kHoverColorIndex];
-      final HSLColor borderHighlightColor = colorScheme.primary[50];
-      final HSLColor borderIndicatorColor = colorScheme.primary[50];
+      final Color borderHoverColor = colorScheme.shade[kHoverColorIndex];
+      final Color borderHighlightColor = colorScheme.primary[50];
+      final Color borderIndicatorColor = colorScheme.primary[50];
 
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
-          IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());
+          IconThemeData(size: kIconSize, color: textTheme.textHigh);
 
       final double itemHeight =
           listTableThemeData.itemHeight ?? _kDefaultItemHeight;
@@ -286,12 +286,12 @@ class ListTableTheme extends InheritedTheme {
     IconThemeData? iconThemeData,
     ColorScheme? colorScheme,
     double? itemHeight,
-    HSLColor? selectedColor,
-    HSLColor? selectedHighlightColor,
-    HSLColor? selectedHoverColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
-    HSLColor? background,
+    Color? selectedColor,
+    Color? selectedHighlightColor,
+    Color? selectedHoverColor,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? background,
   }) {
     return Builder(
       key: key,

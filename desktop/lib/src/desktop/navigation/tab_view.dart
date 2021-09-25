@@ -101,7 +101,7 @@ class _TabViewState extends State<TabView> {
 
     return TabMenuRoute<dynamic>(
       context: context,
-      barrierColor: themeData.colorScheme.background,
+      barrierColor: themeData.colorScheme.background[0],
       axis: TabScope.of(context)!.axis,
       pageBuilder: (BuildContext context) => Container(
         alignment: Alignment.center,

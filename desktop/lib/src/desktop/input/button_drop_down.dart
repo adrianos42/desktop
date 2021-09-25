@@ -179,7 +179,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     final enabled = widget.enabled;
 
     Widget bodyChild;
-    HSLColor? inactiveBackground;
+    Color? inactiveBackground;
 
     if (widget.value != null) {
       bodyChild = widget
@@ -202,17 +202,13 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     final foreground = enabled
         ? buttonThemeData.iconThemeData!.color!
-        : buttonThemeData.disabledColor!.toColor();
+        : buttonThemeData.disabledColor!;
 
-    _color = ColorTween(
-        begin: _color?.end ?? borderColor.toColor(),
-        end: borderColor.toColor());
+    _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
 
-    final HSLColor? background =
-        waiting ? waitingBackground : inactiveBackground;
-    _backgroundColor = ColorTween(
-        begin: _backgroundColor?.end ?? background?.toColor(),
-        end: background?.toColor());
+    final Color? background = waiting ? waitingBackground : inactiveBackground;
+    _backgroundColor =
+        ColorTween(begin: _backgroundColor?.end ?? background, end: background);
 
     Widget result = AnimatedBuilder(
       animation: _controller,
@@ -228,8 +224,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
         return DefaultTextStyle(
           style: buttonThemeData.textStyle!.copyWith(
-              color:
-                  !enabled ? buttonThemeData.disabledColor!.toColor() : null),
+              color: !enabled ? buttonThemeData.disabledColor! : null),
           child: Container(
             constraints: BoxConstraints(
               minHeight: contextMenuThemeData.itemHeight!,

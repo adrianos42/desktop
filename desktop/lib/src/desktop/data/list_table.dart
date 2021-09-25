@@ -221,15 +221,14 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             final ListTableThemeData listTableThemeData =
                 ListTableTheme.of(context);
 
-            final HSLColor? backgroundColor =
+            final Color? backgroundColor =
                 pressedIndex == index || waitingIndex == index
                     ? listTableThemeData.highlightColor
                     : hoveredIndex == index
                         ? listTableThemeData.hoverColor
                         : null;
 
-            BoxDecoration decoration =
-                BoxDecoration(color: backgroundColor?.toColor());
+            BoxDecoration decoration = BoxDecoration(color: backgroundColor);
 
             // TODO(as): ???
             if (widget.tableBorder != null &&
@@ -254,7 +253,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
               final right = dragging && colDragging == col
                   ? BorderSide(
-                      color: listTableThemeData.borderHighlightColor!.toColor(),
+                      color: listTableThemeData.borderHighlightColor!,
                       width: dragBorderWidth,
                     )
                   : isRight
@@ -265,7 +264,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
               decoration = decoration.copyWith(border: border);
             } else if (dragging && colDragging == col) {
               final right = BorderSide(
-                color: listTableThemeData.borderHighlightColor!.toColor(),
+                color: listTableThemeData.borderHighlightColor!,
                 width: 2.0,
               );
 
@@ -414,7 +413,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
     if (notification.depth == 0) {
       // final y = metrics.maxScrollExtent <= metrics.minScrollExtent;
-      // if (hasExtent != y) { 
+      // if (hasExtent != y) {
       // TODO(as): Necessary to show bottom border?
       //   setState(() => hasExtent = y);
       // }
@@ -533,8 +532,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     }
 
     if (remWidth > 0.0) {
-      final int key =
-          colSizes.lastIndexWhere((value) => value > 0.0);
+      final int key = colSizes.lastIndexWhere((value) => value > 0.0);
       colSizes[key] = colSizes[key] + remWidth;
     }
   }
@@ -684,16 +682,16 @@ class _TableColHandlerState extends State<_TableColHandler>
     final bool expanded = hovered || dragged || widget.hasIndicator;
 
     if (border != null && border != BorderSide.none) {
-      final HSLColor borderColor = dragged
+      final Color borderColor = dragged
           ? listTableTheme.borderHighlightColor!
           : hovered
               ? listTableTheme.borderHoverColor!
               : widget.hasIndicator
                   ? listTableTheme.borderIndicatorColor!
-                  : HSLColor.fromColor(border.color);
+                  : border.color;
 
       border = border.copyWith(
-          color: borderColor.toColor(),
+          color: borderColor,
           width: expanded
               ? border.width + (border.width / 2.0).roundToDouble()
               : border.width);
@@ -706,7 +704,7 @@ class _TableColHandlerState extends State<_TableColHandler>
               : widget.hasIndicator
                   ? listTableTheme.borderIndicatorColor!
                   : listTableTheme.borderColor!;
-      border = BorderSide(width: width, color: borderColor.toColor());
+      border = BorderSide(width: width, color: borderColor);
     }
 
     return RawGestureDetector(

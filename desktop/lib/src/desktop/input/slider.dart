@@ -151,11 +151,11 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final active = widget.onChanged != null;
     final theme = SliderTheme.of(context);
 
-    final HSLColor activeColor = theme.activeColor!;
+    final Color activeColor = theme.activeColor!;
     final hoverColor = theme.activeHoverColor!;
     final disabledColor = theme.disabledColor!;
 
-    final HSLColor trackColor = theme.trackColor!;
+    final Color trackColor = theme.trackColor!;
 
     final Widget result = FocusableActionDetector(
       focusNode: widget.focusNode,
@@ -169,10 +169,10 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
           return _SliderRenderObjectWidget(
             state: this,
             value: (widget.value - widget.min) / (widget.max - widget.min),
-            activeColor: activeColor.toColor(),
-            trackColor: trackColor.toColor(),
-            disabledColor: disabledColor.toColor(),
-            hoverColor: hoverColor.toColor(),
+            activeColor: activeColor,
+            trackColor: trackColor,
+            disabledColor: disabledColor,
+            hoverColor: hoverColor,
             hovering: _hovering || _focused,
             onChanged: active ? _handleChanged : null,
             onChangeStart: (value) {

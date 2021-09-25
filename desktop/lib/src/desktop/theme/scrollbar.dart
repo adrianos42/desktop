@@ -17,28 +17,28 @@ class ScrollbarThemeData {
     this.trackColor,
   });
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? color;
+  final Color? color;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
-  final HSLColor? inhoverColor;
+  final Color? inhoverColor;
 
-  final HSLColor? foreground;
+  final Color? foreground;
 
-  final HSLColor? trackColor;
+  final Color? trackColor;
 
   ScrollbarThemeData copyWith({
-    HSLColor? disabledColor,
-    HSLColor? color,
-    HSLColor? foreground,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
-    HSLColor? inhoverColor,
-    HSLColor? trackColor,
+    Color? disabledColor,
+    Color? color,
+    Color? foreground,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? inhoverColor,
+    Color? trackColor,
   }) {
     return ScrollbarThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -143,25 +143,25 @@ class ScrollbarTheme extends InheritedTheme {
 
       final ColorScheme colorScheme = themeData.colorScheme;
 
-      final HSLColor color =
-          scrollbarThemeData.color ?? colorScheme.shade[30].withAlpha(0.8);
+      final Color color = scrollbarThemeData.color ??
+          HSLColor.fromColor(colorScheme.shade[30]).withAlpha(0.8).toColor();
 
-      final HSLColor hoverColor =
-          scrollbarThemeData.hoverColor ?? colorScheme.shade[50].withAlpha(0.8);
+      final Color hoverColor = scrollbarThemeData.hoverColor ??
+          HSLColor.fromColor(colorScheme.shade[50]).withAlpha(0.8).toColor();
 
-      final HSLColor highlightColor =
-          scrollbarThemeData.color ?? colorScheme.shade[40].withAlpha(0.8);
+      final Color highlightColor = scrollbarThemeData.color ??
+          HSLColor.fromColor(colorScheme.shade[40]).withAlpha(0.8).toColor();
 
-      final HSLColor foreground =
+      final Color foreground =
           scrollbarThemeData.foreground ?? colorScheme.shade[100];
 
-      final HSLColor inhoverColor =
+      final Color inhoverColor =
           scrollbarThemeData.hoverColor ?? colorScheme.shade[70];
 
-      final HSLColor trackColor =
+      final Color trackColor =
           scrollbarThemeData.trackColor ?? colorScheme.background[10];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           scrollbarThemeData.disabledColor ?? colorScheme.disabled;
 
       scrollbarThemeData = scrollbarThemeData.copyWith(

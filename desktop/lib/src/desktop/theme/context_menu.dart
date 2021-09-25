@@ -48,17 +48,17 @@ class ContextMenuThemeData {
 
   final TextStyle? textStyle;
 
-  final HSLColor? selectedColor;
+  final Color? selectedColor;
 
-  final HSLColor? selectedHighlightColor;
+  final Color? selectedHighlightColor;
 
-  final HSLColor? selectedHoverColor;
+  final Color? selectedHoverColor;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
-  final HSLColor? background;
+  final Color? background;
 
   ContextMenuThemeData copyWith({
     TextStyle? textStyle,
@@ -69,12 +69,12 @@ class ContextMenuThemeData {
     double? minMenuWidth,
     double? maxMenuWidth,
     double? menuHorizontalPadding,
-    HSLColor? selectedColor,
-    HSLColor? selectedHighlightColor,
-    HSLColor? selectedHoverColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
-    HSLColor? background,
+    Color? selectedColor,
+    Color? selectedHighlightColor,
+    Color? selectedHoverColor,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? background,
   }) {
     return ContextMenuThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -203,28 +203,28 @@ class ContextMenuTheme extends InheritedTheme {
       final TextStyle textStyle = contextMenuThemeData.textStyle ??
           textTheme.body1.copyWith(fontSize: kFontSize);
 
-      final HSLColor selectedHighlightColor =
+      final Color selectedHighlightColor =
           contextMenuThemeData.selectedHighlightColor ??
               colorScheme.primary[60];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           contextMenuThemeData.hoverColor ?? colorScheme.background[20];
 
-      final HSLColor highlightColor =
+      final Color highlightColor =
           contextMenuThemeData.highlightColor ?? colorScheme.background[10];
 
-      final HSLColor selectedColor =
+      final Color selectedColor =
           contextMenuThemeData.selectedColor ?? colorScheme.primary[30];
 
-      final HSLColor background =
-          contextMenuThemeData.background ?? colorScheme.background;
+      final Color background =
+          contextMenuThemeData.background ?? colorScheme.background[0];
 
-      final HSLColor selectedHoverColor =
+      final Color selectedHoverColor =
           contextMenuThemeData.selectedHoverColor ??
               colorScheme.primary[40]; // TODO(as): ???
 
       final IconThemeData iconThemeData = contextMenuThemeData.iconThemeData ??
-          IconThemeData(size: kIconSize, color: textTheme.textHigh.toColor());
+          IconThemeData(size: kIconSize, color: textTheme.textHigh);
 
       final double itemHeight =
           contextMenuThemeData.itemHeight ?? _kDefaultItemHeight;
@@ -282,12 +282,12 @@ class ContextMenuTheme extends InheritedTheme {
     double? minMenuWidth,
     double? maxMenuWidth,
     double? menuHorizontalPadding,
-    HSLColor? selectedColor,
-    HSLColor? selectedHighlightColor,
-    HSLColor? selectedHoverColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
-    HSLColor? background,
+    Color? selectedColor,
+    Color? selectedHighlightColor,
+    Color? selectedHoverColor,
+    Color? hoverColor,
+    Color? highlightColor,
+    Color? background,
   }) {
     return ContextMenuTheme(
       child: child,

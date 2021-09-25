@@ -47,7 +47,7 @@ class Dialog extends StatelessWidget {
 
     final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
-    final Color backgroundColor = dialogThemeData.background!.toColor();
+    final Color backgroundColor = dialogThemeData.background!;
 
     Widget result = Container(
       constraints: constraints ?? dialogThemeData.constraints,
@@ -136,8 +136,7 @@ class DialogRoute<T> extends PopupRoute<T> {
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor =
-            barrierColor ?? DialogTheme.of(context).barrierColor!.toColor(),
+        _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
         super(settings: settings, filter: filter);
 
   final RoutePageBuilder _pageBuilder;
@@ -190,13 +189,13 @@ Future<T?> showDialog<T>({
   required WidgetBuilder builder,
   bool barrierDismissible = true,
   ImageFilter? filter,
-  HSLColor? barrierColor,
+  Color? barrierColor,
 }) {
   return Navigator.of(context, rootNavigator: true).push<T>(DialogRoute<T>(
     pageBuilder: (context, _, __) => builder(context),
     context: context,
     barrierDismissible: barrierDismissible,
     filter: filter,
-    barrierColor: barrierColor?.toColor(),
+    barrierColor: barrierColor,
   ));
 }

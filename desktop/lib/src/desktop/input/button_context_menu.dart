@@ -25,7 +25,7 @@ class ContextMenuButton<T> extends StatefulWidget {
   final Widget child;
 
   /// The color of the button.
-  final HSLColor? color;
+  final Color? color;
 
   /// The list of [ContextMenuItem] used for the context menu.
   final ContextMenuItemBuilder<T> itemBuilder;

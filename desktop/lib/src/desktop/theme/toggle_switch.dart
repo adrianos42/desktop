@@ -18,25 +18,25 @@ class ToggleSwitchThemeData {
     this.inactiveHoverColor,
   });
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? activeColor;
+  final Color? activeColor;
 
-  final HSLColor? activeHoverColor;
+  final Color? activeHoverColor;
 
-  final HSLColor? inactiveColor;
+  final Color? inactiveColor;
 
-  final HSLColor? inactiveHoverColor;
+  final Color? inactiveHoverColor;
 
-  final HSLColor? foreground;
+  final Color? foreground;
 
   ToggleSwitchThemeData copyWith({
-    HSLColor? disabledColor,
-    HSLColor? activeColor,
-    HSLColor? foreground,
-    HSLColor? activeHoverColor,
-    HSLColor? inactiveColor,
-    HSLColor? inactiveHoverColor,
+    Color? disabledColor,
+    Color? activeColor,
+    Color? foreground,
+    Color? activeHoverColor,
+    Color? inactiveColor,
+    Color? inactiveHoverColor,
   }) {
     return ToggleSwitchThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -136,24 +136,24 @@ class ToggleSwitchTheme extends InheritedTheme {
 
       final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-      final HSLColor foreground = toggleSwitchThemeData.foreground ??
+      final Color foreground = toggleSwitchThemeData.foreground ??
           colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor activeHoverColor =
+      final Color activeHoverColor =
           toggleSwitchThemeData.activeHoverColor ??
               colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor activeColor = toggleSwitchThemeData.activeColor ??
+      final Color activeColor = toggleSwitchThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];
 
-      final HSLColor inactiveHoverColor =
+      final Color inactiveHoverColor =
           toggleSwitchThemeData.inactiveHoverColor ??
               colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor inactiveColor = toggleSwitchThemeData.inactiveColor ??
+      final Color inactiveColor = toggleSwitchThemeData.inactiveColor ??
           colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           toggleSwitchThemeData.disabledColor ?? colorScheme.disabled;
 
       toggleSwitchThemeData = toggleSwitchThemeData.copyWith(

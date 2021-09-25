@@ -37,9 +37,9 @@ class Button extends StatefulWidget {
     String text, {
     double? fontSize,
     String? tooltip,
-    HSLColor? color,
-    HSLColor? highlightColor,
-    HSLColor? hoverColor,
+    Color? color,
+    Color? highlightColor,
+    Color? hoverColor,
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
@@ -71,9 +71,9 @@ class Button extends StatefulWidget {
     IconData icon, {
     String? tooltip,
     double? size,
-    HSLColor? color,
-    HSLColor? highlightColor,
-    HSLColor? hoverColor,
+    Color? color,
+    Color? highlightColor,
+    Color? hoverColor,
     VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
@@ -113,13 +113,13 @@ class Button extends StatefulWidget {
   final VoidCallback? onPressed;
 
   /// The color of the button.
-  final HSLColor? color;
+  final Color? color;
 
   /// The color of the button when the is hovering it.
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
   /// The color of the button when it's been pressed.
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
   /// The button axis.
   final Axis axis;
@@ -217,7 +217,8 @@ class _ButtonState extends State<Button>
   }
 
   bool get _shouldShowFocus {
-    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ?? NavigationMode.traditional;
+    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
+        NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
         return enabled && focused;
@@ -259,7 +260,6 @@ class _ButtonState extends State<Button>
     focused = hasFocus;
   }
 
-
   bool get active => waiting || widget.active;
 
   bool get enabled => widget.onPressed != null;
@@ -294,15 +294,15 @@ class _ButtonState extends State<Button>
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final HSLColor enabledForeground = widget.color ?? buttonThemeData.color!;
-    final HSLColor pressedForeground =
+    final Color enabledForeground = widget.color ?? buttonThemeData.color!;
+    final Color pressedForeground =
         widget.highlightColor ?? buttonThemeData.highlightColor!;
-    final HSLColor hoveredForeground =
+    final Color hoveredForeground =
         widget.hoverColor ?? buttonThemeData.hoverColor!;
 
-    final HSLColor disabledForeground = buttonThemeData.disabledColor!;
+    final Color disabledForeground = buttonThemeData.disabledColor!;
 
-    final HSLColor foregroundColor = enabled
+    final Color foregroundColor = enabled
         ? active || pressed
             ? pressedForeground
             : hovered || _focusHighlight
@@ -310,9 +310,8 @@ class _ButtonState extends State<Button>
                 : enabledForeground
         : disabledForeground;
 
-    _color = ColorTween(
-        begin: _color?.end ?? foregroundColor.toColor(),
-        end: foregroundColor.toColor());
+    _color =
+        ColorTween(begin: _color?.end ?? foregroundColor, end: foregroundColor);
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 

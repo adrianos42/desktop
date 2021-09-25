@@ -173,12 +173,12 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           return _ToggleSwitchRenderObjectWidget(
             value: widget.value,
             state: this,
-            activeColor: activeColor.toColor(),
-            inactiveColor: inactiveColor.toColor(),
-            disabledColor: disabledColor.toColor(),
-            hoverColor: hoverColor.toColor(),
+            activeColor: activeColor,
+            inactiveColor: inactiveColor,
+            disabledColor: disabledColor,
+            hoverColor: hoverColor,
             onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
-            foregroundColor: foregroundColor.toColor(),
+            foregroundColor: foregroundColor,
             hovering: _hovering || _focused,
             additionalConstraints: additionalConstraints,
           );

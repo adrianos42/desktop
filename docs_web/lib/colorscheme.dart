@@ -11,22 +11,22 @@ class ColorschemePage extends StatefulWidget {
 Widget _itemPrimary(
   BuildContext context,
   PrimaryColor color, [
-  HSLColor? foreground,
+  Color? foreground,
 ]) {
-  return _createItemForColor(context, color, color.toString(), foreground);
+  return _createItemForColor(context, color.toColor(), color.toString(), foreground);
 }
 
 Widget _createItemForColor(
   BuildContext context,
-  HSLColor color,
+  Color color,
   String name, [
-  HSLColor? foreground,
+  Color? foreground,
 ]) {
   final textStyle = Theme.of(context).textTheme.body2.copyWith(
-        color: foreground?.toColor(),
+        color: foreground,
       );
   return Container(
-    color: color.toColor(),
+    color: color,
     alignment: Alignment.centerLeft,
     padding: EdgeInsets.all(8.0),
     height: 200.0,
@@ -39,19 +39,23 @@ Widget _createItemForColor(
           style: textStyle,
         ),
         Text(
-          'Hue: ${(color.hue.round()).toString()}',
+          'Hue: ${(HSLColor.fromColor(color).hue.round()).toString()}',
           style: textStyle,
         ),
         Text(
-          'Saturation: ${(color.saturation * 100.0).round().toString()}%',
+          'Saturation: ${(HSLColor.fromColor(color).saturation * 100.0).round().toString()}%',
           style: textStyle,
         ),
         Text(
-          'Lightness: ${(color.lightness * 100.0).round().toString()}%',
+          'Lightness: ${(HSLColor.fromColor(color).lightness * 100.0).round().toString()}%',
           style: textStyle,
         ),
         Text(
-          'Alpha: ${(color.alpha * 100.0).round().toString()}%',
+          'Alpha: ${(HSLColor.fromColor(color).alpha * 100.0).round().toString()}%',
+          style: textStyle,
+        ),
+        Text(
+          'ARGB: ${color.value.toRadixString(0x10)}',
           style: textStyle,
         ),
       ],
@@ -143,43 +147,43 @@ class _ColorschemePageState extends State<ColorschemePage> {
                     context,
                     colorScheme.shade[40],
                     'Shade 40',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[50],
                     'Shade 50',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[60],
                     'Shade 60',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[70],
                     'Shade 70',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[80],
                     'Shade 80',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[90],
                     'Shade 90',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,
                     colorScheme.shade[100],
                     'Shade 100',
-                    colorScheme.background,
+                    colorScheme.background[0],
                   ),
                   _createItemForColor(
                     context,

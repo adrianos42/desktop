@@ -24,20 +24,20 @@ class TreeThemeData {
   final TextStyle? textStyle;
 
   /// The color of the tree item.
-  final HSLColor? color;
+  final Color? color;
 
   /// The hover color of the tree item.
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
   /// The highlight color of the tree item.
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
   ///
   TreeThemeData copyWidth({
     TextStyle? textStyle,
-    HSLColor? color,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
+    Color? color,
+    Color? hoverColor,
+    Color? highlightColor,
   }) {
     return TreeThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -110,13 +110,13 @@ class TreeTheme extends InheritedTheme {
       final TextStyle textStyle = treeThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final HSLColor color =
+      final Color color =
           treeThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           treeThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor highlightColor = treeThemeData.highlightColor ??
+      final Color highlightColor = treeThemeData.highlightColor ??
           colorScheme.primary[kHighlightColorIndex];
 
       treeThemeData = treeThemeData.copyWidth(

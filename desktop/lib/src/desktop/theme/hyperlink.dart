@@ -22,18 +22,18 @@ class HyperlinkButtonThemeData {
     this.highlightColor,
   });
 
-  final HSLColor? color;
+  final Color? color;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
   final TextStyle? textStyle;
 
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
   HyperlinkButtonThemeData copyWidth({
-    HSLColor? color,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
+    Color? color,
+    Color? hoverColor,
+    Color? highlightColor,
     TextStyle? textStyle,
   }) {
     return HyperlinkButtonThemeData(
@@ -103,12 +103,12 @@ class HyperlinkButtonTheme extends InheritedTheme {
             decorationThickness: _kLineThickness,
           );
 
-      final HSLColor color = hyperlinkThemeData.color ?? _kDefaultColor;
+      final Color color = hyperlinkThemeData.color ?? _kDefaultColor.toColor();
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           hyperlinkThemeData.hoverColor ?? themeData.textTheme.textHigh;
 
-      final HSLColor highlightColor =
+      final Color highlightColor =
           hyperlinkThemeData.highlightColor ?? themeData.textTheme.textLow;
 
       hyperlinkThemeData = hyperlinkThemeData.copyWidth(

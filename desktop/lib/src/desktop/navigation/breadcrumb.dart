@@ -149,7 +149,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
         items.add(
           Icon(
             Icons.chevron_right,
-            color: foreground.toColor(),
+            color: foreground,
             size: 20.0,
           ),
         );

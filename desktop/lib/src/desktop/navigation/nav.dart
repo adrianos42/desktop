@@ -206,7 +206,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
         _menus = item.title;
 
         final Color barrierColor =
-            DialogTheme.of(context).barrierColor!.toColor();
+            DialogTheme.of(context).barrierColor!;
         _menuColorTween.begin = barrierColor.withOpacity(0.0);
         _menuColorTween.end = barrierColor.withOpacity(0.8);
 

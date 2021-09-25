@@ -200,13 +200,13 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
           return _CheckboxRenderObjectWidget(
             value: widget.value,
             state: this,
-            activeColor: activeColor.toColor(),
-            hoverColor: hoverColor.toColor(),
+            activeColor: activeColor,
+            hoverColor: hoverColor,
             hovering: _hovering || _focused,
-            inactiveColor: inactiveColor.toColor(),
-            disabledColor: disabledColor.toColor(),
+            inactiveColor: inactiveColor,
+            disabledColor: disabledColor,
             onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
-            foregroundColor: foregroundColor.toColor(),
+            foregroundColor: foregroundColor,
             additionalConstraints: additionalConstraints,
           );
         },

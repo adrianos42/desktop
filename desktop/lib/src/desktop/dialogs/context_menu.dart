@@ -146,7 +146,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
     final bool selected = widget.selected(context);
 
-    final HSLColor? background = pressed
+    final Color? background = pressed
         ? (selected
             ? contextMenuThemeData.selectedHighlightColor!
             : contextMenuThemeData.highlightColor!) // TODO(as): ???
@@ -163,7 +163,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
       child: IconTheme(
         data: contextMenuThemeData.iconThemeData!,
         child: Container(
-          color: background?.toColor(),
+          color: background,
           padding: EdgeInsets.symmetric(
             horizontal: contextMenuThemeData.menuHorizontalPadding!,
           ),
@@ -214,14 +214,14 @@ class ContextMenuDivider extends ContextMenuEntry {
 class _ContextMenuDividerState extends State<ContextMenuDivider> {
   @override
   Widget build(BuildContext context) {
-    final HSLColor background = Theme.of(context).colorScheme.background;
+    final Color background = Theme.of(context).colorScheme.background[0];
 
     return SizedBox(
       height: _kDividerHeight,
       child: Center(
         child: Container(
           height: _kDividerThickness,
-          color: background.toColor(),
+          color: background,
         ),
       ),
     );
@@ -287,7 +287,7 @@ class _ContextMenu<T> extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1.0,
-          color: Theme.of(context).textTheme.textLow.toColor(),
+          color: Theme.of(context).textTheme.textLow,
         ),
       ),
       child: Semantics(
@@ -315,7 +315,7 @@ class _ContextMenu<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: contextMenuThemeData.background!.toColor(),
+        color: contextMenuThemeData.background!,
         //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
       ),
       position: DecorationPosition.background,

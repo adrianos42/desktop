@@ -40,15 +40,15 @@ class ButtonThemeData {
 
   final TextStyle? textStyle;
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? color;
+  final Color? color;
 
-  final HSLColor? focusColor;
+  final Color? focusColor;
 
-  final HSLColor? hoverColor;
+  final Color? hoverColor;
 
-  final HSLColor? highlightColor;
+  final Color? highlightColor;
 
   ButtonThemeData copyWith({
     TextStyle? textStyle,
@@ -56,11 +56,11 @@ class ButtonThemeData {
     double? itemSpacing,
     double? height,
     double? minWidth,
-    HSLColor? disabledColor,
-    HSLColor? color,
-    HSLColor? focusColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
+    Color? disabledColor,
+    Color? color,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? highlightColor,
   }) {
     return ButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -145,35 +145,35 @@ class ButtonThemeData {
   }
 
   /// Returns a proper custom color.
-  HSLColor customColor(BuildContext context, HSLColor color) {
+  Color customColor(BuildContext context, Color color) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        return color.withLightness(0.6);
+        return HSLColor.fromColor(color).withLightness(0.6).toColor();
       case Brightness.light:
-        return color.withLightness(0.4);
+        return HSLColor.fromColor(color).withLightness(0.4).toColor();
     }
   }
 
   /// Returns a proper custom hover color.
-  HSLColor customHoverColor(BuildContext context, HSLColor color) {
+  Color customHoverColor(BuildContext context, Color color) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        return color.withLightness(0.8);
+        return HSLColor.fromColor(color).withLightness(0.8).toColor();
       case Brightness.light:
-        return color.withLightness(0.2);
+        return HSLColor.fromColor(color).withLightness(0.2).toColor();
     }
   }
 
   /// Returns a proper custom highlight color.
-  HSLColor customHighlightColor(BuildContext context, HSLColor color) {
+  Color customHighlightColor(BuildContext context, Color color) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        return color.withLightness(0.6);
+        return HSLColor.fromColor(color).withLightness(0.6).toColor();
       case Brightness.light:
-        return color.withLightness(0.4);
+        return HSLColor.fromColor(color).withLightness(0.4).toColor();
     }
   }
 }
@@ -211,11 +211,11 @@ class ButtonTheme extends InheritedTheme {
     double? itemSpacing,
     double? height,
     double? minWidth,
-    HSLColor? disabledColor,
-    HSLColor? color,
-    HSLColor? focusColor,
-    HSLColor? hoverColor,
-    HSLColor? highlightColor,
+    Color? disabledColor,
+    Color? color,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? highlightColor,
   }) {
     return Builder(
       key: key,
@@ -261,22 +261,22 @@ class ButtonTheme extends InheritedTheme {
       final TextStyle textStyle = buttonThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: kFontSize);
 
-      final HSLColor color =
+      final Color color =
           buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor hoverColor =
+      final Color hoverColor =
           buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor highlightColor = buttonThemeData.highlightColor ??
+      final Color highlightColor = buttonThemeData.highlightColor ??
           colorScheme.primary[kHighlightColorIndex];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
 
-      final HSLColor focusColor = hoverColor; // TODO(as): ???
+      final Color focusColor = hoverColor; // TODO(as): ???
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
-          IconThemeData(size: kIconSize, color: color.toColor());
+          IconThemeData(size: kIconSize, color: color);
 
       final double height = buttonThemeData.height ?? _kHeight;
       final double itemSpacing = buttonThemeData.itemSpacing ?? _kSidePadding;

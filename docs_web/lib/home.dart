@@ -122,10 +122,7 @@ class _DocAppState extends State<DocApp> {
                         'Desktop',
                         style: Theme.of(context).textTheme.title.copyWith(
                               overflow: TextOverflow.ellipsis,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary[70]
-                                  .toColor(),
+                              color: Theme.of(context).colorScheme.primary[70],
                             ),
                       );
                     },
@@ -138,7 +135,7 @@ class _DocAppState extends State<DocApp> {
                   child: Builder(
                     builder: (context) {
                       return Text(
-                        'dev.9.6',
+                        'dev.9.7',
                         style: Theme.of(context)
                             .textTheme
                             .caption

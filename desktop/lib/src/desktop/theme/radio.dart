@@ -17,25 +17,25 @@ class RadioButtonThemeData {
     this.inactiveHoverColor,
   });
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? activeColor;
+  final Color? activeColor;
 
-  final HSLColor? activeHoverColor;
+  final Color? activeHoverColor;
 
-  final HSLColor? inactiveColor;
+  final Color? inactiveColor;
 
-  final HSLColor? inactiveHoverColor;
+  final Color? inactiveHoverColor;
 
-  final HSLColor? foreground;
+  final Color? foreground;
 
   RadioButtonThemeData copyWith({
-    HSLColor? disabledColor,
-    HSLColor? activeColor,
-    HSLColor? foreground,
-    HSLColor? activeHoverColor,
-    HSLColor? inactiveColor,
-    HSLColor? inactiveHoverColor,
+    Color? disabledColor,
+    Color? activeColor,
+    Color? foreground,
+    Color? activeHoverColor,
+    Color? inactiveColor,
+    Color? inactiveHoverColor,
   }) {
     return RadioButtonThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -136,22 +136,22 @@ class RadioButtonTheme extends InheritedTheme {
 
       radioButtonThemeData ??= themeData.radioButtonTheme;
 
-      final HSLColor foreground =
+      final Color foreground =
           radioButtonThemeData.foreground ?? colorScheme.shade[100];
 
-      final HSLColor activeHoverColor =
+      final Color activeHoverColor =
           radioButtonThemeData.activeHoverColor ?? colorScheme.primary[60];
 
-      final HSLColor activeColor =
+      final Color activeColor =
           radioButtonThemeData.activeColor ?? colorScheme.primary[60];
 
-      final HSLColor inactiveHoverColor =
+      final Color inactiveHoverColor =
           radioButtonThemeData.inactiveHoverColor ?? colorScheme.shade[100];
 
-      final HSLColor inactiveColor =
+      final Color inactiveColor =
           radioButtonThemeData.inactiveColor ?? colorScheme.shade[50];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           radioButtonThemeData.disabledColor ?? colorScheme.disabled;
 
       radioButtonThemeData = radioButtonThemeData.copyWith(

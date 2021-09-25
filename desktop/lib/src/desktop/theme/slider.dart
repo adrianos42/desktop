@@ -16,19 +16,19 @@ class SliderThemeData {
     this.activeHoverColor,
   });
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? activeColor;
+  final Color? activeColor;
 
-  final HSLColor? activeHoverColor;
+  final Color? activeHoverColor;
 
-  final HSLColor? trackColor;
+  final Color? trackColor;
 
   SliderThemeData copyWith({
-    HSLColor? disabledColor,
-    HSLColor? activeColor,
-    HSLColor? trackColor,
-    HSLColor? activeHoverColor,
+    Color? disabledColor,
+    Color? activeColor,
+    Color? trackColor,
+    Color? activeHoverColor,
   }) {
     return SliderThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -119,16 +119,16 @@ class SliderTheme extends InheritedTheme {
       final TextTheme textTheme = themeData.textTheme;
       final ColorScheme colorScheme = themeData.colorScheme;
 
-      final HSLColor trackColor =
+      final Color trackColor =
           sliderThemeData.trackColor ?? colorScheme.shade[kItemBackgroundIndex];
 
-      final HSLColor activeHoverColor = sliderThemeData.activeHoverColor ??
+      final Color activeHoverColor = sliderThemeData.activeHoverColor ??
           colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor activeColor = sliderThemeData.activeColor ??
+      final Color activeColor = sliderThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           sliderThemeData.disabledColor ?? colorScheme.disabled;
 
       sliderThemeData = sliderThemeData.copyWith(

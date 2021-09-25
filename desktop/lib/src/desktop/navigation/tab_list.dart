@@ -224,14 +224,14 @@
 //     final TextTheme textTheme = themeData.textTheme;
 //     final TextStyle textStyle = textTheme.body1.copyWith(fontSize: 14.0);
 //     final ColorScheme colorScheme = themeData.colorScheme;
-//     final HSLColor selectedColor = colorScheme.primary[60];
+//     final Color selectedColor = colorScheme.primary[60];
 
 //     return List<Widget>.generate(widget.items.length, (index) {
 //       final bool selected = index == widget.index;
 //       final pressed = _pressedIndex == index;
 //       final hovered = _hoveredIndex == index;
 
-//       final HSLColor? background = selected
+//       final Color? background = selected
 //           ? selectedColor
 //           : pressed
 //               ? colorScheme.background2
@@ -239,7 +239,7 @@
 //                   ? colorScheme.background1
 //                   : null;
 
-//       final HSLColor foreground = pressed || selected
+//       final Color foreground = pressed || selected
 //           ? textTheme.textHigh
 //           : hovered
 //               ? textTheme.textMedium

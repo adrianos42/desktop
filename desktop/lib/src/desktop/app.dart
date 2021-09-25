@@ -247,7 +247,7 @@ class _DesktopAppState extends State<DesktopApp> {
   WidgetsApp _buildWidgetApp(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final Color color =
-        widget.color ?? themeData.colorScheme.primary[50].toColor();
+        widget.color ?? themeData.colorScheme.primary[50];
 
     final shortcuts = {
       ...WidgetsApp.defaultShortcuts,

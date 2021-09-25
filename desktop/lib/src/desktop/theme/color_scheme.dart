@@ -24,12 +24,12 @@ class ColorScheme {
   }
 
   /// Calculates a color lightness according to the current brightness.
-  HSLColor shadeColorFromLightness(HSLColor value) {
+  Color shadeColorFromLightness(Color value) {
     // TODO(as): See the contrast in colors.
     if (brightness == Brightness.dark) {
-      return value.withLightness(0.8);
+      return HSLColor.fromColor(value).withLightness(0.8).toColor();
     }
-    return value.withLightness(0.2);
+    return HSLColor.fromColor(value).withLightness(0.2).toColor();
   }
 
   final PrimaryColor _primary;
@@ -56,12 +56,12 @@ class ColorScheme {
   }
 
   /// Disabled color.
-  HSLColor get disabled => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.75)
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25);
+  Color get disabled => brightness == Brightness.light
+      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.75).toColor()
+      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25).toColor();
 
   /// Error color.
-  HSLColor get error => const HSLColor.fromAHSL(1.0, 0, 0.8, 0.5);
+  Color get error => const HSLColor.fromAHSL(1.0, 0, 0.8, 0.5).toColor();
 
   /// Shade color.
   ShadeColor get shade => ShadeColor._withBrightness(brightness);
@@ -90,47 +90,47 @@ class ShadeColor extends HSLColor {
   }
 
   /// Returns a shade color.
-  HSLColor operator [](int index) {
+  Color operator [](int index) {
     switch (_brightness!) {
       case Brightness.dark:
         switch (index) {
           case 30:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3).toColor();
           case 40:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4).toColor();
           case 50:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5).toColor();
           case 60:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6).toColor();
           case 70:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7).toColor();
           case 80:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.8);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.8).toColor();
           case 90:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.9);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.9).toColor();
           case 100:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 1.0);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 1.0).toColor();
           default:
             throw Exception('Wrong index for shade color');
         }
       case Brightness.light:
         switch (index) {
           case 30:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7).toColor();
           case 40:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6).toColor();
           case 50:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5).toColor();
           case 60:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4).toColor();
           case 70:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3).toColor();
           case 80:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.2);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.2).toColor();
           case 90:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.1);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.1).toColor();
           case 100:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.0);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.0).toColor();
           default:
             throw Exception('Wrong index for shade color');
         }
@@ -165,59 +165,59 @@ class BackgroundColor extends HSLColor {
   }
 
   /// Returns a background color.
-  HSLColor operator [](int index) {
+  Color operator [](int index) {
     switch (_brightness!) {
       case Brightness.dark:
         switch (index) {
           case 0:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.0);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.0).toColor();
           case 2:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.02);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.02).toColor();
           case 4:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.04);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.04).toColor();
           case 6:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.06);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.06).toColor();
           case 8:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.08);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.08).toColor();
           case 10:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.1);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.1).toColor();
           case 12:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.12);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.12).toColor();
           case 14:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.14);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.14).toColor();
           case 16:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.16);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.16).toColor();
           case 18:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.18);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.18).toColor();
           case 20:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.2);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness + 0.2).toColor();
           default:
             throw Exception('Wrong index for backgrount color');
         }
       case Brightness.light:
         switch (index) {
           case 0:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
           case 2:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.02);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.02).toColor();
           case 4:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.04);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.04).toColor();
           case 6:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.06);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.06).toColor();
           case 8:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.08);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.08).toColor();
           case 10:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.1);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.1).toColor();
           case 12:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.12);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.12).toColor();
           case 14:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.14);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.14).toColor();
           case 16:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.16);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.16).toColor();
           case 18:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.18);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.18).toColor();
           case 20:
-            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.2);
+            return HSLColor.fromAHSL(alpha, hue, saturation, lightness - 0.2).toColor();
           default:
             throw Exception('Wrong index for backgrount color');
         }
@@ -245,35 +245,35 @@ class PrimaryColor extends HSLColor {
         );
 
   /// Returns a primary color.
-  HSLColor operator [](int index) {
+  Color operator [](int index) {
     switch (_brightness!) {
       case Brightness.dark:
         switch (index) {
           case 30:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3).toColor();
           case 40:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4).toColor();
           case 50:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5).toColor();
           case 60:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6).toColor();
           case 70:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7).toColor();
           default:
             throw Exception('Wrong index for primary color');
         }
       case Brightness.light:
         switch (index) {
           case 30:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.7).toColor();
           case 40:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.6).toColor();
           case 50:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.5).toColor();
           case 60:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.4).toColor();
           case 70:
-            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3);
+            return HSLColor.fromAHSL(alpha, hue, saturation, 0.3).toColor();
           default:
             throw Exception('Wrong index for primary color');
         }

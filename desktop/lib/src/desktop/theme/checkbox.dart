@@ -18,25 +18,25 @@ class CheckboxThemeData {
     this.inactiveHoverColor,
   });
 
-  final HSLColor? disabledColor;
+  final Color? disabledColor;
 
-  final HSLColor? activeColor;
+  final Color? activeColor;
 
-  final HSLColor? activeHoverColor;
+  final Color? activeHoverColor;
 
-  final HSLColor? inactiveColor;
+  final Color? inactiveColor;
 
-  final HSLColor? inactiveHoverColor;
+  final Color? inactiveHoverColor;
 
-  final HSLColor? foreground;
+  final Color? foreground;
 
   CheckboxThemeData copyWith({
-    HSLColor? disabledColor,
-    HSLColor? activeColor,
-    HSLColor? foreground,
-    HSLColor? activeHoverColor,
-    HSLColor? inactiveColor,
-    HSLColor? inactiveHoverColor,
+    Color? disabledColor,
+    Color? activeColor,
+    Color? foreground,
+    Color? activeHoverColor,
+    Color? inactiveColor,
+    Color? inactiveHoverColor,
   }) {
     return CheckboxThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
@@ -138,23 +138,23 @@ class CheckboxTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
       // final TextTheme textTheme = Theme.of(context).textTheme; // TODO(as): ???
 
-      final HSLColor foreground =
+      final Color foreground =
           checkboxThemeData.foreground ?? colorScheme.background[0];
 
-      final HSLColor activeHoverColor = checkboxThemeData.activeHoverColor ??
+      final Color activeHoverColor = checkboxThemeData.activeHoverColor ??
           colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor activeColor = checkboxThemeData.activeColor ??
+      final Color activeColor = checkboxThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];
 
-      final HSLColor inactiveHoverColor =
+      final Color inactiveHoverColor =
           checkboxThemeData.inactiveHoverColor ??
               colorScheme.shade[kHoverColorIndex];
 
-      final HSLColor inactiveColor = checkboxThemeData.inactiveColor ??
+      final Color inactiveColor = checkboxThemeData.inactiveColor ??
           colorScheme.shade[kInactiveColorIndex];
 
-      final HSLColor disabledColor =
+      final Color disabledColor =
           checkboxThemeData.disabledColor ?? colorScheme.disabled;
 
       checkboxThemeData = checkboxThemeData.copyWith(

@@ -37,9 +37,9 @@ class DialogThemeData {
 
   final EdgeInsets bodyPadding;
 
-  final HSLColor? background;
+  final Color? background;
 
-  final HSLColor? barrierColor;
+  final Color? barrierColor;
 
   final TextStyle? titleTextStyle;
 
@@ -50,8 +50,8 @@ class DialogThemeData {
     EdgeInsets? menuPadding,
     EdgeInsets? titlePadding,
     EdgeInsets? bodyPadding,
-    HSLColor? background,
-    HSLColor? barrierColor,
+    Color? background,
+    Color? barrierColor,
     TextStyle? titleTextStyle,
     TextAlign? bodyTextAlign,
   }) {
@@ -127,12 +127,12 @@ class DialogTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       dialogThemeData ??= themeData.dialogTheme;
 
-      final HSLColor background =
-          dialogThemeData.background ?? themeData.colorScheme.background;
-      final HSLColor barrierColor = dialogThemeData.barrierColor ??
+      final Color background =
+          dialogThemeData.background ?? themeData.colorScheme.background[0];
+      final Color barrierColor = dialogThemeData.barrierColor ??
           (themeData.colorScheme.brightness == Brightness.light
-              ? const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8)
-              : const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2));
+              ? const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.8).toColor()
+              : const HSLColor.fromAHSL(0.8, 0.0, 0.0, 0.2).toColor());
       final TextStyle titleTextStyle =
           dialogThemeData.titleTextStyle ?? themeData.textTheme.title;
       final TextAlign bodyTextAlign =

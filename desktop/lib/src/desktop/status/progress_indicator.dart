@@ -22,15 +22,15 @@ abstract class ProgressIndicator extends StatefulWidget {
 
   final double? value;
 
-  final HSLColor? valueColor;
+  final Color? valueColor;
 
-  final HSLColor? backgroundColor;
+  final Color? backgroundColor;
 
   final String? semanticsLabel;
 
   final String? semanticsValue;
 
-  HSLColor _getBackgroundColor(BuildContext context) {
+  Color _getBackgroundColor(BuildContext context) {
     if (backgroundColor != null) {
       return backgroundColor!;
     }
@@ -38,13 +38,19 @@ abstract class ProgressIndicator extends StatefulWidget {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     if (colorScheme.brightness == Brightness.light) {
-      return colorScheme.primary[60].withSaturation(0.4).withLightness(0.9);
+      return HSLColor.fromColor(colorScheme.primary[60])
+          .withSaturation(0.4)
+          .withLightness(0.9)
+          .toColor();
     } else {
-      return colorScheme.primary[60].withSaturation(0.4).withLightness(0.1);
+      return HSLColor.fromColor(colorScheme.primary[60])
+          .withSaturation(0.4)
+          .withLightness(0.1)
+          .toColor();
     }
   }
 
-  HSLColor _getValueColor(BuildContext context) =>
+  Color _getValueColor(BuildContext context) =>
       valueColor ?? Theme.of(context).colorScheme.primary[60];
 
   @override
@@ -76,10 +82,10 @@ class LinearProgressIndicator extends ProgressIndicator {
   const LinearProgressIndicator({
     Key? key,
     double? value,
-    HSLColor? valueColor,
+    Color? valueColor,
     String? semanticsLabel,
     String? semanticsValue,
-    HSLColor? backgroundColor,
+    Color? backgroundColor,
   }) : super(
           key: key,
           value: value,
@@ -125,8 +131,8 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
         ),
         child: CustomPaint(
           painter: _LinearProgressIndicatorPainter(
-            backgroundColor: widget._getBackgroundColor(context).toColor(),
-            valueColor: widget._getValueColor(context).toColor(),
+            backgroundColor: widget._getBackgroundColor(context),
+            valueColor: widget._getValueColor(context),
             value: widget.value,
             animationValue: animationValue,
           ),
@@ -198,11 +204,7 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
   final double? value;
   final double animationValue;
 
-  static const Curve line1Head = Interval(
-    0.0,
-    0.4,
-    curve: Curves.decelerate
-  );
+  static const Curve line1Head = Interval(0.0, 0.4, curve: Curves.decelerate);
 
   static const Curve line1Tail = Interval(
     0.4,
@@ -254,8 +256,8 @@ class CircularProgressIndicator extends ProgressIndicator {
   const CircularProgressIndicator({
     Key? key,
     double? value,
-    HSLColor? backgroundColor,
-    HSLColor? valueColor,
+    Color? backgroundColor,
+    Color? valueColor,
     this.strokeWidth = 3.0,
     String? semanticsLabel,
     String? semanticsValue,
@@ -333,8 +335,8 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
         ),
         child: CustomPaint(
           painter: _CircularProgressIndicatorPainter(
-            backgroundColor: widget._getBackgroundColor(context).toColor(),
-            valueColor: widget._getValueColor(context).toColor(),
+            backgroundColor: widget._getBackgroundColor(context),
+            valueColor: widget._getValueColor(context),
             value: widget.value, // may be null
             headValue:
                 headValue, // remaining arguments are ignored if widget.value is not null

@@ -90,22 +90,22 @@ class _ScrollbarState extends State<Scrollbar>
   ColorTween get _thumbColor {
     final theme = ScrollbarTheme.of(context);
 
-    final HSLColor color = pressed
+    final Color color = pressed
         ? theme.highlightColor!
         : hovered
             ? theme.hoverColor!
             : theme.color!;
 
     _color = ColorTween(
-      begin: _color?.end ?? color.toColor(),
-      end: color.toColor(),
+      begin: _color?.end ?? color,
+      end: color,
     );
     return _color!;
   }
 
   ColorTween? _color;
 
-  HSLColor? get _trackColor {
+  Color? get _trackColor {
     return null;
     if (!_hideScroll) {
       final theme = ScrollbarTheme.of(context);
@@ -245,7 +245,7 @@ class _ScrollbarState extends State<Scrollbar>
     return DesktopScrollbarPainter(
       thumbColor: _thumbColor,
       thumbColorAnimation: _thumbAnimation,
-      trackColor: _trackColor?.toColor(),
+      trackColor: _trackColor,
       thickness: _kScrollbarThickness,
       textDirection: Directionality.of(context),
       minOverscrollLength: _kScrollbarMinOverscrollLength,
@@ -435,7 +435,7 @@ class _ScrollbarState extends State<Scrollbar>
   void _updateScrollbarPainter() {
     _painter!
       ..thumbColor = _thumbColor
-      ..trackColor = _trackColor?.toColor()
+      ..trackColor = _trackColor
       ..textDirection = Directionality.of(context)
       ..thickness = widget.thickness ?? _kScrollbarThickness
       ..padding = MediaQuery.of(context).padding;

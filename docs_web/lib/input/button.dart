@@ -38,7 +38,7 @@ Button.text(
 )
 ''';
 
-    final customColor = HSLColor.fromAHSL(1.0, 150, 0.6, 0.5);
+    final customColor = HSLColor.fromAHSL(1.0, 150, 0.6, 0.5).toColor();
     final buttonTheme = Theme.of(context).buttonTheme;
 
     return Defaults.createItemsWithTitle(

@@ -8,12 +8,12 @@ class TabMenuRoute<T> extends PopupRoute<T> {
     required BuildContext context,
     String? barrierLabel,
     RouteSettings? settings,
-    required HSLColor barrierColor,
+    required Color barrierColor,
     this.axis = Axis.horizontal,
   })  : _pageBuilder = pageBuilder,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor.toColor(),
+        _barrierColor = barrierColor,
         super(settings: settings);
 
   final Axis axis;
@@ -38,7 +38,7 @@ class TabMenuRoute<T> extends PopupRoute<T> {
   final Color _barrierColor;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 400);
+  Duration get transitionDuration => const Duration(milliseconds: 300);
 
   @override
   Animation<double> createAnimation() {

@@ -100,7 +100,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     child: Text(
                       'Text High',
                       style: textTheme.subtitle.copyWith(
-                        color: textTheme.textHigh.toColor(),
+                        color: textTheme.textHigh,
                       ),
                     ),
                   ),
@@ -109,7 +109,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     child: Text(
                       'Text Medium',
                       style: textTheme.subtitle.copyWith(
-                        color: textTheme.textMedium.toColor(),
+                        color: textTheme.textMedium,
                       ),
                     ),
                   ),
@@ -118,7 +118,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     child: Text(
                       'Text Low',
                       style: textTheme.subtitle.copyWith(
-                        color: textTheme.textLow.toColor(),
+                        color: textTheme.textLow,
                       ),
                     ),
                   ),
@@ -127,7 +127,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     child: Text(
                       'Text Disabled',
                       style: textTheme.subtitle.copyWith(
-                        color: textTheme.textDisabled.toColor(),
+                        color: textTheme.textDisabled,
                       ),
                     ),
                   ),
