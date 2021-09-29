@@ -9,6 +9,7 @@ import 'localizations.dart';
 import 'navigation/route.dart';
 import 'scrolling/scrolling.dart';
 import 'theme/theme.dart';
+import 'dialogs/message.dart';
 
 /// Base functionality for desktop apps.
 class DesktopApp extends StatefulWidget {
@@ -217,6 +218,8 @@ class DesktopApp extends StatefulWidget {
 }
 
 class _DesktopAppState extends State<DesktopApp> {
+  final GlobalKey<OverlayState> _overlayKey = GlobalKey<OverlayState>();
+
   @override
   void initState() {
     super.initState();
@@ -244,10 +247,29 @@ class _DesktopAppState extends State<DesktopApp> {
         onPressed: onPressed,
       );
 
+  Widget _builder(BuildContext context, Widget? child) {
+    return Overlay(
+      key: _overlayKey,
+      initialEntries: [
+        OverlayEntry(
+          maintainState: true,
+          opaque: true,
+          builder: (context) => Messenger(
+            child: Container(
+              color: Theme.of(context).colorScheme.background.toColor(),
+              child: widget.builder != null
+                  ? widget.builder!(context, child)
+                  : child ?? const SizedBox.shrink(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   WidgetsApp _buildWidgetApp(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final Color color =
-        widget.color ?? themeData.colorScheme.primary[50];
+    final Color color = widget.color ?? themeData.colorScheme.primary[50];
 
     final shortcuts = {
       ...WidgetsApp.defaultShortcuts,
@@ -262,7 +284,7 @@ class _DesktopAppState extends State<DesktopApp> {
         routerDelegate: widget.routerDelegate!,
         routeInformationProvider: widget.routeInformationProvider,
         backButtonDispatcher: widget.backButtonDispatcher,
-        builder: widget.builder,
+        builder: _builder,
         title: widget.title,
         onGenerateTitle: widget.onGenerateTitle,
         textStyle: themeData.textTheme.body1,
@@ -296,7 +318,7 @@ class _DesktopAppState extends State<DesktopApp> {
       onGenerateRoute: widget.onGenerateRoute,
       onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
       onUnknownRoute: widget.onUnknownRoute,
-      builder: widget.builder,
+      builder: _builder,
       title: widget.title,
       onGenerateTitle: widget.onGenerateTitle,
       textStyle: themeData.textTheme.body1,
@@ -327,12 +349,7 @@ class _DesktopAppState extends State<DesktopApp> {
       data: effectiveThemeData,
       child: ScrollConfiguration(
         behavior: widget.scrollBehavior ?? const DesktopScrollBehavior(),
-        child: Container(
-          color: effectiveThemeData.colorScheme.background.toColor(),
-          child: Builder(
-            builder: _buildWidgetApp,
-          ),
-        ),
+        child: Builder(builder: _buildWidgetApp),
       ),
     );
   }
@@ -347,18 +364,23 @@ class DesktopScrollBehavior extends ScrollBehavior {
   @override
   Widget buildScrollbar(
       BuildContext context, Widget child, ScrollableDetails details) {
-    switch (getPlatform(context)) {
-      case TargetPlatform.linux:
-      case TargetPlatform.macOS:
-      case TargetPlatform.windows:
-        return Scrollbar(
-          child: child,
-          controller: details.controller,
-        );
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.iOS:
+    switch (axisDirectionToAxis(details.direction)) {
+      case Axis.horizontal:
         return child;
+      case Axis.vertical:
+        switch (getPlatform(context)) {
+          case TargetPlatform.linux:
+          case TargetPlatform.macOS:
+          case TargetPlatform.windows:
+            return Scrollbar(
+              child: child,
+              controller: details.controller,
+            );
+          case TargetPlatform.android:
+          case TargetPlatform.fuchsia:
+          case TargetPlatform.iOS:
+            return child;
+        }
     }
   }
 }

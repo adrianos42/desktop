@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-# idl client --path=plugins/collections
 flutter build linux --verbose --release
 rm -rf ~/opt/desktop_docs
 mkdir -p ~/opt/desktop_docs

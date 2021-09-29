@@ -22,12 +22,12 @@ class _DialogPageState extends State<DialogMessagePage> {
             child: Button.text(
               'Error message',
               onPressed: () async {
-                showMessageDialog(
-                  context: context,
-                  title: 'Lorem Ipsum',
-                  kind: MessageKind.error,
+                Messenger.showMessage(
+                  context,
                   message:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                  title: 'Lorem Ipsum',
+                  kind: MessageKind.error,
                 );
               },
             ),
@@ -41,8 +41,8 @@ class _DialogPageState extends State<DialogMessagePage> {
             child: Button.text(
               'Info message',
               onPressed: () async {
-                showMessageDialog(
-                  context: context,
+                Messenger.showMessage(
+                  context,
                   title: 'Lorem Ipsum',
                   kind: MessageKind.info,
                   message:
@@ -60,8 +60,8 @@ class _DialogPageState extends State<DialogMessagePage> {
             child: Button.text(
               'Warning message',
               onPressed: () async {
-                showMessageDialog(
-                  context: context,
+                Messenger.showMessage(
+                  context,
                   title: 'Lorem Ipsum',
                   kind: MessageKind.warning,
                   message: 'Lorem ipsum dolor sit amet.',
@@ -78,8 +78,8 @@ class _DialogPageState extends State<DialogMessagePage> {
             child: Button.text(
               'Success message',
               onPressed: () async {
-                showMessageDialog(
-                  context: context,
+                Messenger.showMessage(
+                  context,
                   title: 'Lorem Ipsum',
                   kind: MessageKind.success,
                   message:

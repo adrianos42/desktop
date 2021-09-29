@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:ui';
+import 'dart:collection';
 
-import 'package:flutter/animation.dart' show Curves;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -28,18 +26,261 @@ enum MessageKind {
   success,
 }
 
-class _MessageDialog extends StatefulWidget {
-  /// Creates a [MessageDialog].
-  const _MessageDialog({
+/// The reason the message was closed.
+enum MessageClosedReason {
+  action,
+  dismiss,
+  hide,
+  remove,
+
+  /// Timeout.
+  timeout,
+}
+
+class _FeatureController {
+  const _FeatureController._(
+      this._widget, this._completer, this.close, this.setState);
+  final Message _widget;
+  final Completer<MessageClosedReason> _completer;
+
+  /// Completes when the feature controlled by this object is no longer visible.
+  Future<MessageClosedReason> get closed => _completer.future;
+
+  /// Remove the feature (e.g., bottom sheet, snack bar, or material banner) from the scaffold.
+  final VoidCallback close;
+
+  /// Mark the feature (e.g., bottom sheet or snack bar) as needing to rebuild.
+  final StateSetter? setState;
+}
+
+/// A stack for showing [Message].
+class Messenger extends StatefulWidget {
+  /// Creates a widget that manages a [Message] stack.
+  const Messenger({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  /// The widget below this widget in the tree.
+  ///
+  /// {@macro flutter.widgets.ProxyWidget.child}
+  final Widget child;
+
+  static _MessengerState _of(BuildContext context) {
+    final _MessengerScope scope =
+        context.dependOnInheritedWidgetOfExactType<_MessengerScope>()!;
+    return scope._messengerState;
+  }
+
+  /// Adds a [Message] te be shown.
+  static void showMessage(
+    BuildContext context, {
+    required String message,
+    required MessageKind kind,
+    String? title,
+  }) {
+    _of(context).showMessage(
+      message: message,
+      kind: kind,
+    );
+  }
+
+  @override
+  _MessengerState createState() => _MessengerState();
+}
+
+class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
+  final Queue<OverlayEntry> _messages = Queue<OverlayEntry>();
+  AnimationController? _messageController;
+  Timer? _hideTimer;
+
+  void startTimer() {
+    _hideTimer = Timer(const Duration(seconds: 4), () {
+      hideCurrentMessage();
+    });
+  }
+
+  void stopTimer() {
+    _hideTimer?.cancel();
+  }
+
+  void showMessage({
+    required String message,
+    required MessageKind kind,
+    String? title,
+  }) {
+    final OverlayEntry entry = OverlayEntry(
+      builder: (context) => Message(
+        message: message,
+        kind: kind,
+        title: title,
+      ),
+      maintainState: false,
+    );
+
+    _messages.addLast(entry);
+
+    if (_messages.length == 1) {
+      Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
+      startTimer();
+    }
+  }
+
+  void _update() {
+    // scaffold._updateMessage();
+  }
+
+  // void showMessage(BuildContext context, Message message) {
+  //   _messageController ??= Message._createAnimationController(vsync: this)
+  //     ..addStatusListener(_handleMessageStatusChanged);
+
+  //   if (_messages.isEmpty) {
+  //     assert(_messageController!.isDismissed);
+  //     _messageController!.forward();
+  //   }
+
+  //   // final _FeatureController<Message, MessageClosedReason> controller =
+  //   //     _FeatureController<Message, MessageClosedReason>._(
+  //   //   message
+  //   //   // .withAnimation(_messageController!,
+  //   //   //     fallbackKey: UniqueKey())
+  //   //   ,
+  //   //   Completer<MessageClosedReason>(),
+  //   //   () {
+  //   //     hideCurrentMessage(reason: MessageClosedReason.hide);
+  //   //   },
+  //   //   null, // Message doesn't use a builder function so setState() wouldn't rebuild it
+  //   // );
+
+  //   //print(_messages);
+
+  //   //return controller;
+  // }
+
+  void _handleMessageStatusChanged(AnimationStatus status) {
+    switch (status) {
+      case AnimationStatus.dismissed:
+        assert(_messages.isNotEmpty);
+        _messages.removeFirst();
+
+        _update();
+        if (_messages.isNotEmpty) {
+          _messageController!.forward();
+        }
+        break;
+      case AnimationStatus.completed:
+        assert(_hideTimer == null);
+        _update();
+        break;
+      case AnimationStatus.forward:
+        break;
+      case AnimationStatus.reverse:
+        break;
+    }
+  }
+
+  /// Removes the current [Message] (if any) immediately from registered
+  /// [Scaffold]s.
+  ///
+  /// The removed snack bar does not run its normal exit animation. If there are
+  /// any queued snack bars, they begin their entrance animation immediately.
+  void removeCurrentMessage(
+      {MessageClosedReason reason = MessageClosedReason.remove}) {
+    if (_messages.isEmpty) {
+      return;
+    }
+
+    // final Completer<MessageClosedReason> completer = _messages.first._completer;
+
+    // if (!completer.isCompleted) completer.complete(reason);
+
+    _hideTimer?.cancel();
+    _hideTimer = null;
+
+    // This will trigger the animation's status callback.
+    _messageController!.value = 0.0;
+  }
+
+  /// Removes the current [Message] by running its normal exit animation.
+  ///
+  /// The closed completer is called after the animation is complete.
+  void hideCurrentMessage({
+    MessageClosedReason reason = MessageClosedReason.hide,
+  }) {
+    // if (_messages.isEmpty ||
+    //     _messageController!.status == AnimationStatus.dismissed) {
+    //   return;
+    // }
+
+    final entry = _messages.removeFirst();
+
+    entry.remove();
+
+    if (_messages.isNotEmpty) {
+      Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
+      startTimer();
+    }
+
+    // final Completer<MessageClosedReason> completer = _messages.first._completer;
+    _messageController?.reverse().then<void>((void value) {
+      //if (!completer.isCompleted) completer.complete(reason);
+    });
+
+    //_hideTimer?.cancel();
+    //_hideTimer = null;
+  }
+
+  /// Removes all the messages currently in queue by clearing the queue
+  /// and running normal exit animation on the current message.
+  void clearMessages() {
+    if (_messages.isEmpty ||
+        _messageController!.status == AnimationStatus.dismissed) {
+      return;
+    }
+
+    // final _FeatureController<Message, MessageClosedReason> currentMessage =
+    //     _messages.first;
+    // _messages.clear();
+    // _messages.add(currentMessage);
+    hideCurrentMessage();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _MessengerScope(
+      messengerState: this,
+      child: widget.child,
+    );
+  }
+}
+
+class _MessengerScope extends InheritedWidget {
+  const _MessengerScope({
+    Key? key,
+    required Widget child,
+    required _MessengerState messengerState,
+  })  : _messengerState = messengerState,
+        super(key: key, child: child);
+
+  final _MessengerState _messengerState;
+
+  @override
+  bool updateShouldNotify(_MessengerScope old) =>
+      _messengerState != old._messengerState;
+}
+
+class Message extends StatefulWidget {
+  /// Creates a [Message].
+  const Message({
     Key? key,
     this.title,
     this.menus,
     this.constraints,
     this.padding,
+    this.duration = const Duration(seconds: 4),
     this.dialogPadding,
     required this.kind,
     required this.message,
-    required this.entryObject,
   }) : super(key: key);
 
   final String message;
@@ -56,34 +297,27 @@ class _MessageDialog extends StatefulWidget {
 
   final MessageKind kind;
 
-  final _OverlayMes entryObject;
+  final Duration duration;
+
+  static AnimationController _createAnimationController({
+    required TickerProvider vsync,
+  }) {
+    return AnimationController(
+      duration: const Duration(milliseconds: 400),
+      debugLabel: 'Message',
+      vsync: vsync,
+    );
+  }
 
   @override
-  _MessageDialogState createState() => _MessageDialogState();
+  _MessageState createState() => _MessageState();
 }
 
-class _MessageDialogState extends State<_MessageDialog>
-    with SingleTickerProviderStateMixin {
+class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   late bool _mouseIsConnected;
   AnimationStatus? _previousAnimationStatus;
-
-  OverlayEntry get _entry => widget.entryObject.entry!;
-
-  Timer? _hideTimer;
-
-  void _startTimer() {
-    _hideTimer = Timer(const Duration(seconds: 4), () {
-      print(_controller.value);
-      print('contloller reverse');
-      _controller.reverse();
-    });
-  }
-
-  void _stopTimer() {
-    _hideTimer?.cancel();
-  }
 
   @override
   void initState() {
@@ -107,8 +341,6 @@ class _MessageDialogState extends State<_MessageDialog>
     );
 
     _controller.forward();
-
-    _startTimer();
   }
 
   void _handleMouseTrackerChange() {
@@ -135,7 +367,7 @@ class _MessageDialogState extends State<_MessageDialog>
   void _handleStatusChanged(AnimationStatus status) {
     if (_controller.value == 0.0 &&
         _previousAnimationStatus == AnimationStatus.reverse) {
-      _entry.remove();
+      //_entry.remove();
     } else {
       _previousAnimationStatus = status;
     }
@@ -249,9 +481,9 @@ class _MessageDialogState extends State<_MessageDialog>
 
     if (_mouseIsConnected) {
       result = MouseRegion(
-        onEnter: (_) => _stopTimer(),
-        onExit: (_) => _startTimer(),
-        onHover: (_) => _stopTimer(),
+        // onEnter: (_) => _stopTimer(),
+        // onExit: (_) => _startTimer(),
+        // onHover: (_) => _stopTimer(),
         child: result,
       );
     }
@@ -262,35 +494,4 @@ class _MessageDialogState extends State<_MessageDialog>
       debugLabel: 'Dialog',
     );
   }
-}
-
-/// Shows a dialog with default [DialogRoute].
-void showMessageDialog({
-  String? title,
-  required BuildContext context,
-  required String message,
-  required MessageKind kind,
-}) {
-  final entryObject = _OverlayMes();
-
-  final Widget overlay = Directionality(
-    textDirection: Directionality.of(context),
-    child: _MessageDialog(
-      message: message,
-      title: title,
-      kind: kind,
-      entryObject: entryObject,
-    ),
-  );
-
-  entryObject.entry = OverlayEntry(
-    builder: (BuildContext context) => overlay,
-    maintainState: true,
-  );
-
-  Overlay.of(context, rootOverlay: true)?.insert(entryObject.entry!);
-}
-
-class _OverlayMes {
-  OverlayEntry? entry;
 }
