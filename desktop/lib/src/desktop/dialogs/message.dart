@@ -95,7 +95,8 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
   Timer? _hideTimer;
 
   void startTimer() {
-    _hideTimer = Timer(const Duration(seconds: 4), () {
+    _messageController!.forward(from: 0.0);
+    _hideTimer = Timer(const Duration(seconds: 6), () {
       hideCurrentMessage();
     });
   }
@@ -109,11 +110,14 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     required MessageKind kind,
     String? title,
   }) {
+    _messageController ??= Message._createAnimationController(vsync: this);
+
     final OverlayEntry entry = OverlayEntry(
       builder: (context) => Message(
         message: message,
         kind: kind,
         title: title,
+        animation: _messageController,
       ),
       maintainState: false,
     );
@@ -130,42 +134,15 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     // scaffold._updateMessage();
   }
 
-  // void showMessage(BuildContext context, Message message) {
-  //   _messageController ??= Message._createAnimationController(vsync: this)
-  //     ..addStatusListener(_handleMessageStatusChanged);
-
-  //   if (_messages.isEmpty) {
-  //     assert(_messageController!.isDismissed);
-  //     _messageController!.forward();
-  //   }
-
-  //   // final _FeatureController<Message, MessageClosedReason> controller =
-  //   //     _FeatureController<Message, MessageClosedReason>._(
-  //   //   message
-  //   //   // .withAnimation(_messageController!,
-  //   //   //     fallbackKey: UniqueKey())
-  //   //   ,
-  //   //   Completer<MessageClosedReason>(),
-  //   //   () {
-  //   //     hideCurrentMessage(reason: MessageClosedReason.hide);
-  //   //   },
-  //   //   null, // Message doesn't use a builder function so setState() wouldn't rebuild it
-  //   // );
-
-  //   //print(_messages);
-
-  //   //return controller;
-  // }
-
   void _handleMessageStatusChanged(AnimationStatus status) {
     switch (status) {
       case AnimationStatus.dismissed:
         assert(_messages.isNotEmpty);
-        _messages.removeFirst();
+        //_messages.removeFirst();
 
         _update();
         if (_messages.isNotEmpty) {
-          _messageController!.forward();
+          //_messageController!.forward();
         }
         break;
       case AnimationStatus.completed:
@@ -212,18 +189,16 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     //   return;
     // }
 
-    final entry = _messages.removeFirst();
-
-    entry.remove();
-
-    if (_messages.isNotEmpty) {
-      Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
-      startTimer();
-    }
-
     // final Completer<MessageClosedReason> completer = _messages.first._completer;
     _messageController?.reverse().then<void>((void value) {
       //if (!completer.isCompleted) completer.complete(reason);
+      final entry = _messages.removeFirst();
+      entry.remove();
+      
+      if (_messages.isNotEmpty) {
+        Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
+        startTimer();
+      }
     });
 
     //_hideTimer?.cancel();
@@ -279,6 +254,7 @@ class Message extends StatefulWidget {
     this.padding,
     this.duration = const Duration(seconds: 4),
     this.dialogPadding,
+    this.animation,
     required this.kind,
     required this.message,
   }) : super(key: key);
@@ -299,13 +275,30 @@ class Message extends StatefulWidget {
 
   final Duration duration;
 
+  final Animation<double>? animation;
+
   static AnimationController _createAnimationController({
     required TickerProvider vsync,
   }) {
     return AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 100),
       debugLabel: 'Message',
       vsync: vsync,
+    );
+  }
+
+  Message _withAnimation(Animation<double> animation) {
+    return Message(
+      key: key,
+      padding: padding,
+      animation: animation,
+      kind: kind,
+      message: message,
+      constraints: constraints,
+      dialogPadding: dialogPadding,
+      duration: duration,
+      menus: menus,
+      title: title,
     );
   }
 
@@ -314,10 +307,10 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
   late bool _mouseIsConnected;
   AnimationStatus? _previousAnimationStatus;
+
+  Animation<double>? _animation;
 
   @override
   void initState() {
@@ -327,20 +320,6 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
     RendererBinding.instance!.mouseTracker
         .addListener(_handleMouseTrackerChange);
     GestureBinding.instance!.pointerRouter.addGlobalRoute(_handlePointerEvent);
-
-    _controller = AnimationController(
-      duration: _kFadeInDuration,
-      reverseDuration: _kFadeOutDuration,
-      vsync: this,
-    )..addStatusListener(_handleStatusChanged);
-
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInSine,
-      reverseCurve: Curves.easeOutSine,
-    );
-
-    _controller.forward();
   }
 
   void _handleMouseTrackerChange() {
@@ -364,23 +343,12 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
     }
   }
 
-  void _handleStatusChanged(AnimationStatus status) {
-    if (_controller.value == 0.0 &&
-        _previousAnimationStatus == AnimationStatus.reverse) {
-      //_entry.remove();
-    } else {
-      _previousAnimationStatus = status;
-    }
-  }
-
   @override
   void dispose() {
     GestureBinding.instance!.pointerRouter
         .removeGlobalRoute(_handlePointerEvent);
     RendererBinding.instance!.mouseTracker
         .removeListener(_handleMouseTrackerChange);
-
-    _controller.dispose();
     super.dispose();
   }
 
@@ -390,7 +358,18 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
     final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
+    // final Animation animation = CurvedAnimation(
+    //   parent: widget.animation!,
+    //   curve: Curves.easeOut,
+    // );
+
     //final DialogThemeData dialogThemeData = DialogTheme.of(context);
+
+    _animation ??= CurvedAnimation(
+      parent: widget.animation!,
+      curve: Curves.easeInSine,
+      reverseCurve: Curves.easeOutSine,
+    );
 
     final Color backgroundColor = colorScheme.background[0];
     final Color iconForeground;
@@ -477,7 +456,7 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
       ),
     );
 
-    result = FadeTransition(opacity: _animation, child: result);
+    result = FadeTransition(opacity: _animation!, child: result);
 
     if (_mouseIsConnected) {
       result = MouseRegion(
