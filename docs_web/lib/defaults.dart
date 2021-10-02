@@ -23,36 +23,42 @@ class Defaults {
   static Widget _createCodeSession(
     BuildContext context, {
     required WidgetBuilder builder,
-    required String codeText,
+    String? codeText,
     bool hasBorder = true,
   }) {
-    final textController = TextEditingController(text: codeText);
-
-    return Tab(
-      padding: EdgeInsets.zero,
-      items: [
-        TabItem.icon(
-          Icons.visibility,
-          builder: (context, _) => Container(
-            decoration: hasBorder ? Defaults.itemDecoration(context) : null,
-            child: builder(context),
-          ),
-        ),
-        TabItem.icon(
-          Icons.code,
-          builder: (context, _) => Container(
-            alignment: Alignment.topLeft,
-            //decoration: Defaults.itemDecoration(context),
-            child: TextField(
-              maxLines: 1000,
-              controller: textController,
-              keyboardType: TextInputType.multiline,
-              style: Theme.of(context).textTheme.monospace, 
+    if (codeText != null) {
+      return Tab(
+        padding: EdgeInsets.zero,
+        items: [
+          TabItem.icon(
+            Icons.visibility,
+            builder: (context, _) => Container(
+              decoration: hasBorder ? Defaults.itemDecoration(context) : null,
+              child: builder(context),
             ),
           ),
-        ),
-      ],
-    );
+          TabItem.icon(
+            Icons.code,
+            builder: (context, _) => Container(
+              alignment: Alignment.topLeft,
+              //decoration: Defaults.itemDecoration(context),
+              child: TextField(
+                maxLines: 1000,
+                controller: TextEditingController(text: codeText),
+                keyboardType: TextInputType.multiline,
+                style: Theme.of(context).textTheme.monospace,
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container(
+        alignment: Alignment.topCenter,
+        decoration: hasBorder ? Defaults.itemDecoration(context) : null,
+        child: builder(context),
+      );
+    }
   }
 
   static Widget createSubheader(BuildContext context, String name) {
@@ -133,10 +139,7 @@ class Defaults {
         child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Defaults.createHeader(context, header),
-              ...result
-            ]),
+            children: [Defaults.createHeader(context, header), ...result]),
       ),
     );
   }
@@ -147,14 +150,14 @@ class Defaults {
 class ItemTitle {
   ItemTitle({
     required this.body,
-    required this.codeText,
+    this.codeText,
     required this.title,
-    required this.height,
+    this.height,
     this.hasBorder = true,
   });
   final String title;
   final WidgetBuilder body;
-  final double height;
-  final String codeText;
+  final double? height;
+  final String? codeText;
   final bool hasBorder;
 }

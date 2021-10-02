@@ -7,9 +7,11 @@ import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../theme/theme.dart';
+import '../input/button.dart';
 
 const Duration _kFadeInDuration = Duration(milliseconds: 100);
 const Duration _kFadeOutDuration = Duration(milliseconds: 100);
+const Duration _kDefaultMessageDuration = Duration(seconds: 6);
 
 /// The kind of message to be displayed.
 enum MessageKind {
@@ -28,29 +30,50 @@ enum MessageKind {
 
 /// The reason the message was closed.
 enum MessageClosedReason {
-  action,
-  dismiss,
-  hide,
+  /// The message was removed.
   remove,
 
   /// Timeout.
   timeout,
+
+  /// The message was closed.
+  close,
 }
 
-class _FeatureController {
-  const _FeatureController._(
-      this._widget, this._completer, this.close, this.setState);
-  final Message _widget;
+class MessageAction {
+  const MessageAction({
+    required this.title,
+    required this.onPressed,
+  });
+
+  final String title;
+
+  final VoidCallback onPressed;
+}
+
+class MessageController {
+  const MessageController._({
+    required OverlayEntry overlayEntry,
+    required Completer<MessageClosedReason> completer,
+    required bool hasMenu,
+    required Duration duration,
+    required this.close,
+  })  : _overlayEntry = overlayEntry,
+        _completer = completer,
+        _durarion = duration,
+        _hasMenu = hasMenu;
+
+  final OverlayEntry _overlayEntry;
+
+  final bool _hasMenu;
+
+  final Duration _durarion;
+
   final Completer<MessageClosedReason> _completer;
 
-  /// Completes when the feature controlled by this object is no longer visible.
   Future<MessageClosedReason> get closed => _completer.future;
 
-  /// Remove the feature (e.g., bottom sheet, snack bar, or material banner) from the scaffold.
   final VoidCallback close;
-
-  /// Mark the feature (e.g., bottom sheet or snack bar) as needing to rebuild.
-  final StateSetter? setState;
 }
 
 /// A stack for showing [Message].
@@ -73,16 +96,37 @@ class Messenger extends StatefulWidget {
   }
 
   /// Adds a [Message] te be shown.
-  static void showMessage(
+  static MessageController showMessage(
     BuildContext context, {
     required String message,
     required MessageKind kind,
     String? title,
+    Duration? duration,
+    List<MessageAction>? actions,
+    bool clearMessages = false,
   }) {
-    _of(context).showMessage(
+    return _of(context).showMessage(
       message: message,
       kind: kind,
+      duration: duration,
+      actions: actions,
+      clearMessages: clearMessages,
     );
+  }
+
+  /// Removes the current [Message].
+  static void removeCurrentMessage(BuildContext context) {
+    _of(context).removeCurrentMessage();
+  }
+
+  /// Clear all [Message]s.
+  static void clearMessages(BuildContext context) {
+    _of(context).clearMessages();
+  }
+
+  /// The length of [Message]s in the stack.
+  static int messagesLength(BuildContext context) {
+    return _of(context)._messages.length;
   }
 
   @override
@@ -90,119 +134,119 @@ class Messenger extends StatefulWidget {
 }
 
 class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
-  final Queue<OverlayEntry> _messages = Queue<OverlayEntry>();
+  final Queue<MessageController> _messages = Queue<MessageController>();
   AnimationController? _messageController;
   Timer? _hideTimer;
 
-  void startTimer() {
-    _messageController!.forward(from: 0.0);
-    _hideTimer = Timer(const Duration(seconds: 6), () {
-      hideCurrentMessage();
-    });
+  void _startTimer() {
+    if (!_messages.first._hasMenu) {
+      _hideTimer = Timer(_messages.first._durarion, () {
+        removeCurrentMessage(reason: MessageClosedReason.timeout);
+      });
+    }
   }
 
-  void stopTimer() {
+  void _stopTimer() {
     _hideTimer?.cancel();
+    _hideTimer = null;
   }
 
-  void showMessage({
+  MessageController showMessage({
+    String? title,
+    Duration? duration,
+    List<MessageAction>? actions,
     required String message,
     required MessageKind kind,
-    String? title,
+    required bool clearMessages,
   }) {
     _messageController ??= Message._createAnimationController(vsync: this);
 
-    final OverlayEntry entry = OverlayEntry(
-      builder: (context) => Message(
-        message: message,
-        kind: kind,
-        title: title,
-        animation: _messageController,
+    late MessageController entry;
+
+    entry = MessageController._(
+      overlayEntry: OverlayEntry(
+        builder: (context) => Message(
+          message: message,
+          kind: kind,
+          title: title,
+          animation: _messageController,
+          stopTimer: _stopTimer,
+          resumeTimer: _startTimer,
+          remove: removeCurrentMessage,
+          actions: actions,
+        ),
+        maintainState: false,
       ),
-      maintainState: false,
+      completer: Completer<MessageClosedReason>(),
+      hasMenu: actions?.isNotEmpty ?? false,
+      duration: duration ?? _kDefaultMessageDuration,
+      close: () {
+        if (_messages.first == entry) {
+          removeCurrentMessage(reason: MessageClosedReason.close);
+        } else {
+          entry._completer.complete(MessageClosedReason.close);
+          _messages.remove(entry);
+        }
+      },
     );
 
-    _messages.addLast(entry);
+    if (clearMessages && _messages.isNotEmpty) {
+      for (final entry in _messages) {
+        entry._completer.complete(MessageClosedReason.remove);
+      }
 
-    if (_messages.length == 1) {
-      Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
-      startTimer();
+      _messages.first._overlayEntry.remove();
+      _messages.clear();
+
+      _messages.addLast(entry);
+
+      Overlay.of(context, rootOverlay: true)?.insert(entry._overlayEntry);
+      _startTimer();
+    } else {
+      _messages.addLast(entry);
+
+      if (_messages.length == 1) {
+        _messageController!.forward(from: 0.0);
+        Overlay.of(context, rootOverlay: true)?.insert(entry._overlayEntry);
+        _startTimer();
+      } else {
+        setState(() {});
+      }
     }
+
+    return entry;
   }
 
-  void _update() {
-    // scaffold._updateMessage();
-  }
-
-  void _handleMessageStatusChanged(AnimationStatus status) {
-    switch (status) {
-      case AnimationStatus.dismissed:
-        assert(_messages.isNotEmpty);
-        //_messages.removeFirst();
-
-        _update();
-        if (_messages.isNotEmpty) {
-          //_messageController!.forward();
-        }
-        break;
-      case AnimationStatus.completed:
-        assert(_hideTimer == null);
-        _update();
-        break;
-      case AnimationStatus.forward:
-        break;
-      case AnimationStatus.reverse:
-        break;
-    }
-  }
-
-  /// Removes the current [Message] (if any) immediately from registered
-  /// [Scaffold]s.
-  ///
-  /// The removed snack bar does not run its normal exit animation. If there are
-  /// any queued snack bars, they begin their entrance animation immediately.
-  void removeCurrentMessage(
-      {MessageClosedReason reason = MessageClosedReason.remove}) {
-    if (_messages.isEmpty) {
+  /// Removes the current [Message].
+  void removeCurrentMessage({
+    MessageClosedReason reason = MessageClosedReason.remove,
+  }) {
+    if (_messages.isEmpty ||
+        _messageController!.status == AnimationStatus.dismissed) {
       return;
     }
 
-    // final Completer<MessageClosedReason> completer = _messages.first._completer;
-
-    // if (!completer.isCompleted) completer.complete(reason);
-
-    _hideTimer?.cancel();
-    _hideTimer = null;
-
-    // This will trigger the animation's status callback.
-    _messageController!.value = 0.0;
-  }
-
-  /// Removes the current [Message] by running its normal exit animation.
-  ///
-  /// The closed completer is called after the animation is complete.
-  void hideCurrentMessage({
-    MessageClosedReason reason = MessageClosedReason.hide,
-  }) {
-    // if (_messages.isEmpty ||
-    //     _messageController!.status == AnimationStatus.dismissed) {
-    //   return;
-    // }
-
-    // final Completer<MessageClosedReason> completer = _messages.first._completer;
-    _messageController?.reverse().then<void>((void value) {
-      //if (!completer.isCompleted) completer.complete(reason);
+    if (_messages.length > 1) {
       final entry = _messages.removeFirst();
-      entry.remove();
-      
-      if (_messages.isNotEmpty) {
-        Overlay.of(context, rootOverlay: true)?.insert(_messages.first);
-        startTimer();
-      }
-    });
+      entry._overlayEntry.remove();
+      entry._completer.complete(reason);
 
-    //_hideTimer?.cancel();
-    //_hideTimer = null;
+      Overlay.of(context, rootOverlay: true)
+          ?.insert(_messages.first._overlayEntry);
+      _startTimer();
+    } else {
+      _messageController?.reverse().then<void>((void value) {
+        final entry = _messages.removeFirst();
+        entry._overlayEntry.remove();
+        entry._completer.complete(reason);
+
+        if (_messages.isNotEmpty) {
+          Overlay.of(context, rootOverlay: true)
+              ?.insert(_messages.first._overlayEntry);
+          _startTimer();
+        }
+      });
+    }
   }
 
   /// Removes all the messages currently in queue by clearing the queue
@@ -213,17 +257,29 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
       return;
     }
 
-    // final _FeatureController<Message, MessageClosedReason> currentMessage =
-    //     _messages.first;
-    // _messages.clear();
-    // _messages.add(currentMessage);
-    hideCurrentMessage();
+    _hideTimer?.cancel();
+    _hideTimer = null;
+
+    for (final entry in _messages) {
+      entry._completer.complete(MessageClosedReason.remove);
+    }
+
+    final currentMessage = _messages.removeFirst();
+    _messages.clear();
+
+    final messageController = _messageController;
+    _messageController = null;
+
+    messageController?.reverse().then<void>((void value) {
+      currentMessage._overlayEntry.remove();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return _MessengerScope(
       messengerState: this,
+      length: _messages.length,
       child: widget.child,
     );
   }
@@ -234,14 +290,18 @@ class _MessengerScope extends InheritedWidget {
     Key? key,
     required Widget child,
     required _MessengerState messengerState,
+    required int length,
   })  : _messengerState = messengerState,
+        _length = length,
         super(key: key, child: child);
 
   final _MessengerState _messengerState;
+  final int _length;
 
   @override
-  bool updateShouldNotify(_MessengerScope old) =>
-      _messengerState != old._messengerState;
+  bool updateShouldNotify(_MessengerScope old) {
+    return _length != old._length;
+  }
 }
 
 class Message extends StatefulWidget {
@@ -249,7 +309,7 @@ class Message extends StatefulWidget {
   const Message({
     Key? key,
     this.title,
-    this.menus,
+    this.actions,
     this.constraints,
     this.padding,
     this.duration = const Duration(seconds: 4),
@@ -257,13 +317,16 @@ class Message extends StatefulWidget {
     this.animation,
     required this.kind,
     required this.message,
+    required this.resumeTimer,
+    required this.stopTimer,
+    required this.remove,
   }) : super(key: key);
 
   final String message;
 
   final String? title;
 
-  final List<Widget>? menus;
+  final List<MessageAction>? actions;
 
   final BoxConstraints? constraints;
 
@@ -277,6 +340,12 @@ class Message extends StatefulWidget {
 
   final Animation<double>? animation;
 
+  final VoidCallback resumeTimer;
+
+  final VoidCallback stopTimer;
+
+  final VoidCallback remove;
+
   static AnimationController _createAnimationController({
     required TickerProvider vsync,
   }) {
@@ -287,30 +356,15 @@ class Message extends StatefulWidget {
     );
   }
 
-  Message _withAnimation(Animation<double> animation) {
-    return Message(
-      key: key,
-      padding: padding,
-      animation: animation,
-      kind: kind,
-      message: message,
-      constraints: constraints,
-      dialogPadding: dialogPadding,
-      duration: duration,
-      menus: menus,
-      title: title,
-    );
-  }
-
   @override
   _MessageState createState() => _MessageState();
 }
 
-class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
+class _MessageState extends State<Message> {
   late bool _mouseIsConnected;
-  AnimationStatus? _previousAnimationStatus;
-
   Animation<double>? _animation;
+
+  bool _hasFocus = false;
 
   @override
   void initState() {
@@ -358,13 +412,6 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
     final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
-    // final Animation animation = CurvedAnimation(
-    //   parent: widget.animation!,
-    //   curve: Curves.easeOut,
-    // );
-
-    //final DialogThemeData dialogThemeData = DialogTheme.of(context);
-
     _animation ??= CurvedAnimation(
       parent: widget.animation!,
       curve: Curves.easeInSine,
@@ -400,7 +447,7 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
         color: backgroundColor,
         border: Border(
           top: BorderSide(
-            color: iconForeground,
+            color: _hasFocus ? colorScheme.shade[100] : iconForeground,
           ),
         ),
       ),
@@ -440,16 +487,20 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
                   ],
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 12),
-              //   child: Button.text(
-              //     'Try Again',
-              //     onPressed: () {},
-              //     padding: EdgeInsets.zero,
-              //     //highlightColor: HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.5),
-              //     //color: iconForeground,
-              //   ),
-              // ),
+              if (widget.actions?.isNotEmpty ?? false)
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Column(
+                    children: widget.actions!
+                        .map(
+                          (e) => Button.text(
+                            e.title,
+                            onPressed: e.onPressed,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
             ],
           ),
         ],
@@ -459,12 +510,30 @@ class _MessageState extends State<Message> with SingleTickerProviderStateMixin {
     result = FadeTransition(opacity: _animation!, child: result);
 
     if (_mouseIsConnected) {
-      result = MouseRegion(
-        // onEnter: (_) => _stopTimer(),
-        // onExit: (_) => _startTimer(),
-        // onHover: (_) => _stopTimer(),
-        child: result,
-      );
+      if (widget.actions?.isEmpty ?? true) {
+        result = MouseRegion(
+          onEnter: (_) => !_hasFocus ? widget.stopTimer() : null,
+          onExit: (_) => !_hasFocus ? widget.resumeTimer() : null,
+          onHover: (_) => !_hasFocus ? widget.stopTimer() : null,
+          cursor: SystemMouseCursors.click,
+          child: result,
+        );
+
+        result = GestureDetector(
+          onTap: () {
+            if (_hasFocus) {
+              widget.resumeTimer();
+            } else {
+              widget.stopTimer();
+            }
+
+            setState(
+              () => _hasFocus = !_hasFocus,
+            );
+          },
+          child: result,
+        );
+      }
     }
 
     return Focus(

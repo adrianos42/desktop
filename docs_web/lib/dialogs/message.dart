@@ -18,16 +18,44 @@ class _DialogPageState extends State<DialogMessagePage> {
       context,
       items: [
         ItemTitle(
+          body: (context) => Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                    'Messages to be shown: ${Messenger.messagesLength(context)}'),
+              ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Button.text(
+                  'Clear messages',
+                  onPressed: () => Messenger.clearMessages(context),
+                ),
+              ),
+            ],
+          ),
+          title: 'Messager context',
+        ),
+        ItemTitle(
           body: (context) => Center(
             child: Button.text(
               'Error message',
               onPressed: () async {
-                Messenger.showMessage(
+                late MessageController messageController;
+                messageController = Messenger.showMessage(
                   context,
                   message:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                   title: 'Lorem Ipsum',
                   kind: MessageKind.error,
+                  actions: [
+                    MessageAction(
+                      onPressed: () {
+                        messageController.close();
+                      },
+                      title: 'close',
+                    ),
+                  ],
                 );
               },
             ),
