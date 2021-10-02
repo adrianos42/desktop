@@ -6,12 +6,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
-import '../theme/theme.dart';
 import '../input/button.dart';
+import '../theme/theme.dart';
 
 const Duration _kFadeInDuration = Duration(milliseconds: 100);
 const Duration _kFadeOutDuration = Duration(milliseconds: 100);
 const Duration _kDefaultMessageDuration = Duration(seconds: 6);
+
+typedef _MessageReasonCallback = void Function(MessageClosedReason);
 
 /// The kind of message to be displayed.
 enum MessageKind {
@@ -38,6 +40,9 @@ enum MessageClosedReason {
 
   /// The message was closed.
   close,
+
+  /// The user dismissed the message.
+  dismiss,
 }
 
 class MessageAction {
@@ -141,7 +146,7 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
   void _startTimer() {
     if (!_messages.first._hasMenu) {
       _hideTimer = Timer(_messages.first._durarion, () {
-        removeCurrentMessage(reason: MessageClosedReason.timeout);
+        removeCurrentMessage(MessageClosedReason.timeout);
       });
     }
   }
@@ -182,7 +187,7 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
       duration: duration ?? _kDefaultMessageDuration,
       close: () {
         if (_messages.first == entry) {
-          removeCurrentMessage(reason: MessageClosedReason.close);
+          removeCurrentMessage(MessageClosedReason.close);
         } else {
           entry._completer.complete(MessageClosedReason.close);
           _messages.remove(entry);
@@ -218,9 +223,9 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
   }
 
   /// Removes the current [Message].
-  void removeCurrentMessage({
+  void removeCurrentMessage([
     MessageClosedReason reason = MessageClosedReason.remove,
-  }) {
+  ]) {
     if (_messages.isEmpty ||
         _messageController!.status == AnimationStatus.dismissed) {
       return;
@@ -344,7 +349,7 @@ class Message extends StatefulWidget {
 
   final VoidCallback stopTimer;
 
-  final VoidCallback remove;
+  final _MessageReasonCallback remove;
 
   static AnimationController _createAnimationController({
     required TickerProvider vsync,
@@ -394,6 +399,15 @@ class _MessageState extends State<Message> {
       // _startTimer();
     } else if (event is PointerDownEvent) {
       // _stopTimer();
+    }
+  }
+
+  void _setFocus(bool value) {
+    _hasFocus = value;
+    if (value) {
+      widget.resumeTimer();
+    } else {
+      widget.remove(MessageClosedReason.dismiss);
     }
   }
 
@@ -509,8 +523,8 @@ class _MessageState extends State<Message> {
 
     result = FadeTransition(opacity: _animation!, child: result);
 
-    if (_mouseIsConnected) {
-      if (widget.actions?.isEmpty ?? true) {
+    if (widget.actions?.isEmpty ?? true) {
+      if (_mouseIsConnected) {
         result = MouseRegion(
           onEnter: (_) => !_hasFocus ? widget.stopTimer() : null,
           onExit: (_) => !_hasFocus ? widget.resumeTimer() : null,
@@ -518,28 +532,23 @@ class _MessageState extends State<Message> {
           cursor: SystemMouseCursors.click,
           child: result,
         );
-
-        result = GestureDetector(
-          onTap: () {
-            if (_hasFocus) {
-              widget.resumeTimer();
-            } else {
-              widget.stopTimer();
-            }
-
-            setState(
-              () => _hasFocus = !_hasFocus,
-            );
-          },
-          child: result,
-        );
       }
+
+      result = GestureDetector(
+        onTap: () => setState(() => _setFocus(!_hasFocus)),
+        child: result,
+      );
     }
 
     return Focus(
       child: Container(alignment: Alignment.bottomCenter, child: result),
       autofocus: true,
       debugLabel: 'Dialog',
+      onFocusChange: (value) {
+        if (widget.actions?.isEmpty ?? true) {
+          _setFocus(value);
+        }
+      },
     );
   }
 }

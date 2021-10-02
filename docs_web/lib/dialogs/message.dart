@@ -48,14 +48,14 @@ class _DialogPageState extends State<DialogMessagePage> {
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                   title: 'Lorem Ipsum',
                   kind: MessageKind.error,
-                  actions: [
-                    MessageAction(
-                      onPressed: () {
-                        messageController.close();
-                      },
-                      title: 'close',
-                    ),
-                  ],
+                  // actions: [
+                  //   MessageAction(
+                  //     onPressed: () {
+                  //       messageController.close();
+                  //     },
+                  //     title: 'close',
+                  //   ),
+                  // ],
                 );
               },
             ),
