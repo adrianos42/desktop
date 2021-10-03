@@ -733,15 +733,16 @@ class _TreeColumnState extends State<_TreeColumn> {
         alignment: Alignment.centerLeft,
         child: ButtonTheme.merge(
           data: ButtonThemeData(
-            color: activeColor,
+            color: treeTheme.color,
             highlightColor: highlightColor,
-            hoverColor: hoverColor,
-            focusColor: hoverColor,
+            //hoverColor: hoverColor,
+            //focusColor: hoverColor,
           ),
           child: Button(
             padding: EdgeInsets.zero,
             bodyPadding: EdgeInsets.zero,
             body: widget.node.title,
+            active: active,
             onPressed: () {
               Tree._of(context)!.setPage(name);
             },

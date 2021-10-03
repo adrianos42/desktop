@@ -9,6 +9,9 @@ class DialogPage extends StatefulWidget {
 }
 
 class _DialogPageState extends State<DialogPage> {
+  bool _dialogActive = false;
+  bool _dialogDismissActive = false;
+
   @override
   Widget build(BuildContext context) {
     final requiresActionCode = '''
@@ -46,14 +49,16 @@ showDialog(
           body: (context) => Center(
             child: Button.text(
               'Open dialog',
+              active: _dialogActive,
               onPressed: () async {
+                setState(() => _dialogActive = true);
                 await showDialog(
                   context: context,
                   barrierDismissible: false,
                   builder: (context) => Dialog(
                     menus: [
-                      Button.text(
-                        'Close',
+                      DialogAction(
+                        title: 'Close',
                         onPressed: () => Dialog.close(context),
                       ),
                     ],
@@ -71,6 +76,8 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
 '''),
                   ),
                 );
+
+                setState(() => _dialogActive = false);
               },
             ),
           ),
@@ -82,7 +89,10 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
           body: (context) => Center(
             child: Button.text(
               'Open dialog',
+              active: _dialogDismissActive,
               onPressed: () async {
+                setState(() => _dialogDismissActive = true);
+
                 await showDialog(
                   context: context,
                   barrierDismissible: true,
@@ -92,6 +102,8 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
                   ),
                 );
+
+                setState(() => _dialogDismissActive = false);
               },
             ),
           ),

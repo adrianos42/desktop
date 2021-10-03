@@ -20,7 +20,7 @@ class _TabPageState extends State<TabPage> {
           ? colorScheme.background[0]
           : buttonScope.pressed
               ? colorScheme.background[0]
-              : buttonScope.highlighted
+              : buttonScope.hovered
                   ? colorScheme.shade[30]
                   : colorScheme.background[10];
 
@@ -136,8 +136,8 @@ Tab(
             return Tab(
               backgroundColor: Theme.of(context).colorScheme.background[10],
               items: [
-                TabItem.custom(
-                  _createCustomTab('camera', Icons.camera),
+                TabItem(
+                  tabItemBuilder: _createCustomTab('camera', Icons.camera),
                   builder: (context, _) => Center(
                     child: Text(
                       'camera page',
@@ -145,8 +145,8 @@ Tab(
                     ),
                   ),
                 ),
-                TabItem.custom(
-                  _createCustomTab('computer', Icons.computer),
+                TabItem(
+                  tabItemBuilder: _createCustomTab('computer', Icons.computer),
                   builder: (context, _) => Center(
                     child: Text(
                       'computer page',
@@ -154,8 +154,8 @@ Tab(
                     ),
                   ),
                 ),
-                TabItem.custom(
-                  _createCustomTab('map', Icons.map),
+                TabItem(
+                  tabItemBuilder: _createCustomTab('map', Icons.map),
                   builder: (context, _) => Center(
                     child: Text(
                       'map page',
@@ -163,8 +163,8 @@ Tab(
                     ),
                   ),
                 ),
-                TabItem.custom(
-                  _createCustomTab('cloud', Icons.cloud),
+                TabItem(
+                  tabItemBuilder: _createCustomTab('cloud', Icons.cloud),
                   builder: (context, _) => Center(
                     child: Text(
                       'cloud page',

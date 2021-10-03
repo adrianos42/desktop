@@ -1,11 +1,12 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
+
+const Duration _kDefaultButtonDuration = Duration(milliseconds: 100);
 
 /// Base button used to create other kinds of buttons.
 class Button extends StatefulWidget {
@@ -24,7 +25,7 @@ class Button extends StatefulWidget {
     this.padding,
     this.bodyPadding,
     this.trailingPadding,
-    this.active = false,
+    this.active,
     this.axis = Axis.horizontal,
     this.focusNode,
     this.canRequestFocus = true,
@@ -46,6 +47,7 @@ class Button extends StatefulWidget {
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
+    bool? active,
   }) {
     return Button(
       body: Text(
@@ -63,6 +65,7 @@ class Button extends StatefulWidget {
       focusNode: focusNode,
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
+      active: active,
     );
   }
 
@@ -80,6 +83,7 @@ class Button extends StatefulWidget {
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
+    bool? active,
   }) {
     return Button(
       body: Icon(icon, size: size),
@@ -94,6 +98,7 @@ class Button extends StatefulWidget {
       focusNode: focusNode,
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
+      active: active,
     );
   }
 
@@ -137,7 +142,7 @@ class Button extends StatefulWidget {
   final EdgeInsets? padding;
 
   /// Forces the button highlight.
-  final bool active;
+  final bool? active;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -156,38 +161,41 @@ class _ButtonState extends State<Button>
     with ComponentStateMixin, SingleTickerProviderStateMixin {
   void _handleHoverEntered() {
     if (!hovered && (pressed || !_globalPointerDown)) {
-      _controller.reset();
-      _controller.forward();
+      _colorUpdate.clear();
       setState(() => hovered = true);
+      _updateColor();
     }
   }
 
   void _handleHoverExited() {
     if (hovered) {
-      _controller.reset();
-      _controller.forward();
       setState(() => hovered = false);
+      _updateColor();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
     if (pressed) {
-      _controller.forward(from: 0.5);
       setState(() => pressed = false);
+      if (widget.active == null) {
+        _updateColor();
+      }
     }
   }
 
   void _handleTapDown(TapDownDetails event) {
     if (!pressed) {
-      _controller.forward(from: 0.5);
       setState(() => pressed = true);
+      _colorUpdate.clear();
+      _updateColor();
     }
   }
 
   void _handleTapCancel() {
     if (pressed) {
-      _controller.forward(from: 0.5);
       setState(() => pressed = false);
+      pressed = false;
+      _updateColor();
     }
   }
 
@@ -198,6 +206,7 @@ class _ButtonState extends State<Button>
   late AnimationController _controller;
 
   ColorTween? _color;
+  final Queue<Color> _colorUpdate = Queue<Color>();
 
   late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
     ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _invoke),
@@ -236,43 +245,75 @@ class _ButtonState extends State<Button>
     }
   }
 
-  void _invoke([Intent? intent]) {
-    _handleTap();
-  }
+  void _invoke([Intent? intent]) => _handleTap();
 
-  Future<void> _handleTap() async {
-    if (waiting) {
-      return;
-    }
-    setState(() => waiting = true);
-
-    final dynamic result =
-        widget.onPressed!() as dynamic; // TODO(as): fix dynamic
-
-    if (result is Future<void>) {
-      await result;
-    }
-
-    setState(() => waiting = false);
-  }
+  void _handleTap() => widget.onPressed?.call();
 
   void _handleFocusUpdate(bool hasFocus) {
     focused = hasFocus;
   }
 
-  bool get active => waiting || widget.active;
+  bool get active => waiting || (widget.active ?? false);
 
   bool get enabled => widget.onPressed != null;
+
+  void _updateColor() {
+    final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
+
+    final Color pressedForeground =
+        widget.highlightColor ?? buttonThemeData.highlightColor!;
+
+    final Color enabledForeground = widget.color ?? buttonThemeData.color!;
+
+    final Color hoveredForeground =
+        widget.hoverColor ?? buttonThemeData.hoverColor!;
+
+    final Color disabledForeground = buttonThemeData.disabledColor!;
+
+    final Color foregroundColor = enabled
+        ? active || pressed
+            ? pressedForeground
+            : hovered || _focusHighlight
+                ? hoveredForeground
+                : enabledForeground
+        : disabledForeground;
+
+    _colorUpdate.addLast(foregroundColor);
+
+    if (!_controller.isAnimating) {
+      if (_colorUpdate.length == 1) {
+        final color = _colorUpdate.removeFirst();
+        _color = ColorTween(begin: _color?.end ?? color, end: color);
+        _controller.forward(from: 0.0);
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-
-    _controller.forward();
+      duration: _kDefaultButtonDuration,
+      value: 1.0,
+    )..addStatusListener((status) {
+        switch (status) {
+          case AnimationStatus.dismissed:
+            break;
+          case AnimationStatus.forward:
+            break;
+          case AnimationStatus.reverse:
+            break;
+          case AnimationStatus.completed:
+            if (_colorUpdate.isNotEmpty) {
+              final color = _colorUpdate.removeFirst();
+              _color = ColorTween(begin: _color?.end ?? color, end: color);
+              _controller.forward(from: 0.0);
+            }
+            break;
+        }
+      });
 
     WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
   }
@@ -287,33 +328,32 @@ class _ButtonState extends State<Button>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _color = null;
+
+    _updateColor();
+  }
+
+  @override
+  void didUpdateWidget(Button oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.active != oldWidget.active) {
+      _colorUpdate.clear();
+      _updateColor();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final Color enabledForeground = widget.color ?? buttonThemeData.color!;
-    final Color pressedForeground =
-        widget.highlightColor ?? buttonThemeData.highlightColor!;
-    final Color hoveredForeground =
-        widget.hoverColor ?? buttonThemeData.hoverColor!;
-
-    final Color disabledForeground = buttonThemeData.disabledColor!;
-
-    final Color foregroundColor = enabled
-        ? active || pressed
-            ? pressedForeground
-            : hovered || _focusHighlight
-                ? hoveredForeground
-                : enabledForeground
-        : disabledForeground;
-
-    _color =
-        ColorTween(begin: _color?.end ?? foregroundColor, end: foregroundColor);
-
     final itemSpacing = buttonThemeData.itemSpacing!;
+
+    if (_color == null) {
+      _updateColor();
+
+      final color = _colorUpdate.removeFirst();
+      _color ??= ColorTween(begin: _color?.end ?? color, end: color);
+    }
 
     final BoxConstraints constraints;
     final EdgeInsets leadingPadding;
@@ -431,7 +471,7 @@ class _ButtonState extends State<Button>
 
     result = ButtonScope(
       child: result,
-      highlighted: enabled && (hovered || _focusHighlight),
+      hovered: enabled && (hovered || _focusHighlight),
       pressed: enabled && pressed,
       active: enabled && active,
       disabled: !enabled,
@@ -454,13 +494,13 @@ class ButtonScope extends InheritedWidget {
   const ButtonScope({
     Key? key,
     required Widget child,
-    required this.highlighted,
+    required this.hovered,
     required this.pressed,
     required this.active,
     required this.disabled,
   }) : super(key: key, child: child);
 
-  final bool highlighted;
+  final bool hovered;
 
   final bool pressed;
 

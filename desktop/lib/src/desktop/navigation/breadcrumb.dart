@@ -1,64 +1,83 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+//import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../input/button.dart';
-import '../input/button_context_menu.dart';
-import '../dialogs/context_menu.dart';
 import '../theme/theme.dart';
-import 'route.dart';
-import 'tab_scope.dart' show RouteBuilder, TabScope;
-
-typedef TextCallback = void Function(String);
+import 'tab_scope.dart' show TabScope;
 
 const double _kHeight = 32.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
+class _BreadcrumbItem {
+  const _BreadcrumbItem(this.overlayEntry, this.itemBuilder);
+
+  final OverlayEntry overlayEntry;
+  final WidgetBuilder itemBuilder;
+}
+
+class BreadcrumbController extends ChangeNotifier {
+  bool _isDisposed = false;
+
+  final List<_BreadcrumbItem> _items =
+      List<_BreadcrumbItem>.empty(growable: true);
+
+  int get index => _items.length - 1;
+
+  set index(int value) {
+    if (_items.length - 1 == value || value >= _items.length - 1) {
+      return;
+    }
+
+    _items.removeRange(value + 1, _items.length);
+    notifyListeners();
+  }
+
+  void push({
+    required IndexedWidgetBuilder builder,
+    required IndexedWidgetBuilder breadCrumbBuilder,
+  }) {
+    final int index = _items.length;
+    _items.add(
+      _BreadcrumbItem(
+        OverlayEntry(builder: (context) => builder(context, index)),
+        (context) => breadCrumbBuilder(context, index),
+      ),
+    );
+
+    notifyListeners();
+  }
+
+  void pop() {
+    _items.removeLast();
+    notifyListeners();
+  }
+
+  @mustCallSuper
+  @override
+  void dispose() {
+    super.dispose();
+    _isDisposed = true;
+  }
+}
+
 /// Navigation using breadcrumbs.
-///
-/// ```dart
-/// Breadcrumb(
-///   initialRoute: 'Page0/',
-///   routeBuilder: (context, settings) {
-///     switch (settings.name) {
-///       case 'Page0/':
-///         return DesktopPageRoute(
-///           fullscreenDialog: false,
-///           builder: (context) => HomePage(),
-///           settings: RouteSettings(name: settings.name),
-///         );
-///       default:
-///         return DesktopPageRoute(
-///           fullscreenDialog: false,
-///           builder: (context) => Page(settings.arguments),
-///           settings: RouteSettings(name: settings.name),
-///         );
-///     }
-///   },
-/// )```
 class Breadcrumb extends StatefulWidget {
   /// Creates a [Breadcrumb].
   const Breadcrumb({
     Key? key,
-    required this.routeBuilder,
-    required this.initialRoute,
-    this.routeNameChanged,
     this.trailing,
     this.leading,
+    required this.controller,
   }) : super(key: key);
 
-  final String initialRoute;
+  final BreadcrumbController controller;
 
-  /// Called whenever a route is pushed into the current [Navigator].
-  final TextCallback? routeNameChanged;
-
-  final RouteBuilder routeBuilder;
-
-  /// Widget placed after any items.
+  /// Widget placed at the end of the breadcrumb.
   final Widget? trailing;
 
-  /// Widget placed before any items.
+  /// Widget placed at the beginning of the breadcrumb.
   final Widget? leading;
 
   @override
@@ -68,48 +87,11 @@ class Breadcrumb extends StatefulWidget {
 class _BreadcrumbState extends State<Breadcrumb> {
   late GlobalKey<NavigatorState> _navigatorKey;
 
-  List<String> _names = List<String>.empty(growable: true);
+  final ScrollController scrollController = ScrollController();
 
-  void _pushName(String name) {
-    if (mounted) {
-      name = _formatNavText(name);
-      widget.routeNameChanged?.call(name);
-      setState(() => _names.add(name));
-    }
-  }
+  BreadcrumbController get controller => widget.controller;
 
-  void _popName(String name) {
-    if (mounted) {
-      final names = _names;
-      assert(names.length > 1, 'Cannot pop the first route');
-
-      names.removeLast();
-      widget.routeNameChanged?.call(names.last);
-      setState(() => _names = names);
-    }
-  }
-
-  void _popByIndex(int index) {
-    final names = _names;
-
-    // Pops until the name index
-    while (names.length - 1 > index) {
-      assert(_navigatorKey.currentState!.canPop());
-      _navigatorKey.currentState!.pop();
-    }
-
-    widget.routeNameChanged?.call(_names.last);
-
-    setState(() => _names = names);
-  }
-
-  String _formatNavText(String value) {
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-
-    return capitalize(value.replaceAll('/', '').replaceAll('_', ' '));
-  }
-
-  final ScrollController _scrollController = ScrollController();
+  _BreadcrumbItem? currentBreadcrumbItem;
 
   Widget _createBarNavigation() {
     final themeData = Theme.of(context);
@@ -120,8 +102,8 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
     final foreground = textTheme.textLow;
 
-    for (int i = 0; i < _names.length; i++) {
-      final isLast = i == _names.length - 1;
+    for (int i = 0; i < controller._items.length; i++) {
+      final isLast = i == controller._items.length - 1;
 
       items.add(
         Align(
@@ -135,10 +117,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
             ),
             child: Builder(
               builder: (context) => Button(
-                body: Text(_names[i]),
+                body: controller._items[i].itemBuilder(context),
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 bodyPadding: EdgeInsets.zero,
-                onPressed: isLast ? null : () => _popByIndex(i),
+                onPressed:
+                    isLast ? null : () => widget.controller.index = i,
               ),
             ),
           ),
@@ -155,9 +138,6 @@ class _BreadcrumbState extends State<Breadcrumb> {
         );
       }
     }
-
-    final showEllipsis = _scrollController.hasClients &&
-        _scrollController.position.extentAfter > 0;
 
     Widget result = Container(
       constraints: const BoxConstraints.tightFor(height: _kHeight),
@@ -178,7 +158,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
                 ),
                 child: SingleChildScrollView(
                   reverse: true,
-                  controller: _scrollController,
+                  controller: scrollController,
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -188,17 +168,6 @@ class _BreadcrumbState extends State<Breadcrumb> {
               ),
             ),
           ),
-          if (showEllipsis)
-            ContextMenuButton(
-              const Icon(Icons.more_horiz),
-              value: '',
-              onSelected: (String value) => setState(() {}),
-              itemBuilder: (context) => _names
-                  .map(
-                    (e) => ContextMenuItem(child: Text(e), value: e),
-                  )
-                  .toList(),
-            ),
           if (widget.trailing != null) widget.trailing!,
         ],
       ),
@@ -212,13 +181,21 @@ class _BreadcrumbState extends State<Breadcrumb> {
     return result;
   }
 
+  void _onCurrentIndexChanged() {
+    if (currentBreadcrumbItem != controller._items[controller.index]) {
+      currentBreadcrumbItem?.overlayEntry.remove();
+      currentBreadcrumbItem = controller._items[controller.index];
+      
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
-    final name = _formatNavText(widget.initialRoute);
-    _names.add(name);
     _navigatorKey = GlobalKey<NavigatorState>();
+
+    widget.controller.addListener(_onCurrentIndexChanged);
   }
 
   @override
@@ -229,6 +206,13 @@ class _BreadcrumbState extends State<Breadcrumb> {
   @override
   void didUpdateWidget(Breadcrumb oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    if (widget.controller != oldWidget.controller) {
+      if (oldWidget.controller._isDisposed == false) {
+        oldWidget.controller.removeListener(_onCurrentIndexChanged);
+      }
+      widget.controller.addListener(_onCurrentIndexChanged);
+    }
   }
 
   @override
@@ -246,101 +230,19 @@ class _BreadcrumbState extends State<Breadcrumb> {
         Builder(
           builder: (context) => _createBarNavigation(),
         ),
-        Expanded(
-          child: Builder(
-            builder: (context) => _NavigationView(
-              builder: widget.routeBuilder,
-              navigatorKey: _navigatorKey,
-              initialRoute: widget.initialRoute,
-              navigatorObserver: _NavObserver(this),
-            ),
-          ),
-        ),
+        // Expanded(
+        //   child: Builder(
+        //     builder: (context) => _NavigationView(
+        //       builder: widget.routeBuilder,
+        //       navigatorKey: _navigatorKey,
+        //       initialRoute: widget.initialRoute,
+        //       navigatorObserver: _NavObserver(this),
+        //     ),
+        //   ),
+        // ),
       ],
     );
 
     return result;
-  }
-}
-
-class _NavObserver extends NavigatorObserver {
-  _NavObserver(this._navState);
-
-  final _BreadcrumbState _navState;
-
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (!route.isFirst && route is PageRoute<dynamic>) {
-      _navState._pushName(route.settings.name!); // TODO(as): ??
-    }
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    if (!route.isFirst && route is PageRoute<dynamic>) {
-      _navState._popName(route.settings.name!);
-    }
-  }
-
-  @override
-  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {}
-
-  @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {}
-}
-
-class _NavigationView extends StatefulWidget {
-  const _NavigationView({
-    required this.builder,
-    this.initialRoute,
-    this.navigatorKey,
-    required this.navigatorObserver,
-    Key? key,
-  }) : super(key: key);
-
-  final RouteBuilder builder;
-
-  final GlobalKey<NavigatorState>? navigatorKey;
-
-  final String? initialRoute;
-
-  final NavigatorObserver navigatorObserver;
-
-  @override
-  _NavigationViewState createState() => _NavigationViewState();
-}
-
-class _NavigationViewState extends State<_NavigationView> {
-  @override
-  Widget build(BuildContext context) {
-    return Navigator(
-      key: widget.navigatorKey,
-      onGenerateRoute: _onGenerateRoute,
-      onUnknownRoute: _onUnknownRoute,
-      initialRoute: widget.initialRoute,
-      observers: <NavigatorObserver>[widget.navigatorObserver],
-    );
-  }
-
-  Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
-    return widget.builder(context, settings);
-  }
-
-  Route<dynamic> _onUnknownRoute(RouteSettings settings) {
-    final name = settings.name!.replaceFirst(r'/', '');
-
-    final ThemeData themeData = Theme.invertedThemeOf(context);
-
-    return DesktopPageRoute(
-      builder: (context) => Container(
-        alignment: Alignment.center,
-        color: themeData.colorScheme.background.toColor(),
-        child: Text(
-          'Page "$name" not found',
-          style: themeData.textTheme.title,
-        ),
-      ),
-      settings: settings,
-    );
   }
 }

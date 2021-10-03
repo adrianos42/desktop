@@ -1,13 +1,23 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/animation.dart' show Curves;
 
 import '../localizations.dart';
 import '../theme/theme.dart';
+import '../input/button.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 300);
+
+class DialogAction {
+  const DialogAction({
+    required this.title,
+    required this.onPressed,
+  });
+
+  final String title;
+
+  final VoidCallback onPressed;
+}
 
 class Dialog extends StatelessWidget {
   /// Creates a [Dialog].
@@ -28,7 +38,7 @@ class Dialog extends StatelessWidget {
   final Widget? title;
 
   /// Widgets to be placed at the bottom right of the dialog.
-  final List<Widget>? menus;
+  final List<DialogAction>? menus;
 
   /// The constraints for the dialog.
   final BoxConstraints? constraints;
@@ -37,7 +47,7 @@ class Dialog extends StatelessWidget {
 
   //final EdgeInsets? dialogPadding;
 
-  // Closes the dialog.
+  /// Closes the dialog.
   static void close(BuildContext context) => Navigator.of(context).pop();
 
   @override
@@ -96,7 +106,15 @@ class Dialog extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: menus!, // TODO(as): ???
+                children: menus!
+                    .map(
+                      (e) => Button.text(
+                        e.title,
+                        padding: EdgeInsets.zero,
+                        onPressed: e.onPressed,
+                      ),
+                    )
+                    .toList(),
               ),
             ),
         ],

@@ -144,6 +144,8 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
   Timer? _hideTimer;
 
   void _startTimer() {
+    _stopTimer();
+
     if (!_messages.first._hasMenu) {
       _hideTimer = Timer(_messages.first._durarion, () {
         removeCurrentMessage(MessageClosedReason.timeout);
@@ -232,6 +234,8 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     }
 
     if (_messages.length > 1) {
+      _stopTimer();
+
       final entry = _messages.removeFirst();
       entry._overlayEntry.remove();
       entry._completer.complete(reason);
@@ -245,7 +249,7 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
         entry._overlayEntry.remove();
         entry._completer.complete(reason);
 
-        if (_messages.isNotEmpty) {
+        if (_messages.isNotEmpty && _hideTimer == null) {
           Overlay.of(context, rootOverlay: true)
               ?.insert(_messages.first._overlayEntry);
           _startTimer();

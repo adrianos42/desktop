@@ -43,17 +43,6 @@ class TabItem {
     );
   }
 
-  /// Creates a tab item with a custom widget.
-  factory TabItem.custom(
-    IndexedWidgetBuilder tabBuilder, {
-    required IndexedWidgetBuilder builder,
-  }) {
-    return TabItem(
-      builder: builder,
-      tabItemBuilder: tabBuilder,
-    );
-  }
-
   /// The 'page' used for the tab.
   final IndexedWidgetBuilder builder;
 
@@ -377,15 +366,11 @@ class _TabGroupState extends State<_TabGroup> {
         List<Widget>.generate(widget.items.length, (index) {
       final active = widget.index == index;
 
-      final highlightColor = tabThemeData.highlightColor!;
-      final hoverColor = active ? highlightColor : tabThemeData.hoverColor!;
-      final activeColor = active ? highlightColor : tabThemeData.color!;
-
       return ButtonTheme.merge(
         data: ButtonThemeData(
-          color: activeColor,
-          highlightColor: highlightColor,
-          hoverColor: hoverColor,
+          color: tabThemeData.color!,
+          highlightColor: tabThemeData.highlightColor!,
+          hoverColor: tabThemeData.hoverColor!,
         ),
         child: Button(
           onPressed: () => widget.changeIndex(index),

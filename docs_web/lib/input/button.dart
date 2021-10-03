@@ -80,10 +80,8 @@ Button.text(
               child: Button(
                 body: Text('Custom'),
                 // Uses a recommended color for the button.
-                color: buttonTheme.customColor(context, customColor),
-                hoverColor: buttonTheme.customHoverColor(context, customColor),
-                highlightColor:
-                    buttonTheme.customHighlightColor(context, customColor),
+                color: customColor,
+                highlightColor: Theme.of(context).textTheme.textLow,
                 onPressed: () {},
               ),
             ),
