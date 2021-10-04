@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,7 @@ import '../theme/theme.dart';
 import '../input/button.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 300);
+const Curve _kDialogCurve = Curves.easeOut;
 
 class DialogAction {
   const DialogAction({
@@ -19,12 +21,157 @@ class DialogAction {
   final VoidCallback onPressed;
 }
 
+/// The reason the dialog was closed.
+enum DialogClosedReason {
+  /// The message was closed.
+  close,
+
+  /// The user dismissed the dialog.
+  dismiss,
+}
+
+class DialogController {
+  const DialogController._({
+    required OverlayEntry overlayEntry,
+    required Completer<DialogClosedReason> completer,
+    required bool hasMenu,
+    required Duration duration,
+    required this.close,
+  })  : _overlayEntry = overlayEntry,
+        _completer = completer,
+        _durarion = duration,
+        _hasMenu = hasMenu;
+
+  final OverlayEntry _overlayEntry;
+
+  final bool _hasMenu;
+
+  final Duration _durarion;
+
+  final Completer<DialogClosedReason> _completer;
+
+  final VoidCallback close;
+
+  Future<DialogClosedReason> get closed => _completer.future;
+}
+
+// class DialogScope extends InheritedWidget {
+//   /// Creates a [DialogScope].
+//   DialogScope({
+//     Key? key,
+//     required Widget child,
+//   }) : super(key: key, child: child);
+
+//   DialogController? _currentDialogController;
+
+  
+
+//   static void closeDialog(BuildContext context) {
+//     final DialogScope scope =
+//         context.dependOnInheritedWidgetOfExactType<DialogScope>()!;
+
+//     final DialogController? currentDialogController =
+//         scope._currentDialogController;
+
+//     if (currentDialogController != null) {
+//       currentDialogController.close();
+//     }
+
+//     scope._currentDialogController = null;
+//   }
+
+//   @override
+//   bool updateShouldNotify(DialogScope oldWidget) {
+//     return _currentDialogController != oldWidget._currentDialogController;
+//   }
+// }
+
+class _DialogView extends StatefulWidget {
+  const _DialogView({
+    required this.builder,
+    required this.close,
+    required this.closeComplete,
+    required this.dismissible,
+    this.barrierColor,
+    Key? key,
+  }) : super(key: key);
+
+  final WidgetBuilder builder;
+  final VoidCallback close;
+  final void Function(DialogClosedReason) closeComplete;
+  final bool dismissible;
+  final Color? barrierColor;
+
+  @override
+  _DialogViewState createState() => _DialogViewState();
+}
+
+class _DialogViewState extends State<_DialogView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  void dismiss() {
+    if (widget.dismissible) {
+      close();
+    }
+  }
+
+  void close([DialogClosedReason reason = DialogClosedReason.dismiss]) {
+    widget.closeComplete(reason);
+    controller.reverse().then<void>((void value) => widget.close());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      duration: _kDialogDuration,
+      debugLabel: 'Dialog',
+      vsync: this,
+    );
+
+    animation = CurvedAnimation(
+      curve: _kDialogCurve,
+      reverseCurve: _kDialogCurve.flipped,
+      parent: controller,
+    );
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Color barrierColor =
+        widget.barrierColor ?? DialogTheme.of(context).barrierColor!;
+
+    return FadeTransition(
+      opacity: animation,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: dismiss,
+        child: Container(
+          color: barrierColor,
+          child: GestureDetector(
+            behavior: HitTestBehavior.deferToChild,
+            onTap: () {},
+            child: Builder(
+              builder: widget.builder,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class Dialog extends StatelessWidget {
   /// Creates a [Dialog].
   const Dialog({
     Key? key,
     this.title,
-    this.menus,
+    this.actions,
     this.constraints,
     //this.padding,
     //this.dialogPadding,
@@ -38,7 +185,7 @@ class Dialog extends StatelessWidget {
   final Widget? title;
 
   /// Widgets to be placed at the bottom right of the dialog.
-  final List<DialogAction>? menus;
+  final List<DialogAction>? actions;
 
   /// The constraints for the dialog.
   final BoxConstraints? constraints;
@@ -46,9 +193,6 @@ class Dialog extends StatelessWidget {
   // final EdgeInsets? padding;
 
   //final EdgeInsets? dialogPadding;
-
-  /// Closes the dialog.
-  static void close(BuildContext context) => Navigator.of(context).pop();
 
   @override
   Widget build(BuildContext context) {
@@ -99,14 +243,14 @@ class Dialog extends StatelessWidget {
               ),
             ),
           ),
-          if (menus != null)
+          if (actions != null)
             Container(
               alignment: Alignment.centerRight,
               padding: dialogThemeData.menuPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: menus!
+                children: actions!
                     .map(
                       (e) => Button.text(
                         e.title,
@@ -140,80 +284,35 @@ class Dialog extends StatelessWidget {
   }
 }
 
-class DialogRoute<T> extends PopupRoute<T> {
-  /// Creates a [DialogRoute].
-  DialogRoute({
-    required RoutePageBuilder pageBuilder,
-    required BuildContext context,
-    bool barrierDismissible = true,
-    String? barrierLabel,
-    RouteSettings? settings,
+DialogController showDialog(
+    BuildContext context, {
+    required WidgetBuilder builder,
+    Duration? duration,
+    List<DialogAction>? actions,
     Color? barrierColor,
-    ImageFilter? filter,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
-        super(settings: settings, filter: filter);
+    bool dismissible = true,
+  }) {
+    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
 
-  final RoutePageBuilder _pageBuilder;
-
-  final _curve = Curves.easeOut;
-
-  @override
-  bool get barrierDismissible => _barrierDismissible;
-  final bool _barrierDismissible;
-
-  @override
-  String? get barrierLabel => _barrierLabel;
-  final String? _barrierLabel;
-
-  @override
-  Color? get barrierColor => _barrierColor;
-  final Color? _barrierColor;
-
-  @override
-  Duration get transitionDuration => _kDialogDuration;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return Semantics(
-      child: _pageBuilder(context, animation, secondaryAnimation),
-      scopesRoute: true,
-      explicitChildNodes: true,
-      focused: true,
-    );
-  }
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: _curve,
-        reverseCurve: _curve.flipped,
+    late DialogController entry;
+    entry = DialogController._(
+      overlayEntry: OverlayEntry(
+        builder: (context) => _DialogView(
+            key: viewKey,
+            builder: builder,
+            dismissible: dismissible,
+            barrierColor: barrierColor,
+            close: () => entry._overlayEntry.remove(),
+            closeComplete: (reason) => entry._completer.complete(reason)),
+        maintainState: false,
       ),
-      child: child,
+      completer: Completer<DialogClosedReason>(),
+      hasMenu: actions?.isNotEmpty ?? false,
+      duration: duration ?? _kDialogDuration,
+      close: () => viewKey.currentState!.close(DialogClosedReason.close),
     );
-  }
-}
 
-/// Shows a dialog with default [DialogRoute].
-Future<T?> showDialog<T>({
-  required BuildContext context,
-  required WidgetBuilder builder,
-  bool barrierDismissible = true,
-  ImageFilter? filter,
-  Color? barrierColor,
-}) {
-  return Navigator.of(context, rootNavigator: true).push<T>(DialogRoute<T>(
-    pageBuilder: (context, _, __) => builder(context),
-    context: context,
-    barrierDismissible: barrierDismissible,
-    filter: filter,
-    barrierColor: barrierColor,
-  ));
-}
+    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
+
+    return entry;
+  }

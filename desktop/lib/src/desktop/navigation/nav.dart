@@ -19,7 +19,7 @@ class NavItem {
   });
 
   /// Page builder.
-  final WidgetBuilder builder;
+  final IndexedWidgetBuilder builder;
 
   /// Icon used if the nav axis is vertical.
   final IconData icon;
@@ -200,13 +200,12 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     });
   }
 
-  void _showMenu(NavItem item) {
+  void _showMenu(NavItem item, int index) {
     if (_menus == null) {
       setState(() {
         _menus = item.title;
 
-        final Color barrierColor =
-            DialogTheme.of(context).barrierColor!;
+        final Color barrierColor = DialogTheme.of(context).barrierColor!;
         _menuColorTween.begin = barrierColor.withOpacity(0.0);
         _menuColorTween.end = barrierColor.withOpacity(0.8);
 
@@ -215,7 +214,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
           builder: (context) => AnimatedBuilder(
             animation: _menuAnimation,
             builder: (context, _) => GestureDetector(
-              behavior: HitTestBehavior.deferToChild,
+              behavior: HitTestBehavior.opaque,
               onTap: _hideMenu,
               child: Container(
                 alignment: widget.navAxis == Axis.vertical
@@ -228,7 +227,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
                   child: ClipRect(
                     child: FractionalTranslation(
                       translation: _menuOffsetTween.evaluate(_menuAnimation),
-                      child: item.builder(context),
+                      child: item.builder(context, index),
                     ),
                   ),
                 ),
@@ -247,21 +246,27 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   Widget _createMenuItems(
       EdgeInsets itemsSpacing, NavThemeData navThemeData, List<NavItem> items) {
+    final List<Widget> itemsMenu = List<Widget>.empty(growable: true);
+
+    for (int i = 0; i < items.length; i += 1) {
+      itemsMenu.add(
+        NavMenuButton(
+          Icon(items[i].icon),
+          axis: widget.navAxis,
+          active: _menus == items[i].title,
+          onPressed: _menus == null || _menus == items[i].title
+              ? () => _showMenu(items[i], i)
+              : null,
+        ),
+      );
+    }
+
     return Padding(
       padding: itemsSpacing,
       child: Flex(
         direction: widget.navAxis,
         mainAxisSize: MainAxisSize.min,
-        children: items.map((item) {
-          return NavMenuButton(
-            Icon(item.icon),
-            axis: widget.navAxis,
-            active: _menus == item.title,
-            onPressed: _menus == null || _menus == item.title
-                ? () => _showMenu(item)
-                : null,
-          );
-        }).toList(),
+        children: itemsMenu,
       ),
     );
   }
@@ -423,7 +428,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
                 canRequestFocus: active,
                 child: Builder(
                   builder: _shouldBuildView[index]
-                      ? widget.items[index].builder
+                      ? (context) => widget.items[index].builder(context, index)
                       : (context) => Container(),
                 ),
               ),

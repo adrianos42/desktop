@@ -18,6 +18,14 @@ class _BreadcrumbItem {
 }
 
 class BreadcrumbController extends ChangeNotifier {
+  /// Creates a [BreadcrumbController] with a initial page.
+  BreadcrumbController({
+    required IndexedWidgetBuilder builder,
+    required IndexedWidgetBuilder breadCrumbBuilder,
+  }) {
+    push(builder: builder, breadCrumbBuilder: breadCrumbBuilder);
+  }
+
   bool _isDisposed = false;
 
   final List<_BreadcrumbItem> _items =
@@ -25,6 +33,7 @@ class BreadcrumbController extends ChangeNotifier {
 
   int get index => _items.length - 1;
 
+  /// Sets an index to navigate.
   set index(int value) {
     if (_items.length - 1 == value || value >= _items.length - 1) {
       return;
@@ -39,6 +48,7 @@ class BreadcrumbController extends ChangeNotifier {
     required IndexedWidgetBuilder breadCrumbBuilder,
   }) {
     final int index = _items.length;
+
     _items.add(
       _BreadcrumbItem(
         OverlayEntry(builder: (context) => builder(context, index)),
@@ -49,9 +59,15 @@ class BreadcrumbController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void pop() {
-    _items.removeLast();
-    notifyListeners();
+  bool pop() {
+    if (_items.length > 1) {
+      _items.removeLast();
+      notifyListeners();
+
+      return true;
+    }
+
+    return false;
   }
 
   @mustCallSuper
@@ -85,13 +101,13 @@ class Breadcrumb extends StatefulWidget {
 }
 
 class _BreadcrumbState extends State<Breadcrumb> {
-  late GlobalKey<NavigatorState> _navigatorKey;
-
   final ScrollController scrollController = ScrollController();
 
   BreadcrumbController get controller => widget.controller;
 
-  _BreadcrumbItem? currentBreadcrumbItem;
+  late _BreadcrumbItem currentBreadcrumbItem;
+
+  final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 
   Widget _createBarNavigation() {
     final themeData = Theme.of(context);
@@ -111,17 +127,14 @@ class _BreadcrumbState extends State<Breadcrumb> {
           child: ButtonTheme.merge(
             data: ButtonThemeData(
               disabledColor: isLast ? textTheme.textPrimaryHigh : null,
-              hoverColor: colorScheme.shade[100],
-              highlightColor: textTheme.textPrimaryHigh,
-              color: foreground,
             ),
             child: Builder(
               builder: (context) => Button(
                 body: controller._items[i].itemBuilder(context),
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 bodyPadding: EdgeInsets.zero,
-                onPressed:
-                    isLast ? null : () => widget.controller.index = i,
+                active: controller.index == i,
+                onPressed: isLast ? null : () => controller.index = i,
               ),
             ),
           ),
@@ -183,9 +196,11 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
   void _onCurrentIndexChanged() {
     if (currentBreadcrumbItem != controller._items[controller.index]) {
-      currentBreadcrumbItem?.overlayEntry.remove();
+      currentBreadcrumbItem.overlayEntry.remove();
       currentBreadcrumbItem = controller._items[controller.index];
-      
+      overlayKey.currentState!.insert(currentBreadcrumbItem.overlayEntry);
+
+      setState(() {});
     }
   }
 
@@ -193,7 +208,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
   void initState() {
     super.initState();
 
-    _navigatorKey = GlobalKey<NavigatorState>();
+    currentBreadcrumbItem = controller._items[controller.index];
 
     widget.controller.addListener(_onCurrentIndexChanged);
   }
@@ -230,16 +245,12 @@ class _BreadcrumbState extends State<Breadcrumb> {
         Builder(
           builder: (context) => _createBarNavigation(),
         ),
-        // Expanded(
-        //   child: Builder(
-        //     builder: (context) => _NavigationView(
-        //       builder: widget.routeBuilder,
-        //       navigatorKey: _navigatorKey,
-        //       initialRoute: widget.initialRoute,
-        //       navigatorObserver: _NavObserver(this),
-        //     ),
-        //   ),
-        // ),
+        Expanded(
+          child: Overlay(
+            key: overlayKey,
+            initialEntries: [currentBreadcrumbItem.overlayEntry],
+          ),
+        ),
       ],
     );
 

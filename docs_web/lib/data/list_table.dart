@@ -184,8 +184,8 @@ ListTable(
               horizontalInside: borderSide.copyWith(width: 1.0),
             ),
             onPressed: (row) async {
-              await showDialog(
-                context: context,
+              showDialog(
+                context,
                 builder: (context) => Dialog(
                   body: Text(someDataTableRows[row][0]),
                   title: Text(someDataTableRows[row][2]),

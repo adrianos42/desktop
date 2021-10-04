@@ -125,7 +125,7 @@ Nav(
               trailingMenu: [
                 NavItem(
                   title: 'settings',
-                  builder: (context) => TabDialog(
+                  builder: (context, _) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(32.0),
@@ -141,7 +141,7 @@ Nav(
               ],
               items: [
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 0',
                     style: Theme.of(context).textTheme.title,
@@ -150,7 +150,7 @@ Nav(
                   icon: Icons.today,
                 ),
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 1',
                     style: Theme.of(context).textTheme.title,
@@ -159,7 +159,7 @@ Nav(
                   icon: Icons.stars,
                 ),
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 2',
                     style: Theme.of(context).textTheme.title,
@@ -181,7 +181,7 @@ Nav(
               trailingMenu: [
                 NavItem(
                   title: 'settings',
-                  builder: (context) => TabDialog(
+                  builder: (context, _) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(32.0),
@@ -197,7 +197,7 @@ Nav(
               ],
               items: [
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 0',
                     style: Theme.of(context).textTheme.title,
@@ -206,7 +206,7 @@ Nav(
                   icon: Icons.today,
                 ),
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 1',
                     style: Theme.of(context).textTheme.title,
@@ -215,7 +215,7 @@ Nav(
                   icon: Icons.stars,
                 ),
                 NavItem(
-                  builder: (context) => Center(
+                  builder: (context, _) => Center(
                       child: Text(
                     'page 2',
                     style: Theme.of(context).textTheme.title,

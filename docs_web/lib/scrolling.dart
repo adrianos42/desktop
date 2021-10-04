@@ -113,16 +113,18 @@ class _ScrollingPageState extends State<ScrollingPage> {
                     // TODO(as): Create a merge instead.
                     final themeData = ThemeData.dark();
 
-                    showDialog(
-                      context: context,
+                    late DialogController dialogController;
+                    dialogController = showDialog(
+                      context,
                       barrierColor: themeData.colorScheme.background[0],
-                      barrierDismissible: true,
+                      dismissible: true,
                       builder: (context) {
                         return Theme(
                           data: themeData,
                           child: Builder(
                             builder: (context) => _ImagePage(
                               assetName,
+                              close: () => dialogController.close(),
                               requestNext: _requestNext,
                               requestPrevious: _requestPrevious,
                             ),
@@ -155,10 +157,13 @@ class _ImagePage extends StatefulWidget {
     this.assetName, {
     this.requestNext,
     this.requestPrevious,
+    required this.close,
     Key? key,
   }) : super(key: key);
 
   final String assetName;
+
+  final VoidCallback close;
 
   final RequestAssetNameCallback? requestNext;
   final RequestAssetNameCallback? requestPrevious;
@@ -372,7 +377,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Button.icon(
                               Icons.close,
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: widget.close,
                               tooltip: 'Close',
                             ),
                           ),

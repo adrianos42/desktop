@@ -3,8 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "a92801d2be858180e31a206c097fa463",
-"assets/NOTICES": "66615ac06ee6aa1b4458769e65b34e3d",
+  "main.dart.js": "8c00e43c037655e7deb05de7476009ae",
+"assets/NOTICES": "a440a22143772b31505a49856b5b91fc",
 "assets/assets/GitHub-Mark-32px.png": "f87561b8bb354ef83b09a66e54f70e08",
 "assets/assets/cats_small/pexels-mark-burnett-731553.jpg": "655da72061b5ca7666b452eb9fd904d8",
 "assets/assets/cats_small/pexels-david-savochka-192384.jpg": "86ef015ed5353520a573bd6b67f77b3b",
@@ -133,8 +133,8 @@ const RESOURCES = {
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Regular.ttf": "cb46f1f18358474393e7ccd02be3998a",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf": "1f86f6c46bf066316c13a9cba815ccfd",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Thin.ttf": "19dbee61fc3b65e55edc0ae9c2b554a8",
-"index.html": "7fd0765e12e7101171665cbf52a9468e",
-"/": "7fd0765e12e7101171665cbf52a9468e",
+"index.html": "0a257f916ec5a429755073a12208e1c0",
+"/": "0a257f916ec5a429755073a12208e1c0",
 "manifest.json": "625fda5b332651ee804529166225fcfd",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116",

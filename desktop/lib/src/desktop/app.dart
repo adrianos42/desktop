@@ -3,13 +3,14 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import 'dialogs/dialog.dart';
+import 'dialogs/message.dart';
 import 'icons.dart';
 import 'input/button.dart';
 import 'localizations.dart';
 import 'navigation/route.dart';
 import 'scrolling/scrolling.dart';
 import 'theme/theme.dart';
-import 'dialogs/message.dart';
 
 /// Base functionality for desktop apps.
 class DesktopApp extends StatefulWidget {
@@ -256,10 +257,10 @@ class _DesktopAppState extends State<DesktopApp> {
           opaque: true,
           builder: (context) => Messenger(
             child: Container(
-              color: Theme.of(context).colorScheme.background.toColor(),
-              child: widget.builder != null
-                  ? widget.builder!(context, child)
-                  : child ?? const SizedBox.shrink(),
+                color: Theme.of(context).colorScheme.background.toColor(),
+                child: widget.builder != null
+                    ? widget.builder!(context, child)
+                    : child ?? const SizedBox.shrink(),
             ),
           ),
         ),

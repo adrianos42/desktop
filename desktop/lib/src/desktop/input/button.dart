@@ -257,7 +257,7 @@ class _ButtonState extends State<Button>
 
   bool get enabled => widget.onPressed != null;
 
-  void _updateColor() {
+  void _updateColor([bool animates = true]) {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
     final Color pressedForeground =
@@ -280,12 +280,19 @@ class _ButtonState extends State<Button>
 
     _colorUpdate.addLast(foregroundColor);
 
-    if (!_controller.isAnimating) {
-      if (_colorUpdate.length == 1) {
-        final color = _colorUpdate.removeFirst();
-        _color = ColorTween(begin: _color?.end ?? color, end: color);
-        _controller.forward(from: 0.0);
+    if (animates) {
+      if (!_controller.isAnimating) {
+        if (_colorUpdate.length == 1) {
+          final color = _colorUpdate.removeFirst();
+          _color = ColorTween(begin: _color?.end ?? color, end: color);
+          _controller.forward(from: 0.0);
+        }
       }
+    } else {
+      final color = _colorUpdate.removeFirst();
+      _colorUpdate.clear();
+      _controller.value = 1.0;
+      _color = ColorTween(begin: _color?.end ?? color, end: color);
     }
   }
 
@@ -337,8 +344,7 @@ class _ButtonState extends State<Button>
     super.didUpdateWidget(oldWidget);
 
     if (widget.active != oldWidget.active) {
-      _colorUpdate.clear();
-      _updateColor();
+      _updateColor(false);
     }
   }
 

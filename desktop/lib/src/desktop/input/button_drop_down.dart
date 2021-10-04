@@ -190,11 +190,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       bodyChild = Container();
     }
 
-    final waitingBackground = buttonThemeData.waitingColor!;
-
     final borderColor = enabled
         ? waiting
-            ? waitingBackground
+            ? buttonThemeData.waitingColor!
             : hovered
                 ? buttonThemeData.hoverColor!
                 : buttonThemeData.color!
@@ -206,7 +204,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
 
-    final Color? background = waiting ? waitingBackground : inactiveBackground;
+    final Color? background = waiting
+        ? Theme.of(context).colorScheme.background[0]
+        : inactiveBackground;
     _backgroundColor =
         ColorTween(begin: _backgroundColor?.end ?? background, end: background);
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0-dev.10
+
+- Implements `Message`.
+- `Dialog` and `Nav` menus with `Overlay` instead of `Navigator`.
+- `Button` animation fix.
+- Remove `Navigator` from `Nav`, `Tab`, `Tree`, and `Tab`.
+- Option to use widgets in `Tab` and `Tree` nodes.
+
 ## 3.0.0-dev.9
 
 - Updated license.

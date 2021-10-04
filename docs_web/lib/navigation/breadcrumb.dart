@@ -9,31 +9,34 @@ class BreadcrumbPage extends StatefulWidget {
 }
 
 class _BreadcrumbPageState extends State<BreadcrumbPage> {
-  final BreadcrumbController breadcrumbController = BreadcrumbController();
+  late BreadcrumbController breadcrumbController;
+
+  Widget buildPage(BuildContext context, int index) {
+    return _MainPage(index, () {
+      breadcrumbController.push(
+        builder: buildPage,
+        breadCrumbBuilder: buildItem,
+      );
+    });
+  }
+
+  Widget buildItem(BuildContext context, int index) {
+    return Text('page $index');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    breadcrumbController = BreadcrumbController(
+      builder: buildPage,
+      breadCrumbBuilder: buildItem,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final textController = TextEditingController(text: '''
-Breadcrumb(
-  initialRoute: 'page_0/',
-  routeBuilder: (context, settings) {
-    switch (settings.name) {
-      case 'page_0/':
-        return DesktopPageRoute(
-          fullscreenDialog: false,
-          builder: (context) => _MainPage(0),
-          settings: RouteSettings(name: settings.name),
-        );
-      default:
-        final count = settings.arguments as int;
-        return DesktopPageRoute(
-          fullscreenDialog: false,
-          builder: (context) => _MainPage(count),
-          settings: RouteSettings(name: settings.name),
-        );
-    }
-  },
-)
 ''');
 
     return Defaults.createItemsWithTitle(
@@ -41,23 +44,6 @@ Breadcrumb(
       items: [
         ItemTitle(
             body: (context) => Breadcrumb(
-                  // routeBuilder: (context, settings) {
-                  //   switch (settings.name) {
-                  //     case 'page_0/':
-                  //       return DesktopPageRoute(
-                  //         fullscreenDialog: false,
-                  //         builder: (context) => _MainPage(0),
-                  //         settings: RouteSettings(name: settings.name),
-                  //       );
-                  //     default:
-                  //       final count = settings.arguments as int;
-                  //       return DesktopPageRoute(
-                  //         fullscreenDialog: false,
-                  //         builder: (context) => _MainPage(count),
-                  //         settings: RouteSettings(name: settings.name),
-                  //       );
-                  //   }
-                  // },
                   controller: breadcrumbController,
                 ),
             codeText: textController.text,
@@ -70,9 +56,11 @@ Breadcrumb(
 }
 
 class _MainPage extends StatelessWidget {
-  _MainPage(this.count);
+  _MainPage(this.count, this.pushPage);
 
-  final count;
+  final int count;
+
+  final VoidCallback pushPage;
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +74,7 @@ class _MainPage extends StatelessWidget {
           child: Center(
             child: Button.text(
               'Next page',
-              onPressed: () async => Navigator.pushNamed(
-                context,
-                'Page${count + 1}/',
-                arguments: count + 1,
-              ),
+              onPressed: pushPage,
             ),
           ),
         ),

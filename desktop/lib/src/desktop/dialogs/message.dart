@@ -19,13 +19,10 @@ typedef _MessageReasonCallback = void Function(MessageClosedReason);
 enum MessageKind {
   /// Info message.
   info,
-
   /// Error message.
   error,
-
   /// Warning message.
   warning,
-
   /// Success message.
   success,
 }
@@ -34,13 +31,10 @@ enum MessageKind {
 enum MessageClosedReason {
   /// The message was removed.
   remove,
-
   /// Timeout.
   timeout,
-
   /// The message was closed.
   close,
-
   /// The user dismissed the message.
   dismiss,
 }
@@ -76,9 +70,9 @@ class MessageController {
 
   final Completer<MessageClosedReason> _completer;
 
-  Future<MessageClosedReason> get closed => _completer.future;
-
   final VoidCallback close;
+
+  Future<MessageClosedReason> get closed => _completer.future;
 }
 
 /// A stack for showing [Message].
@@ -308,8 +302,8 @@ class _MessengerScope extends InheritedWidget {
   final int _length;
 
   @override
-  bool updateShouldNotify(_MessengerScope old) {
-    return _length != old._length;
+  bool updateShouldNotify(_MessengerScope oldWidget) {
+    return _length != oldWidget._length;
   }
 }
 
