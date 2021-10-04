@@ -336,6 +336,7 @@ class _ButtonState extends State<Button>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    _colorUpdate.clear();
     _updateColor();
   }
 
@@ -344,6 +345,7 @@ class _ButtonState extends State<Button>
     super.didUpdateWidget(oldWidget);
 
     if (widget.active != oldWidget.active) {
+      _colorUpdate.clear();
       _updateColor(false);
     }
   }

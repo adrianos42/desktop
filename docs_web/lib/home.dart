@@ -135,7 +135,7 @@ class _DocAppState extends State<DocApp> {
                   child: Builder(
                     builder: (context) {
                       return Text(
-                        'dev.10.0',
+                        'dev.10.1',
                         style: Theme.of(context)
                             .textTheme
                             .caption
