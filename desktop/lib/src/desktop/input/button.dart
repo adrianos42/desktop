@@ -8,9 +8,9 @@ import '../theme/theme.dart';
 
 const Duration _kDefaultButtonDuration = Duration(milliseconds: 100);
 
-/// Base button used to create other kinds of buttons.
+/// The base button which is used to create other kinds of buttons.
 class Button extends StatefulWidget {
-  ///
+  /// Creates a [Button].
   const Button({
     Key? key,
     this.body,
@@ -344,10 +344,8 @@ class _ButtonState extends State<Button>
   void didUpdateWidget(Button oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.active != oldWidget.active) {
-      _colorUpdate.clear();
-      _updateColor(false);
-    }
+    _colorUpdate.clear();
+    _updateColor(false);
   }
 
   @override

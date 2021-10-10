@@ -259,7 +259,10 @@ class ButtonTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final TextStyle textStyle = buttonThemeData.textStyle ??
-          textTheme.body2.copyWith(fontSize: kFontSize);
+          textTheme.body2.copyWith(
+            fontSize: kFontSize,
+            overflow: TextOverflow.ellipsis,
+          );
 
       final Color color =
           buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];

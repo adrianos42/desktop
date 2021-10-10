@@ -154,7 +154,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
 
     Widget result = Container(
       constraints: const BoxConstraints.tightFor(height: _kHeight),
-      color: Theme.of(context).colorScheme.background.toColor(),
+      color: Theme.of(context).colorScheme.background[0],
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

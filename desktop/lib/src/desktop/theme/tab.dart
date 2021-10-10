@@ -145,9 +145,13 @@ class TabTheme extends InheritedTheme {
       final ColorScheme colorScheme = themeData.colorScheme;
 
       final TextStyle textStyle = tabThemeData.textStyle ??
-          textTheme.body2.copyWith(fontSize: _kFontSize);
+          textTheme.body2.copyWith(
+            fontSize: _kFontSize,
+            overflow: TextOverflow.ellipsis,
+          );
 
-      final Color color = tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
+      final Color color =
+          tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
 
       final Color hoverColor =
           tabThemeData.hoverColor ?? colorScheme.shade[100];

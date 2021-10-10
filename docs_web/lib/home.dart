@@ -14,6 +14,8 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
+const String _version = 'dev.11.0';
+
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
 
@@ -22,11 +24,6 @@ class DocApp extends StatefulWidget {
 }
 
 class _DocAppState extends State<DocApp> {
-  ThemeData _themeData = ThemeData(brightness: Brightness.dark);
-
-  ThemeData get themeData =>
-      ThemeData(brightness: _themeData.brightness, primaryColor: primaryColor);
-
   static ContextMenuItem<PrimaryColor> _menuItemPrimaryColor(
       PrimaryColor color) {
     return ContextMenuItem(
@@ -35,7 +32,10 @@ class _DocAppState extends State<DocApp> {
     );
   }
 
-  PrimaryColor primaryColor = PrimaryColor.dodgerBlue;
+  PrimaryColor? _primaryColor;
+
+  PrimaryColor get primaryColor =>
+      _primaryColor ?? Theme.of(context).colorScheme.primary;
 
   double backgroundColorLightness = 0.0;
 
@@ -70,9 +70,22 @@ class _DocAppState extends State<DocApp> {
         child: ContextMenuButton(
           Icon(Icons.palette),
           itemBuilder: itemBuilder,
-          value: primaryColor,
+          value: Theme.of(context).colorScheme.primary,
           onSelected: (PrimaryColor value) {
-            setState(() => primaryColor = value);
+            final themeData = Theme.of(context);
+            final colorScheme = themeData.colorScheme;
+            _primaryColor = value;
+
+            Theme.updateThemeData(
+              context,
+              themeData.copyWith(
+                colorScheme: ColorScheme(
+                  colorScheme.brightness,
+                  primary: value,
+                ),
+              ),
+            );
+            // setState(() => primaryColor = value);
           },
         ),
       ),
@@ -135,7 +148,7 @@ class _DocAppState extends State<DocApp> {
                   child: Builder(
                     builder: (context) {
                       return Text(
-                        'dev.10.1',
+                        _version,
                         style: Theme.of(context)
                             .textTheme
                             .caption
@@ -151,12 +164,14 @@ class _DocAppState extends State<DocApp> {
                     children: [
                       _createColorButton(),
                       ThemeToggle(
-                        onPressed: () => setState(
-                            () => _themeData = _themeData.invertedTheme),
+                        onPressed: () => setState(() {
+                          final invertedTheme = Theme.of(context).invertedTheme;
+                          Theme.updateThemeData(context, invertedTheme);
+                        }),
                       ),
                       Builder(builder: (context) {
                         final githubImage;
-                        if (themeData.brightness == Brightness.dark) {
+                        if (Theme.of(context).brightness == Brightness.dark) {
                           githubImage = Image.asset(
                             'assets/GitHub-Mark-Light-32px.png',
                             width: 18.0,
@@ -197,52 +212,70 @@ class _DocAppState extends State<DocApp> {
                 ),
                 nodes: [
                   TreeNode.child(
-                    'Overview',
+                    (context) => Text('Overview'),
                     builder: (context) => OverviewPage(),
-                    ////builder: (context) => TextFieldPage(),
+                    //builder: (context) => TextFieldPage(),
+
                     /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
                   ),
-                  TreeNode.children('Navigation', children: [
-                    TreeNode.child('Breadcrumb',
-                        builder: (context) => BreadcrumbPage()),
-                    TreeNode.child('Nav', builder: (context) => NavPage()),
-                    TreeNode.child('Tab', builder: (context) => TabPage()),
-                    TreeNode.child('Tree', builder: (context) => TreePage()),
-                  ]),
-                  TreeNode.children('Data', children: [
-                    TreeNode.child('List table',
-                        builder: (context) => ListTablePage()),
-                  ]),
-                  TreeNode.children('Dialogs', children: [
-                    TreeNode.child('Dialog',
-                        builder: (context) => DialogPage()),
-                    TreeNode.child('Message',
-                        builder: (context) => DialogMessagePage()),
+                  TreeNode.children((context) => Text('Navigation'), children: [
                     TreeNode.child(
-                      'Tooltip',
+                      (context) => Text('Breadcrumb'),
+                      builder: (context) => BreadcrumbPage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Nav'),
+                      builder: (context) => NavPage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Tab'),
+                      builder: (context) => TabPage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Tree'),
+                      builder: (context) => TreePage(),
+                    ),
+                  ]),
+                  TreeNode.children((context) => Text('Data'), children: [
+                    TreeNode.child(
+                      (context) => Text('List table'),
+                      builder: (context) => ListTablePage(),
+                    ),
+                  ]),
+                  TreeNode.children((context) => Text('Dialogs'), children: [
+                    TreeNode.child(
+                      (context) => Text('Dialog'),
+                      builder: (context) => DialogPage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Message'),
+                      builder: (context) => DialogMessagePage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Tooltip'),
                       builder: (context) => TooltipPage(),
                     ),
                   ]),
-                  TreeNode.children('Input', children: [
+                  TreeNode.children((context) => Text('Input'), children: [
                     TreeNode.child(
-                      'Button',
+                      (context) => Text('Button'),
                       builder: (context) => ButtonPage(),
                     ),
                     TreeNode.child(
-                      'Context menu',
+                      (context) => Text('Context menu'),
                       builder: (context) => ButtonContextMenuPage(),
                     ),
                     TreeNode.child(
-                      'Drop down menu',
+                      (context) => Text('Drop down menu'),
                       builder: (context) => ButtonDropDownPage(),
                     ),
                     TreeNode.child(
-                      'Icon button',
+                      (context) => Text('Icon button'),
                       builder: (context) => ButtonIconPage(),
                     ),
                     TreeNode.child(
-                      'Text button',
+                      (context) => Text('Text button'),
                       builder: (context) => ButtonTextPage(),
                     ),
                     // TreeNode(
@@ -250,29 +283,29 @@ class _DocAppState extends State<DocApp> {
                     //   builder: (context) => ButtonTogglePage(),
                     // ),
                     TreeNode.child(
-                      'Hyperlink',
+                      (context) => Text('Hyperlink'),
                       builder: (context) => ButtonHyperlinkPage(),
                     ),
                     TreeNode.child(
-                      'Slider',
+                      (context) => Text('Slider'),
                       builder: (context) => SliderPage(),
                     ),
                     TreeNode.child(
-                      'Checkbox',
+                      (context) => Text('Checkbox'),
                       builder: (context) => CheckboxPage(),
                     ),
                     TreeNode.child(
-                      'Radio',
+                      (context) => Text('Radio'),
                       builder: (context) => ButtonRadioPage(),
                     ),
                     TreeNode.child(
-                      'Toggle switch',
+                      (context) => Text('Toggle switch'),
                       builder: (context) => ToggleSwitchPage(),
                     ),
                   ]),
-                  TreeNode.children('Status', children: [
+                  TreeNode.children((context) => Text('Status'), children: [
                     TreeNode.child(
-                      'Progress indicator',
+                      (context) => Text('Progress indicator'),
                       builder: (context) => ProgressIndicatorPage(),
                     ),
                     // TreeNode.view(
@@ -280,23 +313,25 @@ class _DocAppState extends State<DocApp> {
                     //   builder: (context) => StatusBarPage(),
                     // ),
                   ]),
-                  TreeNode.children('Text', children: [
+                  TreeNode.children((context) => Text('Text'), children: [
                     TreeNode.child(
-                      'Text field',
+                      (context) => Text('Text field'),
                       builder: (context) => TextFieldPage(),
                     ),
                   ]),
+                  TreeNode.children((context) => Text('Theme'), children: [
+                    TreeNode.child(
+                      (context) => Text('Typography'),
+                      builder: (context) => TypographyPage(),
+                    ),
+                    TreeNode.child(
+                      (context) => Text('Color scheme'),
+                      builder: (context) => ColorschemePage(),
+                    ),
+                  ]),
                   TreeNode.child(
-                    'Scrolling',
+                    (context) => Text('Scrolling'),
                     builder: (context) => ScrollingPage(),
-                  ),
-                  TreeNode.child(
-                    'Typography',
-                    builder: (context) => TypographyPage(),
-                  ),
-                  TreeNode.child(
-                    'Color scheme',
-                    builder: (context) => ColorschemePage(),
                   ),
                 ],
               ),
@@ -309,12 +344,8 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: themeData,
-      child: Container(
-        color: themeData.colorScheme.background.toColor(),
-        child: _createHome(),
-      ),
+    return Container(
+      child: _createHome(),
     );
   }
 }

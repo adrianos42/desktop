@@ -47,7 +47,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     with ComponentStateMixin, SingleTickerProviderStateMixin {
   Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Navigator.of(context, rootNavigator: true)
+    final RenderBox overlay = Overlay.of(context, rootOverlay: true)!
         .context
         .findRenderObject()! as RenderBox;
 
@@ -75,7 +75,6 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       position: position,
       width: button.size.width,
       settings: const RouteSettings(),
-      rootNavigator: true,
     ).then<void>((T? newValue) {
       if (!mounted) {
         return null;

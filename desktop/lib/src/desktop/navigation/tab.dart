@@ -18,79 +18,14 @@ class TabItem {
   /// If it's necessary to use the index of each tab, then use this builder.
   const TabItem({
     required this.builder,
-    required this.tabItemBuilder,
+    required this.itemBuilder,
   });
-
-  /// Creates a tab item with text.
-  factory TabItem.text(
-    String text, {
-    required IndexedWidgetBuilder builder,
-  }) {
-    return TabItem(
-      builder: builder,
-      tabItemBuilder: (context, _) => TabItemText(text),
-    );
-  }
-
-  /// Creates a tab item with a icon.
-  factory TabItem.icon(
-    IconData icon, {
-    required IndexedWidgetBuilder builder,
-  }) {
-    return TabItem(
-      builder: builder,
-      tabItemBuilder: (context, _) => TabItemIcon(icon),
-    );
-  }
 
   /// The 'page' used for the tab.
   final IndexedWidgetBuilder builder;
 
   /// A custom item to be built for the tab bar.
-  final IndexedWidgetBuilder tabItemBuilder;
-}
-
-/// The default text style used for tab item. Use [TabItem.text] instead.
-class TabItemText extends StatelessWidget {
-  ///
-  const TabItemText(this.text, {Key? key}) : super(key: key);
-
-  /// The displayed in the tab.
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(
-        horizontal: TabTheme.of(context).itemSpacing!,
-      ),
-      child: Text(
-        text,
-        overflow: TextOverflow.ellipsis,
-      ),
-    );
-  }
-}
-
-/// The default icon style used for tab item. Use [TabItem.icon] instead.
-class TabItemIcon extends StatelessWidget {
-  ///
-  const TabItemIcon(this.icon, {Key? key}) : super(key: key);
-
-  /// The displayed in the tab.
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(
-        horizontal: TabTheme.of(context).itemSpacing!,
-      ),
-      child: Icon(icon),
-    );
-  }
+  final IndexedWidgetBuilder itemBuilder;
 }
 
 /// Navigation tab.
@@ -125,6 +60,7 @@ class Tab extends StatefulWidget {
     this.backgroundColor,
     this.padding,
     this.autofocus = false,
+    this.itemPadding,
   })  : assert(items.length > 0),
         super(key: key);
 
@@ -146,13 +82,14 @@ class Tab extends StatefulWidget {
   /// The tab bar padding.
   final EdgeInsets? padding;
 
+  /// The tab item padding.
+  final EdgeInsets? itemPadding;
+
   @override
   _TabState createState() => _TabState();
 }
 
 class _TabState extends State<Tab> {
-  final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
-  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   final List<bool> _shouldBuildView = <bool>[];
 
   int _index = _kIntialIndexValue;
@@ -179,34 +116,12 @@ class _TabState extends State<Tab> {
 
       setState(() {
         _index = index;
-        _focusView();
       });
 
       return true;
     }
 
     return false;
-  }
-
-  void _focusView() {
-    if (_focusNodes.length != _length) {
-      if (_length < _focusNodes.length) {
-        _disposedFocusNodes.addAll(_focusNodes.sublist(_length));
-        _focusNodes.removeRange(_length, _focusNodes.length);
-      } else {
-        _focusNodes.addAll(
-          List<FocusScopeNode>.generate(
-            _length - _focusNodes.length,
-            (index) => FocusScopeNode(
-              skipTraversal: true,
-              debugLabel: 'Tab ${index + _focusNodes.length}',
-            ),
-          ),
-        );
-      }
-    }
-
-    FocusScope.of(context).setFirstFocus(_focusNodes[_index]);
   }
 
   @override
@@ -226,7 +141,6 @@ class _TabState extends State<Tab> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _focusView();
   }
 
   @override
@@ -242,24 +156,17 @@ class _TabState extends State<Tab> {
     }
 
     _index = math.min(_index, widget.items.length - 1);
-
-    _focusView();
   }
 
   @override
   void dispose() {
-    for (final focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    for (final focusNode in _disposedFocusNodes) {
-      focusNode.dispose();
-    }
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final TabThemeData tabThemeData = TabTheme.of(context);
+
     final list = List<Widget>.generate(_length, (index) {
       final bool active = index == _index;
       _shouldBuildView[index] = active || _shouldBuildView[index];
@@ -268,16 +175,12 @@ class _TabState extends State<Tab> {
         offstage: !active,
         child: TickerMode(
           enabled: active,
-          child: FocusScope(
-            node: _focusNodes[index],
-            canRequestFocus: active,
-            child: Builder(
-              builder: (context) {
-                return _shouldBuildView[index]
-                    ? widget.items[index].builder(context, index)
-                    : Container();
-              },
-            ),
+          child: Builder(
+            builder: (context) {
+              return _shouldBuildView[index]
+                  ? widget.items[index].builder(context, index)
+                  : Container();
+            },
           ),
         ),
       );
@@ -296,7 +199,14 @@ class _TabState extends State<Tab> {
           padding: widget.padding,
           items: List<IndexedWidgetBuilder>.generate(
             _length,
-            (index) => widget.items[index].tabItemBuilder,
+            (index) => (context, index) => Container(
+                  alignment: Alignment.center,
+                  padding: widget.itemPadding ??
+                      EdgeInsets.symmetric(
+                        horizontal: tabThemeData.itemSpacing!,
+                      ),
+                  child: widget.items[index].itemBuilder(context, index),
+                ),
           ),
         ),
         Expanded(

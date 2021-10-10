@@ -20,7 +20,7 @@ import 'toggle_switch.dart';
 import 'tree.dart';
 
 @immutable
-class Theme extends StatelessWidget {
+class Theme extends StatefulWidget {
   const Theme({
     Key? key,
     required this.data,
@@ -29,9 +29,12 @@ class Theme extends StatelessWidget {
 
   final ThemeData data;
 
+  final Widget child;
+
   static ThemeData of(BuildContext context) {
     final _InheritedTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
+
     return inheritedTheme?.theme.data ?? ThemeData.dark();
   }
 
@@ -42,13 +45,31 @@ class Theme extends StatelessWidget {
     return inheritedTheme.theme.data.brightness;
   }
 
-  final Widget child;
-
   static ThemeData invertedThemeOf(BuildContext context) {
     final _InheritedTheme inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
 
     return inheritedTheme.theme.data.invertedTheme;
+  }
+
+  static void updateThemeData(BuildContext context, ThemeData themeData) {
+    final _InheritedTheme inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
+
+    inheritedTheme.theme.updateThemeData(themeData);
+  }
+
+  @override
+  _ThemeState createState() => _ThemeState();
+}
+
+class _ThemeState extends State<Theme> {
+  ThemeData? _data;
+
+  ThemeData get data => _data ?? widget.data;
+
+  void updateThemeData(ThemeData themeData) {
+    setState(() => _data = themeData);
   }
 
   @override
@@ -57,8 +78,8 @@ class Theme extends StatelessWidget {
       theme: this,
       child: Builder(
         builder: (context) => DefaultTextStyle(
-          style: of(context).textTheme.body1,
-          child: child,
+          style: Theme.of(context).textTheme.body1,
+          child: widget.child,
         ),
       ),
     );
@@ -72,7 +93,7 @@ class _InheritedTheme extends InheritedTheme {
     required Widget child,
   }) : super(key: key, child: child);
 
-  final Theme theme;
+  final _ThemeState theme;
 
   @override
   Widget wrap(BuildContext context, Widget child) {
@@ -84,9 +105,10 @@ class _InheritedTheme extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(_InheritedTheme old) => theme.data != old.theme.data;
+  bool updateShouldNotify(_InheritedTheme old) => true;
 }
 
+/// The data for the [Theme] for desktop apps.
 @immutable
 class ThemeData {
   /// Creates a [ThemeData].
@@ -95,7 +117,11 @@ class ThemeData {
     PrimaryColor? primaryColor,
     BackgroundColor? backgroundColor,
   }) {
-    final colorScheme = ColorScheme(brightness, primaryColor, backgroundColor);
+    final colorScheme = ColorScheme(
+      brightness,
+      primary: primaryColor,
+      backgroundColor: backgroundColor,
+    );
 
     return ThemeData._raw(
       brightness: brightness,
@@ -143,6 +169,73 @@ class ThemeData {
 
   factory ThemeData.dark([PrimaryColor? primaryColor]) =>
       ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
+
+  ThemeData withBrightness(Brightness brightness) {
+    final colorScheme = this.colorScheme.withBrightness(brightness);
+    final textTheme = TextTheme.withColorScheme(colorScheme);
+
+    return ThemeData._raw(
+        brightness: brightness,
+        colorScheme: colorScheme,
+        textTheme: textTheme,
+        navTheme: navTheme,
+        buttonTheme: buttonTheme,
+        dropDownButtonTheme: dropDownButtonTheme,
+        dialogTheme: dialogTheme,
+        contextMenuTheme: contextMenuTheme,
+        hyperlinkButtonTheme: hyperlinkButtonTheme,
+        radioButtonTheme: radioButtonTheme,
+        checkboxTheme: checkboxTheme,
+        sliderTheme: sliderTheme,
+        toggleSwitchTheme: toggleSwitchTheme,
+        scrollbarTheme: scrollbarTheme,
+        tabTheme: tabTheme,
+        treeTheme: treeTheme,
+        listTableTheme: listTableTheme);
+  }
+
+  ThemeData copyWith({
+    Brightness? brightness,
+    ColorScheme? colorScheme,
+    TextTheme? textTheme,
+    NavThemeData? navTheme,
+    TabThemeData? tabTheme,
+    TreeThemeData? treeTheme,
+    ButtonThemeData? buttonTheme,
+    DropDownButtonThemeData? dropDownButtonTheme,
+    DialogThemeData? dialogTheme,
+    ContextMenuThemeData? contextMenuTheme,
+    HyperlinkButtonThemeData? hyperlinkButtonTheme,
+    RadioButtonThemeData? radioButtonTheme,
+    CheckboxThemeData? checkboxTheme,
+    ToggleSwitchThemeData? toggleSwitchTheme,
+    SliderThemeData? sliderTheme,
+    ScrollbarThemeData? scrollbarTheme,
+    ListTableThemeData? listTableTheme,
+  }) {
+    final newColorScheme =
+        colorScheme?.withBrightness(brightness ?? this.brightness) ??
+            this.colorScheme.withBrightness(brightness ?? this.brightness);
+    return ThemeData._raw(
+      brightness: brightness ?? this.brightness,
+      colorScheme: newColorScheme,
+      textTheme: textTheme ?? TextTheme.withColorScheme(newColorScheme),
+      navTheme: navTheme ?? this.navTheme,
+      buttonTheme: buttonTheme ?? this.buttonTheme,
+      dropDownButtonTheme: dropDownButtonTheme ?? this.dropDownButtonTheme,
+      dialogTheme: dialogTheme ?? this.dialogTheme,
+      contextMenuTheme: contextMenuTheme ?? this.contextMenuTheme,
+      hyperlinkButtonTheme: hyperlinkButtonTheme ?? this.hyperlinkButtonTheme,
+      radioButtonTheme: radioButtonTheme ?? this.radioButtonTheme,
+      checkboxTheme: checkboxTheme ?? this.checkboxTheme,
+      sliderTheme: sliderTheme ?? this.sliderTheme,
+      toggleSwitchTheme: toggleSwitchTheme ?? this.toggleSwitchTheme,
+      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
+      tabTheme: tabTheme ?? this.tabTheme,
+      treeTheme: treeTheme ?? this.treeTheme,
+      listTableTheme: listTableTheme ?? this.listTableTheme,
+    );
+  }
 
   factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);
 

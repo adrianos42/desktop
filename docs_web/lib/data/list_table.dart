@@ -184,13 +184,14 @@ ListTable(
               horizontalInside: borderSide.copyWith(width: 1.0),
             ),
             onPressed: (row) async {
-              showDialog(
+              final dialog = showDialog(
                 context,
                 builder: (context) => Dialog(
                   body: Text(someDataTableRows[row][0]),
                   title: Text(someDataTableRows[row][2]),
                 ),
               );
+              await dialog.closed;
             },
             colFraction: {0: 0.5},
             //collapseOnDrag: true,
@@ -216,10 +217,10 @@ ListTable(
                   overflow: TextOverflow.ellipsis,
                 ),
               );
-            },
+            }, 
           ),
           codeText: someDataSample,
-          title: 'Some data',
+          title: 'Example with data',
           height: 600.0,
           hasBorder: false,
         ),

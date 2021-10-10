@@ -128,10 +128,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   // late Map<Type, Action<Intent>> _actionMap;
 
-  final List<FocusScopeNode> _focusNodes =
-      List<FocusScopeNode>.empty(growable: true);
-  final List<FocusScopeNode> _disposedFocusNodes =
-      List<FocusScopeNode>.empty(growable: true);
   final List<bool> _shouldBuildView = List<bool>.empty(growable: true);
 
   final List<OverlayEntry> _overlays = List<OverlayEntry>.empty(growable: true);
@@ -177,7 +173,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
       setState(() {
         _index = index;
-        _focusView();
       });
 
       return true;
@@ -300,7 +295,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
     final NavThemeData navThemeData = NavTheme.of(context);
 
-    final backgroundColor = colorScheme.background;
+    final backgroundColor = colorScheme.background[0];
 
     BoxConstraints constraints;
     EdgeInsets itemsSpacing;
@@ -346,7 +341,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
     Widget result = Container(
       constraints: constraints,
-      color: backgroundColor.toColor(),
+      color: backgroundColor,
       child: Flex(
         direction: widget.navAxis,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -365,27 +360,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     );
 
     return result;
-  }
-
-  void _focusView() {
-    if (_focusNodes.length != _length) {
-      if (_length < _focusNodes.length) {
-        _disposedFocusNodes.addAll(_focusNodes.sublist(_length));
-        _focusNodes.removeRange(_length, _focusNodes.length);
-      } else {
-        _focusNodes.addAll(
-          List<FocusScopeNode>.generate(
-            _length - _focusNodes.length,
-            (index) => FocusScopeNode(
-              skipTraversal: true,
-              debugLabel: 'Nav ${index + _focusNodes.length}',
-            ),
-          ),
-        );
-      }
-    }
-
-    FocusScope.of(context).setFirstFocus(_focusNodes[_index]);
   }
 
   @override
@@ -423,15 +397,11 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
             offstage: !active,
             child: TickerMode(
               enabled: active,
-              child: FocusScope(
-                node: _focusNodes[index],
-                canRequestFocus: active,
-                child: Builder(
+              child:  Builder(
                   builder: _shouldBuildView[index]
                       ? (context) => widget.items[index].builder(context, index)
                       : (context) => Container(),
                 ),
-              ),
             ),
           );
         });
@@ -440,7 +410,6 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _focusView();
   }
 
   @override
@@ -471,19 +440,10 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     if (oldWidget.navAxis != widget.navAxis) {
       _createAnimation();
     }
-
-    _focusView();
   }
 
   @override
   void dispose() {
-    for (final focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    for (final focusNode in _disposedFocusNodes) {
-      focusNode.dispose();
-    }
-
     _menuController.dispose();
 
     super.dispose();

@@ -15,7 +15,7 @@ class _TabPageState extends State<TabPage> {
       final colorScheme = Theme.of(context).colorScheme;
       final buttonScope = ButtonScope.of(context)!;
 
-      final foreground = colorScheme.shade;
+      final foreground = colorScheme.shade[100];
       final Color background = buttonScope.active
           ? colorScheme.background[0]
           : buttonScope.pressed
@@ -38,12 +38,12 @@ class _TabPageState extends State<TabPage> {
               child: Text(
                 title,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.body2.copyWith(color: foreground.toColor()),
+                style: textTheme.body2.copyWith(color: foreground),
               ),
             ),
             Icon(
               icon,
-              color: foreground.toColor(),
+              color: foreground,
             ),
           ],
         ),
@@ -53,7 +53,7 @@ class _TabPageState extends State<TabPage> {
 
   @override
   Widget build(BuildContext context) {
-    final codeSample = '''
+    const codeSample = '''
 Tab(
   items: [
     TabItem.text('page 0',
@@ -90,6 +90,50 @@ Tab(
 )
 ''';
 
+    const customCodeSample = '''
+Tab(
+  itemPadding: EdgeInsets.zero,
+  backgroundColor: Theme.of(context).colorScheme.background[10],
+  items: [
+    TabItem(
+      itemBuilder: _createCustomTab('camera', Icons.camera),
+      builder: (context, _) => Center(
+        child: Text(
+          'camera page',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: _createCustomTab('computer', Icons.computer),
+      builder: (context, _) => Center(
+        child: Text(
+          'computer page',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: _createCustomTab('map', Icons.map),
+      builder: (context, _) => Center(
+        child: Text(
+          'map page',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: _createCustomTab('cloud', Icons.cloud),
+      builder: (context, _) => Center(
+        child: Text(
+          'cloud page',
+          style: Theme.of(context).textTheme.title,
+        ),
+      ),
+    ),
+  ],
+);''';
+
     return Defaults.createItemsWithTitle(
       context,
       items: [
@@ -97,8 +141,8 @@ Tab(
           body: (context) {
             return Tab(
               items: [
-                TabItem.text(
-                  'page 0',
+                TabItem(
+                  itemBuilder: (context, _) => Text('page 0'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 0',
@@ -106,8 +150,8 @@ Tab(
                     ),
                   ),
                 ),
-                TabItem.text(
-                  'page 1',
+                TabItem(
+                  itemBuilder: (context, _) => Text('page 1'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 1',
@@ -115,8 +159,8 @@ Tab(
                     ),
                   ),
                 ),
-                TabItem.text(
-                  'page 2',
+                TabItem(
+                  itemBuilder: (context, _) => Text('page 2'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 2',
@@ -134,10 +178,11 @@ Tab(
         ItemTitle(
           body: (context) {
             return Tab(
+              itemPadding: EdgeInsets.zero,
               backgroundColor: Theme.of(context).colorScheme.background[10],
               items: [
                 TabItem(
-                  tabItemBuilder: _createCustomTab('camera', Icons.camera),
+                  itemBuilder: _createCustomTab('camera', Icons.camera),
                   builder: (context, _) => Center(
                     child: Text(
                       'camera page',
@@ -146,7 +191,7 @@ Tab(
                   ),
                 ),
                 TabItem(
-                  tabItemBuilder: _createCustomTab('computer', Icons.computer),
+                  itemBuilder: _createCustomTab('computer', Icons.computer),
                   builder: (context, _) => Center(
                     child: Text(
                       'computer page',
@@ -155,7 +200,7 @@ Tab(
                   ),
                 ),
                 TabItem(
-                  tabItemBuilder: _createCustomTab('map', Icons.map),
+                  itemBuilder: _createCustomTab('map', Icons.map),
                   builder: (context, _) => Center(
                     child: Text(
                       'map page',
@@ -164,7 +209,7 @@ Tab(
                   ),
                 ),
                 TabItem(
-                  tabItemBuilder: _createCustomTab('cloud', Icons.cloud),
+                  itemBuilder: _createCustomTab('cloud', Icons.cloud),
                   builder: (context, _) => Center(
                     child: Text(
                       'cloud page',
@@ -175,7 +220,7 @@ Tab(
               ],
             );
           },
-          codeText: codeSample,
+          codeText: customCodeSample,
           title: 'Custom tabs',
           height: 600.0,
         ),

@@ -40,8 +40,7 @@ class _TabDialogState extends State<TabDialog> {
           : null, // TODO(as): Set this in theme.
       color: Theme.of(context)
           .colorScheme
-          .background
-          .toColor(), // TODO(as): Set this in theme.
+          .background[0], // TODO(as): Set this in theme.
       child: widget.child,
     );
   }

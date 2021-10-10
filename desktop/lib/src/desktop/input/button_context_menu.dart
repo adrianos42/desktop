@@ -53,9 +53,11 @@ class ContextMenuButton<T> extends StatefulWidget {
 }
 
 class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
+  bool buttonActive = false;
+
   Future<void> showButtonMenu(BuildContext context) async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Navigator.of(context, rootNavigator: true)
+    final RenderBox overlay = Overlay.of(context, rootOverlay: true)!
         .context
         .findRenderObject()! as RenderBox;
 
@@ -80,7 +82,6 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
       initialValue: widget.value,
       position: position,
       settings: const RouteSettings(),
-      rootNavigator: true,
     ).then<void>((T? newValue) {
       if (!mounted) {
         return null;
@@ -108,9 +109,16 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
   Widget build(BuildContext context) {
     return Button(
       padding: widget.padding,
+      active: buttonActive,
       bodyPadding: widget.padding != null ? EdgeInsets.zero : null,
       body: widget.child,
-      onPressed: widget.enabled ? () => showButtonMenu(context) : null,
+      onPressed: widget.enabled
+          ? () async {
+              setState(() => buttonActive = true);
+              final _ = await showButtonMenu(context);
+              setState(() => buttonActive = false);
+            }
+          : null,
       tooltip: widget.tooltip,
     );
   }

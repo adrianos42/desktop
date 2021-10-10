@@ -343,7 +343,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    color: colorScheme.background.withAlpha(0.9).toColor(),
+                    color: colorScheme.background[0].withAlpha(0xE6),
                     height: 60.0,
                     child: MouseRegion(
                       onEnter: (_) => setState(() => _menuFocus = true),

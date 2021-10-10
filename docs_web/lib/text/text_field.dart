@@ -30,7 +30,9 @@ class _TextFieldPageState extends State<TextFieldPage> {
             alignment: Alignment.centerLeft,
             child: SizedBox(
               width: 200.0,
-              child: TextField(),
+              child: TextField(
+                focusNode: FocusNode(),
+              ),
             ),
           ),
           codeText: basicExample,
@@ -45,7 +47,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
               width: 300.0,
               child: TextField(
                 maxLines: 3,
-                minLines: 3,
+                focusNode: FocusNode(),
               ),
             ),
           ),

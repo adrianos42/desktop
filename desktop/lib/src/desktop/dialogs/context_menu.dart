@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../localizations.dart';
-import '../navigation/route.dart';
 import '../theme/theme.dart';
 import '../scrolling/scrollbar.dart';
 
@@ -112,7 +111,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 
   void _handleTapUp(TapUpDetails event) {
-    Navigator.pop<T>(context, widget.value);
+    _ContextScope._of<T>(context)._close(widget.value);
   }
 
   void _handleTapCancel() {
@@ -248,25 +247,27 @@ class _MenuItemSelected extends InheritedWidget {
 }
 
 class _ContextMenu<T> extends StatelessWidget {
-  const _ContextMenu({
+  _ContextMenu({
     Key? key,
-    required this.route,
     this.semanticLabel,
   }) : super(key: key);
 
-  final _ContextMenuRoute<T> route;
+  _ContextController<T> controller(BuildContext context) =>
+      _ContextScope._of<T>(context);
+
   final String? semanticLabel;
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final ContextMenuThemeData contextMenuThemeData =
         ContextMenuTheme.of(context);
 
-    final children = route.items.map((item) {
+    final children = controller(context).items.map((item) {
       final bool selected;
 
-      if (route.value != null) {
-        selected = item.represents(route.value!);
+      if (controller(context).value != null) {
+        selected = item.represents(controller(context).value!);
       } else {
         selected = false;
       }
@@ -281,8 +282,10 @@ class _ContextMenu<T> extends StatelessWidget {
 
     final Widget child = Container(
       constraints: BoxConstraints(
-        minWidth: route.width ?? contextMenuThemeData.minMenuWidth!,
-        maxWidth: route.width ?? contextMenuThemeData.maxMenuWidth!,
+        minWidth:
+            controller(context).width ?? contextMenuThemeData.minMenuWidth!,
+        maxWidth:
+            controller(context).width ?? contextMenuThemeData.maxMenuWidth!,
       ),
       decoration: BoxDecoration(
         border: Border.all(
@@ -299,12 +302,13 @@ class _ContextMenu<T> extends StatelessWidget {
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: Scrollbar(
             isAlwaysShown: false,
+            controller: scrollController,
             child: IntrinsicWidth(
-              stepWidth: route.width == null
+              stepWidth: controller(context).width == null
                   ? contextMenuThemeData.menuWidthStep!
                   : null,
               child: SingleChildScrollView(
-                controller: ScrollController(),
+                controller: scrollController,
                 child: ListBody(children: children),
               ),
             ),
@@ -313,104 +317,28 @@ class _ContextMenu<T> extends StatelessWidget {
       ),
     );
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: contextMenuThemeData.background!,
-        //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
-      ),
-      position: DecorationPosition.background,
-      child: child,
-    );
-  }
-}
-
-class _ContextMenuRoute<T> extends ContextRoute<T> {
-  _ContextMenuRoute({
-    required this.items,
-    this.value,
-    this.barrierLabel,
-    this.semanticLabel,
-    this.width,
-    required this.rootNavigator,
-    required this.position,
-    required RouteSettings settings,
-  }) : super(settings: settings);
-
-  final List<ContextMenuEntry<T>> items;
-  final T? value;
-  final String? semanticLabel;
-  final Rect position;
-  final double? width;
-  final bool rootNavigator;
-
-  @override
-  bool get opaque => false;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  bool get barrierDismissible => true;
-
-  @override
-  Duration get transitionDuration => _kMenuDuration;
-
-  //@override
-  //Color? get barrierColor => const HSLColor.fromAHSL(0.1, 0.0, 0.0, 1.0).toColor();
-
-  @override
-  Color? get barrierColor => null;
-
-  @override
-  final String? barrierLabel;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    int? selectedItemIndex;
-
-    if (value != null) {
-      for (int index = 0;
-          selectedItemIndex == null && index < items.length;
-          index += 1) {
-        if (items[index].represents(value!)) {
-          selectedItemIndex = index;
-        }
-      }
-    }
-
-    final Widget menu = _ContextMenu<T>(
-      route: this,
-      semanticLabel: semanticLabel,
-    );
-
-    return CustomSingleChildLayout(
-      delegate: _ContextMenuRouteLayout(position, rootNavigator),
-      child: menu,
-    );
-  }
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
     return FadeTransition(
-        opacity: CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOut,
-          reverseCurve: Curves.easeOut.flipped,
+      opacity: CurvedAnimation(
+        parent: const AlwaysStoppedAnimation(1.0),
+        curve: Curves.easeOut,
+        reverseCurve: Curves.easeOut.flipped,
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: contextMenuThemeData.background!,
+          //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
         ),
-        child: child);
-  } // Some default transition
+        position: DecorationPosition.background,
+        child: child,
+      ),
+    );
+  }
 }
 
-class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
-  _ContextMenuRouteLayout(
-    this.position,
-    this.rootNavigator,
-  );
+class _ContextMenuLayoutDelegate extends SingleChildLayoutDelegate {
+  _ContextMenuLayoutDelegate(this.position);
 
   final Rect position;
-  final bool rootNavigator;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -449,8 +377,68 @@ class _ContextMenuRouteLayout extends SingleChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(_ContextMenuRouteLayout oldDelegate) {
+  bool shouldRelayout(_ContextMenuLayoutDelegate oldDelegate) {
     return position != oldDelegate.position;
+  }
+}
+
+class _ContextScope<T> extends InheritedWidget {
+  const _ContextScope(
+    this.contextController, {
+    required Widget child,
+  }) : super(child: child);
+
+  final _ContextController<T> contextController;
+
+  static _ContextController<T> _of<T>(BuildContext context) {
+    final _ContextController<T> scope = context
+        .dependOnInheritedWidgetOfExactType<_ContextScope<T>>()!
+        .contextController;
+    return scope;
+  }
+
+  @override
+  bool updateShouldNotify(_ContextScope oldWidget) => false;
+}
+
+class _ContextController<T> {
+  _ContextController._({
+    this.value,
+    this.width,
+    required this.items,
+    required this.position,
+    String? semanticLabel,
+  }) : _completer = Completer<T>() {
+    _overlayEntry = OverlayEntry(
+      builder: (context) => _ContextScope<T>(
+        this,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => _close(null),
+          child: CustomSingleChildLayout(
+              delegate: _ContextMenuLayoutDelegate(position),
+              child: _ContextMenu<T>(semanticLabel: semanticLabel),
+          ),
+        ),
+      ),
+    );
+  }
+
+  late OverlayEntry _overlayEntry;
+
+  final Completer<T?> _completer;
+
+  final List<ContextMenuEntry<T>> items;
+
+  final Rect position;
+
+  final double? width;
+
+  final T? value;
+
+  void _close(T? completeValue) {
+    _overlayEntry.remove();
+    _completer.complete(completeValue ?? value);
   }
 }
 
@@ -464,25 +452,20 @@ Future<T?> showMenu<T>({
   String? semanticLabel,
   String? barrierLabel,
   T? initialValue,
-  bool rootNavigator = true,
 }) {
   assert(items.isNotEmpty);
 
-  final String? label = semanticLabel;
-
-  return Navigator.of(context, rootNavigator: rootNavigator).push(
-    _ContextMenuRoute<T>(
-      items: items,
-      value: initialValue,
-      semanticLabel: label,
-      position: position,
-      width: width,
-      settings: settings,
-      rootNavigator: rootNavigator,
-      barrierLabel: barrierLabel ??
-          DesktopLocalizations.of(context).modalBarrierDismissLabel,
-    ),
+  final controller = _ContextController<T>._(
+    value: initialValue,
+    width: width,
+    items: items,
+    position: position,
+    semanticLabel: semanticLabel,
   );
+
+  Overlay.of(context, rootOverlay: true)!.insert(controller._overlayEntry);
+
+  return controller._completer.future;
 }
 
 typedef ContextMenuItemSelected<T> = void Function(T value);

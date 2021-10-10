@@ -105,7 +105,7 @@ class _TabViewState extends State<TabView> {
       axis: TabScope.of(context)!.axis,
       pageBuilder: (BuildContext context) => Container(
         alignment: Alignment.center,
-        color: themeData.colorScheme.background.toColor(),
+        color: themeData.colorScheme.background[0],
         child: Text(
           'Page "${settings.name}" not found',
           style: themeData.textTheme.title,

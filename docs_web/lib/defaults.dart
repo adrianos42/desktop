@@ -30,15 +30,15 @@ class Defaults {
       return Tab(
         padding: EdgeInsets.zero,
         items: [
-          TabItem.icon(
-            Icons.visibility,
+          TabItem(
+            itemBuilder: (context, _) => Icon(Icons.visibility),
             builder: (context, _) => Container(
               decoration: hasBorder ? Defaults.itemDecoration(context) : null,
               child: builder(context),
             ),
           ),
-          TabItem.icon(
-            Icons.code,
+          TabItem(
+            itemBuilder: (context, _) => Icon(Icons.code),
             builder: (context, _) => Container(
               alignment: Alignment.topLeft,
               //decoration: Defaults.itemDecoration(context),

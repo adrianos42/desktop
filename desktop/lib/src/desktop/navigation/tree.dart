@@ -15,83 +15,37 @@ import 'tab_view.dart';
 @immutable
 class TreeNode {
   /// Creates a tree node with the page title, and child or children.
-  const TreeNode._(this.title, this.name, {this.builder, this.nodes})
-      : assert((builder == null || nodes == null) &&
+  const TreeNode._(
+    this.titleBuilder, {
+    this.builder,
+    this.nodes,
+  }) : assert((builder == null || nodes == null) &&
             (builder != null || nodes != null));
 
   /// Creates a node with a default text and a [Navigator] history.
-  static TreeNode child<T, N>(
-    T title, {
-    N? name,
+  static TreeNode child(
+    WidgetBuilder title, {
     WidgetBuilder? builder,
   }) {
-    if (title is String) {
-      final String nodeName;
-
-      if (name == null) {
-        nodeName = title;
-      } else {
-        nodeName = name.toString();
-      }
-
-      return TreeNode._(
-        Text(title),
-        nodeName,
-        builder: builder,
-      );
-    } else if (title is Widget) {
-      if (name == null) {
-        throw Exception('The name of the node cannot be null.');
-      }
-
-      final String nodeName = name.toString();
-
-      return TreeNode._(
-        title,
-        nodeName,
-        builder: builder,
-      );
-    } else {
-      throw Exception('Invalid type for tree node title.');
-    }
+    return TreeNode._(
+      title,
+      builder: builder,
+    );
   }
 
   /// Creates a node with children and default text.
   static TreeNode children<T, N>(
-    T title, {
+    WidgetBuilder title, {
     N? name,
     bool hideColumnCollapsedIcon = false,
     required List<TreeNode> children,
   }) {
-    if (title is String) {
-      final String nodeName;
-
-      if (name == null) {
-        nodeName = title;
-      } else {
-        nodeName = name.toString();
-      }
-
-      return TreeNode._(
-        _TreeNodeTextCollapse(Text(title)),
-        nodeName,
-        nodes: children,
-      );
-    } else if (title is Widget) {
-      if (name == null) {
-        throw Exception('The name of the node cannot be null.');
-      }
-
-      final String nodeName = name.toString();
-
-      return TreeNode._(
-        hideColumnCollapsedIcon ? title : _TreeNodeTextCollapse(title),
-        nodeName,
-        nodes: children,
-      );
-    } else {
-      throw Exception('Invalid type for tree node title.');
-    }
+    return TreeNode._(
+      hideColumnCollapsedIcon
+          ? title
+          : (context) => _TreeNodeTextCollapse(title),
+      nodes: children,
+    );
   }
 
   /// The children in a node.
@@ -100,13 +54,10 @@ class TreeNode {
   /// The child in the node.
   final WidgetBuilder? builder;
 
-  /// The node identifier.
-  final String name;
-
   /// The widget used in the node tree.
-  final Widget title;
+  final WidgetBuilder titleBuilder;
 
-  /// If this node is collapsed.
+  /// If this node is collapsed, given a [BuildContext].
   static bool isCollapsed(BuildContext context) {
     final _TreeNodeCollapse? result =
         context.dependOnInheritedWidgetOfExactType<_TreeNodeCollapse>();
@@ -131,9 +82,9 @@ class _TreeNodeCollapse extends InheritedWidget {
 }
 
 class _TreeNodeTextCollapse extends StatelessWidget {
-  const _TreeNodeTextCollapse(this.child);
+  const _TreeNodeTextCollapse(this.widgetBuilder);
 
-  final Widget child;
+  final WidgetBuilder widgetBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +96,7 @@ class _TreeNodeTextCollapse extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        child,
+        widgetBuilder(context),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Icon(iconCollpased),
@@ -271,9 +222,9 @@ class _TreeState extends State<Tree>
   final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   String? _current;
 
-  FocusNode? _focusNode;
-  FocusNode get _effectiveFocusNode =>
-      widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
+  // FocusNode? _focusNode;
+  // FocusNode get _effectiveFocusNode =>
+  //     widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
 
   bool _visible = false;
 
@@ -338,26 +289,24 @@ class _TreeState extends State<Tree>
     }
   }
 
-  // Returns true if any route is a duplicate.
-  bool _verifyDuplicates(List<TreeNode> nodes) {
-    for (final node in nodes) {
-      if (node.nodes != null) {
-        if (_verifyDuplicates(node.nodes!)) {
-          return true;
-        }
-
-        if (nodes.where((element) => node.name == element.name).length != 1) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
   final ScrollController _controller = ScrollController();
 
   Widget _createTree(BuildContext context) {
+    final List<_TreeColumn> children = List.empty(growable: true);
+
+    for (var i = 0; i < widget.nodes.length; i += 1) {
+      children.add(_TreeColumn(
+        node: widget.nodes[i],
+        parentName: '',
+        name: i.toString(),
+        updatePage: () {
+          setState(
+              () {}); // TODO(as): See scroll notification without rebuilding.
+          //controller.position.;
+        },
+      ));
+    }
+
     return Container(
       alignment: Alignment.topLeft,
       width: 200.0,
@@ -382,19 +331,7 @@ class _TreeState extends State<Tree>
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: widget.nodes
-                        .map(
-                          (e) => _TreeColumn(
-                            node: e,
-                            parentName: '',
-                            updatePage: () {
-                              setState(
-                                  () {}); // TODO(as): See scroll notification without rebuilding.
-                              //controller.position.;
-                            },
-                          ),
-                        )
-                        .toList(),
+                    children: children,
                   ),
                 ),
               ),
@@ -410,25 +347,21 @@ class _TreeState extends State<Tree>
 
   late CurvedAnimation _columnAnimation;
 
-  void _createEntries(String name, TreeNode node) {
-    final nameResult = '''$name${node.name}''';
+  void _createEntries(String previousName, String name, TreeNode node) {
+    final nameResult = '$previousName/$name';
 
     if (node.nodes != null) {
-      for (final child in node.nodes!) {
-        _createEntries(nameResult, child);
+      for (var i = 0; i < node.nodes!.length; i += 1) {
+        _createEntries(nameResult, i.toString(), node.nodes![i]);
       }
     } else if (node.builder != null) {
-      if (!_pages.containsKey(nameResult)) {
-        _pages[nameResult] = _BuildTreePage(
-          builder: node.builder!,
-          focusScopeNode: FocusScopeNode(
-            skipTraversal: true,
-            debugLabel: 'Tree $nameResult',
-          ),
-        );
-      }
-    } else {
-      throw Exception('Either builder or children must be not null');
+      _pages[nameResult] = _BuildTreePage(
+        builder: node.builder!,
+        focusScopeNode: FocusScopeNode(
+          skipTraversal: true,
+          debugLabel: 'Tree $nameResult',
+        ),
+      );
     }
   }
 
@@ -448,19 +381,15 @@ class _TreeState extends State<Tree>
       throw Exception('Nodes cannot be empty');
     }
 
-    if (_verifyDuplicates(widget.nodes)) {
-      throw Exception('Cannot have duplicate routes');
-    }
-
-    for (final node in widget.nodes) {
-      _createEntries('', node);
+    for (var i = 0; i < widget.nodes.length; i += 1) {
+      _createEntries('', i.toString(), widget.nodes[i]);
     }
 
     oldPages.removeWhere((key, value) => _pages.containsKey(key));
     _disposedFocusNodes
         .addAll(oldPages.values.map((value) => value.focusScopeNode));
 
-    _focusView();
+    //_focusView();
 
     if (oldWidget.collapsed != widget.collapsed) {
       if (widget.collapsed) {
@@ -474,11 +403,11 @@ class _TreeState extends State<Tree>
   @override
   void dispose() {
     for (final value in _pages.values) {
-      value.focusScopeNode.dispose();
+      //value.focusScopeNode.dispose();
     }
-    for (final focusScopeNode in _disposedFocusNodes) {
-      focusScopeNode.dispose();
-    }
+    // for (final focusScopeNode in _disposedFocusNodes) {
+    //   focusScopeNode.dispose();
+    // }
 
     _indicatorSizecontroller.dispose();
     _columnController.dispose();
@@ -494,12 +423,8 @@ class _TreeState extends State<Tree>
       throw Exception('Nodes cannot be empty');
     }
 
-    if (_verifyDuplicates(widget.nodes)) {
-      throw Exception('Cannot have duplicate names');
-    }
-
-    for (final node in widget.nodes) {
-      _createEntries('', node);
+    for (var i = 0; i < widget.nodes.length; i += 1) {
+      _createEntries('', i.toString(), widget.nodes[i]);
     }
 
     _indicatorSizecontroller = AnimationController(
@@ -523,14 +448,14 @@ class _TreeState extends State<Tree>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _focusView();
+    //_focusView();
   }
 
   @override
   Widget build(BuildContext context) {
     final pagesResult = List<Widget>.empty(growable: true);
 
-    _current ??= widget.nodes.first.name;
+    _current ??= '/0';
 
     for (final entry in _pages.entries) {
       final active = entry.key == _current!;
@@ -541,9 +466,7 @@ class _TreeState extends State<Tree>
           offstage: !active,
           child: TickerMode(
             enabled: active,
-            child: FocusScope(
-              node: entry.value.focusScopeNode,
-              child: Builder(
+            child:  Builder(
                 builder: (context) {
                   return entry.value.shouldBuild
                       ? Padding(
@@ -552,7 +475,6 @@ class _TreeState extends State<Tree>
                         )
                       : Container();
                 },
-              ),
             ),
           ),
         ),
@@ -629,11 +551,13 @@ class _TreeState extends State<Tree>
       treeState: this,
     );
 
-    return FocusableActionDetector(
-      child: result,
-      focusNode: _effectiveFocusNode,
-      autofocus: widget.autofocus,
-    );
+    return result;
+
+    // return FocusableActionDetector(
+    //   child: result,
+    //   focusNode: _effectiveFocusNode,
+    //   autofocus: widget.autofocus,
+    // );
   }
 }
 
@@ -654,12 +578,14 @@ class _TreeColumn extends StatefulWidget {
   const _TreeColumn({
     required this.node,
     required this.parentName,
+    required this.name,
     required this.updatePage,
     Key? key,
   }) : super(key: key);
 
   final TreeNode node;
   final String parentName;
+  final String name;
   final VoidCallback updatePage;
 
   @override
@@ -669,30 +595,31 @@ class _TreeColumn extends StatefulWidget {
 class _TreeColumnState extends State<_TreeColumn> {
   bool _collapsed = true;
 
-  String get name => '${widget.parentName}${widget.node.name}';
+  String get name => '${widget.parentName}/${widget.name}';
 
   @override
   Widget build(BuildContext context) {
     final treeTheme = TreeTheme.of(context);
 
-    if (widget.node.name.isEmpty) {
-      throw Exception('Title in tree cannot be empty');
-    }
-
     if (widget.node.nodes != null) {
+      final List<_TreeColumn> children = List.empty(growable: true);
+
+      for (var i = 0; i < widget.node.nodes!.length; i += 1) {
+        children.add(_TreeColumn(
+          node: widget.node.nodes![i],
+          parentName: name,
+          name: i.toString(),
+          updatePage: widget.updatePage,
+        ));
+      }
+
       final chidrenWidget = Padding(
         padding: const EdgeInsets.only(left: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget.node.nodes!
-              .map((e) => _TreeColumn(
-                    node: e,
-                    parentName: name,
-                    updatePage: widget.updatePage,
-                  ))
-              .toList(),
+          children: children,
         ),
       );
 
@@ -710,7 +637,10 @@ class _TreeColumnState extends State<_TreeColumn> {
             child: Button(
               bodyPadding: EdgeInsets.zero,
               padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
-              body: _TreeNodeCollapse(_collapsed, child: widget.node.title),
+              body: _TreeNodeCollapse(
+                _collapsed,
+                child: widget.node.titleBuilder(context),
+              ),
               onPressed: () {
                 widget.updatePage();
                 setState(() => _collapsed = !_collapsed);
@@ -726,8 +656,6 @@ class _TreeColumnState extends State<_TreeColumn> {
     } else {
       final active = Tree._of(context)!._current == name;
       final highlightColor = treeTheme.highlightColor;
-      final hoverColor = active ? highlightColor : treeTheme.hoverColor;
-      final activeColor = active ? highlightColor : treeTheme.color;
 
       return Align(
         alignment: Alignment.centerLeft,
@@ -741,7 +669,7 @@ class _TreeColumnState extends State<_TreeColumn> {
           child: Button(
             padding: EdgeInsets.zero,
             bodyPadding: EdgeInsets.zero,
-            body: widget.node.title,
+            body: widget.node.titleBuilder(context),
             active: active,
             onPressed: () {
               Tree._of(context)!.setPage(name);

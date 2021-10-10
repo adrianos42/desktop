@@ -1,11 +1,11 @@
+//import 'editable_text.dart';
+
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
-
-//import 'editable_text.dart';
 
 export 'package:flutter/services.dart'
     show
@@ -18,6 +18,109 @@ export 'package:flutter/services.dart'
 const double _kCursorWidth = 1.0;
 const double _kBorderWidth = 1.0;
 
+class _TextFieldSelectionGestureDetectorBuilder
+    extends TextSelectionGestureDetectorBuilder {
+  _TextFieldSelectionGestureDetectorBuilder({
+    required _TextFieldState state,
+  })  : _state = state,
+        super(delegate: state);
+
+  final _TextFieldState _state;
+
+  @override
+  void onForcePressStart(ForcePressDetails details) {
+    super.onForcePressStart(details);
+    if (delegate.selectionEnabled && shouldShowSelectionToolbar) {
+      editableText.showToolbar();
+    }
+  }
+
+  @override
+  void onForcePressEnd(ForcePressDetails details) {
+    // Not required.
+  }
+
+  @override
+  void onSingleLongTapMoveUpdate(LongPressMoveUpdateDetails details) {
+    if (delegate.selectionEnabled) {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.iOS:
+        case TargetPlatform.macOS:
+          renderEditable.selectPositionAt(
+            from: details.globalPosition,
+            cause: SelectionChangedCause.longPress,
+          );
+          break;
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.linux:
+        case TargetPlatform.windows:
+          renderEditable.selectWordsInRange(
+            from: details.globalPosition - details.offsetFromOrigin,
+            to: details.globalPosition,
+            cause: SelectionChangedCause.longPress,
+          );
+          break;
+      }
+    }
+  }
+
+  @override
+  void onSingleTapUp(TapUpDetails details) {
+    editableText.hideToolbar();
+    if (delegate.selectionEnabled) {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.iOS:
+        case TargetPlatform.macOS:
+          switch (details.kind) {
+            case PointerDeviceKind.mouse:
+            case PointerDeviceKind.stylus:
+            case PointerDeviceKind.invertedStylus:
+              // Precise devices should place the cursor at a precise position.
+              renderEditable.selectPosition(cause: SelectionChangedCause.tap);
+              break;
+            case PointerDeviceKind.touch:
+            case PointerDeviceKind.unknown:
+              // On macOS/iOS/iPadOS a touch tap places the cursor at the edge
+              // of the word.
+              renderEditable.selectWordEdge(cause: SelectionChangedCause.tap);
+              break;
+          }
+          break;
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.linux:
+        case TargetPlatform.windows:
+          renderEditable.selectPosition(cause: SelectionChangedCause.tap);
+          break;
+      }
+    }
+    _state._requestKeyboard();
+    _state.widget.onTap?.call();
+  }
+
+  @override
+  void onSingleLongTapStart(LongPressStartDetails details) {
+    if (delegate.selectionEnabled) {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.iOS:
+        case TargetPlatform.macOS:
+          renderEditable.selectPositionAt(
+            from: details.globalPosition,
+            cause: SelectionChangedCause.longPress,
+          );
+          break;
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.linux:
+        case TargetPlatform.windows:
+          renderEditable.selectWord(cause: SelectionChangedCause.longPress);
+          break;
+      }
+    }
+  }
+}
+
 /// Desktop text field.
 ///
 /// See also:
@@ -29,14 +132,14 @@ class TextField extends StatefulWidget {
     Key? key,
     this.autocorrect = true,
     this.autofocus = false,
+    this.clipBehavior = Clip.hardEdge,
     this.controller,
-    this.cursorWidth = 2.0,
+    this.cursorWidth = _kCursorWidth,
     this.decoration,
     this.enabled = true,
     this.expands = false,
     this.focusNode,
     this.inputFormatters,
-    this.keyboardType = TextInputType.text,
     this.scrollController,
     this.maxLength,
     this.maxLines = 1,
@@ -44,6 +147,7 @@ class TextField extends StatefulWidget {
     this.onChanged,
     this.onEditingComplete,
     this.onSubmitted,
+    this.textDirection,
     this.onTap,
     this.placeholder,
     this.placeholderStyle,
@@ -55,8 +159,54 @@ class TextField extends StatefulWidget {
     this.obscuringCharacter = '•',
     this.obscureText = false,
     this.textAlign = TextAlign.start,
-  })  : assert(!obscureText || maxLines == 1,
+    this.enableSuggestions = false,
+    this.dragStartBehavior = DragStartBehavior.down,
+    this.cursorHeight,
+    this.autofillHints = const <String>[],
+    this.enableIMEPersonalizedLearning = true,
+    this.enableInteractiveSelection = true,
+    this.onAppPrivateCommand,
+    this.selectionControls,
+    this.textInputAction,
+    SmartDashesType? smartDashesType,
+    SmartQuotesType? smartQuotesType,
+    TextInputType? keyboardType,
+    ToolbarOptions? toolbarOptions,
+    this.scrollPadding = const EdgeInsets.all(0),
+    this.textCapitalization = TextCapitalization.none,
+  })  : smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(!obscureText || maxLines == 1,
             'Obscured fields cannot be multiline.'),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !identical(textInputAction, TextInputAction.newline) ||
+              maxLines == 1 ||
+              !identical(keyboardType, TextInputType.text),
+          'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+        ),
+        assert(obscuringCharacter.length == 1),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        toolbarOptions = toolbarOptions ??
+            (obscureText
+                ? const ToolbarOptions(
+                    selectAll: true,
+                    paste: true,
+                  )
+                : const ToolbarOptions(
+                    copy: true,
+                    cut: true,
+                    selectAll: true,
+                    paste: true,
+                  )),
         super(key: key);
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -68,6 +218,9 @@ class TextField extends StatefulWidget {
 
   /// {@macro flutter.widgets.editableText.textAlign}
   final TextAlign textAlign;
+
+  /// {@macro flutter.widgets.editableText.scrollPadding}
+  final EdgeInsets scrollPadding;
 
   /// {@macro flutter.widgets.editableText.autofocus}
   final bool autofocus;
@@ -89,13 +242,21 @@ class TextField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.showCursor}
   final bool? showCursor;
 
+  /// {@macro flutter.widgets.editableText.textDirection}
+  final TextDirection? textDirection;
+
   /// {@macro flutter.widgets.editableText.inputFormatters}
   final List<TextInputFormatter>? inputFormatters;
 
   /// {@macro flutter.widgets.editableText.autocorrect}
   final bool autocorrect;
 
+  /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
+  final bool enableSuggestions;
+
   final TextStyle? style;
+
+  final Clip clipBehavior;
 
   /// {@macro flutter.widgets.editableText.readOnly}
   final bool readOnly;
@@ -105,6 +266,8 @@ class TextField extends StatefulWidget {
 
   /// {@macro flutter.widgets.editableText.expands}
   final bool expands;
+
+  final ToolbarOptions toolbarOptions;
 
   /// {@macro flutter.widgets.editableText.minLines}
   final int? minLines;
@@ -118,6 +281,12 @@ class TextField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.onEditingComplete}
   final VoidCallback? onEditingComplete;
 
+  /// {@macro flutter.widgets.editableText.enableInteractiveSelection}
+  final bool enableInteractiveSelection;
+
+  /// {@macro flutter.widgets.editableText.selectionControls}
+  final TextSelectionControls? selectionControls;
+
   /// {@macro flutter.widgets.editableText.onSubmitted}
   ///
   /// See also:
@@ -129,8 +298,25 @@ class TextField extends StatefulWidget {
 
   final bool enabled;
 
+  /// {@macro flutter.widgets.editableText.onAppPrivateCommand}
+  final AppPrivateCommandCallback? onAppPrivateCommand;
+
+  /// {@macro flutter.services.TextInputConfiguration.smartDashesType}
+  final SmartDashesType smartDashesType;
+
+  /// {@macro flutter.services.TextInputConfiguration.smartQuotesType}
+  final SmartQuotesType smartQuotesType;
+
+  final TextInputAction? textInputAction;
+
+  /// {@macro flutter.widgets.editableText.textCapitalization}
+  final TextCapitalization textCapitalization;
+
   /// {@macro flutter.widgets.editableText.cursorWidth}
   final double cursorWidth;
+
+  /// {@macro flutter.widgets.editableText.cursorHeight}
+  final double? cursorHeight;
 
   /// {@macro flutter.material.textfield.onTap}
   final GestureTapCallback? onTap;
@@ -141,8 +327,18 @@ class TextField extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType keyboardType;
 
+  /// {@macro flutter.widgets.editableText.autofillHints}
+  /// {@macro flutter.services.AutofillConfiguration.autofillHints}
+  final Iterable<String>? autofillHints;
+
   /// {@macro flutter.widgets.editableText.scrollController}
   final ScrollController? scrollController;
+
+  /// {@macro flutter.widgets.scrollable.dragStartBehavior}
+  final DragStartBehavior dragStartBehavior;
+
+  /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
+  final bool enableIMEPersonalizedLearning;
 
   @override
   _TextFieldState createState() => _TextFieldState();
@@ -161,6 +357,19 @@ class _TextFieldState extends State<TextField>
   FocusNode get _effectiveFocusNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
 
+  late _TextFieldSelectionGestureDetectorBuilder
+      _selectionGestureDetectorBuilder;
+
+  EditableTextState? get _editableText => editableTextKey.currentState;
+
+  bool _hovering = false;
+
+  void _requestKeyboard() {
+    _editableText?.requestKeyboard();
+  }
+
+  void _handleFocusChanged() => setState(() {});
+
   @override
   final GlobalKey<EditableTextState> editableTextKey =
       GlobalKey<EditableTextState>();
@@ -174,10 +383,13 @@ class _TextFieldState extends State<TextField>
   @override
   void initState() {
     super.initState();
+    _selectionGestureDetectorBuilder =
+        _TextFieldSelectionGestureDetectorBuilder(state: this);
     if (widget.controller == null) {
       _createLocalController();
     }
     _effectiveFocusNode.canRequestFocus = widget.enabled;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
   }
 
   @override
@@ -185,6 +397,7 @@ class _TextFieldState extends State<TextField>
 
   @override
   void dispose() {
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
     _focusNode?.dispose();
     _controller?.dispose();
     super.dispose();
@@ -201,6 +414,12 @@ class _TextFieldState extends State<TextField>
       _controller!.dispose();
       _controller = null;
     }
+
+    if (widget.focusNode != oldWidget.focusNode) {
+      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
+      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
+    }
+
     _effectiveFocusNode.canRequestFocus = widget.enabled;
   }
 
@@ -227,6 +446,12 @@ class _TextFieldState extends State<TextField>
     }
   }
 
+  void _handleHover(bool value) {
+    if (value != _hovering) {
+      setState(() => _hovering = value);
+    }
+  }
+
   // void _handleSelectionChanged(
   //     TextSelection selection, SelectionChangedCause cause) {
   //   if (cause == SelectionChangedCause.longPress) {}
@@ -238,6 +463,9 @@ class _TextFieldState extends State<TextField>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    final TextSelectionControls? textSelectionControls =
+        widget.selectionControls;
 
     final TextEditingController controller = _effectiveController;
     final FocusNode focusNode = _effectiveFocusNode;
@@ -251,7 +479,7 @@ class _TextFieldState extends State<TextField>
     final Color background = enabled
         ? focusNode.hasFocus
             ? colorScheme.background[0]
-            : colorScheme.background.withAlpha(0.0).toColor()
+            : colorScheme.background[0].withAlpha(0)
         : colorScheme.shade[90];
     final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
@@ -263,6 +491,8 @@ class _TextFieldState extends State<TextField>
       color: characterColor,
     );
 
+    const Brightness keyboardAppearance = Brightness.dark;
+
     final decoration = widget.decoration ??
         BoxDecoration(
           color: background,
@@ -271,59 +501,92 @@ class _TextFieldState extends State<TextField>
               : null,
         );
 
+    final MouseCursor effectiveMouseCursor = widget.enabled && _hovering
+        ? SystemMouseCursors.text
+        : SystemMouseCursors.basic;
+
     final editable = EditableText(
-      key: editableTextKey,
       autocorrect: widget.autocorrect,
       autofocus: widget.autofocus,
       backgroundCursorColor: background, // TODO(as): ???
       controller: controller,
       cursorColor: characterColor,
+      cursorHeight: widget.cursorHeight,
       cursorOffset: Offset.zero,
       cursorOpacityAnimates: false,
-      cursorWidth: _kCursorWidth,
-      dragStartBehavior: DragStartBehavior.down,
-      enableInteractiveSelection: true,
+      cursorRadius: Radius.zero,
+      cursorWidth: widget.cursorWidth,
+      dragStartBehavior: widget.dragStartBehavior,
+      enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
+      enableSuggestions: widget.enableSuggestions,
       expands: widget.expands,
       focusNode: focusNode,
       inputFormatters: widget.inputFormatters,
+      key: editableTextKey,
+      keyboardAppearance: keyboardAppearance,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       obscureText: widget.obscureText,
       obscuringCharacter: widget.obscuringCharacter,
+      onAppPrivateCommand: widget.onAppPrivateCommand,
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingComplete,
       onSubmitted: widget.onSubmitted,
-      paintCursorAboveText: false,
-      rendererIgnoresPointer: true,
+      paintCursorAboveText: true,
       readOnly: widget.readOnly,
+      rendererIgnoresPointer: true,
       restorationId: 'editable',
+      scrollBehavior: const _InputScrollBehavior(),
       scrollController: widget.scrollController,
+      scrollPadding: widget.scrollPadding,
       selectionColor: enabled ? selectionColor : colorScheme.background[0],
+      selectionControls:
+          widget.enableInteractiveSelection ? textSelectionControls : null,
       showCursor: widget.showCursor,
       showSelectionHandles: false,
+      smartDashesType: widget.smartDashesType,
+      smartQuotesType: widget.smartQuotesType,
       strutStyle: widget.strutStyle,
       style: widget.style ?? textStyle,
       textAlign: widget.textAlign,
+      textCapitalization: widget.textCapitalization,
+      textDirection: widget.textDirection,
+      textInputAction: widget.textInputAction,
+      toolbarOptions: widget.toolbarOptions,
+      mouseCursor: MouseCursor.defer,
     );
 
-    final Widget result = IgnorePointer(
-      ignoring: !enabled,
-      child: RepaintBoundary(
-        child: UnmanagedRestorationScope(
-          bucket: bucket,
-          child: Container(
-            decoration: decoration,
-            child: Align(
-              alignment: Alignment.center,
-              widthFactor: 1.0,
-              heightFactor: 1.0,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-                child: TextSelectionGestureDetectorBuilder(delegate: this)
-                    .buildGestureDetector(
-                  child: editable,
+    final Widget result = ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: FocusTrapArea(
+        focusNode: focusNode,
+        child: MouseRegion(
+          cursor: effectiveMouseCursor,
+          onEnter: (_) => _handleHover(true),
+          onExit: (_) => _handleHover(false),
+          child: IgnorePointer(
+            ignoring: !enabled,
+            child: RepaintBoundary(
+              child: UnmanagedRestorationScope(
+                bucket: bucket,
+                child: Container(
+                  decoration: decoration,
+                  child: Align(
+                    alignment: Alignment.center,
+                    widthFactor: 1.0,
+                    heightFactor: 1.0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 4.0, vertical: 4.0),
+                      child:
+                          _selectionGestureDetectorBuilder.buildGestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        child: editable,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -332,13 +595,19 @@ class _TextFieldState extends State<TextField>
       ),
     );
 
-    // if (kIsWeb) {
-    //   return Shortcuts(
-    //     shortcuts: scrollShortcutOverrides,
-    //     child: result,
-    //   );
-    // }
-
     return result;
+  }
+}
+
+/// Default [ScrollBehavior] for desktop.
+class _InputScrollBehavior extends ScrollBehavior {
+  /// Creates a [DesktopScrollBehavior].
+  const _InputScrollBehavior() : super();
+
+  /// Applies a [Scrollbar] to the child widget.
+  @override
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

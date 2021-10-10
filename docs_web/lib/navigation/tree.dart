@@ -315,54 +315,60 @@ Tree(
               ),
               nodes: [
                 TreeNode.child(
-                  'Node 0',
+                  (context) => Text('Node 0'),
                   builder: (context) => Center(
-                      child: Text(
-                    'Node 0',
-                    style: Theme.of(context).textTheme.title,
-                  )),
-                ),
-                TreeNode.children('Node 1', children: [
-                  TreeNode.child(
-                    'Node 0',
-                    builder: (context) => Center(
-                        child: Text(
-                      'Node 1 -> 0',
-                      style: Theme.of(context).textTheme.title,
-                    )),
-                  ),
-                  TreeNode.child(
-                    'Node 1',
-                    builder: (context) => Center(
-                        child: Text(
-                      'Node 1 -> 1',
-                      style: Theme.of(context).textTheme.title,
-                    )),
-                  ),
-                  TreeNode.child(
-                    'Node 2',
-                    builder: (context) => Center(
-                        child: Text(
-                      'Node 1 -> 2',
-                      style: Theme.of(context).textTheme.title,
-                    )),
-                  ),
-                  TreeNode.children('Node3', children: [
-                    TreeNode.child(
+                    child: Text(
                       'Node 0',
-                      builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 3 -> 0',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                  ),
+                ),
+                TreeNode.children((context) => Text('Node 1'), children: [
+                  TreeNode.child(
+                    (context) => Text('Node 0'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 1 -> 0',
                         style: Theme.of(context).textTheme.title,
-                      )),
+                      ),
+                    ),
+                  ),
+                  TreeNode.child(
+                    (context) => Text('Node 1'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 1 -> 1',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TreeNode.child(
+                    (context) => Text('Node 2'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 1 -> 2',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TreeNode.children((context) => Text('Node3'), children: [
+                    TreeNode.child(
+                      (context) => Text('Node 0'),
+                      builder: (context) => Center(
+                        child: Text(
+                          'Node 1 -> 3 -> 0',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
                     ),
                     TreeNode.child(
-                      'Node 1',
+                      (context) => Text('Node 1'),
                       builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 3 -> 1',
-                        style: Theme.of(context).textTheme.title,
-                      )),
+                        child: Text(
+                          'Node 1 -> 3 -> 1',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
                     ),
                     // TreeNode('Breadcrumb',
                     //     builder: (context) => BreadcrumbPage()),
@@ -371,29 +377,32 @@ Tree(
                   //     builder: (context) => BreadcrumbPage()),
                 ]),
                 TreeNode.child(
-                  'Node 2',
+                  (context) => Text('Node 2'),
                   builder: (context) => Center(
-                      child: Text(
-                    'Node 2 ',
-                    style: Theme.of(context).textTheme.title,
-                  )),
-                ),
-                TreeNode.children('Node 3', children: [
-                  TreeNode.child(
-                    'Node 0',
-                    builder: (context) => Center(
-                        child: Text(
-                      'Node 3 -> 0',
+                    child: Text(
+                      'Node 2 ',
                       style: Theme.of(context).textTheme.title,
-                    )),
+                    ),
+                  ),
+                ),
+                TreeNode.children((context) => Text('Node 3'), children: [
+                  TreeNode.child(
+                    (context) => Text('Node 0'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 3 -> 0',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
                   ),
                   TreeNode.child(
-                    'Node 1',
+                    (context) => Text('Node 1'),
                     builder: (context) => Center(
-                        child: Text(
-                      'Node 3 -> 1',
-                      style: Theme.of(context).textTheme.title,
-                    )),
+                      child: Text(
+                        'Node 3 -> 1',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
                   ),
                   // TreeNode('Breadcrumb',
                   //     builder: (context) => BreadcrumbPage()),
@@ -416,7 +425,7 @@ Tree(
               ),
               nodes: [
                 TreeNode.child(
-                  Row(
+                  (constext) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -425,15 +434,15 @@ Tree(
                       Text('Node 0'),
                     ],
                   ),
-                  name: 'node_0',
                   builder: (context) => Center(
-                      child: Text(
-                    'Node 0',
-                    style: Theme.of(context).textTheme.title,
-                  )),
+                    child: Text(
+                      'Node 0',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                  ),
                 ),
                 TreeNode.children(
-                  Row(
+                  (context) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -442,10 +451,9 @@ Tree(
                       Text('Node 1'),
                     ],
                   ),
-                  name: 'node_1',
                   children: [
                     TreeNode.child(
-                      Row(
+                      (context) => Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
@@ -460,10 +468,9 @@ Tree(
                           style: Theme.of(context).textTheme.title,
                         ),
                       ),
-                      name: 'node_0',
                     ),
                     TreeNode.child(
-                      Row(
+                      (context) => Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
@@ -472,17 +479,17 @@ Tree(
                           Text('Node 1'),
                         ],
                       ),
-                      name: 'node_1',
                       builder: (context) => Center(
-                          child: Text(
-                        'Node 1 -> 1',
-                        style: Theme.of(context).textTheme.title,
-                      )),
+                        child: Text(
+                          'Node 1 -> 1',
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 TreeNode.child(
-                  Row(
+                  (context) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -491,12 +498,12 @@ Tree(
                       Text('Node 2'),
                     ],
                   ),
-                  name: 'node_2',
                   builder: (context) => Center(
-                      child: Text(
-                    'Node 2 ',
-                    style: Theme.of(context).textTheme.title,
-                  )),
+                    child: Text(
+                      'Node 2 ',
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                  ),
                 ),
               ],
             );
@@ -529,7 +536,7 @@ Tree(
                     ),
                     nodes: [
                       TreeNode.child(
-                        Row(
+                        (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
@@ -538,15 +545,15 @@ Tree(
                             Text('Node 0'),
                           ],
                         ),
-                        name: 'node_0',
                         builder: (context) => Center(
-                            child: Text(
-                          'Node 0',
-                          style: Theme.of(context).textTheme.title,
-                        )),
+                          child: Text(
+                            'Node 0',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                        ),
                       ),
                       TreeNode.children(
-                        Row(
+                        (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
@@ -555,10 +562,9 @@ Tree(
                             Text('Node 1'),
                           ],
                         ),
-                        name: 'node_1',
                         children: [
                           TreeNode.child(
-                            Row(
+                            (context) => Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
@@ -573,10 +579,9 @@ Tree(
                                 style: Theme.of(context).textTheme.title,
                               ),
                             ),
-                            name: 'node_0',
                           ),
                           TreeNode.child(
-                            Row(
+                            (context) => Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
@@ -585,17 +590,17 @@ Tree(
                                 Text('Node 1'),
                               ],
                             ),
-                            name: 'node_1',
                             builder: (context) => Center(
-                                child: Text(
-                              'Node 1 -> 1',
-                              style: Theme.of(context).textTheme.title,
-                            )),
+                              child: Text(
+                                'Node 1 -> 1',
+                                style: Theme.of(context).textTheme.title,
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       TreeNode.child(
-                        Row(
+                        (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
@@ -604,7 +609,6 @@ Tree(
                             Text('Node 2'),
                           ],
                         ),
-                        name: 'node_2',
                         builder: (context) => Center(
                           child: Text(
                             'Node 2 ',
