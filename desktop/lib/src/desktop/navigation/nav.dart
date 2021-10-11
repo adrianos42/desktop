@@ -84,7 +84,6 @@ class Nav extends StatefulWidget {
     required this.items,
     this.navAxis = Axis.vertical,
     this.trailingMenu,
-    this.focusNode,
     this.onPressBackButton,
     this.isBackButtonEnabled,
   })  : assert(items.length > 0),
@@ -104,9 +103,6 @@ class Nav extends StatefulWidget {
 
   /// The axis of the nav bar.
   final Axis navAxis;
-
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
 
   @override
   _NavState createState() => _NavState();
@@ -128,6 +124,10 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   // late Map<Type, Action<Intent>> _actionMap;
 
+  final List<FocusScopeNode> _focusNodes =
+      List<FocusScopeNode>.empty(growable: true);
+  final List<FocusScopeNode> _disposedFocusNodes =
+      List<FocusScopeNode>.empty(growable: true);
   final List<bool> _shouldBuildView = List<bool>.empty(growable: true);
 
   final List<OverlayEntry> _overlays = List<OverlayEntry>.empty(growable: true);
@@ -173,6 +173,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
       setState(() {
         _index = index;
+        //_focusView();
       });
 
       return true;
@@ -362,6 +363,27 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     return result;
   }
 
+  void _focusView() {
+    if (_focusNodes.length != _length) {
+      if (_length < _focusNodes.length) {
+        _disposedFocusNodes.addAll(_focusNodes.sublist(_length));
+        _focusNodes.removeRange(_length, _focusNodes.length);
+      } else {
+        _focusNodes.addAll(
+          List<FocusScopeNode>.generate(
+            _length - _focusNodes.length,
+            (index) => FocusScopeNode(
+              skipTraversal: true,
+              debugLabel: 'Nav ${index + _focusNodes.length}',
+            ),
+          ),
+        );
+      }
+    }
+
+    FocusScope.of(context).setFirstFocus(_focusNodes[_index]);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -410,6 +432,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    //_focusView();
   }
 
   @override
@@ -440,10 +463,19 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     if (oldWidget.navAxis != widget.navAxis) {
       _createAnimation();
     }
+
+//    _focusView();
   }
 
   @override
   void dispose() {
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    for (final focusNode in _disposedFocusNodes) {
+      focusNode.dispose();
+    }
+
     _menuController.dispose();
 
     super.dispose();

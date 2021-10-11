@@ -167,8 +167,6 @@ class Tree extends StatefulWidget {
     this.title,
     required this.nodes,
     this.pagePadding,
-    this.focusNode,
-    this.autofocus = false,
     this.isScrollbarAlwaysShown = true,
     this.collapsed = false,
     this.showDraggingIndicator = true,
@@ -183,12 +181,6 @@ class Tree extends StatefulWidget {
 
   /// Padding for the the page used in a node.
   final EdgeInsets? pagePadding;
-
-  /// If the widget receives focus automatically.
-  final bool autofocus;
-
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
 
   final bool isScrollbarAlwaysShown;
 
@@ -222,6 +214,8 @@ class _TreeState extends State<Tree>
   final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   String? _current;
 
+  final GlobalKey _stackKey = GlobalKey();
+
   // FocusNode? _focusNode;
   // FocusNode get _effectiveFocusNode =>
   //     widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
@@ -230,7 +224,7 @@ class _TreeState extends State<Tree>
 
   void setPage(String name) {
     setState(() => _current = name);
-    _focusView();
+    //_focusView();
   }
 
   void _handleHoverEntered() {
@@ -382,12 +376,12 @@ class _TreeState extends State<Tree>
     }
 
     for (var i = 0; i < widget.nodes.length; i += 1) {
-      _createEntries('', i.toString(), widget.nodes[i]);
+      //   _createEntries('', i.toString(), widget.nodes[i]);
     }
 
-    oldPages.removeWhere((key, value) => _pages.containsKey(key));
-    _disposedFocusNodes
-        .addAll(oldPages.values.map((value) => value.focusScopeNode));
+    //oldPages.removeWhere((key, value) => _pages.containsKey(key));
+    // _disposedFocusNodes
+    //     .addAll(oldPages.values.map((value) => value.focusScopeNode));
 
     //_focusView();
 
@@ -541,7 +535,11 @@ class _TreeState extends State<Tree>
           ),
         ),
         Expanded(
-          child: Stack(fit: StackFit.expand, children: pagesResult),
+          child: Stack(
+            key: _stackKey,
+            fit: StackFit.expand,
+            children: pagesResult,
+          ),
         )
       ],
     );

@@ -56,10 +56,8 @@ class Tab extends StatefulWidget {
     Key? key,
     required this.items,
     this.trailing,
-    this.focusNode,
     this.backgroundColor,
     this.padding,
-    this.autofocus = false,
     this.itemPadding,
   })  : assert(items.length > 0),
         super(key: key);
@@ -69,12 +67,6 @@ class Tab extends StatefulWidget {
 
   /// The trailing widget that will placed at the end of the tab bar.
   final WidgetBuilder? trailing;
-
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
-
-  /// If the widget receives focus automatically.
-  final bool autofocus;
 
   /// The background color for the tab bar.
   final Color? backgroundColor;
@@ -90,6 +82,8 @@ class Tab extends StatefulWidget {
 }
 
 class _TabState extends State<Tab> {
+  final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
+  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   final List<bool> _shouldBuildView = <bool>[];
 
   int _index = _kIntialIndexValue;
@@ -97,10 +91,6 @@ class _TabState extends State<Tab> {
   // late Map<Type, Action<Intent>> _actionMap;
 
   int get _length => widget.items.length;
-
-  FocusNode? _focusNode;
-  FocusNode get _effectiveFocusNode =>
-      widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
 
   // void _nextView() => _indexChanged((_index + 1) % _length);
 
@@ -116,12 +106,34 @@ class _TabState extends State<Tab> {
 
       setState(() {
         _index = index;
+        //_focusView();
       });
 
       return true;
     }
 
     return false;
+  }
+
+  void _focusView() {
+    if (_focusNodes.length != _length) {
+      if (_length < _focusNodes.length) {
+        _disposedFocusNodes.addAll(_focusNodes.sublist(_length));
+        _focusNodes.removeRange(_length, _focusNodes.length);
+      } else {
+        _focusNodes.addAll(
+          List<FocusScopeNode>.generate(
+            _length - _focusNodes.length,
+            (index) => FocusScopeNode(
+              skipTraversal: true,
+              debugLabel: 'Tab ${index + _focusNodes.length}',
+            ),
+          ),
+        );
+      }
+    }
+
+    FocusScope.of(context).setFirstFocus(_focusNodes[_index]);
   }
 
   @override
@@ -141,6 +153,7 @@ class _TabState extends State<Tab> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    //_focusView();
   }
 
   @override
@@ -156,10 +169,19 @@ class _TabState extends State<Tab> {
     }
 
     _index = math.min(_index, widget.items.length - 1);
+
+    //_focusView();
   }
 
   @override
   void dispose() {
+    for (final focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    for (final focusNode in _disposedFocusNodes) {
+      focusNode.dispose();
+    }
+
     super.dispose();
   }
 
@@ -224,17 +246,7 @@ class _TabState extends State<Tab> {
       axis: Axis.horizontal,
     );
 
-    return FocusableActionDetector(
-      child: result,
-      focusNode: _effectiveFocusNode,
-      autofocus: widget.autofocus,
-      // onShowHoverHighlight: (value) {
-      //   if (value) {
-      //     FocusScope.of(context).requestFocus(_effectiveFocusNode);
-      //   }
-      // },
-      // actions: _actionMap,
-    );
+    return result;
   }
 }
 
