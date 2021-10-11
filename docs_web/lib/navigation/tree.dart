@@ -315,7 +315,7 @@ Tree(
               ),
               nodes: [
                 TreeNode.child(
-                  (context) => Text('Node 0'),
+                  titleBuilder: (context) => Text('Node 0'),
                   builder: (context) => Center(
                     child: Text(
                       'Node 0',
@@ -323,61 +323,65 @@ Tree(
                     ),
                   ),
                 ),
-                TreeNode.children((context) => Text('Node 1'), children: [
-                  TreeNode.child(
-                    (context) => Text('Node 0'),
-                    builder: (context) => Center(
-                      child: Text(
-                        'Node 1 -> 0',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                    ),
-                  ),
-                  TreeNode.child(
-                    (context) => Text('Node 1'),
-                    builder: (context) => Center(
-                      child: Text(
-                        'Node 1 -> 1',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                    ),
-                  ),
-                  TreeNode.child(
-                    (context) => Text('Node 2'),
-                    builder: (context) => Center(
-                      child: Text(
-                        'Node 1 -> 2',
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                    ),
-                  ),
-                  TreeNode.children((context) => Text('Node3'), children: [
-                    TreeNode.child(
-                      (context) => Text('Node 0'),
-                      builder: (context) => Center(
-                        child: Text(
-                          'Node 1 -> 3 -> 0',
-                          style: Theme.of(context).textTheme.title,
+                TreeNode.children(
+                    titleBuilder: (context) => Text('Node 1'),
+                    children: [
+                      TreeNode.child(
+                        titleBuilder: (context) => Text('Node 0'),
+                        builder: (context) => Center(
+                          child: Text(
+                            'Node 1 -> 0',
+                            style: Theme.of(context).textTheme.title,
+                          ),
                         ),
                       ),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Node 1'),
-                      builder: (context) => Center(
-                        child: Text(
-                          'Node 1 -> 3 -> 1',
-                          style: Theme.of(context).textTheme.title,
+                      TreeNode.child(
+                        titleBuilder: (context) => Text('Node 1'),
+                        builder: (context) => Center(
+                          child: Text(
+                            'Node 1 -> 1',
+                            style: Theme.of(context).textTheme.title,
+                          ),
                         ),
                       ),
-                    ),
-                    // TreeNode('Breadcrumb',
-                    //     builder: (context) => BreadcrumbPage()),
-                  ]),
-                  // TreeNode('Breadcrumb',
-                  //     builder: (context) => BreadcrumbPage()),
-                ]),
+                      TreeNode.child(
+                        titleBuilder: (context) => Text('Node 2'),
+                        builder: (context) => Center(
+                          child: Text(
+                            'Node 1 -> 2',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                        ),
+                      ),
+                      TreeNode.children(
+                          titleBuilder: (context) => Text('Node3'),
+                          children: [
+                            TreeNode.child(
+                              titleBuilder: (context) => Text('Node 0'),
+                              builder: (context) => Center(
+                                child: Text(
+                                  'Node 1 -> 3 -> 0',
+                                  style: Theme.of(context).textTheme.title,
+                                ),
+                              ),
+                            ),
+                            TreeNode.child(
+                              titleBuilder: (context) => Text('Node 1'),
+                              builder: (context) => Center(
+                                child: Text(
+                                  'Node 1 -> 3 -> 1',
+                                  style: Theme.of(context).textTheme.title,
+                                ),
+                              ),
+                            ),
+                            // TreeNode('Breadcrumb',
+                            //     builder: (context) => BreadcrumbPage()),
+                          ]),
+                      // TreeNode('Breadcrumb',
+                      //     builder: (context) => BreadcrumbPage()),
+                    ]),
                 TreeNode.child(
-                  (context) => Text('Node 2'),
+                  titleBuilder: (context) => Text('Node 2'),
                   builder: (context) => Center(
                     child: Text(
                       'Node 2 ',
@@ -385,28 +389,30 @@ Tree(
                     ),
                   ),
                 ),
-                TreeNode.children((context) => Text('Node 3'), children: [
-                  TreeNode.child(
-                    (context) => Text('Node 0'),
-                    builder: (context) => Center(
-                      child: Text(
-                        'Node 3 -> 0',
-                        style: Theme.of(context).textTheme.title,
+                TreeNode.children(
+                    titleBuilder: (context) => Text('Node 3'),
+                    children: [
+                      TreeNode.child(
+                        titleBuilder: (context) => Text('Node 0'),
+                        builder: (context) => Center(
+                          child: Text(
+                            'Node 3 -> 0',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  TreeNode.child(
-                    (context) => Text('Node 1'),
-                    builder: (context) => Center(
-                      child: Text(
-                        'Node 3 -> 1',
-                        style: Theme.of(context).textTheme.title,
+                      TreeNode.child(
+                        titleBuilder: (context) => Text('Node 1'),
+                        builder: (context) => Center(
+                          child: Text(
+                            'Node 3 -> 1',
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  // TreeNode('Breadcrumb',
-                  //     builder: (context) => BreadcrumbPage()),
-                ]),
+                      // TreeNode('Breadcrumb',
+                      //     builder: (context) => BreadcrumbPage()),
+                    ]),
               ],
             );
           },
@@ -425,7 +431,7 @@ Tree(
               ),
               nodes: [
                 TreeNode.child(
-                  (constext) => Row(
+                  titleBuilder: (constext) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -442,7 +448,7 @@ Tree(
                   ),
                 ),
                 TreeNode.children(
-                  (context) => Row(
+                  titleBuilder: (context) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -453,7 +459,7 @@ Tree(
                   ),
                   children: [
                     TreeNode.child(
-                      (context) => Row(
+                      titleBuilder: (context) => Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
@@ -470,7 +476,7 @@ Tree(
                       ),
                     ),
                     TreeNode.child(
-                      (context) => Row(
+                      titleBuilder: (context) => Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
@@ -489,7 +495,7 @@ Tree(
                   ],
                 ),
                 TreeNode.child(
-                  (context) => Row(
+                  titleBuilder: (context) => Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
@@ -536,7 +542,7 @@ Tree(
                     ),
                     nodes: [
                       TreeNode.child(
-                        (context) => Row(
+                        titleBuilder: (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
@@ -553,7 +559,7 @@ Tree(
                         ),
                       ),
                       TreeNode.children(
-                        (context) => Row(
+                        titleBuilder: (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
@@ -564,7 +570,7 @@ Tree(
                         ),
                         children: [
                           TreeNode.child(
-                            (context) => Row(
+                            titleBuilder: (context) => Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
@@ -581,7 +587,7 @@ Tree(
                             ),
                           ),
                           TreeNode.child(
-                            (context) => Row(
+                            titleBuilder: (context) => Row(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
@@ -600,7 +606,7 @@ Tree(
                         ],
                       ),
                       TreeNode.child(
-                        (context) => Row(
+                        titleBuilder: (context) => Row(
                           children: [
                             Padding(
                               padding: EdgeInsets.only(right: 8),

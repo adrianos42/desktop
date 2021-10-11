@@ -217,7 +217,7 @@ ListTable(
                   overflow: TextOverflow.ellipsis,
                 ),
               );
-            }, 
+            },
           ),
           codeText: someDataSample,
           title: 'Example with data',

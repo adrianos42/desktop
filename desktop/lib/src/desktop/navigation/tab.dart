@@ -82,8 +82,6 @@ class Tab extends StatefulWidget {
 }
 
 class _TabState extends State<Tab> {
-  final List<FocusScopeNode> _focusNodes = <FocusScopeNode>[];
-  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   final List<bool> _shouldBuildView = <bool>[];
 
   int _index = _kIntialIndexValue;
@@ -104,36 +102,12 @@ class _TabState extends State<Tab> {
         return false;
       }
 
-      setState(() {
-        _index = index;
-        //_focusView();
-      });
+      setState(() => _index = index);
 
       return true;
     }
 
     return false;
-  }
-
-  void _focusView() {
-    if (_focusNodes.length != _length) {
-      if (_length < _focusNodes.length) {
-        _disposedFocusNodes.addAll(_focusNodes.sublist(_length));
-        _focusNodes.removeRange(_length, _focusNodes.length);
-      } else {
-        _focusNodes.addAll(
-          List<FocusScopeNode>.generate(
-            _length - _focusNodes.length,
-            (index) => FocusScopeNode(
-              skipTraversal: true,
-              debugLabel: 'Tab ${index + _focusNodes.length}',
-            ),
-          ),
-        );
-      }
-    }
-
-    FocusScope.of(context).setFirstFocus(_focusNodes[_index]);
   }
 
   @override
@@ -153,7 +127,6 @@ class _TabState extends State<Tab> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    //_focusView();
   }
 
   @override
@@ -169,19 +142,10 @@ class _TabState extends State<Tab> {
     }
 
     _index = math.min(_index, widget.items.length - 1);
-
-    //_focusView();
   }
 
   @override
   void dispose() {
-    for (final focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
-    for (final focusNode in _disposedFocusNodes) {
-      focusNode.dispose();
-    }
-
     super.dispose();
   }
 

@@ -23,7 +23,7 @@ class BreadcrumbController extends ChangeNotifier {
     required IndexedWidgetBuilder builder,
     required IndexedWidgetBuilder breadCrumbBuilder,
   }) {
-    push(builder: builder, breadCrumbBuilder: breadCrumbBuilder);
+    push(builder: builder, breadcrumbBuilder: breadCrumbBuilder);
   }
 
   bool _isDisposed = false;
@@ -45,14 +45,14 @@ class BreadcrumbController extends ChangeNotifier {
 
   void push({
     required IndexedWidgetBuilder builder,
-    required IndexedWidgetBuilder breadCrumbBuilder,
+    required IndexedWidgetBuilder breadcrumbBuilder,
   }) {
     final int index = _items.length;
 
     _items.add(
       _BreadcrumbItem(
         OverlayEntry(builder: (context) => builder(context, index)),
-        (context) => breadCrumbBuilder(context, index),
+        (context) => breadcrumbBuilder(context, index),
       ),
     );
 

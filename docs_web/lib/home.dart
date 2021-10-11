@@ -14,7 +14,7 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
-const String _version = 'dev.11.1';
+const String _version = 'dev.0.0';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -212,125 +212,135 @@ class _DocAppState extends State<DocApp> {
                 ),
                 nodes: [
                   TreeNode.child(
-                    (context) => Text('Overview'),
+                    titleBuilder: (context) => Text('Overview'),
                     builder: (context) => OverviewPage(),
                     //builder: (context) => TextFieldPage(),
 
                     /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
                   ),
-                  TreeNode.children((context) => Text('Navigation'), children: [
-                    TreeNode.child(
-                      (context) => Text('Breadcrumb'),
-                      builder: (context) => BreadcrumbPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Nav'),
-                      builder: (context) => NavPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Tab'),
-                      builder: (context) => TabPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Tree'),
-                      builder: (context) => TreePage(),
-                    ),
-                  ]),
-                  TreeNode.children((context) => Text('Data'), children: [
-                    TreeNode.child(
-                      (context) => Text('List table'),
-                      builder: (context) => ListTablePage(),
-                    ),
-                  ]),
-                  TreeNode.children((context) => Text('Dialogs'), children: [
-                    TreeNode.child(
-                      (context) => Text('Dialog'),
-                      builder: (context) => DialogPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Message'),
-                      builder: (context) => DialogMessagePage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Tooltip'),
-                      builder: (context) => TooltipPage(),
-                    ),
-                  ]),
-                  TreeNode.children((context) => Text('Input'), children: [
-                    TreeNode.child(
-                      (context) => Text('Button'),
-                      builder: (context) => ButtonPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Context menu'),
-                      builder: (context) => ButtonContextMenuPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Drop down menu'),
-                      builder: (context) => ButtonDropDownPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Icon button'),
-                      builder: (context) => ButtonIconPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Text button'),
-                      builder: (context) => ButtonTextPage(),
-                    ),
-                    // TreeNode(
-                    //   'Toggle button',
-                    //   builder: (context) => ButtonTogglePage(),
-                    // ),
-                    TreeNode.child(
-                      (context) => Text('Hyperlink'),
-                      builder: (context) => ButtonHyperlinkPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Slider'),
-                      builder: (context) => SliderPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Checkbox'),
-                      builder: (context) => CheckboxPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Radio'),
-                      builder: (context) => ButtonRadioPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Toggle switch'),
-                      builder: (context) => ToggleSwitchPage(),
-                    ),
-                  ]),
-                  TreeNode.children((context) => Text('Status'), children: [
-                    TreeNode.child(
-                      (context) => Text('Progress indicator'),
-                      builder: (context) => ProgressIndicatorPage(),
-                    ),
-                    // TreeNode.view(
-                    //   'Status bar',
-                    //   builder: (context) => StatusBarPage(),
-                    // ),
-                  ]),
-                  TreeNode.children((context) => Text('Text'), children: [
-                    TreeNode.child(
-                      (context) => Text('Text field'),
-                      builder: (context) => TextFieldPage(),
-                    ),
-                  ]),
-                  TreeNode.children((context) => Text('Theme'), children: [
-                    TreeNode.child(
-                      (context) => Text('Typography'),
-                      builder: (context) => TypographyPage(),
-                    ),
-                    TreeNode.child(
-                      (context) => Text('Color scheme'),
-                      builder: (context) => ColorschemePage(),
-                    ),
-                  ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Navigation'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Breadcrumb'),
+                          builder: (context) => BreadcrumbPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Nav'),
+                          builder: (context) => NavPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Tab'),
+                          builder: (context) => TabPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Tree'),
+                          builder: (context) => TreePage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Data'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('List table'),
+                          builder: (context) => ListTablePage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Dialogs'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Dialog'),
+                          builder: (context) => DialogPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Message'),
+                          builder: (context) => DialogMessagePage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Tooltip'),
+                          builder: (context) => TooltipPage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Input'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Button'),
+                          builder: (context) => ButtonPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Context menu'),
+                          builder: (context) => ButtonContextMenuPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Drop down menu'),
+                          builder: (context) => ButtonDropDownPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Icon button'),
+                          builder: (context) => ButtonIconPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Text button'),
+                          builder: (context) => ButtonTextPage(),
+                        ),
+                        // TreeNode(
+                        //   'Toggle button',
+                        //   builder: (context) => ButtonTogglePage(),
+                        // ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Hyperlink'),
+                          builder: (context) => ButtonHyperlinkPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Slider'),
+                          builder: (context) => SliderPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Checkbox'),
+                          builder: (context) => CheckboxPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Radio'),
+                          builder: (context) => ButtonRadioPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Toggle switch'),
+                          builder: (context) => ToggleSwitchPage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Status'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Progress indicator'),
+                          builder: (context) => ProgressIndicatorPage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Text'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Text field'),
+                          builder: (context) => TextFieldPage(),
+                        ),
+                      ]),
+                  TreeNode.children(
+                      titleBuilder: (context) => Text('Theme'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Typography'),
+                          builder: (context) => TypographyPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => Text('Color scheme'),
+                          builder: (context) => ColorschemePage(),
+                        ),
+                      ]),
                   TreeNode.child(
-                    (context) => Text('Scrolling'),
+                    titleBuilder: (context) => Text('Scrolling'),
                     builder: (context) => ScrollingPage(),
                   ),
                 ],

@@ -15,7 +15,7 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
     return _MainPage(index, () {
       breadcrumbController.push(
         builder: buildPage,
-        breadCrumbBuilder: buildItem,
+        breadcrumbBuilder: buildItem,
       );
     });
   }

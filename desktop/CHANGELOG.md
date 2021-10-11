@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- `Message` dialogs.
+- Possibility to use widgets in `Tree` nodes, `Tab` item, and in `Breadcrumb`.
+- Using `Overlay` instead of `Navigator`, using a root `Overlay` in `App`.
+
 ## 3.0.0-dev.11
 
 - Fixes `TextField`.

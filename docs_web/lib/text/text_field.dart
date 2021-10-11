@@ -10,7 +10,6 @@ class TextFieldPage extends StatefulWidget {
 
 class _TextFieldPageState extends State<TextFieldPage> {
   FocusNode _focusNode = FocusNode();
-  FocusNode _focusNode2 = FocusNode();
   FocusNode _multiFocusNode = FocusNode();
 
   @override
@@ -30,24 +29,19 @@ class _TextFieldPageState extends State<TextFieldPage> {
       items: [
         ItemTitle(
           body: (context) => Container(
-              margin: EdgeInsets.all(16.0),
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 200.0,
-                    child: TextField(
-                      focusNode: _focusNode,
-                    ),
+            margin: EdgeInsets.all(16.0),
+            alignment: Alignment.centerLeft,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 200.0,
+                  child: TextField(
+                    focusNode: _focusNode,
                   ),
-                  SizedBox(
-                    width: 200.0,
-                    child: TextField(
-                      focusNode: _focusNode2,
-                    ),
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           codeText: basicExample,
           title: 'Basic example',
           height: 300.0,

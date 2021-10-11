@@ -13,7 +13,8 @@ Widget _itemPrimary(
   PrimaryColor color, [
   Color? foreground,
 ]) {
-  return _createItemForColor(context, color.color, color.toString(), foreground);
+  return _createItemForColor(
+      context, color.color, color.toString(), foreground);
 }
 
 Widget _createItemForColor(

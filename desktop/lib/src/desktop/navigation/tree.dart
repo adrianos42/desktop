@@ -23,27 +23,26 @@ class TreeNode {
             (builder != null || nodes != null));
 
   /// Creates a node with a default text and a [Navigator] history.
-  static TreeNode child(
-    WidgetBuilder title, {
+  static TreeNode child({
+    required WidgetBuilder titleBuilder,
     WidgetBuilder? builder,
   }) {
     return TreeNode._(
-      title,
+      titleBuilder,
       builder: builder,
     );
   }
 
   /// Creates a node with children and default text.
-  static TreeNode children<T, N>(
-    WidgetBuilder title, {
-    N? name,
+  static TreeNode children({
+    required WidgetBuilder titleBuilder,
     bool hideColumnCollapsedIcon = false,
     required List<TreeNode> children,
   }) {
     return TreeNode._(
       hideColumnCollapsedIcon
-          ? title
-          : (context) => _TreeNodeTextCollapse(title),
+          ? titleBuilder
+          : (context) => _TreeNodeTextCollapse(titleBuilder),
       nodes: children,
     );
   }
@@ -200,31 +199,23 @@ class Tree extends StatefulWidget {
 class _BuildTreePage {
   _BuildTreePage({
     required this.builder,
-    required this.focusScopeNode,
   });
 
   final WidgetBuilder builder;
-  final FocusScopeNode focusScopeNode;
   bool shouldBuild = false;
 }
 
 class _TreeState extends State<Tree>
     with ComponentStateMixin, TickerProviderStateMixin {
   final _pages = HashMap<String, _BuildTreePage>();
-  final List<FocusScopeNode> _disposedFocusNodes = <FocusScopeNode>[];
   String? _current;
 
   final GlobalKey _stackKey = GlobalKey();
 
-  // FocusNode? _focusNode;
-  // FocusNode get _effectiveFocusNode =>
-  //     widget.focusNode ?? (_focusNode ??= FocusNode(skipTraversal: true));
-
-  bool _visible = false;
+  final bool _visible = false;
 
   void setPage(String name) {
     setState(() => _current = name);
-    //_focusView();
   }
 
   void _handleHoverEntered() {
@@ -349,19 +340,7 @@ class _TreeState extends State<Tree>
         _createEntries(nameResult, i.toString(), node.nodes![i]);
       }
     } else if (node.builder != null) {
-      _pages[nameResult] = _BuildTreePage(
-        builder: node.builder!,
-        focusScopeNode: FocusScopeNode(
-          skipTraversal: true,
-          debugLabel: 'Tree $nameResult',
-        ),
-      );
-    }
-  }
-
-  void _focusView() {
-    if (_pages.containsKey(_current)) {
-      FocusScope.of(context).setFirstFocus(_pages[_current]!.focusScopeNode);
+      _pages[nameResult] = _BuildTreePage(builder: node.builder!);
     }
   }
 
@@ -369,21 +348,15 @@ class _TreeState extends State<Tree>
   void didUpdateWidget(Tree oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    final oldPages = HashMap.of(_pages);
-
     if (widget.nodes.isEmpty) {
       throw Exception('Nodes cannot be empty');
     }
 
-    for (var i = 0; i < widget.nodes.length; i += 1) {
-      //   _createEntries('', i.toString(), widget.nodes[i]);
+    if (oldWidget.nodes != widget.nodes) {
+      for (var i = 0; i < widget.nodes.length; i += 1) {
+        _createEntries('', i.toString(), widget.nodes[i]);
+      }
     }
-
-    //oldPages.removeWhere((key, value) => _pages.containsKey(key));
-    // _disposedFocusNodes
-    //     .addAll(oldPages.values.map((value) => value.focusScopeNode));
-
-    //_focusView();
 
     if (oldWidget.collapsed != widget.collapsed) {
       if (widget.collapsed) {
@@ -396,13 +369,6 @@ class _TreeState extends State<Tree>
 
   @override
   void dispose() {
-    for (final value in _pages.values) {
-      //value.focusScopeNode.dispose();
-    }
-    // for (final focusScopeNode in _disposedFocusNodes) {
-    //   focusScopeNode.dispose();
-    // }
-
     _indicatorSizecontroller.dispose();
     _columnController.dispose();
 
@@ -442,7 +408,6 @@ class _TreeState extends State<Tree>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    //_focusView();
   }
 
   @override
@@ -550,12 +515,6 @@ class _TreeState extends State<Tree>
     );
 
     return result;
-
-    // return FocusableActionDetector(
-    //   child: result,
-    //   focusNode: _effectiveFocusNode,
-    //   autofocus: widget.autofocus,
-    // );
   }
 }
 
