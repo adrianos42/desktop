@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Fixes `Button` text overflow.
+
 ## 3.0.0
 
 - `Message` dialogs.
