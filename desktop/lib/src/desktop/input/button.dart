@@ -424,19 +424,25 @@ class _ButtonState extends State<Button>
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (widget.leading != null)
-                  Padding(
-                    padding: leadingPadding,
-                    child: widget.leading,
+                  Flexible(
+                    child: Padding(
+                      padding: leadingPadding,
+                      child: widget.leading,
+                    ),
                   ),
                 // The widget that is always placed in the button.
-                Padding(
-                  padding: bodyPadding,
-                  child: widget.body,
+                Flexible(
+                  child: Padding(
+                    padding: bodyPadding,
+                    child: widget.body,
+                  ),
                 ),
                 if (widget.trailing != null)
-                  Padding(
-                    padding: trailingPadding,
-                    child: widget.trailing,
+                  Flexible(
+                    child: Padding(
+                      padding: trailingPadding,
+                      child: widget.trailing,
+                    ),
                   ),
               ],
             ),

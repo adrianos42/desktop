@@ -145,7 +145,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
     final bool selected = widget.selected(context);
 
-    final Color? background = pressed
+    final Color background = pressed
         ? (selected
             ? contextMenuThemeData.selectedHighlightColor!
             : contextMenuThemeData.highlightColor!) // TODO(as): ???
@@ -155,7 +155,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
                 : contextMenuThemeData.selectedColor!)
             : hovered
                 ? contextMenuThemeData.hoverColor! // TODO(as): ???
-                : null;
+                : contextMenuThemeData.background!;
 
     Widget item = DefaultTextStyle(
       style: contextMenuThemeData.textStyle!,
@@ -302,6 +302,7 @@ class _ContextMenu<T> extends StatelessWidget {
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: Scrollbar(
             isAlwaysShown: false,
+            thickness: 4.0, // TODO(as): Use in scrollbar theme instead.
             controller: scrollController,
             child: IntrinsicWidth(
               stepWidth: controller(context).width == null

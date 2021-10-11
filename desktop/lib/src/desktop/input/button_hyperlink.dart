@@ -46,12 +46,14 @@ class HyperlinkButton extends StatelessWidget {
         hoverColor: hyperlinkButtonThemeData.hoverColor,
         highlightColor: hyperlinkButtonThemeData.highlightColor,
       ),
-      child: Button(
-        body: Text(text),
-        tooltip: tooltip,
-        padding: padding,
-        bodyPadding: padding != null ? EdgeInsets.zero : null,
-        onPressed: onPressed != null ? () => onPressed!(text) : null,
+      child: Builder(
+        builder: (context) => Button(
+          body: Text(text),
+          tooltip: tooltip,
+          padding: padding,
+          bodyPadding: padding != null ? EdgeInsets.zero : null,
+          onPressed: onPressed != null ? () => onPressed!(text) : null,
+        ),
       ),
     );
   }

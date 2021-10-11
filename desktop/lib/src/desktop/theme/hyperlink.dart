@@ -101,6 +101,7 @@ class HyperlinkButtonTheme extends InheritedTheme {
             fontSize: 14.0,
             decoration: TextDecoration.underline,
             decorationThickness: _kLineThickness,
+            overflow: TextOverflow.ellipsis,
           );
 
       final Color color = hyperlinkThemeData.color ?? _kDefaultColor.toColor();
