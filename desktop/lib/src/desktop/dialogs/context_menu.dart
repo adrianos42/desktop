@@ -416,8 +416,8 @@ class _ContextController<T> {
           behavior: HitTestBehavior.opaque,
           onTap: () => _close(null),
           child: CustomSingleChildLayout(
-              delegate: _ContextMenuLayoutDelegate(position),
-              child: _ContextMenu<T>(semanticLabel: semanticLabel),
+            delegate: _ContextMenuLayoutDelegate(position),
+            child: _ContextMenu<T>(semanticLabel: semanticLabel),
           ),
         ),
       ),

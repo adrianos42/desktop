@@ -213,9 +213,8 @@ class ListTableTheme extends InheritedTheme {
       final Color background =
           listTableThemeData.background ?? colorScheme.background[4];
 
-      final Color selectedHoverColor =
-          listTableThemeData.selectedHoverColor ??
-              colorScheme.primary[40]; // TODO(as): ???
+      final Color selectedHoverColor = listTableThemeData.selectedHoverColor ??
+          colorScheme.primary[40]; // TODO(as): ???
 
       final Color borderColor =
           listTableThemeData.borderColor ?? colorScheme.shade[40];

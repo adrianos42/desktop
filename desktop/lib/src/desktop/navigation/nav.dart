@@ -397,11 +397,11 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
             offstage: !active,
             child: TickerMode(
               enabled: active,
-              child:  Builder(
-                  builder: _shouldBuildView[index]
-                      ? (context) => widget.items[index].builder(context, index)
-                      : (context) => Container(),
-                ),
+              child: Builder(
+                builder: _shouldBuildView[index]
+                    ? (context) => widget.items[index].builder(context, index)
+                    : (context) => Container(),
+              ),
             ),
           );
         });

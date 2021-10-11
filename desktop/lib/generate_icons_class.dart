@@ -23,7 +23,7 @@ Future<void> main() async {
   var listValues = '';
 
   for (final line in myFile) {
-    final items = line.split(' '); 
+    final items = line.split(' ');
     //var name = _toCamelCase(items[0]);
     var name = items[0];
     final code = items[1];

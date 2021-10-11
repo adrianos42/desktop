@@ -257,10 +257,10 @@ class _DesktopAppState extends State<DesktopApp> {
           opaque: true,
           builder: (context) => Messenger(
             child: Container(
-                color: Theme.of(context).colorScheme.background[0],
-                child: widget.builder != null
-                    ? widget.builder!(context, child)
-                    : child ?? const SizedBox.shrink(),
+              color: Theme.of(context).colorScheme.background[0],
+              child: widget.builder != null
+                  ? widget.builder!(context, child)
+                  : child ?? const SizedBox.shrink(),
             ),
           ),
         ),

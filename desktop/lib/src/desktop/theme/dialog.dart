@@ -8,8 +8,7 @@ import 'theme_data.dart';
 
 const EdgeInsets _kbodyPadding = EdgeInsets.all(16.0);
 const EdgeInsets _kTitlePadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0);
-const EdgeInsets _kMenuPadding =
-    EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0);
+const EdgeInsets _kMenuPadding = EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0);
 const double _kMinDialogWidth = 640.0;
 const double _kMinDialogHeight = 120.0;
 

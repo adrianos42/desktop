@@ -139,9 +139,8 @@ class ToggleSwitchTheme extends InheritedTheme {
       final Color foreground = toggleSwitchThemeData.foreground ??
           colorScheme.shade[kHoverColorIndex];
 
-      final Color activeHoverColor =
-          toggleSwitchThemeData.activeHoverColor ??
-              colorScheme.shade[kHoverColorIndex];
+      final Color activeHoverColor = toggleSwitchThemeData.activeHoverColor ??
+          colorScheme.shade[kHoverColorIndex];
 
       final Color activeColor = toggleSwitchThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];

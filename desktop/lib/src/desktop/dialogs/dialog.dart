@@ -64,8 +64,6 @@ class DialogController {
 
 //   DialogController? _currentDialogController;
 
-  
-
 //   static void closeDialog(BuildContext context) {
 //     final DialogScope scope =
 //         context.dependOnInheritedWidgetOfExactType<DialogScope>()!;
@@ -285,34 +283,34 @@ class Dialog extends StatelessWidget {
 }
 
 DialogController showDialog(
-    BuildContext context, {
-    required WidgetBuilder builder,
-    Duration? duration,
-    List<DialogAction>? actions,
-    Color? barrierColor,
-    bool dismissible = true,
-  }) {
-    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
+  BuildContext context, {
+  required WidgetBuilder builder,
+  Duration? duration,
+  List<DialogAction>? actions,
+  Color? barrierColor,
+  bool dismissible = true,
+}) {
+  final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
 
-    late DialogController entry;
-    entry = DialogController._(
-      overlayEntry: OverlayEntry(
-        builder: (context) => _DialogView(
-            key: viewKey,
-            builder: builder,
-            dismissible: dismissible,
-            barrierColor: barrierColor,
-            close: () => entry._overlayEntry.remove(),
-            closeComplete: (reason) => entry._completer.complete(reason)),
-        maintainState: false,
-      ),
-      completer: Completer<DialogClosedReason>(),
-      hasMenu: actions?.isNotEmpty ?? false,
-      duration: duration ?? _kDialogDuration,
-      close: () => viewKey.currentState!.close(DialogClosedReason.close),
-    );
+  late DialogController entry;
+  entry = DialogController._(
+    overlayEntry: OverlayEntry(
+      builder: (context) => _DialogView(
+          key: viewKey,
+          builder: builder,
+          dismissible: dismissible,
+          barrierColor: barrierColor,
+          close: () => entry._overlayEntry.remove(),
+          closeComplete: (reason) => entry._completer.complete(reason)),
+      maintainState: false,
+    ),
+    completer: Completer<DialogClosedReason>(),
+    hasMenu: actions?.isNotEmpty ?? false,
+    duration: duration ?? _kDialogDuration,
+    close: () => viewKey.currentState!.close(DialogClosedReason.close),
+  );
 
-    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
+  Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
 
-    return entry;
-  }
+  return entry;
+}

@@ -19,10 +19,13 @@ typedef _MessageReasonCallback = void Function(MessageClosedReason);
 enum MessageKind {
   /// Info message.
   info,
+
   /// Error message.
   error,
+
   /// Warning message.
   warning,
+
   /// Success message.
   success,
 }
@@ -31,10 +34,13 @@ enum MessageKind {
 enum MessageClosedReason {
   /// The message was removed.
   remove,
+
   /// Timeout.
   timeout,
+
   /// The message was closed.
   close,
+
   /// The user dismissed the message.
   dismiss,
 }

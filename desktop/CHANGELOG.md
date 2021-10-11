@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0-dev.11
+
+- Fixes `TextField`.
+- `Overlay` in `ContextMenu`.
+- `Tree` now using a diferent index naming for its items.
+- Rgba color usage instead of HSL.
+
 ## 3.0.0-dev.10
 
 - Implements `Message`.

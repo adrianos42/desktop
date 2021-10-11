@@ -256,7 +256,6 @@ Future<T?> showDesktopPopup<T>({
   );
 }
 
-
 class DialogRoute<T> extends PopupRoute<T> {
   /// Creates a [DialogRoute].
   DialogRoute({

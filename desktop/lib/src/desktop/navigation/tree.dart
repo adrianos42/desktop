@@ -466,15 +466,15 @@ class _TreeState extends State<Tree>
           offstage: !active,
           child: TickerMode(
             enabled: active,
-            child:  Builder(
-                builder: (context) {
-                  return entry.value.shouldBuild
-                      ? Padding(
-                          padding: widget.pagePadding ?? EdgeInsets.zero,
-                          child: entry.value.builder(context),
-                        )
-                      : Container();
-                },
+            child: Builder(
+              builder: (context) {
+                return entry.value.shouldBuild
+                    ? Padding(
+                        padding: widget.pagePadding ?? EdgeInsets.zero,
+                        child: entry.value.builder(context),
+                      )
+                    : Container();
+              },
             ),
           ),
         ),
