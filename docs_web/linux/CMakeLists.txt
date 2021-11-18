@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "docs_web")
-set(APPLICATION_ID "com.example.docs_web")
+set(BINARY_NAME "desktop")
+set(APPLICATION_ID "com.example.desktop")
 
 cmake_policy(SET CMP0063 NEW)
 
