@@ -3,8 +3,12 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "6d6e8e77d0dc027ace95d694f89386f2",
-"assets/NOTICES": "551b3bdea773907e289f0bda1cd28041",
+  "canvaskit/canvaskit.wasm": "b179ba02b7a9f61ebc108f82c5a1ecdb",
+"canvaskit/canvaskit.js": "62b9906717d7215a6ff4cc24efbd1b5c",
+"canvaskit/profiling/canvaskit.wasm": "6d1b0fc1ec88c3110db88caa3393c580",
+"canvaskit/profiling/canvaskit.js": "3783918f48ef691e230156c251169480",
+"main.dart.js": "4057e6e923600bb9059f8060b68d8185",
+"assets/NOTICES": "01ee7a6869402db72a4111544231a872",
 "assets/assets/GitHub-Mark-32px.png": "f87561b8bb354ef83b09a66e54f70e08",
 "assets/assets/cats_small/pexels-mark-burnett-731553.jpg": "655da72061b5ca7666b452eb9fd904d8",
 "assets/assets/cats_small/pexels-david-savochka-192384.jpg": "86ef015ed5353520a573bd6b67f77b3b",
@@ -133,8 +137,8 @@ const RESOURCES = {
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Regular.ttf": "cb46f1f18358474393e7ccd02be3998a",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf": "1f86f6c46bf066316c13a9cba815ccfd",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Thin.ttf": "19dbee61fc3b65e55edc0ae9c2b554a8",
-"index.html": "d12770ba9233afda46a58e25597fbe20",
-"/": "d12770ba9233afda46a58e25597fbe20",
+"index.html": "66e1f098795b18da8b13d85720764d2e",
+"/": "66e1f098795b18da8b13d85720764d2e",
 "manifest.json": "b84436d4ff185318efa7890db21d84b2",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116",
