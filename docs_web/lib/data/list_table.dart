@@ -183,7 +183,7 @@ ListTable(
               right: borderSide,
               horizontalInside: borderSide.copyWith(width: 1.0),
             ),
-            onPressed: (row) async {
+            onPressed: (row, _) async {
               final dialog = showDialog(
                 context,
                 builder: (context) => Dialog(
