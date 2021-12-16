@@ -27,7 +27,7 @@ typedef TableRowBuilder = Widget Function(
 );
 
 ///
-typedef RowPressedCallback = void Function(int index);
+typedef RowPressedCallback = void Function(int index, RelativeRect position);
 
 /// A table with columns that can be resized.
 class ListTable extends StatefulWidget {
@@ -43,6 +43,7 @@ class ListTable extends StatefulWidget {
     this.controller,
     this.itemExtent = _kHeaderHeight,
     this.onPressed,
+    this.onSecondaryPress,
     Key? key,
   })  : assert(colCount > 0),
         assert(itemExtent >= 0.0),
@@ -69,6 +70,8 @@ class ListTable extends StatefulWidget {
 
   final RowPressedCallback? onPressed;
 
+  final RowPressedCallback? onSecondaryPress;
+
   /// If the last column should collapse if it does not fit the minimum width anymore.
   // TODO(as): final bool collapseOnDrag;
 
@@ -79,10 +82,15 @@ class ListTable extends StatefulWidget {
 class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   var columnWidths = {};
   bool hasHiddenColumns = false;
+  bool shouldReactToPrimaryPress = false;
 
-  int hoveredIndex = -1;
-  int pressedIndex = -1;
-  int waitingIndex = -1;
+  int primaryHoveredIndex = -1;
+  int primaryPressedIndex = -1;
+  int primaryWaitingIndex = -1;
+
+  int secondaryHoveredIndex = -1;
+  int secondaryPressedIndex = -1;
+  int secondaryWaitingIndex = -1;
 
   Widget createHeader() {
     final TableBorder? tableBorder = widget.tableBorder;
@@ -166,37 +174,67 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     final List<double> colElems = colSizes.where((e) => e > 0.0).toList();
 
     return MouseRegion(
-      onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
-      onExit: (_) => dragging ? null : setState(() => hoveredIndex = -1),
-      child: GestureDetector(
+      onEnter: (_) =>
+          dragging ? null : setState(() => primaryHoveredIndex = index),
+      onExit: (_) => dragging ? null : setState(() => primaryHoveredIndex = -1),
+      child: Listener(
         behavior: HitTestBehavior.deferToChild,
-        onTapDown: dragging
+        onPointerDown: dragging
             ? null
-            : widget.onPressed != null
-                ? (_) => setState(() => pressedIndex = index)
-                : null,
-        onTapUp: dragging
-            ? null
-            : widget.onPressed != null
-                ? (_) => setState(() => pressedIndex = -1)
-                : null,
-        onTapCancel: dragging ? null : () => setState(() => pressedIndex = -1),
-        onTap: dragging
-            ? null
-            : widget.onPressed != null
-                ? () {
-                    if (waitingIndex == index) {
-                      return;
-                    }
-                    waitingIndex = index;
-                    final dynamic result = widget.onPressed!(index)
-                        as dynamic; // TODO(as): fix dynamic
-
-                    if (result is Future) {
-                      setState(() => waitingIndex = index);
-                      result.then((_) => setState(() => waitingIndex = -1));
+            : widget.onPressed != null || widget.onSecondaryPress != null
+                ? (e) {
+                    shouldReactToPrimaryPress =
+                        e.kind == PointerDeviceKind.mouse &&
+                            e.buttons == kPrimaryMouseButton;
+                    if (shouldReactToPrimaryPress) {
+                      setState(() => primaryPressedIndex = index);
                     } else {
-                      waitingIndex = -1;
+                      setState(() => secondaryPressedIndex = index);
+                    }
+                  }
+                : null,
+        onPointerUp: dragging
+            ? null
+            : widget.onPressed != null || widget.onSecondaryPress != null
+                ? (e) {
+                    final overlay =
+                        Overlay.of(context)!.context.findRenderObject();
+                    final position = RelativeRect.fromRect(
+                      Offset(e.position.dx, e.position.dy) & Size.zero,
+                      overlay!.semanticBounds,
+                    );
+                    if (shouldReactToPrimaryPress) {
+                      if (primaryWaitingIndex == index) {
+                        return;
+                      }
+                      primaryWaitingIndex = index;
+                      final dynamic result =
+                          widget.onPressed?.call(index, position)
+                              as dynamic; // TODO(as): fix dynamic
+                      if (result is Future) {
+                        setState(() => primaryWaitingIndex = index);
+                        result.then(
+                            (_) => setState(() => primaryWaitingIndex = -1));
+                      } else {
+                        primaryWaitingIndex = -1;
+                      }
+                      setState(() => primaryPressedIndex = -1);
+                    } else {
+                      if (secondaryWaitingIndex == index) {
+                        return;
+                      }
+                      secondaryWaitingIndex = index;
+                      final dynamic result =
+                          widget.onSecondaryPress?.call(index, position)
+                              as dynamic; // TODO(as): fix dynamic
+                      if (result is Future) {
+                        setState(() => secondaryWaitingIndex = index);
+                        result.then(
+                            (_) => setState(() => secondaryWaitingIndex = -1));
+                      } else {
+                        secondaryWaitingIndex = -1;
+                      }
+                      setState(() => secondaryPressedIndex = -1);
                     }
                   }
                 : null,
@@ -222,9 +260,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 ListTableTheme.of(context);
 
             final Color? backgroundColor =
-                pressedIndex == index || waitingIndex == index
+                primaryPressedIndex == index || primaryWaitingIndex == index
                     ? listTableThemeData.highlightColor
-                    : hoveredIndex == index
+                    : primaryHoveredIndex == index
                         ? listTableThemeData.hoverColor
                         : null;
 
