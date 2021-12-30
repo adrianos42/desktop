@@ -51,6 +51,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         .context
         .findRenderObject()! as RenderBox;
 
+    print(button.size);
+
     final Rect position = Rect.fromPoints(
       button.localToGlobal(
         Offset.zero,
@@ -68,13 +70,18 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     setState(() => waiting = true);
 
+    final ContextMenuThemeData contextMenuThemeData =
+        ContextMenuTheme.of(context);
+
+    print(contextMenuThemeData.background);
+
     await showMenu<T>(
       context: context,
       items: items,
       initialValue: widget.value,
       position: position,
       width: button.size.width,
-      settings: const RouteSettings(),
+      contextMenuThemeData: contextMenuThemeData,
     ).then<void>((T? newValue) {
       if (!mounted) {
         return null;
@@ -178,13 +185,12 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     final enabled = widget.enabled;
 
     Widget bodyChild;
-    Color? inactiveBackground;
+    final Color inactiveBackground = buttonThemeData.inactiveBackgroundColor!;
 
     if (widget.value != null) {
       bodyChild = widget
           .itemBuilder(context)
           .firstWhere((value) => value.represents(widget.value!));
-      inactiveBackground = buttonThemeData.inactiveColor;
     } else {
       bodyChild = Container();
     }
@@ -203,9 +209,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
 
-    final Color? background = waiting
-        ? Theme.of(context).colorScheme.background[0]
-        : inactiveBackground;
+    final Color? background =
+        waiting ? buttonThemeData.backgroundColor : inactiveBackground;
     _backgroundColor =
         ColorTween(begin: _backgroundColor?.end ?? background, end: background);
 
@@ -227,30 +232,27 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
           child: Container(
             constraints: BoxConstraints(
               minHeight: contextMenuThemeData.itemHeight!,
-              minWidth: contextMenuThemeData.minMenuWidth!,
               maxHeight: contextMenuThemeData.itemHeight!,
-              maxWidth: contextMenuThemeData.maxMenuWidth!,
             ),
             decoration: BoxDecoration(
-              color: background,
-              border: border,
-            ),
-            //constraints: constraints,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+                    color: background,
+                    border: border,
+                  ),
+            child: Stack(
               children: [
                 IgnorePointer(
                   ignoring: true,
                   child: bodyChild,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Icon(
-                    waiting ? Icons.expand_less : Icons.expand_more,
-                    size: 18.0,
-                    color: foreground,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      waiting ? Icons.expand_less : Icons.expand_more,
+                      size: 18.0,
+                      color: foreground,
+                    ),
                   ),
                 ),
               ],
@@ -270,7 +272,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
           onTapDown: _handleTapDown,
           onTapUp: _handleTapUp,
           onTapCancel: _handleTapCancel,
-          onTap: showButtonMenu,
+          onTap: () => showButtonMenu(),
           child: result,
         ),
       );
@@ -283,7 +285,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     if (widget.tooltip != null) {
       result = Tooltip(
-        message: widget.tooltip!, // TODO(as): ???
+        message: widget.tooltip!,
         child: result,
       );
     }

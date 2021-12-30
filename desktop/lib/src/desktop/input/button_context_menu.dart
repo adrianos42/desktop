@@ -81,7 +81,6 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
       items: items,
       initialValue: widget.value,
       position: position,
-      settings: const RouteSettings(),
     ).then<void>((T? newValue) {
       if (!mounted) {
         return null;

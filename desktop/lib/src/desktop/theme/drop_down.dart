@@ -24,7 +24,8 @@ class DropDownButtonThemeData {
     this.focusColor,
     this.hoverColor,
     this.waitingColor,
-    this.inactiveColor,
+    this.backgroundColor,
+    this.inactiveBackgroundColor,
   });
 
   final IconThemeData? iconThemeData;
@@ -41,7 +42,9 @@ class DropDownButtonThemeData {
 
   final Color? waitingColor;
 
-  final Color? inactiveColor;
+  final Color? backgroundColor;
+
+  final Color? inactiveBackgroundColor;
 
   DropDownButtonThemeData copyWith({
     TextStyle? textStyle,
@@ -51,7 +54,8 @@ class DropDownButtonThemeData {
     Color? focusColor,
     Color? hoverColor,
     Color? waitingColor,
-    Color? inactiveColor,
+    Color? backgroundColor,
+    Color? inactiveBackgroundColor,
   }) {
     return DropDownButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -61,7 +65,8 @@ class DropDownButtonThemeData {
       focusColor: focusColor ?? this.focusColor,
       hoverColor: hoverColor ?? this.hoverColor,
       waitingColor: waitingColor ?? this.waitingColor,
-      inactiveColor: inactiveColor ?? this.inactiveColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      inactiveBackgroundColor: inactiveBackgroundColor ?? this.inactiveBackgroundColor,
     );
   }
 
@@ -77,7 +82,8 @@ class DropDownButtonThemeData {
       focusColor: other.focusColor,
       hoverColor: other.hoverColor,
       waitingColor: other.waitingColor,
-      inactiveColor: other.inactiveColor,
+      backgroundColor: other.backgroundColor,
+      inactiveBackgroundColor: other.inactiveBackgroundColor,
     );
   }
 
@@ -88,7 +94,8 @@ class DropDownButtonThemeData {
         color != null &&
         focusColor != null &&
         hoverColor != null &&
-        inactiveColor != null &&
+        inactiveBackgroundColor != null &&
+        backgroundColor != null &&
         waitingColor != null;
   }
 
@@ -102,7 +109,8 @@ class DropDownButtonThemeData {
       focusColor,
       hoverColor,
       waitingColor,
-      inactiveColor,
+      backgroundColor,
+      inactiveBackgroundColor,
     );
   }
 
@@ -121,7 +129,8 @@ class DropDownButtonThemeData {
         other.color == color &&
         other.focusColor == focusColor &&
         other.hoverColor == hoverColor &&
-        other.inactiveColor == inactiveColor &&
+        other.inactiveBackgroundColor == inactiveBackgroundColor &&
+        other.backgroundColor == backgroundColor &&
         other.waitingColor == waitingColor;
   }
 }
@@ -177,12 +186,15 @@ class DropDownButtonTheme extends InheritedTheme {
       final Color waitingColor =
           buttonThemeData.waitingColor ?? colorScheme.shade[30];
 
+      final Color backgroundColor =
+          buttonThemeData.backgroundColor ?? colorScheme.background[0];
+
       final Color disabledColor =
           buttonThemeData.disabledColor ?? colorScheme.disabled;
       final Color focusColor = buttonThemeData.focusColor ?? waitingColor;
 
-      final Color inactiveColor =
-          buttonThemeData.inactiveColor ?? colorScheme.background[0];
+      final Color inactiveBackgroundColor =
+          buttonThemeData.inactiveBackgroundColor ?? colorScheme.background[0];
 
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: hoverColor);
@@ -195,7 +207,8 @@ class DropDownButtonTheme extends InheritedTheme {
         focusColor: focusColor,
         hoverColor: hoverColor,
         waitingColor: waitingColor,
-        inactiveColor: inactiveColor,
+        backgroundColor: backgroundColor,
+        inactiveBackgroundColor: inactiveBackgroundColor,
       );
     }
 

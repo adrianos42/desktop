@@ -179,65 +179,66 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       onExit: (_) => dragging ? null : setState(() => primaryHoveredIndex = -1),
       child: Listener(
         behavior: HitTestBehavior.deferToChild,
-        onPointerDown: dragging
-            ? null
-            : widget.onPressed != null || widget.onSecondaryPress != null
+        onPointerDown:
+            widget.onPressed != null || widget.onSecondaryPress != null
                 ? (e) {
-                    shouldReactToPrimaryPress =
-                        e.kind == PointerDeviceKind.mouse &&
-                            e.buttons == kPrimaryMouseButton;
-                    if (shouldReactToPrimaryPress) {
-                      setState(() => primaryPressedIndex = index);
-                    } else {
-                      setState(() => secondaryPressedIndex = index);
+                    if (!dragging) {
+                      shouldReactToPrimaryPress =
+                          e.kind == PointerDeviceKind.mouse &&
+                              e.buttons == kPrimaryMouseButton;
+                      if (shouldReactToPrimaryPress) {
+                        setState(() => primaryPressedIndex = index);
+                      } else {
+                        setState(() => secondaryPressedIndex = index);
+                      }
                     }
                   }
                 : null,
-        onPointerUp: dragging
-            ? null
-            : widget.onPressed != null || widget.onSecondaryPress != null
-                ? (e) {
-                    final overlay =
-                        Overlay.of(context)!.context.findRenderObject();
-                    final position = RelativeRect.fromRect(
-                      Offset(e.position.dx, e.position.dy) & Size.zero,
-                      overlay!.semanticBounds,
-                    );
-                    if (shouldReactToPrimaryPress) {
-                      if (primaryWaitingIndex == index) {
-                        return;
-                      }
-                      primaryWaitingIndex = index;
-                      final dynamic result =
-                          widget.onPressed?.call(index, position)
-                              as dynamic; // TODO(as): fix dynamic
-                      if (result is Future) {
-                        setState(() => primaryWaitingIndex = index);
-                        result.then(
-                            (_) => setState(() => primaryWaitingIndex = -1));
-                      } else {
-                        primaryWaitingIndex = -1;
-                      }
-                      setState(() => primaryPressedIndex = -1);
-                    } else {
-                      if (secondaryWaitingIndex == index) {
-                        return;
-                      }
-                      secondaryWaitingIndex = index;
-                      final dynamic result =
-                          widget.onSecondaryPress?.call(index, position)
-                              as dynamic; // TODO(as): fix dynamic
-                      if (result is Future) {
-                        setState(() => secondaryWaitingIndex = index);
-                        result.then(
-                            (_) => setState(() => secondaryWaitingIndex = -1));
-                      } else {
-                        secondaryWaitingIndex = -1;
-                      }
-                      setState(() => secondaryPressedIndex = -1);
+        onPointerUp: widget.onPressed != null || widget.onSecondaryPress != null
+            ? (e) {
+                if (!dragging) {
+                  final overlay =
+                      Overlay.of(context)!.context.findRenderObject();
+                  final position = RelativeRect.fromRect(
+                    Offset(e.position.dx, e.position.dy) & Size.zero,
+                    overlay!.semanticBounds,
+                  );
+                  if (shouldReactToPrimaryPress) {
+                    if (primaryWaitingIndex == index) {
+                      return;
                     }
+                    primaryWaitingIndex = index;
+                    final dynamic result =
+                        widget.onPressed?.call(index, position)
+                            as dynamic; // TODO(as): fix dynamic
+                    if (result is Future) {
+                      setState(() => primaryWaitingIndex = index);
+                      result.then(
+                          (_) => setState(() => primaryWaitingIndex = -1));
+                    } else {
+                      primaryWaitingIndex = -1;
+                    }
+                    setState(() => primaryPressedIndex = -1);
+                  } else {
+                    if (secondaryWaitingIndex == index) {
+                      return;
+                    }
+                    secondaryWaitingIndex = index;
+                    final dynamic result =
+                        widget.onSecondaryPress?.call(index, position)
+                            as dynamic; // TODO(as): fix dynamic
+                    if (result is Future) {
+                      setState(() => secondaryWaitingIndex = index);
+                      result.then(
+                          (_) => setState(() => secondaryWaitingIndex = -1));
+                    } else {
+                      secondaryWaitingIndex = -1;
+                    }
+                    setState(() => secondaryPressedIndex = -1);
                   }
-                : null,
+                }
+              }
+            : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,

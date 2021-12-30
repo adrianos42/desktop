@@ -271,9 +271,9 @@ class ContextMenuTheme extends InheritedTheme {
   @override
   bool updateShouldNotify(ContextMenuTheme oldWidget) => data != oldWidget.data;
 
-  static Widget merge(
-    BuildContext context,
-    Widget child, {
+  static Widget copyWith({
+    Key? key,
+    required Widget child,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     ColorScheme? colorScheme,
@@ -289,23 +289,26 @@ class ContextMenuTheme extends InheritedTheme {
     Color? highlightColor,
     Color? background,
   }) {
-    return ContextMenuTheme(
-      child: child,
-      data: ContextMenuTheme.of(context).copyWith(
-        textStyle: textStyle,
-        iconThemeData: iconThemeData,
-        colorScheme: colorScheme,
-        menuWidthStep: menuWidthStep,
-        itemHeight: itemHeight,
-        minMenuWidth: minMenuWidth,
-        maxMenuWidth: maxMenuWidth,
-        menuHorizontalPadding: menuHorizontalPadding,
-        selectedColor: selectedColor,
-        selectedHighlightColor: selectedHighlightColor,
-        selectedHoverColor: selectedHoverColor,
-        hoverColor: hoverColor,
-        highlightColor: highlightColor,
-        background: background,
+    return Builder(
+      key: key,
+      builder: (context) => ContextMenuTheme(
+        child: child,
+        data: ContextMenuTheme.of(context).copyWith(
+          textStyle: textStyle,
+          iconThemeData: iconThemeData,
+          colorScheme: colorScheme,
+          menuWidthStep: menuWidthStep,
+          itemHeight: itemHeight,
+          minMenuWidth: minMenuWidth,
+          maxMenuWidth: maxMenuWidth,
+          menuHorizontalPadding: menuHorizontalPadding,
+          selectedColor: selectedColor,
+          selectedHighlightColor: selectedHighlightColor,
+          selectedHoverColor: selectedHoverColor,
+          hoverColor: hoverColor,
+          highlightColor: highlightColor,
+          background: background,
+        ),
       ),
     );
   }

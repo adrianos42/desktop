@@ -280,6 +280,11 @@ class _ContextMenu<T> extends StatelessWidget {
       );
     }).toList();
 
+    final contextView = SingleChildScrollView(
+      controller: scrollController,
+      child: ListBody(children: children),
+    );
+
     final Widget child = Container(
       constraints: BoxConstraints(
         minWidth:
@@ -304,15 +309,11 @@ class _ContextMenu<T> extends StatelessWidget {
             isAlwaysShown: false,
             thickness: 4.0, // TODO(as): Use in scrollbar theme instead.
             controller: scrollController,
-            child: IntrinsicWidth(
-              stepWidth: controller(context).width == null
-                  ? contextMenuThemeData.menuWidthStep!
-                  : null,
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: ListBody(children: children),
-              ),
-            ),
+            child: controller(context).width == null
+                ? IntrinsicWidth(
+                    stepWidth: contextMenuThemeData.menuWidthStep!,
+                    child: contextView)
+                : contextView,
           ),
         ),
       ),
@@ -327,7 +328,6 @@ class _ContextMenu<T> extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: contextMenuThemeData.background!,
-          //border: Border.all(width: 1.0, color: colorScheme.background[20].toColor()),
         ),
         position: DecorationPosition.background,
         child: child,
@@ -408,6 +408,7 @@ class _ContextController<T> {
     this.width,
     required this.items,
     required this.position,
+    this.contextMenuThemeData,
     String? semanticLabel,
   }) : _completer = Completer<T>() {
     _overlayEntry = OverlayEntry(
@@ -418,7 +419,12 @@ class _ContextController<T> {
           onTap: () => _close(null),
           child: CustomSingleChildLayout(
             delegate: _ContextMenuLayoutDelegate(position),
-            child: _ContextMenu<T>(semanticLabel: semanticLabel),
+            child: contextMenuThemeData != null
+                ? ContextMenuTheme(
+                    child: _ContextMenu<T>(semanticLabel: semanticLabel),
+                    data: contextMenuThemeData!,
+                  )
+                : _ContextMenu<T>(semanticLabel: semanticLabel),
           ),
         ),
       ),
@@ -437,6 +443,8 @@ class _ContextController<T> {
 
   final T? value;
 
+  final ContextMenuThemeData? contextMenuThemeData;
+
   void _close(T? completeValue) {
     _overlayEntry.remove();
     _completer.complete(completeValue ?? value);
@@ -448,11 +456,11 @@ Future<T?> showMenu<T>({
   required BuildContext context,
   required List<ContextMenuEntry<T>> items,
   required Rect position,
-  required RouteSettings settings,
   double? width,
   String? semanticLabel,
   String? barrierLabel,
   T? initialValue,
+  ContextMenuThemeData? contextMenuThemeData,
 }) {
   assert(items.isNotEmpty);
 
@@ -462,6 +470,7 @@ Future<T?> showMenu<T>({
     items: items,
     position: position,
     semanticLabel: semanticLabel,
+    contextMenuThemeData: contextMenuThemeData,
   );
 
   Overlay.of(context, rootOverlay: true)!.insert(controller._overlayEntry);
