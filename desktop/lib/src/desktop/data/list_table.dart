@@ -177,6 +177,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       onEnter: (_) =>
           dragging ? null : setState(() => primaryHoveredIndex = index),
       onExit: (_) => dragging ? null : setState(() => primaryHoveredIndex = -1),
+      cursor: widget.onPressed != null
+          ? SystemMouseCursors.click
+          : SystemMouseCursors.basic,
       child: Listener(
         behavior: HitTestBehavior.deferToChild,
         onPointerDown:

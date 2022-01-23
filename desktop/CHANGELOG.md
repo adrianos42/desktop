@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.2
+
+- Changes the highlight color for list table.
+
 ## 3.1.1
 
 - Fixes the context menu width.
