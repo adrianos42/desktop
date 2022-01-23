@@ -16,9 +16,10 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final backgroundColor = colorScheme.background[6];
-    final hoverBackgroundColor = colorScheme.background[16];
-    final waitingBackgroundColor = colorScheme.background[2];
+    final backgroundColor = colorScheme.background[8];
+    final hoverBackgroundColor = colorScheme.background[20];
+    final waitingBackgroundColor = colorScheme.background[4];
+    final highlightBackgroundColor = colorScheme.background[14];
 
     final enabledCode = '''
 Container(
@@ -131,6 +132,7 @@ Container(
               child: ContextMenuTheme.copyWith(
                 color: backgroundColor,
                 background: backgroundColor,
+                highlightColor: highlightBackgroundColor,
                 child: DropDownButtonTheme.copyWith(
                   backgroundColor: backgroundColor,
                   hoverBackgroundColor: hoverBackgroundColor,

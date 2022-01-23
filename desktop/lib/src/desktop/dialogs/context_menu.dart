@@ -97,7 +97,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   }
 
   void _handleHoverExited() {
-    if (hovered && !_globalPointerDown) {
+    if (hovered) {
       setState(() => hovered = false);
     }
   }
@@ -177,18 +177,20 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     );
 
     item = IgnorePointer(
-      ignoring: !widget.enabled, //|| selected == null,
+      ignoring: !widget.enabled,
       child: MouseRegion(
         cursor: widget.enabled ? SystemMouseCursors.click : MouseCursor.defer,
         onEnter: widget.enabled ? (event) => _handleHoverEntered() : null,
-        onExit: widget.enabled ? (event) => _handleHoverExited() : null,
         onHover: widget.enabled ? (event) => _handleHoverEntered() : null,
+        onExit: widget.enabled ? (event) => _handleHoverExited() : null,
         opaque: false,
         child: GestureDetector(
           behavior: HitTestBehavior.deferToChild,
           onTapDown: widget.enabled ? _handleTapDown : null,
           onTapUp: widget.enabled ? _handleTapUp : null,
           onTapCancel: widget.enabled ? _handleTapCancel : null,
+          onVerticalDragStart: (event) => _handleHoverExited(),
+          onHorizontalDragStart: (event) => _handleHoverExited(),
           child: item,
         ),
       ),
@@ -263,6 +265,9 @@ class _ContextMenu<T> extends StatelessWidget {
     final ContextMenuThemeData contextMenuThemeData =
         ContextMenuTheme.of(context);
 
+    final double menuWidth =
+        controller(context).width ?? contextMenuThemeData.minMenuWidth!;
+
     final children = controller(context).items.map((item) {
       final bool selected;
 
@@ -286,11 +291,8 @@ class _ContextMenu<T> extends StatelessWidget {
     );
 
     final Widget child = Container(
-      constraints: BoxConstraints(
-        minWidth:
-            controller(context).width ?? contextMenuThemeData.minMenuWidth!,
-        maxWidth:
-            controller(context).width ?? contextMenuThemeData.maxMenuWidth!,
+      constraints: BoxConstraints.tightFor(
+        width: menuWidth,
       ),
       decoration: BoxDecoration(
         border: Border.all(
@@ -345,11 +347,7 @@ class _ContextMenuLayoutDelegate extends SingleChildLayoutDelegate {
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     final double maxHeight = constraints.maxHeight;
     final double maxWidth = constraints.maxWidth;
-    final Size size = Size(
-      max(position.left, maxWidth - position.right),
-      max(position.top, maxHeight - position.bottom),
-    );
-    return BoxConstraints.loose(size);
+    return BoxConstraints.loose(Size(maxWidth, maxHeight));
   }
 
   @override
@@ -417,14 +415,17 @@ class _ContextController<T> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => _close(null),
-          child: CustomSingleChildLayout(
-            delegate: _ContextMenuLayoutDelegate(position),
-            child: contextMenuThemeData != null
-                ? ContextMenuTheme(
-                    child: _ContextMenu<T>(semanticLabel: semanticLabel),
-                    data: contextMenuThemeData!,
-                  )
-                : _ContextMenu<T>(semanticLabel: semanticLabel),
+          child: SizedBox(
+            width: width,
+            child: CustomSingleChildLayout(
+              delegate: _ContextMenuLayoutDelegate(position),
+              child: contextMenuThemeData != null
+                  ? ContextMenuTheme(
+                      child: _ContextMenu<T>(semanticLabel: semanticLabel),
+                      data: contextMenuThemeData!,
+                    )
+                  : _ContextMenu<T>(semanticLabel: semanticLabel),
+            ),
           ),
         ),
       ),

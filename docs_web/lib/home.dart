@@ -14,7 +14,7 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
-const String _version = 'dev.2.1';
+const String _version = 'dev.2.2';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);

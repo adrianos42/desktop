@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.1
+
+- Fixes the context menu width.
+
+## 3.1.0
+
+- Adds option for background in context menu.
+
 ## 3.0.1
 
 - Fixes `Button` text overflow.
