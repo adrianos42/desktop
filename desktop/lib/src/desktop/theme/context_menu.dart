@@ -32,33 +32,50 @@ class ContextMenuThemeData {
     this.hoverColor,
     this.highlightColor,
     this.background,
+    this.color,
   });
 
+  /// The icon theme.
   final IconThemeData? iconThemeData;
 
+  /// The menu step width.
   final double? menuWidthStep;
 
+  /// The item height.
   final double? itemHeight;
 
+  /// The minimum width of the menu.
   final double? minMenuWidth;
 
+  /// The maximum width of the menu.
   final double? maxMenuWidth;
 
+  /// The horizontal padding for the menu item.
   final double? menuHorizontalPadding;
 
+  /// The [TextStyle] of the item.
   final TextStyle? textStyle;
 
+  /// The color of an item when selected.
   final Color? selectedColor;
 
+  /// The color of an item when selected and highlighted. 
   final Color? selectedHighlightColor;
 
+  /// The color of an item when selected and hovered.
   final Color? selectedHoverColor;
 
+  /// The color of an item when hovering over it.
   final Color? hoverColor;
 
+  /// The color of an item when highlighted color.
   final Color? highlightColor;
 
+  ///  The background color of the menu.
   final Color? background;
+
+  /// The color of the menu border.
+  final Color? color;
 
   ContextMenuThemeData copyWith({
     TextStyle? textStyle,
@@ -75,6 +92,7 @@ class ContextMenuThemeData {
     Color? hoverColor,
     Color? highlightColor,
     Color? background,
+    Color? color,
   }) {
     return ContextMenuThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -92,6 +110,7 @@ class ContextMenuThemeData {
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
       background: background ?? this.background,
+      color: color ?? this.color,
     );
   }
 
@@ -113,6 +132,7 @@ class ContextMenuThemeData {
       highlightColor: other.highlightColor,
       background: other.background,
       menuHorizontalPadding: other.menuHorizontalPadding,
+      color: other.color,
     );
   }
 
@@ -129,7 +149,8 @@ class ContextMenuThemeData {
         maxMenuWidth != null &&
         menuHorizontalPadding != null &&
         highlightColor != null &&
-        background != null;
+        background != null &&
+        color != null;
   }
 
   @override
@@ -148,6 +169,7 @@ class ContextMenuThemeData {
       hoverColor,
       highlightColor,
       background,
+      color,
     );
   }
 
@@ -172,7 +194,8 @@ class ContextMenuThemeData {
         other.selectedHoverColor == selectedHoverColor &&
         other.hoverColor == hoverColor &&
         other.highlightColor == highlightColor &&
-        other.background == background;
+        other.background == background && 
+        other.color == color;
   }
 }
 
@@ -223,6 +246,8 @@ class ContextMenuTheme extends InheritedTheme {
           contextMenuThemeData.selectedHoverColor ??
               colorScheme.primary[40]; // TODO(as): ???
 
+      final Color color = colorScheme.shade[kInactiveColorIndex];
+
       final IconThemeData iconThemeData = contextMenuThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh);
 
@@ -251,6 +276,7 @@ class ContextMenuTheme extends InheritedTheme {
         maxMenuWidth: maxMenuWidth,
         menuHorizontalPadding: menuHorizontalPadding,
         background: background,
+        color: color,
       );
     }
 
@@ -288,6 +314,7 @@ class ContextMenuTheme extends InheritedTheme {
     Color? hoverColor,
     Color? highlightColor,
     Color? background,
+    Color? color,
   }) {
     return Builder(
       key: key,
@@ -308,6 +335,7 @@ class ContextMenuTheme extends InheritedTheme {
           hoverColor: hoverColor,
           highlightColor: highlightColor,
           background: background,
+          color: color,
         ),
       ),
     );

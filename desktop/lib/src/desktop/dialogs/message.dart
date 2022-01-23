@@ -432,8 +432,7 @@ class _MessageState extends State<Message> {
 
     _animation ??= CurvedAnimation(
       parent: widget.animation!,
-      curve: Curves.easeInSine,
-      reverseCurve: Curves.easeOutSine,
+      curve: Curves.easeInCubic,
     );
 
     final Color backgroundColor = colorScheme.background[0];

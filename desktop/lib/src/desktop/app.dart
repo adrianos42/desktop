@@ -313,7 +313,7 @@ class _DesktopAppState extends State<DesktopApp> {
       navigatorObservers: widget.navigatorObservers!,
       pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) =>
           DesktopPageRoute<T>(settings: settings, builder: builder),
-      home: widget.home!,
+      home: widget.home,
       routes: widget.routes!,
       initialRoute: widget.initialRoute,
       onGenerateRoute: widget.onGenerateRoute,

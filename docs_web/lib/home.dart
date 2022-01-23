@@ -14,7 +14,7 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
-const String _version = 'dev.1.1';
+const String _version = 'dev.2.1';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -36,8 +36,6 @@ class _DocAppState extends State<DocApp> {
 
   PrimaryColor get primaryColor =>
       _primaryColor ?? Theme.of(context).colorScheme.primary;
-
-  double backgroundColorLightness = 0.0;
 
   bool? _isShowingTree;
 
@@ -214,7 +212,7 @@ class _DocAppState extends State<DocApp> {
                   TreeNode.child(
                     titleBuilder: (context) => Text('Overview'),
                     builder: (context) => OverviewPage(),
-                    //builder: (context) => TextFieldPage(),
+                    //builder: (context) => ButtonDropDownPage(),
 
                     /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
@@ -354,9 +352,7 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: _createHome(),
-    );
+    return _createHome();
   }
 }
 

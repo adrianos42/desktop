@@ -295,7 +295,7 @@ class _ContextMenu<T> extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1.0,
-          color: Theme.of(context).textTheme.textLow,
+          color: contextMenuThemeData.color!,
         ),
       ),
       child: Semantics(
@@ -410,7 +410,7 @@ class _ContextController<T> {
     required this.position,
     this.contextMenuThemeData,
     String? semanticLabel,
-  }) : _completer = Completer<T>() {
+  }) : _completer = Completer<T?>() {
     _overlayEntry = OverlayEntry(
       builder: (context) => _ContextScope<T>(
         this,

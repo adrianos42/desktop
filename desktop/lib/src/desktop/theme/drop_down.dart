@@ -25,26 +25,42 @@ class DropDownButtonThemeData {
     this.hoverColor,
     this.waitingColor,
     this.backgroundColor,
-    this.inactiveBackgroundColor,
+    this.hoverBackgroundColor,
+    this.waitingBackgroundColor,
+    this.disabledBackgroundColor,
   });
 
+  /// The icon theme of the button.
   final IconThemeData? iconThemeData;
 
   final TextStyle? textStyle;
 
+  /// The color of the border when disabled.
   final Color? disabledColor;
 
+  /// The color of the border.
   final Color? color;
 
+  /// The color of the border when focused.
   final Color? focusColor;
 
+  /// The color of the border when hovered.
   final Color? hoverColor;
 
+  /// The color of the border when the menu is open.
   final Color? waitingColor;
 
+  /// The background color of the button.
   final Color? backgroundColor;
 
-  final Color? inactiveBackgroundColor;
+  /// The background color when the button is being hovered.
+  final Color? hoverBackgroundColor;
+
+  /// The background color when the menu is open.
+  final Color? waitingBackgroundColor;
+
+  /// The background color when the button is disabled.
+  final Color? disabledBackgroundColor;
 
   DropDownButtonThemeData copyWith({
     TextStyle? textStyle,
@@ -55,19 +71,24 @@ class DropDownButtonThemeData {
     Color? hoverColor,
     Color? waitingColor,
     Color? backgroundColor,
-    Color? inactiveBackgroundColor,
+    Color? hoverBackgroundColor,
+    Color? waitingBackgroundColor,
+    Color? disabledBackgroundColor,
   }) {
     return DropDownButtonThemeData(
-      textStyle: textStyle ?? this.textStyle,
-      iconThemeData: iconThemeData ?? this.iconThemeData,
-      disabledColor: disabledColor ?? this.disabledColor,
-      color: color ?? this.color,
-      focusColor: focusColor ?? this.focusColor,
-      hoverColor: hoverColor ?? this.hoverColor,
-      waitingColor: waitingColor ?? this.waitingColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      inactiveBackgroundColor: inactiveBackgroundColor ?? this.inactiveBackgroundColor,
-    );
+        textStyle: textStyle ?? this.textStyle,
+        iconThemeData: iconThemeData ?? this.iconThemeData,
+        disabledColor: disabledColor ?? this.disabledColor,
+        color: color ?? this.color,
+        focusColor: focusColor ?? this.focusColor,
+        hoverColor: hoverColor ?? this.hoverColor,
+        waitingColor: waitingColor ?? this.waitingColor,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor ?? this.hoverBackgroundColor,
+        waitingBackgroundColor:
+            waitingBackgroundColor ?? this.waitingBackgroundColor,
+        disabledBackgroundColor:
+            disabledBackgroundColor ?? this.disabledBackgroundColor);
   }
 
   DropDownButtonThemeData merge(DropDownButtonThemeData? other) {
@@ -83,7 +104,9 @@ class DropDownButtonThemeData {
       hoverColor: other.hoverColor,
       waitingColor: other.waitingColor,
       backgroundColor: other.backgroundColor,
-      inactiveBackgroundColor: other.inactiveBackgroundColor,
+      hoverBackgroundColor: other.hoverBackgroundColor,
+      waitingBackgroundColor: other.waitingBackgroundColor,
+      disabledBackgroundColor: other.disabledBackgroundColor,
     );
   }
 
@@ -94,9 +117,11 @@ class DropDownButtonThemeData {
         color != null &&
         focusColor != null &&
         hoverColor != null &&
-        inactiveBackgroundColor != null &&
         backgroundColor != null &&
-        waitingColor != null;
+        waitingColor != null &&
+        hoverBackgroundColor != null &&
+        waitingBackgroundColor != null &&
+        disabledBackgroundColor != null;
   }
 
   @override
@@ -110,7 +135,9 @@ class DropDownButtonThemeData {
       hoverColor,
       waitingColor,
       backgroundColor,
-      inactiveBackgroundColor,
+      hoverBackgroundColor,
+      waitingBackgroundColor,
+      disabledBackgroundColor,
     );
   }
 
@@ -129,9 +156,11 @@ class DropDownButtonThemeData {
         other.color == color &&
         other.focusColor == focusColor &&
         other.hoverColor == hoverColor &&
-        other.inactiveBackgroundColor == inactiveBackgroundColor &&
+        other.waitingColor == waitingColor &&
         other.backgroundColor == backgroundColor &&
-        other.waitingColor == waitingColor;
+        other.hoverBackgroundColor == hoverBackgroundColor &&
+        other.waitingBackgroundColor == waitingBackgroundColor &&
+        other.disabledBackgroundColor == disabledBackgroundColor;
   }
 }
 
@@ -184,7 +213,7 @@ class DropDownButtonTheme extends InheritedTheme {
           buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
 
       final Color waitingColor =
-          buttonThemeData.waitingColor ?? colorScheme.shade[30];
+          buttonThemeData.waitingColor ?? colorScheme.background[20];
 
       final Color backgroundColor =
           buttonThemeData.backgroundColor ?? colorScheme.background[0];
@@ -193,11 +222,17 @@ class DropDownButtonTheme extends InheritedTheme {
           buttonThemeData.disabledColor ?? colorScheme.disabled;
       final Color focusColor = buttonThemeData.focusColor ?? waitingColor;
 
-      final Color inactiveBackgroundColor =
-          buttonThemeData.inactiveBackgroundColor ?? colorScheme.background[0];
-
       final IconThemeData iconThemeData = buttonThemeData.iconThemeData ??
           IconThemeData(size: _kIconSize, color: hoverColor);
+
+      final Color hoverBackgroundColor =
+          buttonThemeData.hoverBackgroundColor ?? colorScheme.background[0];
+
+      final Color waitingBackgroundColor =
+          buttonThemeData.waitingBackgroundColor ?? colorScheme.background[0];
+
+      final Color disabledBackgroundColor =
+          buttonThemeData.disabledBackgroundColor ?? colorScheme.background[0];
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,
@@ -208,13 +243,51 @@ class DropDownButtonTheme extends InheritedTheme {
         hoverColor: hoverColor,
         waitingColor: waitingColor,
         backgroundColor: backgroundColor,
-        inactiveBackgroundColor: inactiveBackgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+        waitingBackgroundColor: waitingBackgroundColor,
+        disabledBackgroundColor: disabledBackgroundColor,
       );
     }
 
     assert(buttonThemeData.isConcrete);
 
     return buttonThemeData;
+  }
+
+  static Widget copyWith({
+    Key? key,
+    required Widget child,
+    TextStyle? textStyle,
+    IconThemeData? iconThemeData,
+    Color? disabledColor,
+    Color? color,
+    Color? focusColor,
+    Color? hoverColor,
+    Color? waitingColor,
+    Color? backgroundColor,
+    Color? hoverBackgroundColor,
+    Color? waitingBackgroundColor,
+    Color? disabledBackgroundColor,
+  }) {
+    return Builder(
+      key: key,
+      builder: (context) => DropDownButtonTheme(
+        child: child,
+        data: DropDownButtonTheme.of(context).copyWith(
+          textStyle: textStyle,
+          iconThemeData: iconThemeData,
+          disabledColor: disabledColor,
+          color: color,
+          focusColor: focusColor,
+          hoverColor: hoverColor,
+          waitingColor: waitingColor,
+          backgroundColor: backgroundColor,
+          hoverBackgroundColor: hoverBackgroundColor,
+          waitingBackgroundColor: waitingBackgroundColor,
+          disabledBackgroundColor: disabledBackgroundColor,
+        ),
+      ),
+    );
   }
 
   @override

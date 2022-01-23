@@ -1,12 +1,8 @@
 import 'package:desktop/desktop.dart';
-import 'routes/delegate.dart';
+import 'home.dart';
 
-void main() {
-  runApp(
-    DesktopApp.router(
-      routeInformationParser: const DocsInformationParser(),
-      routerDelegate: DocsRouteDelegate(),
-      backButtonDispatcher: RootBackButtonDispatcher(),
-    ),
-  );
-}
+void main() => runApp(
+      DesktopApp(
+        home: DocApp(),
+      ),
+    );

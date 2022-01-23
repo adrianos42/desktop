@@ -33,7 +33,7 @@ class DropDownButton<T> extends StatefulWidget {
   /// Called when the user cancels the context menu selection.
   final ContextMenuCanceled? onCanceled;
 
-  /// The button tooltip;
+  /// The button tooltip.
   final String? tooltip;
 
   /// If this button is enabled.
@@ -45,13 +45,13 @@ class DropDownButton<T> extends StatefulWidget {
 
 class _DropDownButtonState<T> extends State<DropDownButton<T>>
     with ComponentStateMixin, SingleTickerProviderStateMixin {
+  ContextMenuThemeData get contextMenuThemeData => ContextMenuTheme.of(context);
+
   Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
     final RenderBox overlay = Overlay.of(context, rootOverlay: true)!
         .context
         .findRenderObject()! as RenderBox;
-
-    print(button.size);
 
     final Rect position = Rect.fromPoints(
       button.localToGlobal(
@@ -69,11 +69,6 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     assert(items.isNotEmpty);
 
     setState(() => waiting = true);
-
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
-
-    print(contextMenuThemeData.background);
 
     await showMenu<T>(
       context: context,
@@ -179,13 +174,10 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
   Widget build(BuildContext context) {
     final DropDownButtonThemeData buttonThemeData =
         DropDownButtonTheme.of(context);
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
 
-    final enabled = widget.enabled;
+    final bool enabled = widget.enabled;
 
     Widget bodyChild;
-    final Color inactiveBackground = buttonThemeData.inactiveBackgroundColor!;
 
     if (widget.value != null) {
       bodyChild = widget
@@ -195,7 +187,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       bodyChild = Container();
     }
 
-    final borderColor = enabled
+    final Color borderColor = enabled
         ? waiting
             ? buttonThemeData.waitingColor!
             : hovered
@@ -203,14 +195,20 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                 : buttonThemeData.color!
         : buttonThemeData.disabledColor!;
 
-    final foreground = enabled
+    final Color foreground = enabled
         ? buttonThemeData.iconThemeData!.color!
         : buttonThemeData.disabledColor!;
 
     _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
 
-    final Color? background =
-        waiting ? buttonThemeData.backgroundColor : inactiveBackground;
+    final Color background = enabled
+        ? waiting
+            ? buttonThemeData.waitingBackgroundColor!
+            : hovered
+                ? buttonThemeData.hoverBackgroundColor!
+                : buttonThemeData.backgroundColor!
+        : buttonThemeData.disabledBackgroundColor!;
+
     _backgroundColor =
         ColorTween(begin: _backgroundColor?.end ?? background, end: background);
 
@@ -235,14 +233,17 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               maxHeight: contextMenuThemeData.itemHeight!,
             ),
             decoration: BoxDecoration(
-                    color: background,
-                    border: border,
-                  ),
+              color: background,
+              border: border,
+            ),
             child: Stack(
               children: [
                 IgnorePointer(
                   ignoring: true,
-                  child: bodyChild,
+                  child: ContextMenuTheme(
+                    child: bodyChild,
+                    data: contextMenuThemeData.copyWith(background: background),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
