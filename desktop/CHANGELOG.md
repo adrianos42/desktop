@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.3
+
+- Fixes the tap input for list table.
+
 ## 3.1.2
 
 - Changes the highlight color for list table.

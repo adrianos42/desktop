@@ -83,14 +83,11 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   var columnWidths = {};
   bool hasHiddenColumns = false;
   bool shouldReactToPrimaryPress = false;
+  bool shouldReactToSecondaryPress = false;
 
-  int primaryHoveredIndex = -1;
-  int primaryPressedIndex = -1;
-  int primaryWaitingIndex = -1;
-
-  int secondaryHoveredIndex = -1;
-  int secondaryPressedIndex = -1;
-  int secondaryWaitingIndex = -1;
+  int hoveredIndex = -1;
+  int pressedIndex = -1;
+  int waitingIndex = -1;
 
   Widget createHeader() {
     final TableBorder? tableBorder = widget.tableBorder;
@@ -174,74 +171,69 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     final List<double> colElems = colSizes.where((e) => e > 0.0).toList();
 
     return MouseRegion(
-      onEnter: (_) =>
-          dragging ? null : setState(() => primaryHoveredIndex = index),
-      onExit: (_) => dragging ? null : setState(() => primaryHoveredIndex = -1),
+      onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
+      onExit: (_) => dragging ? null : setState(() => hoveredIndex = -1),
       cursor: widget.onPressed != null
           ? SystemMouseCursors.click
           : SystemMouseCursors.basic,
-      child: Listener(
-        behavior: HitTestBehavior.deferToChild,
-        onPointerDown:
-            widget.onPressed != null || widget.onSecondaryPress != null
-                ? (e) {
-                    if (!dragging) {
-                      shouldReactToPrimaryPress =
-                          e.kind == PointerDeviceKind.mouse &&
-                              e.buttons == kPrimaryMouseButton;
-                      if (shouldReactToPrimaryPress) {
-                        setState(() => primaryPressedIndex = index);
-                      } else {
-                        setState(() => secondaryPressedIndex = index);
-                      }
-                    }
-                  }
-                : null,
-        onPointerUp: widget.onPressed != null || widget.onSecondaryPress != null
-            ? (e) {
-                if (!dragging) {
-                  final overlay =
-                      Overlay.of(context)!.context.findRenderObject();
-                  final position = RelativeRect.fromRect(
-                    Offset(e.position.dx, e.position.dy) & Size.zero,
-                    overlay!.semanticBounds,
-                  );
-                  if (shouldReactToPrimaryPress) {
-                    if (primaryWaitingIndex == index) {
-                      return;
-                    }
-                    primaryWaitingIndex = index;
-                    final dynamic result =
-                        widget.onPressed?.call(index, position)
-                            as dynamic; // TODO(as): fix dynamic
-                    if (result is Future) {
-                      setState(() => primaryWaitingIndex = index);
-                      result.then(
-                          (_) => setState(() => primaryWaitingIndex = -1));
-                    } else {
-                      primaryWaitingIndex = -1;
-                    }
-                    setState(() => primaryPressedIndex = -1);
-                  } else {
-                    if (secondaryWaitingIndex == index) {
-                      return;
-                    }
-                    secondaryWaitingIndex = index;
-                    final dynamic result =
-                        widget.onSecondaryPress?.call(index, position)
-                            as dynamic; // TODO(as): fix dynamic
-                    if (result is Future) {
-                      setState(() => secondaryWaitingIndex = index);
-                      result.then(
-                          (_) => setState(() => secondaryWaitingIndex = -1));
-                    } else {
-                      secondaryWaitingIndex = -1;
-                    }
-                    setState(() => secondaryPressedIndex = -1);
-                  }
+      child: GestureDetector(
+        onTapUp: widget.onPressed != null
+            ? (event) {
+                final overlay = Overlay.of(context)!.context.findRenderObject();
+                final position = RelativeRect.fromRect(
+                  Offset(event.globalPosition.dx, event.globalPosition.dy) &
+                      Size.zero,
+                  overlay!.semanticBounds,
+                );
+
+                if (waitingIndex == index) {
+                  return;
                 }
+                waitingIndex = index;
+                final dynamic result =
+                    widget.onPressed?.call(index, position) as dynamic;
+                if (result is Future) {
+                  setState(() => waitingIndex = index);
+                  result.then((_) => setState(() => waitingIndex = -1));
+                } else {
+                  waitingIndex = -1;
+                }
+                setState(() => pressedIndex = -1);
               }
             : null,
+        onTapDown: widget.onPressed != null
+            ? (_) => setState(() => pressedIndex = index)
+            : null,
+        onTapCancel: () => setState(() => pressedIndex = -1),
+        onSecondaryTapUp: widget.onSecondaryPress != null
+            ? (event) {
+                final overlay = Overlay.of(context)!.context.findRenderObject();
+                final position = RelativeRect.fromRect(
+                  Offset(event.globalPosition.dx, event.globalPosition.dy) &
+                      Size.zero,
+                  overlay!.semanticBounds,
+                );
+
+                if (waitingIndex == index) {
+                  return;
+                }
+                waitingIndex = index;
+                final dynamic result =
+                    widget.onSecondaryPress?.call(index, position) as dynamic;
+                if (result is Future) {
+                  setState(() => waitingIndex = index);
+                  result.then((_) => setState(() => waitingIndex = -1));
+                } else {
+                  waitingIndex = -1;
+                }
+                setState(() => pressedIndex = -1);
+              }
+            : null,
+        onSecondaryTapDown: widget.onSecondaryPress != null
+            ? (_) => setState(() => pressedIndex = index)
+            : null,
+        onSecondaryTapCancel: () => setState(() => pressedIndex = -1),
+        behavior: HitTestBehavior.deferToChild,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -264,9 +256,9 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                 ListTableTheme.of(context);
 
             final Color? backgroundColor =
-                primaryPressedIndex == index || primaryWaitingIndex == index
+                pressedIndex == index || waitingIndex == index
                     ? listTableThemeData.highlightColor
-                    : primaryHoveredIndex == index
+                    : hoveredIndex == index
                         ? listTableThemeData.hoverColor
                         : null;
 

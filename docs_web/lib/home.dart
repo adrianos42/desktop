@@ -14,7 +14,7 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
-const String _version = 'dev.2.2';
+const String _version = 'dev.2.3';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -211,9 +211,9 @@ class _DocAppState extends State<DocApp> {
                 nodes: [
                   TreeNode.child(
                     titleBuilder: (context) => Text('Overview'),
-                    builder: (context) => OverviewPage(),
+                    // builder: (context) => OverviewPage(),
                     //builder: (context) => ButtonDropDownPage(),
-
+                    builder: (context) => ListTablePage()
                     /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
                   ),

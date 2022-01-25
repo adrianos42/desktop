@@ -153,17 +153,6 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     }
 
     return LayoutBuilder(builder: (context, constraints) {
-      // currentWidth = constraints.maxWidth;
-      // print(currentWidth);
-      // _controller.duration =
-      //     Duration(microseconds: totalDuration(currentWidth));
-
-      // print(totalDuration(currentWidth));
-      // _controller.reset();
-      // _controller.repeat();
-
-      // print(_controller.value);
-
       return AnimatedBuilder(
         animation: _controller.view,
         builder: (BuildContext context, Widget? child) {

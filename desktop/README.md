@@ -4,25 +4,30 @@ Minimal desktop widgets for flutter.
 
 [Gallery](https://adrianos42.github.io/desktop/)
 
-* List table
-* Context menu
-* Tooltip
-* Dialog
-* Input
-  * Context menu button
-  * Dropdown button
-  * Hyperlink
-  * Icon button
-  * Radio
-  * Button group
-  * Checkbox
-  * Slider
-  * Toggle switch
 * Navigation
   * Breadcrumb
   * Nav
   * Tab
   * Tree
+* Data
+  * List table
+* Dialogs
+  * Dialog
+  * Message
+  * Tooltip
+* Input
+  * Button
+  * Context menu
+  * Dropdown menu
+  * Icon button
+  * Text button
+  * Hyperlink
+  * Slider
+  * Checkbox
+  * Radio
+  * Toggle switch
+* Status
+  * Progress indicator
+* Text
+  * Text field
 * Scrollbar
-* Progress indicator
-* Text field
