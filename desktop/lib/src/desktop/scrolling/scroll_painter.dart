@@ -395,6 +395,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
       case PointerDeviceKind.stylus:
       case PointerDeviceKind.invertedStylus:
       case PointerDeviceKind.unknown:
+      default:
         return interactiveRect.contains(position);
     }
   }
@@ -421,6 +422,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
       case PointerDeviceKind.stylus:
       case PointerDeviceKind.invertedStylus:
       case PointerDeviceKind.unknown:
+      default:
         return _thumbRect!.contains(position);
     }
   }

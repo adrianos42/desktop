@@ -59,6 +59,7 @@ class Tab extends StatefulWidget {
     this.backgroundColor,
     this.padding,
     this.itemPadding,
+    this.height,
   })  : assert(items.length > 0),
         super(key: key);
 
@@ -76,6 +77,9 @@ class Tab extends StatefulWidget {
 
   /// The tab item padding.
   final EdgeInsets? itemPadding;
+
+  /// The tab height.
+  final double? height;
 
   @override
   _TabState createState() => _TabState();
@@ -180,6 +184,7 @@ class _TabState extends State<Tab> {
         _TabGroup(
           index: _index,
           trailing: widget.trailing,
+          height: widget.height,
           background: widget.backgroundColor,
           changeIndex: (value) => _indexChanged(value),
           padding: widget.padding,
@@ -223,6 +228,7 @@ class _TabGroup extends StatefulWidget {
     this.background,
     this.trailing,
     this.padding,
+    this.height,
   }) : super(key: key);
 
   final int index;
@@ -236,6 +242,8 @@ class _TabGroup extends StatefulWidget {
   final Color? background;
 
   final EdgeInsets? padding;
+
+  final double? height;
 
   @override
   _TabGroupState createState() => _TabGroupState();
@@ -274,7 +282,7 @@ class _TabGroupState extends State<_TabGroup> {
 
     final Widget result = Container(
       padding: widget.padding ?? EdgeInsets.zero,
-      height: tabThemeData.height!,
+      height: widget.height ?? tabThemeData.height!,
       color: widget.background ?? tabThemeData.backgroundColor!,
       child: Row(
         mainAxisSize: MainAxisSize.min,

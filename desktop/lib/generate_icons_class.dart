@@ -16,7 +16,7 @@ class Icons {
 ''';
 }
 
-Future<void> main() async {
+Future<void> _main() async {
   final myFile = await File('../fonts/Material_Icons_Sharp_Regular/codepoints')
       .readAsLines();
 

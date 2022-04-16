@@ -379,7 +379,8 @@ class _MessageState extends State<Message> {
   void initState() {
     super.initState();
 
-    _mouseIsConnected = RendererBinding.instance!.mouseTracker.mouseIsConnected;
+    _mouseIsConnected =
+        RendererBinding.instance!.mouseTracker.mouseIsConnected;
     RendererBinding.instance!.mouseTracker
         .addListener(_handleMouseTrackerChange);
     GestureBinding.instance!.pointerRouter.addGlobalRoute(_handlePointerEvent);

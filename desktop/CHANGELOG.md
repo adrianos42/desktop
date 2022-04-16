@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.5
+
+- Fixes instance null check.
+
+## 3.1.4
+
+- Fixes problems related to null safety.
+
 ## 3.1.3
 
 - Fixes the tap input for list table.

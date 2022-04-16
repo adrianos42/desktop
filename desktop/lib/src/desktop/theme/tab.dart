@@ -7,7 +7,7 @@ import 'constants.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
-const double _kTabHeight = 38.0;
+const double _kTabHeight = 36.0;
 const double _kPadding = 8.0;
 const double _kFontSize = 14.0;
 
