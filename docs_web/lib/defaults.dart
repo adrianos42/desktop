@@ -134,7 +134,6 @@ class Defaults {
               child: TextField(
                 minLines: 1000,
                 maxLines: null,
-                readOnly: true,
                 controller: CodeTextCotroller(text: codeText),
                 keyboardType: TextInputType.multiline,
                 style: Theme.of(context).textTheme.monospace,
