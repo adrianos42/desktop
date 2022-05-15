@@ -12,8 +12,8 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 6),
-  )..repeat();
+    duration: const Duration(seconds: 0),
+  )..forward();
 
   @override
   void dispose() {

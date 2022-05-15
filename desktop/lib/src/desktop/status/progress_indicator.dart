@@ -7,7 +7,7 @@ import '../theme/theme.dart';
 import 'dart:ui' show Brightness;
 
 const double _kLinearProgressIndicatorHeight = 4.0;
-const int _kIndeterminateLinearDuration = 2000;
+const int _kIndeterminateLinearDuration = 4000;
 const double _kMinCircularProgressIndicatorSize = 36.0;
 
 abstract class ProgressIndicator extends StatefulWidget {
@@ -139,11 +139,6 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
         ),
       ),
     );
-  }
-
-  int totalDuration(double width) {
-    final prop = (_kIndeterminateLinearDuration.toDouble() * width) / 60;
-    return prop.toInt();
   }
 
   @override

@@ -11,9 +11,17 @@ class OverviewPage extends StatefulWidget {
   _OverviewPageState createState() => _OverviewPageState();
 }
 
+// final _controller = CodeTextCotroller();
+
 class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
+    // return TextField(
+    //   controller: _controller,
+    //   minLines: 1000,
+    //   maxLines: null,
+    // );
+
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Container(
@@ -27,67 +35,35 @@ class _OverviewPageState extends State<OverviewPage> {
             HyperlinkButton(
               'Homepage',
               onPressed: (_) async {
-                final link = 'https://github.com/adrianos42/desktop';
-                if (await canLaunch(link)) {
-                  await launch(link);
-                }
+                await launchUrl(
+                    Uri.parse('https://github.com/adrianos42/desktop'));
               },
             ),
-            // HyperlinkButton(
-            //   'Figma',
-            //   onPressed: (_) async {
-            //     final link =
-            //         'https://www.figma.com/file/WQCf5O9Jh7cLtOY4zRDL0U/Model?node-id=2%3A0';
-            //     if (await canLaunch(link)) {
-            //       await launch(link);
-            //     }
-            //   },
-            // ),
             Defaults.createTitle(context, 'Flutter resources'),
             HyperlinkButton(
               'Desktop support for Flutter',
               onPressed: (_) async {
-                final link = 'https://flutter.dev/desktop';
-                if (await canLaunch(link)) {
-                  await launch(link);
-                }
+                await launchUrl(Uri.parse('https://flutter.dev/desktop'));
               },
             ),
             HyperlinkButton(
               'Build and release a Linux app',
               onPressed: (_) async {
-                final link = 'https://flutter.dev/docs/deployment/linux';
-                if (await canLaunch(link)) {
-                  await launch(link);
-                }
+                await launchUrl(
+                    Uri.parse('https://flutter.dev/docs/deployment/linux'));
               },
             ),
             HyperlinkButton(
               'Build and release a web app',
               onPressed: (_) async {
-                final link = 'https://flutter.dev/docs/deployment/web';
-                if (await canLaunch(link)) {
-                  await launch(link);
-                }
+                await launchUrl(
+                    Uri.parse('https://flutter.dev/docs/deployment/web'));
               },
             ),
             // Defaults.createTitle(context, 'Other projects using desktop'),
             // HyperlinkButton(
             //   'Music',
-            //   onPressed: (_) async {
-            //     final link = 'https://github.com/adrianos42/music';
-            //     if (await canLaunch(link)) {
-            //       await launch(link);
-            //     }
-            //   },
-            // ),
-            // HyperlinkButton(
-            //   'Photos',
-            //   onPressed: (_) async {
-            //     final link = 'https://github.com/adrianos42/photos';
-            //     if (await canLaunch(link)) {
-            //       await launch(link);
-            //     }
+            //    await parse(Uri.dataFromString('https://github.com/adrianos42/music'));
             //   },
             // ),
           ],

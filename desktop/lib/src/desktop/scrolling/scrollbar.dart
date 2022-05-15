@@ -442,7 +442,7 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _maybeTriggerScrollbar() {
-    WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
       final ScrollController scrollController =
           widget.controller ?? PrimaryScrollController.of(context)!;
       scrollController.position.didUpdateScrollPositionBy(0);

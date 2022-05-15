@@ -81,10 +81,13 @@ class _TextFieldSelectionGestureDetectorBuilder
               break;
             case PointerDeviceKind.touch:
             case PointerDeviceKind.unknown:
-            //case PointerDeviceKind.trackpad:
+              //case PointerDeviceKind.trackpad:
               // On macOS/iOS/iPadOS a touch tap places the cursor at the edge
               // of the word.
               renderEditable.selectWordEdge(cause: SelectionChangedCause.tap);
+
+              break;
+            default:
               break;
           }
           break;

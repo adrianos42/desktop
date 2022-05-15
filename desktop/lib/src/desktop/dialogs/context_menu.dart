@@ -129,12 +129,12 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
   }
 

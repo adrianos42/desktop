@@ -14,7 +14,7 @@ import 'typography.dart';
 import 'colorscheme.dart';
 import 'overview.dart';
 
-const String _version = 'dev.2.3';
+const String _version = 'dev.4.1';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -25,10 +25,13 @@ class DocApp extends StatefulWidget {
 
 class _DocAppState extends State<DocApp> {
   static ContextMenuItem<PrimaryColor> _menuItemPrimaryColor(
-      PrimaryColor color) {
+    PrimaryColor color,
+  ) {
     return ContextMenuItem(
-      child: Text(color.toString()),
       value: color,
+      child: Text(
+        color.toString(),
+      ),
     );
   }
 
@@ -40,7 +43,7 @@ class _DocAppState extends State<DocApp> {
   bool? _isShowingTree;
 
   Widget _createColorButton() {
-    final itemBuilder = (context) => [
+    List<ContextMenuItem<PrimaryColor>> itemBuilder(context) => [
           _menuItemPrimaryColor(PrimaryColor.coral),
           _menuItemPrimaryColor(PrimaryColor.sandyBrown),
           _menuItemPrimaryColor(PrimaryColor.orange),
@@ -186,11 +189,8 @@ class _DocAppState extends State<DocApp> {
                         return Button(
                           body: githubImage,
                           onPressed: () async {
-                            final urlRepository =
-                                'https://github.com/adrianos42/desktop';
-                            if (await canLaunch(urlRepository)) {
-                              await launch(urlRepository);
-                            }
+                            await launchUrl(Uri.parse(
+                                'https://github.com/adrianos42/desktop'));
                           },
                         );
                       }),

@@ -435,7 +435,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    WidgetsBinding.instance!.addPostFrameCallback((Duration duration) {
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
       final position = controller.position;
       position.didUpdateScrollPositionBy(0.0);
       //hasExtent = position.maxScrollExtent > position.minScrollExtent;

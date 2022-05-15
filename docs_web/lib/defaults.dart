@@ -1,6 +1,89 @@
 import 'package:flutter/widgets.dart';
 import 'package:desktop/desktop.dart';
 
+class CodeTextCotroller extends TextEditingController {
+  CodeTextCotroller({super.text});
+
+  static final _regex = RegExp(
+    r'''(?<class>\b[_$]*[A-Z][a-zA-Z0-9_$]*\b|bool\b|num\b|int\b|double\b|dynamic\b|(void)\b)|(?<string>(?:'.*?'))|(?<keyword>\b(?:try|on|catch|finally|throw|rethrow|break|case|continue|default|do|else|for|if|in|return|switch|while|abstract|class|enum|extends|extension|external|factory|implements|get|mixin|native|operator|set|typedef|with|covariant|static|final|const|required|late|void|var|library|import|part of|part|export|await|yield|async|sync)\b)|(?<comment>(?:(?:\/.*?)$))|(?<numeric>\b(?:(?:0(?:x|X)[0-9a-fA-F]*)|(?:(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))(?:(?:e|E)(?:\+|-)?[0-9]+)?)\b)''',
+    multiLine: true,
+    dotAll: true,
+  );
+
+  @override
+  TextSpan buildTextSpan({
+    required BuildContext context,
+    TextStyle? style,
+    required bool withComposing,
+  }) {
+    //final classColor = Color(0xff5ac4a0);
+    //final commentsColor = Color(0xff696969);
+    //final textColor = Color(0xffd3d3d3);
+    //final stringColor  = Color(0xffcd8162);
+    //final numericColor = Color(0xffb5cea8);
+    //final keywordColor = Color(0xff5dadee);
+
+    final brightness = Theme.of(context).brightness;
+
+    final classColor = PrimaryColor.springGreen
+                      .withBrightness(brightness)[70];
+    final commentsColor = Theme.of(context).colorScheme.shade[40];
+    final textColor = Theme.of(context).colorScheme.shade[80];
+    final stringColor  = PrimaryColor.coral.withBrightness(brightness)[70];
+    final numericColor = PrimaryColor.goldenrod.withBrightness(brightness)[70];
+    final keywordColor = PrimaryColor.dodgerBlue.withBrightness(brightness)[70];
+    
+    final matches = _regex.allMatches(text);
+
+    final spans = <TextSpan>[];
+
+    int lastEnd = 0;
+
+    for (final match in matches) {
+      final start = match.start;
+      final end = match.end;
+
+      spans.add(TextSpan(text: text.substring(lastEnd, start)));
+
+      if (match.namedGroup('class') != null) {
+        spans.add(TextSpan(
+            text: text.substring(start, end),
+            style: TextStyle(color: classColor)));
+      } else if (match.namedGroup('keyword') != null) {
+        spans.add(TextSpan(
+            text: text.substring(start, end),
+            style: TextStyle(color: keywordColor)));
+      } else if (match.namedGroup('string') != null) {
+        spans.add(TextSpan(
+            text: text.substring(start, end),
+            style: TextStyle(color: stringColor)));
+      } else if (match.namedGroup('comment') != null) {
+        spans.add(TextSpan(
+            text: text.substring(start, end),
+            style: TextStyle(color: commentsColor)));
+      } else if (match.namedGroup('numeric') != null) {
+        spans.add(TextSpan(
+            text: text.substring(start, end),
+            style: TextStyle(color: numericColor)));
+      } else {
+        spans.add(TextSpan(text: text.substring(start, end)));
+      }
+
+      lastEnd = end;
+    }
+
+    spans.add(TextSpan(text: text.substring(lastEnd)));
+
+    return TextSpan(
+      style: Theme.of(context)
+          .textTheme
+          .monospace
+          .copyWith(color: textColor),
+      children: spans,
+    );
+  }
+}
+
 class Defaults {
   static BoxDecoration itemDecoration(BuildContext context) => BoxDecoration(
         border: Border.all(
@@ -19,6 +102,12 @@ class Defaults {
       ),
     );
   }
+
+  static final _regex = RegExp(
+    r'''(?<class>\b[_$]*[A-Z][a-zA-Z0-9_$]*\b|bool\b|num\b|int\b|double\b|dynamic\b|(void)\b)|(?<string>(?:'.*?'))|(?<keyword>\b(?:try|on|catch|finally|throw|rethrow|break|case|continue|default|do|else|for|if|in|return|switch|while|abstract|class|enum|extends|extension|external|factory|implements|get|mixin|native|operator|set|typedef|with|covariant|static|final|const|required|late|void|var|library|import|part of|part|export|await|yield|async|sync)\b)|(?<comment>(?:(?:\/.*?)$))|(?<numeric>\b(?:(?:0(?:x|X)[0-9a-fA-F]*)|(?:(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))(?:(?:e|E)(?:\+|-)?[0-9]+)?)\b)''',
+    multiLine: true,
+    dotAll: true,
+  );
 
   static Widget _createCodeSession(
     BuildContext context, {
@@ -43,8 +132,10 @@ class Defaults {
               alignment: Alignment.topLeft,
               //decoration: Defaults.itemDecoration(context),
               child: TextField(
-                maxLines: 1000,
-                controller: TextEditingController(text: codeText),
+                minLines: 1000,
+                maxLines: null,
+                readOnly: true,
+                controller: CodeTextCotroller(text: codeText),
                 keyboardType: TextInputType.multiline,
                 style: Theme.of(context).textTheme.monospace,
               ),

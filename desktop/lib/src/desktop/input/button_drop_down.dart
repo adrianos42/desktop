@@ -153,13 +153,13 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     _controller.forward();
 
-    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
   }
 

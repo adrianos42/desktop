@@ -380,10 +380,10 @@ class _MessageState extends State<Message> {
     super.initState();
 
     _mouseIsConnected =
-        RendererBinding.instance!.mouseTracker.mouseIsConnected;
-    RendererBinding.instance!.mouseTracker
+        RendererBinding.instance.mouseTracker.mouseIsConnected;
+    RendererBinding.instance.mouseTracker
         .addListener(_handleMouseTrackerChange);
-    GestureBinding.instance!.pointerRouter.addGlobalRoute(_handlePointerEvent);
+    GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);
   }
 
   void _handleMouseTrackerChange() {
@@ -391,7 +391,7 @@ class _MessageState extends State<Message> {
       return;
     }
     final bool mouseIsConnected =
-        RendererBinding.instance!.mouseTracker.mouseIsConnected;
+        RendererBinding.instance.mouseTracker.mouseIsConnected;
     if (mouseIsConnected != _mouseIsConnected) {
       setState(() {
         _mouseIsConnected = mouseIsConnected;
@@ -418,9 +418,9 @@ class _MessageState extends State<Message> {
 
   @override
   void dispose() {
-    GestureBinding.instance!.pointerRouter
+    GestureBinding.instance.pointerRouter
         .removeGlobalRoute(_handlePointerEvent);
-    RendererBinding.instance!.mouseTracker
+    RendererBinding.instance.mouseTracker
         .removeListener(_handleMouseTrackerChange);
     super.dispose();
   }

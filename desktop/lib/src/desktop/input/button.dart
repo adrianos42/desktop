@@ -322,13 +322,13 @@ class _ButtonState extends State<Button>
         }
       });
 
-    WidgetsBinding.instance!.pointerRouter.addGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    WidgetsBinding.instance!.pointerRouter.removeGlobalRoute(_mouseRoute);
+    WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
   }
 
