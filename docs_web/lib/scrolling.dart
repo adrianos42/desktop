@@ -86,14 +86,14 @@ class _ScrollingPageState extends State<ScrollingPage> {
     return null;
   }
 
-  ScrollController _controler = ScrollController();
+  final ScrollController _controler = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Defaults.createHeader(context, 'Scrolling'),
         ),
         Expanded(
@@ -101,7 +101,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
             controller: _controler,
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisSpacing: 4.0,
               crossAxisSpacing: 4.0,
@@ -182,7 +182,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
     setState(() {
       _offstage = false;
-      _fadeoutTimer = Timer(Duration(milliseconds: 2000), () {
+      _fadeoutTimer = Timer(const Duration(milliseconds: 2000), () {
         setState(() => _fadeoutTimer = null);
       });
     });
@@ -324,7 +324,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
             LayoutBuilder(builder: (context, constraints) {
               return Container(
                 height: constraints.maxHeight,
-                color: Color(0x0),
+                color: const Color(0xFF000000),
                 alignment: Alignment.center,
                 child: Transform(
                   transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
@@ -340,6 +340,13 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
             Offstage(
               offstage: _offstage,
               child: AnimatedOpacity(
+                opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 200),
+                curve: _fadeoutTimer == null && !_menuFocus
+                    ? Curves.easeOut
+                    : Curves.easeIn,
+                onEnd: () => setState(
+                    () => _offstage = _fadeoutTimer == null && !_menuFocus),
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(
@@ -353,7 +360,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 assetName,
                                 overflow: TextOverflow.ellipsis,
@@ -374,7 +381,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                               tooltip: 'Next',
                             ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Button.icon(
                               Icons.close,
                               onPressed: widget.close,
@@ -386,13 +393,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 200),
-                curve: _fadeoutTimer == null && !_menuFocus
-                    ? Curves.easeOut
-                    : Curves.easeIn,
-                onEnd: () => setState(
-                    () => _offstage = _fadeoutTimer == null && !_menuFocus),
+
                 //curve: Curves.easeOutSine,
               ),
             ),
@@ -402,10 +403,10 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     );
 
     return FocusableActionDetector(
-      child: result,
       autofocus: true,
       actions: _actionMap,
       shortcuts: _shortcutMap,
+      child: result,
     );
   }
 }
@@ -418,9 +419,9 @@ Widget _frameBuilder(
 ) {
   if (wasSynchronouslyLoaded) return child;
   return AnimatedOpacity(
-    child: child,
     opacity: frame == null ? 0 : 1,
     duration: const Duration(milliseconds: 200),
     curve: Curves.easeOutSine,
+    child: child,
   );
 }

@@ -1,5 +1,5 @@
 import 'package:desktop/desktop.dart';
-import 'defaults.dart';
+import '../defaults.dart';
 
 class ColorschemePage extends StatefulWidget {
   ColorschemePage({Key? key}) : super(key: key);
@@ -68,19 +68,18 @@ class _ColorschemePageState extends State<ColorschemePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final light = ColorScheme(Brightness.dark).shade[100];
-    final dark = ColorScheme(Brightness.dark).background;
+    final light = const ColorScheme(Brightness.dark).shade[100];
 
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
             Defaults.createHeader(context, 'Color scheme'),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -226,7 +225,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Column(
                 children: [
                   Defaults.createTitle(context, 'Primary Colors'),
@@ -267,19 +266,18 @@ class _CustomThemePageState extends State<CustomThemePage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final light = ColorScheme(Brightness.dark).shade[100];
-    final dark = ColorScheme(Brightness.dark).background;
+    final light = const ColorScheme(Brightness.dark).shade[100];
 
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
             Defaults.createHeader(context, 'Color scheme'),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -425,7 +423,7 @@ class _CustomThemePageState extends State<CustomThemePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Column(
                 children: [
                   Defaults.createTitle(context, 'Primary Colors'),

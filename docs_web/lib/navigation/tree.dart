@@ -13,7 +13,7 @@ class _TreePageState extends State<TreePage> {
 
   @override
   Widget build(BuildContext context) {
-    final codeSample = '''
+    const codeSample = '''
 Tree(
   title: Builder(
     builder: (context) => Text(
@@ -110,7 +110,7 @@ Tree(
 )
 ''';
 
-    final codeSampleWidget = '''
+    const codeSampleWidget = '''
 Tree(
   title: Builder(
     builder: (context) => Text(
@@ -205,7 +205,7 @@ Tree(
   ],
 )''';
 
-    final codeSampleCollapse = '''
+    const codeSampleCollapse = '''
 Tree(
   collapsed: !_isShowingTree,
   title: Builder(
@@ -315,7 +315,7 @@ Tree(
               ),
               nodes: [
                 TreeNode.child(
-                  titleBuilder: (context) => Text('Node 0'),
+                  titleBuilder: (context) => const Text('Node 0'),
                   builder: (context) => Center(
                     child: Text(
                       'Node 0',
@@ -324,10 +324,10 @@ Tree(
                   ),
                 ),
                 TreeNode.children(
-                    titleBuilder: (context) => Text('Node 1'),
+                    titleBuilder: (context) => const Text('Node 1'),
                     children: [
                       TreeNode.child(
-                        titleBuilder: (context) => Text('Node 0'),
+                        titleBuilder: (context) => const Text('Node 0'),
                         builder: (context) => Center(
                           child: Text(
                             'Node 1 -> 0',
@@ -336,7 +336,7 @@ Tree(
                         ),
                       ),
                       TreeNode.child(
-                        titleBuilder: (context) => Text('Node 1'),
+                        titleBuilder: (context) => const Text('Node 1'),
                         builder: (context) => Center(
                           child: Text(
                             'Node 1 -> 1',
@@ -345,7 +345,7 @@ Tree(
                         ),
                       ),
                       TreeNode.child(
-                        titleBuilder: (context) => Text('Node 2'),
+                        titleBuilder: (context) => const Text('Node 2'),
                         builder: (context) => Center(
                           child: Text(
                             'Node 1 -> 2',
@@ -354,10 +354,10 @@ Tree(
                         ),
                       ),
                       TreeNode.children(
-                          titleBuilder: (context) => Text('Node3'),
+                          titleBuilder: (context) => const Text('Node3'),
                           children: [
                             TreeNode.child(
-                              titleBuilder: (context) => Text('Node 0'),
+                              titleBuilder: (context) => const Text('Node 0'),
                               builder: (context) => Center(
                                 child: Text(
                                   'Node 1 -> 3 -> 0',
@@ -366,7 +366,7 @@ Tree(
                               ),
                             ),
                             TreeNode.child(
-                              titleBuilder: (context) => Text('Node 1'),
+                              titleBuilder: (context) => const Text('Node 1'),
                               builder: (context) => Center(
                                 child: Text(
                                   'Node 1 -> 3 -> 1',
@@ -381,7 +381,7 @@ Tree(
                       //     builder: (context) => BreadcrumbPage()),
                     ]),
                 TreeNode.child(
-                  titleBuilder: (context) => Text('Node 2'),
+                  titleBuilder: (context) => const Text('Node 2'),
                   builder: (context) => Center(
                     child: Text(
                       'Node 2 ',
@@ -390,10 +390,10 @@ Tree(
                   ),
                 ),
                 TreeNode.children(
-                    titleBuilder: (context) => Text('Node 3'),
+                    titleBuilder: (context) => const Text('Node 3'),
                     children: [
                       TreeNode.child(
-                        titleBuilder: (context) => Text('Node 0'),
+                        titleBuilder: (context) => const Text('Node 0'),
                         builder: (context) => Center(
                           child: Text(
                             'Node 3 -> 0',
@@ -402,7 +402,7 @@ Tree(
                         ),
                       ),
                       TreeNode.child(
-                        titleBuilder: (context) => Text('Node 1'),
+                        titleBuilder: (context) => const Text('Node 1'),
                         builder: (context) => Center(
                           child: Text(
                             'Node 3 -> 1',
@@ -432,7 +432,7 @@ Tree(
               nodes: [
                 TreeNode.child(
                   titleBuilder: (constext) => Row(
-                    children: [
+                    children: const [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
                         child: Icon(Icons.camera_enhance),
@@ -449,7 +449,7 @@ Tree(
                 ),
                 TreeNode.children(
                   titleBuilder: (context) => Row(
-                    children: [
+                    children: const [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
                         child: Icon(Icons.place),
@@ -460,7 +460,7 @@ Tree(
                   children: [
                     TreeNode.child(
                       titleBuilder: (context) => Row(
-                        children: [
+                        children: const [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.location_city),
@@ -477,7 +477,7 @@ Tree(
                     ),
                     TreeNode.child(
                       titleBuilder: (context) => Row(
-                        children: [
+                        children: const [
                           Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.map),
@@ -496,7 +496,7 @@ Tree(
                 ),
                 TreeNode.child(
                   titleBuilder: (context) => Row(
-                    children: [
+                    children: const [
                       Padding(
                         padding: EdgeInsets.only(right: 8),
                         child: Icon(Icons.message),
@@ -543,7 +543,7 @@ Tree(
                     nodes: [
                       TreeNode.child(
                         titleBuilder: (context) => Row(
-                          children: [
+                          children: const [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.camera_enhance),
@@ -560,7 +560,7 @@ Tree(
                       ),
                       TreeNode.children(
                         titleBuilder: (context) => Row(
-                          children: [
+                          children: const [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.place),
@@ -571,7 +571,7 @@ Tree(
                         children: [
                           TreeNode.child(
                             titleBuilder: (context) => Row(
-                              children: [
+                              children: const [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.location_city),
@@ -588,7 +588,7 @@ Tree(
                           ),
                           TreeNode.child(
                             titleBuilder: (context) => Row(
-                              children: [
+                              children: const [
                                 Padding(
                                   padding: EdgeInsets.only(right: 8),
                                   child: Icon(Icons.map),
@@ -607,7 +607,7 @@ Tree(
                       ),
                       TreeNode.child(
                         titleBuilder: (context) => Row(
-                          children: [
+                          children: const [
                             Padding(
                               padding: EdgeInsets.only(right: 8),
                               child: Icon(Icons.message),

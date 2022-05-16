@@ -13,7 +13,7 @@ class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    final enabledText = ''' 
+    const enabledText = ''' 
 ContextMenuButton(
   Icon(Icons.place),
   value: firstValue,
@@ -40,7 +40,7 @@ ContextMenuButton(
 ),
 ''';
 
-    final disabledText = '''
+    const disabledText = '''
 ContextMenuButton(
   Icon(Icons.place),
   value: firstValue,
@@ -72,40 +72,38 @@ ContextMenuButton(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
-              child: Row(
-                children: [
-                  ContextMenuButton(
-                    Icon(Icons.place),
-                    value: firstValue,
-                    onSelected: (String value) =>
-                        setState(() => firstValue = value),
-                    itemBuilder: (context) => [
-                      ContextMenuItem(
-                        child: Text('Florianópolis'),
-                        value: 'Florianópolis',
-                      ),
-                      ContextMenuItem(
-                        child: Text('Joinville'),
-                        value: 'Joinville',
-                      ),
-                      ContextMenuItem(
-                        child: Text('Palhoça'),
-                        value: 'Palhoça',
-                      ),
-                      ContextMenuItem(
-                        child: Text('Pedra Branca'),
-                        value: 'Pedra Branca',
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    alignment: Alignment.center,
-                    child: Text(firstValue),
-                  ),
-                ],
-              ),
+            child: Row(
+              children: [
+                ContextMenuButton(
+                  const Icon(Icons.place),
+                  value: firstValue,
+                  onSelected: (String value) =>
+                      setState(() => firstValue = value),
+                  itemBuilder: (context) => const [
+                    ContextMenuItem(
+                      value: 'Florianópolis',
+                      child: Text('Florianópolis'),
+                    ),
+                    ContextMenuItem(
+                      value: 'Joinville',
+                      child: Text('Joinville'),
+                    ),
+                    ContextMenuItem(
+                      value: 'Palhoça',
+                      child: Text('Palhoça'),
+                    ),
+                    ContextMenuItem(
+                      value: 'Pedra Branca',
+                      child: Text('Pedra Branca'),
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  alignment: Alignment.center,
+                  child: Text(firstValue),
+                ),
+              ],
             ),
           ),
           codeText: enabledText,
@@ -117,44 +115,42 @@ ContextMenuButton(
             final textTheme = Theme.of(context).textTheme;
             return Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Row(
-                  children: [
-                    ContextMenuButton(
-                      Icon(Icons.place),
-                      value: firstValue,
-                      enabled: false,
-                      itemBuilder: (context) => [
-                        ContextMenuItem(
-                          child: Text('Florianópolis'),
-                          value: 'Florianópolis',
-                        ),
-                        ContextMenuItem(
-                          child: Text('Joinville'),
-                          value: 'Joinville',
-                        ),
-                        ContextMenuItem(
-                          child: Text('Palhoça'),
-                          value: 'Palhoça',
-                        ),
-                        ContextMenuItem(
-                          child: Text('Pedra Branca'),
-                          value: 'Pedra Branca',
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        firstValue,
-                        style: textTheme.body1.copyWith(
-                          color: textTheme.textDisabled,
-                        ),
+              child: Row(
+                children: [
+                  ContextMenuButton(
+                    const Icon(Icons.place),
+                    value: firstValue,
+                    enabled: false,
+                    itemBuilder: (context) => const [
+                      ContextMenuItem(
+                        value: 'Florianópolis',
+                        child: Text('Florianópolis'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Joinville',
+                        child: Text('Joinville'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Palhoça',
+                        child: Text('Palhoça'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Pedra Branca',
+                        child: Text('Pedra Branca'),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    alignment: Alignment.center,
+                    child: Text(
+                      firstValue,
+                      style: textTheme.body1.copyWith(
+                        color: textTheme.textDisabled,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },

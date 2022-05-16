@@ -34,7 +34,7 @@ class _TabPageState extends State<TabPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: EdgeInsets.only(right: 16.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: Text(
                 title,
                 overflow: TextOverflow.ellipsis,
@@ -142,7 +142,7 @@ Tab(
             return Tab(
               items: [
                 TabItem(
-                  itemBuilder: (context, _) => Text('page 0'),
+                  itemBuilder: (context, _) => const Text('page 0'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 0',
@@ -151,7 +151,7 @@ Tab(
                   ),
                 ),
                 TabItem(
-                  itemBuilder: (context, _) => Text('page 1'),
+                  itemBuilder: (context, _) => const Text('page 1'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 1',
@@ -160,7 +160,7 @@ Tab(
                   ),
                 ),
                 TabItem(
-                  itemBuilder: (context, _) => Text('page 2'),
+                  itemBuilder: (context, _) => const Text('page 2'),
                   builder: (context, _) => Center(
                     child: Text(
                       'page 2',

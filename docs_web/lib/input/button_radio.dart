@@ -13,7 +13,7 @@ class _ButtonRadioPageState extends State<ButtonRadioPage> {
 
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 Container(
   width: 100.0,
   child: Row(
@@ -40,7 +40,7 @@ Container(
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Container(
   width: 100.0,
   child: Row(
@@ -63,7 +63,7 @@ Container(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 100.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -95,11 +95,11 @@ Container(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 100.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: const [
                   Radio(
                     value: true,
                   ),

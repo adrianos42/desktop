@@ -67,7 +67,7 @@ class _MainPage extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 16.0),
           child: Defaults.createSubheader(context, 'Page $count'),
         ),
         Expanded(

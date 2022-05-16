@@ -11,7 +11,7 @@ class NavPage extends StatefulWidget {
 class _NavPageState extends State<NavPage> {
   @override
   Widget build(BuildContext context) {
-    final codeVerticalSample = '''
+    const codeVerticalSample = '''
 Nav(
     trailingMenu: [
       NavItem(
@@ -64,7 +64,7 @@ Nav(
 )
 ''';
 
-    final codeHorizontalSample = '''
+    const codeHorizontalSample = '''
 Nav(
   navAxis: Axis.horizontal,
   trailingMenu: [
@@ -128,7 +128,7 @@ Nav(
                   builder: (context, _) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(32.0),
+                      padding: const EdgeInsets.all(32.0),
                       width: 400.0,
                       child: Text(
                         'Settings page',
@@ -184,7 +184,7 @@ Nav(
                   builder: (context, _) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(32.0),
+                      padding: const EdgeInsets.all(32.0),
                       height: 100.0,
                       child: Text(
                         'Settings page',

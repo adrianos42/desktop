@@ -11,14 +11,14 @@ class ButtonIconPage extends StatefulWidget {
 class _ButtonIconPageState extends State<ButtonIconPage> {
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 Button.icon(
   Icons.place,
   onPressed: () {},
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Button.icon(Icons.place)
 ''';
 

@@ -87,7 +87,7 @@ class ListTablePage extends StatefulWidget {
 class _ListTablePageState extends State<ListTablePage> {
   @override
   Widget build(BuildContext context) {
-    final someDataSample = ''' 
+    const someDataSample = ''' 
 final borderColor = Theme.of(context).colorScheme.shade[40].toColor();
 final borderSide = BorderSide(color: borderColor, width: 2.0);
 
@@ -138,7 +138,7 @@ ListTable(
 );
 ''';
 
-    final codeSample = '''
+    const codeSample = '''
 ListTable(
   colCount: 4,
   itemCount: 15,
@@ -193,14 +193,14 @@ ListTable(
               );
               await dialog.closed;
             },
-            colFraction: {0: 0.5},
+            colFraction: const {0: 0.5},
             //collapseOnDrag: true,
             headerColumnBorder: BorderSide(width: 1.0, color: borderColor),
             tableHeaderBuilder: (context, col, constraints) {
               return Container(
                 constraints: constraints,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   someDataTableHeader[col],
                   overflow: TextOverflow.ellipsis,
@@ -211,7 +211,7 @@ ListTable(
               return Container(
                 constraints: constraints,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   someDataTableRows[row][col],
                   overflow: TextOverflow.ellipsis,
@@ -232,12 +232,12 @@ ListTable(
               return Container(
                 constraints: constraints,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('$col'),
                   ],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
               );
             },
@@ -245,7 +245,7 @@ ListTable(
               return Container(
                 constraints: constraints,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text('$row$col'),
               );
             },

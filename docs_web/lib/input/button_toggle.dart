@@ -11,22 +11,22 @@ class ButtonTogglePage extends StatefulWidget {
 class _ButtonTogglePageState extends State<ButtonTogglePage> {
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 ''';
 
     return Defaults.createItemsWithTitle(
       context,
       items: [
         ItemTitle(
-            body: (context) => Text(''),
+            body: (context) => const Text(''),
             codeText: enabledCode,
             title: 'Enabled',
             height: 400.0),
         ItemTitle(
-            body: (context) => Text(''),
+            body: (context) => const Text(''),
             codeText: disabledCode,
             title: 'Disabled',
             height: 400.0),

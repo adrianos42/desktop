@@ -14,7 +14,7 @@ class _DialogPageState extends State<DialogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final requiresActionCode = '''
+    const requiresActionCode = '''
 showDialog(
   context: context,
   barrierDismissible: false,
@@ -31,7 +31,7 @@ showDialog(
 )
 ''';
 
-    final dismissableDialog = '''
+    const dismissableDialog = '''
 showDialog(
   context: context, 
   barrierDismissible: true,
@@ -63,8 +63,8 @@ showDialog(
                         onPressed: () => dialogController.close(),
                       ),
                     ],
-                    title: Text('Lorem Ipsum'),
-                    body: Text('''
+                    title: const Text('Lorem Ipsum'),
+                    body: const Text('''
 Porro ut culpa voluptatem. Et quia nobis iste. Voluptatem ea voluptates nemo enim dolor ut dolorem odit. Similique impedit nesciunt nemo rerum ipsam qui. Odio unde ut fugiat dolore. Possimus itaque qui necessitatibus possimus recusandae nisi.
 
 Vel iste voluptatum ex tenetur voluptate non atque. Porro quasi omnis voluptatem dolor quis. Corrupti eius et quo voluptatem est quo quas possimus. Culpa ex quisquam adipisci pariatur.
@@ -98,7 +98,7 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
 
                 final dialog = showDialog(
                   context,
-                  builder: (context) => Dialog(
+                  builder: (context) => const Dialog(
                     title: Text('Lorem Ipsum'),
                     body: Text(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),

@@ -11,7 +11,7 @@ class DialogMessagePage extends StatefulWidget {
 class _DialogPageState extends State<DialogMessagePage> {
   @override
   Widget build(BuildContext context) {
-    final dismissableDialog = '''
+    const dismissableDialog = '''
 ''';
 
     return Defaults.createItemsWithTitle(
@@ -21,12 +21,12 @@ class _DialogPageState extends State<DialogMessagePage> {
           body: (context) => Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
                     'Messages to be shown: ${Messenger.messagesLength(context)}'),
               ),
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Button.text(
                   'Clear messages',
                   onPressed: () => Messenger.clearMessages(context),
@@ -41,8 +41,7 @@ class _DialogPageState extends State<DialogMessagePage> {
             child: Button.text(
               'Error message',
               onPressed: () async {
-                late MessageController messageController;
-                messageController = Messenger.showMessage(
+                Messenger.showMessage(
                   context,
                   message:
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',

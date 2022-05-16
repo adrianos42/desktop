@@ -1,5 +1,5 @@
 import 'package:desktop/desktop.dart';
-import 'defaults.dart';
+import '../defaults.dart';
 
 class TypographyPage extends StatefulWidget {
   TypographyPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _TypographyPageState extends State<TypographyPage> {
       controller: ScrollController(),
       child: Container(
         alignment: Alignment.topLeft,
-        margin: EdgeInsets.symmetric(horizontal: 16.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
             Defaults.createHeader(context, 'Typography'),
@@ -25,7 +25,7 @@ class _TypographyPageState extends State<TypographyPage> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Header/IBM Plex Sans/Light/44',
                     style: textTheme.header,
@@ -33,7 +33,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Subheader/IBM Plex Sans/Light/34',
                     style: textTheme.subheader,
@@ -41,7 +41,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Title/IBM Plex Sans/Regular/24',
                     style: textTheme.title,
@@ -49,7 +49,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Subtitle/IBM Plex Sans/Regular/20',
                     style: textTheme.subtitle,
@@ -57,7 +57,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Body1/IBM Plex Sans/Regular/14',
                     style: textTheme.body1,
@@ -65,7 +65,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Body2/IBM Plex Sans/Medium/14',
                     style: textTheme.body2,
@@ -73,7 +73,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Monospace/IBM Plex Mono/Regular/13',
                     style: textTheme.monospace,
@@ -81,7 +81,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     'Caption/IBM Plex Sans/Regular/12',
                     style: textTheme.caption,
@@ -96,7 +96,7 @@ class _TypographyPageState extends State<TypographyPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Text High',
                       style: textTheme.subtitle.copyWith(
@@ -105,7 +105,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Text Medium',
                       style: textTheme.subtitle.copyWith(
@@ -114,7 +114,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Text Low',
                       style: textTheme.subtitle.copyWith(
@@ -123,7 +123,7 @@ class _TypographyPageState extends State<TypographyPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Text Disabled',
                       style: textTheme.subtitle.copyWith(

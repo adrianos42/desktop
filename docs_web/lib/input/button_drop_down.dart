@@ -21,7 +21,7 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
     final waitingBackgroundColor = colorScheme.background[4];
     final highlightBackgroundColor = colorScheme.background[14];
 
-    final enabledCode = '''
+    const enabledCode = '''
 Container(
   width: 200.0,
   child: DropDownButton(
@@ -52,7 +52,7 @@ Container(
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Container(
   width: 200.0,
   child: DropDownButton(
@@ -89,29 +89,29 @@ Container(
             child: Container(
               width: 200.0,
               alignment: Alignment.center,
-              margin: EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(16.0),
               child: ContextMenuTheme.copyWith(
                 child: DropDownButton(
                   onSelected: (int value) {
                     setState(() => initialValue = value);
                   },
                   value: initialValue,
-                  itemBuilder: (context) => [
+                  itemBuilder: (context) => const [
                     ContextMenuItem(
-                      child: Text('Florianópolis'),
                       value: 0,
+                      child: Text('Florianópolis'),
                     ),
                     ContextMenuItem(
-                      child: Text('Joinville'),
                       value: 1,
+                      child: Text('Joinville'),
                     ),
                     ContextMenuItem(
-                      child: Text('Palhoça'),
                       value: 2,
+                      child: Text('Palhoça'),
                     ),
                     ContextMenuItem(
-                      child: Text('Pedra Branca'),
                       value: 3,
+                      child: Text('Pedra Branca'),
                     ),
                   ],
                 ),
@@ -128,7 +128,7 @@ Container(
             child: Container(
               width: 200.0,
               alignment: Alignment.center,
-              margin: EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(16.0),
               child: ContextMenuTheme.copyWith(
                 color: backgroundColor,
                 background: backgroundColor,
@@ -145,22 +145,22 @@ Container(
                       setState(() => initialCustomValue = value);
                     },
                     value: initialCustomValue,
-                    itemBuilder: (context) => [
+                    itemBuilder: (context) => const [
                       ContextMenuItem(
-                        child: Text('Florianópolis'),
                         value: 0,
+                        child: Text('Florianópolis'),
                       ),
                       ContextMenuItem(
-                        child: Text('Joinville'),
                         value: 1,
+                        child: Text('Joinville'),
                       ),
                       ContextMenuItem(
-                        child: Text('Palhoça'),
                         value: 2,
+                        child: Text('Palhoça'),
                       ),
                       ContextMenuItem(
-                        child: Text('Pedra Branca'),
                         value: 3,
+                        child: Text('Pedra Branca'),
                       ),
                     ],
                   ),
@@ -178,26 +178,26 @@ Container(
             child: Container(
               width: 200.0,
               alignment: Alignment.center,
-              margin: EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(16.0),
               child: DropDownButton(
                 enabled: false,
                 // isField: true,
-                itemBuilder: (context) => [
+                itemBuilder: (context) => const [
                   ContextMenuItem(
-                    child: Text('Florianópolis'),
                     value: 0,
+                    child: Text('Florianópolis'),
                   ),
                   ContextMenuItem(
-                    child: Text('Joinville'),
                     value: 1,
+                    child: Text('Joinville'),
                   ),
                   ContextMenuItem(
-                    child: Text('Palhoça'),
                     value: 2,
+                    child: Text('Palhoça'),
                   ),
                   ContextMenuItem(
-                    child: Text('Pedra Branca'),
                     value: 3,
+                    child: Text('Pedra Branca'),
                   ),
                 ],
               ),

@@ -13,7 +13,7 @@ class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 ToggleSwitch(
   onChanged: (fvalue) {
     setState(() => value = fvalue);
@@ -23,7 +23,7 @@ ToggleSwitch(
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 ToggleSwitch(
   autofocus: false,
   value: false,
@@ -36,7 +36,7 @@ ToggleSwitch(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 100.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,12 +60,12 @@ ToggleSwitch(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 100.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: const [
                   ToggleSwitch(
                     autofocus: false,
                     value: false,

@@ -34,7 +34,7 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
         ItemTitle(
           body: (context) => Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
             child: AnimatedBuilder(
               animation: _controller,
               builder: (context, _) => LinearProgressIndicator(
@@ -49,8 +49,8 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
         ItemTitle(
           body: (context) => Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            child: LinearProgressIndicator(),
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            child: const LinearProgressIndicator(),
           ),
           codeText: linearIndeterminateCodeExample,
           title: 'Linear indeterminate',
@@ -59,8 +59,8 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
         ItemTitle(
           body: (context) => Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            child: CircularProgressIndicator(),
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            child: const CircularProgressIndicator(),
           ),
           codeText: circurlarCodeExample,
           title: 'Circular',

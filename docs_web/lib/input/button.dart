@@ -11,7 +11,7 @@ class ButtonPage extends StatefulWidget {
 class _ButtonPageState extends State<ButtonPage> {
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 Button(
   body: Text('Button'),
   trailing: Icon(Icons.phone),
@@ -20,7 +20,7 @@ Button(
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Button(
   body: Text('Button'),
   trailing: Icon(Icons.phone),
@@ -28,7 +28,7 @@ Button(
 )
 ''';
 
-    final customCode = '''
+    const customCode = '''
 Button.text(
   'Custom',
   color: HSLColor.fromAHSL(1.0, 150, 0.8, 0.4),
@@ -38,8 +38,7 @@ Button.text(
 )
 ''';
 
-    final customColor = HSLColor.fromAHSL(1.0, 150, 0.6, 0.5).toColor();
-    final buttonTheme = Theme.of(context).buttonTheme;
+    final customColor = (const HSLColor.fromAHSL(1.0, 150, 0.6, 0.5)).toColor();
 
     return Defaults.createItemsWithTitle(
       context,
@@ -47,12 +46,10 @@ Button.text(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
-              child: Button(
-                body: Text('Button'),
-                leading: Icon(Icons.control_camera),
-                onPressed: () {},
-              ),
+            child: Button(
+              body: const Text('Button'),
+              leading: const Icon(Icons.control_camera),
+              onPressed: () {},
             ),
           ),
           codeText: enabledCode,
@@ -60,13 +57,11 @@ Button.text(
           height: 200.0,
         ),
         ItemTitle(
-          body: (context) => Align(
+          body: (context) => const Align(
             alignment: Alignment.centerLeft,
-            child: Container(
-              child: Button(
-                body: Text('Button'),
-                leading: Icon(Icons.control_camera),
-              ),
+            child: Button(
+              body: Text('Button'),
+              leading: Icon(Icons.control_camera),
             ),
           ),
           codeText: disabledCode,
@@ -76,14 +71,12 @@ Button.text(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
-              child: Button(
-                body: Text('Custom'),
-                // Uses a recommended color for the button.
-                color: customColor,
-                highlightColor: Theme.of(context).textTheme.textLow,
-                onPressed: () {},
-              ),
+            child: Button(
+              body: const Text('Custom'),
+              // Uses a recommended color for the button.
+              color: customColor,
+              highlightColor: Theme.of(context).textTheme.textLow,
+              onPressed: () {},
             ),
           ),
           codeText: customCode,

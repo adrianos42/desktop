@@ -11,14 +11,14 @@ class ButtonTextPage extends StatefulWidget {
 class _ButtonTextPageState extends State<ButtonTextPage> {
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 Button.text(
   'Click Me',
   onPressed: () {},
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Button.text('Click Me')
 ''';
 

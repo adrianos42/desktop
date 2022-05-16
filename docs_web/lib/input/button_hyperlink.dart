@@ -11,14 +11,14 @@ class ButtonHyperlinkPage extends StatefulWidget {
 class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 HyperlinkButton(
   'https://github.com/adrianos42/desktop',
   onPressed: (value) {},
 ),
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 HyperlinkButton('https://github.com/adrianos42/desktop'),
 ''';
 
@@ -28,7 +28,7 @@ HyperlinkButton('https://github.com/adrianos42/desktop'),
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               height: 50,
               child: HyperlinkButton(
                 'https://github.com/adrianos42/desktop',
@@ -41,9 +41,9 @@ HyperlinkButton('https://github.com/adrianos42/desktop'),
           height: 200.0,
         ),
         ItemTitle(
-          body: (context) => Align(
+          body: (context) => const Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               height: 50,
               child: HyperlinkButton('https://github.com/adrianos42/desktop'),
             ),

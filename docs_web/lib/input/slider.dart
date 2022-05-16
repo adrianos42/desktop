@@ -14,7 +14,7 @@ class _SliderPageState extends State<SliderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final enabledCode = '''
+    const enabledCode = '''
 Container(
   width: 200.0,
   child: Column(
@@ -32,7 +32,7 @@ Container(
 )
 ''';
 
-    final disabledCode = '''
+    const disabledCode = '''
 Container(
   width: 200.0,
   child: Column(
@@ -53,7 +53,7 @@ Container(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 200.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,12 +77,12 @@ Container(
         ItemTitle(
           body: (context) => Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: SizedBox(
               width: 200.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: const [
                   Slider(
                     value: 0.3,
                   ),
