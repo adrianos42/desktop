@@ -81,7 +81,8 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            Defaults.createTitle(context, 'Primary Colors Dark'),
+            Defaults.createHeader(context, 'Primary Colors'),
+            Defaults.createTitle(context, 'Dark'),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               color: darkBackground,
@@ -91,6 +92,8 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
                   _itemPrimary(
                       context, PrimaryColor.sandyBrown, Brightness.dark),
                   _itemPrimary(context, PrimaryColor.orange, Brightness.dark),
+                  _itemPrimary(
+                      context, PrimaryColor.lightGoldenrod, Brightness.dark),
                   _itemPrimary(
                       context, PrimaryColor.goldenrod, Brightness.dark),
                   _itemPrimary(
@@ -115,7 +118,7 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
                 ],
               ),
             ),
-            Defaults.createTitle(context, 'Primary Colors Light'),
+            Defaults.createTitle(context, 'Light'),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               color: lightBackground,
@@ -125,6 +128,8 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
                   _itemPrimary(
                       context, PrimaryColor.sandyBrown, Brightness.light),
                   _itemPrimary(context, PrimaryColor.orange, Brightness.light),
+                  _itemPrimary(
+                      context, PrimaryColor.lightGoldenrod, Brightness.light),
                   _itemPrimary(
                       context, PrimaryColor.goldenrod, Brightness.light),
                   _itemPrimary(

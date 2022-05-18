@@ -49,6 +49,7 @@ class _DocAppState extends State<DocApp> {
           _menuItemPrimaryColor(PrimaryColor.sandyBrown),
           _menuItemPrimaryColor(PrimaryColor.orange),
           _menuItemPrimaryColor(PrimaryColor.goldenrod),
+          _menuItemPrimaryColor(PrimaryColor.lightGoldenrod),
           _menuItemPrimaryColor(PrimaryColor.springGreen),
           _menuItemPrimaryColor(PrimaryColor.turquoise),
           _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),

@@ -403,7 +403,10 @@ class PrimaryColor {
   /// Dodger blue color.
   static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
 
-  /// Golden rod color.
+  /// Light Goldenrod color.
+  static const lightGoldenrod = PrimaryColor._('Light Goldenrod', 1.0, 51, 0.76, 0.72);
+
+  /// Goldenrod color.
   static const goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
 
   /// Hot pink color.

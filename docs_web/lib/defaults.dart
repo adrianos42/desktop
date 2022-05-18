@@ -5,7 +5,7 @@ class CodeTextCotroller extends TextEditingController {
   CodeTextCotroller({super.text});
 
   static final _regex = RegExp(
-    r'''(?<class>\b[_$]*[A-Z][a-zA-Z0-9_$]*\b|bool\b|num\b|int\b|double\b|dynamic\b|(void)\b)|(?<string>(?:'.*?'))|(?<keyword>\b(?:try|on|catch|finally|throw|rethrow|break|case|continue|default|do|else|for|if|in|return|switch|while|abstract|class|enum|extends|extension|external|factory|implements|get|mixin|native|operator|set|typedef|with|covariant|static|final|const|required|late|void|var|library|import|part of|part|export|await|yield|async|sync)\b)|(?<comment>(?:(?:\/.*?)$))|(?<numeric>\b(?:(?:0(?:x|X)[0-9a-fA-F]*)|(?:(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))(?:(?:e|E)(?:\+|-)?[0-9]+)?)\b)''',
+    r'''(?<class>\b[_$]*[A-Z][a-zA-Z0-9_$]*\b|bool\b|num\b|int\b|double\b|dynamic\b|(void)\b)|(?<string>(?:'.*?'))|(?<keyword>\b(?:try|on|catch|finally|throw|rethrow|break|case|continue|default|do|else|for|if|in|return|switch|while|abstract|class|enum|extends|extension|external|factory|implements|get|mixin|native|operator|set|typedef|with|covariant|static|final|const|required|late|void|var|library|import|part of|part|export|await|yield|async|sync|true|false)\b)|(?<comment>(?:(?:\/.*?)$))|(?<numeric>\b(?:(?:0(?:x|X)[0-9a-fA-F]*)|(?:(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))(?:(?:e|E)(?:\+|-)?[0-9]+)?)\b)''',
     multiLine: true,
     dotAll: true,
   );
@@ -16,22 +16,20 @@ class CodeTextCotroller extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    //final classColor = Color(0xff5ac4a0);
-    //final commentsColor = Color(0xff696969);
-    //final textColor = Color(0xffd3d3d3);
-    //final stringColor  = Color(0xffcd8162);
-    //final numericColor = Color(0xffb5cea8);
-    //final keywordColor = Color(0xff5dadee);
+    ///const classColor = Color(0xff5ac4a0);
+    ///const commentsColor = Color(0xff696969);
+    ///const textColor = Color(0xffd3d3d3);
+    ///const stringColor  = Color(0xffcd8162);
+    ///const numericColor = Color(0xffb5cea8);
+    ///const keywordColor = Color(0xff5dadee);
 
     final brightness = Theme.of(context).brightness;
 
-    final classColor = PrimaryColor.springGreen
-                      .withBrightness(brightness)[70];
+    final classColor = PrimaryColor.springGreen.withBrightness(brightness)[70];
     final commentsColor = Theme.of(context).colorScheme.shade[40];
-    final stringColor  = PrimaryColor.coral.withBrightness(brightness)[70];
-    final numericColor = PrimaryColor.goldenrod.withBrightness(brightness)[60];
+    final stringColor  = PrimaryColor.sandyBrown.withBrightness(brightness)[70];
+    final numericColor = PrimaryColor.lightGoldenrod.withBrightness(brightness)[70];
     final keywordColor = PrimaryColor.dodgerBlue.withBrightness(brightness)[70];
-    
     final textColor = Theme.of(context).textTheme.textHigh;
 
     final matches = _regex.allMatches(text);
