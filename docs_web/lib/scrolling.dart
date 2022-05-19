@@ -5,52 +5,46 @@ import 'package:flutter/services.dart';
 import 'defaults.dart';
 
 const _kFileNames = [
-  'pexels-anete-lusina-4790622',
-  'pexels-bianca-marolla-3030635',
-  'pexels-christopher-schruff-720684',
-  'pexels-danielle-daniel-479009',
-  'pexels-david-savochka-192384',
-  'pexels-akbar-nemati-5622738',
-  'pexels-dương-nhân-2817405',
-  'pexels-emily-geibel-3772262',
-  'pexels-emir-kaan-okutan-2255565',
-  'pexels-engin-akyurt-1571724',
-  'pexels-evg-culture-1416792',
-  'pexels-faris-subriun-4391733',
-  'pexels-flickr-156321',
-  'pexels-fotografierende-3127729',
-  'pexels-francesco-ungaro-96428',
-  'pexels-halil-i̇brahim-çeti̇n-1754986',
-  'pexels-hugo-zoccal-fernandes-laguna-1299518',
-  'pexels-jan-kopřiva-5800065',
-  'pexels-josé-andrés-pacheco-cortes-5456616',
-  'pexels-leonardo-de-oliveira-1770918',
-  'pexels-levent-simsek-4411430',
-  'pexels-luan-oosthuizen-1784289',
-  'pexels-mark-burnett-731553',
-  'pexels-mati-mango-4734723',
-  'pexels-matteo-petralli-1828875',
-  'pexels-matthias-oben-5281143',
-  'pexels-mustafa-ezz-979503',
-  'pexels-peng-louis-1643457',
-  'pexels-peng-louis-1653357',
-  'pexels-piers-olphin-5044690',
-  'pexels-pixabay-45170',
-  'pexels-pixabay-45201',
-  'pexels-pixabay-104827',
-  'pexels-pixabay-160755',
-  'pexels-pixabay-271611',
-  'pexels-tamba-budiarsana-979247',
-  'pexels-tomas-ryant-2693561',
-  'pexels-utku-koylu-2611939',
-  'pexels-xue-guangjian-1687831',
-  'pexels-zhang-kaiyv-4858815',
-  'pexels-александар-цветановић-1440406',
-  'pexels-aleksandr-nadyojin-4492149',
+  'pexels-1770918',
+  'pexels-4411430',
+  'pexels-1784289',
+  'pexels-731553',
+  'pexels-4734723',
+  'pexels-1828875',
+  'pexels-979503',
+  'pexels-1643457',
+  'pexels-5044690',
+  'pexels-45170',
+  'pexels-45201',
+  'pexels-104827',
+  'pexels-160755',
+  'pexels-979247',
+  'pexels-2693561',
+  'pexels-2611939',
+  'pexels-1687831',
+  'pexels-4858815',
+  'pexels-3030635',
+  'pexels-720684',
+  'pexels-479009',
+  'pexels-192384',
+  'pexels-1653357',
+  'pexels-2817405',
+  'pexels-3772262',
+  'pexels-2255565',
+  'pexels-1571724',
+  'pexels-1416792',
+  'pexels-4391733',
+  'pexels-156321',
+  'pexels-3127729',
+  'pexels-96428',
+  'pexels-1754986',
+  'pexels-1299518',
+  'pexels-5800065',
+  'pexels-5456616',
 ];
 
 const _kPageDuration = Duration(milliseconds: 200);
-const _kPageCurve = Curves.easeOutSine;
+const _kPageCurve = Curves.easeOut;
 
 class ScrollingPage extends StatefulWidget {
   ScrollingPage({Key? key}) : super(key: key);
@@ -137,7 +131,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
                   },
                   child: LayoutBuilder(builder: (context, constraints) {
                     return Image.asset(
-                      'assets/cats_small/$assetName.jpg',
+                      'assets/cats_small/$assetName.webp',
                       frameBuilder: _frameBuilder,
                       fit: BoxFit.cover,
                     );
@@ -179,12 +173,13 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   bool _offstage = false;
   bool _menuFocus = true;
 
-  void _startFadeoutTimer() {
+  void _startFadeoutTimer(
+      [Duration duration = const Duration(milliseconds: 2000)]) {
     _fadeoutTimer?.cancel();
 
     setState(() {
       _offstage = false;
-      _fadeoutTimer = Timer(const Duration(milliseconds: 2000), () {
+      _fadeoutTimer = Timer(duration, () {
         setState(() => _fadeoutTimer = null);
       });
     });
@@ -194,17 +189,19 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
-    controller!.previousPage(
+    controller.previousPage(
       duration: _kPageDuration,
       curve: _kPageCurve,
     );
+    setState(() => _menuFocus = true);
   }
 
   void _requestNext() {
-    controller!.nextPage(
+    controller.nextPage(
       duration: _kPageDuration,
       curve: _kPageCurve,
     );
+    setState(() => _menuFocus = true);
   }
 
   @override
@@ -233,123 +230,158 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
       LogicalKeySet(LogicalKeyboardKey.arrowRight):
           const ScrollIntent(direction: AxisDirection.right),
     };
+
+    controller = PageController(initialPage: widget.assetIndex);
+
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
+      if (controller.hasClients) {
+        setState(() {});
+      }
+    });
+
+    controller.addListener(onChangedPage);
+  }
+
+  void onChangedPage() {
+    if (controller.hasClients) {
+      controller.removeListener(onChangedPage);
+    }
   }
 
   @override
   void dispose() {
     _fadeoutTimer?.cancel();
     _fadeoutTimer = null;
+    controller.dispose();
     super.dispose();
   }
 
-  PageController? controller;
+  late PageController controller;
+
+  bool get canRequestPrevious =>
+      controller.hasClients && (controller.page?.toInt() ?? 0) > 0;
+
+  bool get canRequestNext =>
+      controller.hasClients &&
+      (controller.page?.toInt() ?? _kFileNames.length) < _kFileNames.length - 1;
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    final ScrollMetrics metrics = notification.metrics;
+
+    if (notification is ScrollUpdateNotification) {
+      if (_menuFocus) {
+        setState(() {
+          _startFadeoutTimer();
+          _menuFocus = false;
+        });
+      }
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    controller ??= PageController(initialPage: widget.assetIndex);
-
-    final bool canRequestPrevious;
-    final bool canRequestNext;
-
-    if (controller!.hasClients) {
-      canRequestPrevious = (controller?.page?.toInt() ?? 0) > 0;
-      canRequestNext = (controller?.page?.toInt() ?? _kFileNames.length) <
-          _kFileNames.length - 1;
-    } else {
-      canRequestPrevious = false;
-      canRequestNext = false;
-    }
-
     final colorScheme = Theme.of(context).colorScheme;
 
     Widget result = MouseRegion(
       onHover: (_) => _startFadeoutTimer(),
-      child: LayoutBuilder(
-        builder: (context, constraints) => Stack(
-          children: [
-            PageView.custom(
-              controller: controller,
-              childrenDelegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Container(
-                    color: const Color(0xFF000000),
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/cats/${_kFileNames[index]}.jpg',
-                      frameBuilder: _frameBuilder,
-                      fit: BoxFit.contain,
-                      cacheHeight: constraints.maxHeight.toInt(),
-                    ),
-                  );
-                },
-                childCount: _kFileNames.length,
+      child: GestureDetector(
+        onTap: () => _startFadeoutTimer(),
+        child: LayoutBuilder(
+          builder: (context, constraints) => Stack(
+            children: [
+              NotificationListener<ScrollNotification>(
+                onNotification: _handleScrollNotification,
+                child: PageView.custom(
+                  controller: controller,
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Container(
+                        color: const Color(0xFF000000),
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'assets/cats/${_kFileNames[index]}.webp',
+                          frameBuilder: _frameBuilder,
+                          fit: BoxFit.contain,
+                          cacheHeight: constraints.maxHeight.toInt(),
+                        ),
+                      );
+                    },
+                    childCount: _kFileNames.length,
+                  ),
+                ),
               ),
-            ),
-            Offstage(
-              offstage: _offstage,
-              child: AnimatedOpacity(
-                opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 200),
-                curve: _fadeoutTimer == null && !_menuFocus
-                    ? Curves.easeOut
-                    : Curves.easeIn,
-                onEnd: () => setState(
-                    () => _offstage = _fadeoutTimer == null && !_menuFocus),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    color: colorScheme.background[0].withAlpha(0xE6),
-                    height: 60.0,
-                    child: MouseRegion(
-                      onEnter: (_) => setState(() => _menuFocus = true),
-                      onExit: (_) => setState(() => _menuFocus = false),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                _kFileNames[controller?.initialPage ?? 0],
-                                overflow: TextOverflow.ellipsis,
+              Offstage(
+                offstage: _offstage,
+                child: AnimatedOpacity(
+                  opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 200),
+                  curve: _fadeoutTimer == null && !_menuFocus
+                      ? Curves.easeOut
+                      : Curves.easeIn,
+                  onEnd: () => setState(
+                      () => _offstage = _fadeoutTimer == null && !_menuFocus),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      color: colorScheme.background[0].withAlpha(0xE6),
+                      height: 60.0,
+                      child: MouseRegion(
+                        onEnter: (_) => setState(() => _menuFocus = true),
+                        onExit: (_) => setState(() => _menuFocus = false),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                child: Text(
+                                  controller.hasClients
+                                      ? _kFileNames[controller.initialPage]
+                                      : '',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
-                          ),
-                          if (widget.requestPrevious != null)
-                            Button.icon(
-                              Icons.navigate_before,
-                              size: 24,
-                              onPressed:
-                                  canRequestPrevious ? _requestPrevious : null,
-                              tooltip: 'Previous',
+                            if (widget.requestPrevious != null)
+                              Button.icon(
+                                Icons.arrow_back,
+                                onPressed: canRequestPrevious
+                                    ? _requestPrevious
+                                    : null,
+                                tooltip: 'Previous',
+                              ),
+                            if (widget.requestNext != null)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Button.icon(
+                                  Icons.arrow_forward,
+                                  onPressed:
+                                      canRequestNext ? _requestNext : null,
+                                  tooltip: 'Next',
+                                ),
+                              ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(32, 0, 16, 0),
+                              child: Button.icon(
+                                Icons.close,
+                                onPressed: widget.close,
+                                tooltip: 'Close',
+                              ),
                             ),
-                          if (widget.requestNext != null)
-                            Button.icon(
-                              Icons.navigate_next,
-                              size: 24,
-                              onPressed: canRequestNext ? _requestNext : null,
-                              tooltip: 'Next',
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Button.icon(
-                              Icons.close,
-                              size: 24,
-                              onPressed: widget.close,
-                              tooltip: 'Close',
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                //curve: Curves.easeOutSine,
+                  //curve: Curves.easeOutSine,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -373,7 +405,7 @@ Widget _frameBuilder(
   return AnimatedOpacity(
     opacity: frame == null ? 0 : 1,
     duration: const Duration(milliseconds: 200),
-    curve: Curves.easeOutSine,
+    curve: Curves.easeOut,
     child: child,
   );
 }
