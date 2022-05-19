@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'dart:ui' show PointerDeviceKind;
 import 'package:desktop/desktop.dart';
 import 'package:flutter/services.dart';
 import 'defaults.dart';
 
-final _kFileNames = [
+const _kFileNames = [
   'pexels-anete-lusina-4790622',
   'pexels-bianca-marolla-3030635',
   'pexels-christopher-schruff-720684',
@@ -49,6 +48,9 @@ final _kFileNames = [
   'pexels-александар-цветановић-1440406',
   'pexels-aleksandr-nadyojin-4492149',
 ];
+
+const _kPageDuration = Duration(milliseconds: 200);
+const _kPageCurve = Curves.easeOutSine;
 
 class ScrollingPage extends StatefulWidget {
   ScrollingPage({Key? key}) : super(key: key);
@@ -123,7 +125,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
                           data: themeData,
                           child: Builder(
                             builder: (context) => _ImagePage(
-                              assetName,
+                              _kFileNames.indexOf(assetName),
                               close: () => dialogController.close(),
                               requestNext: _requestNext,
                               requestPrevious: _requestPrevious,
@@ -153,15 +155,15 @@ class _ScrollingPageState extends State<ScrollingPage> {
 typedef RequestAssetNameCallback = String? Function(String);
 
 class _ImagePage extends StatefulWidget {
-  _ImagePage(
-    this.assetName, {
+  const _ImagePage(
+    this.assetIndex, {
     this.requestNext,
     this.requestPrevious,
     required this.close,
     Key? key,
   }) : super(key: key);
 
-  final String assetName;
+  final int assetIndex;
 
   final VoidCallback close;
 
@@ -188,30 +190,21 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     });
   }
 
-  String? _replaceAssetName;
-
   late Map<Type, Action<Intent>> _actionMap;
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
-    final replace =
-        widget.requestPrevious!(_replaceAssetName ?? widget.assetName);
-    if (replace != null) {
-      setState(() {
-        _menuFocus = true;
-        _replaceAssetName = replace;
-      });
-    }
+    controller!.previousPage(
+      duration: _kPageDuration,
+      curve: _kPageCurve,
+    );
   }
 
   void _requestNext() {
-    final replace = widget.requestNext!(_replaceAssetName ?? widget.assetName);
-    if (replace != null) {
-      setState(() {
-        _menuFocus = true;
-        _replaceAssetName = replace;
-      });
-    }
+    controller!.nextPage(
+      duration: _kPageDuration,
+      curve: _kPageCurve,
+    );
   }
 
   @override
@@ -228,7 +221,9 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
             if (widget.requestNext != null) _requestNext();
             break;
           default:
+            break;
         }
+        return null;
       }),
     };
 
@@ -247,96 +242,49 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  double _xOffset = 0.0;
-  double? _offset;
-
-  void onDragStart(DragStartDetails details) {
-    if (details.kind == PointerDeviceKind.touch) {
-      setState(() {
-        _menuFocus = false;
-        _offset = details.globalPosition.dx;
-      });
-    }
-  }
-
-  void onDragCancel() {
-    setState(() {
-      _offset = null;
-      _xOffset = 0.0;
-    });
-  }
-
-  void onDragEnd(DragEndDetails details) {
-    if (_offset != null) {
-      // TODO(as): Calculate proper velocity.
-      if (details.primaryVelocity != null) {
-        final assetName = _replaceAssetName ?? widget.assetName;
-
-        final canRequestPrevious =
-            widget.requestPrevious?.call(assetName) != null;
-        final canRequestNext = widget.requestNext?.call(assetName) != null;
-
-        if (details.primaryVelocity! < 0.0 && _xOffset < -40.0) {
-          if (canRequestNext) {
-            _requestNext();
-          }
-        } else if (details.primaryVelocity! > 0.0 && _xOffset > 40.0) {
-          if (canRequestPrevious) {
-            _requestPrevious();
-          }
-        }
-      }
-
-      setState(() {
-        _offset = null;
-        _xOffset = 0.0;
-      });
-    }
-  }
-
-  void onDragUpdate(DragUpdateDetails details) {
-    if (_offset != null) {
-      setState(() {
-        _xOffset = details.globalPosition.dx - _offset!;
-      });
-    }
-  }
+  PageController? controller;
 
   @override
   Widget build(BuildContext context) {
-    final assetName = _replaceAssetName ?? widget.assetName;
+    controller ??= PageController(initialPage: widget.assetIndex);
 
-    final canRequestPrevious = widget.requestPrevious?.call(assetName) != null;
-    final canRequestNext = widget.requestNext?.call(assetName) != null;
+    final bool canRequestPrevious;
+    final bool canRequestNext;
+
+    if (controller!.hasClients) {
+      canRequestPrevious = (controller?.page?.toInt() ?? 0) > 0;
+      canRequestNext = (controller?.page?.toInt() ?? _kFileNames.length) <
+          _kFileNames.length - 1;
+    } else {
+      canRequestPrevious = false;
+      canRequestNext = false;
+    }
 
     final colorScheme = Theme.of(context).colorScheme;
 
     Widget result = MouseRegion(
       onHover: (_) => _startFadeoutTimer(),
-      child: GestureDetector(
-        onTap: () => _startFadeoutTimer(),
-        onHorizontalDragStart: onDragStart,
-        onHorizontalDragCancel: onDragCancel,
-        onHorizontalDragEnd: onDragEnd,
-        onHorizontalDragUpdate: onDragUpdate,
-        child: Stack(
+      child: LayoutBuilder(
+        builder: (context, constraints) => Stack(
           children: [
-            LayoutBuilder(builder: (context, constraints) {
-              return Container(
-                height: constraints.maxHeight,
-                color: const Color(0xFF000000),
-                alignment: Alignment.center,
-                child: Transform(
-                  transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
-                  child: Image.asset(
-                    'assets/cats/$assetName.jpg',
-                    frameBuilder: _frameBuilder,
-                    fit: BoxFit.contain,
-                    cacheHeight: constraints.maxHeight.toInt(),
-                  ),
-                ),
-              );
-            }),
+            PageView.custom(
+              controller: controller,
+              childrenDelegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                    color: const Color(0xFF000000),
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'assets/cats/${_kFileNames[index]}.jpg',
+                      frameBuilder: _frameBuilder,
+                      fit: BoxFit.contain,
+                      cacheHeight: constraints.maxHeight.toInt(),
+                    ),
+                  );
+                },
+                childCount: _kFileNames.length,
+              ),
+            ),
             Offstage(
               offstage: _offstage,
               child: AnimatedOpacity(
@@ -360,9 +308,10 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
-                                assetName,
+                                _kFileNames[controller?.initialPage ?? 0],
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -370,6 +319,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                           if (widget.requestPrevious != null)
                             Button.icon(
                               Icons.navigate_before,
+                              size: 24,
                               onPressed:
                                   canRequestPrevious ? _requestPrevious : null,
                               tooltip: 'Previous',
@@ -377,6 +327,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                           if (widget.requestNext != null)
                             Button.icon(
                               Icons.navigate_next,
+                              size: 24,
                               onPressed: canRequestNext ? _requestNext : null,
                               tooltip: 'Next',
                             ),
@@ -384,6 +335,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Button.icon(
                               Icons.close,
+                              size: 24,
                               onPressed: widget.close,
                               tooltip: 'Close',
                             ),
