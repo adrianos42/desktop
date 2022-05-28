@@ -577,18 +577,13 @@ class _TextFieldState extends State<TextField>
                 bucket: bucket,
                 child: Container(
                   decoration: decoration,
-                  child: Align(
-                    alignment: Alignment.center,
-                    widthFactor: 1.0,
-                    heightFactor: 1.0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4.0, vertical: 4.0),
-                      child:
-                          _selectionGestureDetectorBuilder.buildGestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        child: editable,
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0, vertical: 4.0),
+                    child:
+                        _selectionGestureDetectorBuilder.buildGestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      child: editable,
                     ),
                   ),
                 ),

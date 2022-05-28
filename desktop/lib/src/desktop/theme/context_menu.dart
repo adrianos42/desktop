@@ -240,7 +240,7 @@ class ContextMenuTheme extends InheritedTheme {
           contextMenuThemeData.selectedColor ?? colorScheme.primary[30];
 
       final Color background =
-          contextMenuThemeData.background ?? colorScheme.background[0];
+          contextMenuThemeData.background ?? colorScheme.background[8];
 
       final Color selectedHoverColor =
           contextMenuThemeData.selectedHoverColor ??

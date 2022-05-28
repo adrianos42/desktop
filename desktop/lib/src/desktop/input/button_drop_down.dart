@@ -226,7 +226,10 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
         return DefaultTextStyle(
           style: buttonThemeData.textStyle!.copyWith(
-              color: !enabled ? buttonThemeData.disabledColor! : null),
+            color: !enabled
+                ? buttonThemeData.disabledColor!
+                : buttonThemeData.textStyle!.color,
+          ),
           child: Container(
             constraints: BoxConstraints(
               minHeight: contextMenuThemeData.itemHeight!,

@@ -16,19 +16,21 @@ class CodeTextCotroller extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
+    final brightness = Theme.of(context).brightness;
+
     ///const classColor = Color(0xff5ac4a0);
     ///const commentsColor = Color(0xff696969);
     ///const textColor = Color(0xffd3d3d3);
     ///const stringColor  = Color(0xffcd8162);
-    ///const numericColor = Color(0xffb5cea8);
-    ///const keywordColor = Color(0xff5dadee);
+    final numericColor =
+        brightness == Brightness.dark ? Color(0xffcae6bd) : Color(0xff768a76);
 
-    final brightness = Theme.of(context).brightness;
+    ///const keywordColor = Color(0xff5dadee);
 
     final classColor = PrimaryColor.springGreen.withBrightness(brightness)[70];
     final commentsColor = Theme.of(context).colorScheme.shade[40];
-    final stringColor  = PrimaryColor.sandyBrown.withBrightness(brightness)[70];
-    final numericColor = PrimaryColor.lightGoldenrod.withBrightness(brightness)[70];
+    final stringColor = PrimaryColor.sandyBrown.withBrightness(brightness)[70];
+    //final numericColor = PrimaryColor.lightGoldenrod.withBrightness(brightness)[70];
     final keywordColor = PrimaryColor.dodgerBlue.withBrightness(brightness)[70];
     final textColor = Theme.of(context).textTheme.textHigh;
 
@@ -74,10 +76,7 @@ class CodeTextCotroller extends TextEditingController {
     spans.add(TextSpan(text: text.substring(lastEnd)));
 
     return TextSpan(
-      style: Theme.of(context)
-          .textTheme
-          .monospace
-          .copyWith(color: textColor),
+      style: Theme.of(context).textTheme.monospace.copyWith(color: textColor),
       children: spans,
     );
   }
