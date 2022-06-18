@@ -1,21 +1,18 @@
-import 'dart:ui';
 import 'package:desktop/desktop.dart';
-import 'package:flutter/foundation.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'data/data.dart';
-import 'navigation/navigation.dart';
 import 'dialogs/dialogs.dart';
 import 'input/input.dart';
+import 'navigation/navigation.dart';
+import 'scrolling.dart';
 import 'status/status.dart';
 import 'text/text.dart';
-import 'scrolling.dart';
-import 'theme/typography.dart';
 import 'theme/colorscheme.dart';
 import 'theme/primaryColor.dart';
+import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.8';
+const String _version = 'dev.4.2.15';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -139,36 +136,23 @@ class _DocAppState extends State<DocApp> {
                           vertical: 8.0, horizontal: 16.0),
                       child: Builder(
                         builder: (context) {
-                          return Text(
-                            'Desktop',
-                            style: Theme.of(context).textTheme.title.copyWith(
-                                  overflow: TextOverflow.ellipsis,
-                                  color:
-                                      Theme.of(context).colorScheme.primary[70],
-                                ),
-                          );
-                        },
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      child: Builder(
-                        builder: (context) {
-                          return Text(
-                            _version,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption
-                                .copyWith(overflow: TextOverflow.ellipsis),
+                          return Tooltip(
+                            message: _version,
+                            child: Text(
+                              'Desktop',
+                              style: Theme.of(context).textTheme.title.copyWith(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary[70],
+                                  ),
+                            ),
                           );
                         },
                       ),
                     ),
                   ],
                 ),
-                //const Spacer(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
@@ -181,30 +165,6 @@ class _DocAppState extends State<DocApp> {
                           Theme.updateThemeData(context, invertedTheme);
                         }),
                       ),
-                      Builder(builder: (context) {
-                        final Image githubImage;
-                        if (Theme.of(context).brightness == Brightness.dark) {
-                          githubImage = Image.asset(
-                            'assets/GitHub-Mark-Light-32px.png',
-                            width: 18.0,
-                            height: 18.0,
-                          );
-                        } else {
-                          githubImage = Image.asset(
-                            'assets/GitHub-Mark-32px.png',
-                            width: 18.0,
-                            height: 18.0,
-                          );
-                        }
-
-                        return Button(
-                          body: githubImage,
-                          onPressed: () async {
-                            await launchUrl(Uri.parse(
-                                'https://github.com/adrianos42/desktop'));
-                          },
-                        );
-                      }),
                     ],
                   ),
                 )
@@ -224,10 +184,10 @@ class _DocAppState extends State<DocApp> {
                     titleBuilder: (context) => const Text('Overview'),
                     builder: (context) => OverviewPage(),
                     //builder: (context) => ButtonDropDownPage(),
-                    // builder: (context) => ListTablePage()
-                    /// builder: (context) => NavPage(),
+                    //builder: (context) => ListTablePage()                    /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
                     //builder: (context) => ScrollingPage(),
+                    // builder: (context) => BottomNavPage(),
                   ),
                   TreeNode.children(
                       titleBuilder: (context) => const Text('Navigation'),
@@ -239,6 +199,10 @@ class _DocAppState extends State<DocApp> {
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Nav'),
                           builder: (context) => NavPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Bottom Nav'),
+                          builder: (context) => BottomNavPage(),
                         ),
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Tab'),
@@ -372,6 +336,7 @@ class _DocAppState extends State<DocApp> {
 
   @override
   Widget build(BuildContext context) {
+    // return BottomNavPage();
     return _createHome();
   }
 }

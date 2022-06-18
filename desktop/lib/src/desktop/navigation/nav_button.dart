@@ -458,3 +458,57 @@ class NavMenuButton extends StatelessWidget {
     );
   }
 }
+
+class BottomNavMenuButton extends StatelessWidget {
+  const BottomNavMenuButton(
+    this.child, {
+    Key? key,
+    this.tooltip,
+    this.onPressed,
+    required this.active,
+    required this.height,
+  }) : super(key: key);
+
+  final String? tooltip;
+
+  final Widget child;
+
+  final VoidCallback? onPressed;
+
+  final bool active;
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final NavThemeData navThemeData = NavTheme.of(context);
+    final ThemeData themeData = Theme.of(context);
+    final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = themeData.colorScheme;
+
+    final highlightColor = colorScheme.shade[100];
+
+    final IconThemeData iconThemeData = navThemeData.iconThemeData;
+    final color = textTheme.textLow;
+
+    return Container(
+      height: height,
+      alignment: Alignment.topRight,
+      child: ButtonTheme.merge(
+        data: ButtonThemeData(
+          color: active ? highlightColor : color,
+          highlightColor: highlightColor,
+          hoverColor: active ? highlightColor : highlightColor,
+          iconThemeData: iconThemeData,
+        ),
+        child: Button(
+          onPressed: onPressed,
+          tooltip: tooltip,
+          padding: EdgeInsets.zero,
+          bodyPadding: EdgeInsets.zero,
+          body: child,
+        ),
+      ),
+    );
+  }
+}

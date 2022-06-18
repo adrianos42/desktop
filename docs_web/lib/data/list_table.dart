@@ -175,7 +175,7 @@ ListTable(
         ItemTitle(
           body: (context) => ListTable(
             colCount: 4,
-            itemCount: [...someDataTableRows, ...someDataTableRows].length,
+            itemCount: someDataTableRows.length,
             allowColumnDragging: true,
             tableBorder: TableBorder(
               bottom: borderSide,
@@ -188,10 +188,8 @@ ListTable(
               final dialog = showDialog(
                 context,
                 builder: (context) => Dialog(
-                  body: Text(
-                      [...someDataTableRows, ...someDataTableRows][row][0]),
-                  title: Text(
-                      [...someDataTableRows, ...someDataTableRows][row][2]),
+                  body: Text(someDataTableRows[row][0]),
+                  title: Text(someDataTableRows[row][2]),
                 ),
               );
               await dialog.closed;

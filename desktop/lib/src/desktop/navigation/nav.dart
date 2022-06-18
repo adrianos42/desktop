@@ -141,7 +141,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static final Curve _animationCurve = Curves.easeInOutSine;
+  static const Curve _animationCurve = Curves.easeInOutSine;
 
   void _createAnimation() {
     _menuAnimation = CurvedAnimation(

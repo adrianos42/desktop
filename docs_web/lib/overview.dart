@@ -25,12 +25,34 @@ class _OverviewPageState extends State<OverviewPage> {
           children: [
             Defaults.createHeader(context, 'Overview'),
             Defaults.createTitle(context, 'Resources'),
-            HyperlinkButton(
-              'Homepage',
-              onPressed: (_) async {
-                await launchUrl(
-                    Uri.parse('https://github.com/adrianos42/desktop'));
-              },
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (Theme.of(context).brightness == Brightness.dark)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Image.asset(
+                      'assets/GitHub-Mark-Light-32px.png',
+                      width: 20.0,
+                      height: 20.0,
+                    ),
+                  ),
+                if (Theme.of(context).brightness == Brightness.light)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Image.asset(
+                    'assets/GitHub-Mark-32px.png',
+                    width: 20.0,
+                    height: 20.0,
+                  ),),
+                HyperlinkButton(
+                  'Homepage [Github]',
+                  onPressed: (_) async {
+                    await launchUrl(
+                        Uri.parse('https://github.com/adrianos42/desktop'));
+                  },
+                ),
+              ],
             ),
             Defaults.createTitle(context, 'Flutter resources'),
             HyperlinkButton(
