@@ -15,7 +15,7 @@ import 'theme/colorscheme.dart';
 import 'theme/primaryColor.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.7';
+const String _version = 'dev.4.2.8';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -107,63 +107,72 @@ class _DocAppState extends State<DocApp> {
         padding: const EdgeInsets.only(top: 16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Button.icon(
-                    Icons.menu_open,
-                    color: isShowingTree
-                        ? ButtonTheme.of(context).highlightColor
-                        : null,
-                    hoverColor: isShowingTree
-                        ? ButtonTheme.of(context).highlightColor
-                        : null,
-                    size: 22,
-                    onPressed: () =>
-                        setState(() => _isShowingTree = !isShowingTree),
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Button.icon(
+                        Icons.menu_open,
+                        color: isShowingTree
+                            ? ButtonTheme.of(context).highlightColor
+                            : null,
+                        hoverColor: isShowingTree
+                            ? ButtonTheme.of(context).highlightColor
+                            : null,
+                        size: 22,
+                        onPressed: () =>
+                            setState(() => _isShowingTree = !isShowingTree),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: Builder(
+                        builder: (context) {
+                          return Text(
+                            'Desktop',
+                            style: Theme.of(context).textTheme.title.copyWith(
+                                  overflow: TextOverflow.ellipsis,
+                                  color:
+                                      Theme.of(context).colorScheme.primary[70],
+                                ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: Builder(
+                        builder: (context) {
+                          return Text(
+                            _version,
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .copyWith(overflow: TextOverflow.ellipsis),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: Builder(
-                    builder: (context) {
-                      return Text(
-                        'Desktop',
-                        style: Theme.of(context).textTheme.title.copyWith(
-                              overflow: TextOverflow.ellipsis,
-                              color: Theme.of(context).colorScheme.primary[70],
-                            ),
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: Builder(
-                    builder: (context) {
-                      return Text(
-                        _version,
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption
-                            .copyWith(overflow: TextOverflow.ellipsis),
-                      );
-                    },
-                  ),
-                ),
-                const Spacer(),
-                Container(
+                //const Spacer(),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       _createColorButton(),
                       _ThemeToggle(
@@ -215,7 +224,7 @@ class _DocAppState extends State<DocApp> {
                     titleBuilder: (context) => const Text('Overview'),
                     builder: (context) => OverviewPage(),
                     //builder: (context) => ButtonDropDownPage(),
-                    //builder: (context) => ListTablePage()
+                    // builder: (context) => ListTablePage()
                     /// builder: (context) => NavPage(),
                     //builder: (context) => ButtonGroupPage(),
                     //builder: (context) => ScrollingPage(),
@@ -276,7 +285,8 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => ButtonContextMenuPage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Drop Down Menu'),
+                          titleBuilder: (context) =>
+                              const Text('Drop Down Menu'),
                           builder: (context) => ButtonDropDownPage(),
                         ),
                         TreeNode.child(
@@ -308,7 +318,8 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => ButtonRadioPage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Toggle Switch'),
+                          titleBuilder: (context) =>
+                              const Text('Toggle Switch'),
                           builder: (context) => ToggleSwitchPage(),
                         ),
                       ]),
@@ -316,7 +327,8 @@ class _DocAppState extends State<DocApp> {
                       titleBuilder: (context) => const Text('Status'),
                       children: [
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Progress Indicator'),
+                          titleBuilder: (context) =>
+                              const Text('Progress Indicator'),
                           builder: (context) => ProgressIndicatorPage(),
                         ),
                       ]),
@@ -340,7 +352,8 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => ColorschemePage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Primary Colors'),
+                          titleBuilder: (context) =>
+                              const Text('Primary Colors'),
                           builder: (context) => PrimaryColorPage(),
                         ),
                       ]),

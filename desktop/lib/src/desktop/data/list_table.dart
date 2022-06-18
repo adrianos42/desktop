@@ -8,7 +8,7 @@ import '../theme/theme.dart';
 
 const _kHeaderHeight = 40.0;
 const _kMinColumnWidth = 40.0;
-const _kHandlerWidth = 8.0;
+const _kHandlerWidth = 12.0;
 //const _kDefaultItemExtent = 40.0;
 
 /// The builder for the table header.
@@ -44,6 +44,7 @@ class ListTable extends StatefulWidget {
     this.itemExtent = _kHeaderHeight,
     this.onPressed,
     this.onSecondaryPress,
+    this.allowColumnDragging = false,
     Key? key,
   })  : assert(colCount > 0),
         assert(itemExtent >= 0.0),
@@ -72,6 +73,8 @@ class ListTable extends StatefulWidget {
 
   final RowPressedCallback? onSecondaryPress;
 
+  final bool allowColumnDragging;
+
   /// If the last column should collapse if it does not fit the minimum width anymore.
   // TODO(as): final bool collapseOnDrag;
 
@@ -88,6 +91,98 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   int hoveredIndex = -1;
   int pressedIndex = -1;
   int waitingIndex = -1;
+  int draggingColumnIndex = -1;
+
+  bool get isDraggingColumn => draggingColumnIndex >= 0;
+
+  Widget createHeaderFeedback(int col, int lastNonZero) {
+    final TableBorder? tableBorder = widget.tableBorder;
+    final bool hasBorder = tableBorder != null &&
+        (tableBorder.left != BorderSide.none ||
+            tableBorder.right != BorderSide.none ||
+            tableBorder.top != BorderSide.none ||
+            tableBorder.bottom != BorderSide.none);
+    final bool hasHeaderBorder =
+        tableBorder != null && tableBorder.top != BorderSide.none;
+
+    final BoxDecoration decoration = BoxDecoration(
+      color: Theme.of(context).colorScheme.background[0].withOpacity(0.9),
+      border: hasBorder
+          ? Border(
+              left: tableBorder.left,
+              right: tableBorder.right,
+              top: tableBorder.top,
+              bottom: tableBorder.bottom,
+            )
+          : null,
+    );
+
+    return Container(
+      width: colSizes[col],
+      height: totalHeight!,
+      decoration: decoration,
+      child: UnconstrainedBox(
+        clipBehavior: Clip.antiAlias,
+        alignment: Alignment.topLeft,
+        constrainedAxis: Axis.horizontal,
+        child: Column(
+          children: [
+            Container(
+              constraints: BoxConstraints.tightFor(
+                width: colSizes[col],
+                height: _kHeaderHeight,
+              ),
+              decoration: hasHeaderBorder
+                  ? BoxDecoration(border: Border(bottom: tableBorder.top))
+                  : null,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return widget.tableHeaderBuilder(
+                    context,
+                    col,
+                    constraints,
+                  );
+                },
+              ),
+            ),
+            ...List.generate(widget.itemCount, (index) {
+              BoxDecoration decoration = const BoxDecoration();
+
+              if (widget.tableBorder != null &&
+                  (widget.tableBorder!.horizontalInside != BorderSide.none ||
+                      widget.tableBorder!.verticalInside != BorderSide.none)) {
+                final isBottom = index < widget.itemCount - 1 || hasExtent;
+                final isRight = col < widget.colCount - 1 && col < lastNonZero;
+
+                final horizontalInside = widget.tableBorder!.horizontalInside;
+                final verticalInside = widget.tableBorder!.verticalInside;
+
+                final bottom = isBottom ? horizontalInside : BorderSide.none;
+
+                final right = isRight ? verticalInside : BorderSide.none;
+
+                final border = Border(bottom: bottom, right: right);
+                decoration = decoration.copyWith(border: border);
+              }
+
+              return DecoratedBox(
+                decoration: decoration,
+                child: widget.tableRowBuilder(
+                  context,
+                  index,
+                  col,
+                  BoxConstraints.tightFor(
+                    width: colSizes[col],
+                    height: _kHeaderHeight,
+                  ),
+                ),
+              );
+            }).toList(),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget createHeader() {
     final TableBorder? tableBorder = widget.tableBorder;
@@ -111,9 +206,11 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         children: List<Widget>.generate(colCount, (col) {
           assert(col < colSizes.length);
 
-          if (colSizes[col] == 0.0) {
-            return Container();
-          }
+          // if (colSizes[col] == 0.0) {
+          //   return Container();
+          // }
+
+          final bool draggingTargetColumn = draggingColumnIndex == col + 1;
 
           Widget result;
 
@@ -137,6 +234,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                   hasIndicator: hasHiddenColumns && lastNonZero == col,
                   border:
                       widget.headerColumnBorder ?? tableBorder?.verticalInside,
+                  draggingTargetColumn: draggingTargetColumn,
+                  draggingColumn: isDraggingColumn,
                 ),
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,12 +253,45 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
             );
           }
 
-          return ConstrainedBox(
+          result = Container(
+            color: Theme.of(context).colorScheme.background[0],
             constraints: BoxConstraints.tightFor(
               height: _kHeaderHeight,
               width: colSizes[col],
             ),
             child: result,
+          );
+
+          return MouseRegion(
+            hitTestBehavior: HitTestBehavior.deferToChild,
+            cursor:
+                isDraggingColumn ? MouseCursor.defer : SystemMouseCursors.click,
+            child: Draggable<int>(
+              data: col,
+              child: result,
+              childWhenDragging: const SizedBox(),
+              rootOverlay: true,
+              onDragStarted: () {
+                print('started');
+                setState(() => draggingColumnIndex = col);
+              },
+              onDraggableCanceled: (_, __) {
+                print('canceled');
+                setState(() => draggingColumnIndex = -1);
+              },
+              onDragUpdate: (details) {
+                //print(details.globalPosition);
+              },
+              onDragEnd: (details) {
+                print('ended');
+                print(details);
+              },
+              onDragCompleted: () {
+                print('fst');
+              },
+              maxSimultaneousDrags: widget.colCount > 1 ? 1 : 0,
+              feedback: createHeaderFeedback(col, lastNonZero),
+            ),
           );
         }).toList(),
       ),
@@ -168,12 +300,19 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
   Widget createList(int index) {
     final int lastNonZero = colSizes.lastIndexWhere((elem) => elem > 0.0);
-    final List<double> colElems = colSizes.where((e) => e > 0.0).toList();
+
+    /// final List<double> colElems = colSizes.where((e) => e > 0.0).toList();
+    final List<double> colElems =
+        colSizes.where((e) => e > 0.0 || isDraggingColumn).toList();
 
     return MouseRegion(
-      onEnter: (_) => dragging ? null : setState(() => hoveredIndex = index),
-      onExit: (_) => dragging ? null : setState(() => hoveredIndex = -1),
-      cursor: widget.onPressed != null
+      onEnter: (_) => dragging || isDraggingColumn
+          ? null
+          : setState(() => hoveredIndex = index),
+      onExit: (_) => dragging || isDraggingColumn
+          ? null
+          : setState(() => hoveredIndex = -1),
+      cursor: widget.onPressed != null && !isDraggingColumn
           ? SystemMouseCursors.click
           : SystemMouseCursors.basic,
       child: GestureDetector(
@@ -241,6 +380,12 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           children: List.generate(colElems.length, (col) {
             assert(col < colSizes.length);
 
+            if (col == draggingColumnIndex) {
+              return const SizedBox();
+            }
+
+            final bool draggingTargetColumn = draggingColumnIndex == col + 1;
+
             Widget result = LayoutBuilder(
               builder: (context, constraints) => widget.tableRowBuilder(
                 context,
@@ -276,7 +421,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
               final bottom = isBottom ? horizontalInside : BorderSide.none;
 
-              // TODO(as): Put this shit somewhere else.
+              // TODO(as): ???
               final headerColumnBorder = widget.headerColumnBorder ??
                   widget.tableBorder?.verticalInside;
               final dragBorderWidth = headerColumnBorder != null &&
@@ -285,20 +430,28 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                       (headerColumnBorder.width / 2.0).roundToDouble()
                   : 2.0;
 
-              final right = dragging && colDragging == col
-                  ? BorderSide(
-                      color: listTableThemeData.borderHighlightColor!,
-                      width: dragBorderWidth,
-                    )
-                  : isRight
-                      ? verticalInside
-                      : BorderSide.none;
+              final right = // FIXME HERE
+                  dragging && colDragging == col || draggingTargetColumn
+                      ? BorderSide(
+                          color: listTableThemeData.borderHighlightColor!,
+                          width: dragBorderWidth,
+                        )
+                      : isDraggingColumn
+                          ? BorderSide(
+                              color: listTableThemeData.borderColor!,
+                              width: dragBorderWidth,
+                            )
+                          : isRight
+                              ? verticalInside
+                              : BorderSide.none;
 
               final border = Border(bottom: bottom, right: right);
               decoration = decoration.copyWith(border: border);
-            } else if (dragging && colDragging == col) {
+            } else if (dragging && colDragging == col || isDraggingColumn) {
               final right = BorderSide(
-                color: listTableThemeData.borderHighlightColor!,
+                color: draggingTargetColumn || dragging
+                    ? listTableThemeData.borderHighlightColor!
+                    : listTableThemeData.borderColor!,
                 width: 2.0,
               );
 
@@ -326,6 +479,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
   int? colDragging;
   double? previousWidth;
   double? totalWidth;
+  double? totalHeight;
   List<double>? previousColSizes;
   Map<int, double>? previousColFraction;
 
@@ -535,8 +689,10 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
       if (colFraction!.containsKey(i)) {
         if (remWidth >= _kMinColumnWidth) {
           // The last item.
-          if (i == colCount - 1) {
+          if (i == colCount - 1 ||
+              (draggingColumnIndex == colCount - 1 && i == colCount - 2)) {
             colSizes[i] = remWidth;
+
             remWidth = 0.0;
             break;
           }
@@ -544,18 +700,14 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           double width = (colFraction![i]! * totalWidth!)
               .clamp(_kMinColumnWidth, remWidth);
 
-          if (dragging && false) {
-            colSizes[i] = width;
-          } else {
-            width = width.floorToDouble();
-            colSizes[i] = width;
-          }
+          width = draggingColumnIndex == i ? 0 : width.floorToDouble();
+          colSizes[i] = width;
 
           remWidth -= width;
 
           if (remWidth < 0.0) {
             throw Exception(
-                'Wrong fraction value at $i value ${colFraction![i]}.');
+                'Wrong fraction value at index $i, value ${colFraction![i]}.');
           }
         } else {
           break;
@@ -576,6 +728,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
     Widget result = LayoutBuilder(
       builder: (context, constraints) {
         totalWidth = constraints.maxWidth;
+        totalHeight = constraints.maxHeight;
+
         calculateColFractions();
         calculateColSizes();
 
@@ -638,6 +792,8 @@ class _TableColHandler extends StatefulWidget {
     required this.tableDragUpdate,
     required this.col,
     required this.hasIndicator,
+    required this.draggingColumn,
+    required this.draggingTargetColumn,
     this.border,
     Key? key,
   }) : super(key: key);
@@ -646,6 +802,8 @@ class _TableColHandler extends StatefulWidget {
   final _TableDragUpdate tableDragUpdate;
   final int col;
   final BorderSide? border;
+  final bool draggingColumn;
+  final bool draggingTargetColumn;
 
   @override
   _TableColHandlerState createState() => _TableColHandlerState();
@@ -713,16 +871,19 @@ class _TableColHandlerState extends State<_TableColHandler>
     final ListTableThemeData listTableTheme = ListTableTheme.of(context);
 
     BorderSide? border = widget.border;
-    final bool expanded = hovered || dragged || widget.hasIndicator;
+    final bool expanded =
+        hovered || dragged || widget.hasIndicator || widget.draggingColumn;
 
     if (border != null && border != BorderSide.none) {
-      final Color borderColor = dragged
+      final Color borderColor = dragged || widget.draggingTargetColumn
           ? listTableTheme.borderHighlightColor!
-          : hovered
-              ? listTableTheme.borderHoverColor!
-              : widget.hasIndicator
-                  ? listTableTheme.borderIndicatorColor!
-                  : border.color;
+          : widget.draggingColumn
+              ? listTableTheme.borderColor!
+              : hovered
+                  ? listTableTheme.borderHoverColor!
+                  : widget.hasIndicator
+                      ? listTableTheme.borderIndicatorColor!
+                      : border.color;
 
       border = border.copyWith(
           color: borderColor,
@@ -731,14 +892,25 @@ class _TableColHandlerState extends State<_TableColHandler>
               : border.width);
     } else {
       final width = expanded ? 2.0 : 1.0;
-      final borderColor = dragged
+      final borderColor = dragged || widget.draggingTargetColumn
           ? listTableTheme.borderHighlightColor!
-          : hovered
-              ? listTableTheme.borderHoverColor!
-              : widget.hasIndicator
-                  ? listTableTheme.borderIndicatorColor!
-                  : listTableTheme.borderColor!;
+          : widget.draggingColumn
+              ? listTableTheme.borderColor!
+              : hovered
+                  ? listTableTheme.borderHoverColor!
+                  : widget.hasIndicator
+                      ? listTableTheme.borderIndicatorColor!
+                      : listTableTheme.borderColor!;
       border = BorderSide(width: width, color: borderColor);
+    }
+
+    final Widget result = Container(
+      margin: const EdgeInsets.only(left: _kHandlerWidth),
+      decoration: BoxDecoration(border: Border(right: border)),
+    );
+
+    if (widget.draggingColumn) {
+      return result;
     }
 
     return RawGestureDetector(
@@ -749,10 +921,7 @@ class _TableColHandlerState extends State<_TableColHandler>
         cursor: SystemMouseCursors.click,
         onEnter: _handleMouseEnter,
         onExit: _handleMouseExit,
-        child: Container(
-          margin: const EdgeInsets.only(left: _kHandlerWidth),
-          decoration: BoxDecoration(border: Border(right: border)),
-        ),
+        child: result,
       ),
     );
   }

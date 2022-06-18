@@ -86,6 +86,7 @@ class Nav extends StatefulWidget {
     this.trailingMenu,
     this.onPressBackButton,
     this.isBackButtonEnabled,
+    this.visible = true,
   })  : assert(items.length > 0),
         super(key: key);
 
@@ -103,6 +104,9 @@ class Nav extends StatefulWidget {
 
   /// The axis of the nav bar.
   final Axis navAxis;
+
+  /// If the nav bar should be visible.
+  final bool visible;
 
   @override
   _NavState createState() => _NavState();
@@ -452,7 +456,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        _createNavBar(),
+        if (widget.visible) _createNavBar(),
         Expanded(
           child: Overlay(
             key: _overlayKey,

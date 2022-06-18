@@ -175,7 +175,8 @@ ListTable(
         ItemTitle(
           body: (context) => ListTable(
             colCount: 4,
-            itemCount: someDataTableRows.length,
+            itemCount: [...someDataTableRows, ...someDataTableRows].length,
+            allowColumnDragging: true,
             tableBorder: TableBorder(
               bottom: borderSide,
               top: borderSide,
@@ -187,8 +188,10 @@ ListTable(
               final dialog = showDialog(
                 context,
                 builder: (context) => Dialog(
-                  body: Text(someDataTableRows[row][0]),
-                  title: Text(someDataTableRows[row][2]),
+                  body: Text(
+                      [...someDataTableRows, ...someDataTableRows][row][0]),
+                  title: Text(
+                      [...someDataTableRows, ...someDataTableRows][row][2]),
                 ),
               );
               await dialog.closed;
@@ -213,7 +216,7 @@ ListTable(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  someDataTableRows[row][col],
+                  [...someDataTableRows, ...someDataTableRows][row][col],
                   overflow: TextOverflow.ellipsis,
                 ),
               );

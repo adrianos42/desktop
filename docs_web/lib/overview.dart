@@ -12,19 +12,9 @@ class OverviewPage extends StatefulWidget {
   _OverviewPageState createState() => _OverviewPageState();
 }
 
-// final _controller = CodeTextCotroller();
-
 class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
-    // return TextField(
-    //   controller: _controller,
-    //   minLines: 1000,
-    //   maxLines: null,
-    // );
-
-    // return PrimaryColorPage();
-
     return SingleChildScrollView(
       controller: ScrollController(),
       child: Container(

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:desktop/desktop.dart';
 
-class CodeTextCotroller extends TextEditingController {
-  CodeTextCotroller({super.text});
+class CodeTextController extends TextEditingController {
+  CodeTextController({super.text});
 
   static final _regex = RegExp(
     r'''(?<class>\b[_$]*[A-Z][a-zA-Z0-9_$]*\b|bool\b|num\b|int\b|double\b|dynamic\b|(void)\b)|(?<string>(?:'.*?'))|(?<keyword>\b(?:try|on|catch|finally|throw|rethrow|break|case|continue|default|do|else|for|if|in|return|switch|while|abstract|class|enum|extends|extension|external|factory|implements|get|mixin|native|operator|set|typedef|with|covariant|static|final|const|required|late|void|var|library|import|part of|part|export|await|yield|async|sync|true|false)\b)|(?<comment>(?:(?:\/.*?)$))|(?<numeric>\b(?:(?:0(?:x|X)[0-9a-fA-F]*)|(?:(?:[0-9]+\.?[0-9]*)|(?:\.[0-9]+))(?:(?:e|E)(?:\+|-)?[0-9]+)?)\b)''',
@@ -76,7 +76,7 @@ class CodeTextCotroller extends TextEditingController {
     spans.add(TextSpan(text: text.substring(lastEnd)));
 
     return TextSpan(
-      style: Theme.of(context).textTheme.monospace.copyWith(color: textColor),
+      style: Theme.of(context).textTheme.monospace.copyWith(color: textColor, fontSize: 14),
       children: spans,
     );
   }
@@ -126,7 +126,7 @@ class Defaults {
               child: TextField(
                 minLines: 1000,
                 maxLines: null,
-                controller: CodeTextCotroller(text: codeText),
+                controller: CodeTextController(text: codeText),
                 keyboardType: TextInputType.multiline,
                 style: Theme.of(context).textTheme.monospace,
               ),
