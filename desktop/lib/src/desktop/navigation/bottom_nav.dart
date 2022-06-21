@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../icons.dart';
 import '../theme/theme.dart';
 import 'nav.dart' show NavItem;
-import 'nav_button.dart';
+import 'nav_bottom_button.dart';
 import 'tab_scope.dart';
 
 export 'nav.dart' show NavItem;
@@ -211,7 +211,7 @@ class _BottomNavState extends State<BottomNav>
       alignment: Alignment.bottomRight,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: BottomNavMenuButton(
-        Icon(_menuActive ? Icons.close : Icons.menu_open),
+        _menuActive ? Icons.close : Icons.menu,
         active: _menuActive,
         onPressed: _showMenu,
         height: navThemeData.width,
@@ -222,9 +222,24 @@ class _BottomNavState extends State<BottomNav>
   Widget _createNavItems(EdgeInsets itemsSpacing, NavThemeData navThemeData) {
     return Padding(
       padding: itemsSpacing,
-      child: NavGroup(
-        navWidgets: (context, index) => Icon(widget.items[index].icon),
-        axis: Axis.horizontal,
+      child: NavBottomGroup(
+        navWidgets: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(widget.items[index].icon),
+              if (index == _index)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Text(
+                    widget.items[index].title,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+            ],
+          );
+        },
         enabled: !_menuActive,
         navItems: widget.items,
         index: _index,

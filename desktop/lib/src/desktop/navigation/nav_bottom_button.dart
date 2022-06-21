@@ -7,19 +7,16 @@ import '../theme/theme.dart';
 import 'nav.dart';
 
 /// Nav Group
-class NavGroup extends StatefulWidget {
+class NavBottomGroup extends StatefulWidget {
   ///
-  const NavGroup({
+  const NavBottomGroup({
     Key? key,
     required this.navItems,
     required this.enabled,
     required this.index,
-    required this.axis,
     required this.onChanged,
     required this.navWidgets,
   }) : super(key: key);
-
-  final Axis axis;
 
   final int index;
 
@@ -32,10 +29,11 @@ class NavGroup extends StatefulWidget {
   final ValueChanged<int> onChanged;
 
   @override
-  _NavGroupState createState() => _NavGroupState();
+  _NavBottomGroupState createState() => _NavBottomGroupState();
 }
 
-class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
+class _NavBottomGroupState extends State<NavBottomGroup>
+    with TickerProviderStateMixin {
   late List<double> itemLengths;
 
   @override
@@ -47,8 +45,6 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final axis = widget.axis;
-
     final titleItems = List<Widget>.empty(growable: true);
 
     final NavThemeData navThemeData = NavTheme.of(context);
@@ -62,28 +58,12 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     for (int index = 0; index < widget.navItems.length; index++) {
       final bool active = widget.index == index;
 
-      BoxConstraints constraints;
-      final EdgeInsets buttonBodyPadding;
-      final double buttonHeight;
+      final BoxConstraints constraints =
+          BoxConstraints.tightFor(height: navThemeData.height, width: 70);
+      final EdgeInsets buttonBodyPadding =
+          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
+      final double buttonHeight = navThemeData.height;
       double? buttonWidth;
-      final Function(Size) onLayout;
-
-      if (axis == Axis.horizontal) {
-        constraints = BoxConstraints.tightFor(height: navThemeData.height);
-        onLayout = (Size value) => itemLengths[index] = value.width;
-        buttonBodyPadding =
-            EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
-        buttonHeight = navThemeData.height;
-      } else {
-        constraints = BoxConstraints.tightFor(
-          width: navThemeData.width,
-          height: navThemeData.width,
-        );
-        onLayout = (Size value) => itemLengths[index] = value.height;
-        buttonBodyPadding = EdgeInsets.zero;
-        buttonHeight = navThemeData.width;
-        buttonWidth = navThemeData.width;
-      }
 
       final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
       final IconThemeData iconThemeData = navThemeData.iconThemeData;
@@ -92,7 +72,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
 
       titleItems.add(
         _NavButtonItem(
-          onLayout: onLayout,
+          onLayout: (Size value) => itemLengths[index] = value.width,
           button: Container(
             constraints: constraints,
             alignment: Alignment.center,
@@ -110,7 +90,6 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
                 body: widget.navWidgets(context, index),
                 padding: EdgeInsets.zero,
                 bodyPadding: buttonBodyPadding,
-                axis: axis,
                 onPressed: enabled ? () => widget.onChanged(index) : null,
                 //tooltip: navItem.title,
               ),
@@ -129,46 +108,36 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
     double crossLenth;
     BoxConstraints constraints;
 
-    if (axis == Axis.horizontal) {
-      final height = navThemeData.height;
-      crossLenth = height;
-      renderHeight = renderIndicatorLength;
-      renderWidth = renderMainLength;
-      constraints = BoxConstraints.tightFor(height: height);
-    } else {
-      final width = navThemeData.width;
-      crossLenth = width;
-      renderWidth = renderIndicatorLength;
-      renderHeight = renderMainLength;
-      constraints = BoxConstraints.tightFor(width: width);
-    }
+    final height = navThemeData.height;
+    crossLenth = height;
+    renderHeight = renderIndicatorLength;
+    renderWidth = renderMainLength;
+    constraints = BoxConstraints.tightFor(height: height);
 
     return Container(
       constraints: constraints,
       child: Stack(
         fit: StackFit.passthrough,
         children: <Widget>[
-          Flex(
-            direction: axis,
+          Row(
             children: titleItems,
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
-          _SideIconRenderObjectWidget(
-            vsync: this,
-            duration: navThemeData.animationDuration,
-            lengths: itemLengths,
-            axis: axis,
-            crossLength: crossLenth,
-            sideLength: navThemeData.indicatorWidth,
-            additionalConstraints: BoxConstraints.tightFor(
-              height: renderHeight,
-              width: renderWidth,
-            ),
-            index: widget.index,
-            foreground: enabled ? highlightColor : colorScheme.disabled,
-          ),
+          // _SideIconRenderObjectWidget(
+          //   vsync: this,
+          //   duration: navThemeData.animationDuration,
+          //   lengths: itemLengths,
+          //   crossLength: crossLenth,
+          //   sideLength: navThemeData.indicatorWidth,
+          //   additionalConstraints: BoxConstraints.tightFor(
+          //     height: renderHeight,
+          //     width: renderWidth,
+          //   ),
+          //   index: widget.index,
+          //   foreground: enabled ? highlightColor : colorScheme.disabled,
+          // ),
         ],
       ),
     );
@@ -390,72 +359,58 @@ class _RenderIconSide extends RenderConstrainedBox {
 }
 
 ///
-class NavMenuButton extends StatelessWidget {
+class BottomNavMenuButton extends StatelessWidget {
   ///
-  const NavMenuButton(
-    this.child, {
-    Key? key,
+  const BottomNavMenuButton(
+    this.icon, {
+    super.key,
     this.tooltip,
     this.onPressed,
-    required this.axis,
     required this.active,
-  }) : super(key: key);
+    required this.height,
+  });
 
   final String? tooltip;
-
-  final Widget child;
 
   final VoidCallback? onPressed;
 
   final bool active;
 
-  final Axis axis;
+  final double height;
+
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
+    final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
     final NavThemeData navThemeData = NavTheme.of(context);
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
-    final highlightColor = colorScheme.shade[100];
+    final Color highlightColor = colorScheme.shade[100];
 
-    final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
-    final IconThemeData iconThemeData = navThemeData.iconThemeData;
-    final color = textTheme.textLow;
-    final hoverColor = colorScheme.shade[100];
+    final IconThemeData iconThemeData =
+        navThemeData.iconThemeData;
+    final Color color = buttonThemeData.highlightColor!;
 
-    final EdgeInsets buttonBodyPadding;
-    final double buttonHeight;
-    double? buttonWidth;
-
-    if (axis == Axis.horizontal) {
-      buttonBodyPadding =
-          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
-      buttonHeight = navThemeData.height;
-    } else {
-      buttonBodyPadding = EdgeInsets.zero;
-      buttonHeight = navThemeData.width;
-      buttonWidth = navThemeData.width;
-    }
-
-    return ButtonTheme.merge(
-      data: ButtonThemeData(
-        color: active ? highlightColor : color,
-        highlightColor: highlightColor,
-        hoverColor: active ? highlightColor : hoverColor,
-        textStyle: textStyle,
-        height: buttonHeight,
-        minWidth: buttonWidth,
-        iconThemeData: iconThemeData,
-      ),
-      child: Button(
-        padding: EdgeInsets.zero,
-        bodyPadding: buttonBodyPadding,
-        onPressed: onPressed,
-        tooltip: tooltip,
-        body: child,
-        axis: axis,
+    return Container(
+      height: height,
+      alignment: Alignment.topRight,
+      child: ButtonTheme.merge(
+        data: ButtonThemeData(
+          color: active ? highlightColor : color,
+          highlightColor: highlightColor,
+          hoverColor: active ? highlightColor : highlightColor,
+          iconThemeData: iconThemeData,
+          height: 0.0,
+        ),
+        child: Button.icon(
+          icon,
+          onPressed: onPressed,
+          tooltip: tooltip,
+          padding: EdgeInsets.zero,
+        ),
       ),
     );
   }

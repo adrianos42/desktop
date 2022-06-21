@@ -471,10 +471,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                           width: dragBorderWidth,
                         )
                       : isDraggingColumn
-                          ? BorderSide(
-                              color: const Color(0x00000000),
-                              width: verticalInside.width,
-                            )
+                          ? BorderSide(width: verticalInside.width)
                           : isRight
                               ? verticalInside
                               : BorderSide.none;
@@ -572,7 +569,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
                     : listTableThemeData.borderColor!;
 
                 final double width = isLast || index == colSizes.length - 2
-                    ? colSizes[col] / 2
+                    ? (colSizes[col] / 2.0).floorToDouble()
                     : colSizes[col];
 
                 final double borderWidth =
@@ -888,17 +885,7 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
           ],
         );
 
-        return widget.allowColumnDragging
-            ? Stack(
-                children: [
-                  table,
-                  Visibility(
-                    visible: isDraggingColumn,
-                    child: createDraggingTarget(),
-                  )
-                ],
-              )
-            : table;
+        return table;
       },
     );
 
@@ -928,7 +915,17 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
 
     return NotificationListener<ScrollNotification>(
       onNotification: _handleScrollNotification,
-      child: result,
+      child: widget.allowColumnDragging
+          ? Stack(
+              children: [
+                result,
+                Visibility(
+                  visible: isDraggingColumn,
+                  child: createDraggingTarget(),
+                )
+              ],
+            )
+          : result,
     );
   }
 }

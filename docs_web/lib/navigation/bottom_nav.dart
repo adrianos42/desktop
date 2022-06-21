@@ -83,10 +83,10 @@ BottomNav(
         NavItem(
           builder: (context, _) => Center(
               child: Text(
-            'page 0',
+            'calendar',
             style: Theme.of(context).textTheme.title,
           )),
-          title: 'page 0',
+          title: 'Schedule',
           icon: Icons.today,
         ),
         NavItem(
@@ -95,8 +95,8 @@ BottomNav(
             'page 1',
             style: Theme.of(context).textTheme.title,
           )),
-          title: 'page 1',
-          icon: Icons.stars,
+          title: 'Travel',
+          icon: Icons.wallet_travel,
         ),
         NavItem(
           builder: (context, _) => Center(
@@ -104,8 +104,8 @@ BottomNav(
             'page 2',
             style: Theme.of(context).textTheme.title,
           )),
-          title: 'page 2',
-          icon: Icons.share,
+          title: 'Article',
+          icon: Icons.article,
         ),
       ],
     );
