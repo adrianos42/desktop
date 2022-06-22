@@ -672,6 +672,8 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
         verticalInside: tableBorder.verticalInside != BorderSide.none
             ? tableBorder.verticalInside
             : const BorderSide(),
+        top: tableBorder.top,
+        bottom: tableBorder.bottom,
       );
 
       final ListTableThemeData listTableThemeData = ListTableTheme.of(context);
@@ -686,75 +688,86 @@ class _ListTableState extends State<ListTable> implements _TableDragUpdate {
               : listTableThemeData.borderColor!;
 
       return DecoratedBox(
+        position: DecorationPosition.foreground,
         decoration: BoxDecoration(
           border: Border(
-            left: border.left.copyWith(
-                color: firstBorderColor,
-                width: draggingColumnTargetIndex == 0 ? 2.0 : 1.0),
-            right: border.right.copyWith(
+            top: border.top,
+            bottom: border.bottom,
+          ),
+        ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(
+              left: border.left.copyWith(
+                  color: firstBorderColor,
+                  width: draggingColumnTargetIndex == 0 ? 2.0 : 1.0),
+              right: border.right.copyWith(
                 color: lastBorderColor,
                 width: draggingColumnTargetIndex == widget.colCount - 1
                     ? 2.0
-                    : 1.0),
+                    : 1.0,
+              ),
+            ),
           ),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: List.generate(widget.colCount, (index) {
-            final bool isLast = index == widget.colCount - 1;
-            final int col = isLast ? indexes[index - 1] : indexes[index];
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: List.generate(widget.colCount, (index) {
+              final bool isLast = index == widget.colCount - 1;
+              final int col = isLast ? indexes[index - 1] : indexes[index];
 
-            return DragTarget<int>(
-              onMove: (details) {
-                setState(() => draggingColumnTargetIndex = index);
-              },
-              onAccept: (columnIndex) {
-                colIndexes ??= List.generate(widget.colCount, (index) => index);
+              return DragTarget<int>(
+                onMove: (details) {
+                  setState(() => draggingColumnTargetIndex = index);
+                },
+                onAccept: (columnIndex) {
+                  colIndexes ??=
+                      List.generate(widget.colCount, (index) => index);
 
-                final int mappedIndex = colIndexes![columnIndex];
+                  final int mappedIndex = colIndexes![columnIndex];
 
-                colIndexes![columnIndex] = -1;
+                  colIndexes![columnIndex] = -1;
 
-                if (draggingColumnTargetIndex == widget.colCount - 1) {
-                  colIndexes!.add(mappedIndex);
-                } else {
-                  colIndexes!
-                      .insert(indexes[draggingColumnTargetIndex], mappedIndex);
-                }
+                  if (draggingColumnTargetIndex == widget.colCount - 1) {
+                    colIndexes!.add(mappedIndex);
+                  } else {
+                    colIndexes!.insert(
+                        indexes[draggingColumnTargetIndex], mappedIndex);
+                  }
 
-                colIndexes!.removeWhere((element) => element == -1);
+                  colIndexes!.removeWhere((element) => element == -1);
 
-                widget.onColumnIndexMappingChanged
-                    ?.call(List.from(colIndexes!));
-              },
-              builder: (context, candidateData, rejectedData) {
-                final Color color = draggingColumnTargetIndex == index
-                    ? listTableThemeData.borderHoverColor!
-                    : listTableThemeData.borderColor!;
+                  widget.onColumnIndexMappingChanged
+                      ?.call(List.from(colIndexes!));
+                },
+                builder: (context, candidateData, rejectedData) {
+                  final Color color = draggingColumnTargetIndex == index
+                      ? listTableThemeData.borderHoverColor!
+                      : listTableThemeData.borderColor!;
 
-                final double width = isLast || index == colSizes.length - 2
-                    ? (colSizes[col] / 2.0).floorToDouble()
-                    : colSizes[col];
+                  final double width = isLast || index == colSizes.length - 2
+                      ? (colSizes[col] / 2.0).floorToDouble()
+                      : colSizes[col];
 
-                final double borderWidth =
-                    draggingColumnTargetIndex == index ? 2.0 : 1.0;
+                  final double borderWidth =
+                      draggingColumnTargetIndex == index ? 2.0 : 1.0;
 
-                return Container(
-                  width: width,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: index > 0 && !isLast
-                          ? border.verticalInside.copyWith(
-                              color: color,
-                              width: borderWidth,
-                            )
-                          : BorderSide.none,
+                  return Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        left: index > 0 && !isLast
+                            ? border.verticalInside.copyWith(
+                                color: color,
+                                width: borderWidth,
+                              )
+                            : BorderSide.none,
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }),
+                  );
+                },
+              );
+            }),
+          ),
         ),
       );
     });
