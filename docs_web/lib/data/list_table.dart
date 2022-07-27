@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 const someDataTableHeader = ['Title', 'Album', 'Composer', 'Performer'];
@@ -168,6 +169,7 @@ ListTable(
 
     final borderColor = Theme.of(context).colorScheme.shade[40];
     final borderSide = BorderSide(color: borderColor, width: 1.0);
+    final dataTableRows = [...someDataTableRows, ...someDataTableRows];
 
     return Defaults.createItemsWithTitle(
       context,
@@ -175,7 +177,7 @@ ListTable(
         ItemTitle(
           body: (context) => ListTable(
             colCount: 4,
-            itemCount: someDataTableRows.length,
+            itemCount: dataTableRows.length,
             allowColumnDragging: true,
             tableBorder: TableBorder(
               bottom: borderSide,
@@ -188,18 +190,17 @@ ListTable(
               final dialog = showDialog(
                 context,
                 builder: (context) => Dialog(
-                  body: Text(someDataTableRows[row][0]),
-                  title: Text(someDataTableRows[row][2]),
+                  body: Text(dataTableRows[row][0]),
+                  title: Text(dataTableRows[row][2]),
                 ),
               );
               await dialog.closed;
             },
             colFraction: const {0: 0.5},
             //collapseOnDrag: true,
-            headerColumnBorder: BorderSide(width: 1.0, color: borderColor),
-            tableHeaderBuilder: (context, col, constraints) {
+            headerColumnBorder: borderSide,
+            tableHeaderBuilder: (context, col) {
               return Container(
-                constraints: constraints,
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
@@ -208,13 +209,12 @@ ListTable(
                 ),
               );
             },
-            tableRowBuilder: (context, row, col, constraints) {
+            tableRowBuilder: (context, row, col) {
               return Container(
-                constraints: constraints,
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  [...someDataTableRows, ...someDataTableRows][row][col],
+                  dataTableRows[row][col],
                   overflow: TextOverflow.ellipsis,
                 ),
               );
@@ -225,37 +225,37 @@ ListTable(
           height: 600.0,
           hasBorder: false,
         ),
-        ItemTitle(
-          body: (context) => ListTable(
-            colCount: 4,
-            itemCount: 10,
-            tableHeaderBuilder: (context, col, constraints) {
-              return Container(
-                constraints: constraints,
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('$col'),
-                  ],
-                ),
-              );
-            },
-            tableRowBuilder: (context, row, col, constraints) {
-              return Container(
-                constraints: constraints,
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text('$row$col'),
-              );
-            },
-          ),
-          codeText: codeSample,
-          title: 'Borderless list table',
-          height: 600.0,
-          hasBorder: false,
-        ),
+        // ItemTitle(
+        //   body: (context) => ListTable(
+        //     colCount: 4,
+        //     itemCount: 10,
+        //     tableHeaderBuilder: (context, col, constraints) {
+        //       return Container(
+        //         constraints: constraints,
+        //         alignment: Alignment.centerLeft,
+        //         padding: const EdgeInsets.only(left: 8.0),
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Text('$col'),
+        //           ],
+        //         ),
+        //       );
+        //     },
+        //     tableRowBuilder: (context, row, col, constraints) {
+        //       return Container(
+        //         constraints: constraints,
+        //         alignment: Alignment.centerLeft,
+        //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        //         child: Text('$row$col'),
+        //       );
+        //     },
+        //   ),
+        //   codeText: codeSample,
+        //   title: 'Borderless list table',
+        //   height: 600.0,
+        //   hasBorder: false,
+        // ),
       ],
       header: 'List table',
     );

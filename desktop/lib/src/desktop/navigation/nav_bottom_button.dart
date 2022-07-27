@@ -58,8 +58,10 @@ class _NavBottomGroupState extends State<NavBottomGroup>
     for (int index = 0; index < widget.navItems.length; index++) {
       final bool active = widget.index == index;
 
-      final BoxConstraints constraints =
-          BoxConstraints.tightFor(height: navThemeData.height, width: 70);
+      final BoxConstraints constraints = BoxConstraints.tightFor(
+        height: navThemeData.height,
+      //  width: navThemeData.height,
+      );
       final EdgeInsets buttonBodyPadding =
           EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
       final double buttonHeight = navThemeData.height;
@@ -125,19 +127,20 @@ class _NavBottomGroupState extends State<NavBottomGroup>
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
           ),
-          // _SideIconRenderObjectWidget(
-          //   vsync: this,
-          //   duration: navThemeData.animationDuration,
-          //   lengths: itemLengths,
-          //   crossLength: crossLenth,
-          //   sideLength: navThemeData.indicatorWidth,
-          //   additionalConstraints: BoxConstraints.tightFor(
-          //     height: renderHeight,
-          //     width: renderWidth,
-          //   ),
-          //   index: widget.index,
-          //   foreground: enabled ? highlightColor : colorScheme.disabled,
-          // ),
+          _SideIconRenderObjectWidget(
+            vsync: this,
+            text: widget.navItems.map((e) => e.title).toList(),
+            duration: navThemeData.animationDuration,
+            lengths: itemLengths,
+            crossLength: crossLenth,
+            sideLength: navThemeData.indicatorWidth,
+            additionalConstraints: BoxConstraints.tightFor(
+              height: renderHeight,
+              width: renderWidth,
+            ),
+            index: widget.index,
+            foreground: enabled ? highlightColor : colorScheme.disabled,
+          ),
         ],
       ),
     );
@@ -186,10 +189,10 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
     required this.additionalConstraints,
     required this.foreground,
     required this.duration,
-    required this.axis,
     required this.sideLength,
     required this.lengths,
     required this.crossLength,
+    required this.text,
   }) : super(key: key);
 
   final int index;
@@ -197,22 +200,22 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
   final BoxConstraints additionalConstraints;
   final Color foreground;
   final Duration duration;
-  final Axis axis;
   final double sideLength;
   final double crossLength;
   final List<double> lengths;
+  final List<String> text;
 
   @override
   _RenderIconSide createRenderObject(BuildContext context) => _RenderIconSide(
         index: index,
         vsync: vsync,
         additionalConstraints: additionalConstraints,
-        axis: axis,
         lengths: lengths,
         sideLength: sideLength,
         crossLength: crossLength,
         duration: duration,
         foreground: foreground,
+        text: text,
       );
 
   @override
@@ -222,10 +225,10 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
       ..additionalConstraints = additionalConstraints
       ..foreground = foreground
       ..sideLength = sideLength
-      ..axis = axis
       ..crossLength = crossLength
       ..lengths = lengths
-      ..vsync = vsync;
+      ..vsync = vsync
+      ..text = text;
   }
 }
 
@@ -235,14 +238,15 @@ class _RenderIconSide extends RenderConstrainedBox {
     required TickerProvider vsync,
     required BoxConstraints additionalConstraints,
     required Duration duration,
+    required List<String> text,
     required this.foreground,
     required this.sideLength,
-    required this.axis,
     required this.crossLength,
     required this.lengths,
   })  : _oldIndex = index,
         _index = index,
         _vsync = vsync,
+        _text = text,
         super(additionalConstraints: additionalConstraints) {
     _positionController = AnimationController(
       duration: duration,
@@ -255,6 +259,11 @@ class _RenderIconSide extends RenderConstrainedBox {
       curve: Curves.easeOutQuad,
     )..addListener(markNeedsPaint);
     //..addStatusListener(_handlePositionStateChanged);
+  }
+
+  List<String> _text;
+  set text(List<String> value) {
+    _text = value;
   }
 
   int get index => _index;
@@ -273,6 +282,13 @@ class _RenderIconSide extends RenderConstrainedBox {
     _position.curve = Curves.easeOut;
 
     _positionController.forward();
+
+    _textPainter.text = TextSpan(
+      text: _text[index],
+      style: const TextStyle(
+        color: Color(0xffffffff),
+      ),
+    );
   }
 
   int _oldIndex;
@@ -281,8 +297,6 @@ class _RenderIconSide extends RenderConstrainedBox {
   Color foreground;
 
   List<double> lengths;
-
-  Axis axis;
 
   double sideLength;
 
@@ -317,6 +331,11 @@ class _RenderIconSide extends RenderConstrainedBox {
     super.detach();
   }
 
+  final TextPainter _textPainter = TextPainter(
+    textDirection: TextDirection.ltr,
+    text: const TextSpan(text: ''),
+  );
+
   @override
   void paint(PaintingContext context, Offset offset) {
     assert(index < lengths.length);
@@ -336,25 +355,19 @@ class _RenderIconSide extends RenderConstrainedBox {
         lengths.sublist(0, index).fold(0.0, (value, elem) => value + elem);
     final double length = lengths[index];
 
-    if (axis == Axis.horizontal) {
-      final double dy = offset.dy + crossLength - sideLength;
-      final double dx = offset.dx + lOffset;
-      final double oldDx = offset.dx + lOldOffset;
+    final double dy = offset.dy + crossLength - sideLength;
+    final double dx = offset.dx + lOffset;
+    final double oldDx = offset.dx + lOldOffset;
 
-      _rectLast = Rect.fromLTWH(oldDx, dy, oldLength, sideLength);
-      _rectNew = Rect.fromLTWH(dx, dy, length, sideLength);
-    } else {
-      final double dx = offset.dx;
-      final double dy = offset.dy + lOffset;
-      final double oldDy = offset.dy + lOldOffset;
-
-      _rectLast = Rect.fromLTWH(dx, oldDy, sideLength, oldLength);
-      _rectNew = Rect.fromLTWH(dx, dy, sideLength, length);
-    }
+    _rectLast = Rect.fromLTWH(oldDx, dy, oldLength, sideLength);
+    _rectNew = Rect.fromLTWH(dx, dy, length, sideLength);
 
     final RectTween _rectTween = RectTween(begin: _rectLast, end: _rectNew);
 
     canvas.drawRect(_rectTween.lerp(position.value)!, paint);
+    // _textPainter.layout();
+    // _textPainter.paint(canvas,
+    //     Offset(_rectTween.lerp(position.value)!.left + 8.0, offset.dy + 24));
   }
 }
 
@@ -390,8 +403,7 @@ class BottomNavMenuButton extends StatelessWidget {
 
     final Color highlightColor = colorScheme.shade[100];
 
-    final IconThemeData iconThemeData =
-        navThemeData.iconThemeData;
+    final IconThemeData iconThemeData = navThemeData.iconThemeData;
     final Color color = buttonThemeData.highlightColor!;
 
     return Container(

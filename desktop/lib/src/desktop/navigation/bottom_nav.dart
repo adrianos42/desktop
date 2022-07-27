@@ -112,7 +112,7 @@ class _BottomNavState extends State<BottomNav>
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static const Curve _animationCurve = Curves.decelerate;
+  static const Curve _animationCurve = Curves.linearToEaseOut;
 
   void _createAnimation() {
     _menuAnimation = CurvedAnimation(
@@ -224,19 +224,15 @@ class _BottomNavState extends State<BottomNav>
       padding: itemsSpacing,
       child: NavBottomGroup(
         navWidgets: (context, index) {
-          return Column(
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(widget.items[index].icon),
-              if (index == _index)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    widget.items[index].title,
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                ),
+              //Icon(widget.items[index].icon),
+               Padding(
+                 padding: const EdgeInsets.only(left: 0),
+                 child: Text(widget.items[index].title),
+               ),
             ],
           );
         },
