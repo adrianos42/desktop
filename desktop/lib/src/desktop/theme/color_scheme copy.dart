@@ -310,7 +310,7 @@ class PrimaryColor {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       _color1,
       _color2,
       _color3,

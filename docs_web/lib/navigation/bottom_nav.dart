@@ -64,16 +64,164 @@ BottomNav(
 )
 ''';
 
+    final colorScheme = Theme.of(context).colorScheme;
+    final wColor = colorScheme.background[0];
+
     return BottomNav(
       trailingMenu: NavItem(
         title: 'settings',
         builder: (context, _) => TabDialog(
           child: Container(
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             color: Theme.of(context).colorScheme.primary[30],
-            child: Text(
-              'Settings page',
-              style: Theme.of(context).textTheme.subtitle,
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text(
+                    'Menu',
+                    style: Theme.of(context).textTheme.subtitle,
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          color: wColor,
+                          height: 80,
+                          margin: const EdgeInsets.only(
+                              top: 24.0, left: 12.0, right: 12.0),
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Icon(
+                                  Icons.nights_stay,
+                                  color:
+                                      Theme.of(context).colorScheme.shade[100],
+                                ),
+                              ),
+                              const Text('Weather'),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: wColor,
+                          margin: const EdgeInsets.only(
+                              top: 12.0, left: 12.0, right: 12.0),
+                          height: 80,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Icon(
+                                  Icons.account_balance,
+                                  color:
+                                      Theme.of(context).colorScheme.shade[100],
+                                ),
+                              ),
+                              const Text('Money'),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: wColor,
+                          margin: const EdgeInsets.only(
+                              top: 12.0, left: 12.0, right: 12.0),
+                          height: 160,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: Icon(
+                                  Icons.skip_previous,
+                                  color:
+                                      Theme.of(context).colorScheme.shade[100],
+                                  size: 32.0,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color:
+                                      Theme.of(context).colorScheme.shade[100],
+                                  size: 48.0,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: Icon(
+                                  Icons.skip_next,
+                                  color:
+                                      Theme.of(context).colorScheme.shade[100],
+                                  size: 32.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: ButtonTheme.copyWith(
+                    color: colorScheme.shade[100],
+                    highlightColor: colorScheme.primary[70],
+                    hoverColor: colorScheme.shade[60],
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 12.0, bottom: 8.0),
+                          child: Button(
+                            leading: const Icon(Icons.help),
+                            body: const Text('Frequently asked...'),
+                            onPressed: () {},
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 12.0, bottom: 8.0),
+                          child: Button(
+                            leading: const Icon(Icons.message),
+                            body: const Text('Feedback'),
+                            onPressed: () {},
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(left: 12.0, bottom: 8.0),
+                          child: Button(
+                            leading: const Icon(Icons.exit_to_app),
+                            body: const Text('Exit App'),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

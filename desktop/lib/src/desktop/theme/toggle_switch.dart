@@ -73,7 +73,7 @@ class ToggleSwitchThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       disabledColor,
       activeColor,
       foreground,

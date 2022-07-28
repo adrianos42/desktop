@@ -29,107 +29,6 @@ typedef RowPressedCallback = void Function(int index, RelativeRect position);
 /// May be used to save the columns positions.
 typedef ColumnIndexMappingCallback = void Function(List<int> indexMapping);
 
-class _TableColHandler extends StatefulWidget {
-  const _TableColHandler({
-    //required this.tableDragUpdate,
-    required this.col,
-    required this.hasIndicator,
-    required this.draggingColumn,
-    this.border,
-    Key? key,
-  }) : super(key: key);
-
-  final bool hasIndicator;
-  //final _TableDragUpdate tableDragUpdate;
-  final int col;
-  final BorderSide? border;
-  final bool draggingColumn;
-
-  @override
-  _TableColHandlerState createState() => _TableColHandlerState();
-}
-
-class _TableColHandlerState extends State<_TableColHandler>
-    with ComponentStateMixin {
-  Map<Type, GestureRecognizerFactory> get _gestures {
-    final gestures = <Type, GestureRecognizerFactory>{};
-
-    return gestures;
-  }
-
-  double? currentPosition;
-
-  ///_TableDragUpdate get tableUpdateColFactor => widget.tableDragUpdate;
-  int get col => widget.col;
-
-  void _handleMouseEnter(PointerEnterEvent event) =>
-      setState(() => hovered = true);
-
-  void _handleMouseExit(PointerExitEvent event) =>
-      setState(() => hovered = false);
-
-  @override
-  Widget build(BuildContext context) {
-    final ListTableThemeData listTableTheme = ListTableTheme.of(context);
-
-    BorderSide? border = widget.border;
-    final bool expanded = hovered || dragged || widget.hasIndicator;
-
-    if (border != null && border != BorderSide.none) {
-      final Color borderColor = widget.draggingColumn
-          ? const Color(0x00000000)
-          : dragged
-              ? listTableTheme.borderHighlightColor!
-              : widget.draggingColumn
-                  ? listTableTheme.borderColor!
-                  : hovered
-                      ? listTableTheme.borderHoverColor!
-                      : widget.hasIndicator
-                          ? listTableTheme.borderIndicatorColor!
-                          : border.color;
-
-      border = border.copyWith(
-          color: borderColor,
-          width: expanded
-              ? border.width + (border.width / 2.0).roundToDouble()
-              : border.width);
-    } else {
-      final width = expanded ? 2.0 : 1.0;
-      final borderColor = dragged
-          ? listTableTheme.borderHighlightColor!
-          : widget.draggingColumn
-              ? listTableTheme.borderColor!
-              : hovered
-                  ? listTableTheme.borderHoverColor!
-                  : widget.hasIndicator
-                      ? listTableTheme.borderIndicatorColor!
-                      : listTableTheme.borderColor!;
-      border = BorderSide(width: width, color: borderColor);
-    }
-
-    final Widget result = Container(
-      margin: const EdgeInsets.only(left: _kHandlerWidth),
-      decoration: BoxDecoration(border: Border(right: border)),
-    );
-
-    if (widget.draggingColumn) {
-      return result;
-    }
-
-    return RawGestureDetector(
-      gestures: _gestures,
-      behavior: HitTestBehavior.translucent,
-      child: MouseRegion(
-        opaque: false,
-        cursor: SystemMouseCursors.click,
-        onEnter: _handleMouseEnter,
-        onExit: _handleMouseExit,
-        child: result,
-      ),
-    );
-  }
-}
-
 /// A table with columns that can be resized.
 class ListTable extends StatefulWidget {
   /// Creates a [ListTable].
@@ -331,37 +230,10 @@ class _ListTableState extends State<ListTable> {
           return Container(); // TODO
         }
 
-        if (colCount > 1 && col < colCount - 1 && false) {
-          result = Row(
-            children: [
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return widget.tableHeaderBuilder(
-                      context,
-                      mappedIndex,
-                    );
-                  },
-                ),
-              ),
-              _TableColHandler(
-                col: col,
-                hasIndicator: false,
-                border:
-                    widget.headerColumnBorder ?? tableBorder?.verticalInside,
-                draggingColumn: isDraggingColumn,
-              ),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-          );
-        } else {
-          result = widget.tableHeaderBuilder(
-            context,
-            mappedIndex,
-          );
-        }
+        result = widget.tableHeaderBuilder(
+          context,
+          mappedIndex,
+        );
 
         result = Container(
           color: Theme.of(context).colorScheme.background[0],
@@ -423,7 +295,9 @@ class _ListTableState extends State<ListTable> {
             ? listTableThemeData.highlightColor
             : hoveredIndex == index
                 ? listTableThemeData.hoverColor
-                : null;
+                : (index.isEven
+                    ? Theme.of(context).colorScheme.background[0]
+                    : Theme.of(context).colorScheme.background[4]);
 
     BoxDecoration decoration = BoxDecoration(color: backgroundColor);
 
@@ -436,7 +310,7 @@ class _ListTableState extends State<ListTable> {
       final bottom = isBottom ? horizontalInside : BorderSide.none;
 
       final border = Border(bottom: bottom);
-      decoration = decoration.copyWith(border: border);
+      //decoration = decoration.copyWith(border: border);
     }
 
     return MouseRegion(
@@ -931,6 +805,8 @@ class _ListTableState extends State<ListTable> {
 
   bool hasExtent = false;
 
+  bool get showScrollbar => !dragging;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -960,13 +836,17 @@ class _ListTableState extends State<ListTable> {
               children: [
                 createHeader(),
                 Expanded(
-                  child: ListView.custom(
-                    childrenDelegate: SliverChildBuilderDelegate(
-                      (context, index) => createList(index),
-                      childCount: widget.itemCount,
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context)
+                        .copyWith(scrollbars: showScrollbar),
+                    child: ListView.custom(
+                      childrenDelegate: SliverChildBuilderDelegate(
+                        (context, index) => createList(index),
+                        childCount: widget.itemCount,
+                      ),
+                      controller: controller,
+                      itemExtent: widget.itemExtent,
                     ),
-                    controller: controller,
-                    itemExtent: widget.itemExtent,
                   ),
                 ),
               ],

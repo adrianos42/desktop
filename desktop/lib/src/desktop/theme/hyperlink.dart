@@ -53,7 +53,7 @@ class HyperlinkButtonThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       color,
       textStyle,
       hoverColor,

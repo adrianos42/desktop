@@ -74,7 +74,7 @@ class TabThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       textStyle,
       iconThemeData,
       itemSpacing,

@@ -75,7 +75,7 @@ class DialogThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       constraints,
       menuPadding,
       titlePadding,

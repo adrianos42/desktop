@@ -129,7 +129,7 @@ class ListTableThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       textStyle,
       iconThemeData,
       itemHeight,

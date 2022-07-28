@@ -296,12 +296,17 @@ DialogController showDialog(
   entry = DialogController._(
     overlayEntry: OverlayEntry(
       builder: (context) => _DialogView(
-          key: viewKey,
-          builder: builder,
-          dismissible: dismissible,
-          barrierColor: barrierColor,
-          close: () => entry._overlayEntry.remove(),
-          closeComplete: (reason) => entry._completer.complete(reason)),
+        key: viewKey,
+        builder: builder,
+        dismissible: dismissible,
+        barrierColor: barrierColor,
+        close: () => entry._overlayEntry.remove(),
+        closeComplete: (reason) {
+          if (!entry._completer.isCompleted) {
+            entry._completer.complete(reason);
+          }
+        },
+      ),
       maintainState: false,
     ),
     completer: Completer<DialogClosedReason>(),

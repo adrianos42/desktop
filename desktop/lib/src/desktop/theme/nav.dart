@@ -76,7 +76,7 @@ class NavThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       //  _background,
       //_foreground,
       itemsSpacing,

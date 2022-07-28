@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+import 'package:flutter/foundation.dart';
 
 import 'data/data.dart';
 import 'dialogs/dialogs.dart';
@@ -12,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.20';
+const String _version = 'dev.4.2.22';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -182,13 +183,18 @@ class _DocAppState extends State<DocApp> {
                 nodes: [
                   TreeNode.child(
                     titleBuilder: (context) => const Text('Overview'),
-                    builder: (context) => OverviewPage(),
-                    //builder: (context) => ButtonDropDownPage(),
-                     //builder: (context) => ListTablePage()
-                    /// builder: (context) => NavPage(),
-                    //builder: (context) => ButtonGroupPage(),
-                    //builder: (context) => ScrollingPage(),
-                    // builder: (context) => BottomNavPage(),
+                    builder: (context) {
+                      if (kReleaseMode) {
+                        return OverviewPage();
+                      } else {
+                        // return ButtonDropDownPage();
+                        return ListTablePage();
+                        // return NavPage();
+                        // return ButtonGroupPage();
+                        // return ScrollingPage();
+                        // return BottomNavPage();
+                      }
+                    },
                   ),
                   TreeNode.children(
                       titleBuilder: (context) => const Text('Navigation'),
@@ -338,7 +344,7 @@ class _DocAppState extends State<DocApp> {
   @override
   Widget build(BuildContext context) {
     // return BottomNavPage();
-     return _createHome();
+    return _createHome();
   }
 }
 

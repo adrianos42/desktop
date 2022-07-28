@@ -49,9 +49,16 @@ class ListTableRender extends RenderBox implements MouseTrackerAnnotation {
         : [];
   }
 
+  ///
   final void Function(int col) dragStart;
+
+  ///
   final void Function(int col, double value) dragUpdate;
+
+  ///
   final void Function() dragEnd;
+
+  ///
   final void Function() dragCancel;
 
   Color _hoverColor;
@@ -341,6 +348,53 @@ class ListTableRender extends RenderBox implements MouseTrackerAnnotation {
     final Paint paint = Paint();
     final Path path = Path();
 
+    _paintStaticTableBorder(canvas, offset);
+
+    if (tableBorder.verticalInside.style == BorderStyle.solid ||
+        _columnDraggingIndex >= 0) {
+      for (int i = 0; i < _columns.length; i += 1) {
+        final double x = _columns[i];
+
+        final bool hasIndicator = i == _lastNonZero && _hasHiddenColumns;
+
+        double lineWidth;
+
+        if (_columnDraggingIndex == i) {
+          paint.color = highlightColor;
+          lineWidth = headerColumnBorder.width + 1.0;
+        } else {
+          if (tableBorder.verticalInside.style != BorderStyle.solid) {
+            continue;
+          }
+          paint.color = tableBorder.verticalInside.color;
+          lineWidth = tableBorder.verticalInside.width;
+        }
+
+        final double indicatorOffset = hasIndicator &&
+                tableBorder.right.style == BorderStyle.solid
+            ? lineWidth
+            : 0.0;
+
+        path.reset();
+
+        path.moveTo(offset.dx + x - indicatorOffset, offset.dy + _headerExtent);
+        path.lineTo(offset.dx + x - indicatorOffset, offset.dy + size.height);
+
+        if (tableBorder.verticalInside.width == 0.0 &&
+            _columnDraggingIndex != i) {
+          paint.style = PaintingStyle.stroke;
+        } else {
+          paint.style = PaintingStyle.fill;
+          path.lineTo(offset.dx + x + lineWidth - indicatorOffset,
+              offset.dy + size.height);
+          path.lineTo(offset.dx + x + lineWidth - indicatorOffset,
+              offset.dy + _headerExtent);
+        }
+
+        canvas.drawPath(path, paint);
+      }
+    }
+
     if (headerColumnBorder.style == BorderStyle.solid) {
       for (int i = 0; i < _columns.length; i += 1) {
         final double x = _columns[i];
@@ -363,58 +417,27 @@ class ListTableRender extends RenderBox implements MouseTrackerAnnotation {
           lineWidth = headerColumnBorder.width;
         }
 
+        final double indicatorOffset =
+            hasIndicator && tableBorder.right.style == BorderStyle.solid
+                ? lineWidth
+                : 0.0;
+
         path.reset();
 
-        path.moveTo(offset.dx + x, offset.dy);
-        path.lineTo(offset.dx + x, offset.dy + _headerExtent);
+        path.moveTo(offset.dx + x - indicatorOffset, offset.dy);
+        path.lineTo(offset.dx + x - indicatorOffset, offset.dy + _headerExtent);
 
-        if (tableBorder.bottom.width == 0.0) {
+        if (headerColumnBorder.width == 0.0) {
           paint.style = PaintingStyle.stroke;
         } else {
           paint.style = PaintingStyle.fill;
-          path.lineTo(offset.dx + x + lineWidth, offset.dy + _headerExtent);
-          path.lineTo(offset.dx + x + lineWidth, offset.dy);
+          path.lineTo(offset.dx + x + lineWidth - indicatorOffset,
+              offset.dy + _headerExtent);
+          path.lineTo(offset.dx + x + lineWidth - indicatorOffset, offset.dy);
         }
 
         canvas.drawPath(path, paint);
       }
     }
-
-    if (tableBorder.verticalInside.style == BorderStyle.solid ||
-        _columnDraggingIndex >= 0) {
-      for (int i = 0; i < _columns.length; i += 1) {
-        final double x = _columns[i];
-
-        double lineWidth;
-
-        if (_columnDraggingIndex == i) {
-          paint.color = highlightColor;
-          lineWidth = 2.0;
-        } else {
-          if (tableBorder.verticalInside.style != BorderStyle.solid) {
-            continue;
-          }
-          paint.color = tableBorder.verticalInside.color;
-          lineWidth = tableBorder.verticalInside.width;
-        }
-
-        path.reset();
-
-        path.moveTo(offset.dx + x, offset.dy + _headerExtent);
-        path.lineTo(offset.dx + x, offset.dy + size.height);
-
-        if (tableBorder.bottom.width == 0.0) {
-          paint.style = PaintingStyle.stroke;
-        } else {
-          paint.style = PaintingStyle.fill;
-          path.lineTo(offset.dx + x + lineWidth, offset.dy + size.height);
-          path.lineTo(offset.dx + x + lineWidth, offset.dy + _headerExtent);
-        }
-
-        canvas.drawPath(path, paint);
-      }
-    }
-
-    _paintStaticTableBorder(canvas, offset);
   }
 }

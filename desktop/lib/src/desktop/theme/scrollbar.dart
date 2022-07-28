@@ -78,7 +78,7 @@ class ScrollbarThemeData {
 
   @override
   int get hashCode {
-    return hashValues(
+    return Object.hash(
       disabledColor,
       color,
       foreground,

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../icons.dart';
 import '../theme/theme.dart';
 import 'nav.dart' show NavItem;
-import 'nav_bottom_button.dart';
+import 'bottom_nav_button.dart';
 import 'tab_scope.dart';
 
 export 'nav.dart' show NavItem;
@@ -11,7 +11,8 @@ export 'tab_scope.dart' show TabScope, RouteBuilder;
 
 const int _kIntialIndexValue = 0;
 
-const Duration _kMenuTransitionDuration = Duration(milliseconds: 300);
+const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
+const Curve _kDefaultAnimationCurve = Curves.linearToEaseOut;
 
 /// Navigation widget [BottomNav]...
 ///
@@ -112,7 +113,7 @@ class _BottomNavState extends State<BottomNav>
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static const Curve _animationCurve = Curves.linearToEaseOut;
+  static const Curve _animationCurve = _kDefaultAnimationCurve;
 
   void _createAnimation() {
     _menuAnimation = CurvedAnimation(
@@ -214,7 +215,7 @@ class _BottomNavState extends State<BottomNav>
         _menuActive ? Icons.close : Icons.menu,
         active: _menuActive,
         onPressed: _showMenu,
-        height: navThemeData.width,
+        height: navThemeData.width + 4.0,
       ),
     );
   }
@@ -228,11 +229,11 @@ class _BottomNavState extends State<BottomNav>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              //Icon(widget.items[index].icon),
-               Padding(
-                 padding: const EdgeInsets.only(left: 0),
-                 child: Text(widget.items[index].title),
-               ),
+              // Icon(widget.items[index].icon),
+              Padding(
+                padding: const EdgeInsets.only(left: 0),
+                child: Text(widget.items[index].title),
+              ),
             ],
           );
         },

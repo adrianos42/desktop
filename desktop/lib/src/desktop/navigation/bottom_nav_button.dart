@@ -60,7 +60,7 @@ class _NavBottomGroupState extends State<NavBottomGroup>
 
       final BoxConstraints constraints = BoxConstraints.tightFor(
         height: navThemeData.height,
-      //  width: navThemeData.height,
+        //  width: navThemeData.height,
       );
       final EdgeInsets buttonBodyPadding =
           EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
@@ -398,12 +398,12 @@ class BottomNavMenuButton extends StatelessWidget {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
     final NavThemeData navThemeData = NavTheme.of(context);
     final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
     final ColorScheme colorScheme = themeData.colorScheme;
 
     final Color highlightColor = colorScheme.shade[100];
 
-    final IconThemeData iconThemeData = navThemeData.iconThemeData;
+    final IconThemeData iconThemeData =
+        navThemeData.iconThemeData.copyWith(size: 24.0);
     final Color color = buttonThemeData.highlightColor!;
 
     return Container(
