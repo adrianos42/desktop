@@ -13,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.22';
+const String _version = 'dev.4.2.23';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -207,10 +207,10 @@ class _DocAppState extends State<DocApp> {
                           titleBuilder: (context) => const Text('Nav'),
                           builder: (context) => NavPage(),
                         ),
-                        TreeNode.child(
-                          titleBuilder: (context) => const Text('Bottom Nav'),
-                          builder: (context) => BottomNavPage(),
-                        ),
+                        ///TreeNode.child(
+                        ///  titleBuilder: (context) => const Text('Bottom Nav'),
+                        ///  builder: (context) => BottomNavPage(),
+                        ///),
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Tab'),
                           builder: (context) => TabPage(),

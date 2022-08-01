@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../component.dart';
 import '../theme/theme.dart';
 import 'list_table_render.dart';
+import 'list_row.dart';
 
 const _kHeaderHeight = 40.0;
 const _kMinColumnWidth = 48.0;
@@ -382,80 +383,80 @@ class _ListTableState extends State<ListTable> {
             : null,
         onSecondaryTapCancel: () => setState(() => pressedIndex = -1),
         behavior: HitTestBehavior.deferToChild,
-        child: DecoratedBox(
-          decoration: decoration,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: List.generate(colElemIndexes.length, (colIndex) {
-              final int col = colElemIndexes[colIndex];
-              final int mappedIndex = colIndexes?[col] ?? col;
+        child: ListRow(
+          rowDecoration: decoration,
+          colSizes: colSizes,
+          itemExtent: widget.itemExtent,
+          children: List.generate(colElemIndexes.length, (colIndex) {
+            final int col = colElemIndexes[colIndex];
+            final int mappedIndex = colIndexes?[col] ?? col;
 
-              assert(col < colSizes.length);
+            assert(col < colSizes.length);
 
-              Widget result = LayoutBuilder(
-                builder: (context, constraints) => widget.tableRowBuilder(
-                  context,
-                  index,
-                  mappedIndex,
-                ),
-              );
+            Widget result = LayoutBuilder(
+              builder: (context, constraints) => widget.tableRowBuilder(
+                context,
+                index,
+                mappedIndex,
+              ),
+            );
 
-              result = Align(alignment: Alignment.bottomLeft, child: result);
+            result = Align(alignment: Alignment.bottomLeft, child: result);
 
-              // TODO(as): ???
-              // if (widget.tableBorder != null &&
-              //     (widget.tableBorder!.horizontalInside != BorderSide.none ||
-              //         widget.tableBorder!.verticalInside != BorderSide.none)) {
-              //   final isBottom = index < widget.itemCount - 1 || hasExtent;
-              //   final isRight = col < colElemIndexes.length - 1;
+            // TODO(as): ???
+            // if (widget.tableBorder != null &&
+            //     (widget.tableBorder!.horizontalInside != BorderSide.none ||
+            //         widget.tableBorder!.verticalInside != BorderSide.none)) {
+            //   final isBottom = index < widget.itemCount - 1 || hasExtent;
+            //   final isRight = col < colElemIndexes.length - 1;
 
-              //   final horizontalInside = widget.tableBorder!.horizontalInside;
-              //   final verticalInside = widget.tableBorder!.verticalInside;
+            //   final horizontalInside = widget.tableBorder!.horizontalInside;
+            //   final verticalInside = widget.tableBorder!.verticalInside;
 
-              //   final bottom = isBottom ? horizontalInside : BorderSide.none;
+            //   final bottom = isBottom ? horizontalInside : BorderSide.none;
 
-              //   // TODO(as): ???
-              //   final headerColumnBorder = widget.headerColumnBorder ??
-              //       widget.tableBorder?.verticalInside;
-              //   final dragBorderWidth = headerColumnBorder != null &&
-              //           headerColumnBorder != BorderSide.none
-              //       ? headerColumnBorder.width +
-              //           (headerColumnBorder.width / 2.0).roundToDouble()
-              //       : 2.0;
+            //   // TODO(as): ???
+            //   final headerColumnBorder = widget.headerColumnBorder ??
+            //       widget.tableBorder?.verticalInside;
+            //   final dragBorderWidth = headerColumnBorder != null &&
+            //           headerColumnBorder != BorderSide.none
+            //       ? headerColumnBorder.width +
+            //           (headerColumnBorder.width / 2.0).roundToDouble()
+            //       : 2.0;
 
-              //   final right = // FIXME HERE
-              //       dragging && colDragging == col
-              //           ? BorderSide(
-              //               color: listTableThemeData.borderHighlightColor!,
-              //               width: dragBorderWidth,
-              //             )
-              //           : isRight
-              //               ? verticalInside
-              //               : BorderSide.none;
+            //   final right = // FIXME HERE
+            //       dragging && colDragging == col
+            //           ? BorderSide(
+            //               color: listTableThemeData.borderHighlightColor!,
+            //               width: dragBorderWidth,
+            //             )
+            //           : isRight
+            //               ? verticalInside
+            //               : BorderSide.none;
 
-              //   final border = Border(bottom: bottom, right: right);
-              //   decoration = decoration.copyWith(border: border);
-              // } else if (dragging && colDragging == col) {
-              //   final right = BorderSide(
-              //     color: dragging
-              //         ? listTableThemeData.borderHighlightColor!
-              //         : listTableThemeData.borderColor!,
-              //     width: 2.0,
-              //   );
+            //   final border = Border(bottom: bottom, right: right);
+            //   decoration = decoration.copyWith(border: border);
+            // } else if (dragging && colDragging == col) {
+            //   final right = BorderSide(
+            //     color: dragging
+            //         ? listTableThemeData.borderHighlightColor!
+            //         : listTableThemeData.borderColor!,
+            //     width: 2.0,
+            //   );
 
-              //   final border = Border(right: right);
-              //   decoration = decoration.copyWith(border: border);
-              // }
-              return ConstrainedBox(
-                constraints: BoxConstraints.tightFor(
-                  width: colSizes[col],
-                ),
-                child: result,
-              );
-            }).toList(),
-          ),
+            //   final border = Border(right: right);
+            //   decoration = decoration.copyWith(border: border);
+            // }
+
+            return result;
+
+            return ConstrainedBox(
+              constraints: BoxConstraints.tightFor(
+                width: colSizes[col],
+              ),
+              child: result,
+            );
+          }).toList(),
         ),
       ),
     );
@@ -837,8 +838,9 @@ class _ListTableState extends State<ListTable> {
                 createHeader(),
                 Expanded(
                   child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context)
-                        .copyWith(scrollbars: showScrollbar),
+                    behavior: ScrollConfiguration.of(context).copyWith(
+                      scrollbars: showScrollbar,
+                    ),
                     child: ListView.custom(
                       childrenDelegate: SliverChildBuilderDelegate(
                         (context, index) => createList(index),

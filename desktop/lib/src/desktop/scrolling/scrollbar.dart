@@ -397,6 +397,7 @@ class _ScrollbarState extends State<Scrollbar>
     final ScrollMetrics metrics = notification.metrics;
     if (_shouldUpdatePainter(metrics.axis)) {
       _painter!.update(metrics, metrics.axisDirection);
+      return true;
     }
 
     return false;
@@ -423,13 +424,16 @@ class _ScrollbarState extends State<Scrollbar>
 
       _fadeoutTimer?.cancel();
       _painter!.update(metrics, metrics.axisDirection);
+
     } else if (notification is ScrollEndNotification) {
       if (_dragScrollbarPosition == null) {
         _startFadeoutTimer();
       }
+    } else {
+      return false;
     }
 
-    return false;
+    return true;
   }
 
   void _updateScrollbarPainter() {

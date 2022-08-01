@@ -1,6 +1,6 @@
 library navigation;
 
-export 'bottom_nav.dart';
+// TODO(as): export 'bottom_nav.dart';
 export 'breadcrumb.dart';
 export 'nav.dart';
 export 'route.dart';

@@ -370,10 +370,10 @@ class ListTableRender extends RenderBox implements MouseTrackerAnnotation {
           lineWidth = tableBorder.verticalInside.width;
         }
 
-        final double indicatorOffset = hasIndicator &&
-                tableBorder.right.style == BorderStyle.solid
-            ? lineWidth
-            : 0.0;
+        final double indicatorOffset =
+            hasIndicator && tableBorder.right.style == BorderStyle.solid
+                ? lineWidth
+                : 0.0;
 
         path.reset();
 
@@ -422,17 +422,22 @@ class ListTableRender extends RenderBox implements MouseTrackerAnnotation {
                 ? lineWidth
                 : 0.0;
 
+        final double topBorderWidth = tableBorder.top.style == BorderStyle.solid
+            ? tableBorder.top.width
+            : 0.0;
+
         path.reset();
 
         path.moveTo(offset.dx + x - indicatorOffset, offset.dy);
-        path.lineTo(offset.dx + x - indicatorOffset, offset.dy + _headerExtent);
+        path.lineTo(offset.dx + x - indicatorOffset,
+            offset.dy + _headerExtent + topBorderWidth);
 
         if (headerColumnBorder.width == 0.0) {
           paint.style = PaintingStyle.stroke;
         } else {
           paint.style = PaintingStyle.fill;
           path.lineTo(offset.dx + x + lineWidth - indicatorOffset,
-              offset.dy + _headerExtent);
+              offset.dy + _headerExtent + topBorderWidth);
           path.lineTo(offset.dx + x + lineWidth - indicatorOffset, offset.dy);
         }
 
