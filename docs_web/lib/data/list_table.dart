@@ -177,48 +177,51 @@ ListTable(
         ItemTitle(
           body: (context) => ListTable(
             colCount: 4,
-            itemCount: dataTableRows.length,
             allowColumnDragging: true,
             tableBorder: TableBorder(
               bottom: borderSide,
               top: borderSide,
               left: borderSide,
               right: borderSide,
-              horizontalInside: borderSide.copyWith(width: 1.0),
+              horizontalInside: borderSide,
             ),
-            onPressed: (row, _) async {
-              final dialog = showDialog(
-                context,
-                builder: (context) => Dialog(
-                  body: Text(dataTableRows[row][0]),
-                  title: Text(dataTableRows[row][2]),
-                ),
-              );
-              await dialog.closed;
-            },
-            colFraction: const {0: 0.5},
-            //collapseOnDrag: true,
-            headerColumnBorder: borderSide,
-            tableHeaderBuilder: (context, col) {
-              return Container(
+            header: ListTableHeader(
+              columnBorder: borderSide,
+              builder: (context, col) => Container(
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   someDataTableHeader[col],
                   overflow: TextOverflow.ellipsis,
                 ),
-              );
-            },
-            tableRowBuilder: (context, row, col) {
-              return Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  dataTableRows[row][col],
-                  overflow: TextOverflow.ellipsis,
+              ),
+            ),
+
+            rows: List.generate(dataTableRows.length, (row) {
+              return ListTableRow(
+                onPressed: (_) async {
+                  final dialog = showDialog(
+                    context,
+                    builder: (context) => Dialog(
+                      body: Text(dataTableRows[row][0]),
+                      title: Text(dataTableRows[row][2]),
+                    ),
+                  );
+                  await dialog.closed;
+                },
+                builder: (context, col) => Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    dataTableRows[row][col],
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               );
-            },
+            }),
+
+            colFraction: const {0: 0.5},
+            //collapseOnDrag: true,
           ),
           codeText: someDataSample,
           title: 'Example with data',

@@ -13,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.23';
+const String _version = 'dev.4.2.25';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);

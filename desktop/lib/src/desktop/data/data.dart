@@ -1,3 +1,3 @@
 library data;
 
-export 'list_table.dart';
+export 'list_table/list_table.dart';

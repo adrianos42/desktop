@@ -256,7 +256,7 @@ class _DesktopAppState extends State<DesktopApp> {
           maintainState: true,
           opaque: true,
           builder: (context) => Messenger(
-            child: Container(
+            child: ColoredBox(
               color: Theme.of(context).colorScheme.background[0],
               child: widget.builder != null
                   ? widget.builder!(context, child)

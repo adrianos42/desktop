@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'defaults.dart';
 
 const _kFileNames = [
-  'pexels-1770918',
   'pexels-4411430',
   'pexels-1784289',
   'pexels-731553',
@@ -41,6 +40,7 @@ const _kFileNames = [
   'pexels-1299518',
   'pexels-5800065',
   'pexels-5456616',
+  'pexels-1770918',
 ];
 
 const _kPageDuration = Duration(milliseconds: 200);
