@@ -110,7 +110,7 @@ class ListTableRender extends RenderBox
   set headerColumnBorder(BorderSide value) {
     if (value != _headerColumnBorder) {
       _headerColumnBorder = value;
-      markNeedsLayout();
+      markNeedsPaint();
     }
   }
 
@@ -119,7 +119,16 @@ class ListTableRender extends RenderBox
   set tableBorder(TableBorder value) {
     if (value != _tableBorder) {
       _tableBorder = value;
-      markNeedsLayout();
+      markNeedsPaint();
+    }
+  }
+
+  double _headerExtent;
+  double get headerExtent => _headerExtent;
+  set headerExtent(double value) {
+    if (value != _headerExtent) {
+      _headerExtent = value;
+      markNeedsPaint();
     }
   }
 
@@ -133,15 +142,6 @@ class ListTableRender extends RenderBox
 
       _hasHiddenColumns = _columnWidths.any((elem) => elem == 0.0);
 
-      markNeedsLayout();
-    }
-  }
-
-  double _headerExtent;
-  double get headerExtent => _headerExtent;
-  set headerExtent(double value) {
-    if (value != _headerExtent) {
-      _headerExtent = value;
       markNeedsLayout();
     }
   }
@@ -518,7 +518,7 @@ class ListTableRender extends RenderBox
 
         path.moveTo(
           offset.dx + x,
-          offset.dy + _headerExtent + topBorderWidth,
+          offset.dy + _headerExtent,
         );
         path.lineTo(
           offset.dx + x,
@@ -536,7 +536,7 @@ class ListTableRender extends RenderBox
           );
           path.lineTo(
             offset.dx + x - lineWidth,
-            offset.dy + _headerExtent + topBorderWidth,
+            offset.dy + _headerExtent,
           );
         }
 
