@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.0-dev.2
+
+- Fixes column indicator in `ListTable`.
+
+## 4.0.0-dev.1
+
+- Implements ability to drag columns in a `ListTable`.
+
 ## 3.1.5
 
 - Fixes instance null check.

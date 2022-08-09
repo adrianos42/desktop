@@ -35,6 +35,7 @@ class ListTableRender extends RenderBox
         _columns = _generateColumns(columnWidths),
         _highlightColor = highlightColor,
         _hoverColor = hoverColor,
+        _hasHiddenColumns = columnWidths.any((elem) => elem == 0.0),
         _draggingColumnTargetItemIndex = draggingColumnTargetItemIndex,
         _isDraggingColumn = isDraggingColumn {
     addAll(children);
@@ -139,7 +140,6 @@ class ListTableRender extends RenderBox
       _columnWidths = value;
 
       _columns = ListTableRender._generateColumns(_columnWidths);
-
       _hasHiddenColumns = _columnWidths.any((elem) => elem == 0.0);
 
       markNeedsLayout();

@@ -140,7 +140,6 @@ class _ListTableState extends State<ListTable> {
 
   bool dragging = false;
   int? colDragging;
-  double? previousWidth;
   double? totalWidth;
   double? totalHeight;
   List<double>? previousColSizes;
@@ -233,8 +232,7 @@ class _ListTableState extends State<ListTable> {
               setState(() => draggingColumnIndex = -1);
             },
             maxSimultaneousDrags: 1,
-            feedback:
-                createHeaderFeedback(mappedIndex, colSizes[col]),
+            feedback: createHeaderFeedback(mappedIndex, colSizes[col]),
           ),
         );
       }).toList(),
@@ -418,7 +416,7 @@ class _ListTableState extends State<ListTable> {
         nfactors += 1;
         final double fraction = colFraction![value]!.clamp(0.0, 1.0);
         colFraction![value] = fraction;
-        remWidth -= (totalWidth! * fraction).truncateToDouble();
+        remWidth -= totalWidth! * fraction;
       }
     }
 
@@ -427,7 +425,7 @@ class _ListTableState extends State<ListTable> {
       int remNFactors = colCount - nfactors;
       // The width for each remaining item.
       final double nonFactorWidth =
-          remWidth > 0.0 ? (remWidth / remNFactors).truncateToDouble() : 0.0;
+          remWidth > 0.0 ? remWidth / remNFactors : 0.0;
 
       for (var i = 0; i < colCount; i++) {
         if (!colFraction!.containsKey(i)) {
@@ -448,7 +446,7 @@ class _ListTableState extends State<ListTable> {
           final double fraction =
               (nonFactorWidth / totalWidth!).clamp(0.0, 1.0);
           colFraction![i] = fraction;
-          remWidth -= (totalWidth! * fraction).truncateToDouble();
+          remWidth -= totalWidth! * fraction;
         }
       }
     }
@@ -474,22 +472,17 @@ class _ListTableState extends State<ListTable> {
       final int mappedIndex = colIndexes?[i] ?? i;
 
       if (colFraction!.containsKey(mappedIndex)) {
-        if (remWidth >= _kMinColumnWidth) {
-          // The last item.
-          if (i == colCount - 1 ||
-              (draggingColumnIndex == colCount - 1 && i == colCount - 2)) {
-            colSizes[i] = remWidth;
+        if (draggingColumnIndex == i) {
+          colSizes[i] = 0.0;
+        } else if (remWidth >= _kMinColumnWidth) {
+          double width = colFraction![mappedIndex]! * totalWidth!;
+          width = width.clamp(_kMinColumnWidth, remWidth);
 
-            remWidth = 0.0;
-            break;
+          if (!dragging || colDragging! > i || true) {
+            width = width.roundToDouble();
           }
 
-          double width = (colFraction![mappedIndex]! * totalWidth!)
-              .clamp(_kMinColumnWidth, remWidth);
-
-          width = draggingColumnIndex == i ? 0 : width.floorToDouble();
           colSizes[i] = width;
-
           remWidth -= width;
 
           if (remWidth < 0.0) {
@@ -514,14 +507,13 @@ class _ListTableState extends State<ListTable> {
     previousColFraction = Map<int, double>.from(colFraction!);
     previousColSizes = List<double>.from(colSizes);
 
-    previousWidth = colSizes.sublist(col).reduce((v, e) => v + e);
     dragging = true;
     colDragging = col;
   }
 
   void dragUpdate(int col, double delta) {
     setState(() {
-      final int totalRemain = colCount - (col + 1);
+      final int totalRemaining = colCount - (col + 1);
 
       final int mappedIndex = colIndexes?[col] ?? col;
 
@@ -534,22 +526,14 @@ class _ListTableState extends State<ListTable> {
       final double newWidth = previousColSizes![col] + delta;
       colFraction![mappedIndex] = newWidth / totalWidth!;
 
-      if (totalRemain > 0) {
-        final double valueEach = (delta / totalRemain).truncateToDouble();
-        double remWidth = previousWidth! - newWidth;
+      if (totalRemaining > 0) {
+        final double valueEachDelta = -delta / totalRemaining;
 
         for (var i = col + 1; i < colCount; i++) {
           final int mappedIndex = colIndexes?[i] ?? i;
+          final double newWidth = previousColSizes![i] + valueEachDelta;
 
-          if (remWidth >= _kMinColumnWidth) {
-            final double newWidth = (previousColSizes![i] - valueEach)
-                .clamp(_kMinColumnWidth, remWidth);
-            colFraction![mappedIndex] = newWidth / totalWidth!;
-
-            remWidth -= newWidth;
-          } else {
-            colFraction![mappedIndex] = 0.0;
-          }
+          colFraction![mappedIndex] = newWidth / totalWidth!;
         }
       }
     });
@@ -559,7 +543,6 @@ class _ListTableState extends State<ListTable> {
     setState(() {
       dragging = false;
       totalWidth = null;
-      previousWidth = null;
       previousColSizes = null;
       previousColFraction = null;
       colDragging = null;
