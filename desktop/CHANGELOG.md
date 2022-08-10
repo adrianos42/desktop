@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0-dev.3
+
+- Fixes indicator in `ListTable`.
+
 ## 4.0.0-dev.2
 
 - Fixes column indicator in `ListTable`.
