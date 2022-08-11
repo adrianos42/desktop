@@ -569,7 +569,7 @@ class ListTableRender extends RenderBox
           lineWidth = headerColumnBorder.width;
         }
 
-        paint.isAntiAlias = lineWidth == 0.0;
+        paint.isAntiAlias = lineWidth == 0.0 || _draggingIndex >= 0;
 
         path.reset();
 

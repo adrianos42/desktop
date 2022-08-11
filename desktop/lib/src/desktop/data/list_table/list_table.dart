@@ -476,18 +476,19 @@ class _ListTableState extends State<ListTable> {
           colSizes[i] = 0.0;
         } else if (remWidth >= _kMinColumnWidth) {
           double width = colFraction![mappedIndex]! * totalWidth!;
-          width = width.clamp(_kMinColumnWidth, remWidth);
 
-          if (!dragging || colDragging! > i || true) {
+          if (!dragging || colDragging! > i) {
             width = width.roundToDouble();
           }
+
+          width = width.clamp(_kMinColumnWidth, remWidth);
 
           colSizes[i] = width;
           remWidth -= width;
 
           if (remWidth < 0.0) {
             throw Exception(
-                'Wrong fraction value at index $i, value ${colFraction![mappedIndex]}.');
+                'Wrong fraction value at index $i, value ${colFraction![mappedIndex]} with $remWidth width.');
           }
         } else {
           break;

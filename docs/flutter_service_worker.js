@@ -7,9 +7,9 @@ const RESOURCES = {
 "canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"main.dart.js": "58bd29f5fb636b16bb54a63822b91b59",
+"main.dart.js": "9490a8fdca71fdbeb9721f1c1e8e2f15",
 "flutter.js": "0816e65a103ba8ba51b174eeeeb2cb67",
-"assets/NOTICES": "68f46fb10655181bede24fc01e939640",
+"assets/NOTICES": "71a15b7ac0118645d3e2549de8fd1997",
 "assets/assets/GitHub-Mark-32px.png": "f87561b8bb354ef83b09a66e54f70e08",
 "assets/assets/cats_small/pexels-5044690.webp": "2f5830b9100502a89dfb9173cce87038",
 "assets/assets/cats_small/pexels-479009.webp": "e3ec36cd82bc773da3d5f46a0a752154",
@@ -126,8 +126,9 @@ const RESOURCES = {
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Regular.ttf": "cb46f1f18358474393e7ccd02be3998a",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Medium.ttf": "1f86f6c46bf066316c13a9cba815ccfd",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Thin.ttf": "19dbee61fc3b65e55edc0ae9c2b554a8",
-"index.html": "81319771983ef2277a9a903e43b370d4",
-"/": "81319771983ef2277a9a903e43b370d4",
+"assets/shaders/ink_sparkle.frag": "e17111c09074cef29210a8d86730724d",
+"index.html": "fcf6c15f1a5e8a4f7ab4a3f94d4f58df",
+"/": "fcf6c15f1a5e8a4f7ab4a3f94d4f58df",
 "manifest.json": "b84436d4ff185318efa7890db21d84b2",
 "icons/Icon-512.png": "f9606f95519ac4aac78099a8873f5116",
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116",
@@ -140,7 +141,6 @@ const RESOURCES = {
 const CORE = [
   "main.dart.js",
 "index.html",
-"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -239,9 +239,11 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache.
+        // lazily populate the cache only if the resource was successfully fetched.
         return response || fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
           return response;
         });
       })
