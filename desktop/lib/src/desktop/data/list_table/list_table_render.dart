@@ -512,7 +512,8 @@ class ListTableRender extends RenderBox
           lineWidth = tableBorder.verticalInside.width;
         }
 
-        paint.isAntiAlias = lineWidth == 0.0;
+        paint.isAntiAlias =
+            lineWidth == 0.0 || (_draggingIndex != -1 && _draggingIndex != i);
 
         path.reset();
 
@@ -569,7 +570,8 @@ class ListTableRender extends RenderBox
           lineWidth = headerColumnBorder.width;
         }
 
-        paint.isAntiAlias = lineWidth == 0.0 || _draggingIndex >= 0;
+        paint.isAntiAlias =
+            lineWidth == 0.0 || (_draggingIndex != -1 && _draggingIndex != i);
 
         path.reset();
 

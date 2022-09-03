@@ -100,7 +100,7 @@ class TextTheme {
 
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        final foreground = colorScheme.shade[100];
+        final foreground = colorScheme.shade[90];
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: foreground),
           subheader: _TextThemes.subheader.apply(color: foreground),
@@ -114,7 +114,7 @@ class TextTheme {
           textPrimaryLow: colorScheme.primary[40],
           textLow: colorScheme.shade[40],
           textMedium: colorScheme.shade[70],
-          textHigh: colorScheme.shade[100],
+          textHigh: foreground,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
@@ -135,7 +135,7 @@ class TextTheme {
           textPrimaryLow: colorScheme.primary[40],
           textLow: colorScheme.shade[40],
           textMedium: colorScheme.shade[70],
-          textHigh: colorScheme.shade[100],
+          textHigh: foreground,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
