@@ -491,7 +491,7 @@ class _MessageState extends State<Message> {
                         padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
                           widget.title!,
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.start,
                           style: textTheme.caption.copyWith(
                             fontWeight: FontWeight.w500,
                           ),
@@ -499,7 +499,7 @@ class _MessageState extends State<Message> {
                       ),
                     Text(
                       widget.message,
-                      textAlign: TextAlign.justify,
+                      textAlign: TextAlign.start,
                       style: textTheme.caption,
                     ),
                   ],

@@ -135,7 +135,7 @@ class DialogTheme extends InheritedTheme {
       final TextStyle titleTextStyle =
           dialogThemeData.titleTextStyle ?? themeData.textTheme.title;
       final TextAlign bodyTextAlign =
-          dialogThemeData.bodyTextAlign ?? TextAlign.justify;
+          dialogThemeData.bodyTextAlign ?? TextAlign.left;
 
       dialogThemeData = dialogThemeData.copyWidth(
         background: background,

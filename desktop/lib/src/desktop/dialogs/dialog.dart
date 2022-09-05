@@ -190,7 +190,7 @@ class Dialog extends StatelessWidget {
 
   // final EdgeInsets? padding;
 
-  //final EdgeInsets? dialogPadding;
+  // final EdgeInsets? dialogPadding;
 
   @override
   Widget build(BuildContext context) {

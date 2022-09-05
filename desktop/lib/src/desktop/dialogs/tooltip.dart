@@ -466,7 +466,7 @@ class _TooltipOverlay extends StatelessWidget {
                   child: Text(
                     message,
                     style: textStyle,
-                    textAlign: TextAlign.justify,
+                    textAlign: TextAlign.start,
                   ),
                 ),
               ),
