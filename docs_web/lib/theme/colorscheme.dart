@@ -26,38 +26,28 @@ Widget _createItemForColor(
   final textStyle = Theme.of(context).textTheme.body2.copyWith(
         color: foreground,
       );
+
   return Container(
     color: color,
     alignment: Alignment.centerLeft,
-    padding: EdgeInsets.all(8.0),
-    height: 200.0,
+    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          name,
-          style: textStyle,
-        ),
-        Text(
-          'Hue: ${(HSLColor.fromColor(color).hue.round()).toString()}',
-          style: textStyle,
-        ),
-        Text(
-          'Saturation: ${(HSLColor.fromColor(color).saturation * 100.0).round().toString()}%',
-          style: textStyle,
-        ),
-        Text(
-          'Lightness: ${(HSLColor.fromColor(color).lightness * 100.0).round().toString()}%',
-          style: textStyle,
-        ),
-        Text(
-          'Alpha: ${(HSLColor.fromColor(color).alpha * 100.0).round().toString()}%',
-          style: textStyle,
-        ),
-        Text(
-          'ARGB: ${color.value.toRadixString(0x10)}',
-          style: textStyle,
+        Text(name, style: textStyle),
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Text.rich(
+            TextSpan(text: 'ARGB: ', style: textStyle, children: [
+              WidgetSpan(
+                child: SelectableText(
+                  color.value.toRadixString(0x10),
+                  style: textStyle,
+                ),
+              ),
+            ]),
+          ),
         ),
       ],
     ),

@@ -100,42 +100,48 @@ class TextTheme {
 
     switch (colorScheme.brightness) {
       case Brightness.dark:
-        final foreground = colorScheme.shade[90];
+        final textLow = colorScheme.shade[50];
+        final textMedium = colorScheme.shade[70];
+        final textHigh = colorScheme.shade[90];
+        
         result = TextTheme._raw(
-          header: _TextThemes.header.apply(color: foreground),
-          subheader: _TextThemes.subheader.apply(color: foreground),
-          subtitle: _TextThemes.subtitle.apply(color: foreground),
-          title: _TextThemes.title.apply(color: foreground),
-          monospace: _TextThemes.monospace.apply(color: foreground),
-          body1: _TextThemes.body1.apply(color: foreground),
-          body2: _TextThemes.body2.apply(color: foreground),
-          caption: _TextThemes.caption.apply(color: foreground),
+          header: _TextThemes.header.apply(color: textHigh),
+          subheader: _TextThemes.subheader.apply(color: textHigh),
+          subtitle: _TextThemes.subtitle.apply(color: textHigh),
+          title: _TextThemes.title.apply(color: textHigh),
+          monospace: _TextThemes.monospace.apply(color: textHigh),
+          body1: _TextThemes.body1.apply(color: textHigh),
+          body2: _TextThemes.body2.apply(color: textHigh),
+          caption: _TextThemes.caption.apply(color: textHigh),
           textPrimaryHigh: colorScheme.primary[60],
           textPrimaryLow: colorScheme.primary[40],
-          textLow: colorScheme.shade[40],
-          textMedium: colorScheme.shade[70],
-          textHigh: foreground,
+          textLow: textLow,
+          textMedium: textMedium,
+          textHigh: textHigh,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );
         break;
 
       case Brightness.light:
-        final foreground = colorScheme.shade[100];
+        final textLow = colorScheme.shade[40];
+        final textMedium = colorScheme.shade[70];
+        final textHigh = colorScheme.shade[100];
+
         result = TextTheme._raw(
-          header: _TextThemes.header.apply(color: foreground),
-          subheader: _TextThemes.subheader.apply(color: foreground),
-          subtitle: _TextThemes.subtitle.apply(color: foreground),
-          title: _TextThemes.title.apply(color: foreground),
-          monospace: _TextThemes.monospace.apply(color: foreground),
-          body1: _TextThemes.body1.apply(color: foreground),
-          body2: _TextThemes.body2.apply(color: foreground),
-          caption: _TextThemes.caption.apply(color: foreground),
+          header: _TextThemes.header.apply(color: textHigh),
+          subheader: _TextThemes.subheader.apply(color: textHigh),
+          subtitle: _TextThemes.subtitle.apply(color: textHigh),
+          title: _TextThemes.title.apply(color: textHigh),
+          monospace: _TextThemes.monospace.apply(color: textHigh),
+          body1: _TextThemes.body1.apply(color: textHigh),
+          body2: _TextThemes.body2.apply(color: textHigh),
+          caption: _TextThemes.caption.apply(color: textHigh),
           textPrimaryHigh: colorScheme.primary[60],
           textPrimaryLow: colorScheme.primary[40],
-          textLow: colorScheme.shade[40],
-          textMedium: colorScheme.shade[70],
-          textHigh: foreground,
+          textLow: textLow,
+          textMedium: textMedium,
+          textHigh: textHigh,
           textDisabled: colorScheme.disabled,
           colorScheme: colorScheme,
         );

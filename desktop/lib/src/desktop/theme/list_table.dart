@@ -218,7 +218,10 @@ class ListTableTheme extends InheritedTheme {
 
       final Color borderColor =
           listTableThemeData.borderColor ?? colorScheme.shade[40];
-      final Color borderHoverColor = colorScheme.shade[kHoverColorIndex];
+      final Color borderHoverColor = colorScheme.shade[
+          colorScheme.brightness == Brightness.dark
+              ? kHoverColorIndexDark
+              : kHoverColorIndexLight];
       final Color borderHighlightColor = colorScheme.primary[50];
       final Color borderIndicatorColor = colorScheme.primary[50];
 

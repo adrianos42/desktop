@@ -8,10 +8,16 @@ const double kIconSize = 18.0;
 const int kItemBackgroundIndex = 30;
 
 /// Default inactive color index.
-const int kInactiveColorIndex = 40;
+const int kInactiveColorIndexDark = 50;
 
 /// Default hover color index.
-const int kHoverColorIndex = 100;
+const int kHoverColorIndexDark = 90;
+
+/// Default inactive color index.
+const int kInactiveColorIndexLight = 40;
+
+/// Default hover color index.
+const int kHoverColorIndexLight = 100;
 
 /// Default highlight color index.
 const int kHighlightColorIndex = 60;

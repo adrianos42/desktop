@@ -1,5 +1,3 @@
-//import 'editable_text.dart';
-
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
@@ -76,14 +74,10 @@ class _TextFieldSelectionGestureDetectorBuilder
             case PointerDeviceKind.mouse:
             case PointerDeviceKind.stylus:
             case PointerDeviceKind.invertedStylus:
-              // Precise devices should place the cursor at a precise position.
               renderEditable.selectPosition(cause: SelectionChangedCause.tap);
               break;
             case PointerDeviceKind.touch:
             case PointerDeviceKind.unknown:
-              //case PointerDeviceKind.trackpad:
-              // On macOS/iOS/iPadOS a touch tap places the cursor at the edge
-              // of the word.
               renderEditable.selectWordEdge(cause: SelectionChangedCause.tap);
 
               break;
@@ -487,7 +481,7 @@ class _TextFieldState extends State<TextField>
         : colorScheme.shade[90];
     final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final Color selectionColor = enabled ? colorScheme.primary[30] : background;
+    final Color selectionColor = enabled ? colorScheme.primary[40] : background;
     final Color borderColor =
         focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[40];
 

@@ -50,12 +50,18 @@ Widget _createItemForColor(BuildContext context, Color color, int index) {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
-          child: Text(
-            '$index ARGB: ${color.value.toRadixString(0x10)}',
-            style: textStyle.copyWith(
-              fontSize: 18,
-              color: color,
-            ),
+          child: Text.rich(
+            TextSpan(
+                text: 'ARGB: ',
+                style: textStyle.copyWith(color: color),
+                children: [
+                  WidgetSpan(
+                    child: SelectableText(
+                      color.value.toRadixString(0x10),
+                      style: textStyle.copyWith(color: color),
+                    ),
+                  ),
+                ]),
           ),
         ),
         ColoredBox(

@@ -150,8 +150,10 @@ class TabTheme extends InheritedTheme {
             overflow: TextOverflow.ellipsis,
           );
 
-      final Color color =
-          tabThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
+      final Color color = tabThemeData.color ??
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kInactiveColorIndexDark
+              : kInactiveColorIndexLight];
 
       final Color hoverColor =
           tabThemeData.hoverColor ?? colorScheme.shade[100];

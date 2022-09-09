@@ -41,10 +41,11 @@ class _OverviewPageState extends State<OverviewPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Image.asset(
-                    'assets/GitHub-Mark-32px.png',
-                    width: 20.0,
-                    height: 20.0,
-                  ),),
+                      'assets/GitHub-Mark-32px.png',
+                      width: 20.0,
+                      height: 20.0,
+                    ),
+                  ),
                 HyperlinkButton(
                   'Homepage [Github]',
                   onPressed: (_) async {

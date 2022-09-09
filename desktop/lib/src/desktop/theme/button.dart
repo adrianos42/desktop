@@ -264,11 +264,15 @@ class ButtonTheme extends InheritedTheme {
             overflow: TextOverflow.ellipsis,
           );
 
-      final Color color =
-          buttonThemeData.color ?? colorScheme.shade[kInactiveColorIndex];
+      final Color color = buttonThemeData.color ??
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kInactiveColorIndexDark
+              : kInactiveColorIndexLight];
 
-      final Color hoverColor =
-          buttonThemeData.hoverColor ?? colorScheme.shade[kHoverColorIndex];
+      final Color hoverColor = buttonThemeData.hoverColor ??
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kHoverColorIndexDark
+              : kHoverColorIndexLight];
 
       final Color highlightColor = buttonThemeData.highlightColor ??
           colorScheme.primary[kHighlightColorIndex];

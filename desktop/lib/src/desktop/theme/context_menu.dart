@@ -59,7 +59,7 @@ class ContextMenuThemeData {
   /// The color of an item when selected.
   final Color? selectedColor;
 
-  /// The color of an item when selected and highlighted. 
+  /// The color of an item when selected and highlighted.
   final Color? selectedHighlightColor;
 
   /// The color of an item when selected and hovered.
@@ -194,7 +194,7 @@ class ContextMenuThemeData {
         other.selectedHoverColor == selectedHoverColor &&
         other.hoverColor == hoverColor &&
         other.highlightColor == highlightColor &&
-        other.background == background && 
+        other.background == background &&
         other.color == color;
   }
 }
@@ -246,7 +246,10 @@ class ContextMenuTheme extends InheritedTheme {
           contextMenuThemeData.selectedHoverColor ??
               colorScheme.primary[40]; // TODO(as): ???
 
-      final Color color = colorScheme.shade[kInactiveColorIndex];
+      final Color color = colorScheme.shade[
+          colorScheme.brightness == Brightness.dark
+              ? kInactiveColorIndexDark
+              : kInactiveColorIndexLight];
 
       final IconThemeData iconThemeData = contextMenuThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh);

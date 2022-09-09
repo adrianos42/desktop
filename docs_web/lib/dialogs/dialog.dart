@@ -42,6 +42,8 @@ showDialog(
 )
 ''';
 
+    print(DialogTheme.of(context).barrierColor);
+
     return Defaults.createItemsWithTitle(
       context,
       items: [

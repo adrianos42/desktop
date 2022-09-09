@@ -13,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.32';
+const String _version = 'dev.4.2.34';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -187,8 +187,9 @@ class _DocAppState extends State<DocApp> {
                       if (kReleaseMode) {
                         return OverviewPage();
                       } else {
+                        return PrimaryColorPage();
                         // return ButtonDropDownPage();
-                        return ListTablePage();
+                        // return ListTablePage();
                         // return NavPage();
                         // return ButtonGroupPage();
                         // return ScrollingPage();
@@ -309,6 +310,10 @@ class _DocAppState extends State<DocApp> {
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Text Field'),
                           builder: (context) => TextFieldPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Selectable Text'),
+                          builder: (context) => SelectableTextPage(),
                         ),
                       ]),
                   TreeNode.children(

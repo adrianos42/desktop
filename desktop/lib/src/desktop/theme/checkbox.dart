@@ -142,16 +142,22 @@ class CheckboxTheme extends InheritedTheme {
           checkboxThemeData.foreground ?? colorScheme.background[0];
 
       final Color activeHoverColor = checkboxThemeData.activeHoverColor ??
-          colorScheme.shade[kHoverColorIndex];
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kHoverColorIndexDark
+              : kHoverColorIndexLight];
 
       final Color activeColor = checkboxThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];
 
       final Color inactiveHoverColor = checkboxThemeData.inactiveHoverColor ??
-          colorScheme.shade[kHoverColorIndex];
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kHoverColorIndexDark
+              : kHoverColorIndexLight];
 
       final Color inactiveColor = checkboxThemeData.inactiveColor ??
-          colorScheme.shade[kInactiveColorIndex];
+          colorScheme.shade[colorScheme.brightness == Brightness.dark
+              ? kInactiveColorIndexDark
+              : kInactiveColorIndexLight];
 
       final Color disabledColor =
           checkboxThemeData.disabledColor ?? colorScheme.disabled;
