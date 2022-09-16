@@ -14,7 +14,7 @@ class _TreePageState extends State<TreePage> {
   @override
   Widget build(BuildContext context) {
     const codeSample = '''
-Tree(
+return Tree(
   title: Builder(
     builder: (context) => Text(
       'Tree',
@@ -107,11 +107,11 @@ Tree(
       //     builder: (context) => BreadcrumbPage()),
     ]),
   ],
-)
+);
 ''';
 
     const codeSampleWidget = '''
-Tree(
+return Tree(
   title: Builder(
     builder: (context) => Text(
       'Tree with widgets',
@@ -203,10 +203,11 @@ Tree(
       )),
     ),
   ],
-)''';
+);
+''';
 
     const codeSampleCollapse = '''
-Tree(
+return Tree(
   collapsed: !_isShowingTree,
   title: Builder(
     builder: (context) => Text(
@@ -299,10 +300,10 @@ Tree(
       )),
     ),
   ],
-)''';
+);
+''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) {
@@ -417,7 +418,6 @@ Tree(
             );
           },
           codeText: codeSample,
-          height: 600.0,
           title: 'Basic example',
         ),
         ItemTitle(
@@ -515,7 +515,6 @@ Tree(
             );
           },
           codeText: codeSampleWidget,
-          height: 600.0,
           title: 'Using widgets instead of text',
         ),
         ItemTitle(
@@ -629,7 +628,6 @@ Tree(
             );
           },
           codeText: codeSampleCollapse,
-          height: 600.0,
           title: 'Collapsible tree',
         ),
       ],

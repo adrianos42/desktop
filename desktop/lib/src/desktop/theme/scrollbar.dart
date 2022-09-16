@@ -159,7 +159,7 @@ class ScrollbarTheme extends InheritedTheme {
           scrollbarThemeData.hoverColor ?? colorScheme.shade[70];
 
       final Color trackColor =
-          scrollbarThemeData.trackColor ?? colorScheme.background[10];
+          scrollbarThemeData.trackColor ?? colorScheme.background[0];
 
       final Color disabledColor =
           scrollbarThemeData.disabledColor ?? colorScheme.disabled;

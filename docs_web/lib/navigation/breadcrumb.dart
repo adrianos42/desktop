@@ -39,16 +39,15 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
     final textController = TextEditingController(text: '''
 ''');
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
-            body: (context) => Breadcrumb(
-                  controller: breadcrumbController,
-                ),
-            codeText: textController.text,
-            title: 'Basic example',
-            height: 600.0)
+          body: (context) => Breadcrumb(
+            controller: breadcrumbController,
+          ),
+          codeText: textController.text,
+          title: 'Basic example',
+        )
       ],
       header: 'Breadcrumb',
     );

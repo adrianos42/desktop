@@ -4,18 +4,17 @@ import 'package:desktop/desktop.dart';
 import 'package:flutter/services.dart';
 import 'defaults.dart';
 
+import 'dart:ui' show PointerDeviceKind;
+
 const _kFileNames = [
-  'pexels-4411430',
-  'pexels-1784289',
-  'pexels-731553',
+  'pexels-3127729',
+  'pexels-5456616',
   'pexels-4734723',
   'pexels-1828875',
   'pexels-979503',
   'pexels-1643457',
-  'pexels-5044690',
   'pexels-45170',
   'pexels-45201',
-  'pexels-104827',
   'pexels-160755',
   'pexels-979247',
   'pexels-2693561',
@@ -34,13 +33,16 @@ const _kFileNames = [
   'pexels-1416792',
   'pexels-4391733',
   'pexels-156321',
-  'pexels-3127729',
+  'pexels-4411430',
   'pexels-96428',
   'pexels-1754986',
   'pexels-1299518',
   'pexels-5800065',
-  'pexels-5456616',
+  'pexels-731553',
+  'pexels-5044690',
+  'pexels-1784289',
   'pexels-1770918',
+  'pexels-104827',
 ];
 
 const _kPageDuration = Duration(milliseconds: 200);
@@ -89,7 +91,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Defaults.createHeader(context, 'Scrolling'),
         ),
         Expanded(
@@ -171,7 +173,8 @@ class _ImagePage extends StatefulWidget {
 class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   Timer? _fadeoutTimer;
   bool _offstage = false;
-  bool _menuFocus = true;
+  bool _menuFocus = false;
+  bool _initialMenuFocus = true;
 
   void _startFadeoutTimer(
       [Duration duration = const Duration(milliseconds: 2000)]) {
@@ -189,19 +192,19 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
   late Map<LogicalKeySet, Intent> _shortcutMap;
 
   void _requestPrevious() {
+    _startFadeoutTimer();
     controller.previousPage(
       duration: _kPageDuration,
       curve: _kPageCurve,
     );
-    setState(() => _menuFocus = true);
   }
 
   void _requestNext() {
+    _startFadeoutTimer();
     controller.nextPage(
       duration: _kPageDuration,
       curve: _kPageCurve,
     );
-    setState(() => _menuFocus = true);
   }
 
   @override
@@ -258,26 +261,34 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
 
   late PageController controller;
 
+  bool? _canRequestPrevious;
   bool get canRequestPrevious =>
+      _canRequestPrevious ??
       controller.hasClients && (controller.page?.toInt() ?? 0) > 0;
 
+  bool? _canRequestNext;
   bool get canRequestNext =>
+      _canRequestNext ??
       controller.hasClients &&
-      (controller.page?.toInt() ?? _kFileNames.length) < _kFileNames.length - 1;
+          (controller.page?.toInt() ?? _kFileNames.length) <
+              _kFileNames.length - 1;
 
-  bool _handleScrollNotification(ScrollNotification notification) {
-    final ScrollMetrics metrics = notification.metrics;
+  String? _pageTitle;
+  String get pageTitle =>
+      _pageTitle ??
+      (controller.hasClients ? _kFileNames[controller.page!.toInt()] : '');
 
-    if (notification is ScrollUpdateNotification) {
-      if (_menuFocus) {
-        setState(() {
-          _startFadeoutTimer();
-          _menuFocus = false;
-        });
+  void _onPageChanged(int index) {
+    setState(() {
+      _pageTitle = _kFileNames[index];
+      _canRequestNext = index < _kFileNames.length - 1;
+      _canRequestPrevious = index > 0;
+
+      if (_initialMenuFocus) {
+        _startFadeoutTimer();
+        _initialMenuFocus = false;
       }
-    }
-
-    return false;
+    });
   }
 
   @override
@@ -285,43 +296,60 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
     final colorScheme = Theme.of(context).colorScheme;
 
     Widget result = MouseRegion(
-      onHover: (_) => _startFadeoutTimer(),
+      onHover: (event) {
+        if (event.kind == PointerDeviceKind.mouse) {
+          _startFadeoutTimer();
+          if (_initialMenuFocus) {
+            _initialMenuFocus = false;
+          }
+        }
+      },
       child: GestureDetector(
-        onTap: () => _startFadeoutTimer(),
+        onTap: () {
+          _startFadeoutTimer();
+          if (_initialMenuFocus) {
+            _initialMenuFocus = false;
+          }
+        },
         child: LayoutBuilder(
           builder: (context, constraints) => Stack(
             children: [
-              NotificationListener<ScrollNotification>(
-                onNotification: _handleScrollNotification,
-                child: PageView.custom(
-                  controller: controller,
-                  childrenDelegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Container(
-                        color: const Color(0xFF000000),
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          'assets/cats/${_kFileNames[index]}.webp',
-                          frameBuilder: _frameBuilder,
-                          fit: BoxFit.contain,
-                          cacheHeight: constraints.maxHeight.toInt(),
-                        ),
-                      );
-                    },
-                    childCount: _kFileNames.length,
-                  ),
+              PageView.custom(
+                controller: controller,
+                onPageChanged: _onPageChanged,
+                childrenDelegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return Container(
+                      color: const Color(0xFF000000),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        'assets/cats/${_kFileNames[index]}.webp',
+                        frameBuilder: _frameBuilder,
+                        fit: BoxFit.contain,
+                        cacheHeight: constraints.maxHeight.toInt(),
+                      ),
+                    );
+                  },
+                  childCount: _kFileNames.length,
                 ),
               ),
               Offstage(
                 offstage: _offstage,
                 child: AnimatedOpacity(
-                  opacity: _fadeoutTimer == null && !_menuFocus ? 0.0 : 1.0,
+                  opacity:
+                      _fadeoutTimer == null && !_menuFocus && !_initialMenuFocus
+                          ? 0.0
+                          : 1.0,
                   duration: const Duration(milliseconds: 200),
-                  curve: _fadeoutTimer == null && !_menuFocus
-                      ? Curves.easeOut
-                      : Curves.easeIn,
+                  curve:
+                      _fadeoutTimer == null && !_menuFocus && !_initialMenuFocus
+                          ? Curves.easeOut
+                          : Curves.easeIn,
                   onEnd: () => setState(
-                      () => _offstage = _fadeoutTimer == null && !_menuFocus),
+                    () => _offstage = _fadeoutTimer == null &&
+                        !_menuFocus &&
+                        !_initialMenuFocus,
+                  ),
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Container(
@@ -338,9 +366,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 16),
                                 child: Text(
-                                  controller.hasClients
-                                      ? _kFileNames[controller.initialPage]
-                                      : '',
+                                  pageTitle,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

@@ -110,15 +110,9 @@ class TreeTheme extends InheritedTheme {
       final TextStyle textStyle = treeThemeData.textStyle ??
           textTheme.body2.copyWith(fontSize: _kFontSize);
 
-      final Color color = treeThemeData.color ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kInactiveColorIndexDark
-              : kInactiveColorIndexLight];
+      final Color color = treeThemeData.color ?? textTheme.textLow;
 
-      final Color hoverColor = treeThemeData.hoverColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color hoverColor = treeThemeData.hoverColor ?? textTheme.textHigh;
 
       final Color highlightColor = treeThemeData.highlightColor ??
           colorScheme.primary[kHighlightColorIndex];

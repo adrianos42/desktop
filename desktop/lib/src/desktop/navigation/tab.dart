@@ -202,8 +202,8 @@ class _TabState extends State<Tab> {
         ),
         Expanded(
           child: Stack(
-            children: list,
             fit: StackFit.expand,
+            children: list,
           ),
         ),
       ],
@@ -302,9 +302,6 @@ class _TabGroupState extends State<_TabGroup> {
                   children: list,
                 ),
               ),
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // mainAxisSize: MainAxisSize.min,
             ),
           ),
           if (widget.trailing != null) widget.trailing!(context),

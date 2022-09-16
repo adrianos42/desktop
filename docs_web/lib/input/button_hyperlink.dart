@@ -9,48 +9,39 @@ class ButtonHyperlinkPage extends StatefulWidget {
 }
 
 class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
+  bool _disabled = false;
+
   @override
   Widget build(BuildContext context) {
-    const enabledCode = '''
-HyperlinkButton(
+    final codeText = '''
+return HyperlinkButton(
   'https://github.com/adrianos42/desktop',
-  onPressed: (value) {},
-),
+  onPressed: ${_disabled ? '(value) {}' : 'null'},
+);
 ''';
 
-    const disabledCode = '''
-HyperlinkButton('https://github.com/adrianos42/desktop'),
-''';
-
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: SizedBox(
               height: 50,
               child: HyperlinkButton(
                 'https://github.com/adrianos42/desktop',
-                onPressed: (value) {},
+                onPressed: !_disabled ? (value) {} : null,
               ),
             ),
           ),
-          codeText: enabledCode,
-          title: 'Enabled',
-          height: 200.0,
-        ),
-        ItemTitle(
-          body: (context) => const Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(
-              height: 50,
-              child: HyperlinkButton('https://github.com/adrianos42/desktop'),
+          codeText: codeText,
+          title: 'Example',
+          options: [
+            Button.icon(
+              Icons.disabled_by_default,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
             ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
-          height: 200.0,
+          ],
         ),
       ],
       header: 'Hyperlink',

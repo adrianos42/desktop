@@ -22,7 +22,7 @@ class _TabPageState extends State<TabPage> {
               ? colorScheme.background[0]
               : buttonScope.hovered
                   ? colorScheme.shade[30]
-                  : colorScheme.background[10];
+                  : colorScheme.background[12];
 
       return Container(
         alignment: Alignment.center,
@@ -54,7 +54,7 @@ class _TabPageState extends State<TabPage> {
   @override
   Widget build(BuildContext context) {
     const codeSample = '''
-Tab(
+return Tab(
   items: [
     TabItem.text('page 0',
       builder: (context, _) => TabView(
@@ -87,13 +87,13 @@ Tab(
       ),
     ),
   ],
-)
+);
 ''';
 
     const customCodeSample = '''
-Tab(
+return Tab(
   itemPadding: EdgeInsets.zero,
-  backgroundColor: Theme.of(context).colorScheme.background[10],
+  backgroundColor: Theme.of(context).colorScheme.background[12],
   items: [
     TabItem(
       itemBuilder: _createCustomTab('camera', Icons.camera),
@@ -132,10 +132,10 @@ Tab(
       ),
     ),
   ],
-);''';
+);
+''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) {
@@ -173,13 +173,12 @@ Tab(
           },
           codeText: codeSample,
           title: 'Basic example',
-          height: 600.0,
         ),
         ItemTitle(
           body: (context) {
             return Tab(
               itemPadding: EdgeInsets.zero,
-              backgroundColor: Theme.of(context).colorScheme.background[10],
+              backgroundColor: Theme.of(context).colorScheme.background[12],
               items: [
                 TabItem(
                   itemBuilder: _createCustomTab('camera', Icons.camera),
@@ -222,7 +221,6 @@ Tab(
           },
           codeText: customCodeSample,
           title: 'Custom tabs',
-          height: 600.0,
         ),
       ],
       header: 'Tab',

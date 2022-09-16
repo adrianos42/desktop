@@ -9,14 +9,17 @@ class ButtonContextMenuPage extends StatefulWidget {
 }
 
 class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
-  String firstValue = 'Joinville';
+  String _firstValue = 'Joinville';
+
+  bool _disabled = false;
 
   @override
   Widget build(BuildContext context) {
-    const enabledText = ''' 
-ContextMenuButton(
+    final codeText = ''' 
+return ContextMenuButton(
   Icon(Icons.place),
   value: firstValue,
+  enabled: $_disabled,
   onSelected: (String value) =>
       setState(() => firstValue = value),
   itemBuilder: (context) => [
@@ -37,48 +40,23 @@ ContextMenuButton(
       value: 'Pedra Branca',
     ),
   ],
-),
+);
 ''';
 
-    const disabledText = '''
-ContextMenuButton(
-  Icon(Icons.place),
-  value: firstValue,
-  enabled: false,
-  itemBuilder: (context) => [
-    ContextMenuItem(
-      child: Text('Florianópolis'),
-      value: 'Florianópolis',
-    ),
-    ContextMenuItem(
-      child: Text('Joinville'),
-      value: 'Joinville',
-    ),
-    ContextMenuItem(
-      child: Text('Palhoça'),
-      value: 'Palhoça',
-    ),
-    ContextMenuItem(
-      child: Text('Pedra Branca'),
-      value: 'Pedra Branca',
-    ),
-  ],
-),
-''';
-
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.topLeft,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ContextMenuButton(
                   const Icon(Icons.place),
-                  value: firstValue,
+                  value: _firstValue,
+                  enabled: !_disabled,
                   onSelected: (String value) =>
-                      setState(() => firstValue = value),
+                      setState(() => _firstValue = value),
                   itemBuilder: (context) => const [
                     ContextMenuItem(
                       value: 'Florianópolis',
@@ -101,62 +79,20 @@ ContextMenuButton(
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   alignment: Alignment.center,
-                  child: Text(firstValue),
+                  child: Text(_firstValue),
                 ),
               ],
             ),
           ),
-          codeText: enabledText,
-          title: 'Enabled',
-          height: 400.0,
-        ),
-        ItemTitle(
-          body: (context) {
-            final textTheme = Theme.of(context).textTheme;
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-                  ContextMenuButton(
-                    const Icon(Icons.place),
-                    value: firstValue,
-                    enabled: false,
-                    itemBuilder: (context) => const [
-                      ContextMenuItem(
-                        value: 'Florianópolis',
-                        child: Text('Florianópolis'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Joinville',
-                        child: Text('Joinville'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Palhoça',
-                        child: Text('Palhoça'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Pedra Branca',
-                        child: Text('Pedra Branca'),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      firstValue,
-                      style: textTheme.body1.copyWith(
-                        color: textTheme.textDisabled,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          codeText: disabledText,
-          title: 'Disabled',
-          height: 400.0,
+          options: [
+            Button.icon(
+              Icons.disabled_by_default,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
+            ),
+          ],
+          codeText: codeText,
+          title: 'Example',
         ),
       ],
       header: 'Context menu',

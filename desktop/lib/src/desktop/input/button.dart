@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
+import 'dart:ui' show PointerDeviceKind;
 
 const Duration _kDefaultButtonDuration = Duration(milliseconds: 100);
 
@@ -20,7 +21,6 @@ class Button extends StatefulWidget {
     this.color,
     this.hoverColor,
     this.highlightColor,
-    this.onPressed,
     this.leadingPadding,
     this.padding,
     this.bodyPadding,
@@ -30,6 +30,8 @@ class Button extends StatefulWidget {
     this.focusNode,
     this.canRequestFocus = true,
     this.autofocus = false,
+    this.filled = false,
+    required this.onPressed,
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
 
@@ -41,13 +43,13 @@ class Button extends StatefulWidget {
     Color? color,
     Color? highlightColor,
     Color? hoverColor,
-    VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
+    required VoidCallback? onPressed,
   }) {
     return Button(
       body: Text(
@@ -77,13 +79,13 @@ class Button extends StatefulWidget {
     Color? color,
     Color? highlightColor,
     Color? hoverColor,
-    VoidCallback? onPressed,
     EdgeInsets? padding,
     Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
+    required VoidCallback? onPressed,
   }) {
     return Button(
       body: Icon(icon, size: size),
@@ -99,6 +101,43 @@ class Button extends StatefulWidget {
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
       active: active,
+    );
+  }
+
+  /// Creates a button with a filled background.
+  factory Button.filled(
+    String text, {
+    double? fontSize,
+    String? tooltip,
+    Color? color,
+    Color? highlightColor,
+    Color? hoverColor,
+    EdgeInsets? padding,
+    Key? key,
+    FocusNode? focusNode,
+    bool canRequestFocus = true,
+    bool autofocus = false,
+    bool? active,
+    required VoidCallback? onPressed,
+  }) {
+    return Button(
+      body: Text(
+        text,
+        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
+      ),
+      padding: padding,
+      bodyPadding: padding != null ? EdgeInsets.zero : null,
+      color: color,
+      highlightColor: highlightColor,
+      hoverColor: hoverColor,
+      tooltip: tooltip,
+      onPressed: onPressed,
+      key: key,
+      focusNode: focusNode,
+      canRequestFocus: canRequestFocus,
+      autofocus: autofocus,
+      active: active,
+      filled: true,
     );
   }
 
@@ -153,6 +192,9 @@ class Button extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// If the button fills a background.
+  final bool filled;
+
   @override
   _ButtonState createState() => _ButtonState();
 }
@@ -160,23 +202,29 @@ class Button extends StatefulWidget {
 class _ButtonState extends State<Button>
     with ComponentStateMixin, SingleTickerProviderStateMixin {
   void _handleHoverEntered() {
-    if (!hovered && (pressed || !_globalPointerDown)) {
-      _colorUpdate.clear();
-      setState(() => hovered = true);
+    if (!hovered && !_globalPointerDown) {
+      hovered = true;
       _updateColor();
     }
   }
 
   void _handleHoverExited() {
     if (hovered) {
-      setState(() => hovered = false);
+      hovered = false;
+      _updateColor();
+    }
+  }
+
+  void _handleHover() {
+    if (!hovered && !pressed && !_globalPointerDown) {
+      hovered = true;
       _updateColor();
     }
   }
 
   void _handleTapUp(TapUpDetails event) {
     if (pressed) {
-      setState(() => pressed = false);
+      pressed = false;
       if (widget.active == null) {
         _updateColor();
       }
@@ -185,28 +233,29 @@ class _ButtonState extends State<Button>
 
   void _handleTapDown(TapDownDetails event) {
     if (!pressed) {
-      setState(() => pressed = true);
-      _colorUpdate.clear();
+      pressed = true;
       _updateColor();
     }
   }
 
   void _handleTapCancel() {
     if (pressed) {
-      setState(() => pressed = false);
       pressed = false;
+      hovered = false;
       _updateColor();
     }
   }
 
   bool _globalPointerDown = false;
 
-  void _mouseRoute(PointerEvent event) => _globalPointerDown = event.down;
+  void _mouseRoute(PointerEvent event) {
+    _globalPointerDown = event.down;
+  }
 
   late AnimationController _controller;
 
   ColorTween? _color;
-  final Queue<Color> _colorUpdate = Queue<Color>();
+  ColorTween? _backgroundColor;
 
   late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
     ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _invoke),
@@ -237,12 +286,9 @@ class _ButtonState extends State<Button>
   }
 
   bool get _focusHighlight {
-    switch (FocusManager.instance.highlightMode) {
-      case FocusHighlightMode.touch:
-        return false;
-      case FocusHighlightMode.traditional:
-        return _shouldShowFocus;
-    }
+    return FocusManager.instance.highlightMode ==
+            FocusHighlightMode.traditional &&
+        _shouldShowFocus;
   }
 
   void _invoke([Intent? intent]) => _handleTap();
@@ -253,46 +299,99 @@ class _ButtonState extends State<Button>
     focused = hasFocus;
   }
 
-  bool get active => waiting || (widget.active ?? false);
+  bool get active => widget.active ?? false;
 
   bool get enabled => widget.onPressed != null;
 
   void _updateColor([bool animates = true]) {
-    final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
+    if (mounted) {
+      final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
-    final Color pressedForeground =
-        widget.highlightColor ?? buttonThemeData.highlightColor!;
+      final Color disabledForeground = buttonThemeData.disabledColor!;
 
-    final Color enabledForeground = widget.color ?? buttonThemeData.color!;
+      final Color foregroundColor;
+      Color? backgroundColor;
 
-    final Color hoveredForeground =
-        widget.hoverColor ?? buttonThemeData.hoverColor!;
+      if (!widget.filled) {
+        final Color pressedForeground =
+            widget.highlightColor ?? buttonThemeData.highlightColor!;
 
-    final Color disabledForeground = buttonThemeData.disabledColor!;
+        final Color enabledForeground = widget.color ?? buttonThemeData.color!;
 
-    final Color foregroundColor = enabled
-        ? active || pressed
-            ? pressedForeground
-            : hovered || _focusHighlight
-                ? hoveredForeground
-                : enabledForeground
-        : disabledForeground;
+        final Color hoveredForeground =
+            widget.hoverColor ?? buttonThemeData.hoverColor!;
 
-    _colorUpdate.addLast(foregroundColor);
+        foregroundColor = enabled
+            ? active || pressed
+                ? pressedForeground
+                : hovered || _focusHighlight
+                    ? hoveredForeground
+                    : enabledForeground
+            : disabledForeground;
+      } else {
+        ///
+        final ColorScheme colorScheme = Theme.of(context).colorScheme;
+        final TextTheme textTheme = Theme.of(context).textTheme;
 
-    if (animates) {
-      if (!_controller.isAnimating) {
-        if (_colorUpdate.length == 1) {
-          final color = _colorUpdate.removeFirst();
-          _color = ColorTween(begin: _color?.end ?? color, end: color);
-          _controller.forward(from: 0.0);
-        }
+        foregroundColor = textTheme.textHigh;
+
+        backgroundColor = enabled
+            ? active || pressed
+                ? colorScheme.background[20]
+                : hovered
+                    ? colorScheme.shade[30]
+                    : colorScheme.primary[30]
+            : disabledForeground;
       }
-    } else {
-      final color = _colorUpdate.removeFirst();
-      _colorUpdate.clear();
-      _controller.value = 1.0;
-      _color = ColorTween(begin: _color?.end ?? color, end: color);
+
+      final bool wasPressed = pressed;
+      final bool wasHovered = hovered;
+      final bool wasActive = active;
+      final bool wasEnabled = enabled;
+
+      if (animates) {
+        if (_controller.isAnimating) {
+          return;
+        }
+
+        _color = ColorTween(
+            begin: _color?.end ?? foregroundColor, end: foregroundColor);
+
+        _backgroundColor = ColorTween(
+            begin: _backgroundColor?.end ?? backgroundColor,
+            end: backgroundColor);
+
+        _controller.forward(from: 0.0).then((_) {
+          if (wasPressed != pressed ||
+              wasHovered != hovered ||
+              wasActive != active ||
+              wasEnabled != enabled) {
+            _updateColor();
+          }
+        });
+      } else {
+        _color = ColorTween(
+            begin: _color?.end ?? foregroundColor, end: foregroundColor);
+
+        _backgroundColor = ColorTween(
+            begin: _backgroundColor?.end ?? backgroundColor,
+            end: backgroundColor);
+
+        _controller.value = 1.0;
+      }
+    }
+  }
+
+  void _statusController(AnimationStatus status) {
+    switch (status) {
+      case AnimationStatus.dismissed:
+        break;
+      case AnimationStatus.forward:
+        break;
+      case AnimationStatus.reverse:
+        break;
+      case AnimationStatus.completed:
+        break;
     }
   }
 
@@ -304,29 +403,14 @@ class _ButtonState extends State<Button>
       vsync: this,
       duration: _kDefaultButtonDuration,
       value: 1.0,
-    )..addStatusListener((status) {
-        switch (status) {
-          case AnimationStatus.dismissed:
-            break;
-          case AnimationStatus.forward:
-            break;
-          case AnimationStatus.reverse:
-            break;
-          case AnimationStatus.completed:
-            if (_colorUpdate.isNotEmpty) {
-              final color = _colorUpdate.removeFirst();
-              _color = ColorTween(begin: _color?.end ?? color, end: color);
-              _controller.forward(from: 0.0);
-            }
-            break;
-        }
-      });
+    )..addStatusListener(_statusController);
 
     WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
   }
 
   @override
   void dispose() {
+    _controller.removeStatusListener(_statusController);
     _controller.dispose();
     WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
     super.dispose();
@@ -335,16 +419,12 @@ class _ButtonState extends State<Button>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    _colorUpdate.clear();
-    _updateColor();
+    _updateColor(false);
   }
 
   @override
   void didUpdateWidget(Button oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    _colorUpdate.clear();
     _updateColor(false);
   }
 
@@ -354,11 +434,8 @@ class _ButtonState extends State<Button>
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 
-    if (_color == null) {
+    if (_color == null || widget.filled && _backgroundColor == null) {
       _updateColor();
-
-      final color = _colorUpdate.removeFirst();
-      _color ??= ColorTween(begin: _color?.end ?? color, end: color);
     }
 
     final BoxConstraints constraints;
@@ -368,10 +445,7 @@ class _ButtonState extends State<Button>
     final EdgeInsets buttonPadding;
 
     if (widget.axis == Axis.horizontal) {
-      constraints = BoxConstraints(
-        minHeight: buttonThemeData.height!,
-        // minWidth: buttonThemeData.minWidth!,
-      );
+      constraints = BoxConstraints(minHeight: buttonThemeData.height!);
 
       leadingPadding = widget.leadingPadding ??
           EdgeInsets.symmetric(horizontal: itemSpacing);
@@ -379,14 +453,13 @@ class _ButtonState extends State<Button>
           EdgeInsets.symmetric(horizontal: itemSpacing);
       bodyPadding =
           widget.bodyPadding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
-      buttonPadding =
-          widget.padding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
+      buttonPadding = widget.padding ??
+          EdgeInsets.symmetric(
+              horizontal: !widget.filled
+                  ? itemSpacing
+                  : buttonThemeData.filledSpacing!);
     } else {
-      constraints = BoxConstraints(
-        // maxWidth: buttonThemeData.height!,
-        // minWidth: buttonThemeData.height!,
-        minHeight: buttonThemeData.minWidth!,
-      );
+      constraints = BoxConstraints(minHeight: buttonThemeData.minWidth!);
 
       leadingPadding =
           widget.leadingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
@@ -394,15 +467,23 @@ class _ButtonState extends State<Button>
           widget.trailingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
       bodyPadding =
           widget.bodyPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
-      buttonPadding =
-          widget.padding ?? EdgeInsets.symmetric(vertical: itemSpacing);
+      buttonPadding = widget.padding ??
+          EdgeInsets.symmetric(
+              vertical: !widget.filled
+                  ? itemSpacing
+                  : buttonThemeData.filledSpacing!);
     }
 
     Widget result = AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        final foreground =
+        final Color? foreground =
             _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
+
+        final Color? background = widget.filled
+            ? _backgroundColor!
+                .evaluate(AlwaysStoppedAnimation(_controller.value))
+            : null;
 
         final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
           color: foreground,
@@ -413,7 +494,7 @@ class _ButtonState extends State<Button>
           color: foreground,
         );
 
-        return DefaultTextStyle(
+        Widget result = DefaultTextStyle(
           style: textStyle,
           child: IconTheme(
             data: iconThemeData,
@@ -448,6 +529,22 @@ class _ButtonState extends State<Button>
             ),
           ),
         );
+
+        result = Container(
+          padding: buttonPadding,
+          constraints: constraints,
+          color: background,
+          child: result,
+        );
+
+        return ButtonScope(
+          child: result,
+          hovered: enabled && (hovered || _focusHighlight),
+          pressed: enabled && pressed,
+          active: enabled && active,
+          disabled: !enabled,
+          color: foreground!,
+        );
       },
     );
 
@@ -462,6 +559,13 @@ class _ButtonState extends State<Button>
           cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
           onEnter: enabled ? (_) => _handleHoverEntered() : null,
           onExit: (_) => _handleHoverExited(),
+          onHover: enabled
+              ? (event) {
+                  if (event.kind == PointerDeviceKind.mouse) {
+                    _handleHover();
+                  }
+                }
+              : null,
           child: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTapDown: enabled ? _handleTapDown : null,
@@ -481,21 +585,9 @@ class _ButtonState extends State<Button>
       );
     }
 
-    result = ButtonScope(
-      child: result,
-      hovered: enabled && (hovered || _focusHighlight),
-      pressed: enabled && pressed,
-      active: enabled && active,
-      disabled: !enabled,
-    );
-
     return Semantics(
       button: true,
-      child: Container(
-        padding: buttonPadding,
-        constraints: constraints,
-        child: result,
-      ),
+      child: result,
     );
   }
 }
@@ -510,6 +602,7 @@ class ButtonScope extends InheritedWidget {
     required this.pressed,
     required this.active,
     required this.disabled,
+    required this.color,
   }) : super(key: key, child: child);
 
   final bool hovered;
@@ -519,6 +612,8 @@ class ButtonScope extends InheritedWidget {
   final bool active;
 
   final bool disabled;
+
+  final Color color;
 
   @override
   bool updateShouldNotify(ButtonScope oldWidget) => true;

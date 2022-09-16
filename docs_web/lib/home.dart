@@ -13,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.34';
+const String _version = 'dev.4.2.46';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -47,7 +47,6 @@ class _DocAppState extends State<DocApp> {
           _menuItemPrimaryColor(PrimaryColor.sandyBrown),
           _menuItemPrimaryColor(PrimaryColor.orange),
           _menuItemPrimaryColor(PrimaryColor.goldenrod),
-          _menuItemPrimaryColor(PrimaryColor.lightGoldenrod),
           _menuItemPrimaryColor(PrimaryColor.springGreen),
           _menuItemPrimaryColor(PrimaryColor.turquoise),
           _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),
@@ -57,7 +56,6 @@ class _DocAppState extends State<DocApp> {
           _menuItemPrimaryColor(PrimaryColor.slateBlue),
           _menuItemPrimaryColor(PrimaryColor.purple),
           _menuItemPrimaryColor(PrimaryColor.violet),
-          _menuItemPrimaryColor(PrimaryColor.orchid),
           _menuItemPrimaryColor(PrimaryColor.hotPink),
           _menuItemPrimaryColor(PrimaryColor.red),
         ];
@@ -134,7 +132,9 @@ class _DocAppState extends State<DocApp> {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
+                        vertical: 8.0,
+                        horizontal: 16.0,
+                      ),
                       child: Builder(
                         builder: (context) {
                           return Tooltip(
@@ -187,9 +187,13 @@ class _DocAppState extends State<DocApp> {
                       if (kReleaseMode) {
                         return OverviewPage();
                       } else {
-                        return PrimaryColorPage();
+                        // return ScrollingPage();
+                        // return OverviewPage();
+                        // return ColorschemePage();
+                        // return ButtonPage();
+                        // return PrimaryColorPage();
                         // return ButtonDropDownPage();
-                        // return ListTablePage();
+                         return ListTablePage();
                         // return NavPage();
                         // return ButtonGroupPage();
                         // return ScrollingPage();
@@ -208,6 +212,7 @@ class _DocAppState extends State<DocApp> {
                           titleBuilder: (context) => const Text('Nav'),
                           builder: (context) => NavPage(),
                         ),
+
                         ///TreeNode.child(
                         ///  titleBuilder: (context) => const Text('Bottom Nav'),
                         ///  builder: (context) => BottomNavPage(),
@@ -262,18 +267,6 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => ButtonDropDownPage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Icon Button'),
-                          builder: (context) => ButtonIconPage(),
-                        ),
-                        TreeNode.child(
-                          titleBuilder: (context) => const Text('Text Button'),
-                          builder: (context) => ButtonTextPage(),
-                        ),
-                        // TreeNode(
-                        //   'Toggle button',
-                        //   builder: (context) => ButtonTogglePage(),
-                        // ),
-                        TreeNode.child(
                           titleBuilder: (context) => const Text('Hyperlink'),
                           builder: (context) => ButtonHyperlinkPage(),
                         ),
@@ -312,7 +305,8 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => TextFieldPage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Selectable Text'),
+                          titleBuilder: (context) =>
+                              const Text('Selectable Text'),
                           builder: (context) => SelectableTextPage(),
                         ),
                       ]),

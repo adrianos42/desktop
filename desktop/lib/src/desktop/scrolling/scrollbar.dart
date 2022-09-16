@@ -106,7 +106,6 @@ class _ScrollbarState extends State<Scrollbar>
   ColorTween? _color;
 
   Color? get _trackColor {
-    return null;
     if (!_hideScroll) {
       final theme = ScrollbarTheme.of(context);
       return theme.trackColor!;

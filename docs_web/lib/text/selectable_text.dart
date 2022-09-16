@@ -11,21 +11,18 @@ class SelectableTextPage extends StatefulWidget {
 class _SelectableTextPageState extends State<SelectableTextPage> {
   @override
   Widget build(BuildContext context) {
-    const basicExample = 'SelectableText()';
+    const basicExample = 'return SelectableText();';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       header: 'Selectable text',
       items: [
         ItemTitle(
           body: (context) => Container(
-            margin: const EdgeInsets.all(16.0),
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: const [
-                SizedBox(
-                  child: SelectableText(
-                    '''
+            margin: const EdgeInsets.all(12.0),
+            alignment: Alignment.center,
+            child: const SingleChildScrollView(
+              child: SelectableText(
+                '''
 Porro ut culpa voluptatem. Et quia nobis iste. Voluptatem ea voluptates nemo enim dolor ut dolorem odit.
 Similique impedit nesciunt nemo rerum ipsam qui. Odio unde ut fugiat dolore. Possimus itaque qui necessitatibus possimus recusandae nisi.
 Vel iste voluptatum ex tenetur voluptate non atque. Porro quasi omnis voluptatem dolor quis. Corrupti eius et quo voluptatem est quo quas possimus. Culpa ex quisquam adipisci pariatur.
@@ -33,16 +30,11 @@ Est est est tempora. Pariatur ad at ut nobis nihil illo aliquid rerum. Illo non 
 Possimus ea hic modi. Quas accusamus eos rerum sint quaerat. Voluptate fugit sit officia.
 Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat officiis ducimus est voluptates minima iste. Non eius labore cum et qui. Voluptatem dolorem dolorum fugiat numquam.
 ''',
-                    minLines: 1,
-                    maxLines: 1000,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
           codeText: basicExample,
           title: 'Basic example',
-          height: 400.0,
         ),
       ],
     );

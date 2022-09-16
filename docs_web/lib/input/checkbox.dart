@@ -16,7 +16,7 @@ class _CheckboxPageState extends State<CheckboxPage> {
   @override
   Widget build(BuildContext context) {
     const enabledCode = '''
-Container(
+return Container(
   width: 200.0,
   child: Row(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,11 +45,11 @@ Container(
       ),
     ],
   ),
-)
+);
 ''';
 
     const disabledCode = '''
-Container(
+return Container(
   width: 200.0,
   child: Row(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,15 +69,14 @@ Container(
       ),
     ],
   ),
-)
+);
 ''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: SizedBox(
               width: 200.0,
               child: Row(
@@ -111,11 +110,10 @@ Container(
           ),
           codeText: enabledCode,
           title: 'Enabled',
-          height: 400.0,
         ),
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: SizedBox(
               width: 200.0,
               child: Row(
@@ -140,7 +138,6 @@ Container(
           ),
           codeText: disabledCode,
           title: 'Disabled',
-          height: 400.0,
         ),
       ],
       header: 'Checkbox',

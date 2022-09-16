@@ -10,6 +10,7 @@ import 'theme_data.dart';
 import 'theme_text.dart';
 
 const double _kSidePadding = 4.0;
+const double _kFilledSidePadding = 12.0;
 const double _kHeight = 32.0;
 const double _kMinWidth = 12.0;
 
@@ -18,6 +19,7 @@ class ButtonThemeData {
   const ButtonThemeData({
     this.height,
     this.itemSpacing,
+    this.filledSpacing,
     this.minWidth,
     this.textStyle,
     this.iconThemeData,
@@ -33,6 +35,8 @@ class ButtonThemeData {
   //final ColorScheme colorScheme;
 
   final double? itemSpacing;
+
+  final double? filledSpacing;
 
   final double? height;
 
@@ -54,6 +58,7 @@ class ButtonThemeData {
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     double? itemSpacing,
+    double? filledSpacing,
     double? height,
     double? minWidth,
     Color? disabledColor,
@@ -73,6 +78,7 @@ class ButtonThemeData {
       focusColor: focusColor ?? this.focusColor,
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
+      filledSpacing: filledSpacing ?? this.filledSpacing,
     );
   }
 
@@ -91,6 +97,7 @@ class ButtonThemeData {
       focusColor: other.focusColor,
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
+      filledSpacing: other.filledSpacing,
     );
   }
 
@@ -104,7 +111,8 @@ class ButtonThemeData {
         itemSpacing != null &&
         height != null &&
         minWidth != null &&
-        highlightColor != null;
+        highlightColor != null &&
+        filledSpacing != null;
   }
 
   @override
@@ -120,6 +128,7 @@ class ButtonThemeData {
       focusColor,
       hoverColor,
       highlightColor,
+      filledSpacing,
     );
   }
 
@@ -141,40 +150,8 @@ class ButtonThemeData {
         other.color == color &&
         other.focusColor == focusColor &&
         other.hoverColor == hoverColor &&
-        other.highlightColor == highlightColor;
-  }
-
-  /// Returns a proper custom color.
-  Color customColor(BuildContext context, Color color) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    switch (colorScheme.brightness) {
-      case Brightness.dark:
-        return HSLColor.fromColor(color).withLightness(0.6).toColor();
-      case Brightness.light:
-        return HSLColor.fromColor(color).withLightness(0.4).toColor();
-    }
-  }
-
-  /// Returns a proper custom hover color.
-  Color customHoverColor(BuildContext context, Color color) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    switch (colorScheme.brightness) {
-      case Brightness.dark:
-        return HSLColor.fromColor(color).withLightness(0.8).toColor();
-      case Brightness.light:
-        return HSLColor.fromColor(color).withLightness(0.2).toColor();
-    }
-  }
-
-  /// Returns a proper custom highlight color.
-  Color customHighlightColor(BuildContext context, Color color) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    switch (colorScheme.brightness) {
-      case Brightness.dark:
-        return HSLColor.fromColor(color).withLightness(0.6).toColor();
-      case Brightness.light:
-        return HSLColor.fromColor(color).withLightness(0.4).toColor();
-    }
+        other.highlightColor == highlightColor &&
+        other.filledSpacing == filledSpacing;
   }
 }
 
@@ -216,6 +193,7 @@ class ButtonTheme extends InheritedTheme {
     Color? focusColor,
     Color? hoverColor,
     Color? highlightColor,
+    double? filledSpacing,
   }) {
     return Builder(
       key: key,
@@ -232,6 +210,7 @@ class ButtonTheme extends InheritedTheme {
           focusColor: focusColor,
           hoverColor: hoverColor,
           highlightColor: highlightColor,
+          filledSpacing: filledSpacing,
         ),
       ),
     );
@@ -264,15 +243,9 @@ class ButtonTheme extends InheritedTheme {
             overflow: TextOverflow.ellipsis,
           );
 
-      final Color color = buttonThemeData.color ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kInactiveColorIndexDark
-              : kInactiveColorIndexLight];
+      final Color color = buttonThemeData.color ?? textTheme.textLow;
 
-      final Color hoverColor = buttonThemeData.hoverColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color hoverColor = buttonThemeData.hoverColor ?? textTheme.textHigh;
 
       final Color highlightColor = buttonThemeData.highlightColor ??
           colorScheme.primary[kHighlightColorIndex];
@@ -289,6 +262,9 @@ class ButtonTheme extends InheritedTheme {
       final double itemSpacing = buttonThemeData.itemSpacing ?? _kSidePadding;
       final double minWidth = buttonThemeData.minWidth ?? _kMinWidth;
 
+      final double filledPadding =
+          buttonThemeData.filledSpacing ?? _kFilledSidePadding;
+
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,
         textStyle: textStyle,
@@ -300,6 +276,7 @@ class ButtonTheme extends InheritedTheme {
         height: height,
         itemSpacing: itemSpacing,
         minWidth: minWidth,
+        filledSpacing: filledPadding,
       );
     }
 

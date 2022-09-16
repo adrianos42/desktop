@@ -15,8 +15,8 @@ const EdgeInsetsGeometry _kPadding =
 const EdgeInsetsGeometry _kMargin = EdgeInsets.zero;
 const Duration _kFadeInDuration = Duration(milliseconds: 80);
 const Duration _kFadeOutDuration = Duration(milliseconds: 40);
-const Duration _kShowDuration = Duration(milliseconds: 1200);
-const Duration _kWaitDuration = Duration(milliseconds: 800);
+const Duration _kShowDuration = Duration(milliseconds: 2400);
+const Duration _kWaitDuration = Duration(milliseconds: 1200);
 const bool _kExcludeFromSemantics = false;
 
 class Tooltip extends StatefulWidget {

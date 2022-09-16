@@ -147,6 +147,11 @@ class _ListTableState extends State<ListTable> {
 
   int get colCount => colSizes.length;
 
+  BorderSide get _defaultHeaderBorder => BorderSide(
+        color: ListTableTheme.of(context).borderColor!,
+        width: 1.0,
+      );
+
   ScrollController? currentController;
   ScrollController get controller =>
       widget.controller ?? (currentController ??= ScrollController());
@@ -159,7 +164,7 @@ class _ListTableState extends State<ListTable> {
       itemSize: Size(colWidth, totalHeight!),
       header: FeedbackHeaderItem(
         builder: widget.header.builder,
-        columnBorder: widget.header.columnBorder ?? BorderSide.none,
+        columnBorder: widget.tableBorder?.top ?? BorderSide.none,
         itemExtent: widget.header.itemExtent,
         decoration: widget.header.decoration,
       ),
@@ -628,7 +633,8 @@ class _ListTableState extends State<ListTable> {
               ],
             ),
             _ListTableBorder(
-              headerColumnBorder: widget.header.columnBorder ?? BorderSide.none,
+              headerColumnBorder:
+                  widget.header.columnBorder ?? _defaultHeaderBorder,
               tableBorder: widget.tableBorder ?? const TableBorder(),
               columnWidths: colSizes,
               headerExtent: _kHeaderHeight,

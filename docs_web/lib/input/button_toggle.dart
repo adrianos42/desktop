@@ -17,19 +17,18 @@ class _ButtonTogglePageState extends State<ButtonTogglePage> {
     const disabledCode = '''
 ''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
-            body: (context) => const Text(''),
-            codeText: enabledCode,
-            title: 'Enabled',
-            height: 400.0),
+          body: (context) => const Text(''),
+          codeText: enabledCode,
+          title: 'Enabled',
+        ),
         ItemTitle(
-            body: (context) => const Text(''),
-            codeText: disabledCode,
-            title: 'Disabled',
-            height: 400.0),
+          body: (context) => const Text(''),
+          codeText: disabledCode,
+          title: 'Disabled',
+        ),
       ],
       header: 'Toggle button',
     );

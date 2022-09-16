@@ -14,7 +14,7 @@ class HyperlinkButton extends StatelessWidget {
   const HyperlinkButton(
     this.text, {
     Key? key,
-    this.onPressed,
+    required this.onPressed,
     this.padding,
     this.tooltip,
   }) : super(key: key);

@@ -205,7 +205,7 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.hoverColor ?? colorScheme.background[20];
 
       final Color highlightColor =
-          listTableThemeData.highlightColor ?? colorScheme.background[10];
+          listTableThemeData.highlightColor ?? colorScheme.background[12];
 
       final Color selectedColor =
           listTableThemeData.selectedColor ?? colorScheme.primary[30];
@@ -214,16 +214,16 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.background ?? colorScheme.background[4];
 
       final Color selectedHoverColor = listTableThemeData.selectedHoverColor ??
-          colorScheme.primary[40]; // TODO(as): ???
+          colorScheme.primary[30]; // TODO(as): ???
 
       final Color borderColor =
           listTableThemeData.borderColor ?? colorScheme.shade[40];
-      final Color borderHoverColor = colorScheme.shade[
-          colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
-      final Color borderHighlightColor = colorScheme.primary[50];
-      final Color borderIndicatorColor = colorScheme.primary[50];
+      final Color borderHoverColor =
+          listTableThemeData.borderHoverColor ?? textTheme.textHigh;
+      final Color borderHighlightColor =
+          listTableThemeData.borderHighlightColor ?? colorScheme.primary[50];
+      final Color borderIndicatorColor =
+          listTableThemeData.borderIndicatorColor ?? colorScheme.primary[50];
 
       final IconThemeData iconThemeData = listTableThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh);

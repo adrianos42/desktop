@@ -481,7 +481,7 @@ class _TextFieldState extends State<TextField>
         : colorScheme.shade[90];
     final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final Color selectionColor = enabled ? colorScheme.primary[40] : background;
+    final Color selectionColor = enabled ? colorScheme.primary[30] : background;
     final Color borderColor =
         focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[40];
 

@@ -134,31 +134,23 @@ class ToggleSwitchTheme extends InheritedTheme {
       final ThemeData themeData = Theme.of(context);
       toggleSwitchThemeData ??= themeData.toggleSwitchTheme;
 
-      final ColorScheme colorScheme = Theme.of(context).colorScheme;
+      final ColorScheme colorScheme = themeData.colorScheme;
+      final TextTheme textTheme = themeData.textTheme;
 
-      final Color foreground = toggleSwitchThemeData.foreground ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color foreground =
+          toggleSwitchThemeData.foreground ?? textTheme.textHigh;
 
-      final Color activeHoverColor = toggleSwitchThemeData.activeHoverColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color activeHoverColor =
+          toggleSwitchThemeData.activeHoverColor ?? textTheme.textHigh;
 
       final Color activeColor = toggleSwitchThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];
 
       final Color inactiveHoverColor =
-          toggleSwitchThemeData.inactiveHoverColor ??
-              colorScheme.shade[colorScheme.brightness == Brightness.dark
-                  ? kHoverColorIndexDark
-                  : kHoverColorIndexLight];
+          toggleSwitchThemeData.inactiveHoverColor ?? textTheme.textHigh;
 
-      final Color inactiveColor = toggleSwitchThemeData.inactiveColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kInactiveColorIndexDark
-              : kInactiveColorIndexLight];
+      final Color inactiveColor =
+          toggleSwitchThemeData.inactiveColor ?? textTheme.textLow;
 
       final Color disabledColor =
           toggleSwitchThemeData.disabledColor ?? colorScheme.disabled;

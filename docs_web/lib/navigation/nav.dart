@@ -12,60 +12,58 @@ class _NavPageState extends State<NavPage> {
   @override
   Widget build(BuildContext context) {
     const codeVerticalSample = '''
-Nav(
-    trailingMenu: [
-      NavItem(
-        title: 'settings',
-        builder: (context) => NavDialog(
-          child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(32.0),
-            width: 600.0,
-            child: Text(
-              'Settings page',
-              style: textTheme.subtitle,
-            ),
+return Nav(
+  trailingMenu: [
+    NavItem(
+      title: 'settings',
+      builder: (context) => NavDialog(
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(32.0),
+          width: 600.0,
+          child: Text(
+            'Settings page',
+            style: textTheme.subtitle,
           ),
         ),
-        icon: Icons.settings,
       ),
-    ],
-    items: [
-      NavItem(
-        builder: (context) => Center(
-            child: Text(
-          'page 0',
-          style: textTheme.title,
-        )),
-        title: 'page 0',
-        icon: Icons.today,
-      ),
-      NavItem(
-        builder: (context) => Center(
-            child: Text(
-          'page 1',
-          style: textTheme.title,
-        )),
-        title: 'page 1',
-        icon: Icons.stars,
-      ),
-      NavItem(
-        builder: (context) => Center(
-            child: Text(
-          'page 2',
-          style: textTheme.title,
-        )),
-        title: 'page 2',
-        icon: Icons.share,
-      ),
-    ],
-  ),
-  codeText: codeSample,
-)
+      icon: Icons.settings,
+    ),
+  ],
+  items: [
+    NavItem(
+      builder: (context) => Center(
+          child: Text(
+        'page 0',
+        style: textTheme.title,
+      )),
+      title: 'page 0',
+      icon: Icons.today,
+    ),
+    NavItem(
+      builder: (context) => Center(
+          child: Text(
+        'page 1',
+        style: textTheme.title,
+      )),
+      title: 'page 1',
+      icon: Icons.stars,
+    ),
+    NavItem(
+      builder: (context) => Center(
+          child: Text(
+        'page 2',
+        style: textTheme.title,
+      )),
+      title: 'page 2',
+      icon: Icons.share,
+    ),
+  ],
+);
 ''';
 
     const codeHorizontalSample = '''
-Nav(
+return Nav(
   navAxis: Axis.horizontal,
   trailingMenu: [
     NavItem(
@@ -113,11 +111,10 @@ Nav(
       icon: Icons.share,
     ),
   ],
-)
+);
 ''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) {
@@ -172,7 +169,6 @@ Nav(
           },
           codeText: codeVerticalSample,
           title: 'Vertical example',
-          height: 600.0,
         ),
         ItemTitle(
           body: (context) {
@@ -228,7 +224,6 @@ Nav(
           },
           codeText: codeHorizontalSample,
           title: 'Horizontal example',
-          height: 600.0,
         )
       ],
       header: 'Nav',

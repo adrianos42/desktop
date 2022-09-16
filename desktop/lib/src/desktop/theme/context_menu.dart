@@ -29,6 +29,7 @@ class ContextMenuThemeData {
     this.selectedColor,
     this.selectedHighlightColor,
     this.selectedHoverColor,
+    this.selectedForeground,
     this.hoverColor,
     this.highlightColor,
     this.background,
@@ -65,6 +66,9 @@ class ContextMenuThemeData {
   /// The color of an item when selected and hovered.
   final Color? selectedHoverColor;
 
+  /// The text foreground when selected and hovered.
+  final Color? selectedForeground;
+
   /// The color of an item when hovering over it.
   final Color? hoverColor;
 
@@ -89,6 +93,7 @@ class ContextMenuThemeData {
     Color? selectedColor,
     Color? selectedHighlightColor,
     Color? selectedHoverColor,
+    Color? selectedForeground,
     Color? hoverColor,
     Color? highlightColor,
     Color? background,
@@ -107,6 +112,7 @@ class ContextMenuThemeData {
       selectedHighlightColor:
           selectedHighlightColor ?? this.selectedHighlightColor,
       selectedHoverColor: selectedHoverColor ?? this.selectedHoverColor,
+      selectedForeground: selectedForeground ?? this.selectedForeground,
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
       background: background ?? this.background,
@@ -128,6 +134,7 @@ class ContextMenuThemeData {
       selectedColor: other.selectedColor,
       selectedHighlightColor: other.selectedHighlightColor,
       selectedHoverColor: other.selectedHoverColor,
+      selectedForeground: other.selectedForeground,
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
       background: other.background,
@@ -142,6 +149,7 @@ class ContextMenuThemeData {
         selectedColor != null &&
         selectedHighlightColor != null &&
         selectedHoverColor != null &&
+        selectedForeground != null &&
         hoverColor != null &&
         menuWidthStep != null &&
         itemHeight != null &&
@@ -166,6 +174,7 @@ class ContextMenuThemeData {
       selectedColor,
       selectedHighlightColor,
       selectedHoverColor,
+      selectedForeground,
       hoverColor,
       highlightColor,
       background,
@@ -192,6 +201,7 @@ class ContextMenuThemeData {
         other.selectedColor == selectedColor &&
         other.selectedHighlightColor == selectedHighlightColor &&
         other.selectedHoverColor == selectedHoverColor &&
+        other.selectedForeground == selectedForeground &&
         other.hoverColor == hoverColor &&
         other.highlightColor == highlightColor &&
         other.background == background &&
@@ -226,30 +236,28 @@ class ContextMenuTheme extends InheritedTheme {
       final TextStyle textStyle = contextMenuThemeData.textStyle ??
           textTheme.body1.copyWith(fontSize: kFontSize);
 
-      final Color selectedHighlightColor =
-          contextMenuThemeData.selectedHighlightColor ??
-              colorScheme.primary[60];
-
       final Color hoverColor =
-          contextMenuThemeData.hoverColor ?? colorScheme.background[20];
+          contextMenuThemeData.hoverColor ?? colorScheme.shade[30];
 
       final Color highlightColor =
-          contextMenuThemeData.highlightColor ?? colorScheme.background[10];
+          contextMenuThemeData.highlightColor ?? colorScheme.background[20];
+
+      final Color selectedHighlightColor =
+          contextMenuThemeData.selectedHighlightColor ?? highlightColor;
 
       final Color selectedColor =
           contextMenuThemeData.selectedColor ?? colorScheme.primary[30];
 
+      final Color selectedHoverColor =
+          contextMenuThemeData.selectedHoverColor ?? hoverColor;
+
+      final Color selectedForeground =
+          contextMenuThemeData.selectedForeground ?? textTheme.textHigh;
+
       final Color background =
           contextMenuThemeData.background ?? colorScheme.background[8];
 
-      final Color selectedHoverColor =
-          contextMenuThemeData.selectedHoverColor ??
-              colorScheme.primary[40]; // TODO(as): ???
-
-      final Color color = colorScheme.shade[
-          colorScheme.brightness == Brightness.dark
-              ? kInactiveColorIndexDark
-              : kInactiveColorIndexLight];
+      final Color color = contextMenuThemeData.color ?? textTheme.textLow;
 
       final IconThemeData iconThemeData = contextMenuThemeData.iconThemeData ??
           IconThemeData(size: kIconSize, color: textTheme.textHigh);
@@ -271,6 +279,7 @@ class ContextMenuTheme extends InheritedTheme {
         selectedColor: selectedColor,
         selectedHighlightColor: selectedHighlightColor,
         selectedHoverColor: selectedHoverColor,
+        selectedForeground: selectedForeground,
         hoverColor: hoverColor,
         highlightColor: highlightColor,
         itemHeight: itemHeight,

@@ -23,14 +23,22 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
 
   @override
   Widget build(BuildContext context) {
-    const linearCodeExample = 'LinearProgressIndicator(value: 0.4)';
-    const linearIndeterminateCodeExample = 'LinearProgressIndicator()';
-    const circurlarCodeExample = 'CircularProgressIndicator()';
+    const linearCodeExample = 'return LinearProgressIndicator(value: 0.4);';
+    const linearIndeterminateCodeExample = 'return LinearProgressIndicator();';
+    const circurlarCodeExample = 'return CircularProgressIndicator();';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       header: 'Progress indicator',
       items: [
+        ItemTitle(
+          body: (context) => Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            child: const LinearProgressIndicator(),
+          ),
+          codeText: linearIndeterminateCodeExample,
+          title: 'Linear indeterminate',
+        ),
         ItemTitle(
           body: (context) => Container(
             alignment: Alignment.center,
@@ -44,17 +52,6 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
           ),
           codeText: linearCodeExample,
           title: 'Linear',
-          height: 200.0,
-        ),
-        ItemTitle(
-          body: (context) => Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            child: const LinearProgressIndicator(),
-          ),
-          codeText: linearIndeterminateCodeExample,
-          title: 'Linear indeterminate',
-          height: 200.0,
         ),
         ItemTitle(
           body: (context) => Container(
@@ -64,7 +61,6 @@ class _ProgressIndicatorPageState extends State<ProgressIndicatorPage>
           ),
           codeText: circurlarCodeExample,
           title: 'Circular',
-          height: 200.0,
         ),
       ],
     );

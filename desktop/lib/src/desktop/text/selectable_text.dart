@@ -120,7 +120,7 @@ class SelectableText extends StatefulWidget {
     this.autofocus = false,
     this.cursorWidth = _kCursorWidth,
     this.focusNode,
-    this.maxLines = 1,
+    this.maxLines,
     this.minLines,
     this.textDirection,
     this.onTap,
@@ -158,7 +158,7 @@ class SelectableText extends StatefulWidget {
     this.autofocus = false,
     this.cursorWidth = _kCursorWidth,
     this.focusNode,
-    this.maxLines = 1,
+    this.maxLines,
     this.minLines,
     this.textDirection,
     this.onTap,
@@ -310,7 +310,6 @@ class _SelectableTextState extends State<SelectableText>
         return;
       default:
         return;
-      // Do nothing.
     }
   }
 
@@ -408,16 +407,10 @@ class _SelectableTextState extends State<SelectableText>
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
 
-    final Color background = enabled
-        ? focusNode.hasFocus
-            ? colorScheme.background[0]
-            : colorScheme.background[0].withAlpha(0)
-        : colorScheme.shade[90];
+    final Color background = colorScheme.background[0].withAlpha(0);
     final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final Color selectionColor = enabled && _effectiveFocusNode.hasFocus
-        ? colorScheme.primary[40]
-        : background;
+    final Color selectionColor = enabled ? colorScheme.primary[30] : background;
 
     final textStyle = textTheme.body1.copyWith(
       color: characterColor,
@@ -438,7 +431,7 @@ class _SelectableTextState extends State<SelectableText>
       enableInteractiveSelection: widget.enableInteractiveSelection,
       focusNode: focusNode,
       key: editableTextKey,
-      maxLines: widget.maxLines,
+      maxLines: widget.maxLines ?? DefaultTextStyle.of(context).maxLines,
       minLines: widget.minLines,
       paintCursorAboveText: true,
       readOnly: true,

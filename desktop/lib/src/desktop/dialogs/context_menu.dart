@@ -157,8 +157,11 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
                 ? contextMenuThemeData.hoverColor! // TODO(as): ???
                 : contextMenuThemeData.background!;
 
+    final Color? foreground =
+        hovered ? contextMenuThemeData.selectedForeground : null;
+
     Widget item = DefaultTextStyle(
-      style: contextMenuThemeData.textStyle!,
+      style: contextMenuThemeData.textStyle!.copyWith(color: foreground),
       child: IconTheme(
         data: contextMenuThemeData.iconThemeData!,
         child: Container(

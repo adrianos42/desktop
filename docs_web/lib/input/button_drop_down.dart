@@ -12,6 +12,8 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
   int? initialValue;
   int? initialCustomValue;
 
+  bool _disabled = false;
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -19,11 +21,12 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
     final backgroundColor = colorScheme.background[8];
     final hoverBackgroundColor = colorScheme.background[20];
     final waitingBackgroundColor = colorScheme.background[4];
-    final highlightBackgroundColor = colorScheme.background[14];
+    final highlightBackgroundColor = colorScheme.background[12];
 
-    const enabledCode = '''
-Container(
+    final codeText = '''
+return SizedBox(
   width: 200.0,
+  enabled: $_disabled,
   child: DropDownButton(
     onSelected: (int value) {
       setState(() => initialValue = value);
@@ -49,49 +52,21 @@ Container(
       ),
     ],
   ),
-)
+);
 ''';
 
-    const disabledCode = '''
-Container(
-  width: 200.0,
-  child: DropDownButton(
-    enabled: false,
-    isField: true,
-    itemBuilder: (context) => [
-      ContextMenuItem(
-        child: Text('Florianópolis'),
-        value: 0,
-      ),
-      ContextMenuItem(
-        child: Text('Joinville'),
-        value: 1,
-      ),
-      ContextMenuItem(_
-        child: Text('Palhoça'),
-        value: 2,
-      ),
-      ContextMenuItem(
-        child: Text('Pedra Branca'),
-        value: 3,
-      ),
-    ],
-  ),
-)
-''';
-
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.topCenter,
             child: Container(
               width: 200.0,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(16.0),
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.all(24.0),
               child: ContextMenuTheme.copyWith(
                 child: DropDownButton(
+                  enabled: !_disabled,
                   onSelected: (int value) {
                     setState(() => initialValue = value);
                   },
@@ -118,17 +93,23 @@ Container(
               ),
             ),
           ),
-          codeText: enabledCode,
-          title: 'Enabled',
-          height: 400.0,
+          options: [
+            Button.icon(
+              Icons.disabled_by_default,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
+            ),
+          ],
+          codeText: codeText,
+          title: 'Example',
         ),
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.topCenter,
             child: Container(
               width: 200.0,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(16.0),
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.all(24.0),
               child: ContextMenuTheme.copyWith(
                 color: backgroundColor,
                 background: backgroundColor,
@@ -168,44 +149,8 @@ Container(
               ),
             ),
           ),
-          codeText: enabledCode,
+          codeText: codeText,
           title: 'Custom background',
-          height: 400.0,
-        ),
-        ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              width: 200.0,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(16.0),
-              child: DropDownButton(
-                enabled: false,
-                // isField: true,
-                itemBuilder: (context) => const [
-                  ContextMenuItem(
-                    value: 0,
-                    child: Text('Florianópolis'),
-                  ),
-                  ContextMenuItem(
-                    value: 1,
-                    child: Text('Joinville'),
-                  ),
-                  ContextMenuItem(
-                    value: 2,
-                    child: Text('Palhoça'),
-                  ),
-                  ContextMenuItem(
-                    value: 3,
-                    child: Text('Pedra Branca'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
-          height: 400.0,
         ),
       ],
       header: 'Drop down menu',

@@ -190,41 +190,21 @@ class _DefaultBackgroundColor extends BackgroundColor {
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness + 0.0)
                 .toColor();
-          case 2:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.02)
-                .toColor();
           case 4:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness + 0.04)
-                .toColor();
-          case 6:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.06)
                 .toColor();
           case 8:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness + 0.08)
                 .toColor();
-          case 10:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.1)
-                .toColor();
           case 12:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness + 0.12)
                 .toColor();
-          case 14:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.14)
-                .toColor();
           case 16:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness + 0.16)
-                .toColor();
-          case 18:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.18)
                 .toColor();
           case 20:
             return HSLColor.fromAHSL(
@@ -238,41 +218,21 @@ class _DefaultBackgroundColor extends BackgroundColor {
           case 0:
             return HSLColor.fromAHSL(_alpha, _hue, _saturation, _lightness)
                 .toColor();
-          case 2:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.02)
-                .toColor();
           case 4:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness - 0.04)
-                .toColor();
-          case 6:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.06)
                 .toColor();
           case 8:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness - 0.08)
                 .toColor();
-          case 10:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.1)
-                .toColor();
           case 12:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness - 0.12)
                 .toColor();
-          case 14:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.14)
-                .toColor();
           case 16:
             return HSLColor.fromAHSL(
                     _alpha, _hue, _saturation, _lightness - 0.16)
-                .toColor();
-          case 18:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.18)
                 .toColor();
           case 20:
             return HSLColor.fromAHSL(
@@ -403,9 +363,6 @@ class PrimaryColor {
   /// Dodger blue color.
   static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
 
-  /// Light Goldenrod color.
-  static const lightGoldenrod = PrimaryColor._('Light Goldenrod', 1.0, 51, 0.76, 0.72);
-
   /// Goldenrod color.
   static const goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
 
@@ -417,9 +374,6 @@ class PrimaryColor {
 
   /// Orange color.
   static const orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
-
-  /// Orchid color.
-  static const orchid = PrimaryColor._('Orchid', 1.0, 302, 0.59, 0.65);
 
   /// Royal blue color.
   static const royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);

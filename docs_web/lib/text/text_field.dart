@@ -15,41 +15,35 @@ class _TextFieldPageState extends State<TextFieldPage> {
   @override
   Widget build(BuildContext context) {
     const multiLineExample = '''
-  TextField(
+  return TextField(
     maxLines: 3,
     minLines: 3,
-  )
+  );
     ''';
 
-    const basicExample = 'TextField()';
+    const basicExample = 'return TextField();';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       header: 'Text field',
       items: [
         ItemTitle(
           body: (context) => Container(
-            margin: const EdgeInsets.all(16.0),
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 200.0,
-                  child: TextField(
-                    focusNode: _focusNode,
-                  ),
-                ),
-              ],
+            margin: const EdgeInsets.all(12.0),
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 200.0,
+              child: TextField(
+                focusNode: _focusNode,
+              ),
             ),
           ),
           codeText: basicExample,
           title: 'Basic example',
-          height: 300.0,
         ),
         ItemTitle(
           body: (context) => Container(
-            margin: const EdgeInsets.all(16.0),
-            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.all(12.0),
+            alignment: Alignment.center,
             child: SizedBox(
               width: 300.0,
               child: TextField(
@@ -60,7 +54,6 @@ class _TextFieldPageState extends State<TextFieldPage> {
           ),
           codeText: multiLineExample,
           title: 'Multiline example',
-          height: 300.0,
         ),
       ],
     );

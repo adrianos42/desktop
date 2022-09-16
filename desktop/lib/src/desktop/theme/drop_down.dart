@@ -206,15 +206,9 @@ class DropDownButtonTheme extends InheritedTheme {
             color: textTheme.textMedium,
           );
 
-      final Color color = buttonThemeData.color ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kInactiveColorIndexDark
-              : kInactiveColorIndexLight];
+      final Color color = buttonThemeData.color ?? textTheme.textLow;
 
-      final Color hoverColor = buttonThemeData.hoverColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color hoverColor = buttonThemeData.hoverColor ?? textTheme.textHigh;
 
       final Color waitingColor =
           buttonThemeData.waitingColor ?? colorScheme.background[20];

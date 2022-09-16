@@ -59,6 +59,7 @@ Widget _createItemForColor(BuildContext context, Color color, int index) {
                     child: SelectableText(
                       color.value.toRadixString(0x10),
                       style: textStyle.copyWith(color: color),
+                      maxLines: 1,
                     ),
                   ),
                 ]),
@@ -80,89 +81,102 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
     final lightBackground = const ColorScheme(Brightness.light).background[0];
     final darkBackground = const ColorScheme(Brightness.dark).background[0];
 
-    return SingleChildScrollView(
-      controller: ScrollController(),
-      child: Container(
-        alignment: Alignment.topLeft,
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Column(children: [
             Defaults.createHeader(context, 'Primary Colors'),
-            Defaults.createTitle(context, 'Dark'),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              color: darkBackground,
-              child: Column(
-                children: [
-                  _itemPrimary(context, PrimaryColor.coral, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.sandyBrown, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.orange, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.lightGoldenrod, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.goldenrod, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.springGreen, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.turquoise, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.deepSkyBlue, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.dodgerBlue, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.cornflowerBlue, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.royalBlue, Brightness.dark),
-                  _itemPrimary(
-                      context, PrimaryColor.slateBlue, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.purple, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.violet, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.orchid, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.hotPink, Brightness.dark),
-                  _itemPrimary(context, PrimaryColor.red, Brightness.dark),
-                ],
-              ),
-            ),
-            Defaults.createTitle(context, 'Light'),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              color: lightBackground,
-              child: Column(
-                children: [
-                  _itemPrimary(context, PrimaryColor.coral, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.sandyBrown, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.orange, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.lightGoldenrod, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.goldenrod, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.springGreen, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.turquoise, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.deepSkyBlue, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.dodgerBlue, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.cornflowerBlue, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.royalBlue, Brightness.light),
-                  _itemPrimary(
-                      context, PrimaryColor.slateBlue, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.purple, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.violet, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.orchid, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.hotPink, Brightness.light),
-                  _itemPrimary(context, PrimaryColor.red, Brightness.light),
-                ],
-              ),
-            ),
-          ],
+          ]),
         ),
-      ),
+        Expanded(
+          child: SingleChildScrollView(
+            controller: ScrollController(),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              children: [
+                Defaults.createTitle(context, 'Dark'),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  color: darkBackground,
+                  child: Column(
+                    children: [
+                      _itemPrimary(
+                          context, PrimaryColor.coral, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.sandyBrown, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.orange, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.goldenrod, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.springGreen, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.turquoise, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.deepSkyBlue, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.dodgerBlue, Brightness.dark),
+                      _itemPrimary(context, PrimaryColor.cornflowerBlue,
+                          Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.royalBlue, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.slateBlue, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.purple, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.violet, Brightness.dark),
+                      _itemPrimary(
+                          context, PrimaryColor.hotPink, Brightness.dark),
+                      _itemPrimary(context, PrimaryColor.red, Brightness.dark),
+                    ],
+                  ),
+                ),
+                Defaults.createTitle(context, 'Light'),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  color: lightBackground,
+                  child: Column(
+                    children: [
+                      _itemPrimary(
+                          context, PrimaryColor.coral, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.sandyBrown, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.orange, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.goldenrod, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.springGreen, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.turquoise, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.deepSkyBlue, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.dodgerBlue, Brightness.light),
+                      _itemPrimary(context, PrimaryColor.cornflowerBlue,
+                          Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.royalBlue, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.slateBlue, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.purple, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.violet, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColor.hotPink, Brightness.light),
+                      _itemPrimary(context, PrimaryColor.red, Brightness.light),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

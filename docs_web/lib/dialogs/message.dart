@@ -14,28 +14,27 @@ class _DialogPageState extends State<DialogMessagePage> {
     const dismissableDialog = '''
 ''';
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
-        ItemTitle(
-          body: (context) => Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                    'Messages to be shown: ${Messenger.messagesLength(context)}'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Button.text(
-                  'Clear messages',
-                  onPressed: () => Messenger.clearMessages(context),
-                ),
-              ),
-            ],
-          ),
-          title: 'Messager context',
-        ),
+        // ItemTitle(
+        //   body: (context) => Column(
+        //     children: [
+        //       Padding(
+        //         padding: const EdgeInsets.all(16.0),
+        //         child: Text(
+        //             'Messages to be shown: ${Messenger.messagesLength(context)}'),
+        //       ),
+        //       Padding(
+        //         padding: const EdgeInsets.all(16.0),
+        //         child: Button.text(
+        //           'Clear messages',
+        //           onPressed: () => Messenger.clearMessages(context),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        //   title: 'Messager context',
+        // ),
         ItemTitle(
           body: (context) => Center(
             child: Button.text(
@@ -61,7 +60,6 @@ class _DialogPageState extends State<DialogMessagePage> {
           ),
           codeText: dismissableDialog,
           title: 'Error message',
-          height: 100.0,
         ),
         ItemTitle(
           body: (context) => Center(
@@ -80,7 +78,6 @@ class _DialogPageState extends State<DialogMessagePage> {
           ),
           codeText: dismissableDialog,
           title: 'Info message',
-          height: 100.0,
         ),
         ItemTitle(
           body: (context) => Center(
@@ -98,7 +95,6 @@ class _DialogPageState extends State<DialogMessagePage> {
           ),
           codeText: dismissableDialog,
           title: 'Warning message',
-          height: 100.0,
         ),
         ItemTitle(
           body: (context) => Center(
@@ -117,7 +113,6 @@ class _DialogPageState extends State<DialogMessagePage> {
           ),
           codeText: dismissableDialog,
           title: 'Success message',
-          height: 100.0,
         )
       ],
       header: 'Message',

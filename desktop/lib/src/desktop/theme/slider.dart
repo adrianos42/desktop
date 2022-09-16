@@ -122,10 +122,8 @@ class SliderTheme extends InheritedTheme {
       final Color trackColor =
           sliderThemeData.trackColor ?? colorScheme.shade[kItemBackgroundIndex];
 
-      final Color activeHoverColor = sliderThemeData.activeHoverColor ??
-          colorScheme.shade[colorScheme.brightness == Brightness.dark
-              ? kHoverColorIndexDark
-              : kHoverColorIndexLight];
+      final Color activeHoverColor =
+          sliderThemeData.activeHoverColor ?? textTheme.textHigh;
 
       final Color activeColor = sliderThemeData.activeColor ??
           colorScheme.primary[kHighlightColorIndex];

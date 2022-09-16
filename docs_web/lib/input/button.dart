@@ -9,43 +9,73 @@ class ButtonPage extends StatefulWidget {
 }
 
 class _ButtonPageState extends State<ButtonPage> {
+  bool _disabledText = false;
+
   @override
   Widget build(BuildContext context) {
     const enabledCode = '''
-Button(
+return Button(
   body: Text('Button'),
   trailing: Icon(Icons.phone),
   leading: Icon(Icons.control_camera),
   onPressed: () {},
-)
+);
 ''';
 
     const disabledCode = '''
-Button(
+return Button(
   body: Text('Button'),
   trailing: Icon(Icons.phone),
   leading: Icon(Icons.control_camera),
-)
+);
 ''';
 
     const customCode = '''
-Button.text(
+return Button.text(
   'Custom',
   color: HSLColor.fromAHSL(1.0, 150, 0.8, 0.4),
   hoverColor: HSLColor.fromAHSL(1.0, 150, 0.8, 0.6),
   highlightColor: HSLColor.fromAHSL(1.0, 150, 0.8, 0.4),
   onPressed: () {},
-)
+);
 ''';
 
     final customColor = (const HSLColor.fromAHSL(1.0, 150, 0.6, 0.5)).toColor();
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
+            child: Button.text(
+              'Button',
+              onPressed: !_disabledText ? () {} : null,
+            ),
+          ),
+          codeText: !_disabledText ? enabledCode : disabledCode,
+          title: 'Text',
+          options: [
+            Button.icon(
+              Icons.disabled_by_default,
+              active: _disabledText,
+              onPressed: () => setState(() => _disabledText = !_disabledText),
+            ),
+          ],
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.center,
+            child: Button.icon(
+              Icons.control_camera,
+              onPressed: () {},
+            ),
+          ),
+          codeText: enabledCode,
+          title: 'Icon',
+        ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.center,
             child: Button(
               body: const Text('Button'),
               leading: const Icon(Icons.control_camera),
@@ -53,26 +83,37 @@ Button.text(
             ),
           ),
           codeText: enabledCode,
-          title: 'Enabled',
-          height: 200.0,
-        ),
-        ItemTitle(
-          body: (context) => const Align(
-            alignment: Alignment.centerLeft,
-            child: Button(
-              body: Text('Button'),
-              leading: Icon(Icons.control_camera),
-            ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
-          height: 200.0,
+          title: 'Text and icon',
         ),
         ItemTitle(
           body: (context) => Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
+            child: Button.filled(
+              'Login',
+              onPressed: () {},
+            ),
+          ),
+          codeText: enabledCode,
+          title: 'Filled',
+        ),
+        // ItemTitle(
+        //   body: (context) => const Align(
+        //     alignment: Alignment.center,
+        //     child: Button(
+        //       body: Text('Button'),
+        //       leading: Icon(Icons.control_camera),
+        //       onPressed: null,
+        //     ),
+        //   ),
+        //   codeText: disabledCode,
+        //   title: 'Disabled',
+        //   height: 200.0,
+        // ),
+        ItemTitle(
+          body: (context) => Align(
+            alignment: Alignment.center,
             child: Button(
-              body: const Text('Custom'),
+              body: const Text('Custom Button'),
               // Uses a recommended color for the button.
               color: customColor,
               highlightColor: Theme.of(context).textTheme.textLow,
@@ -80,11 +121,10 @@ Button.text(
             ),
           ),
           codeText: customCode,
-          title: 'Enabled',
-          height: 200.0,
+          title: 'Custom',
         ),
       ],
-      header: 'Button with custom color',
+      header: 'Button',
     );
   }
 }

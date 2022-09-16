@@ -86,179 +86,192 @@ class ListTablePage extends StatefulWidget {
 }
 
 class _ListTablePageState extends State<ListTablePage> {
-  @override
-  Widget build(BuildContext context) {
-    const someDataSample = ''' 
-final borderColor = Theme.of(context).colorScheme.shade[40].toColor();
-final borderSide = BorderSide(color: borderColor, width: 2.0);
+  bool _allowDragDataExample = true;
+  bool _allowDragBordelessExample = false;
 
-ListTable(
+  String get someDataSample => ''' 
+final borderColor = Theme.of(context).colorScheme.shade[40];
+final borderSide = BorderSide(color: borderColor, width: 1.0);
+final dataTableRows = [...someDataTableRows, ...someDataTableRows];
+
+return ListTable(
   colCount: 4,
-  itemCount: 10,
+  allowColumnDragging: $_allowDragDataExample,
   tableBorder: TableBorder(
     bottom: borderSide,
     top: borderSide,
     left: borderSide,
     right: borderSide,
-    horizontalInside: borderSide.copyWith(width: 1.0),
+    horizontalInside: borderSide,
   ),
-  onPressed: (row) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        body: Text(someDataTableRows[row][0]),
-        title: Text(someDataTableRows[row][2]),
-      ),
-    );
-  },
-  colFraction: {0: 0.5},
-  collapseOnDrag: false,
-  headerColumnBorder: BorderSide(width: 2.0, color: borderColor),
-  tableHeaderBuilder: (context, col, constraints) {
-    return Container(
-      constraints: constraints,
+  header: ListTableHeader(
+    columnBorder: borderSide,
+    builder: (context, col) => Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.only(left: 8.0),
       child: Text(
         someDataTableHeader[col],
         overflow: TextOverflow.ellipsis,
       ),
-    );
-  },
-  tableRowBuilder: (context, row, col, constraints) {
-    return Container(
-      constraints: constraints,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Text(
-        someDataTableRows[row][col],
-        overflow: TextOverflow.ellipsis,
+    ),
+  ),
+  rows: List.generate(dataTableRows.length, (row) {
+    return ListTableRow(
+      onPressed: (_) async {
+        final dialog = showDialog(
+          context,
+          builder: (context) => Dialog(
+            body: Text(dataTableRows[row][0]),
+            title: Text(dataTableRows[row][2]),
+          ),
+        );
+        await dialog.closed;
+      },
+      builder: (context, col) => Container(
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text(
+          dataTableRows[row][col],
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
-  },
+  }),
+  colFraction: const {0: 0.5},
 );
 ''';
 
-    const codeSample = '''
-ListTable(
+  String get codeSample => '''
+return ListTable(
   colCount: 4,
-  itemCount: 15,
-  tableHeaderBuilder: (context, col, constraints) {
-    return Container(
-      constraints: constraints,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(left: 8.0),
-      child: Row(
-        children: [
-          Text('\$col'),
-        ],
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  rows: List.generate(10, (row) {
+    return ListTableRow(
+      builder: (context, col) => Container(
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Text('\$row\$col'),
       ),
     );
-  },
-  tableRowBuilder: (context, row, col, constraints) {
-    return Container(
-      constraints: constraints,
+  }),
+  allowColumnDragging: $_allowDragBordelessExample,
+  header: ListTableHeader(
+    builder: (context, col) => Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: Text('\$row\$col'),
-    );
-  },
-)
+      padding: const EdgeInsets.only(left: 8.0),
+      child: Text('\$col'),
+    ),
+  ),
+);
 ''';
 
+  @override
+  Widget build(BuildContext context) {
     final borderColor = Theme.of(context).colorScheme.shade[40];
     final borderSide = BorderSide(color: borderColor, width: 1.0);
     final dataTableRows = [...someDataTableRows, ...someDataTableRows];
 
-    return Defaults.createItemsWithTitle(
-      context,
+    return Defaults(
       items: [
         ItemTitle(
-          body: (context) => ListTable(
-            colCount: 4,
-            allowColumnDragging: true,
-            tableBorder: TableBorder(
-              bottom: borderSide,
-              top: borderSide,
-              left: borderSide,
-              right: borderSide,
-              horizontalInside: borderSide,
-            ),
-            header: ListTableHeader(
-              columnBorder: borderSide,
-              builder: (context, col) => Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  someDataTableHeader[col],
-                  overflow: TextOverflow.ellipsis,
-                ),
+          title: 'Example with data',
+          body: (context) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ListTable(
+              colCount: 4,
+              allowColumnDragging: _allowDragDataExample,
+              tableBorder: TableBorder(
+                bottom: borderSide,
+                top: borderSide,
+                left: borderSide,
+                right: borderSide,
+                horizontalInside: borderSide,
               ),
-            ),
-
-            rows: List.generate(dataTableRows.length, (row) {
-              return ListTableRow(
-                onPressed: (_) async {
-                  final dialog = showDialog(
-                    context,
-                    builder: (context) => Dialog(
-                      body: Text(dataTableRows[row][0]),
-                      title: Text(dataTableRows[row][2]),
-                    ),
-                  );
-                  await dialog.closed;
-                },
+              header: ListTableHeader(
+                columnBorder: borderSide,
                 builder: (context, col) => Container(
                   alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    dataTableRows[row][col],
+                    someDataTableHeader[col],
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              );
-            }),
-
-            colFraction: const {0: 0.5},
-            //collapseOnDrag: true,
+              ),
+              rows: List.generate(dataTableRows.length, (row) {
+                return ListTableRow(
+                  onPressed: (_) async {
+                    final dialog = showDialog(
+                      context,
+                      builder: (context) => Dialog(
+                        body: Text(dataTableRows[row][0]),
+                        title: Text(dataTableRows[row][2]),
+                      ),
+                    );
+                    await dialog.closed;
+                  },
+                  builder: (context, col) => Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      dataTableRows[row][col],
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                );
+              }),
+              colFraction: const {0: 0.5},
+              //collapseOnDrag: true,
+            ),
           ),
           codeText: someDataSample,
-          title: 'Example with data',
-          height: 600.0,
-          hasBorder: false,
+          options: [
+            Button.icon(
+              Icons.drag_indicator,
+              active: _allowDragDataExample,
+              tooltip: 'Allow column dragging',
+              onPressed: () => setState(
+                () => _allowDragDataExample = !_allowDragDataExample,
+              ),
+            ),
+          ],
         ),
-        // ItemTitle(
-        //   body: (context) => ListTable(
-        //     colCount: 4,
-        //     itemCount: 10,
-        //     tableHeaderBuilder: (context, col, constraints) {
-        //       return Container(
-        //         constraints: constraints,
-        //         alignment: Alignment.centerLeft,
-        //         padding: const EdgeInsets.only(left: 8.0),
-        //         child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //           children: [
-        //             Text('$col'),
-        //           ],
-        //         ),
-        //       );
-        //     },
-        //     tableRowBuilder: (context, row, col, constraints) {
-        //       return Container(
-        //         constraints: constraints,
-        //         alignment: Alignment.centerLeft,
-        //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        //         child: Text('$row$col'),
-        //       );
-        //     },
-        //   ),
-        //   codeText: codeSample,
-        //   title: 'Borderless list table',
-        //   height: 600.0,
-        //   hasBorder: false,
-        // ),
+        ItemTitle(
+          title: 'Borderless list table',
+          body: (context) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: ListTable(
+              colCount: 4,
+              rows: List.generate(10, (row) {
+                return ListTableRow(
+                  builder: (context, col) => Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text('$row$col'),
+                  ),
+                );
+              }),
+              allowColumnDragging: _allowDragBordelessExample,
+              header: ListTableHeader(
+                builder: (context, col) => Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text('$col'),
+                ),
+              ),
+            ),
+          ),
+          codeText: codeSample,
+          options: [
+            Button.icon(
+              Icons.drag_indicator,
+              tooltip: 'Allow column dragging',
+              active: _allowDragBordelessExample,
+              onPressed: () => setState(
+                () => _allowDragBordelessExample = !_allowDragBordelessExample,
+              ),
+            ),
+          ],
+        ),
       ],
       header: 'List table',
     );
