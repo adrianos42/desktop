@@ -56,7 +56,9 @@ class ColorScheme {
       : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25).toColor();
 
   /// Error color.
-  Color get error => const HSLColor.fromAHSL(1.0, 0, 0.8, 0.5).toColor();
+  Color get error => brightness == Brightness.light
+      ? const HSLColor.fromAHSL(1.0, 0, 0.9, 0.5).toColor()
+      : const HSLColor.fromAHSL(1.0, 0, 0.65, 0.55).toColor();
 }
 
 /// Shade color used in [ColorScheme].

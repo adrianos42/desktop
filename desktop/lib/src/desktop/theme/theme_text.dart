@@ -88,6 +88,7 @@ class TextTheme {
     required this.textLow,
     required this.textMedium,
     required this.textHigh,
+    required this.textError,
     required this.textPrimaryHigh,
     required this.textPrimaryLow,
     required this.textDisabled,
@@ -113,6 +114,7 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: textHigh),
           body2: _TextThemes.body2.apply(color: textHigh),
           caption: _TextThemes.caption.apply(color: textHigh),
+          textError: colorScheme.error,
           textPrimaryHigh: colorScheme.primary[60],
           textPrimaryLow: colorScheme.primary[40],
           textLow: textLow,
@@ -137,6 +139,7 @@ class TextTheme {
           body1: _TextThemes.body1.apply(color: textHigh),
           body2: _TextThemes.body2.apply(color: textHigh),
           caption: _TextThemes.caption.apply(color: textHigh),
+          textError: colorScheme.error,
           textPrimaryHigh: colorScheme.primary[60],
           textPrimaryLow: colorScheme.primary[40],
           textLow: textLow,
@@ -172,6 +175,8 @@ class TextTheme {
   final Color textMedium;
 
   final Color textLow;
+
+  final Color textError;
 
   final Color textDisabled;
 

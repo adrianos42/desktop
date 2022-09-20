@@ -9,7 +9,7 @@ import 'constants.dart';
 import 'theme_data.dart';
 import 'theme_text.dart';
 
-const double _kDefaultItemHeight = 34.0;
+const double _kDefaultItemHeight = 32.0;
 const double _kMenuWidthStep = 120.0;
 const double _kMenuHorizontalPadding = 16.0;
 const double _kMinMenuWidth = 2.0 * _kMenuWidthStep;
