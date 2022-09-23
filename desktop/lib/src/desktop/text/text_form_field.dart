@@ -110,7 +110,7 @@ class TextFormField extends FormField<String> {
             );
 
             final TextStyle prefixTextStyle = textTheme.caption.copyWith(
-              color: textTheme.textLow,
+              color: borderColor,
               fontWeight: FontWeight.w500,
             );
 

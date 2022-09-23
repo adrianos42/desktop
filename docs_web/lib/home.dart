@@ -12,8 +12,9 @@ import 'theme/colorscheme.dart';
 import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
+import 'package:flutter/services.dart';
 
-const String _version = 'dev.4.2.55';
+const String _version = 'dev.4.2.56';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -198,7 +199,8 @@ class _DocAppState extends State<DocApp> {
                         // return ButtonGroupPage();
                         // return ScrollingPage();
                         // return BottomNavPage();
-                        return TextFormFieldPage();
+                        // return TextFormFieldPage();
+                        return DialogMessagePage();
                       }
                     },
                   ),
@@ -306,7 +308,8 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => TextFieldPage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) => const Text('Text Form Field'),
+                          titleBuilder: (context) =>
+                              const Text('Text Form Field'),
                           builder: (context) => TextFormFieldPage(),
                         ),
                         TreeNode.child(

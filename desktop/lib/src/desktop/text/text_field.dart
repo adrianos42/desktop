@@ -583,8 +583,7 @@ class _TextFieldState extends State<TextField>
 
     final Widget result = ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: FocusTrapArea(
-        focusNode: focusNode,
+      child: TextFieldTapRegion(
         child: MouseRegion(
           cursor: effectiveMouseCursor,
           onEnter: (_) => _handleHover(true),

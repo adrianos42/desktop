@@ -410,7 +410,7 @@ class _MessageState extends State<Message> {
   void _setFocus(bool value) {
     _hasFocus = value;
     if (value) {
-      widget.resumeTimer();
+      widget.stopTimer();
     } else {
       widget.remove(MessageClosedReason.dismiss);
     }
