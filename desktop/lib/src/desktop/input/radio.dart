@@ -1,6 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
 
@@ -10,11 +10,9 @@ const double _kStrokeWidth = 2.0;
 const double _kOuterRadius = 7.0;
 const double _kInnerRadius = 4.0;
 
-// thicc radio button, maybe add option for mobile usage
-// outerRadius = 8.0;
-// innerRadius = outerRadius - (strokeWidth * 2.0);
-
+///
 class Radio extends StatefulWidget {
+  ///
   const Radio({
     Key? key,
     required this.value,

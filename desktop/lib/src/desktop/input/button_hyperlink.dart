@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
-
 import 'button.dart';
 
 /// Callback that with [String] parameter.

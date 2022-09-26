@@ -1,23 +1,22 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/gestures.dart';
 
 import '../theme/theme.dart';
 
 const Duration _kToggleDuration = Duration(milliseconds: 120);
 const Duration _kHoverDuration = Duration(milliseconds: 100);
 
+const double _kContainerHeight = 32.0;
+const double _kSidePadding = 3.0;
+
 // The width of dat toggle
 const double _kWidth = 26.0;
 const double _kHeight = 14.0;
 const double _kDefaultRadius = 8.0;
+
 const Radius _kRadius = Radius.circular(_kDefaultRadius);
 const double _kStrokeWidth = 2.0;
-
-// thicc one, maybe add option for mobile
-// width = 32.0;
-// height = 16.0;
-// radius = 6.0;
 
 class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({
@@ -50,16 +49,12 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   late AnimationController _positionController;
   late AnimationController _hoverPositionController;
 
-  late TapGestureRecognizer _tap;
-
   @override
   void initState() {
     super.initState();
     _actionMap = <Type, Action<Intent>>{
       ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
     };
-
-    _tap = TapGestureRecognizer()..onTap = _handleTap;
 
     _hoverPositionController = AnimationController(
       duration: _kHoverDuration,
@@ -87,8 +82,6 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   @override
   void dispose() {
-    _tap.dispose();
-
     _positionController.dispose();
     _hoverPositionController.dispose();
     super.dispose();
@@ -168,9 +161,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
       mouseCursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
-      child: Builder(
-        builder: (BuildContext context) {
-          return _ToggleSwitchRenderObjectWidget(
+      child: GestureDetector(
+        onTap: () => _handleTap(),
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          alignment: Alignment.center,
+          width: _kWidth + _kSidePadding * 2,
+          height: _kContainerHeight,
+          child: _ToggleSwitchRenderObjectWidget(
             value: widget.value,
             state: this,
             activeColor: activeColor,
@@ -181,8 +179,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             foregroundColor: foregroundColor,
             hovering: _hovering || _focused,
             additionalConstraints: additionalConstraints,
-          );
-        },
+          ),
+        ),
       ),
     );
   }
@@ -376,18 +374,11 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
   @override
   void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
     assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent && isInteractive) {
-      _state._tap.addPointer(event);
-    }
   }
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
     super.describeSemanticsConfiguration(config);
-    if (isInteractive) {
-      config.onTap = _state._handleTap;
-    }
-
     config.isChecked = value == true;
     config.isEnabled = isInteractive;
   }

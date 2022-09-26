@@ -175,7 +175,8 @@ return ListTable(
         ItemTitle(
           title: 'Example with data',
           body: (context) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
             child: ListTable(
               colCount: 4,
               allowColumnDragging: _allowDragDataExample,
@@ -200,12 +201,10 @@ return ListTable(
               rows: List.generate(dataTableRows.length, (row) {
                 return ListTableRow(
                   onPressed: (_) async {
-                    final dialog = showDialog(
+                    final dialog = Dialog.showDialog(
                       context,
-                      builder: (context) => Dialog(
-                        body: Text(dataTableRows[row][0]),
-                        title: Text(dataTableRows[row][2]),
-                      ),
+                      body: Text(dataTableRows[row][0]),
+                      title: Text(dataTableRows[row][2]),
                     );
                     await dialog.closed;
                   },
@@ -238,7 +237,8 @@ return ListTable(
         ItemTitle(
           title: 'Borderless list table',
           body: (context) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
             child: ListTable(
               colCount: 4,
               rows: List.generate(10, (row) {

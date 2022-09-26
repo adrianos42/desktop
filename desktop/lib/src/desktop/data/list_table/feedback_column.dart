@@ -308,8 +308,10 @@ class _FeedbackColumnRender extends RenderBox
       y += 1;
     }
 
-    size = constraints
-        .constrain(Size(constraints.maxWidth, constraints.maxHeight));
+    size = constraints.constrain(Size(
+      constraints.maxWidth,
+      constraints.maxHeight,
+    ));
   }
 
   void _paintInsideBorders(Canvas canvas, Offset offset) {

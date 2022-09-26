@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../theme/theme.dart';
-import 'nav.dart' show NavItem;
 import 'bottom_nav_button.dart';
+import 'nav.dart' show NavItem;
 import 'tab_scope.dart';
 
 export 'nav.dart' show NavItem;

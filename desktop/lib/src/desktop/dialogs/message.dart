@@ -9,8 +9,6 @@ import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
 
-const Duration _kFadeInDuration = Duration(milliseconds: 100);
-const Duration _kFadeOutDuration = Duration(milliseconds: 100);
 const Duration _kDefaultMessageDuration = Duration(seconds: 6);
 
 typedef _MessageReasonCallback = void Function(MessageClosedReason);

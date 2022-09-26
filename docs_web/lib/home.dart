@@ -12,9 +12,8 @@ import 'theme/colorscheme.dart';
 import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
-import 'package:flutter/services.dart';
 
-const String _version = 'dev.4.2.56';
+const String _version = 'dev.4.2.60';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -188,6 +187,9 @@ class _DocAppState extends State<DocApp> {
                       if (kReleaseMode) {
                         return OverviewPage();
                       } else {
+                        return ToggleSwitchPage();
+                        // return DatePickerPage();
+                        // return TextFieldPage();
                         // return ScrollingPage();
                         // return OverviewPage();
                         // return ColorschemePage();
@@ -200,7 +202,7 @@ class _DocAppState extends State<DocApp> {
                         // return ScrollingPage();
                         // return BottomNavPage();
                         // return TextFormFieldPage();
-                        return DialogMessagePage();
+                        // return DialogMessagePage();
                       }
                     },
                   ),
@@ -236,6 +238,11 @@ class _DocAppState extends State<DocApp> {
                           titleBuilder: (context) => const Text('List Table'),
                           builder: (context) => ListTablePage(),
                         ),
+                        TreeNode.child(
+                          titleBuilder: (context) =>
+                              const Text('Form'),
+                          builder: (context) => TextFormFieldPage(),
+                        ),
                       ]),
                   TreeNode.children(
                       titleBuilder: (context) => const Text('Dialogs'),
@@ -251,6 +258,10 @@ class _DocAppState extends State<DocApp> {
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Tooltip'),
                           builder: (context) => TooltipPage(),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Date Picker'),
+                          builder: (context) => DatePickerPage(),
                         ),
                       ]),
                   TreeNode.children(
@@ -306,11 +317,6 @@ class _DocAppState extends State<DocApp> {
                         TreeNode.child(
                           titleBuilder: (context) => const Text('Text Field'),
                           builder: (context) => TextFieldPage(),
-                        ),
-                        TreeNode.child(
-                          titleBuilder: (context) =>
-                              const Text('Text Form Field'),
-                          builder: (context) => TextFormFieldPage(),
                         ),
                         TreeNode.child(
                           titleBuilder: (context) =>

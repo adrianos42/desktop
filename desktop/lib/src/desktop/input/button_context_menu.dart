@@ -1,8 +1,6 @@
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../dialogs/context_menu.dart';
-
 import 'button.dart';
 
 /// Button that shows a context menu when pressed.

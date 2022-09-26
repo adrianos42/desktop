@@ -1,11 +1,10 @@
-import 'dart:collection';
+import 'dart:ui' show PointerDeviceKind;
 
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
-import 'dart:ui' show PointerDeviceKind;
 
 const Duration _kDefaultButtonDuration = Duration(milliseconds: 100);
 
@@ -329,18 +328,25 @@ class _ButtonState extends State<Button>
                     : enabledForeground
             : disabledForeground;
       } else {
-        ///
-        final ColorScheme colorScheme = Theme.of(context).colorScheme;
-        final TextTheme textTheme = Theme.of(context).textTheme;
+        final Color pressedBackground =  buttonThemeData.highlightBackground!;
+        final Color enabledBackground = buttonThemeData.background!;
+        final Color hoveredBackground = buttonThemeData.hoverBackground!;
+        final Color pressedForeground = buttonThemeData.highlightForeground!;
+        final Color enabledForeground = buttonThemeData.foreground!;
+        final Color hoveredForeground = buttonThemeData.hoverForeground!;
 
-        foregroundColor = textTheme.textHigh;
+        foregroundColor = active || pressed
+            ? pressedForeground
+            : hovered
+                ? hoveredForeground
+                : enabledForeground;
 
         backgroundColor = enabled
             ? active || pressed
-                ? colorScheme.background[20]
+                ? pressedBackground
                 : hovered
-                    ? colorScheme.shade[30]
-                    : colorScheme.primary[30]
+                    ? hoveredBackground
+                    : enabledBackground
             : disabledForeground;
       }
 

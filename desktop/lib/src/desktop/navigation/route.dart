@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:ui' show ImageFilter;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter/widgets.dart';
-import 'package:flutter/animation.dart' show Curves;
 
 import '../localizations.dart';
 import '../theme/dialog.dart';

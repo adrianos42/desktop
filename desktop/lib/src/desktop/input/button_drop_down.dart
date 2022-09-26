@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
@@ -254,7 +253,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
                       waiting ? Icons.expand_less : Icons.expand_more,
-                      size: 18.0,
+                      size: 20.0,
                       color: foreground,
                     ),
                   ),

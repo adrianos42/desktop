@@ -1,19 +1,14 @@
 import 'dart:async';
-import 'dart:ui';
-import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
-import '../localizations.dart';
-import '../theme/theme.dart';
 import '../scrolling/scrollbar.dart';
+import '../theme/theme.dart';
 
 const double _kDividerHeight = 1.0;
 const double _kDividerThickness = 1.0;
-const Duration _kMenuDuration = Duration(milliseconds: 100);
 
 abstract class ContextMenuEntry<T> extends StatefulWidget {
   const ContextMenuEntry({Key? key}) : super(key: key);

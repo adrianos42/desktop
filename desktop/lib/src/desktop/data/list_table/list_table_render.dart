@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 const _kHandlerWidth = 12.0;
+const _defaultIncrementHighlightWidth = 1.0;
+const _defaultIncrementDraggingWidth = 1.0;
 
 class _ListTableParentData extends ContainerBoxParentData<RenderBox> {}
 
@@ -456,7 +458,8 @@ class ListTableRender extends RenderBox
             : 0.0;
 
     if (_isDraggingColumn && _draggingColumnTargetItemIndex == 0) {
-      final double lineWidth = headerColumnBorder.width + 1;
+      final double lineWidth =
+          headerColumnBorder.width + _defaultIncrementHighlightWidth;
 
       paint.color = hoverColor;
 
@@ -499,11 +502,12 @@ class ListTableRender extends RenderBox
 
         if (_draggingIndex == i) {
           paint.color = highlightColor;
-          lineWidth = headerColumnBorder.width + 1.0;
+          lineWidth = headerColumnBorder.width + _defaultIncrementDraggingWidth;
         } else if (_isDraggingColumn &&
             _draggingColumnTargetItemIndex - 1 == i) {
           paint.color = hoverColor;
-          lineWidth = headerColumnBorder.width + 1;
+          lineWidth =
+              headerColumnBorder.width + _defaultIncrementHighlightWidth;
         } else {
           if (tableBorder.verticalInside.style != BorderStyle.solid) {
             continue;
@@ -554,7 +558,7 @@ class ListTableRender extends RenderBox
         double lineWidth;
 
         if (_columnHoverIndex == i || _draggingIndex == i || hasIndicator) {
-          lineWidth = headerColumnBorder.width + 1.0;
+          lineWidth = headerColumnBorder.width + _defaultIncrementDraggingWidth;
 
           paint.color = _draggingIndex == i
               ? highlightColor
@@ -564,7 +568,8 @@ class ListTableRender extends RenderBox
         } else if (_isDraggingColumn &&
             _draggingColumnTargetItemIndex - 1 == i) {
           paint.color = hoverColor;
-          lineWidth = headerColumnBorder.width + 1;
+          lineWidth =
+              headerColumnBorder.width + _defaultIncrementHighlightWidth;
         } else {
           paint.color = headerColumnBorder.color;
           lineWidth = headerColumnBorder.width;

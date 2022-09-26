@@ -112,7 +112,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
                     final themeData = ThemeData.dark();
 
                     late DialogController dialogController;
-                    dialogController = showDialog(
+                    dialogController = Dialog.showCustomDialog(
                       context,
                       barrierColor: themeData.colorScheme.background[0],
                       dismissible: true,

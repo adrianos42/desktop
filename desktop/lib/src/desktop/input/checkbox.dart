@@ -12,9 +12,6 @@ const double _kCheckboxWidth = 14.0;
 const double _kEdgeSize = _kCheckboxWidth;
 const double _kStrokeWidth = 2.0;
 
-// thicc checkbox, maybe add option for mobile usage
-// _kCheckboxWidth = 16.0;
-
 class Checkbox extends StatefulWidget {
   const Checkbox({
     Key? key,

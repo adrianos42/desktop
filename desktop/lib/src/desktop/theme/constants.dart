@@ -2,7 +2,7 @@
 const double kFontSize = 14.0;
 
 /// Default icon size.
-const double kIconSize = 18.0;
+const double kIconSize = 20.0;
 
 /// Default icon background index.
 const int kItemBackgroundIndex = 30;

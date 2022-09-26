@@ -2,13 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
-import 'text_field.dart';
+import '../text/text_field.dart';
 
 export 'package:flutter/services.dart' show SmartDashesType, SmartQuotesType;
 
 // TODO(as): Set in theme.
 const double _kBorderWidth = 1.0;
-const double _kDefaultInputIconSize = 16;
 
 /// A [FormField] that contains a [TextField].
 class TextFormField extends FormField<String> {
@@ -125,6 +124,7 @@ class TextFormField extends FormField<String> {
                 : null;
 
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 DecoratedBox(
                   decoration: decoration,
@@ -215,6 +215,7 @@ class TextFormField extends FormField<String> {
           },
         );
 
+  ///
   final TextEditingController? controller;
 
   /// {@macro flutter.widgets.Focus.focusNode}

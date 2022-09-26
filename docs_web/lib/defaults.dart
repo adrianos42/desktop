@@ -297,7 +297,8 @@ class App extends StatelessWidget {
                 itemBuilder: (context, _) => const Icon(Icons.code),
                 builder: (context, _) => Container(
                   decoration: Defaults.itemDecoration(context),
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 4.0),
                   child: SelectableText.rich(
                     CodeTextController(text: _codeFormatted)
                         .buildTextSpan(context: context, withComposing: false),

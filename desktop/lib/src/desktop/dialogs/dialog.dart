@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 
-import '../localizations.dart';
-import '../theme/theme.dart';
 import '../input/button.dart';
+import '../theme/theme.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 300);
 const Curve _kDialogCurve = Curves.easeOut;
@@ -173,6 +171,7 @@ class Dialog extends StatelessWidget {
     this.constraints,
     //this.padding,
     //this.dialogPadding,
+    this.allowScroll = true,
     required this.body,
   }) : super(key: key);
 
@@ -187,6 +186,93 @@ class Dialog extends StatelessWidget {
 
   /// The constraints for the dialog.
   final BoxConstraints? constraints;
+
+  final bool allowScroll;
+
+  static DialogController showDialog(
+    BuildContext context, {
+    Key? key,
+    Widget? title,
+    List<DialogAction>? actions,
+    BoxConstraints? constraints,
+    Duration? duration,
+    Color? barrierColor,
+    bool dismissible = true,
+    required Widget body,
+  }) {
+    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
+
+    late DialogController entry;
+    entry = DialogController._(
+      overlayEntry: OverlayEntry(
+        builder: (context) => _DialogView(
+          key: viewKey,
+          builder: (context) => Dialog(
+            body: body,
+            actions: actions,
+            constraints: constraints,
+            title: title,
+            key: key,
+          ),
+          dismissible: dismissible,
+          barrierColor: barrierColor,
+          close: () => entry._overlayEntry.remove(),
+          closeComplete: (reason) {
+            if (!entry._completer.isCompleted) {
+              entry._completer.complete(reason);
+            }
+          },
+        ),
+        maintainState: false,
+      ),
+      completer: Completer<DialogClosedReason>(),
+      hasMenu: actions?.isNotEmpty ?? false,
+      duration: duration ?? _kDialogDuration,
+      close: () => viewKey.currentState!.close(DialogClosedReason.close),
+    );
+
+    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
+
+    return entry;
+  }
+
+  static DialogController showCustomDialog(
+    BuildContext context, {
+    required WidgetBuilder builder,
+    Duration? duration,
+    List<DialogAction>? actions,
+    Color? barrierColor,
+    bool dismissible = true,
+  }) {
+    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
+
+    late DialogController entry;
+    entry = DialogController._(
+      overlayEntry: OverlayEntry(
+        builder: (context) => _DialogView(
+          key: viewKey,
+          builder: builder,
+          dismissible: dismissible,
+          barrierColor: barrierColor,
+          close: () => entry._overlayEntry.remove(),
+          closeComplete: (reason) {
+            if (!entry._completer.isCompleted) {
+              entry._completer.complete(reason);
+            }
+          },
+        ),
+        maintainState: false,
+      ),
+      completer: Completer<DialogClosedReason>(),
+      hasMenu: actions?.isNotEmpty ?? false,
+      duration: duration ?? _kDialogDuration,
+      close: () => viewKey.currentState!.close(DialogClosedReason.close),
+    );
+
+    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
+
+    return entry;
+  }
 
   // final EdgeInsets? padding;
 
@@ -217,30 +303,40 @@ class Dialog extends StatelessWidget {
                 style: dialogThemeData.titleTextStyle!,
               ),
             ),
-          Flexible(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                0.0,
-                dialogThemeData.bodyPadding.top,
-                0.0,
-                dialogThemeData.bodyPadding.bottom,
-              ),
-              child: SingleChildScrollView(
-                controller: ScrollController(),
+          if (allowScroll)
+            Flexible(
+              child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                  dialogThemeData.bodyPadding.left,
                   0.0,
-                  dialogThemeData.bodyPadding.right,
+                  dialogThemeData.bodyPadding.top,
                   0.0,
+                  dialogThemeData.bodyPadding.bottom,
                 ),
-                child: DefaultTextStyle(
-                  child: body,
-                  textAlign: dialogThemeData.bodyTextAlign!,
-                  style: textTheme.body1,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  padding: EdgeInsets.fromLTRB(
+                    dialogThemeData.bodyPadding.left,
+                    0.0,
+                    dialogThemeData.bodyPadding.right,
+                    0.0,
+                  ),
+                  child: DefaultTextStyle(
+                    child: body,
+                    textAlign: dialogThemeData.bodyTextAlign!,
+                    style: textTheme.body1,
+                  ),
                 ),
               ),
             ),
-          ),
+          if (!allowScroll)
+            Padding(
+              padding: dialogThemeData.bodyPadding,
+              child: DefaultTextStyle(
+                child: body,
+                textAlign: dialogThemeData.bodyTextAlign!,
+                style: textTheme.body1,
+              ),
+            ),
           if (actions != null)
             Container(
               alignment: Alignment.centerRight,
@@ -252,7 +348,6 @@ class Dialog extends StatelessWidget {
                     .map(
                       (e) => Button.text(
                         e.title,
-                        padding: EdgeInsets.zero,
                         onPressed: e.onPressed,
                       ),
                     )
@@ -280,42 +375,4 @@ class Dialog extends StatelessWidget {
       debugLabel: 'Dialog',
     );
   }
-}
-
-DialogController showDialog(
-  BuildContext context, {
-  required WidgetBuilder builder,
-  Duration? duration,
-  List<DialogAction>? actions,
-  Color? barrierColor,
-  bool dismissible = true,
-}) {
-  final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
-
-  late DialogController entry;
-  entry = DialogController._(
-    overlayEntry: OverlayEntry(
-      builder: (context) => _DialogView(
-        key: viewKey,
-        builder: builder,
-        dismissible: dismissible,
-        barrierColor: barrierColor,
-        close: () => entry._overlayEntry.remove(),
-        closeComplete: (reason) {
-          if (!entry._completer.isCompleted) {
-            entry._completer.complete(reason);
-          }
-        },
-      ),
-      maintainState: false,
-    ),
-    completer: Completer<DialogClosedReason>(),
-    hasMenu: actions?.isNotEmpty ?? false,
-    duration: duration ?? _kDialogDuration,
-    close: () => viewKey.currentState!.close(DialogClosedReason.close),
-  );
-
-  Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
-
-  return entry;
 }

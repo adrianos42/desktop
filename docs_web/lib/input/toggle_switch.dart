@@ -36,7 +36,7 @@ return ToggleSwitch(
           body: (context) => Align(
             alignment: Alignment.center,
             child: SizedBox(
-              width: 100.0,
+              width: 200.0,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

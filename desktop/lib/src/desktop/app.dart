@@ -251,22 +251,27 @@ class _DesktopAppState extends State<DesktopApp> {
   Widget _builder(BuildContext context, Widget? child) {
     return SafeArea(
       maintainBottomViewPadding: true,
-      child: Overlay(
-        key: _overlayKey,
-        initialEntries: [
-          OverlayEntry(
-            maintainState: true,
-            opaque: true,
-            builder: (context) => Messenger(
-              child: ColoredBox(
-                color: Theme.of(context).colorScheme.background[0],
-                child: widget.builder != null
-                    ? widget.builder!(context, child)
-                    : child ?? const SizedBox.shrink(),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Overlay(
+          key: _overlayKey,
+          initialEntries: [
+            OverlayEntry(
+              maintainState: true,
+              opaque: true,
+              builder: (context) => Messenger(
+                child: ColoredBox(
+                  color: Theme.of(context).colorScheme.background[0],
+                  child: widget.builder != null
+                      ? widget.builder!(context, child)
+                      : child ?? const SizedBox.shrink(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
