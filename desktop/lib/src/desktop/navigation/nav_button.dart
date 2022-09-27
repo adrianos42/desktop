@@ -96,8 +96,12 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
           button: Container(
             constraints: constraints,
             alignment: Alignment.center,
-            child: ButtonTheme(
-              data: ButtonThemeData(
+            child: Button(
+              body: widget.navWidgets(context, index),
+              padding: EdgeInsets.zero,
+              bodyPadding: buttonBodyPadding,
+              onPressed: enabled ? () => widget.onChanged(index) : null,
+              style: ButtonThemeData(
                 color: active ? highlightColor : color,
                 highlightColor: highlightColor,
                 hoverColor: active ? highlightColor : hoverColor,
@@ -105,15 +109,9 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
                 iconThemeData: iconThemeData,
                 height: buttonHeight,
                 minWidth: buttonWidth,
-              ),
-              child: Button(
-                body: widget.navWidgets(context, index),
-                padding: EdgeInsets.zero,
-                bodyPadding: buttonBodyPadding,
                 axis: axis,
-                onPressed: enabled ? () => widget.onChanged(index) : null,
-                //tooltip: navItem.title,
               ),
+              // TODO(as): tooltip: navItem.title,
             ),
           ),
         ),
@@ -439,8 +437,13 @@ class NavMenuButton extends StatelessWidget {
       buttonWidth = navThemeData.width;
     }
 
-    return ButtonTheme.merge(
-      data: ButtonThemeData(
+    return Button(
+      padding: EdgeInsets.zero,
+      bodyPadding: buttonBodyPadding,
+      onPressed: onPressed,
+      tooltip: tooltip,
+      body: child,
+      style: ButtonThemeData(
         color: active ? highlightColor : color,
         highlightColor: highlightColor,
         hoverColor: active ? highlightColor : hoverColor,
@@ -448,13 +451,6 @@ class NavMenuButton extends StatelessWidget {
         height: buttonHeight,
         minWidth: buttonWidth,
         iconThemeData: iconThemeData,
-      ),
-      child: Button(
-        padding: EdgeInsets.zero,
-        bodyPadding: buttonBodyPadding,
-        onPressed: onPressed,
-        tooltip: tooltip,
-        body: child,
         axis: axis,
       ),
     );

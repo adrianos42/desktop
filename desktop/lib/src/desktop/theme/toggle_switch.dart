@@ -138,7 +138,7 @@ class ToggleSwitchTheme extends InheritedTheme {
       final TextTheme textTheme = themeData.textTheme;
 
       final Color foreground =
-          toggleSwitchThemeData.foreground ?? textTheme.textHigh;
+          toggleSwitchThemeData.foreground ?? colorScheme.shade[100];
 
       final Color activeHoverColor =
           toggleSwitchThemeData.activeHoverColor ?? textTheme.textHigh;

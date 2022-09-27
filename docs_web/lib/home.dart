@@ -13,7 +13,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.60';
+const String _version = 'dev.4.2.65';
 
 class DocApp extends StatefulWidget {
   DocApp({Key? key}) : super(key: key);
@@ -118,12 +118,14 @@ class _DocAppState extends State<DocApp> {
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Button.icon(
                         Icons.menu_open,
-                        color: isShowingTree
-                            ? ButtonTheme.of(context).highlightColor
-                            : null,
-                        hoverColor: isShowingTree
-                            ? ButtonTheme.of(context).highlightColor
-                            : null,
+                        style: ButtonThemeData(
+                          color: isShowingTree
+                              ? ButtonTheme.of(context).highlightColor
+                              : null,
+                          hoverColor: isShowingTree
+                              ? ButtonTheme.of(context).highlightColor
+                              : null,
+                        ),
                         size: 22.0,
                         onPressed: () =>
                             setState(() => _isShowingTree = !isShowingTree),
@@ -187,8 +189,7 @@ class _DocAppState extends State<DocApp> {
                       if (kReleaseMode) {
                         return OverviewPage();
                       } else {
-                        return ToggleSwitchPage();
-                        // return DatePickerPage();
+                        return DatePickerPage();
                         // return TextFieldPage();
                         // return ScrollingPage();
                         // return OverviewPage();
@@ -239,8 +240,7 @@ class _DocAppState extends State<DocApp> {
                           builder: (context) => ListTablePage(),
                         ),
                         TreeNode.child(
-                          titleBuilder: (context) =>
-                              const Text('Form'),
+                          titleBuilder: (context) => const Text('Form'),
                           builder: (context) => TextFormFieldPage(),
                         ),
                       ]),
@@ -296,6 +296,11 @@ class _DocAppState extends State<DocApp> {
                           titleBuilder: (context) => const Text('Radio'),
                           builder: (context) => ButtonRadioPage(),
                         ),
+                        if (!kReleaseMode)
+                          TreeNode.child(
+                            titleBuilder: (context) => const Text('Select'),
+                            builder: (context) => SelectInputPage(),
+                          ),
                         TreeNode.child(
                           titleBuilder: (context) =>
                               const Text('Toggle Switch'),
@@ -383,13 +388,15 @@ class _ThemeToggleState extends State<_ThemeToggle> {
         return Button.icon(
           Icons.dark_mode,
           onPressed: widget.onPressed,
-          color: iconForeground,
+          style: ButtonThemeData(
+            color: iconForeground,
+          ),
         );
       case Brightness.light:
         return Button.icon(
           Icons.light_mode,
           onPressed: widget.onPressed,
-          color: iconForeground,
+          style: ButtonThemeData(color: iconForeground),
         );
     }
   }

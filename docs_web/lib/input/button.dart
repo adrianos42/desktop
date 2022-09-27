@@ -56,7 +56,7 @@ return Button.text(
           title: 'Text',
           options: [
             Button.icon(
-              Icons.disabled_by_default,
+              Icons.close,
               active: _disabledText,
               onPressed: () => setState(() => _disabledText = !_disabledText),
             ),
@@ -115,8 +115,10 @@ return Button.text(
             child: Button(
               body: const Text('Custom Button'),
               // Uses a recommended color for the button.
-              color: customColor,
-              highlightColor: Theme.of(context).textTheme.textLow,
+              style: ButtonThemeData(
+                color: customColor,
+                highlightColor: Theme.of(context).textTheme.textLow,
+              ),
               onPressed: () {},
             ),
           ),

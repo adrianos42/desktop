@@ -1,5 +1,6 @@
 import 'package:desktop/desktop.dart';
 import '../defaults.dart';
+import 'package:flutter/foundation.dart';
 
 class DatePickerPage extends StatefulWidget {
   DatePickerPage({super.key});
@@ -16,7 +17,7 @@ class _DatePickerPageState extends State<DatePickerPage> {
     return Defaults(
       header: 'Date picker',
       items: [
-        ItemTitle(
+        if (!kReleaseMode) ItemTitle(
           body: (context) => Center(
             child: Container(
               alignment: Alignment.center,
@@ -24,9 +25,9 @@ class _DatePickerPageState extends State<DatePickerPage> {
                 width: 40 * (DateTime.daysPerWeek + 1) + 24.0,
               ),
               child: CalendarDate(
-                firstDate: DateTime(2022, DateTime.april, DateTime.friday),
+                firstDate: DateTime(2022, DateTime.january, DateTime.friday),
                 initialDate: DateTime.now(),
-                lastDate: DateTime(2022, DateTime.october, DateTime.friday),
+                lastDate: DateTime(2022, DateTime.december, DateTime.friday),
                 onDateChanged: (value) {},
               ),
             ),

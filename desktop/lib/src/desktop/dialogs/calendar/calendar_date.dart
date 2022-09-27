@@ -10,7 +10,8 @@ import '../../theme/theme.dart';
 import 'days_month.dart';
 
 const double _kBoxSize = 40.0;
-const double _KDefaultHeight = 344.0;
+//const double _KDefaultHeight = 344.0;
+const double _KDefaultHeight = 320.0;
 const Duration _monthScrollDuration = Duration(milliseconds: 120);
 const Curve _monthScrollCurve = Curves.easeInSine;
 
@@ -227,7 +228,7 @@ class _CalendarDateState extends State<CalendarDate> {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
-        HapticFeedback.vibrate();
+        HapticFeedback.lightImpact();
         break;
       default:
         break;
@@ -398,7 +399,6 @@ class _MonthPickerState extends State<_MonthPicker> {
   DateTime? _focusableDayForMonth(DateTime month, int preferredDay) {
     final int daysInMonth = _DateUtils.getDaysInMonth(month.year, month.month);
 
-    // Can we use the preferred day in this month?
     if (preferredDay <= daysInMonth) {
       final DateTime newFocus = DateTime(month.year, month.month, preferredDay);
       if (_isSelectable(newFocus)) {
@@ -416,21 +416,17 @@ class _MonthPickerState extends State<_MonthPicker> {
   }
 
   void _handleNextMonth() {
-    if (!_isDisplayingLastMonth) {
-      _pageController.nextPage(
-        duration: _monthScrollDuration,
-        curve: _monthScrollCurve,
-      );
-    }
+    _pageController.nextPage(
+      duration: _monthScrollDuration,
+      curve: _monthScrollCurve,
+    );
   }
 
   void _handlePreviousMonth() {
-    if (!_isDisplayingFirstMonth) {
-      _pageController.previousPage(
-        duration: _monthScrollDuration,
-        curve: _monthScrollCurve,
-      );
-    }
+    _pageController.previousPage(
+      duration: _monthScrollDuration,
+      curve: _monthScrollCurve,
+    );
   }
 
   void _showMonth(DateTime month, {bool jump = false}) {
@@ -455,6 +451,18 @@ class _MonthPickerState extends State<_MonthPicker> {
   bool get _isDisplayingLastMonth {
     return !_currentMonth.isBefore(
       DateTime(widget.lastDate.year, widget.lastDate.month),
+    );
+  }
+
+  bool get _isDisplayingFirstButOneMonth {
+    return !_currentMonth.isAfter(
+      DateTime(widget.firstDate.year, widget.firstDate.month + 1),
+    );
+  }
+
+  bool get _isDisplayingLastButOneMonth {
+    return !_currentMonth.isBefore(
+      DateTime(widget.lastDate.year, widget.lastDate.month - 1),
     );
   }
 
@@ -597,12 +605,25 @@ class _MonthPickerState extends State<_MonthPicker> {
     );
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
 
+    ScrollPhysics? scrollPhysics;
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+      case TargetPlatform.fuchsia:
+        scrollPhysics = const NeverScrollableScrollPhysics();
+        break;
+      default:
+        break;
+    }
+
     return Semantics(
       child: Row(
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -636,6 +657,7 @@ class _MonthPickerState extends State<_MonthPicker> {
                           child: PageView.builder(
                             key: _pageViewKey,
                             controller: _pageController,
+                            physics: scrollPhysics,
                             itemBuilder: _buildItems,
                             scrollDirection: Axis.vertical,
                             itemCount: _DateUtils.monthDelta(
@@ -659,24 +681,29 @@ class _MonthPickerState extends State<_MonthPicker> {
             color: Theme.of(context).colorScheme.primary[30],
             child: ButtonTheme.copyWith(
               color: buttonThemeData.foreground,
-              hoverColor: colorScheme.primary[70],
-              highlightColor: colorScheme.background[0],
-              disabledColor: colorScheme.shade[30],
+              hoverColor: colorScheme.background[0],
+              highlightColor: colorScheme.primary[70],
+              disabledColor: colorScheme.shade[50],
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Button.icon(
-                    Icons.keyboard_arrow_up,
+                    Icons.expand_less,
+                    style: ButtonThemeData(color: colorScheme.shade[100]),
                     onPressed:
                         _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                    willChangeState: _isDisplayingFirstButOneMonth,
                   ),
                   Button.icon(
                     Icons.keyboard_arrow_down,
+                    style: ButtonThemeData(color: colorScheme.shade[100]),
+                    willChangeState: _isDisplayingLastButOneMonth,
                     onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
                   ),
                   const Spacer(),
                   Button.icon(
                     Icons.done,
+                    style: ButtonThemeData(color: colorScheme.shade[100]),
                     onPressed: () {},
                   ),
                 ],
@@ -792,9 +819,9 @@ class _DayPickerState extends State<_DayPicker> {
 
     final Color enabledDayColor = textTheme.textLow;
     final Color disabledDayColor = textTheme.textDisabled;
-    final Color selectedDayColor = textTheme.textHigh;
+    final Color selectedDayColor = colorScheme.shade[100];
     final Color selectedDayBackground = colorScheme.primary[30];
-    final Color todayColor = textTheme.textMedium;
+    final Color todayColor = textTheme.textHigh;
     final Color background = colorScheme.background[0];
 
     final int year = widget.displayedMonth.year;
@@ -817,19 +844,24 @@ class _DayPickerState extends State<_DayPicker> {
 
       Color dayColor = enabledDayColor;
 
-      if (isSelectedDay) {
-        dayColor = selectedDayColor;
+      if (isToday) {
+        dayColor = todayColor;
       } else if (isDisabled) {
         dayColor = disabledDayColor;
-      } else if (isToday) {
-        dayColor = todayColor;
       }
 
-      Widget result = Center(
-        child: Text(
-          localizations.formatDecimal(day),
-          style: dayStyle.apply(color: dayColor),
+      Widget result = Button.filled(
+        localizations.formatDecimal(day),
+        active: isSelectedDay,
+        padding: EdgeInsets.zero,
+        focusNode: _dayFocusNodes[day - 1],
+        style: ButtonThemeData(
+          background: background,
+          highlightBackground: selectedDayBackground,
+          foreground: dayColor,
+          highlightForeground: selectedDayColor,
         ),
+        onPressed: !isDisabled ? () => widget.onChanged(dayToBuild) : null,
       );
 
       if (isDisabled) {
@@ -845,19 +877,7 @@ class _DayPickerState extends State<_DayPicker> {
           label: '$dayFormatted, $fullDateFormatted',
           selected: isSelectedDay,
           excludeSemantics: true,
-          child: ButtonTheme.copyWith(
-            background: background,
-            highlightBackground: selectedDayBackground,
-            foreground: dayColor,
-            child: Button.filled(
-              localizations.formatDecimal(day),
-              highlightColor: colorScheme.error,
-              active: isSelectedDay,
-              padding: EdgeInsets.zero,
-              focusNode: _dayFocusNodes[day - 1],
-              onPressed: () => widget.onChanged(dayToBuild),
-            ),
-          ),
+          child: result,
         );
       }
 

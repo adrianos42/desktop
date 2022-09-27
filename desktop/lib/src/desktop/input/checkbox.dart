@@ -8,29 +8,38 @@ import '../theme/theme.dart';
 
 const Duration _kToggleDuration = Duration(milliseconds: 120);
 const Duration _kHoverDuration = Duration(milliseconds: 100);
-const double _kCheckboxWidth = 14.0;
+const double _kCheckboxWidth = 16.0;
 const double _kEdgeSize = _kCheckboxWidth;
 const double _kStrokeWidth = 2.0;
 
+const double _kContainerHeight = 32.0;
+const double _kContainerWidth = 32.0;
+
+/// [Checkbox] input.
 class Checkbox extends StatefulWidget {
+  /// Creates a [Checkbox].
   const Checkbox({
-    Key? key,
+    super.key,
     this.value,
     this.tristate = false,
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  })  : assert(tristate || value != null);
 
+  /// The value of the input.
   final bool? value;
 
+  /// Called when the value changes.
   final ValueChanged<bool?>? onChanged;
 
+  /// If the checkbox has three states.
   final bool tristate;
 
+  /// The [FocusNode] of the checkbox.
   final FocusNode? focusNode;
 
+  /// See [FocusableActionDetector] field [autofocus].
   final bool autofocus;
 
   @override
@@ -46,16 +55,12 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
   late AnimationController _positionController;
   late AnimationController _hoverPositionController;
 
-  late TapGestureRecognizer _tap;
-
   @override
   void initState() {
     super.initState();
     _actionMap = <Type, Action<Intent>>{
       ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _actionHandler),
     };
-
-    _tap = TapGestureRecognizer()..onTap = _handleTap;
 
     _hoverPositionController = AnimationController(
       duration: _kHoverDuration,
@@ -83,8 +88,6 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _tap.dispose();
-
     _positionController.dispose();
     _hoverPositionController.dispose();
     super.dispose();
@@ -181,7 +184,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
     // TODO(as): final focusColor = theme.activeHoverColor!;
     final disabledColor = theme.disabledColor!;
 
-    const Size size = Size.square(_kCheckboxWidth + 2);
+    const Size size = Size.square(_kCheckboxWidth);
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
     return FocusableActionDetector(
@@ -192,21 +195,27 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
       onShowHoverHighlight: _handleHoverChanged,
       onShowFocusHighlight: _handleFocusHighlightChanged,
       mouseCursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
-      child: Builder(
-        builder: (BuildContext context) {
-          return _CheckboxRenderObjectWidget(
-            value: widget.value,
-            state: this,
-            activeColor: activeColor,
-            hoverColor: hoverColor,
-            hovering: _hovering || _focused,
-            inactiveColor: inactiveColor,
-            disabledColor: disabledColor,
-            onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
-            foregroundColor: foregroundColor,
-            additionalConstraints: additionalConstraints,
-          );
-        },
+      child: GestureDetector(
+        onTap: () => _handleTap(),
+        behavior: HitTestBehavior.opaque,
+        child: SizedBox(
+          width: _kContainerWidth,
+          height: _kContainerHeight,
+          child: Center(
+            child: _CheckboxRenderObjectWidget(
+              value: widget.value,
+              state: this,
+              activeColor: activeColor,
+              hoverColor: hoverColor,
+              hovering: _hovering || _focused,
+              inactiveColor: inactiveColor,
+              disabledColor: disabledColor,
+              onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
+              foregroundColor: foregroundColor,
+              additionalConstraints: additionalConstraints,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -382,15 +391,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
   bool get isInteractive => onChanged != null;
 
   @override
-  bool hitTestSelf(Offset position) => true;
-
-  @override
-  void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
-    assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent && isInteractive) {
-      _state._tap.addPointer(event);
-    }
-  }
+  bool hitTestSelf(Offset position) => false;
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
@@ -425,7 +426,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
 
   Paint _createStrokePaint() {
     return Paint()
-      ..color = foregroundColor
+      ..color = _state._hovering ? Color(0xFF000000) : foregroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = _kStrokeWidth;
   }
@@ -443,9 +444,9 @@ class _RenderCheckbox extends RenderConstrainedBox {
     // As t goes from 0.0 to 1.0, animate the two check mark strokes from the
     // short side to the long side.
     final Path path = Path();
-    const Offset start = Offset(_kEdgeSize * 0.15, _kEdgeSize * 0.45);
-    const Offset mid = Offset(_kEdgeSize * 0.4, _kEdgeSize * 0.7);
-    const Offset end = Offset(_kEdgeSize * 0.85, _kEdgeSize * 0.25);
+    const Offset start = Offset(_kEdgeSize * 0.2, _kEdgeSize * 0.45);
+    const Offset mid = Offset(_kEdgeSize * 0.4, _kEdgeSize * 0.65);
+    const Offset end = Offset(_kEdgeSize * 0.8, _kEdgeSize * 0.25);
 
     if (t < 0.5) {
       final double strokeT = t * 2.0;

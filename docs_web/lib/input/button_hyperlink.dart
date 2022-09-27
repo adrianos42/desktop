@@ -37,7 +37,7 @@ return HyperlinkButton(
           title: 'Example',
           options: [
             Button.icon(
-              Icons.disabled_by_default,
+              Icons.hide_source,
               active: _disabled,
               onPressed: () => setState(() => _disabled = !_disabled),
             ),

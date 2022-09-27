@@ -95,7 +95,7 @@ return SizedBox(
           ),
           options: [
             Button.icon(
-              Icons.disabled_by_default,
+              Icons.close,
               active: _disabled,
               onPressed: () => setState(() => _disabled = !_disabled),
             ),

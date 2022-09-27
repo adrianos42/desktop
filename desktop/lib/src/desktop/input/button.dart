@@ -17,20 +17,19 @@ class Button extends StatefulWidget {
     this.trailing,
     this.leading,
     this.tooltip,
-    this.color,
-    this.hoverColor,
-    this.highlightColor,
+    this.style,
     this.leadingPadding,
     this.padding,
     this.bodyPadding,
     this.trailingPadding,
     this.active,
-    this.axis = Axis.horizontal,
     this.focusNode,
     this.canRequestFocus = true,
     this.autofocus = false,
     this.filled = false,
     required this.onPressed,
+    this.willChangeState = false,
+    this.enableAnimation = true,
   })  : assert(body != null || trailing != null || leading != null),
         super(key: key);
 
@@ -39,15 +38,14 @@ class Button extends StatefulWidget {
     String text, {
     double? fontSize,
     String? tooltip,
-    Color? color,
-    Color? highlightColor,
-    Color? hoverColor,
+    ButtonThemeData? style,
     EdgeInsets? padding,
     Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
+    bool willChangeState = false,
     required VoidCallback? onPressed,
   }) {
     return Button(
@@ -57,9 +55,6 @@ class Button extends StatefulWidget {
       ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      color: color,
-      highlightColor: highlightColor,
-      hoverColor: hoverColor,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -67,6 +62,10 @@ class Button extends StatefulWidget {
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
       active: active,
+      willChangeState: willChangeState,
+      style: style,
+      enableAnimation: true,
+      filled: false,
     );
   }
 
@@ -75,24 +74,20 @@ class Button extends StatefulWidget {
     IconData icon, {
     String? tooltip,
     double? size,
-    Color? color,
-    Color? highlightColor,
-    Color? hoverColor,
     EdgeInsets? padding,
     Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
+    bool willChangeState = false,
     required VoidCallback? onPressed,
+    ButtonThemeData? style,
   }) {
     return Button(
       body: Icon(icon, size: size),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      color: color,
-      highlightColor: highlightColor,
-      hoverColor: hoverColor,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -100,6 +95,10 @@ class Button extends StatefulWidget {
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
       active: active,
+      willChangeState: willChangeState,
+      enableAnimation: true,
+      filled: false,
+      style: style,
     );
   }
 
@@ -108,16 +107,16 @@ class Button extends StatefulWidget {
     String text, {
     double? fontSize,
     String? tooltip,
-    Color? color,
-    Color? highlightColor,
-    Color? hoverColor,
     EdgeInsets? padding,
     Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
+    bool enableAnimation = false,
+    bool willChangeState = false,
     required VoidCallback? onPressed,
+    ButtonThemeData? style,
   }) {
     return Button(
       body: Text(
@@ -126,9 +125,7 @@ class Button extends StatefulWidget {
       ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      color: color,
-      highlightColor: highlightColor,
-      hoverColor: hoverColor,
+      style: style,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -137,6 +134,8 @@ class Button extends StatefulWidget {
       autofocus: autofocus,
       active: active,
       filled: true,
+      willChangeState: willChangeState,
+      enableAnimation: enableAnimation,
     );
   }
 
@@ -154,18 +153,6 @@ class Button extends StatefulWidget {
 
   /// Called when button is pressed.
   final VoidCallback? onPressed;
-
-  /// The color of the button.
-  final Color? color;
-
-  /// The color of the button when the is hovering it.
-  final Color? hoverColor;
-
-  /// The color of the button when it's been pressed.
-  final Color? highlightColor;
-
-  /// The button axis.
-  final Axis axis;
 
   /// The leading padding.
   final EdgeInsets? leadingPadding;
@@ -193,6 +180,15 @@ class Button extends StatefulWidget {
 
   /// If the button fills a background.
   final bool filled;
+
+  /// If animations are enabled.
+  final bool enableAnimation;
+
+  /// Heuristic to indicate that the active or onPressed will change.
+  final bool willChangeState;
+
+  /// The style [ButtonThemeData] of the button.
+  final ButtonThemeData? style;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -222,7 +218,7 @@ class _ButtonState extends State<Button>
   }
 
   void _handleTapUp(TapUpDetails event) {
-    if (pressed) {
+    if (pressed && !widget.willChangeState) {
       pressed = false;
       if (widget.active == null) {
         _updateColor();
@@ -238,11 +234,9 @@ class _ButtonState extends State<Button>
   }
 
   void _handleTapCancel() {
-    if (pressed) {
-      pressed = false;
-      hovered = false;
-      _updateColor();
-    }
+    pressed = false;
+    hovered = false;
+    _updateColor();
   }
 
   bool _globalPointerDown = false;
@@ -304,7 +298,8 @@ class _ButtonState extends State<Button>
 
   void _updateColor([bool animates = true]) {
     if (mounted) {
-      final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
+      final ButtonThemeData buttonThemeData =
+          ButtonTheme.of(context).merge(widget.style);
 
       final Color disabledForeground = buttonThemeData.disabledColor!;
 
@@ -312,13 +307,11 @@ class _ButtonState extends State<Button>
       Color? backgroundColor;
 
       if (!widget.filled) {
-        final Color pressedForeground =
-            widget.highlightColor ?? buttonThemeData.highlightColor!;
+        final Color pressedForeground = buttonThemeData.highlightColor!;
 
-        final Color enabledForeground = widget.color ?? buttonThemeData.color!;
+        final Color enabledForeground = buttonThemeData.color!;
 
-        final Color hoveredForeground =
-            widget.hoverColor ?? buttonThemeData.hoverColor!;
+        final Color hoveredForeground = buttonThemeData.hoverColor!;
 
         foregroundColor = enabled
             ? active || pressed
@@ -328,7 +321,7 @@ class _ButtonState extends State<Button>
                     : enabledForeground
             : disabledForeground;
       } else {
-        final Color pressedBackground =  buttonThemeData.highlightBackground!;
+        final Color pressedBackground = buttonThemeData.highlightBackground!;
         final Color enabledBackground = buttonThemeData.background!;
         final Color hoveredBackground = buttonThemeData.hoverBackground!;
         final Color pressedForeground = buttonThemeData.highlightForeground!;
@@ -347,41 +340,42 @@ class _ButtonState extends State<Button>
                 : hovered
                     ? hoveredBackground
                     : enabledBackground
-            : disabledForeground;
+            : Theme.of(context).colorScheme.background[0];
       }
 
       final bool wasPressed = pressed;
       final bool wasHovered = hovered;
-      final bool wasActive = active;
-      final bool wasEnabled = enabled;
 
-      if (animates) {
+      if (animates && widget.enableAnimation) {
         if (_controller.isAnimating) {
           return;
         }
 
         _color = ColorTween(
-            begin: _color?.end ?? foregroundColor, end: foregroundColor);
+          begin: _color?.end ?? foregroundColor,
+          end: foregroundColor,
+        );
 
         _backgroundColor = ColorTween(
-            begin: _backgroundColor?.end ?? backgroundColor,
-            end: backgroundColor);
+          begin: _backgroundColor?.end ?? backgroundColor,
+          end: backgroundColor,
+        );
 
         _controller.forward(from: 0.0).then((_) {
-          if (wasPressed != pressed ||
-              wasHovered != hovered ||
-              wasActive != active ||
-              wasEnabled != enabled) {
+          if (wasPressed != pressed || wasHovered != hovered) {
             _updateColor();
           }
         });
       } else {
         _color = ColorTween(
-            begin: _color?.end ?? foregroundColor, end: foregroundColor);
+          begin: foregroundColor,
+          end: foregroundColor,
+        );
 
         _backgroundColor = ColorTween(
-            begin: _backgroundColor?.end ?? backgroundColor,
-            end: backgroundColor);
+          begin: backgroundColor,
+          end: backgroundColor,
+        );
 
         _controller.value = 1.0;
       }
@@ -431,17 +425,24 @@ class _ButtonState extends State<Button>
   @override
   void didUpdateWidget(Button oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _updateColor(false);
+
+    if (oldWidget.active != widget.active ||
+        oldWidget.onPressed != widget.onPressed ||
+        oldWidget.filled != widget.filled) {
+      pressed = false;
+      _updateColor(false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
+    final ButtonThemeData buttonThemeData =
+        ButtonTheme.of(context).merge(widget.style);
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 
     if (_color == null || widget.filled && _backgroundColor == null) {
-      _updateColor();
+      _updateColor(false);
     }
 
     final BoxConstraints constraints;
@@ -450,7 +451,7 @@ class _ButtonState extends State<Button>
     final EdgeInsets bodyPadding;
     final EdgeInsets buttonPadding;
 
-    if (widget.axis == Axis.horizontal) {
+    if (buttonThemeData.axis == Axis.horizontal) {
       constraints = BoxConstraints(minHeight: buttonThemeData.height!);
 
       leadingPadding = widget.leadingPadding ??
@@ -505,7 +506,7 @@ class _ButtonState extends State<Button>
           child: IconTheme(
             data: iconThemeData,
             child: Flex(
-              direction: widget.axis,
+              direction: buttonThemeData.axis!,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,

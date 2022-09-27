@@ -164,21 +164,22 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       child: GestureDetector(
         onTap: () => _handleTap(),
         behavior: HitTestBehavior.opaque,
-        child: Container(
-          alignment: Alignment.center,
+        child: SizedBox(
           width: _kWidth + _kSidePadding * 2,
           height: _kContainerHeight,
-          child: _ToggleSwitchRenderObjectWidget(
-            value: widget.value,
-            state: this,
-            activeColor: activeColor,
-            inactiveColor: inactiveColor,
-            disabledColor: disabledColor,
-            hoverColor: hoverColor,
-            onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
-            foregroundColor: foregroundColor,
-            hovering: _hovering || _focused,
-            additionalConstraints: additionalConstraints,
+          child: Center(
+            child: _ToggleSwitchRenderObjectWidget(
+              value: widget.value,
+              state: this,
+              activeColor: activeColor,
+              inactiveColor: inactiveColor,
+              disabledColor: disabledColor,
+              hoverColor: hoverColor,
+              onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
+              foregroundColor: foregroundColor,
+              hovering: _hovering || _focused,
+              additionalConstraints: additionalConstraints,
+            ),
           ),
         ),
       ),
@@ -369,12 +370,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
   }
 
   @override
-  bool hitTestSelf(Offset position) => true;
-
-  @override
-  void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
-    assert(debugHandleEvent(event, entry));
-  }
+  bool hitTestSelf(Offset position) => false;
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {

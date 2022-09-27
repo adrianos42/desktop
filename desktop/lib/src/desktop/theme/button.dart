@@ -36,7 +36,10 @@ class ButtonThemeData {
     this.foreground,
     this.highlightForeground,
     this.hoverForeground,
+    this.axis,
   });
+
+  final Axis? axis;
 
   final IconThemeData? iconThemeData;
 
@@ -93,6 +96,7 @@ class ButtonThemeData {
     Color? foreground,
     Color? hoverForeground,
     Color? highlightForeground,
+    Axis? axis,
   }) {
     return ButtonThemeData(
       textStyle: textStyle ?? this.textStyle,
@@ -113,6 +117,7 @@ class ButtonThemeData {
       foreground: foreground ?? this.foreground,
       highlightForeground: highlightForeground ?? this.highlightForeground,
       hoverForeground: hoverForeground ?? this.hoverForeground,
+      axis: axis ??  this.axis,
     );
   }
 
@@ -139,6 +144,7 @@ class ButtonThemeData {
       foreground: other.foreground,
       highlightForeground: other.highlightForeground,
       hoverForeground: other.hoverForeground,
+      axis: other.axis,
     );
   }
 
@@ -160,7 +166,8 @@ class ButtonThemeData {
         highlightBackground != null &&
         foreground != null &&
         hoverForeground != null &&
-        highlightForeground != null;
+        highlightForeground != null &&
+        axis != null;
   }
 
   @override
@@ -184,6 +191,7 @@ class ButtonThemeData {
       foreground,
       hoverForeground,
       highlightForeground,
+      axis,
     );
   }
 
@@ -213,7 +221,8 @@ class ButtonThemeData {
         other.highlightBackground == highlightBackground &&
         other.foreground == foreground &&
         other.hoverForeground == hoverForeground &&
-        other.highlightForeground == highlightForeground;
+        other.highlightForeground == highlightForeground &&
+        other.axis == axis;
   }
 }
 
@@ -263,6 +272,7 @@ class ButtonTheme extends InheritedTheme {
     Color? foreground,
     Color? hoverForeground,
     Color? highlightForeground,
+    Axis? axis,
   }) {
     return Builder(
       key: key,
@@ -287,6 +297,7 @@ class ButtonTheme extends InheritedTheme {
           foreground: foreground,
           hoverForeground: hoverForeground,
           highlightForeground: highlightForeground,
+          axis: axis,
         ),
       ),
     );
@@ -344,8 +355,7 @@ class ButtonTheme extends InheritedTheme {
       final Color focusBackground =
           buttonThemeData.focusBackground ?? colorScheme.shade[100];
 
-      final Color foreground =
-          buttonThemeData.foreground ?? textTheme.textHigh;
+      final Color foreground = buttonThemeData.foreground ?? textTheme.textHigh;
 
       final Color hoverForeground =
           buttonThemeData.hoverForeground ?? textTheme.textHigh;
@@ -362,6 +372,8 @@ class ButtonTheme extends InheritedTheme {
 
       final double filledPadding =
           buttonThemeData.filledSpacing ?? _kFilledSidePadding;
+
+      final Axis axis = buttonThemeData.axis ?? Axis.horizontal;
 
       buttonThemeData = buttonThemeData.copyWith(
         iconThemeData: iconThemeData,
@@ -382,6 +394,7 @@ class ButtonTheme extends InheritedTheme {
         foreground: foreground,
         hoverForeground: hoverForeground,
         highlightForeground: highlightForeground,
+        axis: axis,
       );
     }
 
