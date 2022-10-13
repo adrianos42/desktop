@@ -1,0 +1,2 @@
+dartdoc:
+  nodoc: ['lib/builder.dart', 'lib/icons_generator.dart', 'lib/theme_data_generator.dart']

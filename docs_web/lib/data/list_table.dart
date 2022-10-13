@@ -171,6 +171,7 @@ return ListTable(
     final dataTableRows = [...someDataTableRows, ...someDataTableRows];
 
     return Defaults(
+      styleItems: Defaults.createStyle(ListTableTheme.of(context).toString()),
       items: [
         ItemTitle(
           title: 'Example with data',
@@ -201,12 +202,11 @@ return ListTable(
               rows: List.generate(dataTableRows.length, (row) {
                 return ListTableRow(
                   onPressed: (_) async {
-                    final dialog = Dialog.showDialog(
+                    await Dialog.showDialog(
                       context,
                       body: Text(dataTableRows[row][0]),
                       title: Text(dataTableRows[row][2]),
                     );
-                    await dialog.closed;
                   },
                   builder: (context, col) => Container(
                     alignment: Alignment.centerLeft,

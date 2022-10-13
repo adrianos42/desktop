@@ -138,7 +138,7 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = RadioButtonTheme.of(context);
+    final theme = RadioTheme.of(context);
 
     final activeColor = theme.activeColor!;
     final hoverColor =

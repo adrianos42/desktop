@@ -304,6 +304,7 @@ return Tree(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(TreeTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) {

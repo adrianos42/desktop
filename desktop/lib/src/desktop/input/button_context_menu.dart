@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../dialogs/context_menu.dart';
+import '../dialogs/context_menu/context_menu.dart';
 import 'button.dart';
 
 /// Button that shows a context menu when pressed.
@@ -74,27 +74,27 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
 
     assert(items.isNotEmpty);
 
-    await showMenu<T>(
+    final newValue = await showMenu<T>(
       context: context,
       items: items,
       initialValue: widget.value,
       position: position,
-    ).then<void>((T? newValue) {
-      if (!mounted) {
-        return null;
-      }
+    );
 
-      if (newValue == null) {
-        if (widget.onCanceled != null) {
-          widget.onCanceled!();
-        }
-        return null;
-      }
+    if (!mounted) {
+      return;
+    }
 
-      if (widget.onSelected != null) {
-        widget.onSelected!(newValue);
+    if (newValue == null) {
+      if (widget.onCanceled != null) {
+        widget.onCanceled!();
       }
-    });
+      return;
+    }
+
+    if (widget.onSelected != null) {
+      widget.onSelected!(newValue);
+    }
   }
 
   @override

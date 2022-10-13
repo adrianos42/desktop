@@ -59,6 +59,7 @@ return Container(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(RadioTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Align(

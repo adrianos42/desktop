@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 
 const double _kMinInteractiveSize = 48.0;
 
@@ -252,10 +253,11 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     // Thumb extent reflects fraction of content visible, as long as this
     // isn't less than the absolute minimum size.
     // _totalContentExtent >= viewportDimension, so (_totalContentExtent - _mainAxisPadding) > 0
-    final double fractionVisible =
-        ((_lastMetrics!.extentInside - _mainAxisPadding) /
-                (_totalContentExtent - _mainAxisPadding))
-            .clamp(0.0, 1.0);
+    final double fractionVisible = clampDouble(
+        (_lastMetrics!.extentInside - _mainAxisPadding) /
+            (_totalContentExtent - _mainAxisPadding),
+        0.0,
+        1.0);
 
     final double thumbExtent = math.max(
       math.min(_trackExtent, minOverscrollLength),
@@ -279,11 +281,12 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
         // [0.8, 1.0] to [0.0, 1.0], so 0% to 20% of overscroll will produce
         // values for the thumb that range between minLength and the smallest
         // possible value, minOverscrollLength.
-        : safeMinLength * (1.0 - fractionOverscrolled.clamp(0.0, 0.2) / 0.2);
+        : safeMinLength *
+            (1.0 - clampDouble(fractionOverscrolled, 0.0, 0.2) / 0.2);
 
     // The `thumbExtent` should be no greater than `trackSize`, otherwise
     // the scrollbar may scroll towards the wrong direction.
-    return thumbExtent.clamp(newMinLength, _trackExtent);
+    return clampDouble(thumbExtent, newMinLength, _trackExtent);
   }
 
   @override
@@ -337,8 +340,10 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
         metrics.maxScrollExtent - metrics.minScrollExtent;
 
     final double fractionPast = (scrollableExtent > 0)
-        ? ((metrics.pixels - metrics.minScrollExtent) / scrollableExtent)
-            .clamp(0.0, 1.0)
+        ? clampDouble(
+            (metrics.pixels - metrics.minScrollExtent) / scrollableExtent,
+            0.0,
+            1.0)
         : 0;
 
     return (_isReversed ? 1 - fractionPast : fractionPast) *
@@ -445,7 +450,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
   @override
   bool shouldRepaint(DesktopScrollbarPainter old) {
-    return thumbColor != old.thumbColor ||
+    final should = thumbColor != old.thumbColor ||
         textDirection != old.textDirection ||
         thickness != old.thickness ||
         fadeoutOpacityAnimation != old.fadeoutOpacityAnimation ||
@@ -454,6 +459,8 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
         minLength != old.minLength ||
         minOverscrollLength != old.minOverscrollLength ||
         padding != old.padding;
+
+    return should;
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
-import '../theme/scrollbar.dart';
+import '../theme/scrolling/scrollbar.dart';
 import '../theme/theme.dart';
 import 'scroll_painter.dart';
 
@@ -240,19 +240,6 @@ class _ScrollbarState extends State<Scrollbar>
     return _painter!.hitTestOnlyThumbInteractive(localOffset, kind);
   }
 
-  DesktopScrollbarPainter _buildScrollbarPainter(BuildContext context) {
-    return DesktopScrollbarPainter(
-      thumbColor: _thumbColor,
-      thumbColorAnimation: _thumbAnimation,
-      trackColor: _trackColor,
-      thickness: _kScrollbarThickness,
-      textDirection: Directionality.of(context),
-      minOverscrollLength: _kScrollbarMinOverscrollLength,
-      minLength: widget.minThumbLength,
-      fadeoutOpacityAnimation: _fadeoutOpacityAnimation,
-    );
-  }
-
   void _startFadeoutTimer() {
     if (_hideScroll) {
       _fadeoutTimer?.cancel();
@@ -381,19 +368,26 @@ class _ScrollbarState extends State<Scrollbar>
     if (!widget.notificationPredicate(ScrollUpdateNotification(
       metrics: notification.metrics,
       context: notification.context,
-      //depth: notification.depth,
+      depth: notification.depth,
     ))) {
       return false;
     }
 
-    if (widget.isAlwaysShown) {
+    if (!_hideScroll) {
       if (_fadeoutAnimationController.status != AnimationStatus.forward &&
           _fadeoutAnimationController.status != AnimationStatus.completed) {
-        //_fadeoutAnimationController.forward();
+        _fadeoutAnimationController.forward();
       }
     }
 
     final ScrollMetrics metrics = notification.metrics;
+
+    if (metrics.maxScrollExtent <= metrics.minScrollExtent) {
+      _fadeoutAnimationController.reverse();
+      _painter!.update(metrics, metrics.axisDirection);
+      return true;
+    }
+
     if (_shouldUpdatePainter(metrics.axis)) {
       _painter!.update(metrics, metrics.axisDirection);
       return true;
@@ -409,12 +403,6 @@ class _ScrollbarState extends State<Scrollbar>
 
     final ScrollMetrics metrics = notification.metrics;
 
-    if (metrics.maxScrollExtent <= metrics.minScrollExtent) {
-      _fadeoutAnimationController.reverse();
-      _painter!.update(metrics, metrics.axisDirection);
-      return false;
-    }
-
     if (notification is ScrollUpdateNotification ||
         notification is OverscrollNotification) {
       if (_fadeoutAnimationController.status != AnimationStatus.forward) {
@@ -423,7 +411,6 @@ class _ScrollbarState extends State<Scrollbar>
 
       _fadeoutTimer?.cancel();
       _painter!.update(metrics, metrics.axisDirection);
-
     } else if (notification is ScrollEndNotification) {
       if (_dragScrollbarPosition == null) {
         _startFadeoutTimer();
@@ -494,27 +481,21 @@ class _ScrollbarState extends State<Scrollbar>
       curve: Curves.linear,
     );
 
-    _thumbAnimationController.forward();
+    _painter = DesktopScrollbarPainter(
+      thumbColor: ColorTween(),
+      thumbColorAnimation: _thumbAnimation,
+      trackColor: null,
+      thickness: _kScrollbarThickness,
+      textDirection: TextDirection.ltr,
+      minOverscrollLength: _kScrollbarMinOverscrollLength,
+      minLength: widget.minThumbLength,
+      fadeoutOpacityAnimation: _fadeoutOpacityAnimation,
+    );
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    _color = null;
-
-    if (_painter == null) {
-      _painter = _buildScrollbarPainter(context);
-    } else {
-      _painter!
-        ..textDirection = Directionality.of(context)
-        ..padding = MediaQuery.of(context).padding
-        ..thumbColor = _thumbColor;
-    }
-
-    final _ = MediaQuery.of(context).size;
-
-    _maybeTriggerScrollbar();
   }
 
   bool get showScrollbar => widget.isAlwaysShown;

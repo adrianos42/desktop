@@ -23,12 +23,12 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
     );
 
     if (_formKey.currentState!.validate()) {
-      late DialogController dialogController;
-      dialogController = Dialog.showDialog(
+      Dialog.showDialog(
         context,
         title: const Text('Login'),
         actions: [
-          DialogAction(title: 'Ok', onPressed: () => dialogController.close())
+          DialogAction(
+              title: 'Ok', onPressed: () => Navigator.of(context).pop())
         ],
         body: Text.rich(
           TextSpan(

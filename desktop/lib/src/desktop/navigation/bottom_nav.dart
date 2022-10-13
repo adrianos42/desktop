@@ -168,7 +168,7 @@ class _BottomNavState extends State<BottomNav>
         _menuActive ? Icons.close : Icons.menu,
         active: _menuActive,
         onPressed: _showMenu,
-        height: navThemeData.width + 4.0,
+        height: navThemeData.width! + 4.0,
       ),
     );
   }

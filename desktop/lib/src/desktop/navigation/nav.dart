@@ -301,10 +301,10 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     if (widget.navAxis == Axis.horizontal) {
       constraints = BoxConstraints.tightFor(height: navThemeData.height);
       itemsSpacing =
-          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
+          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing!);
     } else {
       constraints = BoxConstraints.tightFor(width: navThemeData.width);
-      itemsSpacing = EdgeInsets.symmetric(vertical: navThemeData.itemsSpacing);
+      itemsSpacing = EdgeInsets.symmetric(vertical: navThemeData.itemsSpacing!);
     }
 
     final navList = <Widget>[];

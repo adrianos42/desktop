@@ -285,11 +285,13 @@ class _TabGroupState extends State<_TabGroup> {
       height: widget.height ?? tabThemeData.height!,
       color: widget.background ?? tabThemeData.backgroundColor!,
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Expanded(
+          ConstrainedBox(
+            // TODO(as): See default value.
+            constraints: const BoxConstraints(minWidth: 128.0),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(
                 scrollbars: false,

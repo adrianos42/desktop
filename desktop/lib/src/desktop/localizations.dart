@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 /// Defines the localized resource values used by the Desktop widgets.
 ///
@@ -23,7 +24,11 @@ abstract class DesktopLocalizations {
 
   String formatDecimal(int number);
 
+  TextInputFormatter get dateFormInputFormatter;
+
   int get firstDayOfWeekIndex;
+
+  String formatCompactDate(DateTime date);
 
   static DesktopLocalizations of(BuildContext context) {
     return Localizations.of<DesktopLocalizations>(
@@ -113,7 +118,6 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
     'December',
   ];
 
-
   @override
   String tabSemanticsLabel({required int tabIndex, required int tabCount}) {
     assert(tabIndex >= 1);
@@ -132,6 +136,15 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
 
   @override
   String formatYear(DateTime date) => date.year.toString();
+
+  @override
+  String formatCompactDate(DateTime date) {
+    // dd/mm/yyyy format
+    final String month = date.month < 10 ? '0${date.month}' : '${date.month}';
+    final String day = date.day < 10 ? '0${date.day}' : '${date.day}';
+    final String year = date.year.toString().padLeft(4, '0');
+    return '$day/$month/$year';
+  }
 
   @override
   String formatMonthYear(DateTime date) {
@@ -164,6 +177,10 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
     return result.toString();
   }
 
+  @override
+  TextInputFormatter get dateFormInputFormatter =>
+      _DefaultDateFormInputFormatter();
+
   static Future<DesktopLocalizations> load(Locale locale) {
     return SynchronousFuture<DesktopLocalizations>(
         const DefaultDesktopLocalizations());
@@ -171,4 +188,17 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
 
   static const LocalizationsDelegate<DesktopLocalizations> delegate =
       _DesktopLocalizationsDelegate();
+}
+
+class _DefaultDateFormInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(oldValue, TextEditingValue newValue) {
+    if (RegExp(r'^((\d{0,2})|(\d{2}\/\d{0,2})|(\d{2}\/\d{2}\/\d{0,4}))$')
+            .hasMatch(newValue.text) ||
+        newValue.text.isEmpty) {
+      return newValue;
+    } else {
+      return oldValue;
+    }
+  }
 }

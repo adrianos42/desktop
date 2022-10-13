@@ -42,7 +42,10 @@ return Button.text(
 
     final customColor = (const HSLColor.fromAHSL(1.0, 150, 0.6, 0.5)).toColor();
 
+    final ButtonThemeData themeData = ButtonTheme.of(context);
+
     return Defaults(
+      styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
           body: (context) => Align(
@@ -115,7 +118,7 @@ return Button.text(
             child: Button(
               body: const Text('Custom Button'),
               // Uses a recommended color for the button.
-              style: ButtonThemeData(
+              themeData: ButtonThemeData(
                 color: customColor,
                 highlightColor: Theme.of(context).textTheme.textLow,
               ),

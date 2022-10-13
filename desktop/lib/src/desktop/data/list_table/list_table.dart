@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../theme/theme.dart';
@@ -419,7 +420,7 @@ class _ListTableState extends State<ListTable> {
     for (final value in colFraction!.keys) {
       if (value < colCount) {
         nfactors += 1;
-        final double fraction = colFraction![value]!.clamp(0.0, 1.0);
+        final double fraction = clampDouble(colFraction![value]!, 0.0, 1.0);
         colFraction![value] = fraction;
         remWidth -= totalWidth! * fraction;
       }
@@ -449,7 +450,7 @@ class _ListTableState extends State<ListTable> {
           }
 
           final double fraction =
-              (nonFactorWidth / totalWidth!).clamp(0.0, 1.0);
+              clampDouble(nonFactorWidth / totalWidth!, 0.0, 1.0);
           colFraction![i] = fraction;
           remWidth -= totalWidth! * fraction;
         }
@@ -486,7 +487,7 @@ class _ListTableState extends State<ListTable> {
             width = width.roundToDouble();
           }
 
-          width = width.clamp(_kMinColumnWidth, remWidth);
+          width = clampDouble(width, _kMinColumnWidth, remWidth);
 
           colSizes[i] = width;
           remWidth -= width;
@@ -524,9 +525,9 @@ class _ListTableState extends State<ListTable> {
       final int mappedIndex = colIndexes?[col] ?? col;
 
       if (delta < 0) {
-        delta = delta.clamp(-previousColSizes![col] + _kMinColumnWidth, 0.0);
+        delta = clampDouble(delta, -previousColSizes![col] + _kMinColumnWidth, 0.0);
       } else {
-        delta = delta.clamp(0.0, delta);
+        delta = clampDouble(delta, 0.0, delta);
       }
 
       final double newWidth = previousColSizes![col] + delta;

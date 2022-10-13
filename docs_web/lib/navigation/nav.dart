@@ -115,6 +115,7 @@ return Nav(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(NavTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) {

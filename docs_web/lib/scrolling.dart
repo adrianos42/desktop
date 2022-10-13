@@ -88,61 +88,62 @@ class _ScrollingPageState extends State<ScrollingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Defaults.createHeader(context, 'Scrolling'),
-        ),
-        Expanded(
-          child: GridView.custom(
-            controller: _controler,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-            ),
-            childrenDelegate: SliverChildListDelegate.fixed(
-              _kFileNames.map((assetName) {
-                return GestureDetector(
-                  onTap: () async {
-                    // TODO(as): Create a merge instead.
-                    final themeData = ThemeData.dark();
+    return Defaults(
+      styleItems: Defaults.createStyle(ScrollbarTheme.of(context).toString()),
+      header: 'Scrollbar',
+      items: [
+        ItemTitle(
+          title: 'Vertical scrollbar',
+          body: (context) => Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: GridView.custom(
+              controller: _controler,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+              ),
+              childrenDelegate: SliverChildListDelegate.fixed(
+                _kFileNames.map((assetName) {
+                  return GestureDetector(
+                    onTap: () async {
+                      // TODO(as): Create a merge instead.
+                      final themeData = ThemeData.dark();
 
-                    late DialogController dialogController;
-                    dialogController = Dialog.showCustomDialog(
-                      context,
-                      barrierColor: themeData.colorScheme.background[0],
-                      dismissible: true,
-                      builder: (context) {
-                        return Theme(
-                          data: themeData,
-                          child: Builder(
-                            builder: (context) => _ImagePage(
-                              _kFileNames.indexOf(assetName),
-                              close: () => dialogController.close(),
-                              requestNext: _requestNext,
-                              requestPrevious: _requestPrevious,
+                      Dialog.showCustomDialog(
+                        context,
+                        barrierColor: themeData.colorScheme.background[0],
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return Theme(
+                            data: themeData,
+                            child: Builder(
+                              builder: (context) => _ImagePage(
+                                _kFileNames.indexOf(assetName),
+                                close: () => Navigator.of(context).pop(),
+                                requestNext: _requestNext,
+                                requestPrevious: _requestPrevious,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return Image.asset(
-                      'assets/cats_small/$assetName.webp',
-                      frameBuilder: _frameBuilder,
-                      fit: BoxFit.cover,
-                    );
-                  }),
-                );
-              }).toList(),
+                          );
+                        },
+                      );
+                    },
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return Image.asset(
+                        'assets/cats_small/$assetName.webp',
+                        frameBuilder: _frameBuilder,
+                        fit: BoxFit.cover,
+                      );
+                    }),
+                  );
+                }).toList(),
+              ),
             ),
           ),
-        ),
+        )
       ],
     );
   }
@@ -373,7 +374,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                             ),
                             if (widget.requestPrevious != null)
                               Button.icon(
-                                Icons.keyboard_arrow_left,
+                                Icons.arrow_back,
                                 onPressed: canRequestPrevious
                                     ? _requestPrevious
                                     : null,
@@ -383,7 +384,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12),
                                 child: Button.icon(
-                                  Icons.keyboard_arrow_right,
+                                  Icons.arrow_forward,
                                   onPressed:
                                       canRequestNext ? _requestNext : null,
                                   tooltip: 'Next',

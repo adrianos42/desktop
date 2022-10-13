@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.0.0-dev.5
+
+- Fixes `TextField` issue for flutter stable channel.
+
+## 4.0.0-dev.4
+
+- Creates `TextFormField`.
+
 ## 4.0.0-dev.3
 
 - Fixes indicator in `ListTable`.

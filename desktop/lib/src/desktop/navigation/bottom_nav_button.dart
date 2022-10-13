@@ -62,13 +62,14 @@ class _NavBottomGroupState extends State<NavBottomGroup>
         height: navThemeData.height,
         //  width: navThemeData.height,
       );
-      final EdgeInsets buttonBodyPadding =
-          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing);
-      final double buttonHeight = navThemeData.height;
+      final EdgeInsets buttonBodyPadding = EdgeInsets.symmetric(
+        horizontal: navThemeData.itemsSpacing!,
+      );
+      final double buttonHeight = navThemeData.height!;
       double? buttonWidth;
 
       final TextStyle textStyle = textTheme.body2.copyWith(fontSize: 14.0);
-      final IconThemeData iconThemeData = navThemeData.iconThemeData;
+      final IconThemeData iconThemeData = navThemeData.iconThemeData!;
       final color = textTheme.textLow;
       final hoverColor = textTheme.textHigh;
 
@@ -101,7 +102,7 @@ class _NavBottomGroupState extends State<NavBottomGroup>
       );
     }
 
-    final double renderIndicatorLength = navThemeData.indicatorWidth;
+    final double renderIndicatorLength = navThemeData.indicatorWidth!;
     final double renderMainLength =
         itemLengths.reduce((value, elem) => value + elem);
 
@@ -111,7 +112,7 @@ class _NavBottomGroupState extends State<NavBottomGroup>
     BoxConstraints constraints;
 
     final height = navThemeData.height;
-    crossLenth = height;
+    crossLenth = height!;
     renderHeight = renderIndicatorLength;
     renderWidth = renderMainLength;
     constraints = BoxConstraints.tightFor(height: height);
@@ -130,10 +131,10 @@ class _NavBottomGroupState extends State<NavBottomGroup>
           _SideIconRenderObjectWidget(
             vsync: this,
             text: widget.navItems.map((e) => e.title).toList(),
-            duration: navThemeData.animationDuration,
+            duration: navThemeData.animationDuration!,
             lengths: itemLengths,
             crossLength: crossLenth,
-            sideLength: navThemeData.indicatorWidth,
+            sideLength: navThemeData.indicatorWidth!,
             additionalConstraints: BoxConstraints.tightFor(
               height: renderHeight,
               width: renderWidth,
@@ -403,7 +404,7 @@ class BottomNavMenuButton extends StatelessWidget {
     final Color highlightColor = colorScheme.shade[100];
 
     final IconThemeData iconThemeData =
-        navThemeData.iconThemeData.copyWith(size: 24.0);
+        navThemeData.iconThemeData!.copyWith(size: 24.0);
     final Color color = buttonThemeData.highlightColor!;
 
     return Container(

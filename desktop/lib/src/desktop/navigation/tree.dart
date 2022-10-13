@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:ui' show PointerDeviceKind;
+import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -70,8 +71,7 @@ class TreeNode {
 /// Context to see if the node is collapsed or not.
 class _TreeNodeCollapse extends InheritedWidget {
   /// Creates a context for the tree node.
-  const _TreeNodeCollapse(this._collapsed, {required Widget child, Key? key})
-      : super(key: key, child: child);
+  const _TreeNodeCollapse(this._collapsed, {super.key, required super.child});
 
   final bool _collapsed;
 
@@ -169,8 +169,9 @@ class Tree extends StatefulWidget {
     this.isScrollbarAlwaysShown = true,
     this.collapsed = false,
     this.showDraggingIndicator = true,
-    Key? key,
-  }) : super(key: key);
+    this.allowDragging = false,
+    super.key,
+  });
 
   /// The title above the tree.
   final Widget? title;
@@ -181,6 +182,7 @@ class Tree extends StatefulWidget {
   /// Padding for the the page used in a node.
   final EdgeInsets? pagePadding;
 
+  ///
   final bool isScrollbarAlwaysShown;
 
   /// If the tree is collapsed.
@@ -188,6 +190,9 @@ class Tree extends StatefulWidget {
 
   /// If an indicator is shown when the tree is collapsed.
   final bool showDraggingIndicator;
+
+  /// If the tree can be resized.
+  final bool allowDragging;
 
   @override
   _TreeState createState() => _TreeState();
@@ -212,46 +217,57 @@ class _TreeState extends State<Tree>
 
   final GlobalKey _stackKey = GlobalKey();
 
-  final bool _visible = false;
-
   void setPage(String name) {
     setState(() => _current = name);
   }
-
-  void _handleHoverEntered() {
-    if (!hovered) {
-      _indicatorSizecontroller.animateTo(1.0,
-          duration: const Duration(milliseconds: 120));
+  
+  void _handleHoverMoved() {
+    if (!hovered && !_globalPointerDown) {
+      _indicatorSizecontroller.animateTo(1.0);
       setState(() => hovered = true);
     }
   }
 
   void _handleHoverExited() {
     if (hovered) {
-      _indicatorSizecontroller.animateBack(_indicatorSizeFactor,
-          duration: const Duration(milliseconds: 120));
+      if (!dragged) {
+        _indicatorSizecontroller.animateBack(_indicatorSizeFactor);
+      }
+
       setState(() => hovered = false);
     }
   }
 
-  double get _indicatorSizeFactor => _visible ? 0.25 : 0.5;
+  double get _indicatorSizeFactor => 0.5;
 
-  double _xOffset = 0.0;
+  double? _initialColumnWidth;
+  double _previoutColumnWidth = 0.0;
+  double get initialColumnWidth => _initialColumnWidth ??= 200.0;
+
   double? _offset;
+  double? _totalWidth;
 
   void _onDragStart(DragStartDetails details) {
-    return; // TODO(as): Implement dragging.
-    if (details.kind == PointerDeviceKind.mouse) {
+    if (!widget.collapsed) {
       setState(() {
-        _offset = details.globalPosition.dx;
+        dragged = true;
+        _previoutColumnWidth = initialColumnWidth;
+
+        if (details.kind == PointerDeviceKind.mouse) {
+          _offset = details.globalPosition.dx;
+        }
       });
     }
   }
 
   void _onDragCancel() {
     setState(() {
+      dragged = false;
       _offset = null;
-      _xOffset = 0.0;
+
+      if (!hovered) {
+        _indicatorSizecontroller.animateBack(_indicatorSizeFactor);
+      }
     });
   }
 
@@ -261,15 +277,26 @@ class _TreeState extends State<Tree>
 
       setState(() {
         _offset = null;
-        _xOffset = 0.0;
       });
     }
+
+    setState(() {
+      dragged = false;
+
+      if (!hovered) {
+        _indicatorSizecontroller.animateBack(_indicatorSizeFactor);
+      }
+    });
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
     if (_offset != null) {
       setState(() {
-        _xOffset = details.globalPosition.dx - _offset!;
+        final double delta = details.globalPosition.dx - _offset!;
+        _initialColumnWidth = math.max(
+            math.min(_previoutColumnWidth + delta,
+                (_totalWidth ?? double.infinity) - 200.0),
+            200.0);
       });
     }
   }
@@ -277,50 +304,35 @@ class _TreeState extends State<Tree>
   final ScrollController _controller = ScrollController();
 
   Widget _createTree(BuildContext context) {
-    final List<_TreeColumn> children = List.empty(growable: true);
+    final List<Widget> children = List.empty(growable: true);
+
+    if (widget.title != null) {
+      children.add(widget.title!);
+    }
 
     for (var i = 0; i < widget.nodes.length; i += 1) {
       children.add(_TreeColumn(
         node: widget.nodes[i],
         parentName: '',
-        name: i.toString(),
+        name: '$i',
         updatePage: () {
-          setState(
-              () {}); // TODO(as): See scroll notification without rebuilding.
-          //controller.position.;
+          setState(() {});
         },
       ));
     }
 
     return Container(
       alignment: Alignment.topLeft,
-      width: 200.0,
+      width: initialColumnWidth,
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0),
-        child: Transform(
-          transform: Matrix4.translationValues(_xOffset, 0.0, 0.0),
+        child: SingleChildScrollView(
+          controller: _controller,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              if (widget.title != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: widget.title!,
-                ),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: _controller,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: children,
-                  ),
-                ),
-              ),
-            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: children,
           ),
         ),
       ),
@@ -337,11 +349,17 @@ class _TreeState extends State<Tree>
 
     if (node.nodes != null) {
       for (var i = 0; i < node.nodes!.length; i += 1) {
-        _createEntries(nameResult, i.toString(), node.nodes![i]);
+        _createEntries(nameResult, '$i', node.nodes![i]);
       }
     } else if (node.builder != null) {
       _pages[nameResult] = _BuildTreePage(builder: node.builder!);
     }
+  }
+
+  bool _globalPointerDown = false;
+
+  void _mouseRoute(PointerEvent event) {
+    _globalPointerDown = event.down;
   }
 
   @override
@@ -354,7 +372,7 @@ class _TreeState extends State<Tree>
 
     if (oldWidget.nodes != widget.nodes) {
       for (var i = 0; i < widget.nodes.length; i += 1) {
-        _createEntries('', i.toString(), widget.nodes[i]);
+        _createEntries('', '$i', widget.nodes[i]);
       }
     }
 
@@ -368,14 +386,6 @@ class _TreeState extends State<Tree>
   }
 
   @override
-  void dispose() {
-    _indicatorSizecontroller.dispose();
-    _columnController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
 
@@ -384,7 +394,7 @@ class _TreeState extends State<Tree>
     }
 
     for (var i = 0; i < widget.nodes.length; i += 1) {
-      _createEntries('', i.toString(), widget.nodes[i]);
+      _createEntries('', '$i', widget.nodes[i]);
     }
 
     _indicatorSizecontroller = AnimationController(
@@ -403,6 +413,17 @@ class _TreeState extends State<Tree>
       parent: _columnController,
       curve: Curves.easeInOutSine,
     );
+
+    WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
+  }
+
+  @override
+  void dispose() {
+    _indicatorSizecontroller.dispose();
+    _columnController.dispose();
+    WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
+
+    super.dispose();
   }
 
   @override
@@ -412,118 +433,122 @@ class _TreeState extends State<Tree>
 
   @override
   Widget build(BuildContext context) {
-    final pagesResult = List<Widget>.empty(growable: true);
+    return LayoutBuilder(builder: (context, constraints) {
+      final pagesResult = List<Widget>.empty(growable: true);
 
-    _current ??= '/0';
+      _current ??= '/0';
+      _totalWidth = constraints.maxWidth;
 
-    for (final entry in _pages.entries) {
-      final active = entry.key == _current!;
-      entry.value.shouldBuild = active || entry.value.shouldBuild;
+      for (final entry in _pages.entries) {
+        final active = entry.key == _current!;
+        entry.value.shouldBuild = active || entry.value.shouldBuild;
 
-      pagesResult.add(
-        Offstage(
-          offstage: !active,
-          child: TickerMode(
-            enabled: active,
-            child: Builder(
-              builder: (context) {
-                return entry.value.shouldBuild
-                    ? Padding(
-                        padding: widget.pagePadding ?? EdgeInsets.zero,
-                        child: entry.value.builder(context),
-                      )
-                    : Container();
-              },
+        pagesResult.add(
+          Offstage(
+            offstage: !active,
+            child: TickerMode(
+              enabled: active,
+              child: Builder(
+                builder: (context) {
+                  return entry.value.shouldBuild
+                      ? Padding(
+                          padding: widget.pagePadding ?? EdgeInsets.zero,
+                          child: entry.value.builder(context),
+                        )
+                      : Container();
+                },
+              ),
             ),
           ),
-        ),
+        );
+      }
+
+      if (widget.allowDragging) {
+        pagesResult.add(
+          Offstage(
+            offstage: widget.collapsed,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: FadeTransition(
+                //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
+                opacity: const AlwaysStoppedAnimation(1.0),
+                child: GestureDetector(
+                  onHorizontalDragStart: _onDragStart,
+                  onHorizontalDragCancel: _onDragCancel,
+                  onHorizontalDragEnd: _onDragEnd,
+                  onHorizontalDragUpdate: _onDragUpdate,
+                  child: MouseRegion(
+                    cursor: !hovered && !dragged
+                        ? MouseCursor.defer
+                        : SystemMouseCursors.resizeColumn,
+                    onEnter: (_) => _handleHoverMoved(),
+                    onHover: (_) => _handleHoverMoved(),
+                    onExit: (_) => _handleHoverExited(),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      constraints: const BoxConstraints(maxWidth: 2.0),
+                      margin: const EdgeInsets.only(right: 4.0),
+                      child: SizeTransition(
+                        axis: Axis.horizontal,
+                        sizeFactor: _indicatorSizecontroller,
+                        child: Container(
+                          width: 2.0,
+                          color: widget.collapsed || dragged
+                              ? Theme.of(context).colorScheme.primary[50]
+                              : hovered
+                                  ? Theme.of(context).textTheme.textHigh
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .background[20],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+
+      Widget result;
+
+      result = Row(
+        children: [
+          Offstage(
+            offstage: widget.collapsed && _columnController.isCompleted,
+            child: SizeTransition(
+              axis: Axis.horizontal,
+              sizeFactor: _columnAnimation,
+              child: _createTree(context),
+            ),
+          ),
+          Expanded(
+            child: Stack(
+              key: _stackKey,
+              fit: StackFit.expand,
+              children: pagesResult,
+            ),
+          )
+        ],
       );
-    }
 
-    // pagesResult.add(
-    //   Offstage(
-    //     offstage: !widget.collapsed, // TODO(as):
-    //     child: FadeTransition(
-    //       //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
-    //       opacity: const AlwaysStoppedAnimation(1.0),
-    //       child: GestureDetector(
-    //         onTap: () => setState(() {
-    //           if (_visible) {
-    //             _columnController.reverse();
-    //           } else {
-    //             _columnController.forward();0
-    //           }
-    //           _visible = !_visible;
-    //         }),
-    //         onHorizontalDragStart: _onDragStart,
-    //         onHorizontalDragCancel: _onDragCancel,
-    //         onHorizontalDragEnd: _onDragEnd,
-    //         onHorizontalDragUpdate: _onDragUpdate,
-    //         child: MouseRegion(
-    //           cursor: SystemMouseCursors.click,
-    //           onEnter: (_) => _handleHoverEntered(),
-    //           onExit: (_) => _handleHoverExited(),
-    //           child: Row(
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: [
-    //               Container(
-    //                 alignment: Alignment.centerLeft,
-    //                 //constraints: const BoxConstraints.tightForFinite(width: 4),
-    //                 color: hovered
-    //                     ? Theme.of(context).textTheme.textHigh.toColor()
-    //                     : Theme.of(context).colorScheme.primary[50].toColor(),
-    //                 margin: const EdgeInsets.only(right: 8),
-    //                 child: SizeTransition(
-    //                   axis: Axis.horizontal,
-    //                   sizeFactor: _indicatorSizecontroller,
-    //                   child: const SizedBox(width: 4),
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
+      result = _TreeScope(
+        child: result,
+        treeState: this,
+      );
 
-    Widget result;
-
-    result = Row(
-      children: [
-        Offstage(
-          offstage: widget.collapsed && _columnController.isCompleted,
-          child: SizeTransition(
-            axis: Axis.horizontal,
-            sizeFactor: _columnAnimation,
-            child: _createTree(context),
-          ),
-        ),
-        Expanded(
-          child: Stack(
-            key: _stackKey,
-            fit: StackFit.expand,
-            children: pagesResult,
-          ),
-        )
-      ],
-    );
-
-    result = _TreeScope(
-      child: result,
-      treeState: this,
-    );
-
-    return result;
+      return result;
+    });
   }
 }
 
 class _TreeScope extends InheritedWidget {
   const _TreeScope({
-    Key? key,
     required this.treeState,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+    super.key,
+  });
 
   final _TreeState treeState;
 
@@ -565,7 +590,7 @@ class _TreeColumnState extends State<_TreeColumn> {
         children.add(_TreeColumn(
           node: widget.node.nodes![i],
           parentName: name,
-          name: i.toString(),
+          name: '$i',
           updatePage: widget.updatePage,
         ));
       }

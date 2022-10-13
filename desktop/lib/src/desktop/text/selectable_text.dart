@@ -450,6 +450,7 @@ class _SelectableTextState extends State<SelectableText>
       onSelectionHandleTapped: _handleSelectionHandleTapped,
       selectionHeightStyle: ui.BoxHeightStyle.tight,
       selectionWidthStyle: ui.BoxWidthStyle.tight,
+      scrollBehavior: const _InputScrollBehavior(),
     );
 
     return _selectionGestureDetectorBuilder.buildGestureDetector(
@@ -485,5 +486,18 @@ class _TextSpanEditingController extends TextEditingController {
   @override
   set text(String? newText) {
     throw UnimplementedError();
+  }
+}
+
+/// Default [ScrollBehavior] for desktop.
+class _InputScrollBehavior extends ScrollBehavior {
+  /// Creates a [DesktopScrollBehavior].
+  const _InputScrollBehavior() : super();
+
+  /// Applies a [Scrollbar] to the child widget.
+  @override
+  Widget buildScrollbar(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

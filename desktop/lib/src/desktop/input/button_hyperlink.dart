@@ -34,8 +34,8 @@ class HyperlinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
-    final HyperlinkButtonThemeData hyperlinkButtonThemeData =
-        HyperlinkButtonTheme.of(context);
+    final HyperlinkThemeData hyperlinkButtonThemeData =
+        HyperlinkTheme.of(context);
 
     return ButtonTheme.merge(
       data: buttonThemeData.copyWith(

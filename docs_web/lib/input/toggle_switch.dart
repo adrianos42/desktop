@@ -31,6 +31,7 @@ return ToggleSwitch(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(ToggleSwitchTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Align(

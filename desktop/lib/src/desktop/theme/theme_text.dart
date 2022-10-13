@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
 
+export 'theme_data.dart' show ThemeData, Theme;
+
 const _kFontFamily = 'IBM Plex Sans';
 const _kFontFamilyMono = 'IBM Plex Mono';
 const _kFontPackage = 'desktop';
@@ -38,7 +40,7 @@ class _TextThemes {
     inherit: false,
     fontFamily: _kFontFamily,
     package: _kFontPackage,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.normal,
     fontSize: 20.0,
   );
 

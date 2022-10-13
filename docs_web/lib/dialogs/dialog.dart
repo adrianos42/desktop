@@ -77,6 +77,7 @@ return Button.text(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(DialogTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Center(
@@ -85,14 +86,13 @@ return Button.text(
               active: _dialogActive,
               onPressed: () async {
                 setState(() => _dialogActive = true);
-                late DialogController dialogController;
-                dialogController = Dialog.showDialog(
+                await Dialog.showDialog(
                   context,
-                  dismissible: false,
+                  barrierDismissible: false,
                   actions: [
                     DialogAction(
                       title: 'Close',
-                      onPressed: () => dialogController.close(),
+                      onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
                   title: const Text('Lorem Ipsum'),
@@ -109,8 +109,6 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
 '''),
                 );
 
-                final _ = await dialogController.closed;
-
                 setState(() => _dialogActive = false);
               },
             ),
@@ -126,14 +124,12 @@ Eos sed fuga neque. Rerum adipisci ducimus et aspernatur in. Atque sequi fugiat 
               onPressed: () async {
                 setState(() => _dialogDismissActive = true);
 
-                final dialog = Dialog.showDialog(
+                await Dialog.showDialog(
                   context,
                   title: const Text('Lorem Ipsum'),
                   body: const Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
                 );
-
-                final _ = await dialog.closed;
 
                 setState(() => _dialogDismissActive = false);
               },

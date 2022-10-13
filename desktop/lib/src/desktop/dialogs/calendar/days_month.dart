@@ -8,18 +8,23 @@ class DaysMonth extends MultiChildRenderObjectWidget {
     super.key,
     super.children,
     required this.daysOffset,
-    required this.dayBoxSize,
+    required this.boxSize,
+    required this.columns,
   });
 
   ///
   final int daysOffset;
 
   ///
-  final double dayBoxSize;
+  final Size boxSize;
+
+  ///
+  final int columns;
 
   @override
   _DayPickerRender createRenderObject(BuildContext context) {
-    return _DayPickerRender(daysOffset: daysOffset, dayBoxSize: dayBoxSize);
+    return _DayPickerRender(
+        daysOffset: daysOffset, boxSize: boxSize, columns: columns);
   }
 
   @override
@@ -27,7 +32,8 @@ class DaysMonth extends MultiChildRenderObjectWidget {
       BuildContext context, covariant _DayPickerRender renderObject) {
     renderObject
       ..daysOffset = daysOffset
-      ..dayBoxSize = dayBoxSize;
+      ..boxSize = boxSize
+      ..columns = columns;
   }
 }
 
@@ -42,9 +48,11 @@ class _DayPickerRender extends RenderBox
   _DayPickerRender({
     List<RenderBox>? children,
     required int daysOffset,
-    required double dayBoxSize,
+    required Size boxSize,
+    required int columns,
   })  : _daysOffset = daysOffset,
-        _dayBoxSize = dayBoxSize {
+        _boxSize = boxSize,
+        _columns = columns {
     addAll(children);
   }
 
@@ -57,18 +65,25 @@ class _DayPickerRender extends RenderBox
     }
   }
 
-  double _dayBoxSize;
-  double get dayBoxSize => _dayBoxSize;
-  set dayBoxSize(double value) {
-    if (_dayBoxSize != value) {
-      _dayBoxSize = value;
+  int _columns;
+  int get columns => _columns;
+  set columns(int value) {
+    if (_columns != value) {
+      _columns = value;
       markNeedsLayout();
     }
   }
 
-  int get rows =>
-      ((childCount + daysOffset) + DateTime.daysPerWeek - 1) ~/
-      DateTime.daysPerWeek;
+  Size _boxSize;
+  Size get boxSize => _boxSize;
+  set boxSize(Size value) {
+    if (_boxSize != value) {
+      _boxSize = value;
+      markNeedsLayout();
+    }
+  }
+
+  int get _rows => ((childCount + daysOffset) + _columns - 1) ~/ _columns;
 
   @override
   void setupParentData(RenderObject child) {
@@ -82,17 +97,17 @@ class _DayPickerRender extends RenderBox
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    return constraints.constrain(Size(dayBoxSize, dayBoxSize * rows));
+    return constraints.constrain(Size(_boxSize.width, _boxSize.height * _rows));
   }
 
   @override
   void performLayout() {
     final BoxConstraints constraints = this.constraints;
-    final double positionOffset = daysOffset * dayBoxSize;
+    final double positionOffset = _daysOffset * _boxSize.width;
 
     int x = 0;
     int row = 0;
-    int y = 0;
+    int xPosition = 0;
     RenderBox? child = firstChild;
 
     while (child != null) {
@@ -100,12 +115,14 @@ class _DayPickerRender extends RenderBox
           child.parentData! as _DayPickerParentData;
 
       final Offset position = Offset(
-          (row == 0 ? positionOffset : 0.0) + y * dayBoxSize, row * dayBoxSize);
+        (row == 0 ? positionOffset : 0.0) + xPosition * _boxSize.width,
+        row * _boxSize.height,
+      );
 
       child.layout(
         BoxConstraints.tightFor(
-          width: dayBoxSize,
-          height: dayBoxSize,
+          width: _boxSize.width,
+          height: _boxSize.height,
         ),
       );
 
@@ -113,17 +130,17 @@ class _DayPickerRender extends RenderBox
       child = childParentData.nextSibling;
 
       x += 1;
-      y += 1;
+      xPosition += 1;
 
-      if ((x + daysOffset) % DateTime.daysPerWeek == 0) {
+      if ((x + _daysOffset) % _columns == 0) {
         row += 1;
-        y = 0;
+        xPosition = 0;
       }
     }
 
     size = constraints.constrain(Size(
-      dayBoxSize * DateTime.daysPerWeek,
-      dayBoxSize * rows,
+      _boxSize.width * columns,
+      _boxSize.height * _rows,
     ));
   }
 

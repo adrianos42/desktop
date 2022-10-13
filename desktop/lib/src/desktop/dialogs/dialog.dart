@@ -1,12 +1,85 @@
 import 'dart:async';
+import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/widgets.dart';
 
 import '../input/button.dart';
 import '../theme/theme.dart';
+import '../localizations.dart';
 
-const Duration _kDialogDuration = Duration(milliseconds: 300);
+const Duration _kDialogDuration = Duration(milliseconds: 200);
 const Curve _kDialogCurve = Curves.easeOut;
+
+/// A [DialogRound] for dialogs.
+class DialogRoute<T> extends PopupRoute<T> {
+  /// Creates a [DialogRoute].
+  DialogRoute({
+    required RoutePageBuilder pageBuilder,
+    required BuildContext context,
+    bool barrierDismissible = true,
+    String? barrierLabel,
+    RouteSettings? settings,
+    Color? barrierColor,
+    ImageFilter? filter,
+    this.themes,
+  })  : _pageBuilder = pageBuilder,
+        _barrierDismissible = barrierDismissible,
+        _barrierLabel = barrierLabel ??
+            DesktopLocalizations.of(context).modalBarrierDismissLabel,
+        _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
+        super(
+          settings: settings,
+          filter: filter ?? DialogTheme.of(context).imageFilter!,
+        );
+
+  final RoutePageBuilder _pageBuilder;
+
+  final _curve = _kDialogCurve;
+
+  ///
+  final CapturedThemes? themes;
+
+  @override
+  bool get barrierDismissible => _barrierDismissible;
+  final bool _barrierDismissible;
+
+  @override
+  String? get barrierLabel => _barrierLabel;
+  final String? _barrierLabel;
+
+  @override
+  Color? get barrierColor => _barrierColor;
+  final Color? _barrierColor;
+
+  @override
+  Duration get transitionDuration => _kDialogDuration;
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
+    final Widget pageChild = Semantics(
+      child: _pageBuilder(context, animation, secondaryAnimation),
+      scopesRoute: true,
+      explicitChildNodes: true,
+      focused: true,
+    );
+
+    return themes?.wrap(pageChild) ?? pageChild;
+  }
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return FadeTransition(
+      opacity: CurvedAnimation(
+        parent: animation,
+        curve: _curve,
+        reverseCurve: _curve.flipped,
+      ),
+      child: child,
+    );
+  }
+}
 
 class DialogAction {
   const DialogAction({
@@ -17,149 +90,6 @@ class DialogAction {
   final String title;
 
   final VoidCallback onPressed;
-}
-
-/// The reason the dialog was closed.
-enum DialogClosedReason {
-  /// The message was closed.
-  close,
-
-  /// The user dismissed the dialog.
-  dismiss,
-}
-
-class DialogController {
-  const DialogController._({
-    required OverlayEntry overlayEntry,
-    required Completer<DialogClosedReason> completer,
-    required bool hasMenu,
-    required Duration duration,
-    required this.close,
-  })  : _overlayEntry = overlayEntry,
-        _completer = completer,
-        _durarion = duration,
-        _hasMenu = hasMenu;
-
-  final OverlayEntry _overlayEntry;
-
-  final bool _hasMenu;
-
-  final Duration _durarion;
-
-  final Completer<DialogClosedReason> _completer;
-
-  final VoidCallback close;
-
-  Future<DialogClosedReason> get closed => _completer.future;
-}
-
-// class DialogScope extends InheritedWidget {
-//   /// Creates a [DialogScope].
-//   DialogScope({
-//     Key? key,
-//     required Widget child,
-//   }) : super(key: key, child: child);
-
-//   DialogController? _currentDialogController;
-
-//   static void closeDialog(BuildContext context) {
-//     final DialogScope scope =
-//         context.dependOnInheritedWidgetOfExactType<DialogScope>()!;
-
-//     final DialogController? currentDialogController =
-//         scope._currentDialogController;
-
-//     if (currentDialogController != null) {
-//       currentDialogController.close();
-//     }
-
-//     scope._currentDialogController = null;
-//   }
-
-//   @override
-//   bool updateShouldNotify(DialogScope oldWidget) {
-//     return _currentDialogController != oldWidget._currentDialogController;
-//   }
-// }
-
-class _DialogView extends StatefulWidget {
-  const _DialogView({
-    required this.builder,
-    required this.close,
-    required this.closeComplete,
-    required this.dismissible,
-    this.barrierColor,
-    Key? key,
-  }) : super(key: key);
-
-  final WidgetBuilder builder;
-  final VoidCallback close;
-  final void Function(DialogClosedReason) closeComplete;
-  final bool dismissible;
-  final Color? barrierColor;
-
-  @override
-  _DialogViewState createState() => _DialogViewState();
-}
-
-class _DialogViewState extends State<_DialogView>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> animation;
-
-  void dismiss() {
-    if (widget.dismissible) {
-      close();
-    }
-  }
-
-  void close([DialogClosedReason reason = DialogClosedReason.dismiss]) {
-    widget.closeComplete(reason);
-    controller.reverse().then<void>((void value) => widget.close());
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller = AnimationController(
-      duration: _kDialogDuration,
-      debugLabel: 'Dialog',
-      vsync: this,
-    );
-
-    animation = CurvedAnimation(
-      curve: _kDialogCurve,
-      reverseCurve: _kDialogCurve.flipped,
-      parent: controller,
-    );
-
-    controller.forward();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Color barrierColor =
-        widget.barrierColor ?? DialogTheme.of(context).barrierColor!;
-
-    return FadeTransition(
-      opacity: animation,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: dismiss,
-        child: Container(
-          color: barrierColor,
-          child: GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            onTap: () {},
-            child: Builder(
-              builder: widget.builder,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class Dialog extends StatelessWidget {
@@ -189,94 +119,80 @@ class Dialog extends StatelessWidget {
 
   final bool allowScroll;
 
-  static DialogController showDialog(
+  static Future<T?> showDialog<T>(
     BuildContext context, {
-    Key? key,
-    Widget? title,
+    required Widget body,
+    bool barrierDismissible = true,
+    Color? barrierColor,
+    String? barrierLabel,
+    bool useRootNavigator = true,
+    RouteSettings? routeSettings,
     List<DialogAction>? actions,
     BoxConstraints? constraints,
-    Duration? duration,
-    Color? barrierColor,
-    bool dismissible = true,
-    required Widget body,
+    Widget? title,
+    bool allowScroll = true,
   }) {
-    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
+    final Color barrierColor = DialogTheme.of(context).barrierColor!;
 
-    late DialogController entry;
-    entry = DialogController._(
-      overlayEntry: OverlayEntry(
-        builder: (context) => _DialogView(
-          key: viewKey,
-          builder: (context) => Dialog(
-            body: body,
-            actions: actions,
-            constraints: constraints,
-            title: title,
-            key: key,
-          ),
-          dismissible: dismissible,
-          barrierColor: barrierColor,
-          close: () => entry._overlayEntry.remove(),
-          closeComplete: (reason) {
-            if (!entry._completer.isCompleted) {
-              entry._completer.complete(reason);
-            }
-          },
-        ),
-        maintainState: false,
-      ),
-      completer: Completer<DialogClosedReason>(),
-      hasMenu: actions?.isNotEmpty ?? false,
-      duration: duration ?? _kDialogDuration,
-      close: () => viewKey.currentState!.close(DialogClosedReason.close),
+    final CapturedThemes themes = InheritedTheme.capture(
+      from: context,
+      to: Navigator.of(
+        context,
+        rootNavigator: useRootNavigator,
+      ).context,
     );
 
-    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
-
-    return entry;
+    return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
+      DialogRoute<T>(
+        context: context,
+        pageBuilder: (context, animation, secondaryAnimation) => Dialog(
+          body: body,
+          actions: actions,
+          constraints: constraints,
+          title: title,
+          allowScroll: allowScroll,
+        ),
+        barrierColor: barrierColor,
+        barrierDismissible: barrierDismissible,
+        barrierLabel: barrierLabel,
+        settings: routeSettings,
+        themes: themes,
+      ),
+    );
   }
 
-  static DialogController showCustomDialog(
+  static Future<T?> showCustomDialog<T>(
     BuildContext context, {
     required WidgetBuilder builder,
-    Duration? duration,
-    List<DialogAction>? actions,
+    bool barrierDismissible = true,
     Color? barrierColor,
-    bool dismissible = true,
+    String? barrierLabel,
+    bool useRootNavigator = true,
+    RouteSettings? routeSettings,
   }) {
-    final GlobalKey<_DialogViewState> viewKey = GlobalKey<_DialogViewState>();
+    final Color barrierColor = DialogTheme.of(context).barrierColor!;
 
-    late DialogController entry;
-    entry = DialogController._(
-      overlayEntry: OverlayEntry(
-        builder: (context) => _DialogView(
-          key: viewKey,
-          builder: builder,
-          dismissible: dismissible,
-          barrierColor: barrierColor,
-          close: () => entry._overlayEntry.remove(),
-          closeComplete: (reason) {
-            if (!entry._completer.isCompleted) {
-              entry._completer.complete(reason);
-            }
-          },
-        ),
-        maintainState: false,
-      ),
-      completer: Completer<DialogClosedReason>(),
-      hasMenu: actions?.isNotEmpty ?? false,
-      duration: duration ?? _kDialogDuration,
-      close: () => viewKey.currentState!.close(DialogClosedReason.close),
+    final CapturedThemes themes = InheritedTheme.capture(
+      from: context,
+      to: Navigator.of(
+        context,
+        rootNavigator: useRootNavigator,
+      ).context,
     );
 
-    Overlay.of(context, rootOverlay: true)!.insert(entry._overlayEntry);
-
-    return entry;
+    return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
+      DialogRoute<T>(
+        context: context,
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            builder(context),
+        barrierColor: barrierColor,
+        barrierDismissible: barrierDismissible,
+        barrierLabel: barrierLabel,
+        settings: routeSettings,
+        themes: themes,
+      ),
+    );
   }
-
-  // final EdgeInsets? padding;
-
-  // final EdgeInsets? dialogPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +213,7 @@ class Dialog extends StatelessWidget {
         children: <Widget>[
           if (title != null)
             Padding(
-              padding: dialogThemeData.titlePadding,
+              padding: dialogThemeData.titlePadding!,
               child: DefaultTextStyle(
                 child: title!, // TODO(as): ???
                 style: dialogThemeData.titleTextStyle!,
@@ -308,16 +224,16 @@ class Dialog extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
                   0.0,
-                  dialogThemeData.bodyPadding.top,
+                  dialogThemeData.bodyPadding!.top,
                   0.0,
-                  dialogThemeData.bodyPadding.bottom,
+                  dialogThemeData.bodyPadding!.bottom,
                 ),
                 child: SingleChildScrollView(
                   controller: ScrollController(),
                   padding: EdgeInsets.fromLTRB(
-                    dialogThemeData.bodyPadding.left,
+                    dialogThemeData.bodyPadding!.left,
                     0.0,
-                    dialogThemeData.bodyPadding.right,
+                    dialogThemeData.bodyPadding!.right,
                     0.0,
                   ),
                   child: DefaultTextStyle(
@@ -330,7 +246,7 @@ class Dialog extends StatelessWidget {
             ),
           if (!allowScroll)
             Padding(
-              padding: dialogThemeData.bodyPadding,
+              padding: dialogThemeData.bodyPadding!,
               child: DefaultTextStyle(
                 child: body,
                 textAlign: dialogThemeData.bodyTextAlign!,

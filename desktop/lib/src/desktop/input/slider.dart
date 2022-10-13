@@ -4,6 +4,7 @@ import 'dart:ui' show lerpDouble;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
@@ -156,6 +157,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final disabledColor = theme.disabledColor!;
 
     final Color trackColor = theme.trackColor!;
+    final Color hightlightColor = theme.hightlightColor!;
 
     final Widget result = FocusableActionDetector(
       focusNode: widget.focusNode,
@@ -170,6 +172,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
             state: this,
             value: (widget.value - widget.min) / (widget.max - widget.min),
             activeColor: activeColor,
+            hightlightColor: hightlightColor,
             trackColor: trackColor,
             disabledColor: disabledColor,
             hoverColor: hoverColor,
@@ -225,6 +228,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
     required this.disabledColor,
     required this.hoverColor,
     required this.hovering,
+    required this.hightlightColor,
     this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
@@ -238,6 +242,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   final ValueChanged<double>? onChangeEnd;
   final Color disabledColor;
   final Color hoverColor;
+  final Color hightlightColor;
   final bool hovering;
   final _SliderState state;
 
@@ -254,6 +259,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       disabledColor: disabledColor,
       hoverColor: hoverColor,
       hovering: hovering,
+      hightlightColor: hightlightColor,
       textDirection: Directionality.of(context),
     );
   }
@@ -270,6 +276,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
       ..disabledColor = disabledColor
       ..hoverColor = hoverColor
       ..hovering = hovering
+      ..hightlightColor = hightlightColor
       ..textDirection = Directionality.of(context);
   }
 }
@@ -286,6 +293,7 @@ class _RenderSlider extends RenderConstrainedBox {
     required Color hoverColor,
     required bool hovering,
     required Color trackColor,
+    required Color hightlightColor,
     required TextDirection textDirection,
   })  : assert(value >= 0.0 && value <= 1.0),
         _disabledColor = disabledColor,
@@ -297,6 +305,7 @@ class _RenderSlider extends RenderConstrainedBox {
         _trackColor = trackColor,
         _onChanged = onChanged,
         _textDirection = textDirection,
+        _hightlightColor = hightlightColor,
         super(
             additionalConstraints: const BoxConstraints.tightFor(
                 width: _kSliderWidth, height: _kSliderHeight)) {
@@ -312,7 +321,9 @@ class _RenderSlider extends RenderConstrainedBox {
 
   final _SliderState _state;
 
-  double _currentDragValue = 0.0;
+  double? _currentDragValue;
+  double _currentStartDragValue = 0.0;
+
   bool _dragging = false;
 
   bool get isDiscrete => false;
@@ -337,6 +348,16 @@ class _RenderSlider extends RenderConstrainedBox {
       return;
     }
     _activeColor = value;
+    markNeedsPaint();
+  }
+
+  Color _hightlightColor;
+  Color get hightlightColor => _hightlightColor;
+  set hightlightColor(Color value) {
+    if (value == _hightlightColor) {
+      return;
+    }
+    _hightlightColor = value;
     markNeedsPaint();
   }
 
@@ -412,7 +433,8 @@ class _RenderSlider extends RenderConstrainedBox {
   }
 
   double get _discretizedCurrentDragValue {
-    final double dragValue = _currentDragValue.clamp(0.0, 1.0);
+    final double dragValue =
+        clampDouble(_currentDragValue ?? _currentStartDragValue, 0.0, 1.0);
     return dragValue;
   }
 
@@ -442,14 +464,16 @@ class _RenderSlider extends RenderConstrainedBox {
 
   void _handleDragUpdate(DragUpdateDetails details) {
     if (isInteractive) {
+      _currentDragValue ??= _currentStartDragValue;
+
       final double valueDelta = details.primaryDelta! / _trackExtent;
 
       switch (textDirection) {
         case TextDirection.rtl:
-          _currentDragValue -= valueDelta;
+          _currentDragValue = _currentDragValue! - valueDelta;
           break;
         case TextDirection.ltr:
-          _currentDragValue += valueDelta;
+          _currentDragValue = _currentDragValue! + valueDelta;
           break;
       }
 
@@ -478,9 +502,10 @@ class _RenderSlider extends RenderConstrainedBox {
   void _startInteraction(Offset globalPosition) {
     if (isInteractive) {
       _dragging = true;
+
+      _currentStartDragValue = _getValueFromGlobalPosition(globalPosition);
+
       onChangeStart?.call(_discretizedCurrentDragValue);
-      _currentDragValue = _getValueFromGlobalPosition(globalPosition);
-      onChanged!(_discretizedCurrentDragValue);
     }
   }
 
@@ -489,7 +514,8 @@ class _RenderSlider extends RenderConstrainedBox {
 
     _dragging = false;
 
-    _currentDragValue = 0.0;
+    _currentDragValue = null;
+    _currentStartDragValue = 0.0;
 
     markNeedsPaint();
   }
@@ -513,7 +539,7 @@ class _RenderSlider extends RenderConstrainedBox {
       }
 
       if (_dragging || _state._positionController.isAnimating) {
-        color = Color.lerp(color, activeColor, _state._position.value)!;
+        color = Color.lerp(color, hightlightColor, _state._position.value)!;
       }
     }
 

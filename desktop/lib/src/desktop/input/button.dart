@@ -6,8 +6,6 @@ import '../component.dart';
 import '../dialogs/tooltip.dart';
 import '../theme/theme.dart';
 
-const Duration _kDefaultButtonDuration = Duration(milliseconds: 100);
-
 /// The base button which is used to create other kinds of buttons.
 class Button extends StatefulWidget {
   /// Creates a [Button].
@@ -17,7 +15,7 @@ class Button extends StatefulWidget {
     this.trailing,
     this.leading,
     this.tooltip,
-    this.style,
+    this.themeData,
     this.leadingPadding,
     this.padding,
     this.bodyPadding,
@@ -63,7 +61,7 @@ class Button extends StatefulWidget {
       autofocus: autofocus,
       active: active,
       willChangeState: willChangeState,
-      style: style,
+      themeData: style,
       enableAnimation: true,
       filled: false,
     );
@@ -98,7 +96,7 @@ class Button extends StatefulWidget {
       willChangeState: willChangeState,
       enableAnimation: true,
       filled: false,
-      style: style,
+      themeData: style,
     );
   }
 
@@ -125,7 +123,7 @@ class Button extends StatefulWidget {
       ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      style: style,
+      themeData: style,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -188,7 +186,7 @@ class Button extends StatefulWidget {
   final bool willChangeState;
 
   /// The style [ButtonThemeData] of the button.
-  final ButtonThemeData? style;
+  final ButtonThemeData? themeData;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -299,7 +297,7 @@ class _ButtonState extends State<Button>
   void _updateColor([bool animates = true]) {
     if (mounted) {
       final ButtonThemeData buttonThemeData =
-          ButtonTheme.of(context).merge(widget.style);
+          ButtonTheme.of(context).merge(widget.themeData);
 
       final Color disabledForeground = buttonThemeData.disabledColor!;
 
@@ -351,6 +349,8 @@ class _ButtonState extends State<Button>
           return;
         }
 
+        _controller.duration = buttonThemeData.animationDuration;
+
         _color = ColorTween(
           begin: _color?.end ?? foregroundColor,
           end: foregroundColor,
@@ -401,7 +401,6 @@ class _ButtonState extends State<Button>
 
     _controller = AnimationController(
       vsync: this,
-      duration: _kDefaultButtonDuration,
       value: 1.0,
     )..addStatusListener(_statusController);
 
@@ -437,7 +436,7 @@ class _ButtonState extends State<Button>
   @override
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData =
-        ButtonTheme.of(context).merge(widget.style);
+        ButtonTheme.of(context).merge(widget.themeData);
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 

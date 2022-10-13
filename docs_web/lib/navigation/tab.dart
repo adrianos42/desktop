@@ -136,6 +136,7 @@ return Tab(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(TabTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) {

@@ -48,6 +48,7 @@ return Container(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(SliderTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Align(

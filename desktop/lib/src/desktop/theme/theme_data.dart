@@ -2,22 +2,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'button.dart';
-import 'checkbox.dart';
+import 'input/button.dart';
+import 'input/checkbox.dart';
 import 'color_scheme.dart';
-import 'context_menu.dart';
-import 'dialog.dart';
-import 'drop_down.dart';
-import 'hyperlink.dart';
-import 'list_table.dart';
-import 'nav.dart';
-import 'radio.dart';
-import 'scrollbar.dart';
-import 'slider.dart';
-import 'tab.dart';
+import 'dialogs/context_menu.dart';
+import 'dialogs/dialog.dart';
+import 'input/drop_down.dart';
+import 'input/hyperlink.dart';
+import 'data/list_table.dart';
+import 'navigation/nav.dart';
+import 'input/radio.dart';
+import 'scrolling/scrollbar.dart';
+import 'input/slider.dart';
+import 'navigation/tab.dart';
 import 'theme_text.dart';
-import 'toggle_switch.dart';
-import 'tree.dart';
+import 'input/toggle_switch.dart';
+import 'navigation/tree.dart';
 
 @immutable
 class Theme extends StatefulWidget {
@@ -129,11 +129,11 @@ class ThemeData {
       textTheme: TextTheme.withColorScheme(colorScheme),
       navTheme: const NavThemeData(),
       buttonTheme: const ButtonThemeData(),
-      dropDownButtonTheme: const DropDownButtonThemeData(),
+      dropDownTheme: const DropDownThemeData(),
       dialogTheme: const DialogThemeData(),
       contextMenuTheme: const ContextMenuThemeData(),
-      hyperlinkButtonTheme: const HyperlinkButtonThemeData(),
-      radioButtonTheme: const RadioButtonThemeData(),
+      hyperlinkTheme: const HyperlinkThemeData(),
+      radioTheme: const RadioThemeData(),
       checkboxTheme: const CheckboxThemeData(),
       toggleSwitchTheme: const ToggleSwitchThemeData(),
       sliderTheme: const SliderThemeData(),
@@ -150,11 +150,11 @@ class ThemeData {
     required this.textTheme,
     required this.navTheme,
     required this.buttonTheme,
-    required this.dropDownButtonTheme,
+    required this.dropDownTheme,
     required this.dialogTheme,
     required this.contextMenuTheme,
-    required this.hyperlinkButtonTheme,
-    required this.radioButtonTheme,
+    required this.hyperlinkTheme,
+    required this.radioTheme,
     required this.checkboxTheme,
     required this.sliderTheme,
     required this.toggleSwitchTheme,
@@ -180,11 +180,11 @@ class ThemeData {
         textTheme: textTheme,
         navTheme: navTheme,
         buttonTheme: buttonTheme,
-        dropDownButtonTheme: dropDownButtonTheme,
+        dropDownTheme: dropDownTheme,
         dialogTheme: dialogTheme,
         contextMenuTheme: contextMenuTheme,
-        hyperlinkButtonTheme: hyperlinkButtonTheme,
-        radioButtonTheme: radioButtonTheme,
+        hyperlinkTheme: hyperlinkTheme,
+        radioTheme: radioTheme,
         checkboxTheme: checkboxTheme,
         sliderTheme: sliderTheme,
         toggleSwitchTheme: toggleSwitchTheme,
@@ -202,11 +202,11 @@ class ThemeData {
     TabThemeData? tabTheme,
     TreeThemeData? treeTheme,
     ButtonThemeData? buttonTheme,
-    DropDownButtonThemeData? dropDownButtonTheme,
+    DropDownThemeData? dropDownButtonTheme,
     DialogThemeData? dialogTheme,
     ContextMenuThemeData? contextMenuTheme,
-    HyperlinkButtonThemeData? hyperlinkButtonTheme,
-    RadioButtonThemeData? radioButtonTheme,
+    HyperlinkThemeData? hyperlinkButtonTheme,
+    RadioThemeData? radioButtonTheme,
     CheckboxThemeData? checkboxTheme,
     ToggleSwitchThemeData? toggleSwitchTheme,
     SliderThemeData? sliderTheme,
@@ -222,11 +222,11 @@ class ThemeData {
       textTheme: textTheme ?? TextTheme.withColorScheme(newColorScheme),
       navTheme: navTheme ?? this.navTheme,
       buttonTheme: buttonTheme ?? this.buttonTheme,
-      dropDownButtonTheme: dropDownButtonTheme ?? this.dropDownButtonTheme,
+      dropDownTheme: dropDownButtonTheme ?? this.dropDownTheme,
       dialogTheme: dialogTheme ?? this.dialogTheme,
       contextMenuTheme: contextMenuTheme ?? this.contextMenuTheme,
-      hyperlinkButtonTheme: hyperlinkButtonTheme ?? this.hyperlinkButtonTheme,
-      radioButtonTheme: radioButtonTheme ?? this.radioButtonTheme,
+      hyperlinkTheme: hyperlinkButtonTheme ?? this.hyperlinkTheme,
+      radioTheme: radioButtonTheme ?? this.radioTheme,
       checkboxTheme: checkboxTheme ?? this.checkboxTheme,
       sliderTheme: sliderTheme ?? this.sliderTheme,
       toggleSwitchTheme: toggleSwitchTheme ?? this.toggleSwitchTheme,
@@ -253,15 +253,15 @@ class ThemeData {
 
   final ButtonThemeData buttonTheme;
 
-  final DropDownButtonThemeData dropDownButtonTheme;
+  final DropDownThemeData dropDownTheme;
 
   final DialogThemeData dialogTheme;
 
   final ContextMenuThemeData contextMenuTheme;
 
-  final HyperlinkButtonThemeData hyperlinkButtonTheme;
+  final HyperlinkThemeData hyperlinkTheme;
 
-  final RadioButtonThemeData radioButtonTheme;
+  final RadioThemeData radioTheme;
 
   final CheckboxThemeData checkboxTheme;
 
@@ -285,11 +285,11 @@ class ThemeData {
       navTheme: navTheme,
       textTheme: TextTheme.withColorScheme(invertedColorScheme),
       buttonTheme: buttonTheme,
-      dropDownButtonTheme: dropDownButtonTheme,
+      dropDownTheme: dropDownTheme,
       dialogTheme: dialogTheme,
       contextMenuTheme: contextMenuTheme,
-      hyperlinkButtonTheme: hyperlinkButtonTheme,
-      radioButtonTheme: radioButtonTheme,
+      hyperlinkTheme: hyperlinkTheme,
+      radioTheme: radioTheme,
       checkboxTheme: checkboxTheme,
       toggleSwitchTheme: toggleSwitchTheme,
       sliderTheme: sliderTheme,

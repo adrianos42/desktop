@@ -2,6 +2,8 @@ import 'dart:ui' show Brightness;
 
 import 'package:flutter/widgets.dart';
 
+export 'theme_data.dart' show ThemeData, Theme;
+
 const PrimaryColor _kDefaultPrimary = PrimaryColor.dodgerBlue;
 
 /// Color scheme used for the theme data.

@@ -72,7 +72,10 @@ return Container(
 );
 ''';
 
+    final themeData = CheckboxTheme.of(context);
+
     return Defaults(
+      styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
           body: (context) => Align(

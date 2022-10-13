@@ -21,6 +21,7 @@ return HyperlinkButton(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(HyperlinkTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Align(

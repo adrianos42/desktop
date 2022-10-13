@@ -56,6 +56,7 @@ return SizedBox(
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(DropDownTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Align(
@@ -114,7 +115,7 @@ return SizedBox(
                 color: backgroundColor,
                 background: backgroundColor,
                 highlightColor: highlightBackgroundColor,
-                child: DropDownButtonTheme.copyWith(
+                child: DropDownTheme.copyWith(
                   backgroundColor: backgroundColor,
                   hoverBackgroundColor: hoverBackgroundColor,
                   waitingBackgroundColor: waitingBackgroundColor,

@@ -8,12 +8,9 @@ import '../theme/theme.dart';
 
 const Duration _kToggleDuration = Duration(milliseconds: 120);
 const Duration _kHoverDuration = Duration(milliseconds: 100);
-const double _kCheckboxWidth = 16.0;
+const double _kCheckboxWidth = 14.0;
 const double _kEdgeSize = _kCheckboxWidth;
 const double _kStrokeWidth = 2.0;
-
-const double _kContainerHeight = 32.0;
-const double _kContainerWidth = 32.0;
 
 /// [Checkbox] input.
 class Checkbox extends StatefulWidget {
@@ -25,6 +22,7 @@ class Checkbox extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
+    this.themeData,
   })  : assert(tristate || value != null);
 
   /// The value of the input.
@@ -41,6 +39,8 @@ class Checkbox extends StatefulWidget {
 
   /// See [FocusableActionDetector] field [autofocus].
   final bool autofocus;
+
+  final CheckboxThemeData? themeData;
 
   @override
   _CheckboxState createState() => _CheckboxState();
@@ -173,7 +173,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CheckboxTheme.of(context);
+    final theme = CheckboxTheme.of(context).merge(widget.themeData);
 
     final activeColor = theme.activeColor!;
     final hoverColor = widget.value != false
@@ -199,8 +199,8 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
         onTap: () => _handleTap(),
         behavior: HitTestBehavior.opaque,
         child: SizedBox(
-          width: _kContainerWidth,
-          height: _kContainerHeight,
+          width: theme.containerSize,
+          height: theme.containerSize,
           child: Center(
             child: _CheckboxRenderObjectWidget(
               value: widget.value,
@@ -444,9 +444,9 @@ class _RenderCheckbox extends RenderConstrainedBox {
     // As t goes from 0.0 to 1.0, animate the two check mark strokes from the
     // short side to the long side.
     final Path path = Path();
-    const Offset start = Offset(_kEdgeSize * 0.2, _kEdgeSize * 0.45);
-    const Offset mid = Offset(_kEdgeSize * 0.4, _kEdgeSize * 0.65);
-    const Offset end = Offset(_kEdgeSize * 0.8, _kEdgeSize * 0.25);
+    const Offset start = Offset(_kEdgeSize * 0.15, _kEdgeSize * 0.45);
+    const Offset mid = Offset(_kEdgeSize * 0.4, _kEdgeSize * 0.7);
+    const Offset end = Offset(_kEdgeSize * 0.85, _kEdgeSize * 0.25);
 
     if (t < 0.5) {
       final double strokeT = t * 2.0;

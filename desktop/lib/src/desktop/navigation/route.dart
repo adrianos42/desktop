@@ -4,7 +4,7 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/widgets.dart';
 
 import '../localizations.dart';
-import '../theme/dialog.dart';
+import '../theme/dialogs/dialog.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 300);
 
@@ -252,67 +252,6 @@ Future<T?> showDesktopPopup<T>({
       barrierLabel: barrierLabel,
     ),
   );
-}
-
-class DialogRoute<T> extends PopupRoute<T> {
-  /// Creates a [DialogRoute].
-  DialogRoute({
-    required RoutePageBuilder pageBuilder,
-    required BuildContext context,
-    bool barrierDismissible = true,
-    String? barrierLabel,
-    RouteSettings? settings,
-    Color? barrierColor,
-    ImageFilter? filter,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
-        super(settings: settings, filter: filter);
-
-  final RoutePageBuilder _pageBuilder;
-
-  final _curve = Curves.easeOut;
-
-  @override
-  bool get barrierDismissible => _barrierDismissible;
-  final bool _barrierDismissible;
-
-  @override
-  String? get barrierLabel => _barrierLabel;
-  final String? _barrierLabel;
-
-  @override
-  Color? get barrierColor => _barrierColor;
-  final Color? _barrierColor;
-
-  @override
-  Duration get transitionDuration => _kDialogDuration;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return Semantics(
-      child: _pageBuilder(context, animation, secondaryAnimation),
-      scopesRoute: true,
-      explicitChildNodes: true,
-      focused: true,
-    );
-  }
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return FadeTransition(
-      opacity: CurvedAnimation(
-        parent: animation,
-        curve: _curve,
-        reverseCurve: _curve.flipped,
-      ),
-      child: child,
-    );
-  }
 }
 
 // class DismissModalAction extends Action {

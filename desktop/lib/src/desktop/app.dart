@@ -358,7 +358,12 @@ class _DesktopAppState extends State<DesktopApp> {
       data: effectiveThemeData,
       child: ScrollConfiguration(
         behavior: widget.scrollBehavior ?? const DesktopScrollBehavior(),
-        child: Builder(builder: _buildWidgetApp),
+        child: IconTheme(
+          data: IconThemeData(
+            color: effectiveThemeData.textTheme.textHigh,
+          ),
+          child: Builder(builder: _buildWidgetApp),
+        ),
       ),
     );
   }

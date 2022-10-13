@@ -1,0 +1,40 @@
+builders:
+  theme_data:
+    import: "package:desktop/builder.dart"
+    builder_factories: ["themeDataBuilder"]
+    build_extensions: {".dart": [".g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  icons:
+    import: "package:desktop/builder.dart"
+    builder_factories: ["iconsBuilder"]
+    build_extensions: {".dart": [".g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
+  
+targets:
+  $default:
+    builders:
+      desktop|theme_data:
+        generate_for:
+          - lib/src/desktop/theme/data/list_table.dart
+          - lib/src/desktop/theme/dialogs/context_menu.dart
+          - lib/src/desktop/theme/dialogs/dialog.dart
+          - lib/src/desktop/theme/input/button.dart
+          - lib/src/desktop/theme/input/checkbox.dart
+          - lib/src/desktop/theme/input/drop_down.dart
+          - lib/src/desktop/theme/input/hyperlink.dart
+          - lib/src/desktop/theme/input/input.dart
+          - lib/src/desktop/theme/input/radio.dart
+          - lib/src/desktop/theme/input/slider.dart
+          - lib/src/desktop/theme/input/toggle_switch.dart
+          - lib/src/desktop/theme/navigation/nav.dart
+          - lib/src/desktop/theme/navigation/tab.dart
+          - lib/src/desktop/theme/navigation/tree.dart
+          - lib/src/desktop/theme/scrolling/scrollbar.dart
+      
+      desktop|icons:
+        generate_for:
+          - lib/src/desktop/icons.dart

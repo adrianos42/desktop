@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
-import '../dialogs/context_menu.dart';
+import '../dialogs/context_menu/context_menu.dart';
 import '../dialogs/tooltip.dart';
 import '../icons.dart';
+import '../theme/constants.dart';
 import '../theme/theme.dart';
 
 /// Button that shows a list of [ContextMenuItem] when pressed.
@@ -171,8 +172,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final DropDownButtonThemeData buttonThemeData =
-        DropDownButtonTheme.of(context);
+    final DropDownThemeData buttonThemeData = DropDownTheme.of(context);
 
     final bool enabled = widget.enabled;
 
@@ -253,7 +253,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
                       waiting ? Icons.expand_less : Icons.expand_more,
-                      size: 20.0,
+                      size: kDefaultIconSize,
                       color: foreground,
                     ),
                   ),
