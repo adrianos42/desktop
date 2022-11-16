@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -21,7 +23,7 @@ class ListRow extends MultiChildRenderObjectWidget {
   final List<double> colSizes;
 
   /// The height of the item.
-  final double itemExtent;
+  final double? itemExtent;
 
   /// The row [Decoration].
   final Decoration? decoration;
@@ -55,7 +57,6 @@ class ListRow extends MultiChildRenderObjectWidget {
   }
 }
 
-
 class _ListRowParentData extends ContainerBoxParentData<RenderBox> {}
 
 ///
@@ -72,7 +73,7 @@ class _ListRowRender extends RenderBox
     Decoration? decoration,
     ImageConfiguration configuration = ImageConfiguration.empty,
     List<RenderBox>? children,
-    required double itemExtent,
+    required double? itemExtent,
   })  : assert(columns == null || columns >= 0),
         _itemExtent = itemExtent,
         _columnWidths = columnWidths,
@@ -103,9 +104,9 @@ class _ListRowRender extends RenderBox
   }
 
   ///
-  double get itemExtent => _itemExtent;
-  double _itemExtent;
-  set itemExtent(double value) {
+  double? get itemExtent => _itemExtent;
+  double? _itemExtent;
+  set itemExtent(double? value) {
     if (_itemExtent != value) {
       _itemExtent = value;
       markNeedsLayout();
@@ -169,7 +170,33 @@ class _ListRowRender extends RenderBox
     }
     final List<double> widths = _columnWidths;
     final double tableWidth = widths.fold(0.0, (double a, double b) => a + b);
-    return constraints.constrain(Size(tableWidth, _itemExtent));
+
+    double height = _itemExtent ?? 0.0;
+
+    int x = 0;
+
+    if (_itemExtent == null) {
+      RenderBox? child = firstChild;
+
+      while (child != null) {
+        height = math.max(
+          height,
+          child
+              .getDryLayout(
+                BoxConstraints.tightFor(
+                  width: _columnWidths[x],
+                ),
+              )
+              .height,
+        );
+
+        child = childAfter(child);
+      }
+
+      x += 1;
+    }
+
+    return constraints.constrain(Size(tableWidth, height));
   }
 
   @override
@@ -177,6 +204,8 @@ class _ListRowRender extends RenderBox
     final BoxConstraints constraints = this.constraints;
 
     RenderBox? child = firstChild;
+
+    double height = _itemExtent ?? 0.0;
 
     if (_columnWidths.isEmpty) {
       _tableWidth = 0.0;
@@ -197,18 +226,26 @@ class _ListRowRender extends RenderBox
     int x = 0;
 
     while (child != null) {
-      final _ListRowParentData childParentData =
-          child.parentData! as _ListRowParentData;
-
       child.layout(
-          BoxConstraints.tightFor(width: _columnWidths[x], height: itemExtent));
-      childParentData.offset = Offset(positions[x], 0.0);
+        BoxConstraints.tightFor(
+          width: _columnWidths[x],
+          height: _itemExtent,
+        ),
+        parentUsesSize: true,
+      );
 
-      child = childParentData.nextSibling;
+      if (_itemExtent == null) {
+        height = math.max(height, child.size.height);
+      }
+
+      (child.parentData! as _ListRowParentData).offset =
+          Offset(positions[x], 0.0);
+
+      child = childAfter(child);
       x += 1;
     }
 
-    size = constraints.constrain(Size(_tableWidth, itemExtent));
+    size = constraints.constrain(Size(_tableWidth, height));
   }
 
   @override
@@ -223,12 +260,25 @@ class _ListRowRender extends RenderBox
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    return itemExtent;
+    RenderBox? child = firstChild;
+
+    double height = _itemExtent ?? 0.0;
+
+    int x = 0;
+
+    while (child != null) {
+      height = math.max(height, child.getMaxIntrinsicHeight(_columnWidths[x]));
+
+      child = childAfter(child);
+      x += 1;
+    }
+
+    return height;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    return itemExtent;
+    return computeMinIntrinsicHeight(width);
   }
 
   @override
@@ -261,11 +311,13 @@ class _ListRowRender extends RenderBox
     }
 
     RenderBox? child = firstChild;
+    
     while (child != null) {
       final _ListRowParentData childParentData =
           child.parentData! as _ListRowParentData;
       context.paintChild(child, childParentData.offset + offset);
-      child = childParentData.nextSibling;
+      
+      child = childAfter(child);
     }
 
     if (bottomBorder.style == BorderStyle.solid) {
@@ -294,6 +346,7 @@ class _ListRowRender extends RenderBox
           rect.bottom - bottomBorder.width,
         );
       }
+      
       canvas.drawPath(path, paint);
     }
   }

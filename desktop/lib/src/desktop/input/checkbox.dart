@@ -23,10 +23,16 @@ class Checkbox extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.themeData,
-  })  : assert(tristate || value != null);
+    this.forceEnabled = false,
+  })  : assert(tristate || value != null),
+        assert(!forceEnabled || onChanged == null,
+            'Cannot have `onChanged` when `forceEnabled` is true');
 
   /// The value of the input.
   final bool? value;
+
+  /// If the checkbox is enabled without `onChanged` value.
+  final bool forceEnabled;
 
   /// Called when the value changes.
   final ValueChanged<bool?>? onChanged;
@@ -213,6 +219,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
               onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
               foregroundColor: foregroundColor,
               additionalConstraints: additionalConstraints,
+              forceEnabled: widget.forceEnabled,
             ),
           ),
         ),
@@ -234,6 +241,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hoverColor,
     required this.hovering,
     required this.additionalConstraints,
+    required this.forceEnabled,
   }) : super(key: key);
 
   final bool? value;
@@ -246,6 +254,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   final Color hoverColor;
   final bool hovering;
   final BoxConstraints additionalConstraints;
+  final bool forceEnabled;
 
   @override
   _RenderCheckbox createRenderObject(BuildContext context) => _RenderCheckbox(
@@ -259,6 +268,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
         hoverColor: hoverColor,
         hovering: hovering,
         additionalConstraints: additionalConstraints,
+        forceEnabled: forceEnabled,
       );
 
   @override
@@ -272,6 +282,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
       ..onChanged = onChanged
       ..hoverColor = hoverColor
       ..hovering = hovering
+      ..forceEnabled = forceEnabled
       ..additionalConstraints = additionalConstraints;
   }
 }
@@ -280,6 +291,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
   _RenderCheckbox({
     bool? value,
     ValueChanged<bool>? onChanged,
+    required bool forceEnabled,
     required _CheckboxState state,
     required Color activeColor,
     required Color foregroundColor,
@@ -298,6 +310,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
         _hoverColor = hoverColor,
         _hovering = hovering,
         _onChanged = onChanged,
+        _forceEnabled = forceEnabled,
         super(additionalConstraints: additionalConstraints);
 
   final _CheckboxState _state;
@@ -388,6 +401,14 @@ class _RenderCheckbox extends RenderConstrainedBox {
     }
   }
 
+  bool _forceEnabled;
+  set forceEnabled(bool value) {
+    if (value != _forceEnabled) {
+      _forceEnabled = value;
+      markNeedsPaint();
+    }
+  }
+
   bool get isInteractive => onChanged != null;
 
   @override
@@ -411,7 +432,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
   }
 
   Color _colorAt(double t) {
-    if (!isInteractive) {
+    if (!isInteractive && !_forceEnabled) {
       return disabledColor;
     }
 

@@ -1,0 +1,31 @@
+name: docs_base
+description: Library used to create documentations using `desktop` widgets..
+version: 0.0.1
+homepage: https://adrianos42.github.io/desktop
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  desktop: ^4.0.0
+  dart_style: ^2.2.4
+  flutter_svg: ^1.1.6
+
+dependency_overrides:
+  desktop:
+    path: ../desktop
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  fonts:
+    - family: Code
+      fonts:
+        - asset: fonts/Code/Code.otf

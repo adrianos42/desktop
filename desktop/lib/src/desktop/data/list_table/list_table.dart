@@ -15,7 +15,8 @@ class ListTableHeader {
   /// Creates a header in a [ListTable].
   const ListTableHeader({
     this.decoration,
-    required this.builder,
+    this.builder,
+    this.children,
     this.columnBorder,
     this.itemExtent = _kHeaderHeight,
   });
@@ -23,13 +24,16 @@ class ListTableHeader {
   /// A decoration to be painted behind the header.
   final Decoration? decoration;
 
-  /// The builder for the header columns.
-  final IndexedWidgetBuilder builder;
+  /// The builder for the header cells.
+  final IndexedWidgetBuilder? builder;
+
+  /// The children for the header cells.
+  final List<Widget>? children;
 
   final BorderSide? columnBorder;
 
   /// The height of the header.
-  final double itemExtent;
+  final double? itemExtent;
 }
 
 ///
@@ -41,20 +45,27 @@ class ListTableRow {
   /// Creates a header in a [ListTable].
   const ListTableRow({
     this.decoration,
-    required this.builder,
+    this.builder,
     this.itemExtent = _kHeaderHeight,
     this.onPressed,
     this.onSecondaryPress,
-  });
+    this.children,
+  }) : assert(children == null || builder == null);
 
   /// A decoration to be painted behind the header.
   final Decoration? decoration;
 
-  /// The builder for the row columns.
-  final IndexedWidgetBuilder builder;
+  /// The builder for the row cells.
+  final IndexedWidgetBuilder? builder;
+
+  /// The children for the row cells.
+  final List<Widget>? children;
 
   /// The height of the row.
-  final double itemExtent;
+  /// If [itemExtent] is set to null, then the height will be calculated by
+  /// the intrinsic height of each cell in the row.
+  /// Default to 40.0.
+  final double? itemExtent;
 
   final RowPressedCallback? onPressed;
 
@@ -164,14 +175,19 @@ class _ListTableState extends State<ListTable> {
       col: col,
       itemSize: Size(colWidth, totalHeight!),
       header: FeedbackHeaderItem(
-        builder: widget.header.builder,
+        builder: widget.header.builder ??
+            (context, index) => widget.header.children![index],
         columnBorder: widget.tableBorder?.top ?? BorderSide.none,
-        itemExtent: widget.header.itemExtent,
+        itemExtent: widget.header.itemExtent ?? _kHeaderHeight,
         decoration: widget.header.decoration,
       ),
       rows: widget.rows
           .map((rowItem) => FeedbackRowItem(
-              builder: rowItem.builder, itemExtent: rowItem.itemExtent))
+                builder: rowItem.builder ??
+                    (context, index) => rowItem.children![index],
+                // Ignores the [ListTable.itemExtent] null value for now.
+                itemExtent: rowItem.itemExtent ?? _kHeaderHeight,
+              ))
           .toList(),
       tableBorder: widget.tableBorder ?? const TableBorder(),
     );
@@ -199,10 +215,12 @@ class _ListTableState extends State<ListTable> {
 
         final int mappedIndex = colIndexes?[col] ?? col;
 
-        final Widget result = widget.header.builder(
-          context,
-          mappedIndex,
-        );
+        final Widget result = widget.header.builder != null
+            ? widget.header.builder!(
+                context,
+                mappedIndex,
+              )
+            : widget.header.children![mappedIndex];
 
         if (!widget.allowColumnDragging || widget.colCount <= 1) {
           return result;
@@ -271,13 +289,14 @@ class _ListTableState extends State<ListTable> {
         ? widget.tableBorder!.horizontalInside
         : BorderSide.none;
 
+    final bool isHoveredEnabled =
+        tableRow.onPressed != null && !dragging && !isDraggingColumn;
+
     return MouseRegion(
-      onEnter: (_) => dragging || isDraggingColumn
-          ? null
-          : setState(() => hoveredIndex = index),
-      onExit: (_) => dragging || isDraggingColumn
-          ? null
-          : setState(() => hoveredIndex = -1),
+      onEnter: (_) =>
+          isHoveredEnabled ? setState(() => hoveredIndex = index) : null,
+      onExit: (_) =>
+          isHoveredEnabled ? setState(() => hoveredIndex = -1) : null,
       hitTestBehavior: HitTestBehavior.deferToChild,
       cursor: tableRow.onPressed != null && !isDraggingColumn
           ? SystemMouseCursors.click
@@ -310,7 +329,9 @@ class _ListTableState extends State<ListTable> {
         onTapDown: tableRow.onPressed != null
             ? (_) => setState(() => pressedIndex = index)
             : null,
-        onTapCancel: () => setState(() => pressedIndex = -1),
+        onTapCancel: tableRow.onPressed == null
+            ? () => setState(() => pressedIndex = -1)
+            : null,
         onSecondaryTapUp: tableRow.onSecondaryPress != null
             ? (event) {
                 final overlay = Overlay.of(context)!.context.findRenderObject();
@@ -338,7 +359,9 @@ class _ListTableState extends State<ListTable> {
         onSecondaryTapDown: tableRow.onSecondaryPress != null
             ? (_) => setState(() => pressedIndex = index)
             : null,
-        onSecondaryTapCancel: () => setState(() => pressedIndex = -1),
+        onSecondaryTapCancel: tableRow.onSecondaryPress != null
+            ? () => setState(() => pressedIndex = -1)
+            : null,
         behavior: HitTestBehavior.deferToChild,
         child: ListRow(
           decoration: tableRow.decoration,
@@ -352,10 +375,12 @@ class _ListTableState extends State<ListTable> {
 
             assert(col < colSizes.length);
 
-            return tableRow.builder(
-              context,
-              mappedIndex,
-            );
+            return tableRow.builder != null
+                ? tableRow.builder!(
+                    context,
+                    mappedIndex,
+                  )
+                : tableRow.children![mappedIndex];
           }).toList(),
         ),
       ),
@@ -525,7 +550,8 @@ class _ListTableState extends State<ListTable> {
       final int mappedIndex = colIndexes?[col] ?? col;
 
       if (delta < 0) {
-        delta = clampDouble(delta, -previousColSizes![col] + _kMinColumnWidth, 0.0);
+        delta =
+            clampDouble(delta, -previousColSizes![col] + _kMinColumnWidth, 0.0);
       } else {
         delta = clampDouble(delta, 0.0, delta);
       }
@@ -558,6 +584,8 @@ class _ListTableState extends State<ListTable> {
 
   void dragCancel() => dragEnd();
 
+  bool get showScrollbar => !dragging && !isDraggingColumn;
+
   @override
   void initState() {
     super.initState();
@@ -573,15 +601,26 @@ class _ListTableState extends State<ListTable> {
     }
   }
 
-  bool get showScrollbar => !dragging && !isDraggingColumn;
+  @override
+  void didUpdateWidget(ListTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.colFraction != colFraction) {
+      setState(() {
+        colFraction = null;
+      });
+    }
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
-      final position = controller.position;
-      position.didUpdateScrollPositionBy(0.0);
+      if (controller.hasClients) {
+        final position = controller.position;
+        position.didUpdateScrollPositionBy(0.0);
+      }
     });
   }
 
@@ -612,45 +651,75 @@ class _ListTableState extends State<ListTable> {
           }
         }
 
-        return Stack(
-          children: [
-            Column(
-              children: [
-                createHeader(),
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context).copyWith(
-                      scrollbars: showScrollbar,
-                    ),
-                    child: ListView.custom(
-                      childrenDelegate: SliverChildBuilderDelegate(
-                        (context, index) => createListItem(index),
-                        childCount: widget.rows.length,
+        if (constraints.maxHeight.isFinite) {
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  createHeader(),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context).copyWith(
+                        scrollbars: showScrollbar,
                       ),
-                      controller: controller,
+                      child: ListView.custom(
+                        childrenDelegate: SliverChildBuilderDelegate(
+                          (context, index) => createListItem(index),
+                          childCount: widget.rows.length,
+                        ),
+                        controller: controller,
+                      ),
                     ),
                   ),
+                ],
+              ),
+              _ListTableBorder(
+                headerColumnBorder:
+                    widget.header.columnBorder ?? _defaultHeaderBorder,
+                tableBorder: widget.tableBorder ?? const TableBorder(),
+                columnWidths: colSizes,
+                headerExtent: _kHeaderHeight,
+                dragCancel: dragCancel,
+                dragEnd: dragEnd,
+                dragStart: dragStart,
+                dragUpdate: dragUpdate,
+                highlightColor: listTableTheme.borderHighlightColor!,
+                hoverColor: listTableTheme.borderHoverColor!,
+                draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+                isDraggingColumn: isDraggingColumn,
+                children: targetChildren,
+              ),
+            ],
+          );
+        } else {
+          return _ListTableRows(
+            headerColumnBorder:
+                widget.header.columnBorder ?? _defaultHeaderBorder,
+            tableBorder: widget.tableBorder ?? const TableBorder(),
+            columnWidths: colSizes,
+            headerExtent: _kHeaderHeight,
+            dragCancel: dragCancel,
+            dragEnd: dragEnd,
+            dragStart: dragStart,
+            dragUpdate: dragUpdate,
+            highlightColor: listTableTheme.borderHighlightColor!,
+            hoverColor: listTableTheme.borderHoverColor!,
+            draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+            isDraggingColumn: isDraggingColumn,
+            children: [
+              createHeader(),
+              ...List.generate(
+                widget.rows.length,
+                (index) => Builder(
+                  builder: (context) => createListItem(index),
                 ),
-              ],
-            ),
-            _ListTableBorder(
-              headerColumnBorder:
-                  widget.header.columnBorder ?? _defaultHeaderBorder,
-              tableBorder: widget.tableBorder ?? const TableBorder(),
-              columnWidths: colSizes,
-              headerExtent: _kHeaderHeight,
-              dragCancel: dragCancel,
-              dragEnd: dragEnd,
-              dragStart: dragStart,
-              dragUpdate: dragUpdate,
-              highlightColor: listTableTheme.borderHighlightColor!,
-              hoverColor: listTableTheme.borderHoverColor!,
-              draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
-              isDraggingColumn: isDraggingColumn,
-              children: targetChildren,
-            ),
-          ],
-        );
+              ),
+              ...targetChildren
+            ],
+            rowCount: widget.rows.length + 1,
+            targetCount: targetChildren.length,
+          );
+        }
       },
     );
 
@@ -716,5 +785,75 @@ class _ListTableBorder extends MultiChildRenderObjectWidget {
       ..hoverColor = hoverColor
       ..isDraggingColumn = isDraggingColumn
       ..draggingColumnTargetItemIndex = draggingColumnTargetItemIndex;
+  }
+}
+
+class _ListTableRows extends MultiChildRenderObjectWidget {
+  _ListTableRows({
+    super.key,
+    required super.children,
+    required this.headerColumnBorder,
+    required this.tableBorder,
+    required this.columnWidths,
+    required this.headerExtent,
+    required this.dragCancel,
+    required this.dragEnd,
+    required this.dragStart,
+    required this.dragUpdate,
+    required this.highlightColor,
+    required this.hoverColor,
+    required this.draggingColumnTargetItemIndex,
+    required this.isDraggingColumn,
+    required this.rowCount,
+    required this.targetCount,
+  }) : assert(children.length == rowCount + targetCount,
+            'Invalid number of children');
+
+  final TableBorder tableBorder;
+  final BorderSide headerColumnBorder;
+  final List<double> columnWidths;
+  final double headerExtent;
+  final Color highlightColor;
+  final Color hoverColor;
+  final void Function(int col) dragStart;
+  final void Function(int col, double value) dragUpdate;
+  final void Function() dragEnd;
+  final void Function() dragCancel;
+  final int draggingColumnTargetItemIndex;
+  final bool isDraggingColumn;
+  final int rowCount;
+  final int targetCount;
+
+  @override
+  ListTableRender createRenderObject(BuildContext context) => ListTableRender(
+        tableBorder: tableBorder,
+        headerColumnBorder: headerColumnBorder,
+        columnWidths: columnWidths,
+        headerExtent: headerExtent,
+        dragCancel: dragCancel,
+        dragEnd: dragEnd,
+        dragStart: dragStart,
+        dragUpdate: dragUpdate,
+        highlightColor: highlightColor,
+        hoverColor: hoverColor,
+        draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+        isDraggingColumn: isDraggingColumn,
+        rowCount: rowCount,
+        targetCount: targetCount,
+      );
+
+  @override
+  void updateRenderObject(BuildContext context, ListTableRender renderObject) {
+    renderObject
+      ..headerColumnBorder = headerColumnBorder
+      ..tableBorder = tableBorder
+      ..columnWidths = columnWidths
+      ..headerExtent = headerExtent
+      ..highlightColor = highlightColor
+      ..hoverColor = hoverColor
+      ..isDraggingColumn = isDraggingColumn
+      ..draggingColumnTargetItemIndex = draggingColumnTargetItemIndex
+      ..rowCount = rowCount
+      ..targetCount = targetCount;
   }
 }

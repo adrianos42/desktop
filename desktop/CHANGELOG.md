@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0-dev.6
+
+- Add support for `ListTable` in unbounded constraints.
+
 ## 4.0.0-dev.5
 
 - Fixes `TextField` issue for flutter stable channel.

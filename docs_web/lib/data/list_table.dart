@@ -219,7 +219,6 @@ return ListTable(
                 );
               }),
               colFraction: const {0: 0.5},
-              //collapseOnDrag: true,
             ),
           ),
           codeText: someDataSample,

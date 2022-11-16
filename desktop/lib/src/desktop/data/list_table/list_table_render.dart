@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +31,8 @@ class ListTableRender extends RenderBox
     required this.dragCancel,
     required int draggingColumnTargetItemIndex,
     required bool isDraggingColumn,
+    int? rowCount,
+    int? targetCount,
     List<RenderBox>? children,
   })  : _headerColumnBorder = headerColumnBorder,
         _tableBorder = tableBorder,
@@ -39,7 +43,9 @@ class ListTableRender extends RenderBox
         _hoverColor = hoverColor,
         _hasHiddenColumns = columnWidths.any((elem) => elem == 0.0),
         _draggingColumnTargetItemIndex = draggingColumnTargetItemIndex,
-        _isDraggingColumn = isDraggingColumn {
+        _isDraggingColumn = isDraggingColumn,
+        _rowCount = rowCount,
+        _targetCount = targetCount {
     addAll(children);
   }
 
@@ -148,6 +154,33 @@ class ListTableRender extends RenderBox
     }
   }
 
+  int? _rowCount;
+  int? get rowCount => _rowCount;
+  set rowCount(int? value) {
+    if (value != _rowCount) {
+      _rowCount = value;
+
+      markNeedsLayout();
+    }
+  }
+
+  int? _targetCount;
+  int? get targetCount => _rowCount;
+  set targetCount(int? value) {
+    if (value != _targetCount) {
+      _targetCount = value;
+
+      markNeedsLayout();
+    }
+  }
+
+  double _headerHeight = 0.0;
+  double get _effectiveHeaderExtent {
+    return _rowCount != null && _targetCount != null
+        ? _headerHeight
+        : _headerExtent;
+  }
+
   bool get _isInteractive => !_isDraggingColumn;
 
   List<double> _columns;
@@ -166,7 +199,7 @@ class ListTableRender extends RenderBox
               column - _kHandlerWidth,
               0.0,
               _kHandlerWidth * 2,
-              _headerExtent,
+              _effectiveHeaderExtent,
             ))
         .toList()
         .indexWhere((e) => e.contains(localPosition));
@@ -235,11 +268,38 @@ class ListTableRender extends RenderBox
   }
 
   @override
-  bool get sizedByParent => true;
+  bool get sizedByParent => false;
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    return constraints.biggest;
+    double height;
+
+    if (constraints.maxHeight.isFinite) {
+      height = constraints.maxHeight;
+    } else if (_rowCount != null && _targetCount != null) {
+      height = 0.0;
+      int y = 0;
+
+      RenderBox? child = firstChild;
+
+      while (child != null && y < _rowCount!) {
+        height += child
+            .getDryLayout(
+              BoxConstraints.tightFor(
+                width: constraints.maxWidth,
+              ),
+            )
+            .height;
+
+        child = childAfter(child);
+      }
+
+      y += 1;
+    } else {
+      height = constraints.minHeight;
+    }
+
+    return constraints.constrain(Size(constraints.maxWidth, height));
   }
 
   @override
@@ -247,12 +307,42 @@ class ListTableRender extends RenderBox
     final List<double> nonZeroColumns =
         _columnWidths.where((elem) => elem > 0.0).toList();
 
-    if (nonZeroColumns.isNotEmpty && childCount > 0) {
-      final BoxConstraints constraints = this.constraints;
+    RenderBox? child = firstChild;
+    double height;
 
-      RenderBox? child = firstChild;
+    if (constraints.maxHeight.isFinite) {
+      height = constraints.maxHeight;
+    } else if (_rowCount != null && _targetCount != null) {
+      int y = 0;
+      height = 0.0;
 
-      final List<double> targetWidths = List<double>.filled(childCount, 0.0);
+      while (child != null && y < _rowCount!) {
+        child.layout(
+          BoxConstraints.tightFor(width: constraints.maxWidth),
+          parentUsesSize: true,
+        );
+
+        (child.parentData! as _ListTableParentData).offset =
+            Offset(0.0, height);
+
+        if (y == 0) {
+          _headerHeight = child.size.height;
+        }
+
+        height += child.size.height;
+
+        child = childAfter(child);
+        y += 1;
+      }
+    } else {
+      height = constraints.minHeight;
+    }
+
+    final effectiveChildCount = _targetCount ?? childCount;
+
+    if (nonZeroColumns.isNotEmpty && effectiveChildCount > 0) {
+      final List<double> targetWidths =
+          List<double>.filled(effectiveChildCount, 0.0);
 
       targetWidths[0] = nonZeroColumns[0] / 2.0;
 
@@ -273,25 +363,76 @@ class ListTableRender extends RenderBox
       int x = 0;
 
       while (child != null) {
-        final _ListTableParentData childParentData =
-            child.parentData! as _ListTableParentData;
-
         child.layout(BoxConstraints.tightFor(
           width: targetWidths[x],
-          height: constraints.maxHeight,
+          height: height,
         ));
-        childParentData.offset = Offset(positions[x], 0.0);
 
-        child = childParentData.nextSibling;
+        (child.parentData! as _ListTableParentData).offset =
+            Offset(positions[x], 0.0);
+
+        child = childAfter(child);
         x += 1;
       }
     }
+
+    size = Size(constraints.maxWidth, height);
   }
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    return !_isInteractive &&
-        defaultHitTestChildren(result, position: position);
+    RenderBox? child = firstChild;
+
+    final List<RenderBox> rows = [];
+
+    if (_rowCount != null && _targetCount != null) {
+      int y = 0;
+
+      while (child != null && y < _rowCount!) {
+        rows.add(child);
+        child = childAfter(child);
+        y += 1;
+      }
+    }
+
+    if (_isInteractive && rows.isNotEmpty && _indexOfColumn(position) == -1) {
+      for (final child in rows) {
+        final childParentData = child.parentData! as _ListTableParentData;
+
+        final bool isHit = result.addWithPaintOffset(
+          offset: childParentData.offset,
+          position: position,
+          hitTest: (BoxHitTestResult result, Offset transformed) {
+            assert(transformed == position - childParentData.offset);
+            return child.hitTest(result, position: transformed);
+          },
+        );
+
+        if (isHit) {
+          break;
+        }
+      }
+    } else if (!_isInteractive) {
+      while (child != null) {
+        final childParentData = child.parentData! as _ListTableParentData;
+
+        final bool isHit = result.addWithPaintOffset(
+          offset: childParentData.offset,
+          position: position,
+          hitTest: (BoxHitTestResult result, Offset transformed) {
+            assert(transformed == position - childParentData.offset);
+            return child!.hitTest(result, position: transformed);
+          },
+        );
+        if (isHit) {
+          return true;
+        }
+
+        child = childAfter(child);
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -437,13 +578,26 @@ class ListTableRender extends RenderBox
     final Paint paint = Paint();
     final Path path = Path();
 
-    if (!_isInteractive) {
-      RenderBox? child = firstChild;
-      while (child != null) {
-        final _ListTableParentData childParentData =
-            child.parentData! as _ListTableParentData;
+    RenderBox? child = firstChild;
+
+    if (_rowCount != null && _targetCount != null) {
+      int y = 0;
+
+      while (child != null && y < _rowCount!) {
+        final childParentData = child.parentData! as _ListTableParentData;
         context.paintChild(child, childParentData.offset + offset);
-        child = childParentData.nextSibling;
+
+        child = childAfter(child);
+
+        y += 1;
+      }
+    }
+
+    if (!_isInteractive) {
+      while (child != null) {
+        final childParentData = child.parentData! as _ListTableParentData;
+        context.paintChild(child, childParentData.offset + offset);
+        child = childAfter(child);
       }
     }
 
@@ -523,7 +677,7 @@ class ListTableRender extends RenderBox
 
         path.moveTo(
           offset.dx + x,
-          offset.dy + _headerExtent,
+          offset.dy + _effectiveHeaderExtent,
         );
         path.lineTo(
           offset.dx + x,
@@ -541,7 +695,7 @@ class ListTableRender extends RenderBox
           );
           path.lineTo(
             offset.dx + x - lineWidth,
-            offset.dy + _headerExtent,
+            offset.dy + _effectiveHeaderExtent,
           );
         }
 
@@ -586,7 +740,7 @@ class ListTableRender extends RenderBox
         );
         path.lineTo(
           offset.dx + x,
-          offset.dy + _headerExtent,
+          offset.dy + _effectiveHeaderExtent,
         );
 
         if (lineWidth == 0.0) {
@@ -596,7 +750,7 @@ class ListTableRender extends RenderBox
 
           path.lineTo(
             offset.dx + x - lineWidth,
-            offset.dy + _headerExtent,
+            offset.dy + _effectiveHeaderExtent,
           );
           path.lineTo(
             offset.dx + x - lineWidth,

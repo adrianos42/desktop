@@ -169,6 +169,7 @@ class TextField extends StatefulWidget {
     this.onAppPrivateCommand,
     this.selectionControls,
     this.textInputAction,
+    this.scrollBehavior,
     SmartDashesType? smartDashesType,
     SmartQuotesType? smartQuotesType,
     TextInputType? keyboardType,
@@ -176,6 +177,8 @@ class TextField extends StatefulWidget {
     this.scrollPadding = const EdgeInsets.all(0),
     this.textCapitalization = TextCapitalization.none,
     this.maxLengthEnforcement,
+    // TODO(as): Remove it when TextField's style is created.
+    this.padding,
   })  : smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
         smartQuotesType = smartQuotesType ??
@@ -346,6 +349,12 @@ class TextField extends StatefulWidget {
   ///
   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
   final MaxLengthEnforcement? maxLengthEnforcement;
+
+  /// {@template flutter.widgets.shadow.scrollBehavior}
+  final ScrollBehavior? scrollBehavior;
+
+  ///
+  final EdgeInsets? padding;
 
   @override
   _TextFieldState createState() => _TextFieldState();
@@ -556,7 +565,7 @@ class _TextFieldState extends State<TextField>
       readOnly: widget.readOnly,
       rendererIgnoresPointer: true,
       restorationId: 'editable',
-      scrollBehavior: const _InputScrollBehavior(),
+      scrollBehavior: widget.scrollBehavior ?? const _InputScrollBehavior(),
       scrollController: widget.scrollController,
       scrollPadding: widget.scrollPadding,
       selectionColor: enabled ? selectionColor : colorScheme.background[0],
@@ -576,15 +585,11 @@ class _TextFieldState extends State<TextField>
       mouseCursor: MouseCursor.defer,
     );
 
-    final bool isMultiline =
-        (widget.maxLines == null || widget.maxLines! == 1) &&
-            (widget.minLines == null ||
-                (widget.minLines! == 1 && widget.maxLines != null));
+    final bool isMultiline = widget.maxLines != 1;
 
     final Widget result = ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: FocusTrapArea(
-        focusNode: focusNode,
+      child: TextFieldTapRegion(
         child: MouseRegion(
           cursor: effectiveMouseCursor,
           onEnter: (_) => _handleHover(true),
@@ -597,10 +602,13 @@ class _TextFieldState extends State<TextField>
                 child: Container(
                   decoration: decoration,
                   height: isMultiline ? _kDefaultHeight : null,
-                  alignment: isMultiline ? Alignment.center : null,
+                  alignment: isMultiline ? Alignment.topLeft : Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 4.0, vertical: 4.0),
+                    padding: widget.padding ??
+                        const EdgeInsets.symmetric(
+                          horizontal: 4.0,
+                          vertical: 4.0,
+                        ),
                     child:
                         _selectionGestureDetectorBuilder.buildGestureDetector(
                       behavior: HitTestBehavior.translucent,

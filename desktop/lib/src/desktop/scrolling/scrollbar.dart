@@ -12,7 +12,7 @@ const double _kMinThumbExtent = 32.0;
 
 const double _kScrollbarThickness = 8.0;
 
-const Duration _kScrollbarTimeToFade = Duration(milliseconds: 1200);
+const Duration _kScrollbarTimeToFade = Duration(milliseconds: 2000);
 const Duration _kScrollbarFadeDuration = Duration(milliseconds: 300);
 
 const double _kScrollbarMinOverscrollLength = 8.0;

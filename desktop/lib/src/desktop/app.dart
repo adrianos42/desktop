@@ -372,7 +372,9 @@ class _DesktopAppState extends State<DesktopApp> {
 /// Default [ScrollBehavior] for desktop.
 class DesktopScrollBehavior extends ScrollBehavior {
   /// Creates a [DesktopScrollBehavior].
-  const DesktopScrollBehavior() : super();
+  const DesktopScrollBehavior({this.isAlwaysShown = true}) : super();
+
+  final bool isAlwaysShown;
 
   /// Applies a [Scrollbar] to the child widget.
   @override
@@ -388,6 +390,7 @@ class DesktopScrollBehavior extends ScrollBehavior {
           case TargetPlatform.windows:
             return Scrollbar(
               child: child,
+              isAlwaysShown: isAlwaysShown,
               controller: details.controller,
             );
           case TargetPlatform.android:
