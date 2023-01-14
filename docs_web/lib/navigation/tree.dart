@@ -308,28 +308,178 @@ return Tree(
       items: [
         ItemTitle(
           body: (context) {
-            return Tree(
-              title: Builder(
-                builder: (context) => Text(
-                  'Tree',
-                  style: Theme.of(context).textTheme.body2,
-                ),
-              ),
-              nodes: [
-                TreeNode.child(
-                  titleBuilder: (context) => const Text('Node 0'),
-                  builder: (context) => Center(
+            return Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Tree(
+                title: Builder(
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Text(
-                      'Node 0',
-                      style: Theme.of(context).textTheme.title,
+                      'Tree',
+                      style: Theme.of(context).textTheme.body2,
                     ),
                   ),
                 ),
-                TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 1'),
+                nodes: [
+                  TreeNode.child(
+                    titleBuilder: (context) => const Text('Node 0'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 0',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TreeNode.children(
+                      titleBuilder: (context) => const Text('Node 1'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Node 0'),
+                          builder: (context) => Center(
+                            child: Text(
+                              'Node 1 -> 0',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                          ),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Node 1'),
+                          builder: (context) => Center(
+                            child: Text(
+                              'Node 1 -> 1',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                          ),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Node 2'),
+                          builder: (context) => Center(
+                            child: Text(
+                              'Node 1 -> 2',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                          ),
+                        ),
+                        TreeNode.children(
+                            titleBuilder: (context) => const Text('Node3'),
+                            children: [
+                              TreeNode.child(
+                                titleBuilder: (context) => const Text('Node 0'),
+                                builder: (context) => Center(
+                                  child: Text(
+                                    'Node 1 -> 3 -> 0',
+                                    style: Theme.of(context).textTheme.title,
+                                  ),
+                                ),
+                              ),
+                              TreeNode.child(
+                                titleBuilder: (context) => const Text('Node 1'),
+                                builder: (context) => Center(
+                                  child: Text(
+                                    'Node 1 -> 3 -> 1',
+                                    style: Theme.of(context).textTheme.title,
+                                  ),
+                                ),
+                              ),
+                              // TreeNode('Breadcrumb',
+                              //     builder: (context) => BreadcrumbPage()),
+                            ]),
+                        // TreeNode('Breadcrumb',
+                        //     builder: (context) => BreadcrumbPage()),
+                      ]),
+                  TreeNode.child(
+                    titleBuilder: (context) => const Text('Node 2'),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 2 ',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TreeNode.children(
+                      titleBuilder: (context) => const Text('Node 3'),
+                      children: [
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Node 0'),
+                          builder: (context) => Center(
+                            child: Text(
+                              'Node 3 -> 0',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                          ),
+                        ),
+                        TreeNode.child(
+                          titleBuilder: (context) => const Text('Node 1'),
+                          builder: (context) => Center(
+                            child: Text(
+                              'Node 3 -> 1',
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                          ),
+                        ),
+                        // TreeNode('Breadcrumb',
+                        //     builder: (context) => BreadcrumbPage()),
+                      ]),
+                ],
+              ),
+            );
+          },
+          codeText: codeSample,
+          title: 'Basic example',
+        ),
+        ItemTitle(
+          body: (context) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Tree(
+                title: Builder(
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Text(
+                      'Tree with widgets',
+                      style: Theme.of(context).textTheme.body2,
+                    ),
+                  ),
+                ),
+                nodes: [
+                  TreeNode.child(
+                    titleBuilder: (constext) => Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Icon(Icons.camera_enhance),
+                        ),
+                        Text('Node 0'),
+                      ],
+                    ),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 0',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TreeNode.children(
+                    titleBuilder: (context) => Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Icon(Icons.place),
+                        ),
+                        Text('Node 1'),
+                      ],
+                    ),
                     children: [
                       TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
+                        titleBuilder: (context) => Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Icon(Icons.location_city),
+                            ),
+                            Text('Node 0'),
+                          ],
+                        ),
                         builder: (context) => Center(
                           child: Text(
                             'Node 1 -> 0',
@@ -338,7 +488,15 @@ return Tree(
                         ),
                       ),
                       TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
+                        titleBuilder: (context) => Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Icon(Icons.map),
+                            ),
+                            Text('Node 1'),
+                          ],
+                        ),
                         builder: (context) => Center(
                           child: Text(
                             'Node 1 -> 1',
@@ -346,173 +504,27 @@ return Tree(
                           ),
                         ),
                       ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 2'),
-                        builder: (context) => Center(
-                          child: Text(
-                            'Node 1 -> 2',
-                            style: Theme.of(context).textTheme.title,
-                          ),
+                    ],
+                  ),
+                  TreeNode.child(
+                    titleBuilder: (context) => Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Icon(Icons.message),
                         ),
+                        Text('Node 2'),
+                      ],
+                    ),
+                    builder: (context) => Center(
+                      child: Text(
+                        'Node 2 ',
+                        style: Theme.of(context).textTheme.title,
                       ),
-                      TreeNode.children(
-                          titleBuilder: (context) => const Text('Node3'),
-                          children: [
-                            TreeNode.child(
-                              titleBuilder: (context) => const Text('Node 0'),
-                              builder: (context) => Center(
-                                child: Text(
-                                  'Node 1 -> 3 -> 0',
-                                  style: Theme.of(context).textTheme.title,
-                                ),
-                              ),
-                            ),
-                            TreeNode.child(
-                              titleBuilder: (context) => const Text('Node 1'),
-                              builder: (context) => Center(
-                                child: Text(
-                                  'Node 1 -> 3 -> 1',
-                                  style: Theme.of(context).textTheme.title,
-                                ),
-                              ),
-                            ),
-                            // TreeNode('Breadcrumb',
-                            //     builder: (context) => BreadcrumbPage()),
-                          ]),
-                      // TreeNode('Breadcrumb',
-                      //     builder: (context) => BreadcrumbPage()),
-                    ]),
-                TreeNode.child(
-                  titleBuilder: (context) => const Text('Node 2'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'Node 2 ',
-                      style: Theme.of(context).textTheme.title,
                     ),
                   ),
-                ),
-                TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 3'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => Center(
-                          child: Text(
-                            'Node 3 -> 0',
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                        ),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => Center(
-                          child: Text(
-                            'Node 3 -> 1',
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                        ),
-                      ),
-                      // TreeNode('Breadcrumb',
-                      //     builder: (context) => BreadcrumbPage()),
-                    ]),
-              ],
-            );
-          },
-          codeText: codeSample,
-          title: 'Basic example',
-        ),
-        ItemTitle(
-          body: (context) {
-            return Tree(
-              title: Builder(
-                builder: (context) => Text(
-                  'Tree with widgets',
-                  style: Theme.of(context).textTheme.body2,
-                ),
+                ],
               ),
-              nodes: [
-                TreeNode.child(
-                  titleBuilder: (constext) => Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(Icons.camera_enhance),
-                      ),
-                      Text('Node 0'),
-                    ],
-                  ),
-                  builder: (context) => Center(
-                    child: Text(
-                      'Node 0',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                ),
-                TreeNode.children(
-                  titleBuilder: (context) => Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(Icons.place),
-                      ),
-                      Text('Node 1'),
-                    ],
-                  ),
-                  children: [
-                    TreeNode.child(
-                      titleBuilder: (context) => Row(
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Icon(Icons.location_city),
-                          ),
-                          Text('Node 0'),
-                        ],
-                      ),
-                      builder: (context) => Center(
-                        child: Text(
-                          'Node 1 -> 0',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                      ),
-                    ),
-                    TreeNode.child(
-                      titleBuilder: (context) => Row(
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Icon(Icons.map),
-                          ),
-                          Text('Node 1'),
-                        ],
-                      ),
-                      builder: (context) => Center(
-                        child: Text(
-                          'Node 1 -> 1',
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                TreeNode.child(
-                  titleBuilder: (context) => Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Icon(Icons.message),
-                      ),
-                      Text('Node 2'),
-                    ],
-                  ),
-                  builder: (context) => Center(
-                    child: Text(
-                      'Node 2 ',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                ),
-              ],
             );
           },
           codeText: codeSampleWidget,
@@ -535,9 +547,12 @@ return Tree(
                   child: Tree(
                     collapsed: !_isShowingTree,
                     title: Builder(
-                      builder: (context) => Text(
-                        'Tree collapse',
-                        style: Theme.of(context).textTheme.body2,
+                      builder: (context) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Text(
+                          'Tree collapse',
+                          style: Theme.of(context).textTheme.body2,
+                        ),
                       ),
                     ),
                     nodes: [

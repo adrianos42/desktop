@@ -340,12 +340,12 @@ class _CalendarDateState extends State<CalendarDate> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Button.icon(
-                    Icons.arrow_upward,
+                    Icons.keyboard_arrow_up,
                     onPressed: _handlePrevious(),
                     willChangeState: _isDisplayingFirstButOneMonth,
                   ),
                   Button.icon(
-                    Icons.arrow_downward,
+                    Icons.keyboard_arrow_down,
                     willChangeState: _isDisplayingLastButOneMonth,
                     onPressed: _handleNext(),
                   ),

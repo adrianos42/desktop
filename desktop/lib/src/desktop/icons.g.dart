@@ -10,6 +10,13 @@ part of 'icons.dart';
 class Icons {
   const Icons._();
 
+  /// The `abc` material icon.
+  static const IconData abc = IconData(
+    0xeb94,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `ac_unit` material icon.
   static const IconData ac_unit = IconData(
     0xeb3b,
@@ -164,6 +171,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `add_card` material icon.
+  static const IconData add_card = IconData(
+    0xeb86,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `add_chart` material icon.
   static const IconData add_chart = IconData(
     0xe97b,
@@ -188,6 +202,20 @@ class Icons {
   /// The `add_comment` material icon.
   static const IconData add_comment = IconData(
     0xe266,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `add_home` material icon.
+  static const IconData add_home = IconData(
+    0xf8eb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `add_home_work` material icon.
+  static const IconData add_home_work = IconData(
+    0xf8ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -297,6 +325,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `adf_scanner` material icon.
+  static const IconData adf_scanner = IconData(
+    0xeada,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `adjust` material icon.
   static const IconData adjust = IconData(
     0xe39e,
@@ -307,6 +342,13 @@ class Icons {
   /// The `admin_panel_settings` material icon.
   static const IconData admin_panel_settings = IconData(
     0xef3d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `adobe` material icon.
+  static const IconData adobe = IconData(
+    0xea96,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -384,6 +426,20 @@ class Icons {
   /// The `airline_seat_recline_normal` material icon.
   static const IconData airline_seat_recline_normal = IconData(
     0xe637,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `airline_stops` material icon.
+  static const IconData airline_stops = IconData(
+    0xe7d0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `airlines` material icon.
+  static const IconData airlines = IconData(
+    0xe7ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -633,6 +689,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `app_shortcut` material icon.
+  static const IconData app_shortcut = IconData(
+    0xeae4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `apple` material icon.
+  static const IconData apple = IconData(
+    0xea80,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `approval` material icon.
   static const IconData approval = IconData(
     0xe982,
@@ -643,6 +713,13 @@ class Icons {
   /// The `apps` material icon.
   static const IconData apps = IconData(
     0xe5c3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `apps_outage` material icon.
+  static const IconData apps_outage = IconData(
+    0xe7cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -692,6 +769,20 @@ class Icons {
   /// The `arrow_circle_down` material icon.
   static const IconData arrow_circle_down = IconData(
     0xf181,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `arrow_circle_left` material icon.
+  static const IconData arrow_circle_left = IconData(
+    0xeaa7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `arrow_circle_right` material icon.
+  static const IconData arrow_circle_right = IconData(
+    0xeaaa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -748,6 +839,13 @@ class Icons {
   /// The `arrow_left` material icon.
   static const IconData arrow_left = IconData(
     0xe5de,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `arrow_outward` material icon.
+  static const IconData arrow_outward = IconData(
+    0xf8ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -843,6 +941,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `assist_walker` material icon.
+  static const IconData assist_walker = IconData(
+    0xf8d5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `assistant` material icon.
   static const IconData assistant = IconData(
     0xe39f,
@@ -860,6 +965,13 @@ class Icons {
   /// The `assistant_photo` material icon.
   static const IconData assistant_photo = IconData(
     0xe3a0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `assured_workload` material icon.
+  static const IconData assured_workload = IconData(
+    0xeb6f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -909,6 +1021,13 @@ class Icons {
   /// The `attribution` material icon.
   static const IconData attribution = IconData(
     0xefdb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `audio_file` material icon.
+  static const IconData audio_file = IconData(
+    0xeb82,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -972,6 +1091,13 @@ class Icons {
   /// The `auto_graph` material icon.
   static const IconData auto_graph = IconData(
     0xe4fb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `auto_mode` material icon.
+  static const IconData auto_mode = IconData(
+    0xec20,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -1060,6 +1186,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `balance` material icon.
+  static const IconData balance = IconData(
+    0xeaf6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `balcony` material icon.
   static const IconData balcony = IconData(
     0xe58f,
@@ -1098,6 +1231,55 @@ class Icons {
   /// The `bathtub` material icon.
   static const IconData bathtub = IconData(
     0xea41,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_0_bar` material icon.
+  static const IconData battery_0_bar = IconData(
+    0xebdc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_1_bar` material icon.
+  static const IconData battery_1_bar = IconData(
+    0xebd9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_2_bar` material icon.
+  static const IconData battery_2_bar = IconData(
+    0xebe0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_3_bar` material icon.
+  static const IconData battery_3_bar = IconData(
+    0xebdd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_4_bar` material icon.
+  static const IconData battery_4_bar = IconData(
+    0xebe2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_5_bar` material icon.
+  static const IconData battery_5_bar = IconData(
+    0xebd4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `battery_6_bar` material icon.
+  static const IconData battery_6_bar = IconData(
+    0xebd2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -1186,6 +1368,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `bedtime_off` material icon.
+  static const IconData bedtime_off = IconData(
+    0xeb76,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `beenhere` material icon.
   static const IconData beenhere = IconData(
     0xe52d,
@@ -1217,6 +1406,27 @@ class Icons {
   /// The `blender` material icon.
   static const IconData blender = IconData(
     0xefe3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `blind` material icon.
+  static const IconData blind = IconData(
+    0xf8d6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `blinds` material icon.
+  static const IconData blinds = IconData(
+    0xe286,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `blinds_closed` material icon.
+  static const IconData blinds_closed = IconData(
+    0xec1f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -1459,6 +1669,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `boy` material icon.
+  static const IconData boy = IconData(
+    0xeb67,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `branding_watermark` material icon.
   static const IconData branding_watermark = IconData(
     0xe06b,
@@ -1550,6 +1767,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `broadcast_on_home` material icon.
+  static const IconData broadcast_on_home = IconData(
+    0xf8f8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `broadcast_on_personal` material icon.
+  static const IconData broadcast_on_personal = IconData(
+    0xf8f9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `broken_image` material icon.
   static const IconData broken_image = IconData(
     0xe3ad,
@@ -1557,9 +1788,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `browse_gallery` material icon.
+  static const IconData browse_gallery = IconData(
+    0xebd1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `browser_not_supported` material icon.
   static const IconData browser_not_supported = IconData(
     0xef47,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `browser_updated` material icon.
+  static const IconData browser_updated = IconData(
+    0xe7cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -1672,6 +1917,13 @@ class Icons {
   /// The `calculate` material icon.
   static const IconData calculate = IconData(
     0xea5f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `calendar_month` material icon.
+  static const IconData calendar_month = IconData(
+    0xebcc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -1858,6 +2110,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `candlestick_chart` material icon.
+  static const IconData candlestick_chart = IconData(
+    0xead4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `car_crash` material icon.
+  static const IconData car_crash = IconData(
+    0xebf2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `car_rental` material icon.
   static const IconData car_rental = IconData(
     0xea55,
@@ -1935,6 +2201,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `castle` material icon.
+  static const IconData castle = IconData(
+    0xeab1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `catching_pokemon` material icon.
   static const IconData catching_pokemon = IconData(
     0xe508,
@@ -1952,6 +2225,13 @@ class Icons {
   /// The `celebration` material icon.
   static const IconData celebration = IconData(
     0xea65,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `cell_tower` material icon.
+  static const IconData cell_tower = IconData(
+    0xebba,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2131,6 +2411,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `church` material icon.
+  static const IconData church = IconData(
+    0xeaae,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `circle` material icon.
   static const IconData circle = IconData(
     0xef4a,
@@ -2257,9 +2544,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `cloud_sync` material icon.
+  static const IconData cloud_sync = IconData(
+    0xeb5a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `cloud_upload` material icon.
   static const IconData cloud_upload = IconData(
     0xe2c3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `co2` material icon.
+  static const IconData co2 = IconData(
+    0xe7b0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `co_present` material icon.
+  static const IconData co_present = IconData(
+    0xeaf0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2330,6 +2638,20 @@ class Icons {
   /// The `comment_bank` material icon.
   static const IconData comment_bank = IconData(
     0xea4e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `comments_disabled` material icon.
+  static const IconData comments_disabled = IconData(
+    0xe7a2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `commit` material icon.
+  static const IconData commit = IconData(
+    0xeaf5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2411,9 +2733,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `connecting_airports` material icon.
+  static const IconData connecting_airports = IconData(
+    0xe7c9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `construction` material icon.
   static const IconData construction = IconData(
     0xea3c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `contact_emergency` material icon.
+  static const IconData contact_emergency = IconData(
+    0xf8d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2481,9 +2817,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `content_paste_go` material icon.
+  static const IconData content_paste_go = IconData(
+    0xea8e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `content_paste_off` material icon.
   static const IconData content_paste_off = IconData(
     0xe4f8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `content_paste_search` material icon.
+  static const IconData content_paste_search = IconData(
+    0xea9b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `contrast` material icon.
+  static const IconData contrast = IconData(
+    0xeb37,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2505,6 +2862,13 @@ class Icons {
   /// The `control_point_duplicate` material icon.
   static const IconData control_point_duplicate = IconData(
     0xe3bb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `cookie` material icon.
+  static const IconData cookie = IconData(
+    0xeaac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2600,6 +2964,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `crisis_alert` material icon.
+  static const IconData crisis_alert = IconData(
+    0xebe9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `crop` material icon.
   static const IconData crop = IconData(
     0xe3be,
@@ -2691,9 +3062,100 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `css` material icon.
+  static const IconData css = IconData(
+    0xeb93,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_bitcoin` material icon.
+  static const IconData currency_bitcoin = IconData(
+    0xebc5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_exchange` material icon.
+  static const IconData currency_exchange = IconData(
+    0xeb70,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_franc` material icon.
+  static const IconData currency_franc = IconData(
+    0xeafa,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_lira` material icon.
+  static const IconData currency_lira = IconData(
+    0xeaef,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_pound` material icon.
+  static const IconData currency_pound = IconData(
+    0xeaf1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_ruble` material icon.
+  static const IconData currency_ruble = IconData(
+    0xeaec,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_rupee` material icon.
+  static const IconData currency_rupee = IconData(
+    0xeaf7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_yen` material icon.
+  static const IconData currency_yen = IconData(
+    0xeafb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `currency_yuan` material icon.
+  static const IconData currency_yuan = IconData(
+    0xeaf9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `curtains` material icon.
+  static const IconData curtains = IconData(
+    0xec1e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `curtains_closed` material icon.
+  static const IconData curtains_closed = IconData(
+    0xec1d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `cut` material icon.
   static const IconData cut = IconData(
     0xf08b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `cyclone` material icon.
+  static const IconData cyclone = IconData(
+    0xebd5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2726,9 +3188,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `data_array` material icon.
+  static const IconData data_array = IconData(
+    0xead1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `data_exploration` material icon.
   static const IconData data_exploration = IconData(
     0xe76f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `data_object` material icon.
+  static const IconData data_object = IconData(
+    0xead3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2747,6 +3223,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `data_thresholding` material icon.
+  static const IconData data_thresholding = IconData(
+    0xeb9f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `data_usage` material icon.
   static const IconData data_usage = IconData(
     0xe1af,
@@ -2754,9 +3237,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `dataset` material icon.
+  static const IconData dataset = IconData(
+    0xf8ee,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `dataset_linked` material icon.
+  static const IconData dataset_linked = IconData(
+    0xf8ef,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `date_range` material icon.
   static const IconData date_range = IconData(
     0xe916,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `deblur` material icon.
+  static const IconData deblur = IconData(
+    0xeb77,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2810,6 +3314,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `density_large` material icon.
+  static const IconData density_large = IconData(
+    0xeba9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `density_medium` material icon.
+  static const IconData density_medium = IconData(
+    0xeb9e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `density_small` material icon.
+  static const IconData density_small = IconData(
+    0xeba8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `departure_board` material icon.
   static const IconData departure_board = IconData(
     0xe576,
@@ -2824,9 +3349,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `deselect` material icon.
+  static const IconData deselect = IconData(
+    0xebb6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `design_services` material icon.
   static const IconData design_services = IconData(
     0xf10a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `desk` material icon.
+  static const IconData desk = IconData(
+    0xf8f4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -2908,6 +3447,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `devices_fold` material icon.
+  static const IconData devices_fold = IconData(
+    0xebde,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `devices_other` material icon.
   static const IconData devices_other = IconData(
     0xe337,
@@ -2925,6 +3471,20 @@ class Icons {
   /// The `dialpad` material icon.
   static const IconData dialpad = IconData(
     0xe0bc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `diamond` material icon.
+  static const IconData diamond = IconData(
+    0xead5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `difference` material icon.
+  static const IconData difference = IconData(
+    0xeb7d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3104,6 +3664,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `discord` material icon.
+  static const IconData discord = IconData(
+    0xea6c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `discount` material icon.
+  static const IconData discount = IconData(
+    0xebc9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `display_settings` material icon.
+  static const IconData display_settings = IconData(
+    0xeb97,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `dnd_forwardslash` material icon.
   static const IconData dnd_forwardslash = IconData(
     0xe611,
@@ -3212,6 +3793,13 @@ class Icons {
   /// The `domain` material icon.
   static const IconData domain = IconData(
     0xe7ee,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `domain_add` material icon.
+  static const IconData domain_add = IconData(
+    0xeb62,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3552,6 +4140,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `egg` material icon.
+  static const IconData egg = IconData(
+    0xeacc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `egg_alt` material icon.
+  static const IconData egg_alt = IconData(
+    0xeac8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `eject` material icon.
   static const IconData eject = IconData(
     0xe8fb,
@@ -3566,6 +4168,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `elderly_woman` material icon.
+  static const IconData elderly_woman = IconData(
+    0xeb69,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `electric_bike` material icon.
   static const IconData electric_bike = IconData(
     0xeb1b,
@@ -3573,9 +4182,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `electric_bolt` material icon.
+  static const IconData electric_bolt = IconData(
+    0xec1c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `electric_car` material icon.
   static const IconData electric_car = IconData(
     0xeb1c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `electric_meter` material icon.
+  static const IconData electric_meter = IconData(
+    0xec1b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3625,6 +4248,20 @@ class Icons {
   /// The `emergency` material icon.
   static const IconData emergency = IconData(
     0xe1eb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `emergency_recording` material icon.
+  static const IconData emergency_recording = IconData(
+    0xebf4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `emergency_share` material icon.
+  static const IconData emergency_share = IconData(
+    0xebf6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3688,6 +4325,13 @@ class Icons {
   /// The `emoji_transportation` material icon.
   static const IconData emoji_transportation = IconData(
     0xea1f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `energy_savings_leaf` material icon.
+  static const IconData energy_savings_leaf = IconData(
+    0xec1a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3797,6 +4441,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `event_repeat` material icon.
+  static const IconData event_repeat = IconData(
+    0xeb7b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `event_seat` material icon.
   static const IconData event_seat = IconData(
     0xe903,
@@ -3814,6 +4465,13 @@ class Icons {
   /// The `expand` material icon.
   static const IconData expand = IconData(
     0xe94f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `expand_circle_down` material icon.
+  static const IconData expand_circle_down = IconData(
+    0xe7cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -3930,6 +4588,41 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `face_2` material icon.
+  static const IconData face_2 = IconData(
+    0xf8da,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `face_3` material icon.
+  static const IconData face_3 = IconData(
+    0xf8db,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `face_4` material icon.
+  static const IconData face_4 = IconData(
+    0xf8dc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `face_5` material icon.
+  static const IconData face_5 = IconData(
+    0xf8dd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `face_6` material icon.
+  static const IconData face_6 = IconData(
+    0xf8de,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `face_retouching_natural` material icon.
   static const IconData face_retouching_natural = IconData(
     0xef4e,
@@ -3961,6 +4654,13 @@ class Icons {
   /// The `fact_check` material icon.
   static const IconData fact_check = IconData(
     0xf0c5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `factory` material icon.
+  static const IconData factory = IconData(
+    0xebbc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4010,6 +4710,13 @@ class Icons {
   /// The `favorite_outline` material icon.
   static const IconData favorite_outline = IconData(
     0xe87e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fax` material icon.
+  static const IconData fax = IconData(
+    0xead8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4126,6 +4833,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `file_open` material icon.
+  static const IconData file_open = IconData(
+    0xeaf3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `file_present` material icon.
   static const IconData file_present = IconData(
     0xea0e,
@@ -4224,6 +4938,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `filter_alt_off` material icon.
+  static const IconData filter_alt_off = IconData(
+    0xeb32,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `filter_b_and_w` material icon.
   static const IconData filter_b_and_w = IconData(
     0xe3db,
@@ -4262,6 +4983,13 @@ class Icons {
   /// The `filter_list` material icon.
   static const IconData filter_list = IconData(
     0xe152,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `filter_list_off` material icon.
+  static const IconData filter_list_off = IconData(
+    0xeb57,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4315,6 +5043,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `fire_hydrant_alt` material icon.
+  static const IconData fire_hydrant_alt = IconData(
+    0xf8f1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fire_truck` material icon.
+  static const IconData fire_truck = IconData(
+    0xf8f2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `fireplace` material icon.
   static const IconData fireplace = IconData(
     0xea43,
@@ -4336,6 +5078,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `fitbit` material icon.
+  static const IconData fitbit = IconData(
+    0xe82b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `fitness_center` material icon.
   static const IconData fitness_center = IconData(
     0xeb43,
@@ -4346,6 +5095,13 @@ class Icons {
   /// The `flag` material icon.
   static const IconData flag = IconData(
     0xe153,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `flag_circle` material icon.
+  static const IconData flag_circle = IconData(
+    0xeaf8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4413,6 +5169,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `flight_class` material icon.
+  static const IconData flight_class = IconData(
+    0xe7cb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `flight_land` material icon.
   static const IconData flight_land = IconData(
     0xe904,
@@ -4462,8 +5225,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `flood` material icon.
+  static const IconData flood = IconData(
+    0xebe6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `flourescent` material icon.
   static const IconData flourescent = IconData(
+    0xf00d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fluorescent` material icon.
+  static const IconData fluorescent = IconData(
     0xf00d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4497,6 +5274,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `folder_copy` material icon.
+  static const IconData folder_copy = IconData(
+    0xebbd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `folder_delete` material icon.
+  static const IconData folder_delete = IconData(
+    0xeb34,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `folder_off` material icon.
+  static const IconData folder_off = IconData(
+    0xeb83,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `folder_open` material icon.
   static const IconData folder_open = IconData(
     0xe2c8,
@@ -4514,6 +5312,13 @@ class Icons {
   /// The `folder_special` material icon.
   static const IconData folder_special = IconData(
     0xe617,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `folder_zip` material icon.
+  static const IconData folder_zip = IconData(
+    0xeb2c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4542,6 +5347,27 @@ class Icons {
   /// The `food_bank` material icon.
   static const IconData food_bank = IconData(
     0xf1f2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `forest` material icon.
+  static const IconData forest = IconData(
+    0xea99,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fork_left` material icon.
+  static const IconData fork_left = IconData(
+    0xeba0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fork_right` material icon.
+  static const IconData fork_right = IconData(
+    0xebac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4658,6 +5484,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `format_overline` material icon.
+  static const IconData format_overline = IconData(
+    0xeb65,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `format_paint` material icon.
   static const IconData format_paint = IconData(
     0xe243,
@@ -4717,6 +5550,13 @@ class Icons {
   /// The `format_underlined` material icon.
   static const IconData format_underlined = IconData(
     0xe765,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `fort` material icon.
+  static const IconData fort = IconData(
+    0xeaad,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -4847,6 +5687,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `gas_meter` material icon.
+  static const IconData gas_meter = IconData(
+    0xec19,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `gavel` material icon.
   static const IconData gavel = IconData(
     0xe90e,
@@ -4878,6 +5725,20 @@ class Icons {
   /// The `gif` material icon.
   static const IconData gif = IconData(
     0xe908,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `gif_box` material icon.
+  static const IconData gif_box = IconData(
+    0xe7a3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `girl` material icon.
+  static const IconData girl = IconData(
+    0xeb68,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5043,6 +5904,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `group_remove` material icon.
+  static const IconData group_remove = IconData(
+    0xe7ad,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `group_work` material icon.
   static const IconData group_work = IconData(
     0xe886,
@@ -5053,6 +5921,20 @@ class Icons {
   /// The `groups` material icon.
   static const IconData groups = IconData(
     0xf233,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `groups_2` material icon.
+  static const IconData groups_2 = IconData(
+    0xf8df,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `groups_3` material icon.
+  static const IconData groups_3 = IconData(
+    0xf8e0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5074,6 +5956,13 @@ class Icons {
   /// The `hail` material icon.
   static const IconData hail = IconData(
     0xe9b1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `handshake` material icon.
+  static const IconData handshake = IconData(
+    0xebcb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5232,6 +6121,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `heart_broken` material icon.
+  static const IconData heart_broken = IconData(
+    0xeac2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `heat_pump` material icon.
+  static const IconData heat_pump = IconData(
+    0xec18,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `height` material icon.
   static const IconData height = IconData(
     0xea16,
@@ -5263,6 +6166,13 @@ class Icons {
   /// The `hevc` material icon.
   static const IconData hevc = IconData(
     0xf021,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `hexagon` material icon.
+  static const IconData hexagon = IconData(
+    0xeb39,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5340,6 +6250,27 @@ class Icons {
   /// The `history_toggle_off` material icon.
   static const IconData history_toggle_off = IconData(
     0xf17d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `hive` material icon.
+  static const IconData hive = IconData(
+    0xeaa6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `hls` material icon.
+  static const IconData hls = IconData(
+    0xeb8a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `hls_off` material icon.
+  static const IconData hls_off = IconData(
+    0xeb8c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5498,6 +6429,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `html` material icon.
+  static const IconData html = IconData(
+    0xeb7e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `http` material icon.
   static const IconData http = IconData(
     0xe902,
@@ -5508,6 +6446,13 @@ class Icons {
   /// The `https` material icon.
   static const IconData https = IconData(
     0xe88d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `hub` material icon.
+  static const IconData hub = IconData(
+    0xe9f4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5680,6 +6625,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `insert_page_break` material icon.
+  static const IconData insert_page_break = IconData(
+    0xeaca,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `insert_photo` material icon.
   static const IconData insert_photo = IconData(
     0xe251,
@@ -5694,9 +6646,37 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `install_desktop` material icon.
+  static const IconData install_desktop = IconData(
+    0xeb71,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `install_mobile` material icon.
+  static const IconData install_mobile = IconData(
+    0xeb72,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `integration_instructions` material icon.
   static const IconData integration_instructions = IconData(
     0xef54,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `interests` material icon.
+  static const IconData interests = IconData(
+    0xe7c8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `interpreter_mode` material icon.
+  static const IconData interpreter_mode = IconData(
+    0xe83b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5757,9 +6737,65 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `javascript` material icon.
+  static const IconData javascript = IconData(
+    0xeb7c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `join_full` material icon.
+  static const IconData join_full = IconData(
+    0xeaeb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `join_inner` material icon.
+  static const IconData join_inner = IconData(
+    0xeaf4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `join_left` material icon.
+  static const IconData join_left = IconData(
+    0xeaf2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `join_right` material icon.
+  static const IconData join_right = IconData(
+    0xeaea,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `kayaking` material icon.
   static const IconData kayaking = IconData(
     0xe50c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `kebab_dining` material icon.
+  static const IconData kebab_dining = IconData(
+    0xe842,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `key` material icon.
+  static const IconData key = IconData(
+    0xe73c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `key_off` material icon.
+  static const IconData key_off = IconData(
+    0xeb84,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5820,9 +6856,51 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `keyboard_command_key` material icon.
+  static const IconData keyboard_command_key = IconData(
+    0xeae7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `keyboard_control` material icon.
   static const IconData keyboard_control = IconData(
-    0xe5d3,
+    0xeae1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_control_key` material icon.
+  static const IconData keyboard_control_key = IconData(
+    0xeae6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_double_arrow_down` material icon.
+  static const IconData keyboard_double_arrow_down = IconData(
+    0xead0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_double_arrow_left` material icon.
+  static const IconData keyboard_double_arrow_left = IconData(
+    0xeac3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_double_arrow_right` material icon.
+  static const IconData keyboard_double_arrow_right = IconData(
+    0xeac9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_double_arrow_up` material icon.
+  static const IconData keyboard_double_arrow_up = IconData(
+    0xeacf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5830,6 +6908,13 @@ class Icons {
   /// The `keyboard_hide` material icon.
   static const IconData keyboard_hide = IconData(
     0xe31a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `keyboard_option_key` material icon.
+  static const IconData keyboard_option_key = IconData(
+    0xeae8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -5911,9 +6996,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `lan` material icon.
+  static const IconData lan = IconData(
+    0xeb2f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `landscape` material icon.
   static const IconData landscape = IconData(
     0xe3f7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `landslide` material icon.
+  static const IconData landslide = IconData(
+    0xebd7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6079,9 +7178,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `lightbulb_circle` material icon.
+  static const IconData lightbulb_circle = IconData(
+    0xebfe,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `lightbulb_outline` material icon.
   static const IconData lightbulb_outline = IconData(
     0xe90f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `line_axis` material icon.
+  static const IconData line_axis = IconData(
+    0xea9a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6478,9 +7591,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `lock_person` material icon.
+  static const IconData lock_person = IconData(
+    0xf8f3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `lock_reset` material icon.
+  static const IconData lock_reset = IconData(
+    0xeade,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `login` material icon.
   static const IconData login = IconData(
     0xea77,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `logo_dev` material icon.
+  static const IconData logo_dev = IconData(
+    0xead6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6597,9 +7731,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `lyrics` material icon.
+  static const IconData lyrics = IconData(
+    0xec0b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `macro_off` material icon.
+  static const IconData macro_off = IconData(
+    0xf8d2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `mail` material icon.
   static const IconData mail = IconData(
     0xe158,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `mail_lock` material icon.
+  static const IconData mail_lock = IconData(
+    0xec0a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6618,9 +7773,44 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `man` material icon.
+  static const IconData man = IconData(
+    0xe4eb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `man_2` material icon.
+  static const IconData man_2 = IconData(
+    0xf8e1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `man_3` material icon.
+  static const IconData man_3 = IconData(
+    0xf8e2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `man_4` material icon.
+  static const IconData man_4 = IconData(
+    0xf8e3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `manage_accounts` material icon.
   static const IconData manage_accounts = IconData(
     0xf02e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `manage_history` material icon.
+  static const IconData manage_history = IconData(
+    0xebe7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6695,6 +7885,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `mark_unread_chat_alt` material icon.
+  static const IconData mark_unread_chat_alt = IconData(
+    0xeb9d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `markunread` material icon.
   static const IconData markunread = IconData(
     0xe159,
@@ -6744,6 +7941,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `medical_information` material icon.
+  static const IconData medical_information = IconData(
+    0xebed,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `medical_services` material icon.
   static const IconData medical_services = IconData(
     0xf109,
@@ -6754,6 +7958,13 @@ class Icons {
   /// The `medication` material icon.
   static const IconData medication = IconData(
     0xf033,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `medication_liquid` material icon.
+  static const IconData medication_liquid = IconData(
+    0xea87,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6789,6 +8000,13 @@ class Icons {
   /// The `menu_open` material icon.
   static const IconData menu_open = IconData(
     0xe9bd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `merge` material icon.
+  static const IconData merge = IconData(
+    0xeb98,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -6877,6 +8095,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `minor_crash` material icon.
+  static const IconData minor_crash = IconData(
+    0xebf1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `miscellaneous_services` material icon.
   static const IconData miscellaneous_services = IconData(
     0xf10c,
@@ -6954,9 +8179,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `mode_fan_off` material icon.
+  static const IconData mode_fan_off = IconData(
+    0xec17,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `mode_night` material icon.
   static const IconData mode_night = IconData(
     0xf036,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `mode_of_travel` material icon.
+  static const IconData mode_of_travel = IconData(
+    0xe7ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7010,6 +8249,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `monitor_heart` material icon.
+  static const IconData monitor_heart = IconData(
+    0xeaa2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `monitor_weight` material icon.
   static const IconData monitor_weight = IconData(
     0xf039,
@@ -7054,7 +8300,7 @@ class Icons {
 
   /// The `more_horiz` material icon.
   static const IconData more_horiz = IconData(
-    0xe5d3,
+    0xeae1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7069,6 +8315,13 @@ class Icons {
   /// The `more_vert` material icon.
   static const IconData more_vert = IconData(
     0xe5d4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `mosque` material icon.
+  static const IconData mosque = IconData(
+    0xeab2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7122,9 +8375,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `move_down` material icon.
+  static const IconData move_down = IconData(
+    0xeb61,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `move_to_inbox` material icon.
   static const IconData move_to_inbox = IconData(
     0xe168,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `move_up` material icon.
+  static const IconData move_up = IconData(
+    0xeb64,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7311,6 +8578,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `nest_cam_wired_stand` material icon.
+  static const IconData nest_cam_wired_stand = IconData(
+    0xec16,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `network_cell` material icon.
   static const IconData network_cell = IconData(
     0xe1b9,
@@ -7332,9 +8606,37 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `network_ping` material icon.
+  static const IconData network_ping = IconData(
+    0xebca,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `network_wifi` material icon.
   static const IconData network_wifi = IconData(
     0xe1ba,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `network_wifi_1_bar` material icon.
+  static const IconData network_wifi_1_bar = IconData(
+    0xebe4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `network_wifi_2_bar` material icon.
+  static const IconData network_wifi_2_bar = IconData(
+    0xebd6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `network_wifi_3_bar` material icon.
+  static const IconData network_wifi_3_bar = IconData(
+    0xebe1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7349,6 +8651,13 @@ class Icons {
   /// The `new_releases` material icon.
   static const IconData new_releases = IconData(
     0xe031,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `newspaper` material icon.
+  static const IconData newspaper = IconData(
+    0xeb81,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7416,6 +8725,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `no_adult_content` material icon.
+  static const IconData no_adult_content = IconData(
+    0xf8fe,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `no_backpack` material icon.
   static const IconData no_backpack = IconData(
     0xf237,
@@ -7426,6 +8742,13 @@ class Icons {
   /// The `no_cell` material icon.
   static const IconData no_cell = IconData(
     0xf1a4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `no_crash` material icon.
+  static const IconData no_crash = IconData(
+    0xebf0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7510,6 +8833,20 @@ class Icons {
   /// The `no_transfer` material icon.
   static const IconData no_transfer = IconData(
     0xf1d5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `noise_aware` material icon.
+  static const IconData noise_aware = IconData(
+    0xebec,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `noise_control_off` material icon.
+  static const IconData noise_control_off = IconData(
+    0xebf3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7668,6 +9005,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `numbers` material icon.
+  static const IconData numbers = IconData(
+    0xeac7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `offline_bolt` material icon.
   static const IconData offline_bolt = IconData(
     0xe932,
@@ -7685,6 +9029,20 @@ class Icons {
   /// The `offline_share` material icon.
   static const IconData offline_share = IconData(
     0xe9c5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `oil_barrel` material icon.
+  static const IconData oil_barrel = IconData(
+    0xec15,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `on_device_training` material icon.
+  static const IconData on_device_training = IconData(
+    0xebfd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -7794,6 +9152,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `output` material icon.
+  static const IconData output = IconData(
+    0xebbe,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `padding` material icon.
   static const IconData padding = IconData(
     0xe9c8,
@@ -7832,6 +9197,13 @@ class Icons {
   /// The `pan_tool` material icon.
   static const IconData pan_tool = IconData(
     0xe925,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `pan_tool_alt` material icon.
+  static const IconData pan_tool_alt = IconData(
+    0xebb9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8004,6 +9376,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `paypal` material icon.
+  static const IconData paypal = IconData(
+    0xea8d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `pedal_bike` material icon.
   static const IconData pedal_bike = IconData(
     0xeb29,
@@ -8025,6 +9404,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `pentagon` material icon.
+  static const IconData pentagon = IconData(
+    0xeb50,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `people` material icon.
   static const IconData people = IconData(
     0xe7fb,
@@ -8042,6 +9428,13 @@ class Icons {
   /// The `people_outline` material icon.
   static const IconData people_outline = IconData(
     0xe7fc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `percent` material icon.
+  static const IconData percent = IconData(
+    0xeb58,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8119,6 +9512,27 @@ class Icons {
   /// The `person` material icon.
   static const IconData person = IconData(
     0xe7fd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `person_2` material icon.
+  static const IconData person_2 = IconData(
+    0xf8e4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `person_3` material icon.
+  static const IconData person_3 = IconData(
+    0xf8e5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `person_4` material icon.
+  static const IconData person_4 = IconData(
+    0xf8e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8231,6 +9645,13 @@ class Icons {
   /// The `pets` material icon.
   static const IconData pets = IconData(
     0xe91d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `phishing` material icon.
+  static const IconData phishing = IconData(
+    0xead7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8431,6 +9852,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `php` material icon.
+  static const IconData php = IconData(
+    0xeb8f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `piano` material icon.
   static const IconData piano = IconData(
     0xe521,
@@ -8508,9 +9936,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `pinch` material icon.
+  static const IconData pinch = IconData(
+    0xeb38,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `pivot_table_chart` material icon.
   static const IconData pivot_table_chart = IconData(
     0xe9ce,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `pix` material icon.
+  static const IconData pix = IconData(
+    0xeaa3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8599,9 +10041,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `playlist_add_check_circle` material icon.
+  static const IconData playlist_add_check_circle = IconData(
+    0xe7e6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `playlist_add_circle` material icon.
+  static const IconData playlist_add_circle = IconData(
+    0xe7e5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `playlist_play` material icon.
   static const IconData playlist_play = IconData(
     0xe05f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `playlist_remove` material icon.
+  static const IconData playlist_remove = IconData(
+    0xeb80,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8644,6 +10107,13 @@ class Icons {
   /// The `poll` material icon.
   static const IconData poll = IconData(
     0xe801,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `polyline` material icon.
+  static const IconData polyline = IconData(
+    0xebbb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8795,9 +10265,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `propane` material icon.
+  static const IconData propane = IconData(
+    0xec14,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `propane_tank` material icon.
+  static const IconData propane_tank = IconData(
+    0xec13,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `psychology` material icon.
   static const IconData psychology = IconData(
     0xea4a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `psychology_alt` material icon.
+  static const IconData psychology_alt = IconData(
+    0xf8ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8826,6 +10317,13 @@ class Icons {
   /// The `published_with_changes` material icon.
   static const IconData published_with_changes = IconData(
     0xf232,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `punch_clock` material icon.
+  static const IconData punch_clock = IconData(
+    0xeaa8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8879,6 +10377,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `question_mark` material icon.
+  static const IconData question_mark = IconData(
+    0xeb8b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `queue` material icon.
   static const IconData queue = IconData(
     0xe03c,
@@ -8924,6 +10429,13 @@ class Icons {
   /// The `quiz` material icon.
   static const IconData quiz = IconData(
     0xf04c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `quora` material icon.
+  static const IconData quora = IconData(
+    0xea98,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -8987,6 +10499,20 @@ class Icons {
   /// The `ramen_dining` material icon.
   static const IconData ramen_dining = IconData(
     0xea64,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `ramp_left` material icon.
+  static const IconData ramp_left = IconData(
+    0xeb9c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `ramp_right` material icon.
+  static const IconData ramp_right = IconData(
+    0xeb96,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9061,9 +10587,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `rectangle` material icon.
+  static const IconData rectangle = IconData(
+    0xeb54,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `recycling` material icon.
   static const IconData recycling = IconData(
     0xe760,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `reddit` material icon.
+  static const IconData reddit = IconData(
+    0xeaa0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9152,6 +10692,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `remove_road` material icon.
+  static const IconData remove_road = IconData(
+    0xebfc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `remove_shopping_cart` material icon.
   static const IconData remove_shopping_cart = IconData(
     0xe928,
@@ -9162,6 +10709,13 @@ class Icons {
   /// The `reorder` material icon.
   static const IconData reorder = IconData(
     0xe8fe,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `repartition` material icon.
+  static const IconData repartition = IconData(
+    0xf8e8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9355,6 +10909,41 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `rocket` material icon.
+  static const IconData rocket = IconData(
+    0xeba5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `rocket_launch` material icon.
+  static const IconData rocket_launch = IconData(
+    0xeb9b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `roller_shades` material icon.
+  static const IconData roller_shades = IconData(
+    0xec12,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `roller_shades_closed` material icon.
+  static const IconData roller_shades_closed = IconData(
+    0xec11,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `roller_skating` material icon.
+  static const IconData roller_skating = IconData(
+    0xebcd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `roofing` material icon.
   static const IconData roofing = IconData(
     0xf201,
@@ -9390,6 +10979,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `rotate_90_degrees_cw` material icon.
+  static const IconData rotate_90_degrees_cw = IconData(
+    0xeaab,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `rotate_left` material icon.
   static const IconData rotate_left = IconData(
     0xe419,
@@ -9404,9 +11000,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `roundabout_left` material icon.
+  static const IconData roundabout_left = IconData(
+    0xeb99,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `roundabout_right` material icon.
+  static const IconData roundabout_right = IconData(
+    0xeba3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `rounded_corner` material icon.
   static const IconData rounded_corner = IconData(
     0xe920,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `route` material icon.
+  static const IconData route = IconData(
+    0xeacd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9481,6 +11098,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `safety_check` material icon.
+  static const IconData safety_check = IconData(
+    0xebef,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `safety_divider` material icon.
   static const IconData safety_divider = IconData(
     0xe1cc,
@@ -9509,6 +11133,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `satellite_alt` material icon.
+  static const IconData satellite_alt = IconData(
+    0xeb3a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `save` material icon.
   static const IconData save = IconData(
     0xe161,
@@ -9523,6 +11154,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `save_as` material icon.
+  static const IconData save_as = IconData(
+    0xeb60,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `saved_search` material icon.
   static const IconData saved_search = IconData(
     0xea11,
@@ -9533,6 +11171,13 @@ class Icons {
   /// The `savings` material icon.
   static const IconData savings = IconData(
     0xe2eb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `scale` material icon.
+  static const IconData scale = IconData(
+    0xeb5f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9593,6 +11238,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `scoreboard` material icon.
+  static const IconData scoreboard = IconData(
+    0xebd0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `screen_lock_landscape` material icon.
   static const IconData screen_lock_landscape = IconData(
     0xe1be,
@@ -9621,6 +11273,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `screen_rotation_alt` material icon.
+  static const IconData screen_rotation_alt = IconData(
+    0xebee,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `screen_search_desktop` material icon.
   static const IconData screen_search_desktop = IconData(
     0xef70,
@@ -9638,6 +11297,20 @@ class Icons {
   /// The `screenshot` material icon.
   static const IconData screenshot = IconData(
     0xf056,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `screenshot_monitor` material icon.
+  static const IconData screenshot_monitor = IconData(
+    0xec08,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `scuba_diving` material icon.
+  static const IconData scuba_diving = IconData(
+    0xebce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9754,6 +11427,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `send_time_extension` material icon.
+  static const IconData send_time_extension = IconData(
+    0xeadb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `send_to_mobile` material icon.
   static const IconData send_to_mobile = IconData(
     0xf05c,
@@ -9764,6 +11444,13 @@ class Icons {
   /// The `sensor_door` material icon.
   static const IconData sensor_door = IconData(
     0xf1b5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `sensor_occupied` material icon.
+  static const IconData sensor_occupied = IconData(
+    0xec10,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -9985,6 +11672,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `severe_cold` material icon.
+  static const IconData severe_cold = IconData(
+    0xebd3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `shape_line` material icon.
+  static const IconData shape_line = IconData(
+    0xf8d3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `share` material icon.
   static const IconData share = IconData(
     0xe80d,
@@ -10013,6 +11714,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `shield_moon` material icon.
+  static const IconData shield_moon = IconData(
+    0xeaa9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `shop` material icon.
   static const IconData shop = IconData(
     0xe8c9,
@@ -10034,6 +11742,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `shopify` material icon.
+  static const IconData shopify = IconData(
+    0xea9d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `shopping_bag` material icon.
   static const IconData shopping_bag = IconData(
     0xf1cc,
@@ -10051,6 +11766,13 @@ class Icons {
   /// The `shopping_cart` material icon.
   static const IconData shopping_cart = IconData(
     0xe8cc,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `shopping_cart_checkout` material icon.
+  static const IconData shopping_cart_checkout = IconData(
+    0xeb88,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10111,6 +11833,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `sign_language` material icon.
+  static const IconData sign_language = IconData(
+    0xebe5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `signal_cellular_0_bar` material icon.
   static const IconData signal_cellular_0_bar = IconData(
     0xf0a8,
@@ -10128,6 +11857,20 @@ class Icons {
   /// The `signal_cellular_alt` material icon.
   static const IconData signal_cellular_alt = IconData(
     0xe202,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `signal_cellular_alt_1_bar` material icon.
+  static const IconData signal_cellular_alt_1_bar = IconData(
+    0xebdf,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `signal_cellular_alt_2_bar` material icon.
+  static const IconData signal_cellular_alt_2_bar = IconData(
+    0xebe3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10234,6 +11977,13 @@ class Icons {
   /// The `signal_wifi_statusbar_null` material icon.
   static const IconData signal_wifi_statusbar_null = IconData(
     0xf067,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `signpost` material icon.
+  static const IconData signpost = IconData(
+    0xeb91,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10378,6 +12128,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `snapchat` material icon.
+  static const IconData snapchat = IconData(
+    0xea6e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `snippet_folder` material icon.
   static const IconData snippet_folder = IconData(
     0xf1c7,
@@ -10427,6 +12184,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `solar_power` material icon.
+  static const IconData solar_power = IconData(
+    0xec0f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `sort` material icon.
   static const IconData sort = IconData(
     0xe164,
@@ -10441,6 +12205,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `sos` material icon.
+  static const IconData sos = IconData(
+    0xebf7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `soup_kitchen` material icon.
+  static const IconData soup_kitchen = IconData(
+    0xe7d3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `source` material icon.
   static const IconData source = IconData(
     0xf1c4,
@@ -10451,6 +12229,13 @@ class Icons {
   /// The `south` material icon.
   static const IconData south = IconData(
     0xf1e3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `south_america` material icon.
+  static const IconData south_america = IconData(
+    0xe7e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10486,6 +12271,27 @@ class Icons {
   /// The `space_dashboard` material icon.
   static const IconData space_dashboard = IconData(
     0xe66b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `spatial_audio` material icon.
+  static const IconData spatial_audio = IconData(
+    0xebeb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `spatial_audio_off` material icon.
+  static const IconData spatial_audio_off = IconData(
+    0xebe8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `spatial_tracking` material icon.
+  static const IconData spatial_tracking = IconData(
+    0xebea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10546,6 +12352,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `spoke` material icon.
+  static const IconData spoke = IconData(
+    0xe9a7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `sports` material icon.
   static const IconData sports = IconData(
     0xea30,
@@ -10602,6 +12415,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `sports_gymnastics` material icon.
+  static const IconData sports_gymnastics = IconData(
+    0xebc4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `sports_handball` material icon.
   static const IconData sports_handball = IconData(
     0xea33,
@@ -10619,6 +12439,13 @@ class Icons {
   /// The `sports_kabaddi` material icon.
   static const IconData sports_kabaddi = IconData(
     0xea34,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `sports_martial_arts` material icon.
+  static const IconData sports_martial_arts = IconData(
+    0xeae9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10672,9 +12499,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `square` material icon.
+  static const IconData square = IconData(
+    0xeb36,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `square_foot` material icon.
   static const IconData square_foot = IconData(
     0xea49,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `ssid_chart` material icon.
+  static const IconData ssid_chart = IconData(
+    0xeb66,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10689,6 +12530,13 @@ class Icons {
   /// The `stacked_line_chart` material icon.
   static const IconData stacked_line_chart = IconData(
     0xf22b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `stadium` material icon.
+  static const IconData stadium = IconData(
+    0xeb90,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10752,6 +12600,13 @@ class Icons {
   /// The `stars` material icon.
   static const IconData stars = IconData(
     0xe8d0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `start` material icon.
+  static const IconData start = IconData(
+    0xe089,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -10843,6 +12698,13 @@ class Icons {
   /// The `storm` material icon.
   static const IconData storm = IconData(
     0xf070,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `straight` material icon.
+  static const IconData straight = IconData(
+    0xeb95,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11050,6 +12912,83 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `swipe_down` material icon.
+  static const IconData swipe_down = IconData(
+    0xeb53,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_down_alt` material icon.
+  static const IconData swipe_down_alt = IconData(
+    0xeb30,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_left` material icon.
+  static const IconData swipe_left = IconData(
+    0xeb59,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_left_alt` material icon.
+  static const IconData swipe_left_alt = IconData(
+    0xeb33,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_right` material icon.
+  static const IconData swipe_right = IconData(
+    0xeb52,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_right_alt` material icon.
+  static const IconData swipe_right_alt = IconData(
+    0xeb56,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_up` material icon.
+  static const IconData swipe_up = IconData(
+    0xeb2e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_up_alt` material icon.
+  static const IconData swipe_up_alt = IconData(
+    0xeb35,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `swipe_vertical` material icon.
+  static const IconData swipe_vertical = IconData(
+    0xeb51,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `switch_access_shortcut` material icon.
+  static const IconData switch_access_shortcut = IconData(
+    0xe7e1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `switch_access_shortcut_add` material icon.
+  static const IconData switch_access_shortcut_add = IconData(
+    0xe7e2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `switch_account` material icon.
   static const IconData switch_account = IconData(
     0xe9ed,
@@ -11085,6 +13024,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `synagogue` material icon.
+  static const IconData synagogue = IconData(
+    0xeab0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `sync` material icon.
   static const IconData sync = IconData(
     0xe627,
@@ -11102,6 +13048,13 @@ class Icons {
   /// The `sync_disabled` material icon.
   static const IconData sync_disabled = IconData(
     0xe628,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `sync_lock` material icon.
+  static const IconData sync_lock = IconData(
+    0xeaee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11169,9 +13122,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `table_bar` material icon.
+  static const IconData table_bar = IconData(
+    0xead2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `table_chart` material icon.
   static const IconData table_chart = IconData(
     0xe265,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `table_restaurant` material icon.
+  static const IconData table_restaurant = IconData(
+    0xeac6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11267,9 +13234,44 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `telegram` material icon.
+  static const IconData telegram = IconData(
+    0xea6b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `temple_buddhist` material icon.
+  static const IconData temple_buddhist = IconData(
+    0xeab3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `temple_hindu` material icon.
+  static const IconData temple_hindu = IconData(
+    0xeaaf,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `terminal` material icon.
+  static const IconData terminal = IconData(
+    0xeb8e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `terrain` material icon.
   static const IconData terrain = IconData(
     0xe564,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `text_decrease` material icon.
+  static const IconData text_decrease = IconData(
+    0xeadd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11284,6 +13286,13 @@ class Icons {
   /// The `text_format` material icon.
   static const IconData text_format = IconData(
     0xe165,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `text_increase` material icon.
+  static const IconData text_increase = IconData(
+    0xeae2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11428,6 +13437,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `thunderstorm` material icon.
+  static const IconData thunderstorm = IconData(
+    0xebdb,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `tiktok` material icon.
+  static const IconData tiktok = IconData(
+    0xea7e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `time_to_leave` material icon.
   static const IconData time_to_leave = IconData(
     0xe62c,
@@ -11498,6 +13521,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `tire_repair` material icon.
+  static const IconData tire_repair = IconData(
+    0xebc8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `title` material icon.
   static const IconData title = IconData(
     0xe264,
@@ -11533,6 +13563,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `token` material icon.
+  static const IconData token = IconData(
+    0xea25,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `toll` material icon.
   static const IconData toll = IconData(
     0xe8e0,
@@ -11550,6 +13587,13 @@ class Icons {
   /// The `topic` material icon.
   static const IconData topic = IconData(
     0xf1c8,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `tornado` material icon.
+  static const IconData tornado = IconData(
+    0xe199,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11599,6 +13643,13 @@ class Icons {
   /// The `tram` material icon.
   static const IconData tram = IconData(
     0xe571,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `transcribe` material icon.
+  static const IconData transcribe = IconData(
+    0xf8ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11680,9 +13731,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `troubleshoot` material icon.
+  static const IconData troubleshoot = IconData(
+    0xe1d2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `try` material icon.
   static const IconData try_ = IconData(
     0xf07c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `tsunami` material icon.
+  static const IconData tsunami = IconData(
+    0xebd8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11704,6 +13769,48 @@ class Icons {
   /// The `tungsten` material icon.
   static const IconData tungsten = IconData(
     0xf07d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_left` material icon.
+  static const IconData turn_left = IconData(
+    0xeba6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_right` material icon.
+  static const IconData turn_right = IconData(
+    0xebab,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_sharp_left` material icon.
+  static const IconData turn_sharp_left = IconData(
+    0xeba7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_sharp_right` material icon.
+  static const IconData turn_sharp_right = IconData(
+    0xebaa,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_slight_left` material icon.
+  static const IconData turn_slight_left = IconData(
+    0xeba4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `turn_slight_right` material icon.
+  static const IconData turn_slight_right = IconData(
+    0xeb9a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11743,6 +13850,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `type_specimen` material icon.
+  static const IconData type_specimen = IconData(
+    0xf8f0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `u_turn_left` material icon.
+  static const IconData u_turn_left = IconData(
+    0xeba1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `u_turn_right` material icon.
+  static const IconData u_turn_right = IconData(
+    0xeba2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `umbrella` material icon.
   static const IconData umbrella = IconData(
     0xf1ad,
@@ -11771,9 +13899,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `unfold_less_double` material icon.
+  static const IconData unfold_less_double = IconData(
+    0xf8cf,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `unfold_more` material icon.
   static const IconData unfold_more = IconData(
     0xe5d7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `unfold_more_double` material icon.
+  static const IconData unfold_more_double = IconData(
+    0xf8d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -11848,6 +13990,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `vaccines` material icon.
+  static const IconData vaccines = IconData(
+    0xe138,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `vape_free` material icon.
+  static const IconData vape_free = IconData(
+    0xebc6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `vaping_rooms` material icon.
+  static const IconData vaping_rooms = IconData(
+    0xebcf,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `verified` material icon.
   static const IconData verified = IconData(
     0xef76,
@@ -11890,6 +14053,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `vertical_shades` material icon.
+  static const IconData vertical_shades = IconData(
+    0xec0e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `vertical_shades_closed` material icon.
+  static const IconData vertical_shades_closed = IconData(
+    0xec0d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `vertical_split` material icon.
   static const IconData vertical_split = IconData(
     0xe949,
@@ -11925,9 +14102,23 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `video_chat` material icon.
+  static const IconData video_chat = IconData(
+    0xf8a0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `video_collection` material icon.
   static const IconData video_collection = IconData(
     0xe04a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `video_file` material icon.
+  static const IconData video_file = IconData(
+    0xeb87,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12030,9 +14221,30 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `view_comfy_alt` material icon.
+  static const IconData view_comfy_alt = IconData(
+    0xeb73,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `view_compact` material icon.
   static const IconData view_compact = IconData(
     0xe42b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `view_compact_alt` material icon.
+  static const IconData view_compact_alt = IconData(
+    0xeb74,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `view_cozy` material icon.
+  static const IconData view_cozy = IconData(
+    0xeb75,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12054,6 +14266,13 @@ class Icons {
   /// The `view_in_ar` material icon.
   static const IconData view_in_ar = IconData(
     0xe9fe,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `view_kanban` material icon.
+  static const IconData view_kanban = IconData(
+    0xeb7f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12089,6 +14308,13 @@ class Icons {
   /// The `view_stream` material icon.
   static const IconData view_stream = IconData(
     0xe8f2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `view_timeline` material icon.
+  static const IconData view_timeline = IconData(
+    0xeb85,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12149,6 +14375,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `volcano` material icon.
+  static const IconData volcano = IconData(
+    0xebda,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `volume_down` material icon.
   static const IconData volume_down = IconData(
     0xe04d,
@@ -12191,6 +14424,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `vpn_key_off` material icon.
+  static const IconData vpn_key_off = IconData(
+    0xeb7a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `vpn_lock` material icon.
   static const IconData vpn_lock = IconData(
     0xe62f,
@@ -12201,6 +14441,13 @@ class Icons {
   /// The `vrpano` material icon.
   static const IconData vrpano = IconData(
     0xf082,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wallet` material icon.
+  static const IconData wallet = IconData(
+    0xf8ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12229,6 +14476,13 @@ class Icons {
   /// The `wallpaper` material icon.
   static const IconData wallpaper = IconData(
     0xe75f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `warehouse` material icon.
+  static const IconData warehouse = IconData(
+    0xebb8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12264,6 +14518,13 @@ class Icons {
   /// The `watch_later` material icon.
   static const IconData watch_later = IconData(
     0xe924,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `watch_off` material icon.
+  static const IconData watch_off = IconData(
+    0xeae3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12387,6 +14648,27 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `web_stories` material icon.
+  static const IconData web_stories = IconData(
+    0xe595,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `webhook` material icon.
+  static const IconData webhook = IconData(
+    0xeb92,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wechat` material icon.
+  static const IconData wechat = IconData(
+    0xea81,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `weekend` material icon.
   static const IconData weekend = IconData(
     0xe16b,
@@ -12429,9 +14711,44 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `width_full` material icon.
+  static const IconData width_full = IconData(
+    0xf8f5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `width_normal` material icon.
+  static const IconData width_normal = IconData(
+    0xf8f6,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `width_wide` material icon.
+  static const IconData width_wide = IconData(
+    0xf8f7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `wifi` material icon.
   static const IconData wifi = IconData(
     0xe63e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wifi_1_bar` material icon.
+  static const IconData wifi_1_bar = IconData(
+    0xe4ca,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wifi_2_bar` material icon.
+  static const IconData wifi_2_bar = IconData(
+    0xe4d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12450,6 +14767,20 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `wifi_channel` material icon.
+  static const IconData wifi_channel = IconData(
+    0xeb6a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wifi_find` material icon.
+  static const IconData wifi_find = IconData(
+    0xeb31,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `wifi_lock` material icon.
   static const IconData wifi_lock = IconData(
     0xe1e1,
@@ -12460,6 +14791,13 @@ class Icons {
   /// The `wifi_off` material icon.
   static const IconData wifi_off = IconData(
     0xe648,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wifi_password` material icon.
+  static const IconData wifi_password = IconData(
+    0xeb6b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12478,6 +14816,13 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `wifi_tethering_error` material icon.
+  static const IconData wifi_tethering_error = IconData(
+    0xf086,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `wifi_tethering_error_rounded` material icon.
   static const IconData wifi_tethering_error_rounded = IconData(
     0xf086,
@@ -12488,6 +14833,13 @@ class Icons {
   /// The `wifi_tethering_off` material icon.
   static const IconData wifi_tethering_off = IconData(
     0xf087,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wind_power` material icon.
+  static const IconData wind_power = IconData(
+    0xec0c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12506,9 +14858,44 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
+  /// The `woman` material icon.
+  static const IconData woman = IconData(
+    0xe13e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `woman_2` material icon.
+  static const IconData woman_2 = IconData(
+    0xf8e7,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `woo_commerce` material icon.
+  static const IconData woo_commerce = IconData(
+    0xea6d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `wordpress` material icon.
+  static const IconData wordpress = IconData(
+    0xea9f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `work` material icon.
   static const IconData work = IconData(
     0xe8f9,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `work_history` material icon.
+  static const IconData work_history = IconData(
+    0xec09,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12523,6 +14910,13 @@ class Icons {
   /// The `work_outline` material icon.
   static const IconData work_outline = IconData(
     0xe943,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `workspace_premium` material icon.
+  static const IconData workspace_premium = IconData(
+    0xe7af,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
@@ -12572,6 +14966,13 @@ class Icons {
   /// The `zoom_in` material icon.
   static const IconData zoom_in = IconData(
     0xe8ff,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `zoom_in_map` material icon.
+  static const IconData zoom_in_map = IconData(
+    0xeb2d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );

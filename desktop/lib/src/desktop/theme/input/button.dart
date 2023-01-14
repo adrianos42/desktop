@@ -105,7 +105,7 @@ class _ButtonThemeData {
   /// ```dart 
   /// textTheme.textLow
   /// ```
-  Color get color => textTheme.textLow;
+  Color get color => colorScheme.primary[kHighlightColorIndex];
 
   /// The color when the button has focus.
   ///
@@ -132,7 +132,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get highlightColor => colorScheme.primary[kHighlightColorIndex];
+  Color get highlightColor => textTheme.textLow;
 
   /// The background color when the button is filled.
   ///
