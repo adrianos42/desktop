@@ -103,7 +103,9 @@ class ScrollbarThemeData {
 
   @override
   String toString() {
-    return '''disabledColor:;color:;hoverColor:;highlightColor:;inhoverColor:;foreground:;trackColor:;''';
+    return r'''
+disabledColor:;;color:;;hoverColor:;;highlightColor:;;inhoverColor:;;foreground:;;trackColor:;;
+''';
   }
 
   @override

@@ -601,7 +601,7 @@ class _TextFieldState extends State<TextField>
                 bucket: bucket,
                 child: Container(
                   decoration: decoration,
-                  height: isMultiline ? _kDefaultHeight : null,
+                  height: !isMultiline ? _kDefaultHeight : null,
                   alignment: isMultiline ? Alignment.topLeft : Alignment.center,
                   child: Padding(
                     padding: widget.padding ??

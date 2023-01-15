@@ -76,7 +76,9 @@ class HyperlinkThemeData {
 
   @override
   String toString() {
-    return '''color:;hoverColor:;textStyle:;highlightColor:;''';
+    return r'''
+color:;;hoverColor:;;textStyle:;;highlightColor:;;
+''';
   }
 
   @override

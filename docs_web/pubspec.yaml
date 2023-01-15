@@ -14,10 +14,13 @@ dependencies:
   dart_style: ^2.2.4
   url_launcher: ^6.0.3
   intl: ^0.17.0
+  markdown_docs_flutter: ^1.0.0
 
 dependency_overrides:
   desktop:
     path: ../desktop
+  markdown_docs_flutter:
+    path: ../../markdown_docs_flutter/markdown_docs_flutter
 
 dev_dependencies:
   flutter_lints: ^2.0.1

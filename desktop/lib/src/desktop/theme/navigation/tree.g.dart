@@ -100,7 +100,33 @@ class TreeThemeData {
 
   @override
   String toString() {
-    return '''textStyle: The style for the text. The color is ignored. Defaults to: ```dart textTheme.body2.copyWith(fontSize: kDefaultFontSize) ```;color: The color of the tree item. Defaults to: ```dart textTheme.textLow ```;hoverColor: The hover color of the tree item. Defaults to: ```dart textTheme.textHigh ```;highlightColor: The highlight color of the tree item. Defaults to: ```dart colorScheme.primary[60] ```;''';
+    return r'''
+textStyle: The style for the text. The color is ignored.
+
+ Defaults to:
+
+ ```dart
+ textTheme.body2.copyWith(fontSize: kDefaultFontSize)
+ ```;;color: The color of the tree item.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textLow
+ ```;;hoverColor: The hover color of the tree item.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textHigh
+ ```;;highlightColor: The highlight color of the tree item.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.primary[60]
+ ```;;
+''';
   }
 
   @override

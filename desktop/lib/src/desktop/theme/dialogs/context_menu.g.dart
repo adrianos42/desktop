@@ -267,7 +267,99 @@ class ContextMenuThemeData {
 
   @override
   String toString() {
-    return '''iconThemeData: The icon theme. Defaults to: ```dart IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh) ```;menuWidthStep: The menu step width. Defaults to: ```dart 2.0 * 120.0 ```;itemHeight: The item height. Defaults to: ```dart 32.0 ```;minMenuWidth: The minimum width of the menu. Defaults to: ```dart 2.0 * 120.0 ```;maxMenuWidth: The maximum width of the menu. Defaults to: ```dart 6.0 * 120.0 ```;menuHorizontalPadding: The horizontal padding for the menu item. Defaults to: ```dart 16.0 ```;textStyle: The [TextStyle] of the item. Defaults to: ```dart textTheme.body1.copyWith(fontSize: kDefaultFontSize) ```;selectedColor: The color of an item when selected. Defaults to: ```dart colorScheme.primary[30] ```;selectedHighlightColor: The color of an item when selected and highlighted. Defaults to: ```dart highlightColor ```;selectedHoverColor: The color of an item when selected and hovered. Defaults to: ```dart hoverColor ```;selectedForeground: The text foreground when selected and hovered. Defaults to: ```dart textTheme.textHigh ```;hoverColor: The color of an item when hovering over it. Defaults to: ```dart colorScheme.shade[30] ```;highlightColor: The color of an item when highlighted color. Defaults to: ```dart colorScheme.background[20] ```;background:  The background color of the menu. Defaults to: ```dart colorScheme.background[8] ```;color: The color of the menu border. Defaults to: ```dart textTheme.textLow ```;''';
+    return r'''
+iconThemeData: The icon theme.
+
+ Defaults to:
+
+ ```dart
+ IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh)
+ ```;;menuWidthStep: The menu step width.
+
+ Defaults to:
+
+ ```dart
+ 2.0 * 120.0
+ ```;;itemHeight: The item height.
+
+ Defaults to:
+
+ ```dart
+ 32.0
+ ```;;minMenuWidth: The minimum width of the menu.
+
+ Defaults to:
+
+ ```dart
+ 2.0 * 120.0
+ ```;;maxMenuWidth: The maximum width of the menu.
+
+ Defaults to:
+
+ ```dart
+ 6.0 * 120.0
+ ```;;menuHorizontalPadding: The horizontal padding for the menu item.
+
+ Defaults to:
+
+ ```dart
+ 16.0
+ ```;;textStyle: The [TextStyle] of the item.
+
+ Defaults to:
+
+ ```dart
+ textTheme.body1.copyWith(fontSize: kDefaultFontSize)
+ ```;;selectedColor: The color of an item when selected.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.primary[30]
+ ```;;selectedHighlightColor: The color of an item when selected and highlighted.
+
+ Defaults to:
+
+ ```dart
+ highlightColor
+ ```;;selectedHoverColor: The color of an item when selected and hovered.
+
+ Defaults to:
+
+ ```dart
+ hoverColor
+ ```;;selectedForeground: The text foreground when selected and hovered.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textHigh
+ ```;;hoverColor: The color of an item when hovering over it.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.shade[30]
+ ```;;highlightColor: The color of an item when highlighted color.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[20]
+ ```;;background:  The background color of the menu.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[8]
+ ```;;color: The color of the menu border.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textLow
+ ```;;
+''';
   }
 
   @override

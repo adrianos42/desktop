@@ -103,7 +103,7 @@ class _ButtonThemeData {
   /// Defaults to:
   /// 
   /// ```dart 
-  /// textTheme.textLow
+  /// colorScheme.primary[kHighlightColorIndex]
   /// ```
   Color get color => colorScheme.primary[kHighlightColorIndex];
 
@@ -130,7 +130,7 @@ class _ButtonThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// colorScheme.primary[60]
+  /// textTheme.textLow
   /// ```
   Color get highlightColor => textTheme.textLow;
 

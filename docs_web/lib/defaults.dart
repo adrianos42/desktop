@@ -2,6 +2,7 @@ library defaults;
 
 import 'package:desktop/desktop.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:markdown_docs_flutter/markdown_docs_flutter.dart';
 import 'dart:math' as math;
 
 ///
@@ -225,10 +226,10 @@ class Defaults extends StatefulWidget {
 
   ///
   final List<ItemTitle> items;
-  
+
   ///
   final String header;
-  
+
   ///
   final List<StyleItem>? styleItems;
 
@@ -307,15 +308,16 @@ class Defaults extends StatefulWidget {
   }
 
   ///
-  static List<StyleItem> createStyle(String value) => value
-      .split(';')
-      .map(
-        (e) => StyleItem(
-          title: e.split(':').first,
-          value: e.split(':').last,
-        ),
-      )
-      .toList();
+  static List<StyleItem> createStyle(String value) =>
+      value.split(';;').where((e) => e.indexOf(':') > 0).map(
+        (e) {
+          final index = e.indexOf(':');
+          return StyleItem(
+            title: e.substring(0, index).trim(),
+            value: e.substring(index + 1).trim(),
+          );
+        },
+      ).toList();
 
   ///
   static Widget createStylePage(
@@ -351,7 +353,7 @@ class Defaults extends StatefulWidget {
         rows: styleItems
             .map(
               (e) => ListTableRow(
-                  itemExtent: 60.0,
+                  itemExtent: null,
                   builder: (context, col) {
                     final Widget title;
 
@@ -364,19 +366,7 @@ class Defaults extends StatefulWidget {
                         ),
                       );
                     } else {
-                      final TextSpan textSpan =
-                          ThemeTextController(text: e.value).buildTextSpan(
-                        context: context,
-                        withComposing: false,
-                        style: textTheme.body1.copyWith(
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      );
-
-                      title = SelectableText.rich(
-                        textSpan,
-                        minLines: 1,
-                      );
+                      title = Markdown(text: e.value);
                     }
 
                     return Container(

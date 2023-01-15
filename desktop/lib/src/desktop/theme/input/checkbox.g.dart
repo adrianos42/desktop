@@ -103,7 +103,9 @@ class CheckboxThemeData {
 
   @override
   String toString() {
-    return '''disabledColor:;activeColor:;activeHoverColor:;inactiveColor:;inactiveHoverColor:;foreground:;containerSize:;''';
+    return r'''
+disabledColor:;;activeColor:;;activeHoverColor:;;inactiveColor:;;inactiveHoverColor:;;foreground:;;containerSize:;;
+''';
   }
 
   @override

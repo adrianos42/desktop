@@ -160,7 +160,57 @@ class TabThemeData {
 
   @override
   String toString() {
-    return '''textStyle: The style for the text. The color is ignored. Defaults to: ```dart textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis) ```;iconThemeData: The theme for the icon. The color is ignored. Defaults to: ```dart IconThemeData(size: kDefaultIconSize) ```;itemSpacing: The space between items inside the tab bar, if they are simple text or an icon. Defaults to: ```dart 8.0 ```;height: The height of the tab bar. Defaults to: ```dart 36.0 ```;color: The color of the tab item. Defaults to: ```dart textTheme.textLow ```;hoverColor: The hover color of the tab item. Defaults to: ```dart colorScheme.shade[100] ```;backgroundColor: The background of the tab bar. Defaults to: ```dart colorScheme.background[0] ```;highlightColor: The highlight color of the tab item. Defaults to: ```dart colorScheme.primary[60] ```;''';
+    return r'''
+textStyle: The style for the text. The color is ignored.
+
+ Defaults to:
+
+ ```dart
+ textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+ ```;;iconThemeData: The theme for the icon. The color is ignored.
+
+ Defaults to:
+
+ ```dart
+ IconThemeData(size: kDefaultIconSize)
+ ```;;itemSpacing: The space between items inside the tab bar, if they are simple text or an icon.
+
+ Defaults to:
+
+ ```dart
+ 8.0
+ ```;;height: The height of the tab bar.
+
+ Defaults to:
+
+ ```dart
+ 36.0
+ ```;;color: The color of the tab item.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textLow
+ ```;;hoverColor: The hover color of the tab item.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.shade[100]
+ ```;;backgroundColor: The background of the tab bar.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[0]
+ ```;;highlightColor: The highlight color of the tab item.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.primary[60]
+ ```;;
+''';
   }
 
   @override

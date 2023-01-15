@@ -94,7 +94,9 @@ class RadioThemeData {
 
   @override
   String toString() {
-    return '''disabledColor:;activeColor:;activeHoverColor:;inactiveColor:;inactiveHoverColor:;foreground:;''';
+    return r'''
+disabledColor:;;activeColor:;;activeHoverColor:;;inactiveColor:;;inactiveHoverColor:;;foreground:;;
+''';
   }
 
   @override

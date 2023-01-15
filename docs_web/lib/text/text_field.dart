@@ -34,6 +34,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
               width: 200.0,
               child: TextField(
                 focusNode: _focusNode,
+                maxLines: 1,
               ),
             ),
           ),
@@ -47,6 +48,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
             child: SizedBox(
               width: 300.0,
               child: TextField(
+                minLines: 1,
                 maxLines: 3,
                 focusNode: _multiFocusNode,
               ),

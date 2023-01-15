@@ -158,7 +158,9 @@ class ListTableThemeData {
 
   @override
   String toString() {
-    return '''iconThemeData:;itemHeight:;textStyle:;selectedColor:;selectedHighlightColor:;selectedHoverColor:;hoverColor:;highlightColor:;background:;borderColor:;borderHoverColor:;borderHighlightColor:;borderIndicatorColor:;''';
+    return r'''
+iconThemeData:;;itemHeight:;;textStyle:;;selectedColor:;;selectedHighlightColor:;;selectedHoverColor:;;hoverColor:;;highlightColor:;;background:;;borderColor:;;borderHoverColor:;;borderHighlightColor:;;borderIndicatorColor:;;
+''';
   }
 
   @override

@@ -85,7 +85,9 @@ class SliderThemeData {
 
   @override
   String toString() {
-    return '''disabledColor:;activeColor:;activeHoverColor:;trackColor:;hightlightColor:;''';
+    return r'''
+disabledColor:;;activeColor:;;activeHoverColor:;;trackColor:;;hightlightColor:;;
+''';
   }
 
   @override

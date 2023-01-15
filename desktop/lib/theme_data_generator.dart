@@ -136,7 +136,9 @@ class ThemeDataGenerator extends Generator {
           ..annotations.add(refer('override'))
           ..body = Code(
             '''
-              return \'\'\'${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.replaceAll('///', '').replaceAll('\n', '')};')}\'\'\';
+              return r\'\'\'
+${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.replaceAll(RegExp(r'///'), '')};;')}
+\'\'\';
           ''',
           )),
       );

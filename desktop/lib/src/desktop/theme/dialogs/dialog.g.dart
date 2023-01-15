@@ -174,7 +174,62 @@ class DialogThemeData {
 
   @override
   String toString() {
-    return '''constraints: The [BoxConstraints] of the [Dialog].  Defaults to:  ```dart BoxConstraints(minWidth: 640.0, minHeight: 120.0) ```;menuPadding: The [EdgeInsets] padding of the menu.  Defaults to:  ```dart EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0) ```;titlePadding: The title [EdgeInsets] pagging of the title.  Defaults to:  ```dart EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0) ```;bodyPadding: The body [EdgeInsets] padding of the body. Defaults to:  ```dart EdgeInsets.all(16.0) ```;background: The background [Color].  Defaults to:  ```dart colorScheme.background[0] ```;barrierColor: The barrier [Color].  Defaults to:  ```dart colorScheme.background[20].withOpacity(0.8) ```;titleTextStyle: The [TextStyle] for the title.  Defaults to:  ```dart textTheme.title ```;bodyTextAlign: The [TextAlign] of the body text.  Defaults to:  ```dart TextAlign.left ```;imageFilter: The [ImageFilter] used for the dialog`s barrier.  Defaults to:  ```dart ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0) ```;''';
+    return r'''
+constraints: The [BoxConstraints] of the [Dialog].
+ 
+ Defaults to:
+ 
+ ```dart
+ BoxConstraints(minWidth: 640.0, minHeight: 120.0)
+ ```;;menuPadding: The [EdgeInsets] padding of the menu.
+ 
+ Defaults to:
+ 
+ ```dart
+ EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0)
+ ```;;titlePadding: The title [EdgeInsets] pagging of the title.
+ 
+ Defaults to:
+ 
+ ```dart
+ EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0)
+ ```;;bodyPadding: The body [EdgeInsets] padding of the body.
+ Defaults to:
+ 
+ ```dart
+ EdgeInsets.all(16.0)
+ ```;;background: The background [Color].
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.background[0]
+ ```;;barrierColor: The barrier [Color].
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.background[20].withOpacity(0.8)
+ ```;;titleTextStyle: The [TextStyle] for the title.
+ 
+ Defaults to:
+ 
+ ```dart
+ textTheme.title
+ ```;;bodyTextAlign: The [TextAlign] of the body text.
+ 
+ Defaults to:
+ 
+ ```dart
+ TextAlign.left
+ ```;;imageFilter: The [ImageFilter] used for the dialog`s barrier.
+ 
+ Defaults to:
+ 
+ ```dart
+ ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0)
+ ```;;
+''';
   }
 
   @override

@@ -207,7 +207,75 @@ class DropDownThemeData {
 
   @override
   String toString() {
-    return '''iconThemeData: The icon theme of the button.  Defaults to:  ```dart  ```;textStyle: The style of the button.  Defaults to:  ```dart  ```;disabledColor: The color of the border when disabled.  Defaults to:  ```dart  ```;color: The color of the border.  Defaults to:  ```dart  ```;focusColor: The color of the border when focused.  Defaults to:  ```dart  ```;hoverColor: The color of the border when hovered.  Defaults to:  ```dart  ```;waitingColor: The color of the border when the menu is open.  Defaults to:  ```dart  ```;backgroundColor: The background color of the button.  Defaults to:  ```dart  ```;hoverBackgroundColor: The background color when the button is being hovered.  Defaults to:  ```dart  ```;waitingBackgroundColor: The background color when the menu is open.  Defaults to:  ```dart  ```;disabledBackgroundColor: The background color when the button is disabled.  Defaults to:  ```dart  ```;''';
+    return r'''
+iconThemeData: The icon theme of the button.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;textStyle: The style of the button.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;disabledColor: The color of the border when disabled.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;color: The color of the border.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;focusColor: The color of the border when focused.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;hoverColor: The color of the border when hovered.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;waitingColor: The color of the border when the menu is open.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;backgroundColor: The background color of the button.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;hoverBackgroundColor: The background color when the button is being hovered.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;waitingBackgroundColor: The background color when the menu is open.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;disabledBackgroundColor: The background color when the button is disabled.
+ 
+ Defaults to:
+ 
+ ```dart
+ 
+ ```;;
+''';
   }
 
   @override

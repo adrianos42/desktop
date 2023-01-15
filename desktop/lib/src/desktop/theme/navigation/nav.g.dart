@@ -136,7 +136,51 @@ class NavThemeData {
 
   @override
   String toString() {
-    return '''iconThemeData: The [IconThemeData] for the nav items. Defaults to: ```dart IconThemeData(size: width - 8.0 * 2.0) ```;itemsSpacing: The space between items inside the navbar. In this order: - The back button does not have it. - If it has a leading menu, as a top or left padding. - The navigation items have at both side. - If it has a trailing menu, as a bottom or right padding. Defaults to: ```dart 8.0 ```;width: The width of the nab bar when the axis is [Axis.horizontal]. Defaults to: ```dart 36.0 ```;height: The height of the nav when the axis is [Axis.vertical]. Defaults to: ```dart 40.0 ```;indicatorWidth: The width of the indicator. Defaults to: ```dart 2.0 ```;animationDuration: The animation [Duration] for the nav items. Defaults to: ```dart Duration(milliseconds: 200) ```;''';
+    return r'''
+iconThemeData: The [IconThemeData] for the nav items.
+
+ Defaults to:
+
+ ```dart
+ IconThemeData(size: width - 8.0 * 2.0)
+ ```;;itemsSpacing: The space between items inside the navbar.
+
+ In this order:
+ - The back button does not have it.
+ - If it has a leading menu, as a top or left padding.
+ - The navigation items have at both side.
+ - If it has a trailing menu, as a bottom or right padding.
+
+ Defaults to:
+
+ ```dart
+ 8.0
+ ```;;width: The width of the nab bar when the axis is [Axis.horizontal].
+
+ Defaults to:
+
+ ```dart
+ 36.0
+ ```;;height: The height of the nav when the axis is [Axis.vertical].
+
+ Defaults to:
+
+ ```dart
+ 40.0
+ ```;;indicatorWidth: The width of the indicator.
+
+ Defaults to:
+
+ ```dart
+ 2.0
+ ```;;animationDuration: The animation [Duration] for the nav items.
+
+ Defaults to:
+
+ ```dart
+ Duration(milliseconds: 200)
+ ```;;
+''';
   }
 
   @override

@@ -382,7 +382,7 @@ class DocApp extends StatelessWidget {
               titleBuilder: (context) => const Text('Radio'),
               builder: (context) => ButtonRadioPage(),
             ),
-            if (!kReleaseMode)
+            if (!kReleaseMode && false)
               TreeNode.child(
                 titleBuilder: (context) => const Text('Select'),
                 builder: (context) => SelectInputPage(),
