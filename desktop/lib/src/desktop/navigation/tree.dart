@@ -220,7 +220,7 @@ class _TreeState extends State<Tree>
   void setPage(String name) {
     setState(() => _current = name);
   }
-  
+
   void _handleHoverMoved() {
     if (!hovered && !_globalPointerDown) {
       _indicatorSizecontroller.animateTo(1.0);
@@ -610,24 +610,22 @@ class _TreeColumnState extends State<_TreeColumn> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ButtonTheme.merge(
-            data: ButtonThemeData(
+          Button(
+            bodyPadding: EdgeInsets.zero,
+            themeData: ButtonThemeData(
               color: treeTheme.color,
               hoverColor: treeTheme.hoverColor,
               highlightColor: treeTheme.highlightColor,
             ),
-            child: Button(
-              bodyPadding: EdgeInsets.zero,
-              padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
-              body: _TreeNodeCollapse(
-                _collapsed,
-                child: widget.node.titleBuilder(context),
-              ),
-              onPressed: () {
-                widget.updatePage();
-                setState(() => _collapsed = !_collapsed);
-              },
+            padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
+            body: _TreeNodeCollapse(
+              _collapsed,
+              child: widget.node.titleBuilder(context),
             ),
+            onPressed: () {
+              widget.updatePage();
+              setState(() => _collapsed = !_collapsed);
+            },
           ),
           Offstage(
             child: chidrenWidget,
@@ -641,22 +639,18 @@ class _TreeColumnState extends State<_TreeColumn> {
 
       return Align(
         alignment: Alignment.centerLeft,
-        child: ButtonTheme.merge(
-          data: ButtonThemeData(
-            color: treeTheme.color,
-            highlightColor: highlightColor,
-            //hoverColor: hoverColor,
-            //focusColor: hoverColor,
+        child: Button(
+          themeData: ButtonThemeData(
+            color: highlightColor,
+            highlightColor: treeTheme.color,
           ),
-          child: Button(
-            padding: EdgeInsets.zero,
-            bodyPadding: EdgeInsets.zero,
-            body: widget.node.titleBuilder(context),
-            active: active,
-            onPressed: () {
-              Tree._of(context)!.setPage(name);
-            },
-          ),
+          padding: EdgeInsets.zero,
+          bodyPadding: EdgeInsets.zero,
+          body: widget.node.titleBuilder(context),
+          active: active,
+          onPressed: () {
+            Tree._of(context)!.setPage(name);
+          },
         ),
       );
     }

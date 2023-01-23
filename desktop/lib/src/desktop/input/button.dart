@@ -305,10 +305,12 @@ class _ButtonState extends State<Button>
       Color? backgroundColor;
 
       if (!widget.filled) {
-        final Color pressedForeground = buttonThemeData.highlightColor!;
-
-        final Color enabledForeground = buttonThemeData.color!;
-
+        final Color pressedForeground = widget.active == null
+            ? buttonThemeData.highlightColor!
+            : buttonThemeData.color!;
+        final Color enabledForeground = widget.active == null
+            ? buttonThemeData.color!
+            : buttonThemeData.highlightColor!;
         final Color hoveredForeground = buttonThemeData.hoverColor!;
 
         foregroundColor = enabled

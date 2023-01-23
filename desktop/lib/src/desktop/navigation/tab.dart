@@ -260,23 +260,21 @@ class _TabGroupState extends State<_TabGroup> {
         List<Widget>.generate(widget.items.length, (index) {
       final active = widget.index == index;
 
-      return ButtonTheme.merge(
-        data: ButtonThemeData(
-          color: tabThemeData.color!,
-          highlightColor: tabThemeData.highlightColor!,
+      return Button(
+        themeData: ButtonThemeData(
+          color: tabThemeData.highlightColor!,
+          highlightColor: tabThemeData.color!,
           hoverColor: tabThemeData.hoverColor!,
         ),
-        child: Button(
-          onPressed: () => widget.changeIndex(index),
-          active: active,
-          body: Builder(
-            builder: (context) => widget.items[index](context, index),
-          ),
-          bodyPadding: EdgeInsets.zero,
-          leadingPadding: EdgeInsets.zero,
-          trailingPadding: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
+        onPressed: () => widget.changeIndex(index),
+        active: active,
+        body: Builder(
+          builder: (context) => widget.items[index](context, index),
         ),
+        bodyPadding: EdgeInsets.zero,
+        leadingPadding: EdgeInsets.zero,
+        trailingPadding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
       );
     });
 

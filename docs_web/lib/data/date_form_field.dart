@@ -15,7 +15,7 @@ class _DateFormFieldPageState extends State<DateFormFieldPage> {
   final _focusNode = FocusNode();
   DateTime _selectedDate = DateTime.now();
 
-  AutovalidateMode _autovalidateMode = AutovalidateMode.always;
+  AutovalidateMode _autovalidateMode = AutovalidateMode.onUserInteraction;
 
   void _validate() {
     final textTheme = Theme.of(context).textTheme;
