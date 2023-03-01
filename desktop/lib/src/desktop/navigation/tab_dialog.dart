@@ -8,8 +8,8 @@ class TabDialog extends StatefulWidget {
     required this.child,
     this.height,
     this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
 

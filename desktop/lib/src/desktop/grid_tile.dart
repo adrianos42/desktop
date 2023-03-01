@@ -2,11 +2,11 @@ import 'package:flutter/widgets.dart';
 
 class GridTile extends StatelessWidget {
   const GridTile({
-    Key? key,
+    super.key,
     this.header,
     this.footer,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget? header;
 

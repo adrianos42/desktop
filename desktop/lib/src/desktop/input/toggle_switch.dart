@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,12 +19,12 @@ const double _kStrokeWidth = 2.0;
 
 class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-  }) : super(key: key);
+  });
 
   final bool value;
 
@@ -189,7 +188,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
 class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   const _ToggleSwitchRenderObjectWidget({
-    Key? key,
+    super.key,
     this.onChanged,
     required this.value,
     required this.state,
@@ -200,7 +199,7 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hoverColor,
     required this.hovering,
     required this.additionalConstraints,
-  }) : super(key: key);
+  });
 
   final bool value;
   final _ToggleSwitchState state;
@@ -255,7 +254,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     required Color disabledColor,
     required Color hoverColor,
     required bool hovering,
-    required BoxConstraints additionalConstraints,
+    required super.additionalConstraints,
   })  : _state = state,
         _value = value,
         _activeColor = activeColor,
@@ -264,8 +263,7 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
         _inactiveColor = inactiveColor,
         _hoverColor = hoverColor,
         _hovering = hovering,
-        _onChanged = onChanged,
-        super(additionalConstraints: additionalConstraints);
+        _onChanged = onChanged;
 
   final _ToggleSwitchState _state;
 

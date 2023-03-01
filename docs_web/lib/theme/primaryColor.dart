@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class PrimaryColorPage extends StatefulWidget {
-  PrimaryColorPage({Key? key}) : super(key: key);
+  PrimaryColorPage({super.key});
 
   @override
   _PrimaryColorPageState createState() => _PrimaryColorPageState();
@@ -10,7 +10,7 @@ class PrimaryColorPage extends StatefulWidget {
 
 Widget _itemPrimary(
   BuildContext context,
-  PrimaryColor color,
+  PrimaryColors color,
   Brightness brightness,
 ) {
   return Padding(
@@ -28,11 +28,16 @@ Widget _itemPrimary(
                 ),
           ),
         ),
-        _createItemForColor(context, color.withBrightness(brightness)[30], 30),
-        _createItemForColor(context, color.withBrightness(brightness)[40], 40),
-        _createItemForColor(context, color.withBrightness(brightness)[50], 50),
-        _createItemForColor(context, color.withBrightness(brightness)[60], 60),
-        _createItemForColor(context, color.withBrightness(brightness)[70], 70),
+        _createItemForColor(
+            context, color.primaryColor.withBrightness(brightness)[30], 30),
+        _createItemForColor(
+            context, color.primaryColor.withBrightness(brightness)[40], 40),
+        _createItemForColor(
+            context, color.primaryColor.withBrightness(brightness)[50], 50),
+        _createItemForColor(
+            context, color.primaryColor.withBrightness(brightness)[60], 60),
+        _createItemForColor(
+            context, color.primaryColor.withBrightness(brightness)[70], 70),
       ],
     ),
   );
@@ -103,34 +108,34 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
                   child: Column(
                     children: [
                       _itemPrimary(
-                          context, PrimaryColor.coral, Brightness.dark),
+                          context, PrimaryColors.coral, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.sandyBrown, Brightness.dark),
+                          context, PrimaryColors.sandyBrown, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.orange, Brightness.dark),
+                          context, PrimaryColors.orange, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.goldenrod, Brightness.dark),
+                          context, PrimaryColors.goldenrod, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.springGreen, Brightness.dark),
+                          context, PrimaryColors.springGreen, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.turquoise, Brightness.dark),
+                          context, PrimaryColors.turquoise, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.deepSkyBlue, Brightness.dark),
+                          context, PrimaryColors.deepSkyBlue, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.dodgerBlue, Brightness.dark),
-                      _itemPrimary(context, PrimaryColor.cornflowerBlue,
+                          context, PrimaryColors.dodgerBlue, Brightness.dark),
+                      _itemPrimary(context, PrimaryColors.cornflowerBlue,
                           Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.royalBlue, Brightness.dark),
+                          context, PrimaryColors.royalBlue, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.slateBlue, Brightness.dark),
+                          context, PrimaryColors.slateBlue, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.purple, Brightness.dark),
+                          context, PrimaryColors.purple, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.violet, Brightness.dark),
+                          context, PrimaryColors.violet, Brightness.dark),
                       _itemPrimary(
-                          context, PrimaryColor.hotPink, Brightness.dark),
-                      _itemPrimary(context, PrimaryColor.red, Brightness.dark),
+                          context, PrimaryColors.hotPink, Brightness.dark),
+                      _itemPrimary(context, PrimaryColors.red, Brightness.dark),
                     ],
                   ),
                 ),
@@ -141,34 +146,35 @@ class _PrimaryColorPageState extends State<PrimaryColorPage> {
                   child: Column(
                     children: [
                       _itemPrimary(
-                          context, PrimaryColor.coral, Brightness.light),
+                          context, PrimaryColors.coral, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.sandyBrown, Brightness.light),
+                          context, PrimaryColors.sandyBrown, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.orange, Brightness.light),
+                          context, PrimaryColors.orange, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.goldenrod, Brightness.light),
+                          context, PrimaryColors.goldenrod, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.springGreen, Brightness.light),
+                          context, PrimaryColors.springGreen, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.turquoise, Brightness.light),
+                          context, PrimaryColors.turquoise, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.deepSkyBlue, Brightness.light),
+                          context, PrimaryColors.deepSkyBlue, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.dodgerBlue, Brightness.light),
-                      _itemPrimary(context, PrimaryColor.cornflowerBlue,
+                          context, PrimaryColors.dodgerBlue, Brightness.light),
+                      _itemPrimary(context, PrimaryColors.cornflowerBlue,
                           Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.royalBlue, Brightness.light),
+                          context, PrimaryColors.royalBlue, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.slateBlue, Brightness.light),
+                          context, PrimaryColors.slateBlue, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.purple, Brightness.light),
+                          context, PrimaryColors.purple, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.violet, Brightness.light),
+                          context, PrimaryColors.violet, Brightness.light),
                       _itemPrimary(
-                          context, PrimaryColor.hotPink, Brightness.light),
-                      _itemPrimary(context, PrimaryColor.red, Brightness.light),
+                          context, PrimaryColors.hotPink, Brightness.light),
+                      _itemPrimary(
+                          context, PrimaryColors.red, Brightness.light),
                     ],
                   ),
                 ),

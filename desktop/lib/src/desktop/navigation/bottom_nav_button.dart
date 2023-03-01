@@ -10,13 +10,13 @@ import 'nav.dart';
 class NavBottomGroup extends StatefulWidget {
   ///
   const NavBottomGroup({
-    Key? key,
+    super.key,
     required this.navItems,
     required this.enabled,
     required this.index,
     required this.onChanged,
     required this.navWidgets,
-  }) : super(key: key);
+  });
 
   final int index;
 
@@ -150,10 +150,10 @@ class _NavBottomGroupState extends State<NavBottomGroup>
 
 class _NavButtonItem extends SingleChildRenderObjectWidget {
   const _NavButtonItem({
-    Key? key,
+    super.key,
     required this.onLayout,
     required this.button,
-  }) : super(key: key, child: button);
+  }) : super(child: button);
 
   final ValueChanged<Size> onLayout;
   final Widget button;
@@ -171,7 +171,7 @@ class _NavButtonItem extends SingleChildRenderObjectWidget {
 }
 
 class _NavButtonRenderItem extends RenderProxyBox {
-  _NavButtonRenderItem(this.onLayout, [RenderBox? child]) : super(child);
+  _NavButtonRenderItem(this.onLayout, [RenderBox? super.child]);
 
   ValueChanged<Size> onLayout;
 
@@ -184,7 +184,7 @@ class _NavButtonRenderItem extends RenderProxyBox {
 
 class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
   const _SideIconRenderObjectWidget({
-    Key? key,
+    super.key,
     required this.index,
     required this.vsync,
     required this.additionalConstraints,
@@ -194,7 +194,7 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
     required this.lengths,
     required this.crossLength,
     required this.text,
-  }) : super(key: key);
+  });
 
   final int index;
   final TickerProvider vsync;
@@ -237,18 +237,17 @@ class _RenderIconSide extends RenderConstrainedBox {
   _RenderIconSide({
     required int index,
     required TickerProvider vsync,
-    required BoxConstraints additionalConstraints,
     required Duration duration,
     required List<String> text,
     required this.foreground,
     required this.sideLength,
     required this.crossLength,
     required this.lengths,
+    required super.additionalConstraints,
   })  : _oldIndex = index,
         _index = index,
         _vsync = vsync,
-        _text = text,
-        super(additionalConstraints: additionalConstraints) {
+        _text = text {
     _positionController = AnimationController(
       duration: duration,
       value: 0.0,

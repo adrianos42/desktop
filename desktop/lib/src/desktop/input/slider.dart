@@ -16,7 +16,7 @@ const Duration _kDuration = Duration(milliseconds: 100);
 
 class Slider extends StatefulWidget {
   const Slider({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     this.onChangeStart,
@@ -26,8 +26,7 @@ class Slider extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableTooltip = false,
-  })  : assert(value >= min && value <= max),
-        super(key: key);
+  })  : assert(value >= min && value <= max);
 
   final double value;
 
@@ -220,7 +219,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
 class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   const _SliderRenderObjectWidget({
-    Key? key,
+    super.key,
     required this.value,
     required this.state,
     required this.activeColor,
@@ -232,7 +231,7 @@ class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
     this.onChanged,
     this.onChangeStart,
     this.onChangeEnd,
-  }) : super(key: key);
+  });
 
   final double value;
   final Color activeColor;

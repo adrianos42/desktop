@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ToggleSwitchPage extends StatefulWidget {
-  ToggleSwitchPage({Key? key}) : super(key: key);
+  ToggleSwitchPage({super.key});
 
   @override
   _ToggleSwitchPageState createState() => _ToggleSwitchPageState();
@@ -77,7 +77,7 @@ return ToggleSwitch(
           title: 'Disabled',
         ),
       ],
-      header: 'Toggle switch',
+      header: 'Toggle Switch',
     );
   }
 }

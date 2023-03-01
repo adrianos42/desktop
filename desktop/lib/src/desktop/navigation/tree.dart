@@ -562,8 +562,8 @@ class _TreeColumn extends StatefulWidget {
     required this.parentName,
     required this.name,
     required this.updatePage,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final TreeNode node;
   final String parentName;

@@ -7,14 +7,13 @@ class TabMenuRoute<T> extends PopupRoute<T> {
     required WidgetBuilder pageBuilder,
     required BuildContext context,
     String? barrierLabel,
-    RouteSettings? settings,
     required Color barrierColor,
     this.axis = Axis.horizontal,
+    super.settings,
   })  : _pageBuilder = pageBuilder,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor,
-        super(settings: settings);
+        _barrierColor = barrierColor;
 
   final Axis axis;
 

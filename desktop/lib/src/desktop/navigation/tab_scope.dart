@@ -6,11 +6,11 @@ typedef RouteBuilder = Route<dynamic>? Function(BuildContext, RouteSettings);
 
 class TabScope extends InheritedWidget {
   const TabScope({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.axis,
     this.currentIndex,
-  }) : super(key: key, child: child);
+  });
 
   final Axis axis;
 

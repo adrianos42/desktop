@@ -130,7 +130,7 @@ class _TextFieldSelectionGestureDetectorBuilder
 class TextField extends StatefulWidget {
   /// Creates a desktop text field.
   const TextField({
-    Key? key,
+    super.key,
     this.autocorrect = true,
     this.autofocus = false,
     this.clipBehavior = Clip.hardEdge,
@@ -211,8 +211,7 @@ class TextField extends StatefulWidget {
                     cut: true,
                     selectAll: true,
                     paste: true,
-                  )),
-        super(key: key);
+                  ));
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;

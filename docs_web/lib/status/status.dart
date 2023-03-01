@@ -1,4 +1,4 @@
 library status;
 
-export 'progress_indicator.dart';
-export 'status_bar.dart';
+export 'circular_progress_indicator.dart';
+export 'linear_progress_indicator.dart';

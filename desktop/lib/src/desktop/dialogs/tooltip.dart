@@ -21,7 +21,7 @@ const bool _kExcludeFromSemantics = false;
 
 class Tooltip extends StatefulWidget {
   const Tooltip({
-    Key? key,
+    super.key,
     required this.message,
     this.height,
     this.maxWidth,
@@ -36,7 +36,7 @@ class Tooltip extends StatefulWidget {
     this.showDuration,
     this.visible,
     this.child,
-  }) : super(key: key);
+  });
 
   /// The text to display in the tooltip.
   final String message;
@@ -236,7 +236,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     final OverlayState overlayState = Overlay.of(
       context,
       debugRequiredFor: widget,
-    )!;
+    );
 
     final RenderBox box = context.findRenderObject()! as RenderBox;
     final Offset target = box.localToGlobal(
@@ -267,7 +267,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       ),
     );
     _entry = OverlayEntry(builder: (BuildContext context) => overlay);
-    Overlay.of(context, debugRequiredFor: widget)?.insert(_entry!);
+    Overlay.of(context, debugRequiredFor: widget).insert(_entry!);
     SemanticsService.tooltip(widget.message);
   }
 
@@ -415,7 +415,7 @@ class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
 
 class _TooltipOverlay extends StatelessWidget {
   const _TooltipOverlay({
-    Key? key,
+    super.key,
     required this.message,
     required this.height,
     required this.maxWidth,
@@ -427,7 +427,7 @@ class _TooltipOverlay extends StatelessWidget {
     required this.target,
     required this.verticalOffset,
     required this.preferBelow,
-  }) : super(key: key);
+  });
 
   final String message;
   final double height;

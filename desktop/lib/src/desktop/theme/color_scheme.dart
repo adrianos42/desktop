@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 export 'theme_data.dart' show ThemeData, Theme;
 
-const PrimaryColor _kDefaultPrimary = PrimaryColor.dodgerBlue;
+const PrimaryColor _kDefaultPrimary = PrimaryColor._dodgerBlue;
 
 /// Color scheme used for the theme data.
 @immutable
@@ -350,53 +350,125 @@ class PrimaryColor {
   @override
   String toString() => _name.toString();
 
+  static const _coral = PrimaryColor._('Coral', 1.0, 16, 1.0, 0.66);
+  static const _cornflowerBlue =
+      PrimaryColor._('Cornflower Blue', 1.0, 219, 0.79, 0.66);
+  static const _turquoise = PrimaryColor._('Turquoise', 1.0, 181, 0.8, 0.41);
+  static const _deepSkyBlue =
+      PrimaryColor._('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
+  static const _dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
+  static const _goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
+  static const _hotPink = PrimaryColor._('Hot Pink', 1.0, 330, 1.0, 0.7);
+  static const _purple = PrimaryColor._('Purple', 1.0, 260, 0.6, 0.65);
+  static const _orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
+  static const _royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);
+  static const _sandyBrown = PrimaryColor._('Sandy Brown', 1.0, 20, 0.87, 0.67);
+  static const _slateBlue = PrimaryColor._('Slate Blue', 1.0, 248, 0.53, 0.58);
+  static const _steelBlue = PrimaryColor._('Steel Blue', 1.0, 207, 0.44, 0.49);
+  static const _violet = PrimaryColor._('Violet', 1.0, 300, 0.76, 0.7);
+  static const _springGreen =
+      PrimaryColor._('Spring Green', 1.0, 150, 0.8, 0.4);
+  static const _red = PrimaryColor._('Red', 1.0, 347.0, 0.9, 0.6);
+}
+
+/// Constants for [PrimaryColor].
+enum PrimaryColors {
   /// Coral color.
-  static const coral = PrimaryColor._('Coral', 1.0, 16, 1.0, 0.66);
+  coral(PrimaryColor._coral),
 
   /// Cornflower blue color.
-  static const cornflowerBlue =
-      PrimaryColor._('Cornflower Blue', 1.0, 219, 0.79, 0.66);
+  cornflowerBlue(PrimaryColor._cornflowerBlue),
 
   /// Turquoise color.
-  static const turquoise = PrimaryColor._('Turquoise', 1.0, 181, 0.8, 0.41);
+  turquoise(PrimaryColor._turquoise),
 
   /// Deep sky blue color.
-  static const deepSkyBlue =
-      PrimaryColor._('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
+  deepSkyBlue(PrimaryColor._deepSkyBlue),
 
   /// Dodger blue color.
-  static const dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
+  dodgerBlue(PrimaryColor._dodgerBlue),
 
   /// Goldenrod color.
-  static const goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
+  goldenrod(PrimaryColor._goldenrod),
 
   /// Hot pink color.
-  static const hotPink = PrimaryColor._('Hot Pink', 1.0, 330, 1.0, 0.7);
+  hotPink(PrimaryColor._hotPink),
 
   /// Purple color.
-  static const purple = PrimaryColor._('Purple', 1.0, 260, 0.6, 0.65);
+  purple(PrimaryColor._purple),
 
   /// Orange color.
-  static const orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
+  orange(PrimaryColor._orange),
 
   /// Royal blue color.
-  static const royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);
+  royalBlue(PrimaryColor._royalBlue),
 
   /// Sandy brown color.
-  static const sandyBrown = PrimaryColor._('Sandy Brown', 1.0, 20, 0.87, 0.67);
+  sandyBrown(PrimaryColor._sandyBrown),
 
   /// Slate blue color.
-  static const slateBlue = PrimaryColor._('Slate Blue', 1.0, 248, 0.53, 0.58);
+  slateBlue(PrimaryColor._slateBlue),
 
   /// Steel blue color.
-  static const steelBlue = PrimaryColor._('Steel Blue', 1.0, 207, 0.44, 0.49);
+  steelBlue(PrimaryColor._steelBlue),
 
   /// Violet color.
-  static const violet = PrimaryColor._('Violet', 1.0, 300, 0.76, 0.7);
+  violet(PrimaryColor._violet),
 
   /// Spring green color.
-  static const springGreen = PrimaryColor._('Spring Green', 1.0, 150, 0.8, 0.4);
+  springGreen(PrimaryColor._springGreen),
 
   /// Red color.
-  static const red = PrimaryColor._('Red', 1.0, 347.0, 0.9, 0.6);
+  red(PrimaryColor._red);
+
+  /// Creates a [PrimaryColors] enumeration.
+  const PrimaryColors(this._primaryColor);
+
+  final PrimaryColor _primaryColor;
+
+  /// The [PrimaryColor].
+  PrimaryColor get primaryColor => _primaryColor;
+
+  @override
+  String toString() => primaryColor.toString();
+
+  /// Tries to create a [PrimaryColors] enumeration from a [PrimaryColor] value.
+  /// Returns null if the value is a custom primary color.
+  static PrimaryColors? fromPrimaryColor(PrimaryColor primaryColor) {
+    if (primaryColor == PrimaryColors.coral._primaryColor) {
+      return PrimaryColors.coral;
+    } else if (primaryColor == PrimaryColors.cornflowerBlue._primaryColor) {
+      return PrimaryColors.cornflowerBlue;
+    } else if (primaryColor == PrimaryColors.turquoise._primaryColor) {
+      return PrimaryColors.turquoise;
+    } else if (primaryColor == PrimaryColors.deepSkyBlue._primaryColor) {
+      return PrimaryColors.deepSkyBlue;
+    } else if (primaryColor == PrimaryColors.dodgerBlue._primaryColor) {
+      return PrimaryColors.dodgerBlue;
+    } else if (primaryColor == PrimaryColors.goldenrod._primaryColor) {
+      return PrimaryColors.goldenrod;
+    } else if (primaryColor == PrimaryColors.hotPink._primaryColor) {
+      return PrimaryColors.hotPink;
+    } else if (primaryColor == PrimaryColors.purple._primaryColor) {
+      return PrimaryColors.purple;
+    } else if (primaryColor == PrimaryColors.orange._primaryColor) {
+      return PrimaryColors.orange;
+    } else if (primaryColor == PrimaryColors.royalBlue._primaryColor) {
+      return PrimaryColors.royalBlue;
+    } else if (primaryColor == PrimaryColors.sandyBrown._primaryColor) {
+      return PrimaryColors.sandyBrown;
+    } else if (primaryColor == PrimaryColors.slateBlue._primaryColor) {
+      return PrimaryColors.slateBlue;
+    } else if (primaryColor == PrimaryColors.steelBlue._primaryColor) {
+      return PrimaryColors.steelBlue;
+    } else if (primaryColor == PrimaryColors.violet._primaryColor) {
+      return PrimaryColors.violet;
+    } else if (primaryColor == PrimaryColors.springGreen._primaryColor) {
+      return PrimaryColors.springGreen;
+    } else if (primaryColor == PrimaryColors.red._primaryColor) {
+      return PrimaryColors.red;
+    }
+
+    return null;
+  }
 }

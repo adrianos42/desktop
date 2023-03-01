@@ -1,7 +1,7 @@
 import 'package:desktop/desktop.dart';
 
 class Page extends StatefulWidget {
-  Page({Key? key}) : super(key: key);
+  Page({super.key});
 
   @override
   _PageState createState() => _PageState();

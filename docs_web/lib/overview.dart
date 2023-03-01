@@ -6,7 +6,7 @@ import 'defaults.dart';
 import 'theme/primaryColor.dart';
 
 class OverviewPage extends StatefulWidget {
-  OverviewPage({Key? key}) : super(key: key);
+  OverviewPage({super.key});
 
   @override
   _OverviewPageState createState() => _OverviewPageState();

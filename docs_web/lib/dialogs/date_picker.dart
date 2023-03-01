@@ -17,7 +17,7 @@ class _DatePickerPageState extends State<DatePickerPage> {
     const basicExample = 'return TextFormField();';
 
     return Defaults(
-      header: 'Date picker',
+      header: 'Date Picker',
       items: [
         ItemTitle(
           body: (context) => Container(

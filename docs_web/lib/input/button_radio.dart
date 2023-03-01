@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonRadioPage extends StatefulWidget {
-  ButtonRadioPage({Key? key}) : super(key: key);
+  ButtonRadioPage({super.key});
 
   @override
   _ButtonRadioPageState createState() => _ButtonRadioPageState();

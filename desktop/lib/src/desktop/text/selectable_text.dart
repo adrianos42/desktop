@@ -1,9 +1,8 @@
+import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
+
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
-import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 
 import '../theme/theme.dart';
 
@@ -116,7 +115,7 @@ class SelectableText extends StatefulWidget {
   /// Creates a selectable text.
   const SelectableText(
     String this.text, {
-    Key? key,
+    super.key,
     this.autofocus = false,
     this.cursorWidth = _kCursorWidth,
     this.focusNode,
@@ -148,13 +147,12 @@ class SelectableText extends StatefulWidget {
               copy: true,
               selectAll: true,
             ),
-        textSpan = null,
-        super(key: key);
+        textSpan = null;
 
   ///
   const SelectableText.rich(
     TextSpan this.textSpan, {
-    Key? key,
+    super.key,
     this.autofocus = false,
     this.cursorWidth = _kCursorWidth,
     this.focusNode,
@@ -186,8 +184,7 @@ class SelectableText extends StatefulWidget {
               copy: true,
               selectAll: true,
             ),
-        text = null,
-        super(key: key);
+        text = null;
 
   ///
   final String? text;

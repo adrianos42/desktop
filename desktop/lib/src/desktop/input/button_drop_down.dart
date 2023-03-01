@@ -4,7 +4,6 @@ import '../component.dart';
 import '../dialogs/context_menu/context_menu.dart';
 import '../dialogs/tooltip.dart';
 import '../icons.dart';
-import '../theme/constants.dart';
 import '../theme/theme.dart';
 
 /// Button that shows a list of [ContextMenuItem] when pressed.
@@ -12,14 +11,14 @@ import '../theme/theme.dart';
 class DropDownButton<T> extends StatefulWidget {
   ///
   const DropDownButton({
-    Key? key,
+    super.key,
     required this.itemBuilder,
     this.value,
     this.onSelected,
     this.onCanceled,
     this.tooltip,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   /// The list of [ContextMenuItem] used for the context menu.
   final ContextMenuItemBuilder<T> itemBuilder;
@@ -49,7 +48,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Overlay.of(context, rootOverlay: true)!
+    final RenderBox overlay = Overlay.of(context, rootOverlay: true)
         .context
         .findRenderObject()! as RenderBox;
 

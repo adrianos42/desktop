@@ -80,15 +80,14 @@ class NavItem {
 class Nav extends StatefulWidget {
   /// Creates a navigation bar.
   const Nav({
-    Key? key,
+    super.key,
     required this.items,
     this.navAxis = Axis.vertical,
     this.trailingMenu,
     this.onPressBackButton,
     this.isBackButtonEnabled,
     this.visible = true,
-  })  : assert(items.length > 0),
-        super(key: key);
+  })  : assert(items.length > 0);
 
   /// The items with builder and route names for transition among pages.
   final List<NavItem> items;

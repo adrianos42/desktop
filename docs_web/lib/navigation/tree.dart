@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TreePage extends StatefulWidget {
-  TreePage({Key? key}) : super(key: key);
+  TreePage({super.key});
 
   @override
   _TreePageState createState() => _TreePageState();

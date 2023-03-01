@@ -80,11 +80,11 @@ class BreadcrumbController extends ChangeNotifier {
 class Breadcrumb extends StatefulWidget {
   /// Creates a [Breadcrumb].
   const Breadcrumb({
-    Key? key,
+    super.key,
     this.trailing,
     this.leading,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final BreadcrumbController controller;
 

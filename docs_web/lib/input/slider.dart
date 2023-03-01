@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class SliderPage extends StatefulWidget {
-  SliderPage({Key? key}) : super(key: key);
+  SliderPage({super.key});
 
   @override
   _SliderPageState createState() => _SliderPageState();

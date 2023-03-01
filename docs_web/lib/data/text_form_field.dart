@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TextFormFieldPage extends StatefulWidget {
-  TextFormFieldPage({Key? key}) : super(key: key);
+  TextFormFieldPage({super.key});
 
   @override
   _TextFormFieldPageState createState() => _TextFormFieldPageState();
@@ -28,7 +28,9 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
         title: const Text('Login'),
         actions: [
           DialogAction(
-              title: 'Ok', onPressed: () => Navigator.of(context).pop())
+            title: 'Ok',
+            onPressed: () => Navigator.of(context).pop(),
+          )
         ],
         body: Text.rich(
           TextSpan(
@@ -62,7 +64,7 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
     const basicExample = 'return TextFormField();';
 
     return Defaults(
-      header: 'Text form field',
+      header: 'Text Form Field',
       items: [
         ItemTitle(
           body: (context) => Container(

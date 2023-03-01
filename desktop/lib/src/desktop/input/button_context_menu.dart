@@ -16,8 +16,8 @@ class ContextMenuButton<T> extends StatefulWidget {
     this.padding,
     this.tooltip,
     this.enabled = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// The body of the button.
   final Widget child;
@@ -55,7 +55,7 @@ class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {
 
   Future<void> showButtonMenu(BuildContext context) async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Overlay.of(context, rootOverlay: true)!
+    final RenderBox overlay = Overlay.of(context, rootOverlay: true)
         .context
         .findRenderObject()! as RenderBox;
 

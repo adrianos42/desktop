@@ -4,7 +4,7 @@ import '../defaults.dart';
 import 'package:intl/intl.dart';
 
 class DateFormFieldPage extends StatefulWidget {
-  DateFormFieldPage({Key? key}) : super(key: key);
+  DateFormFieldPage({super.key});
 
   @override
   _DateFormFieldPageState createState() => _DateFormFieldPageState();
@@ -36,7 +36,7 @@ class _DateFormFieldPageState extends State<DateFormFieldPage> {
     const basicExample = 'return DateFormField();';
 
     return Defaults(
-      header: 'Date form field',
+      header: 'Date Form Field',
       items: [
         ItemTitle(
           body: (context) => Container(

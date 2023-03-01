@@ -304,7 +304,7 @@ class _ListTableState extends State<ListTable> {
       child: GestureDetector(
         onTapUp: tableRow.onPressed != null
             ? (event) {
-                final overlay = Overlay.of(context)!.context.findRenderObject();
+                final overlay = Overlay.of(context).context.findRenderObject();
                 final position = RelativeRect.fromRect(
                   Offset(event.globalPosition.dx, event.globalPosition.dy) &
                       Size.zero,
@@ -334,7 +334,7 @@ class _ListTableState extends State<ListTable> {
             : null,
         onSecondaryTapUp: tableRow.onSecondaryPress != null
             ? (event) {
-                final overlay = Overlay.of(context)!.context.findRenderObject();
+                final overlay = Overlay.of(context).context.findRenderObject();
                 final position = RelativeRect.fromRect(
                   Offset(event.globalPosition.dx, event.globalPosition.dy) &
                       Size.zero,

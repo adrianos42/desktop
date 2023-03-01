@@ -83,9 +83,9 @@ class MessageController {
 class Messenger extends StatefulWidget {
   /// Creates a widget that manages a [Message] stack.
   const Messenger({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The widget below this widget in the tree.
   ///
@@ -205,14 +205,14 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
 
       _messages.addLast(entry);
 
-      Overlay.of(context, rootOverlay: true)?.insert(entry._overlayEntry);
+      Overlay.of(context, rootOverlay: true).insert(entry._overlayEntry);
       _startTimer();
     } else {
       _messages.addLast(entry);
 
       if (_messages.length == 1) {
         _messageController!.forward(from: 0.0);
-        Overlay.of(context, rootOverlay: true)?.insert(entry._overlayEntry);
+        Overlay.of(context, rootOverlay: true).insert(entry._overlayEntry);
         _startTimer();
       } else {
         setState(() {});
@@ -239,7 +239,7 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
       entry._completer.complete(reason);
 
       Overlay.of(context, rootOverlay: true)
-          ?.insert(_messages.first._overlayEntry);
+          .insert(_messages.first._overlayEntry);
       _startTimer();
     } else {
       _messageController?.reverse().then<void>((void value) {
@@ -249,7 +249,7 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
 
         if (_messages.isNotEmpty && _hideTimer == null) {
           Overlay.of(context, rootOverlay: true)
-              ?.insert(_messages.first._overlayEntry);
+              .insert(_messages.first._overlayEntry);
           _startTimer();
         }
       });
@@ -294,13 +294,12 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
 
 class _MessengerScope extends InheritedWidget {
   const _MessengerScope({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required _MessengerState messengerState,
     required int length,
   })  : _messengerState = messengerState,
-        _length = length,
-        super(key: key, child: child);
+        _length = length;
 
   final _MessengerState _messengerState;
   final int _length;
@@ -314,7 +313,7 @@ class _MessengerScope extends InheritedWidget {
 class Message extends StatefulWidget {
   /// Creates a [Message].
   const Message({
-    Key? key,
+    super.key,
     this.title,
     this.actions,
     this.constraints,
@@ -327,7 +326,7 @@ class Message extends StatefulWidget {
     required this.resumeTimer,
     required this.stopTimer,
     required this.remove,
-  }) : super(key: key);
+  });
 
   final String message;
 
@@ -377,8 +376,7 @@ class _MessageState extends State<Message> {
   void initState() {
     super.initState();
 
-    _mouseIsConnected =
-        RendererBinding.instance.mouseTracker.mouseIsConnected;
+    _mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
     RendererBinding.instance.mouseTracker
         .addListener(_handleMouseTrackerChange);
     GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);

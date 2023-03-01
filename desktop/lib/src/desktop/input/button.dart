@@ -10,7 +10,7 @@ import '../theme/theme.dart';
 class Button extends StatefulWidget {
   /// Creates a [Button].
   const Button({
-    Key? key,
+    super.key,
     this.body,
     this.trailing,
     this.leading,
@@ -28,17 +28,16 @@ class Button extends StatefulWidget {
     required this.onPressed,
     this.willChangeState = false,
     this.enableAnimation = true,
-  })  : assert(body != null || trailing != null || leading != null),
-        super(key: key);
+  }) : assert(body != null || trailing != null || leading != null);
 
   /// Creates a button with a text.
   factory Button.text(
     String text, {
+    Key? key,
     double? fontSize,
     String? tooltip,
     ButtonThemeData? style,
     EdgeInsets? padding,
-    Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
@@ -70,10 +69,10 @@ class Button extends StatefulWidget {
   /// Creates a button with a icon.
   factory Button.icon(
     IconData icon, {
+    Key? key,
     String? tooltip,
     double? size,
     EdgeInsets? padding,
-    Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
@@ -103,10 +102,10 @@ class Button extends StatefulWidget {
   /// Creates a button with a filled background.
   factory Button.filled(
     String text, {
+    Key? key,
     double? fontSize,
     String? tooltip,
     EdgeInsets? padding,
-    Key? key,
     FocusNode? focusNode,
     bool canRequestFocus = true,
     bool autofocus = false,
@@ -604,14 +603,14 @@ class _ButtonState extends State<Button>
 class ButtonScope extends InheritedWidget {
   /// Creates a [ButtonScope].
   const ButtonScope({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.hovered,
     required this.pressed,
     required this.active,
     required this.disabled,
     required this.color,
-  }) : super(key: key, child: child);
+  });
 
   final bool hovered;
 

@@ -11,11 +11,11 @@ class HyperlinkButton extends StatelessWidget {
   ///
   const HyperlinkButton(
     this.text, {
-    Key? key,
+    super.key,
     required this.onPressed,
     this.padding,
     this.tooltip,
-  }) : super(key: key);
+  });
 
   /// The text for the button.
   final String text;

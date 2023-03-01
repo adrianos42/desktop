@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:ui' show ImageFilter;
 
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/widgets.dart';
 
 import '../localizations.dart';
-import '../theme/dialogs/dialog.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 300);
 
@@ -74,12 +74,36 @@ mixin _DesktopRouteTransitionMixin<T> on PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return FadeTransition(
-        opacity: CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOut,
-        ),
-        child: child);
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+      case TargetPlatform.iOS:
+        return SlideTransition(
+          position: Tween(
+            begin: const Offset(1.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Curves.fastLinearToSlowEaseIn,
+            ),
+          ),
+          child: FadeTransition(
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeIn,
+            ),
+            child: child,
+          ),
+        );
+      default:
+        return FadeTransition(
+          opacity: CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeIn,
+          ),
+          child: child,
+        );
+    }
   }
 }
 
@@ -109,16 +133,11 @@ class DesktopPage<T> extends Page<T> {
     required this.child,
     this.maintainState = true,
     this.fullscreenDialog = false,
-    LocalKey? key,
-    String? name,
-    Object? arguments,
-    String? restorationId,
-  }) : super(
-          key: key,
-          name: name,
-          arguments: arguments,
-          restorationId: restorationId,
-        );
+    super.key,
+    super.name,
+    super.arguments,
+    super.restorationId,
+  });
 
   final Widget child;
 
@@ -128,14 +147,13 @@ class DesktopPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return _PageBasedDesktopPageRoute<T>(page: this);
+    return _PageBasedDesktopPageRoute<T>(settings: this);
   }
 }
 
 class _PageBasedDesktopPageRoute<T> extends PageRoute<T>
     with _DesktopRouteTransitionMixin<T> {
-  _PageBasedDesktopPageRoute({required DesktopPage<T> page})
-      : super(settings: page);
+  _PageBasedDesktopPageRoute({required super.settings});
 
   DesktopPage<T> get _page => settings as DesktopPage<T>;
 
@@ -156,11 +174,8 @@ class _PageBasedDesktopPageRoute<T> extends PageRoute<T>
 
 abstract class ContextRoute<T> extends ModalRoute<T> {
   ContextRoute({
-    required RouteSettings settings,
-  }) : super(
-          filter: null,
-          settings: settings,
-        );
+    required super.settings,
+  }) : super(filter: null);
 
   @override
   bool get opaque => false;
@@ -178,19 +193,15 @@ class _DialogRoute<T> extends PopupRoute<T> {
     Color barrierColor = const Color(0x80000000),
     Duration transitionDuration = const Duration(milliseconds: 200),
     RouteTransitionsBuilder? transitionBuilder,
-    RouteSettings? settings,
-    ImageFilter? filter,
+    super.settings,
+    super.filter,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor,
         _transitionDuration = transitionDuration,
-        _transitionBuilder = transitionBuilder,
-        super(
-          settings: settings,
-          filter: filter,
-        );
+        _transitionBuilder = transitionBuilder;
 
   final RoutePageBuilder _pageBuilder;
 
@@ -253,19 +264,3 @@ Future<T?> showDesktopPopup<T>({
     ),
   );
 }
-
-// class DismissModalAction extends Action {
-//   const DismissModalAction() : super(key);
-
-//   static const LocalKey key = ValueKey<Type>(DismissModalAction);
-
-//   @override
-//   void invoke(FocusNode node, Intent intent) {
-//     assert(ModalRoute.of(node.context) != null);
-
-//     if (ModalRoute.of(node.context).barrierDismissible) {
-//       assert(Navigator.of(node.context).canPop());
-//       Navigator.of(node.context).pop();
-//     }
-//   }
-// }

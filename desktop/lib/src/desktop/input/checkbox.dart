@@ -230,7 +230,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
 class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   const _CheckboxRenderObjectWidget({
-    Key? key,
+    super.key,
     this.onChanged,
     this.value,
     required this.state,
@@ -242,7 +242,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hovering,
     required this.additionalConstraints,
     required this.forceEnabled,
-  }) : super(key: key);
+  });
 
   final bool? value;
   final _CheckboxState state;

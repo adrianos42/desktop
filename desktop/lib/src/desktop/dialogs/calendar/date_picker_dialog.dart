@@ -128,22 +128,28 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
           vertical: 0,
         ),
       ),
-      child: Dialog(
-        allowScroll: false,
-        body: Align(
-          alignment: Alignment.centerLeft,
-          child: CalendarDate(
-            firstDate: widget.firstDate,
-            initialDate: widget.initialDate,
-            lastDate: widget.lastDate,
-            onDateChanged: (_) {},
-            currentDate: widget.currentDate,
-            initialCalendarMode: widget.initialCalendarMode,
-            key: _calendarPickerKey,
-            selectableDayPredicate: widget.selectableDayPredicate,
-            onDateSelected: (selectedDate) =>
-                Navigator.pop(context, selectedDate),
-          ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ColoredBox(
+              color: Theme.of(context).colorScheme.background[0],
+              child: CalendarDate(
+                firstDate: widget.firstDate,
+                initialDate: widget.initialDate,
+                lastDate: widget.lastDate,
+                onDateChanged: (_) {},
+                currentDate: widget.currentDate,
+                initialCalendarMode: widget.initialCalendarMode,
+                key: _calendarPickerKey,
+                selectableDayPredicate: widget.selectableDayPredicate,
+                onDateSelected: (selectedDate) =>
+                    Navigator.pop(context, selectedDate),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,31 +1,22 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'input/button.dart';
-import 'input/checkbox.dart';
 import 'color_scheme.dart';
-import 'dialogs/context_menu.dart';
-import 'dialogs/dialog.dart';
-import 'input/drop_down.dart';
-import 'input/hyperlink.dart';
-import 'data/list_table.dart';
-import 'navigation/nav.dart';
-import 'input/radio.dart';
+import 'data/data.dart';
+import 'dialogs/dialogs.dart';
+import 'input/input.dart';
+import 'navigation/navigation.dart';
 import 'scrolling/scrollbar.dart';
-import 'input/slider.dart';
-import 'navigation/tab.dart';
+import 'status/status.dart';
 import 'theme_text.dart';
-import 'input/toggle_switch.dart';
-import 'navigation/tree.dart';
 
 @immutable
 class Theme extends StatefulWidget {
   const Theme({
-    Key? key,
+    super.key,
     required this.data,
     required this.child,
-  }) : super(key: key);
+  });
 
   final ThemeData data;
 
@@ -88,10 +79,10 @@ class _ThemeState extends State<Theme> {
 
 class _InheritedTheme extends InheritedTheme {
   const _InheritedTheme({
-    Key? key,
+    super.key,
     required this.theme,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   final _ThemeState theme;
 
@@ -141,6 +132,9 @@ class ThemeData {
       tabTheme: const TabThemeData(),
       treeTheme: const TreeThemeData(),
       listTableTheme: const ListTableThemeData(),
+      circularProgressIndicatorTheme:
+          const CircularProgressIndicatorThemeData(),
+      linearProgressIndicatorTheme: const LinearProgressIndicatorThemeData(),
     );
   }
 
@@ -162,6 +156,8 @@ class ThemeData {
     required this.tabTheme,
     required this.treeTheme,
     required this.listTableTheme,
+    required this.circularProgressIndicatorTheme,
+    required this.linearProgressIndicatorTheme,
   });
 
   factory ThemeData.light([PrimaryColor? primaryColor]) =>
@@ -175,23 +171,26 @@ class ThemeData {
     final textTheme = TextTheme.withColorScheme(colorScheme);
 
     return ThemeData._raw(
-        brightness: brightness,
-        colorScheme: colorScheme,
-        textTheme: textTheme,
-        navTheme: navTheme,
-        buttonTheme: buttonTheme,
-        dropDownTheme: dropDownTheme,
-        dialogTheme: dialogTheme,
-        contextMenuTheme: contextMenuTheme,
-        hyperlinkTheme: hyperlinkTheme,
-        radioTheme: radioTheme,
-        checkboxTheme: checkboxTheme,
-        sliderTheme: sliderTheme,
-        toggleSwitchTheme: toggleSwitchTheme,
-        scrollbarTheme: scrollbarTheme,
-        tabTheme: tabTheme,
-        treeTheme: treeTheme,
-        listTableTheme: listTableTheme);
+      brightness: brightness,
+      colorScheme: colorScheme,
+      textTheme: textTheme,
+      navTheme: navTheme,
+      buttonTheme: buttonTheme,
+      dropDownTheme: dropDownTheme,
+      dialogTheme: dialogTheme,
+      contextMenuTheme: contextMenuTheme,
+      hyperlinkTheme: hyperlinkTheme,
+      radioTheme: radioTheme,
+      checkboxTheme: checkboxTheme,
+      sliderTheme: sliderTheme,
+      toggleSwitchTheme: toggleSwitchTheme,
+      scrollbarTheme: scrollbarTheme,
+      tabTheme: tabTheme,
+      treeTheme: treeTheme,
+      listTableTheme: listTableTheme,
+      circularProgressIndicatorTheme: circularProgressIndicatorTheme,
+      linearProgressIndicatorTheme: linearProgressIndicatorTheme,
+    );
   }
 
   ThemeData copyWith({
@@ -202,16 +201,18 @@ class ThemeData {
     TabThemeData? tabTheme,
     TreeThemeData? treeTheme,
     ButtonThemeData? buttonTheme,
-    DropDownThemeData? dropDownButtonTheme,
+    DropDownThemeData? dropDownTheme,
     DialogThemeData? dialogTheme,
     ContextMenuThemeData? contextMenuTheme,
-    HyperlinkThemeData? hyperlinkButtonTheme,
-    RadioThemeData? radioButtonTheme,
+    HyperlinkThemeData? hyperlinkTheme,
+    RadioThemeData? radioTheme,
     CheckboxThemeData? checkboxTheme,
     ToggleSwitchThemeData? toggleSwitchTheme,
     SliderThemeData? sliderTheme,
     ScrollbarThemeData? scrollbarTheme,
     ListTableThemeData? listTableTheme,
+    CircularProgressIndicatorThemeData? circularProgressIndicatorTheme,
+    LinearProgressIndicatorThemeData? linearProgressIndicatorTheme,
   }) {
     final newColorScheme =
         colorScheme?.withBrightness(brightness ?? this.brightness) ??
@@ -222,11 +223,11 @@ class ThemeData {
       textTheme: textTheme ?? TextTheme.withColorScheme(newColorScheme),
       navTheme: navTheme ?? this.navTheme,
       buttonTheme: buttonTheme ?? this.buttonTheme,
-      dropDownTheme: dropDownButtonTheme ?? this.dropDownTheme,
+      dropDownTheme: dropDownTheme ?? this.dropDownTheme,
       dialogTheme: dialogTheme ?? this.dialogTheme,
       contextMenuTheme: contextMenuTheme ?? this.contextMenuTheme,
-      hyperlinkTheme: hyperlinkButtonTheme ?? this.hyperlinkTheme,
-      radioTheme: radioButtonTheme ?? this.radioTheme,
+      hyperlinkTheme: hyperlinkTheme ?? this.hyperlinkTheme,
+      radioTheme: radioTheme ?? this.radioTheme,
       checkboxTheme: checkboxTheme ?? this.checkboxTheme,
       sliderTheme: sliderTheme ?? this.sliderTheme,
       toggleSwitchTheme: toggleSwitchTheme ?? this.toggleSwitchTheme,
@@ -234,6 +235,10 @@ class ThemeData {
       tabTheme: tabTheme ?? this.tabTheme,
       treeTheme: treeTheme ?? this.treeTheme,
       listTableTheme: listTableTheme ?? this.listTableTheme,
+      circularProgressIndicatorTheme:
+          circularProgressIndicatorTheme ?? this.circularProgressIndicatorTheme,
+      linearProgressIndicatorTheme:
+          linearProgressIndicatorTheme ?? this.linearProgressIndicatorTheme,
     );
   }
 
@@ -273,6 +278,10 @@ class ThemeData {
 
   final ListTableThemeData listTableTheme;
 
+  final CircularProgressIndicatorThemeData circularProgressIndicatorTheme;
+
+  final LinearProgressIndicatorThemeData linearProgressIndicatorTheme;
+
   ThemeData get invertedTheme {
     final Brightness inverseBrightness =
         brightness == Brightness.dark ? Brightness.light : Brightness.dark;
@@ -297,6 +306,64 @@ class ThemeData {
       tabTheme: tabTheme,
       treeTheme: treeTheme,
       listTableTheme: listTableTheme,
+      circularProgressIndicatorTheme: circularProgressIndicatorTheme,
+      linearProgressIndicatorTheme: linearProgressIndicatorTheme,
     );
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      brightness,
+      colorScheme,
+      textTheme,
+      navTheme,
+      buttonTheme,
+      dropDownTheme,
+      dialogTheme,
+      contextMenuTheme,
+      hyperlinkTheme,
+      radioTheme,
+      checkboxTheme,
+      sliderTheme,
+      toggleSwitchTheme,
+      scrollbarTheme,
+      tabTheme,
+      treeTheme,
+      listTableTheme,
+      circularProgressIndicatorTheme,
+      linearProgressIndicatorTheme,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is ThemeData &&
+        other.brightness == brightness &&
+        other.colorScheme == colorScheme &&
+        other.textTheme == textTheme &&
+        other.navTheme == navTheme &&
+        other.buttonTheme == buttonTheme &&
+        other.dropDownTheme == dropDownTheme &&
+        other.dialogTheme == dialogTheme &&
+        other.contextMenuTheme == contextMenuTheme &&
+        other.hyperlinkTheme == hyperlinkTheme &&
+        other.radioTheme == radioTheme &&
+        other.checkboxTheme == checkboxTheme &&
+        other.sliderTheme == sliderTheme &&
+        other.toggleSwitchTheme == toggleSwitchTheme &&
+        other.scrollbarTheme == scrollbarTheme &&
+        other.tabTheme == tabTheme &&
+        other.treeTheme == treeTheme &&
+        other.listTableTheme == listTableTheme &&
+        other.circularProgressIndicatorTheme ==
+            circularProgressIndicatorTheme &&
+        other.linearProgressIndicatorTheme == linearProgressIndicatorTheme;
   }
 }

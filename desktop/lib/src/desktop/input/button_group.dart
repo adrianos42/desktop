@@ -18,11 +18,11 @@ class ToggleItem<T> {
 
 class ToggleButton<T> extends StatelessWidget {
   const ToggleButton({
-    Key? key,
+    super.key,
     this.onSelected,
     this.value,
     required this.items,
-  }) : super(key: key);
+  });
 
   final List<ToggleItem> items;
 

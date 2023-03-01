@@ -49,7 +49,7 @@ const _kPageDuration = Duration(milliseconds: 200);
 const _kPageCurve = Curves.easeOut;
 
 class ScrollingPage extends StatefulWidget {
-  ScrollingPage({Key? key}) : super(key: key);
+  ScrollingPage({super.key});
 
   @override
   _ScrollingPageState createState() => _ScrollingPageState();
@@ -157,8 +157,8 @@ class _ImagePage extends StatefulWidget {
     this.requestNext,
     this.requestPrevious,
     required this.close,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int assetIndex;
 

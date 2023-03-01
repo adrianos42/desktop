@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonContextMenuPage extends StatefulWidget {
-  ButtonContextMenuPage({Key? key}) : super(key: key);
+  ButtonContextMenuPage({super.key});
 
   @override
   _ButtonContextMenuPageState createState() => _ButtonContextMenuPageState();
@@ -98,7 +98,7 @@ return ContextMenuButton(
           title: 'Example',
         ),
       ],
-      header: 'Context menu',
+      header: 'Context Menu',
     );
   }
 }

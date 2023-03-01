@@ -18,17 +18,16 @@ class DialogRoute<T> extends PopupRoute<T> {
     required BuildContext context,
     bool barrierDismissible = true,
     String? barrierLabel,
-    RouteSettings? settings,
     Color? barrierColor,
     ImageFilter? filter,
     this.themes,
+    super.settings,
   })  : _pageBuilder = pageBuilder,
         _barrierDismissible = barrierDismissible,
         _barrierLabel = barrierLabel ??
             DesktopLocalizations.of(context).modalBarrierDismissLabel,
         _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
         super(
-          settings: settings,
           filter: filter ?? DialogTheme.of(context).imageFilter!,
         );
 
@@ -95,7 +94,7 @@ class DialogAction {
 class Dialog extends StatelessWidget {
   /// Creates a [Dialog].
   const Dialog({
-    Key? key,
+    super.key,
     this.title,
     this.actions,
     this.constraints,
@@ -103,7 +102,7 @@ class Dialog extends StatelessWidget {
     //this.dialogPadding,
     this.allowScroll = true,
     required this.body,
-  }) : super(key: key);
+  });
 
   /// The widget placed between the title and menus.
   final Widget body;
@@ -215,7 +214,7 @@ class Dialog extends StatelessWidget {
             Padding(
               padding: dialogThemeData.titlePadding!,
               child: DefaultTextStyle(
-                child: title!, // TODO(as): ???
+                child: title!,
                 style: dialogThemeData.titleTextStyle!,
               ),
             ),
@@ -262,9 +261,12 @@ class Dialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: actions!
                     .map(
-                      (e) => Button.text(
-                        e.title,
-                        onPressed: e.onPressed,
+                      (e) => Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Button.text(
+                          e.title,
+                          onPressed: e.onPressed,
+                        ),
                       ),
                     )
                     .toList(),

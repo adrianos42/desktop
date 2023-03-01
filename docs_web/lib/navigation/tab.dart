@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TabPage extends StatefulWidget {
-  TabPage({Key? key}) : super(key: key);
+  TabPage({super.key});
 
   @override
   _TabPageState createState() => _TabPageState();

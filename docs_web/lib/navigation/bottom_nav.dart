@@ -2,7 +2,7 @@
 // import '../defaults.dart';
 
 // class BottomNavPage extends StatefulWidget {
-//   BottomNavPage({Key? key}) : super(key: key);
+//   BottomNavPage({super.key});
 
 //   @override
 //   _BottomNavPageState createState() => _BottomNavPageState();

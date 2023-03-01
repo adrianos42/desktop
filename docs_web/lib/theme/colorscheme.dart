@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ColorschemePage extends StatefulWidget {
-  ColorschemePage({Key? key}) : super(key: key);
+  ColorschemePage({super.key});
 
   @override
   _ColorschemePageState createState() => _ColorschemePageState();
@@ -66,7 +66,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
         Container(
           alignment: Alignment.topLeft,
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Defaults.createHeader(context, 'Color scheme'),
+          child: Defaults.createHeader(context, 'Color Scheme'),
         ),
         Expanded(
           child: SingleChildScrollView(

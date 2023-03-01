@@ -53,15 +53,14 @@ class TabItem {
 class Tab extends StatefulWidget {
   ///
   const Tab({
-    Key? key,
+    super.key,
     required this.items,
     this.trailing,
     this.backgroundColor,
     this.padding,
     this.itemPadding,
     this.height,
-  })  : assert(items.length > 0),
-        super(key: key);
+  })  : assert(items.length > 0);
 
   /// Tab items.
   final List<TabItem> items;
@@ -221,7 +220,7 @@ class _TabState extends State<Tab> {
 
 class _TabGroup extends StatefulWidget {
   const _TabGroup({
-    Key? key,
+    super.key,
     required this.index,
     required this.items,
     required this.changeIndex,
@@ -229,7 +228,7 @@ class _TabGroup extends StatefulWidget {
     this.trailing,
     this.padding,
     this.height,
-  }) : super(key: key);
+  });
 
   final int index;
 

@@ -11,8 +11,10 @@ import 'context_menu_layout.dart';
 const double _kDividerHeight = 1.0;
 const double _kDividerThickness = 1.0;
 
+/// A context menu entry.
 abstract class ContextMenuEntry<T> extends StatefulWidget {
-  const ContextMenuEntry({Key? key}) : super(key: key);
+  /// Creates a [ContextMenuEntry].
+  const ContextMenuEntry({super.key});
 
   /// If the item represents the same given value.
   bool represents(T value);
@@ -24,16 +26,16 @@ abstract class ContextMenuEntry<T> extends StatefulWidget {
 
 class _MenuItem extends SingleChildRenderObjectWidget {
   const _MenuItem({
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
+    super.key,
+    required super.child,
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) => _RenderMenuItem();
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
-  _RenderMenuItem([RenderBox? child]) : super(child);
+  _RenderMenuItem([RenderBox? super.child]);
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
@@ -58,12 +60,12 @@ class _RenderMenuItem extends RenderShiftedBox {
 
 class ContextMenuItem<T> extends ContextMenuEntry<T> {
   const ContextMenuItem({
-    Key? key,
+    super.key,
     required this.value,
     this.enabled = true,
     this.height,
     required this.child,
-  }) : super(key: key);
+  });
 
   final T value;
 
@@ -202,7 +204,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 /// A divider used in context menu.
 class ContextMenuDivider extends ContextMenuEntry {
   /// Creates a [ContextMenuDivider].
-  const ContextMenuDivider({Key? key}) : super(key: key);
+  const ContextMenuDivider({super.key});
 
   @override
   bool represents(void value) => false;
@@ -230,10 +232,10 @@ class _ContextMenuDividerState extends State<ContextMenuDivider> {
 
 class _MenuItemSelected extends InheritedWidget {
   const _MenuItemSelected({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.selected,
-  }) : super(key: key, child: child);
+  });
 
   final bool selected;
 
@@ -249,9 +251,9 @@ class _MenuItemSelected extends InheritedWidget {
 
 class _ContextMenu<T> extends StatelessWidget {
   _ContextMenu({
-    Key? key,
+    super.key,
     this.semanticLabel,
-  }) : super(key: key);
+  });
 
   _ContextController<T> controller(BuildContext context) =>
       _ContextScope._of<T>(context);
@@ -334,8 +336,8 @@ class _ContextMenu<T> extends StatelessWidget {
 class _ContextScope<T> extends InheritedWidget {
   const _ContextScope(
     this.contextController, {
-    required Widget child,
-  }) : super(child: child);
+    required super.child,
+  });
 
   final _ContextController<T> contextController;
 
@@ -428,7 +430,7 @@ Future<T?> showMenu<T>({
     contextMenuThemeData: contextMenuThemeData,
   );
 
-  Overlay.of(context, rootOverlay: true)!.insert(controller._overlayEntry);
+  Overlay.of(context, rootOverlay: true).insert(controller._overlayEntry);
 
   return controller._completer.future;
 }

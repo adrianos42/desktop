@@ -12,7 +12,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = 'dev.4.2.69';
+const String _version = '4.0.0-dev-7.0';
 
 ///
 class DocHome extends StatefulWidget {
@@ -50,8 +50,8 @@ class DocHome extends StatefulWidget {
 }
 
 class _DocHomeState extends State<DocHome> {
-  static ContextMenuItem<PrimaryColor> _menuItemPrimaryColor(
-    PrimaryColor color,
+  static ContextMenuItem<PrimaryColors> _menuItemPrimaryColor(
+    PrimaryColors color,
   ) {
     return ContextMenuItem(
       value: color,
@@ -61,30 +61,31 @@ class _DocHomeState extends State<DocHome> {
     );
   }
 
-  PrimaryColor? _primaryColor;
+  PrimaryColors? _primaryColor;
 
-  PrimaryColor get primaryColor =>
-      _primaryColor ?? Theme.of(context).colorScheme.primary;
+  PrimaryColors get primaryColor =>
+      _primaryColor ??
+      PrimaryColors.fromPrimaryColor(Theme.of(context).colorScheme.primary)!;
 
   bool? _isShowingTree;
 
   Widget _createColorButton() {
-    List<ContextMenuItem<PrimaryColor>> itemBuilder(context) => [
-          _menuItemPrimaryColor(PrimaryColor.coral),
-          _menuItemPrimaryColor(PrimaryColor.sandyBrown),
-          _menuItemPrimaryColor(PrimaryColor.orange),
-          _menuItemPrimaryColor(PrimaryColor.goldenrod),
-          _menuItemPrimaryColor(PrimaryColor.springGreen),
-          _menuItemPrimaryColor(PrimaryColor.turquoise),
-          _menuItemPrimaryColor(PrimaryColor.deepSkyBlue),
-          _menuItemPrimaryColor(PrimaryColor.dodgerBlue),
-          _menuItemPrimaryColor(PrimaryColor.cornflowerBlue),
-          _menuItemPrimaryColor(PrimaryColor.royalBlue),
-          _menuItemPrimaryColor(PrimaryColor.slateBlue),
-          _menuItemPrimaryColor(PrimaryColor.purple),
-          _menuItemPrimaryColor(PrimaryColor.violet),
-          _menuItemPrimaryColor(PrimaryColor.hotPink),
-          _menuItemPrimaryColor(PrimaryColor.red),
+    List<ContextMenuItem<PrimaryColors>> itemBuilder(context) => [
+          _menuItemPrimaryColor(PrimaryColors.coral),
+          _menuItemPrimaryColor(PrimaryColors.sandyBrown),
+          _menuItemPrimaryColor(PrimaryColors.orange),
+          _menuItemPrimaryColor(PrimaryColors.goldenrod),
+          _menuItemPrimaryColor(PrimaryColors.springGreen),
+          _menuItemPrimaryColor(PrimaryColors.turquoise),
+          _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
+          _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
+          _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
+          _menuItemPrimaryColor(PrimaryColors.royalBlue),
+          _menuItemPrimaryColor(PrimaryColors.slateBlue),
+          _menuItemPrimaryColor(PrimaryColors.purple),
+          _menuItemPrimaryColor(PrimaryColors.violet),
+          _menuItemPrimaryColor(PrimaryColors.hotPink),
+          _menuItemPrimaryColor(PrimaryColors.red),
         ];
 
     return Builder(
@@ -96,8 +97,8 @@ class _DocHomeState extends State<DocHome> {
         child: ContextMenuButton(
           const Icon(Icons.palette),
           itemBuilder: itemBuilder,
-          value: Theme.of(context).colorScheme.primary,
-          onSelected: (PrimaryColor value) {
+          value: primaryColor,
+          onSelected: (PrimaryColors value) {
             final themeData = Theme.of(context);
             final colorScheme = themeData.colorScheme;
             _primaryColor = value;
@@ -107,7 +108,7 @@ class _DocHomeState extends State<DocHome> {
               themeData.copyWith(
                 colorScheme: ColorScheme(
                   colorScheme.brightness,
-                  primary: value,
+                  primary: value.primaryColor,
                 ),
               ),
             );
@@ -232,8 +233,8 @@ class _DocHomeState extends State<DocHome> {
 class _ThemeToggle extends StatefulWidget {
   const _ThemeToggle({
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onPressed;
 
@@ -283,7 +284,7 @@ class DocApp extends StatelessWidget {
             if (kReleaseMode) {
               return OverviewPage();
             } else {
-              return DialogPage();
+              return CircularProgressIndicatorPage();
             }
           },
         ),
@@ -397,8 +398,12 @@ class DocApp extends StatelessWidget {
           titleBuilder: (context) => const Text('Status'),
           children: [
             TreeNode.child(
-              titleBuilder: (context) => const Text('Progress Indicator'),
-              builder: (context) => ProgressIndicatorPage(),
+              titleBuilder: (context) => const Text('Linear Progress Indicator'),
+              builder: (context) => LinearProgressIndicatorPage(),
+            ),
+            TreeNode.child(
+              titleBuilder: (context) => const Text('Circular Progress Indicator'),
+              builder: (context) => CircularProgressIndicatorPage(),
             ),
           ],
         ),

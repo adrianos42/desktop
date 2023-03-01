@@ -3,21 +3,20 @@ import 'package:flutter/widgets.dart';
 
 import '../input/button.dart';
 import '../theme/theme.dart';
-
 import 'nav.dart';
 
 /// Nav Group
 class NavGroup extends StatefulWidget {
   ///
   const NavGroup({
-    Key? key,
+    super.key,
     required this.navItems,
     required this.enabled,
     required this.index,
     required this.axis,
     required this.onChanged,
     required this.navWidgets,
-  }) : super(key: key);
+  });
 
   final Axis axis;
 
@@ -93,7 +92,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
       titleItems.add(
         _NavButtonItem(
           onLayout: onLayout,
-          button: Container(
+          child: Container(
             constraints: constraints,
             alignment: Alignment.center,
             child: Button(
@@ -175,13 +174,12 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
 
 class _NavButtonItem extends SingleChildRenderObjectWidget {
   const _NavButtonItem({
-    Key? key,
+    super.key,
     required this.onLayout,
-    required this.button,
-  }) : super(key: key, child: button);
+    required super.child,
+  });
 
   final ValueChanged<Size> onLayout;
-  final Widget button;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -196,7 +194,7 @@ class _NavButtonItem extends SingleChildRenderObjectWidget {
 }
 
 class _NavButtonRenderItem extends RenderProxyBox {
-  _NavButtonRenderItem(this.onLayout, [RenderBox? child]) : super(child);
+  _NavButtonRenderItem(this.onLayout, [RenderBox? super.child]);
 
   ValueChanged<Size> onLayout;
 
@@ -209,7 +207,7 @@ class _NavButtonRenderItem extends RenderProxyBox {
 
 class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
   const _SideIconRenderObjectWidget({
-    Key? key,
+    super.key,
     required this.index,
     required this.vsync,
     required this.additionalConstraints,
@@ -219,7 +217,7 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
     required this.sideLength,
     required this.lengths,
     required this.crossLength,
-  }) : super(key: key);
+  });
 
   final int index;
   final TickerProvider vsync;
@@ -262,17 +260,16 @@ class _RenderIconSide extends RenderConstrainedBox {
   _RenderIconSide({
     required int index,
     required TickerProvider vsync,
-    required BoxConstraints additionalConstraints,
     required Duration duration,
     required this.foreground,
     required this.sideLength,
     required this.axis,
     required this.crossLength,
     required this.lengths,
+    required super.additionalConstraints,
   })  : _oldIndex = index,
         _index = index,
-        _vsync = vsync,
-        super(additionalConstraints: additionalConstraints) {
+        _vsync = vsync {
     _positionController = AnimationController(
       duration: duration,
       value: 0.0,
@@ -392,12 +389,12 @@ class NavMenuButton extends StatelessWidget {
   ///
   const NavMenuButton(
     this.child, {
-    Key? key,
+    super.key,
     this.tooltip,
     this.onPressed,
     required this.axis,
     required this.active,
-  }) : super(key: key);
+  });
 
   final String? tooltip;
 

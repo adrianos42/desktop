@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TextFieldPage extends StatefulWidget {
-  TextFieldPage({Key? key}) : super(key: key);
+  TextFieldPage({super.key});
 
   @override
   _TextFieldPageState createState() => _TextFieldPageState();
@@ -24,7 +24,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
     const basicExample = 'return TextField();';
 
     return Defaults(
-      header: 'Text field',
+      header: 'Text Field',
       items: [
         ItemTitle(
           body: (context) => Container(

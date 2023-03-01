@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonHyperlinkPage extends StatefulWidget {
-  ButtonHyperlinkPage({Key? key}) : super(key: key);
+  ButtonHyperlinkPage({super.key});
 
   @override
   _ButtonHyperlinkPageState createState() => _ButtonHyperlinkPageState();

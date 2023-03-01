@@ -2,7 +2,7 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonPage extends StatefulWidget {
-  ButtonPage({Key? key}) : super(key: key);
+  ButtonPage({super.key});
 
   @override
   _ButtonPageState createState() => _ButtonPageState();

@@ -5,13 +5,13 @@ import 'theme/theme.dart';
 
 class GridTileBar extends StatelessWidget {
   const GridTileBar({
-    Key? key,
+    super.key,
     this.backgroundColor,
     this.leading,
     this.title,
     this.subtitle,
     this.trailing,
-  }) : super(key: key);
+  });
 
   final Color? backgroundColor;
 

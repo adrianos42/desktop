@@ -24,7 +24,7 @@ class DesktopApp extends StatefulWidget {
   ///
   /// This class creates an instance of [WidgetApp].
   const DesktopApp({
-    Key? key,
+    super.key,
     this.navigatorKey,
     this.home,
     this.theme,
@@ -56,12 +56,11 @@ class DesktopApp extends StatefulWidget {
   })  : routeInformationParser = null,
         routeInformationProvider = null,
         routerDelegate = null,
-        backButtonDispatcher = null,
-        super(key: key);
+        backButtonDispatcher = null;
 
   /// Creates a [DesktopApp] that uses the [Router] instead of a [Navigator].
   const DesktopApp.router({
-    Key? key,
+    super.key,
     required RouteInformationParser<Object> this.routeInformationParser,
     required RouterDelegate<Object> this.routerDelegate,
     this.routeInformationProvider,
@@ -92,8 +91,7 @@ class DesktopApp extends StatefulWidget {
         onGenerateInitialRoutes = null,
         onUnknownRoute = null,
         routes = null,
-        initialRoute = null,
-        super(key: key);
+        initialRoute = null;
 
   static final _shortcuts = {
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):

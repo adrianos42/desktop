@@ -26,7 +26,6 @@ targets:
           - lib/src/desktop/theme/input/checkbox.dart
           - lib/src/desktop/theme/input/drop_down.dart
           - lib/src/desktop/theme/input/hyperlink.dart
-          - lib/src/desktop/theme/input/input.dart
           - lib/src/desktop/theme/input/radio.dart
           - lib/src/desktop/theme/input/slider.dart
           - lib/src/desktop/theme/input/toggle_switch.dart
@@ -34,6 +33,8 @@ targets:
           - lib/src/desktop/theme/navigation/tab.dart
           - lib/src/desktop/theme/navigation/tree.dart
           - lib/src/desktop/theme/scrolling/scrollbar.dart
+          - lib/src/desktop/theme/status/circular_progress_indicator.dart
+          - lib/src/desktop/theme/status/linear_progress_indicator.dart
       
       desktop|icons:
         generate_for:

@@ -20,8 +20,8 @@ class TabView extends StatefulWidget {
     this.defaultTitle,
     this.navigatorObservers = const <NavigatorObserver>[],
     this.restorationScopeId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// The widget builder for the default route of the tab view
   /// ([Navigator.defaultRouteName], which is `/`).

@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -17,12 +16,12 @@ const double _kContainerWidth = 32.0;
 class Radio extends StatefulWidget {
   ///
   const Radio({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-  }) : super(key: key);
+  });
 
   final bool value;
 
@@ -190,7 +189,7 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
 class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
   const _RadioRenderObjectWidget({
-    Key? key,
+    super.key,
     this.onChanged,
     required this.value,
     required this.state,
@@ -201,7 +200,7 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
     required this.hoverColor,
     required this.hovering,
     required this.additionalConstraints,
-  }) : super(key: key);
+  });
 
   final bool value;
   final _RadioState state;
