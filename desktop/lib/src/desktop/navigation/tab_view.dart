@@ -19,7 +19,6 @@ class TabView extends StatefulWidget {
     this.onUnknownRoute,
     this.defaultTitle,
     this.navigatorObservers = const <NavigatorObserver>[],
-    this.restorationScopeId,
     super.key,
   });
 
@@ -50,12 +49,6 @@ class TabView extends StatefulWidget {
 
   /// The list of observers for the [Navigator] created in this tab view.
   final List<NavigatorObserver> navigatorObservers;
-
-  /// Restoration ID to save and restore the state of the [Navigator] built by
-  /// this [TabView].
-  ///
-  /// {@macro flutter.widgets.navigator.restorationScopeId}
-  final String? restorationScopeId;
 
   @override
   _TabViewState createState() => _TabViewState();

@@ -1,13 +1,13 @@
 builders:
   theme_data:
-    import: "package:desktop/builder.dart"
+    import: "tool/builder.dart"
     builder_factories: ["themeDataBuilder"]
     build_extensions: {".dart": [".g.part"]}
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
   icons:
-    import: "package:desktop/builder.dart"
+    import: "tool/builder.dart"
     builder_factories: ["iconsBuilder"]
     build_extensions: {".dart": [".g.part"]}
     auto_apply: dependents

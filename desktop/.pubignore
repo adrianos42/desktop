@@ -1,8 +1,9 @@
-lib/builder.dart
-lib/theme_data_generator.dart
-lib/icons_generator.dart
+tool/builder.dart
+tool/theme_data_generator.dart
+tool/icons_generator.dart
 fonts/IBM_Plex_Mono/OFL.txt
 fonts/IBM_Plex_Sans/OFL.txt
 fonts/IBM_Plex_Serif/OFL.txt
 fonts/Material_Icons_Sharp_Regular/codepoints
 build.yaml
+Makefile

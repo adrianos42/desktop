@@ -9,80 +9,55 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
-  IndexedWidgetBuilder _createCustomTab(String title, IconData icon) {
-    return (context, _) {
-      final textTheme = Theme.of(context).textTheme;
-      final colorScheme = Theme.of(context).colorScheme;
-      final buttonScope = ButtonScope.of(context)!;
+  final _controller = TabController();
 
-      final foreground = colorScheme.shade[100];
-      final Color background = buttonScope.active
-          ? colorScheme.background[0]
-          : buttonScope.pressed
-              ? colorScheme.background[0]
-              : buttonScope.hovered
-                  ? colorScheme.shade[30]
-                  : colorScheme.background[12];
-
-      return Container(
-        alignment: Alignment.center,
-        color: background,
-        padding: EdgeInsets.symmetric(
-          horizontal: TabTheme.of(context).itemSpacing!,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+  WidgetBuilder _createCustomTab({String? title, IconData? icon}) {
+    return (context) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (icon != null)
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: textTheme.body2.copyWith(color: foreground),
-              ),
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(icon),
             ),
-            Icon(
-              icon,
-              color: foreground,
-            ),
-          ],
-        ),
+          if (title != null) Text(title),
+        ],
       );
     };
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    final colorScheme = themeData.colorScheme;
+    final textTheme = themeData.textTheme;
+
     const codeSample = '''
 return Tab(
   items: [
     TabItem.text('page 0',
-      builder: (context, _) => TabView(
-        builder: (context) => Center(
-          child: Text(
-            'page 0',
-            style: Theme.of(context).textTheme.title,
-          ),
+      builder: (context) => Center(
+        child: Text(
+          'page 0',
+          style: Theme.of(context).textTheme.title,
         ),
       ),
     ),
     TabItem.text('page 1',
-      builder: (context, _) => TabView(
-        builder: (context) => Center(
-          child: Text(
-            'page 1',
-            style: Theme.of(context).textTheme.title,
-          ),
+      builder: (context) => Center(
+        child: Text(
+          'page 1',
+          style: Theme.of(context).textTheme.title,
         ),
       ),
     ),
     TabItem.text('page 2',
-      builder: (context, _) => TabView(
-        builder: (context) => Center(
-          child: Text(
-            'page 2',
-            style: Theme.of(context).textTheme.title,
-          ),
+      builder: (context) => Center(
+        child: Text(
+          'page 2',
+          style: Theme.of(context).textTheme.title,
         ),
       ),
     ),
@@ -92,12 +67,14 @@ return Tab(
 
     const customCodeSample = '''
 return Tab(
-  itemPadding: EdgeInsets.zero,
-  backgroundColor: Theme.of(context).colorScheme.background[12],
+  themeData: TabThemeData(
+    backgroundColor: Theme.of(context).colorScheme.background[12],
+    itemPadding: EdgeInsets.zero,
+  ),
   items: [
     TabItem(
       itemBuilder: _createCustomTab('camera', Icons.camera),
-      builder: (context, _) => Center(
+      builder: (context) => Center(
         child: Text(
           'camera page',
           style: Theme.of(context).textTheme.title,
@@ -106,7 +83,7 @@ return Tab(
     ),
     TabItem(
       itemBuilder: _createCustomTab('computer', Icons.computer),
-      builder: (context, _) => Center(
+      builder: (context) => Center(
         child: Text(
           'computer page',
           style: Theme.of(context).textTheme.title,
@@ -115,7 +92,7 @@ return Tab(
     ),
     TabItem(
       itemBuilder: _createCustomTab('map', Icons.map),
-      builder: (context, _) => Center(
+      builder: (context) => Center(
         child: Text(
           'map page',
           style: Theme.of(context).textTheme.title,
@@ -124,11 +101,79 @@ return Tab(
     ),
     TabItem(
       itemBuilder: _createCustomTab('cloud', Icons.cloud),
-      builder: (context, _) => Center(
+      builder: (context) => Center(
         child: Text(
           'cloud page',
           style: Theme.of(context).textTheme.title,
         ),
+      ),
+    ),
+  ],
+);
+''';
+
+    const controlledSample = '''
+return Tab(
+  controller: _controller,
+  items: [
+    TabItem.text(
+      'camera',
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Button.text('computer',
+              onPressed: () => _controller.index = 1),
+          Button.text('map',
+              onPressed: () => _controller.index = 2),
+          Button.text('cloud',
+              onPressed: () => _controller.index = 3),
+        ],
+      ),
+    ),
+    TabItem.text(
+      'computer',
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Button.text('camera',
+              onPressed: () => _controller.index = 0),
+          Button.text('map',
+              onPressed: () => _controller.index = 2),
+          Button.text('cloud',
+              onPressed: () => _controller.index = 3),
+        ],
+      ),
+    ),
+    TabItem.text(
+      'map',
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Button.text('camera',
+              onPressed: () => _controller.index = 0),
+          Button.text('computer',
+              onPressed: () => _controller.index = 1),
+          Button.text('cloud',
+              onPressed: () => _controller.index = 3),
+        ],
+      ),
+    ),
+    TabItem.text(
+      'cloud',
+      builder: (context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Button.text('camera',
+              onPressed: () => _controller.index = 0),
+          Button.text('computer',
+              onPressed: () => _controller.index = 1),
+          Button.text('map',
+              onPressed: () => _controller.index = 2),
+        ],
       ),
     ),
   ],
@@ -143,29 +188,29 @@ return Tab(
             return Tab(
               items: [
                 TabItem(
-                  itemBuilder: (context, _) => const Text('page 0'),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 0'),
+                  builder: (context) => Center(
                     child: Text(
                       'page 0',
-                      style: Theme.of(context).textTheme.title,
+                      style: textTheme.title,
                     ),
                   ),
                 ),
                 TabItem(
-                  itemBuilder: (context, _) => const Text('page 1'),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 1'),
+                  builder: (context) => Center(
                     child: Text(
                       'page 1',
-                      style: Theme.of(context).textTheme.title,
+                      style: textTheme.title,
                     ),
                   ),
                 ),
                 TabItem(
-                  itemBuilder: (context, _) => const Text('page 2'),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 2'),
+                  builder: (context) => Center(
                     child: Text(
                       'page 2',
-                      style: Theme.of(context).textTheme.title,
+                      style: textTheme.title,
                     ),
                   ),
                 ),
@@ -177,51 +222,224 @@ return Tab(
         ),
         ItemTitle(
           body: (context) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Tab(
+                themeData: TabThemeData(
+                    itemBackgroundColor: colorScheme.background[12],
+                    itemHoverBackgroundColor: colorScheme.shade[30],
+                    itemHighlightBackgroundColor: colorScheme.background[0],
+                    itemColor: colorScheme.shade[100],
+                    tabBarBackgroundColor: colorScheme.background[12],
+                    itemFilled: true,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 12.0)),
+                trailingMenu: [
+                  TabMenuItem(
+                    builder: (context) => Container(
+                      height: 200.0,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'settings',
+                        style: textTheme.title,
+                      ),
+                    ),
+                    itemBuilder: (context) => Padding(
+                      padding: TabTheme.of(context).itemPadding!,
+                      child: const Icon(Icons.camera),
+                    ),
+                  ),
+                ],
+                items: [
+                  TabItem(
+                    itemBuilder:
+                        _createCustomTab(title: 'camera', icon: Icons.camera),
+                    builder: (context) => Center(
+                      child: Text(
+                        'camera page',
+                        style: textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TabItem(
+                    itemBuilder: _createCustomTab(
+                        title: 'computer', icon: Icons.computer),
+                    builder: (context) => Center(
+                      child: Text(
+                        'computer page',
+                        style: textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TabItem(
+                    itemBuilder:
+                        _createCustomTab(title: 'map', icon: Icons.map),
+                    builder: (context) => Center(
+                      child: Text(
+                        'map page',
+                        style: textTheme.title,
+                      ),
+                    ),
+                  ),
+                  TabItem(
+                    itemBuilder:
+                        _createCustomTab(title: 'cloud', icon: Icons.cloud),
+                    builder: (context) => Center(
+                      child: Text(
+                        'cloud page',
+                        style: textTheme.title,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          codeText: customCodeSample,
+          title: 'Custom tabs',
+        ),
+        ItemTitle(
+          body: (context) {
             return Tab(
-              itemPadding: EdgeInsets.zero,
-              backgroundColor: Theme.of(context).colorScheme.background[12],
+              controller: _controller,
+              items: [
+                TabItem.text(
+                  'camera',
+                  builder: (context) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Button.text('computer',
+                          onPressed: () => _controller.index = 1),
+                      Button.text('map',
+                          onPressed: () => _controller.index = 2),
+                      Button.text('cloud',
+                          onPressed: () => _controller.index = 3),
+                    ],
+                  ),
+                ),
+                TabItem.text(
+                  'computer',
+                  builder: (context) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Button.text('camera',
+                          onPressed: () => _controller.index = 0),
+                      Button.text('map',
+                          onPressed: () => _controller.index = 2),
+                      Button.text('cloud',
+                          onPressed: () => _controller.index = 3),
+                    ],
+                  ),
+                ),
+                TabItem.text(
+                  'map',
+                  builder: (context) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Button.text('camera',
+                          onPressed: () => _controller.index = 0),
+                      Button.text('computer',
+                          onPressed: () => _controller.index = 1),
+                      Button.text('cloud',
+                          onPressed: () => _controller.index = 3),
+                    ],
+                  ),
+                ),
+                TabItem.text(
+                  'cloud',
+                  builder: (context) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Button.text('camera',
+                          onPressed: () => _controller.index = 0),
+                      Button.text('computer',
+                          onPressed: () => _controller.index = 1),
+                      Button.text('map',
+                          onPressed: () => _controller.index = 2),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          codeText: controlledSample,
+          title: 'Controlled tabs',
+        ),
+        ItemTitle(
+          body: (context) {
+            return Tab(
+              leadingMenu: [
+                TabMenuItem.text(
+                  'menu 0',
+                  builder: (context) => Container(
+                    height: 200.0,
+                    alignment: Alignment.center,
+                    child: const Text('menu 0'),
+                  ),
+                ),
+                TabMenuItem.text(
+                  'menu 1',
+                  builder: (context) => Container(
+                    height: 400.0,
+                    alignment: Alignment.center,
+                    child: const Text('menu 1'),
+                  ),
+                ),
+                TabMenuItem.text(
+                  'menu 2',
+                  builder: (context) => Container(
+                    height: 80.0,
+                    alignment: Alignment.center,
+                    child: const Text('menu 2'),
+                  ),
+                ),
+              ],
+              trailingMenu: [
+                TabMenuItem.text(
+                  'menu 3',
+                  builder: (context) => Container(
+                    height: 120.0,
+                    alignment: Alignment.center,
+                    child: const Text('menu 3'),
+                  ),
+                ),
+              ],
               items: [
                 TabItem(
-                  itemBuilder: _createCustomTab('camera', Icons.camera),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 0'),
+                  builder: (context) => Center(
                     child: Text(
-                      'camera page',
-                      style: Theme.of(context).textTheme.title,
+                      'page 0',
+                      style: textTheme.title,
                     ),
                   ),
                 ),
                 TabItem(
-                  itemBuilder: _createCustomTab('computer', Icons.computer),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 1'),
+                  builder: (context) => Center(
                     child: Text(
-                      'computer page',
-                      style: Theme.of(context).textTheme.title,
+                      'page 1',
+                      style: textTheme.title,
                     ),
                   ),
                 ),
                 TabItem(
-                  itemBuilder: _createCustomTab('map', Icons.map),
-                  builder: (context, _) => Center(
+                  itemBuilder: (context) => const Text('page 2'),
+                  builder: (context) => Center(
                     child: Text(
-                      'map page',
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                  ),
-                ),
-                TabItem(
-                  itemBuilder: _createCustomTab('cloud', Icons.cloud),
-                  builder: (context, _) => Center(
-                    child: Text(
-                      'cloud page',
-                      style: Theme.of(context).textTheme.title,
+                      'page 2',
+                      style: textTheme.title,
                     ),
                   ),
                 ),
               ],
             );
           },
-          codeText: customCodeSample,
-          title: 'Custom tabs',
+          codeText: codeSample,
+          title: 'Tab with menu',
         ),
       ],
       header: 'Tab',

@@ -484,8 +484,8 @@ class App extends StatelessWidget {
           child: Tab(
             items: [
               TabItem(
-                itemBuilder: (context, _) => const Icon(Icons.visibility),
-                builder: (context, _) => Column(
+                itemBuilder: (context) => const Icon(Icons.visibility),
+                builder: (context) => Column(
                   children: [
                     Container(
                       decoration: Defaults.itemDecoration(context),
@@ -501,8 +501,8 @@ class App extends StatelessWidget {
               ),
               if (widget.styleItems != null)
                 TabItem(
-                  itemBuilder: (context, _) => const Icon(Icons.style),
-                  builder: (context, _) => Column(
+                  itemBuilder: (context) => const Icon(Icons.style),
+                  builder: (context) => Column(
                     children: [
                       Container(
                         decoration: Defaults.itemDecoration(context),
@@ -518,8 +518,8 @@ class App extends StatelessWidget {
                 ),
               if (widget.items[_index].codeText != null)
                 TabItem(
-                  itemBuilder: (context, _) => const Icon(Icons.code),
-                  builder: (context, _) => Container(
+                  itemBuilder: (context) => const Icon(Icons.code),
+                  builder: (context) => Container(
                     decoration: Defaults.itemDecoration(context),
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 4.0),

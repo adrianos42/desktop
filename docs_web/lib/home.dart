@@ -12,7 +12,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = '4.0.0-dev-7.0';
+const String _version = '4.0.0-dev-7.1';
 
 ///
 class DocHome extends StatefulWidget {
@@ -284,7 +284,7 @@ class DocApp extends StatelessWidget {
             if (kReleaseMode) {
               return OverviewPage();
             } else {
-              return CircularProgressIndicatorPage();
+              return TabPage();
             }
           },
         ),
@@ -299,7 +299,6 @@ class DocApp extends StatelessWidget {
               titleBuilder: (context) => const Text('Nav'),
               builder: (context) => NavPage(),
             ),
-
             ///TreeNode.child(
             ///  titleBuilder: (context) => const Text('Bottom Nav'),
             ///  builder: (context) => BottomNavPage(),

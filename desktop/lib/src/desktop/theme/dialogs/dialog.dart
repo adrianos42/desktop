@@ -63,7 +63,7 @@ class _DialogThemeData {
   /// ```
   EdgeInsets get bodyPadding => _kbodyPadding;
 
-  /// The background [Color].
+  /// The background color.
   /// 
   /// Defaults to:
   /// 
@@ -72,7 +72,7 @@ class _DialogThemeData {
   /// ```
   Color get background => colorScheme.background[0];
 
-  /// The barrier [Color].
+  /// The barrier color.
   /// 
   /// Defaults to:
   /// 

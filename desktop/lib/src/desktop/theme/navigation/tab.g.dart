@@ -11,15 +11,48 @@ part of 'tab.dart';
 class TabThemeData {
   /// Creates a [TabThemeData].
   const TabThemeData({
+    this.padding,
+    this.height,
+    this.tabBarBackgroundColor,
     this.textStyle,
     this.iconThemeData,
     this.itemSpacing,
-    this.height,
-    this.color,
-    this.hoverColor,
-    this.backgroundColor,
-    this.highlightColor,
+    this.itemPadding,
+    this.itemColor,
+    this.itemHoverColor,
+    this.itemHighlightColor,
+    this.itemFilled,
+    this.itemBackgroundColor,
+    this.itemHoverBackgroundColor,
+    this.itemHighlightBackgroundColor,
   });
+
+  /// The padding for the tab bar.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// EdgeInsets.zero
+  /// ```
+  final EdgeInsets? padding;
+
+  /// The height of the tab bar.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 36.0
+  /// ```
+  final double? height;
+
+  /// The background of the tab bar.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.background[0]
+  /// ```
+  final Color? tabBarBackgroundColor;
 
   /// The style for the text. The color is ignored.
   ///
@@ -48,14 +81,14 @@ class TabThemeData {
   /// ```
   final double? itemSpacing;
 
-  /// The height of the tab bar.
+  /// The padding for the items in the tab bar.
   ///
   /// Defaults to:
   ///
   /// ```dart
-  /// 36.0
+  /// EdgeInsets.symmetric(horizontal: itemSpacing)
   /// ```
-  final double? height;
+  final EdgeInsets? itemPadding;
 
   /// The color of the tab item.
   ///
@@ -64,7 +97,7 @@ class TabThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  final Color? color;
+  final Color? itemColor;
 
   /// The hover color of the tab item.
   ///
@@ -73,16 +106,7 @@ class TabThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  final Color? hoverColor;
-
-  /// The background of the tab bar.
-  ///
-  /// Defaults to:
-  ///
-  /// ```dart
-  /// colorScheme.background[0]
-  /// ```
-  final Color? backgroundColor;
+  final Color? itemHoverColor;
 
   /// The highlight color of the tab item.
   ///
@@ -91,28 +115,80 @@ class TabThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  final Color? highlightColor;
+  final Color? itemHighlightColor;
+
+  /// If the tab bar item should use a filled button.
+  /// See [itemBackgroundColor] to change the background color.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// false
+  /// ```
+  final bool? itemFilled;
+
+  /// The background color when the button is filled.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.primary[30]
+  /// ```
+  final Color? itemBackgroundColor;
+
+  /// The background color when the button is being hovered.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.shade[30]
+  /// ```
+  final Color? itemHoverBackgroundColor;
+
+  /// The background color when the button is pressed.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.background[20]
+  /// ```
+  final Color? itemHighlightBackgroundColor;
 
   /// Makes a copy of [TabThemeData] overwriting selected fields.
   TabThemeData copyWith({
+    EdgeInsets? padding,
+    double? height,
+    Color? tabBarBackgroundColor,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     double? itemSpacing,
-    double? height,
-    Color? color,
-    Color? hoverColor,
-    Color? backgroundColor,
-    Color? highlightColor,
+    EdgeInsets? itemPadding,
+    Color? itemColor,
+    Color? itemHoverColor,
+    Color? itemHighlightColor,
+    bool? itemFilled,
+    Color? itemBackgroundColor,
+    Color? itemHoverBackgroundColor,
+    Color? itemHighlightBackgroundColor,
   }) {
     return TabThemeData(
+      padding: padding ?? this.padding,
+      height: height ?? this.height,
+      tabBarBackgroundColor:
+          tabBarBackgroundColor ?? this.tabBarBackgroundColor,
       textStyle: textStyle ?? this.textStyle,
       iconThemeData: iconThemeData ?? this.iconThemeData,
       itemSpacing: itemSpacing ?? this.itemSpacing,
-      height: height ?? this.height,
-      color: color ?? this.color,
-      hoverColor: hoverColor ?? this.hoverColor,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      highlightColor: highlightColor ?? this.highlightColor,
+      itemPadding: itemPadding ?? this.itemPadding,
+      itemColor: itemColor ?? this.itemColor,
+      itemHoverColor: itemHoverColor ?? this.itemHoverColor,
+      itemHighlightColor: itemHighlightColor ?? this.itemHighlightColor,
+      itemFilled: itemFilled ?? this.itemFilled,
+      itemBackgroundColor: itemBackgroundColor ?? this.itemBackgroundColor,
+      itemHoverBackgroundColor:
+          itemHoverBackgroundColor ?? this.itemHoverBackgroundColor,
+      itemHighlightBackgroundColor:
+          itemHighlightBackgroundColor ?? this.itemHighlightBackgroundColor,
     );
   }
 
@@ -122,46 +198,82 @@ class TabThemeData {
       return this;
     }
     return copyWith(
+      padding: other.padding,
+      height: other.height,
+      tabBarBackgroundColor: other.tabBarBackgroundColor,
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
       itemSpacing: other.itemSpacing,
-      height: other.height,
-      color: other.color,
-      hoverColor: other.hoverColor,
-      backgroundColor: other.backgroundColor,
-      highlightColor: other.highlightColor,
+      itemPadding: other.itemPadding,
+      itemColor: other.itemColor,
+      itemHoverColor: other.itemHoverColor,
+      itemHighlightColor: other.itemHighlightColor,
+      itemFilled: other.itemFilled,
+      itemBackgroundColor: other.itemBackgroundColor,
+      itemHoverBackgroundColor: other.itemHoverBackgroundColor,
+      itemHighlightBackgroundColor: other.itemHighlightBackgroundColor,
     );
   }
 
   bool get _isConcrete {
-    return textStyle != null &&
+    return padding != null &&
+        height != null &&
+        tabBarBackgroundColor != null &&
+        textStyle != null &&
         iconThemeData != null &&
         itemSpacing != null &&
-        height != null &&
-        color != null &&
-        hoverColor != null &&
-        backgroundColor != null &&
-        highlightColor != null;
+        itemPadding != null &&
+        itemColor != null &&
+        itemHoverColor != null &&
+        itemHighlightColor != null &&
+        itemFilled != null &&
+        itemBackgroundColor != null &&
+        itemHoverBackgroundColor != null &&
+        itemHighlightBackgroundColor != null;
   }
 
   @override
   int get hashCode {
     return Object.hash(
+      padding,
+      height,
+      tabBarBackgroundColor,
       textStyle,
       iconThemeData,
       itemSpacing,
-      height,
-      color,
-      hoverColor,
-      backgroundColor,
-      highlightColor,
+      itemPadding,
+      itemColor,
+      itemHoverColor,
+      itemHighlightColor,
+      itemFilled,
+      itemBackgroundColor,
+      itemHoverBackgroundColor,
+      itemHighlightBackgroundColor,
     );
   }
 
   @override
   String toString() {
     return r'''
-textStyle: The style for the text. The color is ignored.
+padding: The padding for the tab bar.
+
+ Defaults to:
+
+ ```dart
+ EdgeInsets.zero
+ ```;;height: The height of the tab bar.
+
+ Defaults to:
+
+ ```dart
+ 36.0
+ ```;;tabBarBackgroundColor: The background of the tab bar.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[0]
+ ```;;textStyle: The style for the text. The color is ignored.
 
  Defaults to:
 
@@ -179,36 +291,55 @@ textStyle: The style for the text. The color is ignored.
 
  ```dart
  8.0
- ```;;height: The height of the tab bar.
+ ```;;itemPadding: The padding for the items in the tab bar.
 
  Defaults to:
 
  ```dart
- 36.0
- ```;;color: The color of the tab item.
+ EdgeInsets.symmetric(horizontal: itemSpacing)
+ ```;;itemColor: The color of the tab item.
 
  Defaults to:
 
  ```dart
  textTheme.textLow
- ```;;hoverColor: The hover color of the tab item.
+ ```;;itemHoverColor: The hover color of the tab item.
 
  Defaults to:
 
  ```dart
  colorScheme.shade[100]
- ```;;backgroundColor: The background of the tab bar.
-
- Defaults to:
-
- ```dart
- colorScheme.background[0]
- ```;;highlightColor: The highlight color of the tab item.
+ ```;;itemHighlightColor: The highlight color of the tab item.
 
  Defaults to:
 
  ```dart
  colorScheme.primary[60]
+ ```;;itemFilled: If the tab bar item should use a filled button.
+ See [itemBackgroundColor] to change the background color.
+
+ Defaults to:
+
+ ```dart
+ false
+ ```;;itemBackgroundColor: The background color when the button is filled.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.primary[30]
+ ```;;itemHoverBackgroundColor: The background color when the button is being hovered.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.shade[30]
+ ```;;itemHighlightBackgroundColor: The background color when the button is pressed.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[20]
  ```;;
 ''';
   }
@@ -222,14 +353,20 @@ textStyle: The style for the text. The color is ignored.
       return false;
     }
     return other is TabThemeData &&
+        other.padding == padding &&
+        other.height == height &&
+        other.tabBarBackgroundColor == tabBarBackgroundColor &&
         other.textStyle == textStyle &&
         other.iconThemeData == iconThemeData &&
         other.itemSpacing == itemSpacing &&
-        other.height == height &&
-        other.color == color &&
-        other.hoverColor == hoverColor &&
-        other.backgroundColor == backgroundColor &&
-        other.highlightColor == highlightColor;
+        other.itemPadding == itemPadding &&
+        other.itemColor == itemColor &&
+        other.itemHoverColor == itemHoverColor &&
+        other.itemHighlightColor == itemHighlightColor &&
+        other.itemFilled == itemFilled &&
+        other.itemBackgroundColor == itemBackgroundColor &&
+        other.itemHoverBackgroundColor == itemHoverBackgroundColor &&
+        other.itemHighlightBackgroundColor == itemHighlightBackgroundColor;
   }
 }
 
@@ -265,27 +402,39 @@ class TabTheme extends InheritedTheme {
   static Widget copyWith({
     Key? key,
     required Widget child,
+    EdgeInsets? padding,
+    double? height,
+    Color? tabBarBackgroundColor,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
     double? itemSpacing,
-    double? height,
-    Color? color,
-    Color? hoverColor,
-    Color? backgroundColor,
-    Color? highlightColor,
+    EdgeInsets? itemPadding,
+    Color? itemColor,
+    Color? itemHoverColor,
+    Color? itemHighlightColor,
+    bool? itemFilled,
+    Color? itemBackgroundColor,
+    Color? itemHoverBackgroundColor,
+    Color? itemHighlightBackgroundColor,
   }) {
     return Builder(
       key: key,
       builder: (context) => TabTheme(
         data: TabTheme.of(context).copyWith(
+          padding: padding,
+          height: height,
+          tabBarBackgroundColor: tabBarBackgroundColor,
           textStyle: textStyle,
           iconThemeData: iconThemeData,
           itemSpacing: itemSpacing,
-          height: height,
-          color: color,
-          hoverColor: hoverColor,
-          backgroundColor: backgroundColor,
-          highlightColor: highlightColor,
+          itemPadding: itemPadding,
+          itemColor: itemColor,
+          itemHoverColor: itemHoverColor,
+          itemHighlightColor: itemHighlightColor,
+          itemFilled: itemFilled,
+          itemBackgroundColor: itemBackgroundColor,
+          itemHoverBackgroundColor: itemHoverBackgroundColor,
+          itemHighlightBackgroundColor: itemHighlightBackgroundColor,
         ),
         child: child,
       ),
@@ -321,30 +470,49 @@ class TabTheme extends InheritedTheme {
       final _tabThemeData =
           _TabThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
+      final EdgeInsets padding = tabThemeData.padding ?? _tabThemeData.padding;
+      final double height = tabThemeData.height ?? _tabThemeData.height;
+      final Color tabBarBackgroundColor = tabThemeData.tabBarBackgroundColor ??
+          _tabThemeData.tabBarBackgroundColor;
       final TextStyle textStyle =
           tabThemeData.textStyle ?? _tabThemeData.textStyle;
       final IconThemeData iconThemeData =
           tabThemeData.iconThemeData ?? _tabThemeData.iconThemeData;
       final double itemSpacing =
           tabThemeData.itemSpacing ?? _tabThemeData.itemSpacing;
-      final double height = tabThemeData.height ?? _tabThemeData.height;
-      final Color color = tabThemeData.color ?? _tabThemeData.color;
-      final Color hoverColor =
-          tabThemeData.hoverColor ?? _tabThemeData.hoverColor;
-      final Color backgroundColor =
-          tabThemeData.backgroundColor ?? _tabThemeData.backgroundColor;
-      final Color highlightColor =
-          tabThemeData.highlightColor ?? _tabThemeData.highlightColor;
+      final EdgeInsets itemPadding =
+          tabThemeData.itemPadding ?? _tabThemeData.itemPadding;
+      final Color itemColor = tabThemeData.itemColor ?? _tabThemeData.itemColor;
+      final Color itemHoverColor =
+          tabThemeData.itemHoverColor ?? _tabThemeData.itemHoverColor;
+      final Color itemHighlightColor =
+          tabThemeData.itemHighlightColor ?? _tabThemeData.itemHighlightColor;
+      final bool itemFilled =
+          tabThemeData.itemFilled ?? _tabThemeData.itemFilled;
+      final Color itemBackgroundColor =
+          tabThemeData.itemBackgroundColor ?? _tabThemeData.itemBackgroundColor;
+      final Color itemHoverBackgroundColor =
+          tabThemeData.itemHoverBackgroundColor ??
+              _tabThemeData.itemHoverBackgroundColor;
+      final Color itemHighlightBackgroundColor =
+          tabThemeData.itemHighlightBackgroundColor ??
+              _tabThemeData.itemHighlightBackgroundColor;
 
       return tabThemeData.copyWith(
+        padding: padding,
+        height: height,
+        tabBarBackgroundColor: tabBarBackgroundColor,
         textStyle: textStyle,
         iconThemeData: iconThemeData,
         itemSpacing: itemSpacing,
-        height: height,
-        color: color,
-        hoverColor: hoverColor,
-        backgroundColor: backgroundColor,
-        highlightColor: highlightColor,
+        itemPadding: itemPadding,
+        itemColor: itemColor,
+        itemHoverColor: itemHoverColor,
+        itemHighlightColor: itemHighlightColor,
+        itemFilled: itemFilled,
+        itemBackgroundColor: itemBackgroundColor,
+        itemHoverBackgroundColor: itemHoverBackgroundColor,
+        itemHighlightBackgroundColor: itemHighlightBackgroundColor,
       );
     }
 

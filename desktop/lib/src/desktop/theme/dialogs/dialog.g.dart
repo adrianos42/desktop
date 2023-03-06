@@ -57,7 +57,7 @@ class DialogThemeData {
   /// ```
   final EdgeInsets? bodyPadding;
 
-  /// The background [Color].
+  /// The background color.
   ///
   /// Defaults to:
   ///
@@ -66,7 +66,7 @@ class DialogThemeData {
   /// ```
   final Color? background;
 
-  /// The barrier [Color].
+  /// The barrier color.
   ///
   /// Defaults to:
   ///
@@ -198,13 +198,13 @@ constraints: The [BoxConstraints] of the [Dialog].
  
  ```dart
  EdgeInsets.all(16.0)
- ```;;background: The background [Color].
+ ```;;background: The background color.
  
  Defaults to:
  
  ```dart
  colorScheme.background[0]
- ```;;barrierColor: The barrier [Color].
+ ```;;barrierColor: The barrier color.
  
  Defaults to:
  
