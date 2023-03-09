@@ -612,7 +612,7 @@ class _TreeColumnState extends State<_TreeColumn> {
         children: [
           Button(
             bodyPadding: EdgeInsets.zero,
-            themeData: ButtonThemeData(
+            theme: ButtonThemeData(
               color: treeTheme.color,
               hoverColor: treeTheme.hoverColor,
               highlightColor: treeTheme.highlightColor,
@@ -640,7 +640,7 @@ class _TreeColumnState extends State<_TreeColumn> {
       return Align(
         alignment: Alignment.centerLeft,
         child: Button(
-          themeData: ButtonThemeData(
+          theme: ButtonThemeData(
             color: highlightColor,
             highlightColor: treeTheme.color,
           ),

@@ -6,70 +6,24 @@ import 'package:flutter/widgets.dart';
 
 import '../theme/theme.dart';
 
-const double _kTooltipHeight = 32.0;
-const double _kTooltipMaxWidth = 320.0;
-const double _kVerticalOffset = 24.0;
 const bool _kPreferBelow = true;
-const EdgeInsetsGeometry _kPadding =
-    EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0);
-const EdgeInsetsGeometry _kMargin = EdgeInsets.zero;
+const bool _kExcludeFromSemantics = false;
 const Duration _kFadeInDuration = Duration(milliseconds: 80);
 const Duration _kFadeOutDuration = Duration(milliseconds: 40);
-const Duration _kShowDuration = Duration(milliseconds: 2400);
-const Duration _kWaitDuration = Duration(milliseconds: 1200);
-const bool _kExcludeFromSemantics = false;
 
 class Tooltip extends StatefulWidget {
   const Tooltip({
     super.key,
     required this.message,
-    this.height,
-    this.maxWidth,
-    this.padding,
-    this.margin,
-    this.verticalOffset,
     this.preferBelow,
     this.excludeFromSemantics,
-    this.background,
-    this.textStyle,
-    this.waitDuration,
-    this.showDuration,
     this.visible,
+    this.theme,
     this.child,
   });
 
   /// The text to display in the tooltip.
   final String message;
-
-  /// The height of the tooltip's [child].
-  final double? height;
-
-  final double? maxWidth;
-
-  /// The amount of space by which to inset the tooltip's [child].
-  final EdgeInsetsGeometry? padding;
-
-  /// The empty space that surrounds the tooltip.
-  ///
-  /// Defines the tooltip's outer [Container.margin]. By default, a
-  /// long tooltip will span the width of its window. If long enough,
-  /// a tooltip might also span the window's height. This property allows
-  /// one to define how much space the tooltip must be inset from the edges
-  /// of their display window.
-  ///
-  /// If this property is null, then [TooltipThemeData.margin] is used.
-  /// If [TooltipThemeData.margin] is also null, the default margin is
-  /// 0.0 logical pixels on all sides.
-  final EdgeInsetsGeometry? margin;
-
-  /// The vertical gap between the widget and the displayed tooltip.
-  ///
-  /// When [preferBelow] is set to true and tooltips have sufficient space to
-  /// display themselves, this property defines how much vertical space
-  /// tooltips will position themselves under their corresponding widgets.
-  /// Otherwise, tooltips will position themselves above their corresponding
-  /// widgets with the given offset.
-  final double? verticalOffset;
 
   /// Whether the tooltip defaults to being displayed below the widget.
   ///
@@ -91,27 +45,10 @@ class Tooltip extends StatefulWidget {
   /// {@macro flutter.widgets.child}
   final Widget? child;
 
-  final Color? background;
-
-  /// The style to use for the message of the tooltip.
-  final TextStyle? textStyle;
-
-  /// The length of time that a pointer must hover over a tooltip's widget
-  /// before the tooltip will be shown.
-  ///
-  /// Once the pointer leaves the widget, the tooltip will immediately
-  /// disappear.
-  ///
-  /// Defaults to 800 milliseconds.
-  final Duration? waitDuration;
-
-  /// The length of time that the tooltip will be shown after a long press
-  /// is released.
-  ///
-  /// Defaults to 1.2 seconds.
-  final Duration? showDuration;
-
   final bool? visible;
+
+  /// The theme data for [Tooltip].
+  final TooltipThemeData? theme;
 
   @override
   _TooltipState createState() => _TooltipState();
@@ -320,25 +257,22 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    assert(Overlay.of(context, debugRequiredFor: widget) != null);
+    final TooltipThemeData tooltipThemeData =
+        TooltipTheme.of(context).merge(widget.theme);
 
-    final ThemeData themeData = Theme.of(context).invertedTheme;
+    height = tooltipThemeData.height!;
+    maxWidth = tooltipThemeData.maxWidth!;
+    padding = tooltipThemeData.padding!;
+    margin = tooltipThemeData.margin!;
+    verticalOffset = tooltipThemeData.verticalOffset!;
+    background = tooltipThemeData.backgroundColor!;
+    textStyle = tooltipThemeData.textStyle!;
+    waitDuration = tooltipThemeData.waitDuration!;
+    showDuration = tooltipThemeData.showDuration!;
 
-    final TextStyle defaultTextStyle = themeData.textTheme.caption;
-    final Color defaultDecoration = themeData.colorScheme.background[0];
-
-    height = widget.height ?? _kTooltipHeight;
-    maxWidth = widget.maxWidth ?? _kTooltipMaxWidth;
-    padding = widget.padding ?? _kPadding;
-    margin = widget.margin ?? _kMargin;
-    verticalOffset = widget.verticalOffset ?? _kVerticalOffset;
     preferBelow = widget.preferBelow ?? _kPreferBelow;
     excludeFromSemantics =
         widget.excludeFromSemantics ?? _kExcludeFromSemantics;
-    background = widget.background ?? defaultDecoration;
-    textStyle = widget.textStyle ?? defaultTextStyle;
-    waitDuration = widget.waitDuration ?? _kWaitDuration;
-    showDuration = widget.showDuration ?? _kShowDuration;
     _visible = widget.visible ?? true;
 
     Widget result = GestureDetector(

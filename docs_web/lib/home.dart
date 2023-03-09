@@ -12,7 +12,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = '4.0.0-dev-7.1';
+const String _version = '4.0.0';
 
 ///
 class DocHome extends StatefulWidget {

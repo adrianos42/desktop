@@ -3,9 +3,10 @@ import 'package:flutter/widgets.dart';
 import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
+import '../app.dart';
 import 'tab_scope.dart' show TabScope;
 
-const double _kHeight = 32.0;
+const double _kHeight = 36.0;
 const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
 class _BreadcrumbItem {
@@ -83,9 +84,11 @@ class Breadcrumb extends StatefulWidget {
     super.key,
     this.trailing,
     this.leading,
+    this.theme,
     required this.controller,
   });
 
+  /// The controller used to push new pages to the breadcrumb.
   final BreadcrumbController controller;
 
   /// Widget placed at the end of the breadcrumb.
@@ -93,6 +96,9 @@ class Breadcrumb extends StatefulWidget {
 
   /// Widget placed at the beginning of the breadcrumb.
   final Widget? leading;
+
+  /// The theme for [Breadcrumb].
+  final BreadcrumbThemeData? theme;
 
   @override
   _BreadcrumbState createState() => _BreadcrumbState();
@@ -108,13 +114,15 @@ class _BreadcrumbState extends State<Breadcrumb> {
   final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 
   Widget _createBarNavigation() {
-    final themeData = Theme.of(context);
-    final colorScheme = themeData.colorScheme;
-    final textTheme = themeData.textTheme;
+    final BreadcrumbThemeData themeData =
+        BreadcrumbTheme.of(context).merge(widget.theme);
 
     final items = List<Widget>.empty(growable: true);
 
-    final foreground = textTheme.textLow;
+    final Color highlightColor = themeData.highlightColor!;
+    final EdgeInsets padding = themeData.padding!;
+    final double itemSpacing = themeData.itemSpacing!;
+    final Color color = themeData.color!;
 
     for (int i = 0; i < controller._items.length; i++) {
       final isLast = i == controller._items.length - 1;
@@ -124,12 +132,13 @@ class _BreadcrumbState extends State<Breadcrumb> {
           alignment: Alignment.centerLeft,
           child: ButtonTheme.merge(
             data: ButtonThemeData(
-              disabledColor: isLast ? textTheme.textPrimaryHigh : null,
+              disabledColor: isLast ? highlightColor : null,
+              textStyle: themeData.textStyle!.copyWith(color: color),
             ),
             child: Builder(
               builder: (context) => Button(
                 body: controller._items[i].itemBuilder(context),
-                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                padding: EdgeInsets.zero,
                 bodyPadding: EdgeInsets.zero,
                 active: controller.index == i,
                 onPressed: isLast ? null : () => controller.index = i,
@@ -140,19 +149,18 @@ class _BreadcrumbState extends State<Breadcrumb> {
       );
 
       if (!isLast) {
-        items.add(
-          Icon(
-            Icons.chevron_right,
-            color: foreground,
-            size: 20.0,
+        items.add(Padding(
+          padding: EdgeInsets.symmetric(horizontal: itemSpacing),
+          child: IconTheme(
+            data: themeData.iconTheme!.copyWith(color: color),
+            child: const Icon(Icons.chevron_right),
           ),
-        );
+        ));
       }
     }
-
     Widget result = Container(
-      constraints: const BoxConstraints.tightFor(height: _kHeight),
-      color: Theme.of(context).colorScheme.background[0],
+      constraints: BoxConstraints.tightFor(height: themeData.height!),
+      color: themeData.backgroundColor!,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,15 +168,15 @@ class _BreadcrumbState extends State<Breadcrumb> {
         children: [
           if (widget.leading != null) widget.leading!,
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: Align(
               alignment: Alignment.centerLeft,
               child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  scrollbars: false,
+                behavior: const DesktopScrollBehavior(
+                  isAlwaysShown: false,
                 ),
                 child: SingleChildScrollView(
                   reverse: true,
+                  padding: padding,
                   controller: scrollController,
                   scrollDirection: Axis.horizontal,
                   child: Row(

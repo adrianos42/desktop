@@ -150,11 +150,11 @@ class Tab extends StatefulWidget {
     super.key,
     required this.items,
     this.trailing,
-    this.themeData,
+    this.theme,
     this.controller,
     this.leadingMenu,
     this.trailingMenu,
-    this.axis = Axis.horizontal,
+    this.axis = AxisDirection.up,
   }) : assert(items.length > 0);
 
   /// Tab items.
@@ -170,13 +170,13 @@ class Tab extends StatefulWidget {
   final List<TabMenuItem>? leadingMenu;
 
   /// The theme for [Tab].
-  final TabThemeData? themeData;
+  final TabThemeData? theme;
 
   /// Controls the currently selected tab index of [Tab].
   final TabController? controller;
 
-  /// The [Axis] of the tab bar.
-  final Axis axis;
+  /// The [AxisDirection] of the tab bar.
+  final AxisDirection axis;
 
   @override
   _TabState createState() => _TabState();
@@ -208,10 +208,27 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
       reverseCurve: _animationCurve,
     );
 
-    final Offset begin = widget.axis == Axis.vertical
-        ? const Offset(-1.0, 0.0)
-        : const Offset(0.0, -1.0);
-    const Offset end = Offset(0.0, 0.0);
+    final Offset begin;
+    final Offset end;
+
+    switch (widget.axis) {
+      case AxisDirection.left:
+        begin = const Offset(-1.0, 0.0);
+        end = const Offset(0.0, 0.0);
+        break;
+      case AxisDirection.right:
+        begin = const Offset(1.0, 0.0);
+        end = const Offset(0.0, 0.0);
+        break;
+      case AxisDirection.up:
+        begin = const Offset(0.0, -1.0);
+        end = const Offset(0.0, 0.0);
+        break;
+      case AxisDirection.down:
+        begin = const Offset(0.0, 1.0);
+        end = const Offset(0.0, 0.0);
+        break;
+    }
 
     _menuOffsetTween = Tween<Offset>(
       begin: begin,
@@ -225,6 +242,11 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
   ScrollController? _scrollController;
 
   int get _length => widget.items.length;
+
+  Axis get _direction =>
+      widget.axis == AxisDirection.up || widget.axis == AxisDirection.down
+          ? Axis.horizontal
+          : Axis.vertical;
 
   // late Map<Type, Action<Intent>> _actionMap;
 
@@ -282,6 +304,23 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
           ...widget.trailingMenu ?? []
         ];
 
+        final Alignment alignment;
+
+        switch (widget.axis) {
+          case AxisDirection.up:
+            alignment = Alignment.topCenter;
+            break;
+          case AxisDirection.right:
+            alignment = Alignment.centerRight;
+            break;
+          case AxisDirection.down:
+            alignment = Alignment.bottomCenter;
+            break;
+          case AxisDirection.left:
+            alignment = Alignment.centerLeft;
+            break;
+        }
+
         _menuOverlay = OverlayEntry(
           maintainState: false,
           builder: (context) => AnimatedBuilder(
@@ -290,9 +329,6 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
               behavior: HitTestBehavior.opaque,
               onTap: _hideMenu,
               child: Container(
-                alignment: widget.axis == Axis.vertical
-                    ? Alignment.centerLeft
-                    : Alignment.topCenter,
                 color: _menuColorTween.evaluate(_menuAnimation),
                 child: GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
@@ -300,18 +336,21 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
                   child: ClipRect(
                     child: FractionalTranslation(
                       translation: _menuOffsetTween.evaluate(_menuAnimation),
-                      child: Container(
-                        width: widget.axis == Axis.vertical
-                            ? null
-                            : double.infinity,
-                        height: widget.axis == Axis.horizontal
-                            ? null
-                            : double.infinity,
-                        color: themeData.tabBarBackgroundColor!,
-                        child: AnimatedSize(
-                          duration: _kMenuTransitionDuration,
-                          curve: _animationCurve,
-                          child: items[_menuIndex].builder(context),
+                      child: Align(
+                        alignment: alignment,
+                        child: Container(
+                          width: _direction == Axis.vertical
+                              ? null
+                              : double.infinity,
+                          height: _direction == Axis.horizontal
+                              ? null
+                              : double.infinity,
+                          color: themeData.tabBarBackgroundColor!,
+                          child: AnimatedSize(
+                            duration: _kMenuTransitionDuration,
+                            curve: _animationCurve,
+                            child: items[_menuIndex].builder(context),
+                          ),
                         ),
                       ),
                     ),
@@ -331,8 +370,6 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
         _menuIndex = _getMenuIndex(isTrailing, index);
       }
     });
-
-    print(_menuIndex);
   }
 
   void _updateTabController([TabController? oldWidgetController]) {
@@ -388,7 +425,7 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
       final active = _getMenuIndex(isTrailing, index) == _menuIndex;
 
       return Button(
-        themeData: ButtonThemeData(
+        theme: ButtonThemeData(
           color: themeData.itemHighlightColor!,
           highlightColor: themeData.itemColor!,
           hoverColor: themeData.itemHoverColor!,
@@ -401,7 +438,9 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
         active: active,
         body: Builder(
           builder: (context) => Container(
-            alignment: Alignment.center,
+            alignment: _direction == Axis.horizontal
+                ? Alignment.center
+                : Alignment.centerLeft,
             padding: themeData.itemPadding!,
             child: tabMenuItems[index].itemBuilder(context),
           ),
@@ -414,7 +453,7 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
     });
 
     return Flex(
-      direction: widget.axis,
+      direction: _direction,
       mainAxisSize: MainAxisSize.min,
       children: menuItems,
     );
@@ -425,12 +464,11 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
 
     final List<Widget> tabItems =
         List<Widget>.generate(widget.items.length, (index) {
-      final bool active =
-          _controller.index == index && !_menuShown;
+      final bool active = _controller.index == index && !_menuShown;
 
       return Button(
         filled: themeData.itemFilled!,
-        themeData: ButtonThemeData(
+        theme: ButtonThemeData(
           color: themeData.itemHighlightColor!,
           highlightColor: themeData.itemColor!,
           hoverColor: themeData.itemHoverColor!,
@@ -447,7 +485,9 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
         active: active,
         body: Builder(
           builder: (context) => Container(
-            alignment: Alignment.center,
+            alignment: _direction == Axis.horizontal
+                ? Alignment.center
+                : Alignment.centerLeft,
             padding: themeData.itemPadding!,
             child: widget.items[index].itemBuilder(context),
           ),
@@ -459,16 +499,23 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
       );
     });
 
+    final double minWidth = _direction == Axis.horizontal ? 128.0 : 0.0;
+    final double minHeight = _direction == Axis.vertical ? 128.0 : 0.0;
+
     return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 128.0),
+      constraints: BoxConstraints(
+        minWidth: minWidth,
+        minHeight: minHeight,
+      ),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
           scrollbars: false,
         ),
         child: SingleChildScrollView(
           controller: _scrollController,
-          scrollDirection: Axis.horizontal,
-          child: Row(
+          scrollDirection: _direction,
+          child: Flex(
+            direction: _direction,
             mainAxisSize: MainAxisSize.min,
             children: tabItems,
           ),
@@ -478,11 +525,11 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
   }
 
   Widget _createTabBar(TabThemeData themeData) {
-    final Widget result = Container(
+    Widget result = Container(
       padding: themeData.padding!,
-      height: themeData.height!,
       color: themeData.tabBarBackgroundColor!,
-      child: Row(
+      child: Flex(
+        direction: _direction,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -500,6 +547,35 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
         ],
       ),
     );
+
+    final double height = themeData.height!;
+    final double width = themeData.width!;
+
+    if (_direction == Axis.horizontal) {
+      if (height != 0.0) {
+        result = SizedBox(
+          height: height,
+          child: result,
+        );
+      } else {
+        result = IntrinsicHeight(
+          child: result,
+        );
+      }
+    }
+
+    if (_direction == Axis.vertical) {
+      if (width != 0.0) {
+        result = SizedBox(
+          width: width,
+          child: result,
+        );
+      } else {
+        result = IntrinsicWidth(
+          child: result,
+        );
+      }
+    }
 
     return result;
   }
@@ -570,6 +646,10 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
         _controller.index = _index;
       }
     }
+
+    if (widget.axis != oldWidget.axis) {
+      _createAnimation();
+    }
   }
 
   @override
@@ -586,26 +666,33 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final TabThemeData themeData = TabTheme.of(context).merge(widget.themeData);
+    final TabThemeData themeData = TabTheme.of(context).merge(widget.theme);
 
-    Widget result = Column(
+    Widget result = Flex(
+      direction:
+          _direction == Axis.horizontal ? Axis.vertical : Axis.horizontal,
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _createTabBar(themeData),
+        if (widget.axis == AxisDirection.up ||
+            widget.axis == AxisDirection.left)
+          _createTabBar(themeData),
         Expanded(
           child: Overlay(
             key: _overlayKey,
             initialEntries: _overlays,
           ),
         ),
+        if (widget.axis == AxisDirection.right ||
+            widget.axis == AxisDirection.down)
+          _createTabBar(themeData),
       ],
     );
 
     result = TabScope(
       currentIndex: _controller.index,
-      axis: widget.axis,
+      axis: _direction,
       child: result,
     );
 

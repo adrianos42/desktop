@@ -22,6 +22,8 @@ targets:
           - lib/src/desktop/theme/data/list_table.dart
           - lib/src/desktop/theme/dialogs/context_menu.dart
           - lib/src/desktop/theme/dialogs/dialog.dart
+          - lib/src/desktop/theme/dialogs/message.dart
+          - lib/src/desktop/theme/dialogs/tooltip.dart
           - lib/src/desktop/theme/input/button.dart
           - lib/src/desktop/theme/input/checkbox.dart
           - lib/src/desktop/theme/input/drop_down.dart
@@ -29,6 +31,7 @@ targets:
           - lib/src/desktop/theme/input/radio.dart
           - lib/src/desktop/theme/input/slider.dart
           - lib/src/desktop/theme/input/toggle_switch.dart
+          - lib/src/desktop/theme/navigation/breadcrumb.dart
           - lib/src/desktop/theme/navigation/nav.dart
           - lib/src/desktop/theme/navigation/tab.dart
           - lib/src/desktop/theme/navigation/tree.dart

@@ -37,9 +37,26 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
   @override
   Widget build(BuildContext context) {
     final textController = TextEditingController(text: '''
+return Column(
+  children: [
+    Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Defaults.createSubheader(context, 'Page \$count'),
+    ),
+    Expanded(
+      child: Center(
+        child: Button.text(
+          'Next page',
+          onPressed: pushPage,
+        ),
+      ),
+    ),
+  ],
+);
 ''');
 
     return Defaults(
+      styleItems: Defaults.createStyle(BreadcrumbTheme.of(context).toString()),
       items: [
         ItemTitle(
           body: (context) => Breadcrumb(

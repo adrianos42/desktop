@@ -18,19 +18,49 @@ class SliderThemeData {
     this.hightlightColor,
   });
 
+  /// The disabled color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.disabled
+  /// ```
   final Color? disabledColor;
 
+  /// The active color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.primary[60]
+  /// ```
   final Color? activeColor;
 
+  /// The active hover color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// textTheme.textHigh
+  /// ```
   final Color? activeHoverColor;
 
+  /// The track color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.shade[30]
+  /// ```
   final Color? trackColor;
 
+  /// The highlight color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// textTheme.textLow
+  /// ```
   final Color? hightlightColor;
 
   /// Makes a copy of [SliderThemeData] overwriting selected fields.
@@ -86,7 +116,37 @@ class SliderThemeData {
   @override
   String toString() {
     return r'''
-disabledColor:;;activeColor:;;activeHoverColor:;;trackColor:;;hightlightColor:;;
+disabledColor: The disabled color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.disabled
+ ```;;activeColor: The active color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.primary[60]
+ ```;;activeHoverColor: The active hover color.
+ 
+ Defaults to:
+ 
+ ```dart
+ textTheme.textHigh
+ ```;;trackColor: The track color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.shade[30]
+ ```;;hightlightColor: The highlight color.
+ 
+ Defaults to:
+ 
+ ```dart
+ textTheme.textLow
+ ```;;
 ''';
   }
 

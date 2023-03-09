@@ -21,6 +21,7 @@ class Radio extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
+    this.theme,
   });
 
   final bool value;
@@ -30,6 +31,9 @@ class Radio extends StatefulWidget {
   final FocusNode? focusNode;
 
   final bool autofocus;
+
+  /// The style [RadioThemeData] of the radio.
+  final RadioThemeData? theme;
 
   @override
   _RadioState createState() => _RadioState();
@@ -137,15 +141,15 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = RadioTheme.of(context);
+    final RadioThemeData theme = RadioTheme.of(context).merge(widget.theme);
 
-    final activeColor = theme.activeColor!;
-    final hoverColor =
+    final Color activeColor = theme.activeColor!;
+    final Color hoverColor =
         widget.value ? theme.activeHoverColor! : theme.inactiveHoverColor!;
-    final inactiveColor = theme.inactiveColor!;
-    final foregroundColor = theme.foreground!;
+    final Color inactiveColor = theme.inactiveColor!;
+    final Color foregroundColor = theme.foreground!;
     // TODO(as): final focusColor = theme.activeHoverColor!;
-    final disabledColor = theme.disabledColor!;
+    final Color disabledColor = theme.disabledColor!;
 
     const Size size = Size.square(_kOuterRadius * 2.0);
 

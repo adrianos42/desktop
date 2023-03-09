@@ -135,6 +135,9 @@ class ThemeData {
       circularProgressIndicatorTheme:
           const CircularProgressIndicatorThemeData(),
       linearProgressIndicatorTheme: const LinearProgressIndicatorThemeData(),
+      breadcrumbTheme: const BreadcrumbThemeData(),
+      messageTheme: const MessageThemeData(),
+      tooltipTheme: const TooltipThemeData(),
     );
   }
 
@@ -158,6 +161,9 @@ class ThemeData {
     required this.listTableTheme,
     required this.circularProgressIndicatorTheme,
     required this.linearProgressIndicatorTheme,
+    required this.breadcrumbTheme,
+    required this.messageTheme,
+    required this.tooltipTheme,
   });
 
   factory ThemeData.light([PrimaryColor? primaryColor]) =>
@@ -190,6 +196,9 @@ class ThemeData {
       listTableTheme: listTableTheme,
       circularProgressIndicatorTheme: circularProgressIndicatorTheme,
       linearProgressIndicatorTheme: linearProgressIndicatorTheme,
+      breadcrumbTheme: breadcrumbTheme,
+      messageTheme: messageTheme,
+      tooltipTheme: tooltipTheme,
     );
   }
 
@@ -213,6 +222,9 @@ class ThemeData {
     ListTableThemeData? listTableTheme,
     CircularProgressIndicatorThemeData? circularProgressIndicatorTheme,
     LinearProgressIndicatorThemeData? linearProgressIndicatorTheme,
+    BreadcrumbThemeData? breadcrumbTheme,
+    MessageThemeData? messageTheme,
+    TooltipThemeData? tooltipTheme,
   }) {
     final newColorScheme =
         colorScheme?.withBrightness(brightness ?? this.brightness) ??
@@ -239,6 +251,9 @@ class ThemeData {
           circularProgressIndicatorTheme ?? this.circularProgressIndicatorTheme,
       linearProgressIndicatorTheme:
           linearProgressIndicatorTheme ?? this.linearProgressIndicatorTheme,
+      breadcrumbTheme: breadcrumbTheme ?? this.breadcrumbTheme,
+      messageTheme: messageTheme ?? this.messageTheme,
+      tooltipTheme: tooltipTheme ?? this.tooltipTheme,
     );
   }
 
@@ -282,6 +297,12 @@ class ThemeData {
 
   final LinearProgressIndicatorThemeData linearProgressIndicatorTheme;
 
+  final BreadcrumbThemeData breadcrumbTheme;
+
+  final MessageThemeData messageTheme;
+
+  final TooltipThemeData tooltipTheme;
+
   ThemeData get invertedTheme {
     final Brightness inverseBrightness =
         brightness == Brightness.dark ? Brightness.light : Brightness.dark;
@@ -308,6 +329,9 @@ class ThemeData {
       listTableTheme: listTableTheme,
       circularProgressIndicatorTheme: circularProgressIndicatorTheme,
       linearProgressIndicatorTheme: linearProgressIndicatorTheme,
+      breadcrumbTheme: breadcrumbTheme,
+      messageTheme: messageTheme,
+      tooltipTheme: tooltipTheme,
     );
   }
 
@@ -333,6 +357,11 @@ class ThemeData {
       listTableTheme,
       circularProgressIndicatorTheme,
       linearProgressIndicatorTheme,
+      Object.hash(
+        breadcrumbTheme,
+        messageTheme,
+        tooltipTheme,
+      ),
     );
   }
 
@@ -364,6 +393,9 @@ class ThemeData {
         other.listTableTheme == listTableTheme &&
         other.circularProgressIndicatorTheme ==
             circularProgressIndicatorTheme &&
-        other.linearProgressIndicatorTheme == linearProgressIndicatorTheme;
+        other.linearProgressIndicatorTheme == linearProgressIndicatorTheme &&
+        other.breadcrumbTheme == breadcrumbTheme &&
+        other.messageTheme == messageTheme &&
+        other.tooltipTheme == tooltipTheme;
   }
 }

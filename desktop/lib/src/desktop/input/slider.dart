@@ -26,7 +26,8 @@ class Slider extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableTooltip = false,
-  })  : assert(value >= min && value <= max);
+    this.theme,
+  }) : assert(value >= min && value <= max);
 
   final double value;
 
@@ -45,6 +46,9 @@ class Slider extends StatefulWidget {
   final bool autofocus;
 
   final bool enableTooltip;
+
+  /// The style [SliderThemeData] of the slider.
+  final SliderThemeData? theme;
 
   @override
   _SliderState createState() => _SliderState();
@@ -149,7 +153,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final active = widget.onChanged != null;
-    final theme = SliderTheme.of(context);
+    final theme = SliderTheme.of(context).merge(widget.theme);
 
     final Color activeColor = theme.activeColor!;
     final hoverColor = theme.activeHoverColor!;
@@ -208,7 +212,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
       return Tooltip(
         message: (widget.value * 100).round().toString(),
         child: result,
-        height: 14.0,
+        theme: const TooltipThemeData(height: 14.0),
         preferBelow: false,
       );
     } else {

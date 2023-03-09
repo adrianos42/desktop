@@ -20,6 +20,7 @@ return Button.text(
   @override
   Widget build(BuildContext context) {
     return Defaults(
+      styleItems: Defaults.createStyle(TooltipTheme.of(context).toString()),
       header: 'Tooltip',
       items: [
         ItemTitle(

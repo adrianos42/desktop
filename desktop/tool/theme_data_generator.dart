@@ -325,6 +325,10 @@ ${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.repla
           )),
       );
 
+      final themeDataContext = themeName == 'Tooltip'
+          ? 'Theme.of(context).invertedTheme'
+          : 'Theme.of(context)';
+
       themeMethods.add(
         Method((b) => b
           ..name = 'of'
@@ -341,7 +345,7 @@ ${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.repla
             $targetThemeDataClassName? $themeDataIdent = $themeIdent?.data;
 
             if ($themeDataIdent == null || !$themeDataIdent._isConcrete) {
-              final ThemeData themeData = Theme.of(context);
+              final ThemeData themeData = $themeDataContext;
               final TextTheme textTheme = themeData.textTheme;
               final ColorScheme colorScheme = themeData.colorScheme;
 

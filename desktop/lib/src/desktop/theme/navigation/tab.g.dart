@@ -13,6 +13,7 @@ class TabThemeData {
   const TabThemeData({
     this.padding,
     this.height,
+    this.width,
     this.tabBarBackgroundColor,
     this.textStyle,
     this.iconThemeData,
@@ -36,7 +37,9 @@ class TabThemeData {
   /// ```
   final EdgeInsets? padding;
 
-  /// The height of the tab bar.
+  /// The height of the tab bar when the axis is horizontal.
+  /// When the value is `0.0`, the height of the tab bar will be
+  /// the intrinsic height of the children.
   ///
   /// Defaults to:
   ///
@@ -44,6 +47,17 @@ class TabThemeData {
   /// 36.0
   /// ```
   final double? height;
+
+  /// The width of the tab bar when the axis is vertical.
+  /// When the value is `0.0`, the width of the tab bar will be
+  /// the intrinsic width of the children.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 0.0
+  /// ```
+  final double? width;
 
   /// The background of the tab bar.
   ///
@@ -158,6 +172,7 @@ class TabThemeData {
   TabThemeData copyWith({
     EdgeInsets? padding,
     double? height,
+    double? width,
     Color? tabBarBackgroundColor,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
@@ -174,6 +189,7 @@ class TabThemeData {
     return TabThemeData(
       padding: padding ?? this.padding,
       height: height ?? this.height,
+      width: width ?? this.width,
       tabBarBackgroundColor:
           tabBarBackgroundColor ?? this.tabBarBackgroundColor,
       textStyle: textStyle ?? this.textStyle,
@@ -200,6 +216,7 @@ class TabThemeData {
     return copyWith(
       padding: other.padding,
       height: other.height,
+      width: other.width,
       tabBarBackgroundColor: other.tabBarBackgroundColor,
       textStyle: other.textStyle,
       iconThemeData: other.iconThemeData,
@@ -218,6 +235,7 @@ class TabThemeData {
   bool get _isConcrete {
     return padding != null &&
         height != null &&
+        width != null &&
         tabBarBackgroundColor != null &&
         textStyle != null &&
         iconThemeData != null &&
@@ -237,6 +255,7 @@ class TabThemeData {
     return Object.hash(
       padding,
       height,
+      width,
       tabBarBackgroundColor,
       textStyle,
       iconThemeData,
@@ -261,12 +280,22 @@ padding: The padding for the tab bar.
 
  ```dart
  EdgeInsets.zero
- ```;;height: The height of the tab bar.
+ ```;;height: The height of the tab bar when the axis is horizontal.
+ When the value is `0.0`, the height of the tab bar will be
+ the intrinsic height of the children.
 
  Defaults to:
 
  ```dart
  36.0
+ ```;;width: The width of the tab bar when the axis is vertical.
+ When the value is `0.0`, the width of the tab bar will be
+ the intrinsic width of the children.
+
+ Defaults to:
+
+ ```dart
+ 0.0
  ```;;tabBarBackgroundColor: The background of the tab bar.
 
  Defaults to:
@@ -355,6 +384,7 @@ padding: The padding for the tab bar.
     return other is TabThemeData &&
         other.padding == padding &&
         other.height == height &&
+        other.width == width &&
         other.tabBarBackgroundColor == tabBarBackgroundColor &&
         other.textStyle == textStyle &&
         other.iconThemeData == iconThemeData &&
@@ -404,6 +434,7 @@ class TabTheme extends InheritedTheme {
     required Widget child,
     EdgeInsets? padding,
     double? height,
+    double? width,
     Color? tabBarBackgroundColor,
     TextStyle? textStyle,
     IconThemeData? iconThemeData,
@@ -423,6 +454,7 @@ class TabTheme extends InheritedTheme {
         data: TabTheme.of(context).copyWith(
           padding: padding,
           height: height,
+          width: width,
           tabBarBackgroundColor: tabBarBackgroundColor,
           textStyle: textStyle,
           iconThemeData: iconThemeData,
@@ -472,6 +504,7 @@ class TabTheme extends InheritedTheme {
 
       final EdgeInsets padding = tabThemeData.padding ?? _tabThemeData.padding;
       final double height = tabThemeData.height ?? _tabThemeData.height;
+      final double width = tabThemeData.width ?? _tabThemeData.width;
       final Color tabBarBackgroundColor = tabThemeData.tabBarBackgroundColor ??
           _tabThemeData.tabBarBackgroundColor;
       final TextStyle textStyle =
@@ -501,6 +534,7 @@ class TabTheme extends InheritedTheme {
       return tabThemeData.copyWith(
         padding: padding,
         height: height,
+        width: width,
         tabBarBackgroundColor: tabBarBackgroundColor,
         textStyle: textStyle,
         iconThemeData: iconThemeData,

@@ -15,6 +15,7 @@ class _DialogPageState extends State<DialogMessagePage> {
 ''';
 
     return Defaults(
+      styleItems: Defaults.createStyle(MessageTheme.of(context).toString()),
       items: [
         // ItemTitle(
         //   body: (context) => Column(

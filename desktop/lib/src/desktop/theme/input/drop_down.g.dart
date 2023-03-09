@@ -29,7 +29,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// IconThemeData(size: 19.0, color: hoverColor)
   /// ```
   final IconThemeData? iconThemeData;
 
@@ -38,7 +38,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
   /// ```
   final TextStyle? textStyle;
 
@@ -47,7 +47,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.disabled
   /// ```
   final Color? disabledColor;
 
@@ -56,7 +56,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// textTheme.textLow
   /// ```
   final Color? color;
 
@@ -65,7 +65,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// waitingColor
   /// ```
   final Color? focusColor;
 
@@ -74,7 +74,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// textTheme.textHigh
   /// ```
   final Color? hoverColor;
 
@@ -83,7 +83,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.background[20]
   /// ```
   final Color? waitingColor;
 
@@ -92,7 +92,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.background[0]
   /// ```
   final Color? backgroundColor;
 
@@ -101,7 +101,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.background[0]
   /// ```
   final Color? hoverBackgroundColor;
 
@@ -110,7 +110,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.background[0]
   /// ```
   final Color? waitingBackgroundColor;
 
@@ -119,7 +119,7 @@ class DropDownThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  ///
+  /// colorScheme.background[0]
   /// ```
   final Color? disabledBackgroundColor;
 
@@ -213,67 +213,67 @@ iconThemeData: The icon theme of the button.
  Defaults to:
  
  ```dart
- 
+ IconThemeData(size: 19.0, color: hoverColor)
  ```;;textStyle: The style of the button.
  
  Defaults to:
  
  ```dart
- 
+ textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
  ```;;disabledColor: The color of the border when disabled.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.disabled
  ```;;color: The color of the border.
  
  Defaults to:
  
  ```dart
- 
+ textTheme.textLow
  ```;;focusColor: The color of the border when focused.
  
  Defaults to:
  
  ```dart
- 
+ waitingColor
  ```;;hoverColor: The color of the border when hovered.
  
  Defaults to:
  
  ```dart
- 
+ textTheme.textHigh
  ```;;waitingColor: The color of the border when the menu is open.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.background[20]
  ```;;backgroundColor: The background color of the button.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.background[0]
  ```;;hoverBackgroundColor: The background color when the button is being hovered.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.background[0]
  ```;;waitingBackgroundColor: The background color when the menu is open.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.background[0]
  ```;;disabledBackgroundColor: The background color when the button is disabled.
  
  Defaults to:
  
  ```dart
- 
+ colorScheme.background[0]
  ```;;
 ''';
   }

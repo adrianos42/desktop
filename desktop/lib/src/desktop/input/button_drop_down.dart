@@ -18,6 +18,7 @@ class DropDownButton<T> extends StatefulWidget {
     this.onCanceled,
     this.tooltip,
     this.enabled = true,
+    this.theme,
   });
 
   /// The list of [ContextMenuItem] used for the context menu.
@@ -37,6 +38,9 @@ class DropDownButton<T> extends StatefulWidget {
 
   /// If this button is enabled.
   final bool enabled;
+
+  /// The style [DropDownThemeData] of the drop down.
+  final DropDownThemeData? theme;
 
   @override
   _DropDownButtonState<T> createState() => _DropDownButtonState<T>();
@@ -171,7 +175,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final DropDownThemeData buttonThemeData = DropDownTheme.of(context);
+    final DropDownThemeData buttonThemeData =
+        DropDownTheme.of(context).merge(widget.theme);
 
     final bool enabled = widget.enabled;
 

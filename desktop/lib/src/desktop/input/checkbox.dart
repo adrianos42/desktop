@@ -22,7 +22,7 @@ class Checkbox extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-    this.themeData,
+    this.theme,
     this.forceEnabled = false,
   })  : assert(tristate || value != null),
         assert(!forceEnabled || onChanged == null,
@@ -46,7 +46,8 @@ class Checkbox extends StatefulWidget {
   /// See [FocusableActionDetector] field [autofocus].
   final bool autofocus;
 
-  final CheckboxThemeData? themeData;
+  /// The style [CheckboxThemeData] of the checkbox.
+  final CheckboxThemeData? theme;
 
   @override
   _CheckboxState createState() => _CheckboxState();
@@ -179,7 +180,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CheckboxTheme.of(context).merge(widget.themeData);
+    final theme = CheckboxTheme.of(context).merge(widget.theme);
 
     final activeColor = theme.activeColor!;
     final hoverColor = widget.value != false

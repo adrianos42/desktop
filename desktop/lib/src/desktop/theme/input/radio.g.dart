@@ -19,22 +19,58 @@ class RadioThemeData {
     this.foreground,
   });
 
+  /// The disabled color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.disabled
+  /// ```
   final Color? disabledColor;
 
+  /// The active color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.primary[50]
+  /// ```
   final Color? activeColor;
 
+  /// The active hover color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.primary[60]
+  /// ```
   final Color? activeHoverColor;
 
+  /// The inactive color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.shade[50]
+  /// ```
   final Color? inactiveColor;
 
+  /// The inactive hover color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.shade[100]
+  /// ```
   final Color? inactiveHoverColor;
 
+  /// The foreground color.
   ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.shade[100]
+  /// ```
   final Color? foreground;
 
   /// Makes a copy of [RadioThemeData] overwriting selected fields.
@@ -95,7 +131,43 @@ class RadioThemeData {
   @override
   String toString() {
     return r'''
-disabledColor:;;activeColor:;;activeHoverColor:;;inactiveColor:;;inactiveHoverColor:;;foreground:;;
+disabledColor: The disabled color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.disabled
+ ```;;activeColor: The active color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.primary[50]
+ ```;;activeHoverColor: The active hover color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.primary[60]
+ ```;;inactiveColor: The inactive color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.shade[50]
+ ```;;inactiveHoverColor: The inactive hover color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.shade[100]
+ ```;;foreground: The foreground color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.shade[100]
+ ```;;
 ''';
   }
 

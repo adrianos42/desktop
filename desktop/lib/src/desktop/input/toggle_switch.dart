@@ -24,6 +24,7 @@ class ToggleSwitch extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
+    this.theme,
   });
 
   final bool value;
@@ -33,6 +34,9 @@ class ToggleSwitch extends StatefulWidget {
   final FocusNode? focusNode;
 
   final bool autofocus;
+
+  /// The style [ToggleSwitchThemeData] of the toggle switch.
+  final ToggleSwitchThemeData? theme;
 
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
@@ -139,14 +143,15 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   @override
   Widget build(BuildContext context) {
-    final theme = ToggleSwitchTheme.of(context);
+    final ToggleSwitchThemeData theme =
+        ToggleSwitchTheme.of(context).merge(widget.theme);
 
-    final activeColor = theme.activeColor!;
-    final hoverColor = theme.activeHoverColor!;
-    final inactiveColor = theme.inactiveColor!;
-    final foregroundColor = theme.foreground!;
+    final Color activeColor = theme.activeColor!;
+    final Color hoverColor = theme.activeHoverColor!;
+    final Color inactiveColor = theme.inactiveColor!;
+    final Color foregroundColor = theme.foreground!;
     // TODO(as): final focusColor = theme.activeHoverColor!;
-    final disabledColor = theme.disabledColor!;
+    final Color disabledColor = theme.disabledColor!;
 
     const Size size = Size(_kWidth, _kHeight);
 

@@ -15,7 +15,7 @@ class Button extends StatefulWidget {
     this.trailing,
     this.leading,
     this.tooltip,
-    this.themeData,
+    this.theme,
     this.leadingPadding,
     this.padding,
     this.bodyPadding,
@@ -60,7 +60,7 @@ class Button extends StatefulWidget {
       autofocus: autofocus,
       active: active,
       willChangeState: willChangeState,
-      themeData: style,
+      theme: style,
       enableAnimation: true,
       filled: false,
     );
@@ -95,7 +95,7 @@ class Button extends StatefulWidget {
       willChangeState: willChangeState,
       enableAnimation: true,
       filled: false,
-      themeData: style,
+      theme: style,
     );
   }
 
@@ -122,7 +122,7 @@ class Button extends StatefulWidget {
       ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      themeData: style,
+      theme: style,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
@@ -185,7 +185,7 @@ class Button extends StatefulWidget {
   final bool willChangeState;
 
   /// The style [ButtonThemeData] of the button.
-  final ButtonThemeData? themeData;
+  final ButtonThemeData? theme;
 
   @override
   _ButtonState createState() => _ButtonState();
@@ -296,7 +296,7 @@ class _ButtonState extends State<Button>
   void _updateColor([bool animates = true]) {
     if (mounted) {
       final ButtonThemeData buttonThemeData =
-          ButtonTheme.of(context).merge(widget.themeData);
+          ButtonTheme.of(context).merge(widget.theme);
 
       final Color disabledForeground = buttonThemeData.disabledColor!;
 
@@ -437,7 +437,7 @@ class _ButtonState extends State<Button>
   @override
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData =
-        ButtonTheme.of(context).merge(widget.themeData);
+        ButtonTheme.of(context).merge(widget.theme);
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 

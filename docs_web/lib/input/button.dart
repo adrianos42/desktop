@@ -118,7 +118,7 @@ return Button.text(
             child: Button(
               body: const Text('Custom Button'),
               // Uses a recommended color for the button.
-              themeData: ButtonThemeData(
+              theme: ButtonThemeData(
                 color: customColor,
                 highlightColor: Theme.of(context).textTheme.textLow,
               ),

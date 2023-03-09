@@ -29,7 +29,9 @@ class _TabThemeData {
   /// ```
   EdgeInsets get padding => EdgeInsets.zero;
 
-  /// The height of the tab bar.
+  /// The height of the tab bar when the axis is horizontal.
+  /// When the value is `0.0`, the height of the tab bar will be
+  /// the intrinsic height of the children.
   ///
   /// Defaults to:
   ///
@@ -37,6 +39,17 @@ class _TabThemeData {
   /// 36.0
   /// ```
   double get height => _kTabHeight;
+
+  /// The width of the tab bar when the axis is vertical.
+  /// When the value is `0.0`, the width of the tab bar will be
+  /// the intrinsic width of the children.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 0.0
+  /// ```
+  double get width => 0.0;
 
   /// The background of the tab bar.
   ///

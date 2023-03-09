@@ -97,10 +97,8 @@ class Dialog extends StatelessWidget {
     super.key,
     this.title,
     this.actions,
-    this.constraints,
-    //this.padding,
-    //this.dialogPadding,
     this.allowScroll = true,
+    this.theme,
     required this.body,
   });
 
@@ -113,10 +111,10 @@ class Dialog extends StatelessWidget {
   /// Widgets to be placed at the bottom right of the dialog.
   final List<DialogAction>? actions;
 
-  /// The constraints for the dialog.
-  final BoxConstraints? constraints;
-
   final bool allowScroll;
+
+  /// The style [DialogThemeData] of the dialog.
+  final DialogThemeData? theme;
 
   static Future<T?> showDialog<T>(
     BuildContext context, {
@@ -127,7 +125,7 @@ class Dialog extends StatelessWidget {
     bool useRootNavigator = true,
     RouteSettings? routeSettings,
     List<DialogAction>? actions,
-    BoxConstraints? constraints,
+    DialogThemeData? theme,
     Widget? title,
     bool allowScroll = true,
   }) {
@@ -147,7 +145,7 @@ class Dialog extends StatelessWidget {
         pageBuilder: (context, animation, secondaryAnimation) => Dialog(
           body: body,
           actions: actions,
-          constraints: constraints,
+          theme: theme,
           title: title,
           allowScroll: allowScroll,
         ),
@@ -198,12 +196,13 @@ class Dialog extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
 
-    final DialogThemeData dialogThemeData = DialogTheme.of(context);
+    final DialogThemeData dialogThemeData =
+        DialogTheme.of(context).merge(theme);
 
     final Color backgroundColor = dialogThemeData.background!;
 
     Widget result = Container(
-      constraints: constraints ?? dialogThemeData.constraints,
+      constraints: dialogThemeData.constraints,
       color: backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -9,13 +9,13 @@ class LinearProgressIndicator extends StatefulWidget {
   const LinearProgressIndicator({
     super.key,
     this.value,
-    this.themeData,
+    this.theme,
   });
 
   final double? value;
 
   /// The theme [LinearProgressIndicatorThemeData] for the [LinearProgressIndicator].
-  final LinearProgressIndicatorThemeData? themeData;
+  final LinearProgressIndicatorThemeData? theme;
 
   @override
   _LinearProgressIndicatorState createState() =>
@@ -30,7 +30,7 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
 
   Widget _buildIndicator(BuildContext context, double animationValue) {
     final LinearProgressIndicatorThemeData linearProgressIndicatorThemeData =
-        LinearProgressIndicatorTheme.of(context).merge(widget.themeData);
+        LinearProgressIndicatorTheme.of(context).merge(widget.theme);
 
     return Container(
       constraints: BoxConstraints(
@@ -63,7 +63,7 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     super.didChangeDependencies();
 
     _controller.duration = LinearProgressIndicatorTheme.of(context)
-        .merge(widget.themeData)
+        .merge(widget.theme)
         .indeterminateDuration!;
 
     if (widget.value == null) {

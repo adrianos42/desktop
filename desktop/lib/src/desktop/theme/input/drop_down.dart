@@ -28,7 +28,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// IconThemeData(size: 19.0, color: hoverColor)
   /// ```
   IconThemeData get iconThemeData =>
       IconThemeData(size: _kIconSize, color: hoverColor);
@@ -38,7 +38,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
   /// ```
   TextStyle get textStyle => textTheme.body2.copyWith(
         fontSize: _kFontSize,
@@ -50,7 +50,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.disabled
   /// ```
   Color get disabledColor => colorScheme.disabled;
 
@@ -59,7 +59,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// textTheme.textLow
   /// ```
   Color get color => textTheme.textLow;
 
@@ -68,7 +68,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// waitingColor
   /// ```
   Color get focusColor => waitingColor;
 
@@ -77,7 +77,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// textTheme.textHigh
   /// ```
   Color get hoverColor => textTheme.textHigh;
 
@@ -86,7 +86,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.background[20]
   /// ```
   Color get waitingColor => colorScheme.background[20];
 
@@ -95,7 +95,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.background[0]
   /// ```
   Color get backgroundColor => colorScheme.background[0];
 
@@ -104,7 +104,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.background[0]
   /// ```
   Color get hoverBackgroundColor => colorScheme.background[0];
 
@@ -113,7 +113,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.background[0]
   /// ```
   Color get waitingBackgroundColor => colorScheme.background[0];
 
@@ -122,7 +122,7 @@ class _DropDownThemeData {
   /// Defaults to:
   /// 
   /// ```dart
-  /// 
+  /// colorScheme.background[0]
   /// ```
   Color get disabledBackgroundColor => colorScheme.background[0];
 }

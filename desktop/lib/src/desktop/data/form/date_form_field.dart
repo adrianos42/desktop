@@ -151,7 +151,6 @@ class DateFormField extends FormField<String> {
                                 textDirection: textDirection,
                                 textCapitalization: TextCapitalization.none,
                                 autofocus: autofocus,
-                                toolbarOptions: toolbarOptions,
                                 readOnly: readOnly,
                                 showCursor: showCursor,
                                 autocorrect: false,

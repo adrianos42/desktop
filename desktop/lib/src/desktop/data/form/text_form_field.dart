@@ -162,7 +162,6 @@ class TextFormField extends FormField<String> {
                                 textDirection: textDirection,
                                 textCapitalization: textCapitalization,
                                 autofocus: autofocus,
-                                toolbarOptions: toolbarOptions,
                                 readOnly: readOnly,
                                 showCursor: showCursor,
                                 obscuringCharacter: obscuringCharacter,

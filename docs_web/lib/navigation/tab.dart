@@ -10,6 +10,7 @@ class TabPage extends StatefulWidget {
 
 class _TabPageState extends State<TabPage> {
   final _controller = TabController();
+  AxisDirection _positionAxis = AxisDirection.left;
 
   WidgetBuilder _createCustomTab({String? title, IconData? icon}) {
     return (context) {
@@ -180,10 +181,133 @@ return Tab(
 );
 ''';
 
+const codeSamplePositioned = '''
+return Tab(
+  axis: _positionAxis,
+  theme: const TabThemeData(
+    padding: EdgeInsets.symmetric(
+      vertical: 8.0,
+    ),
+  ),
+  trailingMenu: [
+    TabMenuItem.text(
+      'menu',
+      builder: (context) => Container(
+        width: 120.0,
+        height: 120.0,
+        alignment: Alignment.center,
+        child: const Text('menu 3'),
+      ),
+    ),
+  ],
+  items: [
+    TabItem(
+      itemBuilder: (context) => const Text('page 0'),
+      builder: (context) => Center(
+        child: Text(
+          'page 0',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: (context) => const Text('page 1'),
+      builder: (context) => Center(
+        child: Text(
+          'page 1',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: (context) => const Text('page 2'),
+      builder: (context) => Center(
+        child: Text(
+          'page 2',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+  ],
+);
+''';
+
+const codeSampleWithMenu = '''
+return Tab(
+  leadingMenu: [
+    TabMenuItem.text(
+      'menu 0',
+      builder: (context) => Container(
+        height: 200.0,
+        alignment: Alignment.center,
+        child: const Text('menu 0'),
+      ),
+    ),
+    TabMenuItem.text(
+      'menu 1',
+      builder: (context) => Container(
+        height: 400.0,
+        alignment: Alignment.center,
+        child: const Text('menu 1'),
+      ),
+    ),
+    TabMenuItem.text(
+      'menu 2',
+      builder: (context) => Container(
+        height: 80.0,
+        alignment: Alignment.center,
+        child: const Text('menu 2'),
+      ),
+    ),
+  ],
+  trailingMenu: [
+    TabMenuItem.text(
+      'menu 3',
+      builder: (context) => Container(
+        height: 120.0,
+        alignment: Alignment.center,
+        child: const Text('menu 3'),
+      ),
+    ),
+  ],
+  items: [
+    TabItem(
+      itemBuilder: (context) => const Text('page 0'),
+      builder: (context) => Center(
+        child: Text(
+          'page 0',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: (context) => const Text('page 1'),
+      builder: (context) => Center(
+        child: Text(
+          'page 1',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+    TabItem(
+      itemBuilder: (context) => const Text('page 2'),
+      builder: (context) => Center(
+        child: Text(
+          'page 2',
+          style: textTheme.title,
+        ),
+      ),
+    ),
+  ],
+);
+''';
+
     return Defaults(
       styleItems: Defaults.createStyle(TabTheme.of(context).toString()),
       items: [
         ItemTitle(
+          title: 'Basic example',
+          codeText: codeSample,
           body: (context) {
             return Tab(
               items: [
@@ -217,15 +341,15 @@ return Tab(
               ],
             );
           },
-          codeText: codeSample,
-          title: 'Basic example',
         ),
         ItemTitle(
+          title: 'Custom tabs',
+          codeText: customCodeSample,
           body: (context) {
             return Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: Tab(
-                themeData: TabThemeData(
+                theme: TabThemeData(
                     itemBackgroundColor: colorScheme.background[12],
                     itemHoverBackgroundColor: colorScheme.shade[30],
                     itemHighlightBackgroundColor: colorScheme.background[0],
@@ -294,10 +418,10 @@ return Tab(
               ),
             );
           },
-          codeText: customCodeSample,
-          title: 'Custom tabs',
         ),
         ItemTitle(
+          title: 'Controlled tabs',
+          codeText: controlledSample,
           body: (context) {
             return Tab(
               controller: _controller,
@@ -365,10 +489,10 @@ return Tab(
               ],
             );
           },
-          codeText: controlledSample,
-          title: 'Controlled tabs',
         ),
         ItemTitle(
+          title: 'Tab with menu',
+          codeText: codeSampleWithMenu,
           body: (context) {
             return Tab(
               leadingMenu: [
@@ -438,8 +562,94 @@ return Tab(
               ],
             );
           },
-          codeText: codeSample,
-          title: 'Tab with menu',
+        ),
+        ItemTitle(
+          title: 'Positioned tab',
+          codeText: codeSamplePositioned,
+          options: [
+            Button.icon(
+              Icons.keyboard_arrow_left,
+              onPressed: () => setState(
+                () => _positionAxis = AxisDirection.left,
+              ),
+              active: _positionAxis == AxisDirection.left,
+              tooltip: 'left',
+            ),
+            Button.icon(
+              Icons.keyboard_arrow_up,
+              onPressed: () => setState(
+                () => _positionAxis = AxisDirection.up,
+              ),
+              active: _positionAxis == AxisDirection.up,
+              tooltip: 'up',
+            ),
+            Button.icon(
+              Icons.keyboard_arrow_right,
+              onPressed: () => setState(
+                () => _positionAxis = AxisDirection.right,
+              ),
+              active: _positionAxis == AxisDirection.right,
+              tooltip: 'right',
+            ),
+            Button.icon(
+              Icons.keyboard_arrow_down,
+              onPressed: () => setState(
+                () => _positionAxis = AxisDirection.down,
+              ),
+              active: _positionAxis == AxisDirection.down,
+              tooltip: 'down',
+            ),
+          ],
+          body: (context) {
+            return Tab(
+              axis: _positionAxis,
+              theme: const TabThemeData(
+                padding: EdgeInsets.symmetric(
+                  vertical: 8.0,
+                ),
+              ),
+              trailingMenu: [
+                TabMenuItem.text(
+                  'menu',
+                  builder: (context) => Container(
+                    width: 120.0,
+                    height: 120.0,
+                    alignment: Alignment.center,
+                    child: const Text('menu 3'),
+                  ),
+                ),
+              ],
+              items: [
+                TabItem(
+                  itemBuilder: (context) => const Text('page 0'),
+                  builder: (context) => Center(
+                    child: Text(
+                      'page 0',
+                      style: textTheme.title,
+                    ),
+                  ),
+                ),
+                TabItem(
+                  itemBuilder: (context) => const Text('page 1'),
+                  builder: (context) => Center(
+                    child: Text(
+                      'page 1',
+                      style: textTheme.title,
+                    ),
+                  ),
+                ),
+                TabItem(
+                  itemBuilder: (context) => const Text('page 2'),
+                  builder: (context) => Center(
+                    child: Text(
+                      'page 2',
+                      style: textTheme.title,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ],
       header: 'Tab',

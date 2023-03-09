@@ -9,8 +9,6 @@ import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
 
-const Duration _kDefaultMessageDuration = Duration(seconds: 6);
-
 typedef _MessageReasonCallback = void Function(MessageClosedReason);
 
 /// The kind of message to be displayed.
@@ -107,13 +105,17 @@ class Messenger extends StatefulWidget {
     Duration? duration,
     List<MessageAction>? actions,
     bool clearMessages = false,
+    MessageThemeData? theme,
   }) {
     return _of(context).showMessage(
+      context,
       message: message,
       kind: kind,
       duration: duration,
       actions: actions,
       clearMessages: clearMessages,
+      theme: theme,
+      title: title,
     );
   }
 
@@ -156,17 +158,22 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     _hideTimer = null;
   }
 
-  MessageController showMessage({
+  MessageController showMessage(
+    BuildContext context, {
     String? title,
     Duration? duration,
     List<MessageAction>? actions,
     required String message,
     required MessageKind kind,
     required bool clearMessages,
+    MessageThemeData? theme,
   }) {
-    _messageController ??= Message._createAnimationController(vsync: this);
-
     late MessageController entry;
+    final MessageThemeData messageThemeData =
+        MessageTheme.of(context).merge(theme);
+
+    _messageController ??=
+        Message._createAnimationController(messageThemeData, vsync: this);
 
     entry = MessageController._(
       overlayEntry: OverlayEntry(
@@ -179,12 +186,13 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
           resumeTimer: _startTimer,
           remove: removeCurrentMessage,
           actions: actions,
+          theme: messageThemeData,
         ),
         maintainState: false,
       ),
       completer: Completer<MessageClosedReason>(),
       hasMenu: actions?.isNotEmpty ?? false,
-      duration: duration ?? _kDefaultMessageDuration,
+      duration: duration ?? messageThemeData.duration!,
       close: () {
         if (_messages.first == entry) {
           removeCurrentMessage(MessageClosedReason.close);
@@ -316,16 +324,13 @@ class Message extends StatefulWidget {
     super.key,
     this.title,
     this.actions,
-    this.constraints,
-    this.padding,
-    this.duration = const Duration(seconds: 4),
-    this.dialogPadding,
     this.animation,
     required this.kind,
     required this.message,
     required this.resumeTimer,
     required this.stopTimer,
     required this.remove,
+    this.theme,
   });
 
   final String message;
@@ -334,15 +339,7 @@ class Message extends StatefulWidget {
 
   final List<MessageAction>? actions;
 
-  final BoxConstraints? constraints;
-
-  final EdgeInsets? padding;
-
-  final EdgeInsets? dialogPadding;
-
   final MessageKind kind;
-
-  final Duration duration;
 
   final Animation<double>? animation;
 
@@ -352,11 +349,14 @@ class Message extends StatefulWidget {
 
   final _MessageReasonCallback remove;
 
-  static AnimationController _createAnimationController({
+  final MessageThemeData? theme;
+
+  static AnimationController _createAnimationController(
+    MessageThemeData messageThemeData, {
     required TickerProvider vsync,
   }) {
     return AnimationController(
-      duration: const Duration(milliseconds: 100),
+      duration: messageThemeData.animationDuration!,
       debugLabel: 'Message',
       vsync: vsync,
     );
@@ -379,7 +379,6 @@ class _MessageState extends State<Message> {
     _mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
     RendererBinding.instance.mouseTracker
         .addListener(_handleMouseTrackerChange);
-    GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);
   }
 
   void _handleMouseTrackerChange() {
@@ -395,14 +394,6 @@ class _MessageState extends State<Message> {
     }
   }
 
-  void _handlePointerEvent(PointerEvent event) {
-    if (event is PointerUpEvent || event is PointerCancelEvent) {
-      // _startTimer();
-    } else if (event is PointerDownEvent) {
-      // _stopTimer();
-    }
-  }
-
   void _setFocus(bool value) {
     _hasFocus = value;
     if (value) {
@@ -414,8 +405,6 @@ class _MessageState extends State<Message> {
 
   @override
   void dispose() {
-    GestureBinding.instance.pointerRouter
-        .removeGlobalRoute(_handlePointerEvent);
     RendererBinding.instance.mouseTracker
         .removeListener(_handleMouseTrackerChange);
     super.dispose();
@@ -423,45 +412,43 @@ class _MessageState extends State<Message> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final TextTheme textTheme = themeData.textTheme;
-    final ColorScheme colorScheme = themeData.colorScheme;
+    final MessageThemeData messageThemeData =
+        MessageTheme.of(context).merge(widget.theme);
 
     _animation ??= CurvedAnimation(
-      parent: widget.animation!,
-      curve: Curves.easeInCubic,
-    );
+        parent: widget.animation!, curve: messageThemeData.animationCurve!);
 
-    final Color backgroundColor = colorScheme.background[0];
+    final Color backgroundColor = messageThemeData.backgroundColor!;
     final Color iconForeground;
     final IconData iconData;
 
     switch (widget.kind) {
       case MessageKind.info:
         iconData = Icons.info;
-        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.0, 0.6).toColor();
+        iconForeground = messageThemeData.infoColor!;
         break;
       case MessageKind.error:
         iconData = Icons.error;
-        iconForeground = const HSLColor.fromAHSL(1.0, 0, 0.7, 0.55).toColor();
+        iconForeground = messageThemeData.errorColor!;
         break;
       case MessageKind.warning:
         iconData = Icons.warning;
-        iconForeground = const HSLColor.fromAHSL(1.0, 60, 0.7, 0.55).toColor();
+        iconForeground = messageThemeData.warningColor!;
         break;
       case MessageKind.success:
         iconData = Icons.done;
-        iconForeground = const HSLColor.fromAHSL(1.0, 120, 0.7, 0.55).toColor();
+        iconForeground = messageThemeData.successColor!;
         break;
     }
 
     Widget result = Container(
-      padding: const EdgeInsets.all(18),
+      padding: messageThemeData.padding!,
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border(
           top: BorderSide(
-            color: _hasFocus ? colorScheme.shade[100] : iconForeground,
+            color:
+                _hasFocus ? messageThemeData.highlightColor! : iconForeground,
           ),
         ),
       ),
@@ -472,7 +459,7 @@ class _MessageState extends State<Message> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 12),
+                padding: EdgeInsets.only(right: messageThemeData.itemSpacing!),
                 child: Icon(
                   iconData,
                   color: iconForeground,
@@ -484,26 +471,22 @@ class _MessageState extends State<Message> {
                   children: [
                     if (widget.title != null)
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text(
-                          widget.title!,
-                          textAlign: TextAlign.start,
-                          style: textTheme.caption.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        padding: messageThemeData.titlePadding!,
+                        child: Text(widget.title!,
+                            textAlign: TextAlign.start,
+                            style: messageThemeData.titleTextStyle!),
                       ),
                     Text(
                       widget.message,
                       textAlign: TextAlign.start,
-                      style: textTheme.caption,
+                      style: messageThemeData.textStyle!,
                     ),
                   ],
                 ),
               ),
               if (widget.actions?.isNotEmpty ?? false)
                 Padding(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: messageThemeData.itemSpacing!),
                   child: Column(
                     children: widget.actions!
                         .map(

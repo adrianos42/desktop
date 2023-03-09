@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'dialogs/dialog.dart';
 import 'dialogs/message.dart';
 import 'icons.dart';
 import 'input/button.dart';
@@ -372,30 +371,26 @@ class DesktopScrollBehavior extends ScrollBehavior {
   /// Creates a [DesktopScrollBehavior].
   const DesktopScrollBehavior({this.isAlwaysShown = true}) : super();
 
+  /// See [Scrollbar].
   final bool isAlwaysShown;
 
   /// Applies a [Scrollbar] to the child widget.
   @override
   Widget buildScrollbar(
       BuildContext context, Widget child, ScrollableDetails details) {
-    switch (axisDirectionToAxis(details.direction)) {
-      case Axis.horizontal:
+    switch (getPlatform(context)) {
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+        return Scrollbar(
+          child: child,
+          isAlwaysShown: isAlwaysShown,
+          controller: details.controller,
+        );
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.iOS:
         return child;
-      case Axis.vertical:
-        switch (getPlatform(context)) {
-          case TargetPlatform.linux:
-          case TargetPlatform.macOS:
-          case TargetPlatform.windows:
-            return Scrollbar(
-              child: child,
-              isAlwaysShown: isAlwaysShown,
-              controller: details.controller,
-            );
-          case TargetPlatform.android:
-          case TargetPlatform.fuchsia:
-          case TargetPlatform.iOS:
-            return child;
-        }
     }
   }
 }

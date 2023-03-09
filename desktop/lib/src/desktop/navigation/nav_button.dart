@@ -100,7 +100,7 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
               padding: EdgeInsets.zero,
               bodyPadding: buttonBodyPadding,
               onPressed: enabled ? () => widget.onChanged(index) : null,
-              themeData: ButtonThemeData(
+              theme: ButtonThemeData(
                 color: active ? highlightColor : color,
                 highlightColor: highlightColor,
                 hoverColor: active ? highlightColor : hoverColor,
@@ -441,7 +441,7 @@ class NavMenuButton extends StatelessWidget {
       onPressed: onPressed,
       tooltip: tooltip,
       body: child,
-      themeData: ButtonThemeData(
+      theme: ButtonThemeData(
         color: active ? highlightColor : color,
         highlightColor: highlightColor,
         hoverColor: active ? highlightColor : hoverColor,

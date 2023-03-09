@@ -10,7 +10,7 @@ class CircularProgressIndicator extends StatefulWidget {
   /// Creates a [CircularProgressIndicator].
   const CircularProgressIndicator({
     super.key,
-    this.themeData,
+    this.theme,
     this.value,
   });
 
@@ -18,7 +18,7 @@ class CircularProgressIndicator extends StatefulWidget {
   final double? value;
 
   /// The theme [CircularProgressIndicatorThemeData] for the [CircularProgressIndicator].
-  final CircularProgressIndicatorThemeData? themeData;
+  final CircularProgressIndicatorThemeData? theme;
 
   @override
   _CircularProgressIndicatorState createState() =>
@@ -49,7 +49,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
       double tailValue, int stepValue, double rotationValue) {
     final CircularProgressIndicatorThemeData
         circularProgressIndicatorThemeData =
-        CircularProgressIndicatorTheme.of(context).merge(widget.themeData);
+        CircularProgressIndicatorTheme.of(context).merge(widget.theme);
 
     return SizedBox(
       width: circularProgressIndicatorThemeData.size,
@@ -86,7 +86,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
     super.didChangeDependencies();
 
     _controller.duration = CircularProgressIndicatorTheme.of(context)
-        .merge(widget.themeData)
+        .merge(widget.theme)
         .indeterminateDuration!;
 
     if (widget.value == null) {
