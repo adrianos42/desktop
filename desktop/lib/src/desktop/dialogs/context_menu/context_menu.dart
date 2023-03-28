@@ -168,10 +168,14 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
             horizontal: contextMenuThemeData.menuHorizontalPadding!,
           ),
           alignment: AlignmentDirectional.centerStart,
-          constraints: BoxConstraints(
-            minHeight: widget.height ?? contextMenuThemeData.itemHeight!,
-            maxHeight: widget.height ?? contextMenuThemeData.itemHeight!,
-          ),
+          constraints: widget.height != null
+              ? BoxConstraints(
+                  minHeight: widget.height!,
+                  maxHeight: widget.height!,
+                )
+              : BoxConstraints(
+                  minHeight: contextMenuThemeData.itemHeight!,
+                ),
           child: buildChild(),
         ),
       ),

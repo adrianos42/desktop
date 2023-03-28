@@ -146,6 +146,8 @@ class _DefaultShadeColor extends ShadeColor {
           default:
             throw Exception('Wrong index for shade color');
         }
+      default:
+        return const Color(0x0);
     }
   }
 }
@@ -245,6 +247,8 @@ class _DefaultBackgroundColor extends BackgroundColor {
           default:
             throw Exception('Wrong index for backgrount color');
         }
+      default:
+        return const Color(0x0);
     }
   }
 
@@ -330,6 +334,8 @@ class PrimaryColor {
           default:
             throw Exception('Wrong index for primary color');
         }
+      default:
+        return const Color(0x0);
     }
   }
 

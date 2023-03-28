@@ -130,7 +130,7 @@ class DateFormField extends FormField<String> {
                 DecoratedBox(
                   decoration: decoration,
                   child: Padding(
-                    padding: decoration.padding!,
+                    padding: decoration.padding,
                     child: Row(
                       children: [
                         Flexible(
@@ -189,7 +189,7 @@ class DateFormField extends FormField<String> {
                           child: Button.icon(
                             Icons.edit_calendar,
                             active: field._calendarButtonActive,
-                            style: const ButtonThemeData(itemSpacing: 0.0),
+                            theme: const ButtonThemeData(itemSpacing: 0.0),
                             onPressed: field._openDatePicker,
                           ),
                         ),

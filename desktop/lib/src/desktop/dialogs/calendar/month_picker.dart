@@ -560,7 +560,7 @@ class _DayPickerState extends State<_DayPicker> {
         active: isSelectedDay,
         padding: EdgeInsets.zero,
         focusNode: _dayFocusNodes[day - 1],
-        style: ButtonThemeData(
+        theme: ButtonThemeData(
           background: const Color(0x00000000),
           highlightBackground: selectedDayBackground,
           foreground: dayColor,

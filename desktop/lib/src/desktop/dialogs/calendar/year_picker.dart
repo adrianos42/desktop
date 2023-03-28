@@ -160,7 +160,7 @@ class YearPickerState extends State<YearPicker> {
     return Button.filled(
       year.toString(),
       key: ValueKey<int>(year),
-      style: ButtonThemeData(
+      theme: ButtonThemeData(
         background: background,
         foreground: textColor,
       ),

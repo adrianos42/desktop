@@ -21,10 +21,10 @@ class StyleItem {
 class ItemTitle {
   ///
   const ItemTitle({
-    required this.body,
     this.codeText,
     this.options,
     required this.title,
+    required this.body,
   });
 
   ///
@@ -377,23 +377,6 @@ class Defaults extends StatefulWidget {
                   }),
             )
             .toList(),
-      ),
-    );
-
-    for (final styleItem in styleItems) {
-      items.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Defaults.createTitle(context, styleItem.title)],
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Column(
-        children: items,
       ),
     );
   }

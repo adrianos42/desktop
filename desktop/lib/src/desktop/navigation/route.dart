@@ -44,15 +44,6 @@ mixin _DesktopRouteTransitionMixin<T> on PageRoute<T> {
     Animation<double> secondaryAnimation,
   ) {
     final Widget result = buildContent(context);
-    assert(() {
-      if (result == null) {
-        throw FlutterError(
-          'The builder for route "${settings.name}" returned null.\n'
-          'Route builders must never return null.',
-        );
-      }
-      return true;
-    }());
     return Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -167,9 +158,6 @@ class _PageBasedDesktopPageRoute<T> extends PageRoute<T>
 
   @override
   bool get fullscreenDialog => _page.fullscreenDialog;
-
-  @override
-  String get debugLevel => '${super.debugLabel}(${_page.name})';
 }
 
 abstract class ContextRoute<T> extends ModalRoute<T> {

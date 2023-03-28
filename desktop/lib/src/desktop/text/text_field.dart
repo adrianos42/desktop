@@ -67,7 +67,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(TapUpDetails details) {
+  void onSingleTapUp(TapDragUpDetails details) {
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {
@@ -93,6 +93,8 @@ class _TextFieldSelectionGestureDetectorBuilder
         case TargetPlatform.linux:
         case TargetPlatform.windows:
           renderEditable.selectPosition(cause: SelectionChangedCause.tap);
+          break;
+        default:
           break;
       }
     }

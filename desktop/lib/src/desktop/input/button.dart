@@ -36,7 +36,7 @@ class Button extends StatefulWidget {
     Key? key,
     double? fontSize,
     String? tooltip,
-    ButtonThemeData? style,
+    ButtonThemeData? theme,
     EdgeInsets? padding,
     FocusNode? focusNode,
     bool canRequestFocus = true,
@@ -60,7 +60,7 @@ class Button extends StatefulWidget {
       autofocus: autofocus,
       active: active,
       willChangeState: willChangeState,
-      theme: style,
+      theme: theme,
       enableAnimation: true,
       filled: false,
     );
@@ -79,7 +79,7 @@ class Button extends StatefulWidget {
     bool? active,
     bool willChangeState = false,
     required VoidCallback? onPressed,
-    ButtonThemeData? style,
+    ButtonThemeData? theme,
   }) {
     return Button(
       body: Icon(icon, size: size),
@@ -95,7 +95,7 @@ class Button extends StatefulWidget {
       willChangeState: willChangeState,
       enableAnimation: true,
       filled: false,
-      theme: style,
+      theme: theme,
     );
   }
 
@@ -113,7 +113,7 @@ class Button extends StatefulWidget {
     bool enableAnimation = false,
     bool willChangeState = false,
     required VoidCallback? onPressed,
-    ButtonThemeData? style,
+    ButtonThemeData? theme,
   }) {
     return Button(
       body: Text(
@@ -122,7 +122,7 @@ class Button extends StatefulWidget {
       ),
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      theme: style,
+      theme: theme,
       tooltip: tooltip,
       onPressed: onPressed,
       key: key,
