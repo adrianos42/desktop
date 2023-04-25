@@ -107,11 +107,13 @@ class ThemeData {
     required Brightness brightness,
     PrimaryColor? primaryColor,
     BackgroundColor? backgroundColor,
+    ShadeColor? shadeColor,
   }) {
     final colorScheme = ColorScheme(
       brightness,
       primary: primaryColor,
       backgroundColor: backgroundColor,
+      shade: shadeColor,
     );
 
     return ThemeData._raw(

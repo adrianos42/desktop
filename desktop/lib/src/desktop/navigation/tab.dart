@@ -14,8 +14,9 @@ const Duration _kMenuTransitionDuration = Duration(milliseconds: 300);
 /// Controls the tab index.
 class TabController extends ChangeNotifier {
   /// Creates a [TabController].
-  TabController({int initialIndex = 0})
-      : _index = initialIndex,
+  TabController({
+    int initialIndex = 0,
+  })  : _index = initialIndex,
         assert(initialIndex >= 0);
 
   bool _isDisposed = false;

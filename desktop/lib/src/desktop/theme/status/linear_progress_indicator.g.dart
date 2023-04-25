@@ -132,18 +132,12 @@ height: The height of the linear progress indicator.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is LinearProgressIndicatorThemeData &&
+  bool operator ==(covariant LinearProgressIndicatorThemeData other) {
+    return identical(this, other) ||
         other.height == height &&
-        other.color == color &&
-        other.backgroundColor == backgroundColor &&
-        other.indeterminateDuration == indeterminateDuration;
+            other.color == color &&
+            other.backgroundColor == backgroundColor &&
+            other.indeterminateDuration == indeterminateDuration;
   }
 }
 

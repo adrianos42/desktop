@@ -466,34 +466,28 @@ axis: The axis of the button.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is ButtonThemeData &&
+  bool operator ==(covariant ButtonThemeData other) {
+    return identical(this, other) ||
         other.axis == axis &&
-        other.iconThemeData == iconThemeData &&
-        other.itemSpacing == itemSpacing &&
-        other.filledSpacing == filledSpacing &&
-        other.height == height &&
-        other.minWidth == minWidth &&
-        other.textStyle == textStyle &&
-        other.disabledColor == disabledColor &&
-        other.color == color &&
-        other.focusColor == focusColor &&
-        other.hoverColor == hoverColor &&
-        other.highlightColor == highlightColor &&
-        other.background == background &&
-        other.focusBackground == focusBackground &&
-        other.hoverBackground == hoverBackground &&
-        other.highlightBackground == highlightBackground &&
-        other.foreground == foreground &&
-        other.hoverForeground == hoverForeground &&
-        other.highlightForeground == highlightForeground &&
-        other.animationDuration == animationDuration;
+            other.iconThemeData == iconThemeData &&
+            other.itemSpacing == itemSpacing &&
+            other.filledSpacing == filledSpacing &&
+            other.height == height &&
+            other.minWidth == minWidth &&
+            other.textStyle == textStyle &&
+            other.disabledColor == disabledColor &&
+            other.color == color &&
+            other.focusColor == focusColor &&
+            other.hoverColor == hoverColor &&
+            other.highlightColor == highlightColor &&
+            other.background == background &&
+            other.focusBackground == focusBackground &&
+            other.hoverBackground == hoverBackground &&
+            other.highlightBackground == highlightBackground &&
+            other.foreground == foreground &&
+            other.hoverForeground == hoverForeground &&
+            other.highlightForeground == highlightForeground &&
+            other.animationDuration == animationDuration;
   }
 }
 

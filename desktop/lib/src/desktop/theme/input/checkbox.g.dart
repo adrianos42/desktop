@@ -193,21 +193,15 @@ disabledColor: The disabled color.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is CheckboxThemeData &&
+  bool operator ==(covariant CheckboxThemeData other) {
+    return identical(this, other) ||
         other.disabledColor == disabledColor &&
-        other.activeColor == activeColor &&
-        other.activeHoverColor == activeHoverColor &&
-        other.inactiveColor == inactiveColor &&
-        other.inactiveHoverColor == inactiveHoverColor &&
-        other.foreground == foreground &&
-        other.containerSize == containerSize;
+            other.activeColor == activeColor &&
+            other.activeHoverColor == activeHoverColor &&
+            other.inactiveColor == inactiveColor &&
+            other.inactiveHoverColor == inactiveHoverColor &&
+            other.foreground == foreground &&
+            other.containerSize == containerSize;
   }
 }
 

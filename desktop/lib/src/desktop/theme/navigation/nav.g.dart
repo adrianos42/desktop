@@ -184,20 +184,14 @@ iconThemeData: The [IconThemeData] for the nav items.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is NavThemeData &&
+  bool operator ==(covariant NavThemeData other) {
+    return identical(this, other) ||
         other.iconThemeData == iconThemeData &&
-        other.itemsSpacing == itemsSpacing &&
-        other.width == width &&
-        other.height == height &&
-        other.indicatorWidth == indicatorWidth &&
-        other.animationDuration == animationDuration;
+            other.itemsSpacing == itemsSpacing &&
+            other.width == width &&
+            other.height == height &&
+            other.indicatorWidth == indicatorWidth &&
+            other.animationDuration == animationDuration;
   }
 }
 

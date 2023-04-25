@@ -35,7 +35,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
-  _RenderMenuItem([RenderBox? super.child]);
+  _RenderMenuItem([super.child]);
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {

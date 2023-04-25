@@ -151,19 +151,13 @@ disabledColor: The disabled color.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is SliderThemeData &&
+  bool operator ==(covariant SliderThemeData other) {
+    return identical(this, other) ||
         other.disabledColor == disabledColor &&
-        other.activeColor == activeColor &&
-        other.activeHoverColor == activeHoverColor &&
-        other.trackColor == trackColor &&
-        other.hightlightColor == hightlightColor;
+            other.activeColor == activeColor &&
+            other.activeHoverColor == activeHoverColor &&
+            other.trackColor == trackColor &&
+            other.hightlightColor == hightlightColor;
   }
 }
 

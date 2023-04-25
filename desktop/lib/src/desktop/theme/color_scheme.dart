@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 
 export 'theme_data.dart' show ThemeData, Theme;
 
-const PrimaryColor _kDefaultPrimary = PrimaryColor._dodgerBlue;
+const PrimaryColor _kDefaultPrimary = _DodgerBluePrimaryColor();
+const ShadeColor _kDefaultShadeColor = _DefaultShadeColor();
+const BackgroundColor _backgroundColor = _DefaultBackgroundColor();
 
 /// Color scheme used for the theme data.
 @immutable
@@ -16,35 +18,23 @@ class ColorScheme {
     BackgroundColor? backgroundColor,
     ShadeColor? shade,
   })  : _primary = primary ?? _kDefaultPrimary,
-        _background = backgroundColor ?? const _DefaultBackgroundColor._(0.0),
-        _shade = shade;
+        _shade = shade ?? _kDefaultShadeColor,
+        _background = backgroundColor ?? _backgroundColor;
 
   /// Returns a color scheme with a different brightness.
   ColorScheme withBrightness(Brightness brightness) {
     return ColorScheme(brightness, primary: _primary);
   }
 
-  /// Calculates a color lightness according to the current brightness.
-  Color shadeColorFromLightness(Color value) {
-    // TODO(as): See the contrast in colors.
-    if (brightness == Brightness.dark) {
-      return HSLColor.fromColor(value).withLightness(0.8).toColor();
-    }
-    return HSLColor.fromColor(value).withLightness(0.2).toColor();
-  }
-
-  final PrimaryColor _primary;
-
-  final BackgroundColor _background;
-
   /// The color scheme brightness.
   final Brightness brightness;
 
-  final ShadeColor? _shade;
+  final ShadeColor _shade;
+  final PrimaryColor _primary;
+  final BackgroundColor _background;
 
   /// Shade color.
-  ShadeColor get shade =>
-      _shade ?? _DefaultShadeColor._(brightness: brightness);
+  ShadeColor get shade => _shade.withBrightness(brightness);
 
   /// Primary color.
   PrimaryColor get primary => _primary.withBrightness(brightness);
@@ -54,378 +44,1204 @@ class ColorScheme {
 
   /// Disabled color.
   Color get disabled => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.75).toColor()
-      : const HSLColor.fromAHSL(1.0, 0.0, 0.0, 0.25).toColor();
+      ? const Color(0xffbfbfbf)
+      : const Color(0xff404040);
 
   /// Error color.
   Color get error => brightness == Brightness.light
-      ? const HSLColor.fromAHSL(1.0, 0, 0.9, 0.5).toColor()
-      : const HSLColor.fromAHSL(1.0, 0, 0.65, 0.55).toColor();
+      ? const Color(0xfff20d0d)
+      : const Color(0xffd74242);
 }
 
 /// Shade color used in [ColorScheme].
+@immutable
 abstract class ShadeColor {
   ///
-  const ShadeColor();
+  const ShadeColor({this.brightness = Brightness.dark});
+
+  /// The [Brightness] for this color.
+  final Brightness brightness;
+
+  /// Used by [ColorScheme] to return a color with current brightness.
+  ShadeColor withBrightness(Brightness brightness);
+
+  /// Light theme color with index `30`.
+  Color get w30;
+
+  /// Light theme color with index `40`.
+  Color get w40;
+
+  /// Light theme color with index `50`.
+  Color get w50;
+
+  /// Light theme color with index `60`.
+  Color get w60;
+
+  /// Light theme color with index `70`.
+  Color get w70;
+
+  /// Light theme color with index `80`.
+  Color get w80;
+
+  /// Light theme color with index `90`.
+  Color get w90;
+
+  /// Light theme color with index `100`.
+  Color get w100;
+
+  /// Dark theme color with index `30`.
+  Color get b30;
+
+  /// Dark theme color with index `40`.
+  Color get b40;
+
+  /// Dark theme color with index `50`.
+  Color get b50;
+
+  /// Dark theme color with index `60`.
+  Color get b60;
+
+  /// Dark theme color with index `70`.
+  Color get b70;
+
+  /// Dark theme color with index `80`.
+  Color get b80;
+
+  /// Dark theme color with index `90`.
+  Color get b90;
+
+  /// Dark theme color with index `100`.
+  Color get b100;
 
   /// Returns a shade color.
-  Color operator [](int index);
-}
-
-class _DefaultShadeColor extends ShadeColor {
-  ///
-  const _DefaultShadeColor._({
-    Brightness? brightness,
-  }) : _brightness = brightness;
-
-  static const double _alpha = 1.0;
-  static const double _hue = 0.0;
-  static const double _saturation = 0.0;
-
-  final Brightness? _brightness;
-
-  /// Returns a shade color.
-  @override
+  @mustCallSuper
   Color operator [](int index) {
-    switch (_brightness!) {
-      case Brightness.dark:
-        switch (index) {
-          case 30:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.37)
-                .toColor();
-          case 40:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.46)
-                .toColor();
-          case 50:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.55)
-                .toColor();
-          case 60:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.64)
-                .toColor();
-          case 70:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.73)
-                .toColor();
-          case 80:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.82)
-                .toColor();
-          case 90:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.91)
-                .toColor();
-          case 100:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 1.0)
-                .toColor();
-          default:
-            throw Exception('Wrong index for shade color');
-        }
-      case Brightness.light:
-        switch (index) {
-          case 30:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.63)
-                .toColor();
-          case 40:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.54)
-                .toColor();
-          case 50:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.45)
-                .toColor();
-          case 60:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.36)
-                .toColor();
-          case 70:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.27)
-                .toColor();
-          case 80:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.18)
-                .toColor();
-          case 90:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.09)
-                .toColor();
-          case 100:
-            return const HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.0)
-                .toColor();
-          default:
-            throw Exception('Wrong index for shade color');
-        }
-      default:
-        return const Color(0x0);
-    }
-  }
-}
-
-/// The background color used in [ColorScheme].
-abstract class BackgroundColor {
-  ///
-  const BackgroundColor();
-
-  /// Returns the [BackgroundColor] with a different brightness.
-  BackgroundColor withBrightness(Brightness brightness);
-
-  /// Returns a background color.
-  Color operator [](int index);
-}
-
-class _DefaultBackgroundColor extends BackgroundColor {
-  const _DefaultBackgroundColor._(
-    double lightness, {
-    Brightness? brightness,
-  })  : _brightness = brightness,
-        _lightness = lightness;
-
-  static const double _alpha = 1.0;
-  static const double _hue = 0.0;
-  static const double _saturation = 0.0;
-  final double _lightness;
-
-  /// Override this function to return a custom background color.
-  @override
-  BackgroundColor withBrightness(Brightness brightness) {
     switch (brightness) {
-      case Brightness.dark:
-        return _DefaultBackgroundColor._(0.0, brightness: brightness);
-      case Brightness.light:
-        return _DefaultBackgroundColor._(1.0, brightness: brightness);
-    }
-  }
-
-  @override
-  Color operator [](int index) {
-    switch (_brightness!) {
-      case Brightness.dark:
-        switch (index) {
-          case 0:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.0)
-                .toColor();
-          case 4:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.04)
-                .toColor();
-          case 8:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.08)
-                .toColor();
-          case 12:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.12)
-                .toColor();
-          case 16:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.16)
-                .toColor();
-          case 20:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness + 0.2)
-                .toColor();
-          default:
-            throw Exception('Wrong index for backgrount color');
-        }
       case Brightness.light:
         switch (index) {
-          case 0:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, _lightness)
-                .toColor();
-          case 4:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.04)
-                .toColor();
-          case 8:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.08)
-                .toColor();
-          case 12:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.12)
-                .toColor();
-          case 16:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.16)
-                .toColor();
-          case 20:
-            return HSLColor.fromAHSL(
-                    _alpha, _hue, _saturation, _lightness - 0.2)
-                .toColor();
+          case 30:
+            return w30;
+          case 40:
+            return w40;
+          case 50:
+            return w50;
+          case 60:
+            return w60;
+          case 70:
+            return w70;
+          case 80:
+            return w80;
+          case 90:
+            return w90;
+          case 100:
+            return w100;
           default:
-            throw Exception('Wrong index for backgrount color');
+            throw Exception('Wrong index for shade color');
         }
+      case Brightness.dark:
       default:
-        return const Color(0x0);
+        switch (index) {
+          case 30:
+            return b30;
+          case 40:
+            return b40;
+          case 50:
+            return b50;
+          case 60:
+            return b60;
+          case 70:
+            return b70;
+          case 80:
+            return b80;
+          case 90:
+            return b90;
+          case 100:
+            return b100;
+          default:
+            throw Exception('Wrong index for shade color');
+        }
     }
   }
 
-  final Brightness? _brightness;
-}
-
-/// Primary color used for color scheme.
-@immutable
-class PrimaryColor {
-  const PrimaryColor._(
-    this._name,
-    double alpha,
-    double hue,
-    double saturation,
-    double lightness, {
-    Brightness? brightness,
-  })  : _brightness = brightness,
-        _alpha = alpha,
-        _hue = hue,
-        _saturation = saturation,
-        _lightness = lightness;
-
-  final double _alpha;
-  final double _hue;
-  final double _saturation;
-  final double _lightness;
+  @override
+  int get hashCode => brightness.hashCode;
 
   @override
-  int get hashCode {
-    return Object.hash(
-      _alpha,
-      _hue,
-      _lightness,
-      _saturation,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant ShadeColor other) {
     if (identical(this, other)) {
       return true;
     }
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    return other is PrimaryColor &&
-        other._alpha == _alpha &&
-        other._hue == _hue &&
-        other._lightness == _lightness &&
-        other._saturation == _saturation;
+    return other.w30 == w30 &&
+        other.w40 == w40 &&
+        other.w50 == w50 &&
+        other.w60 == w60 &&
+        other.w70 == w70 &&
+        other.w80 == w80 &&
+        other.w90 == w90 &&
+        other.w100 == w100 &&
+        other.b30 == b30 &&
+        other.b40 == b40 &&
+        other.b50 == b50 &&
+        other.b60 == b60 &&
+        other.b70 == b70 &&
+        other.b80 == b80 &&
+        other.b90 == b90 &&
+        other.b100 == b100;
   }
+}
+
+/// Shade color used in [ColorScheme].
+class _DefaultShadeColor extends ShadeColor {
+  const _DefaultShadeColor({super.brightness});
+
+  /// Used by [ColorScheme] to return a color with current brightness.
+  @override
+  ShadeColor withBrightness(Brightness brightness) =>
+      _DefaultShadeColor(brightness: brightness);
+
+  /// Light theme color with index `30`.
+  @override
+  Color get w30 => const Color(0xffa1a1a1);
+
+  /// Light theme color with index `40`.
+  @override
+  Color get w40 => const Color(0xff8a8a8a);
+
+  /// Light theme color with index `50`.
+  @override
+  Color get w50 => const Color(0xff737373);
+
+  /// Light theme color with index `60`.
+  @override
+  Color get w60 => const Color(0xff5c5c5c);
+
+  /// Light theme color with index `70`.
+  @override
+  Color get w70 => const Color(0xff454545);
+
+  /// Light theme color with index `80`.
+  @override
+  Color get w80 => const Color(0xff2e2e2e);
+
+  /// Light theme color with index `90`.
+  @override
+  Color get w90 => const Color(0xff171717);
+
+  /// Light theme color with index `100`.
+  @override
+  Color get w100 => const Color(0xff000000);
+
+  /// Dark theme color with index `30`.
+  @override
+  Color get b30 => const Color(0xff5e5e5e);
+
+  /// Dark theme color with index `40`.
+  @override
+  Color get b40 => const Color(0xff757575);
+
+  /// Dark theme color with index `50`.
+  @override
+  Color get b50 => const Color(0xff8c8c8c);
+
+  /// Dark theme color with index `60`.
+  @override
+  Color get b60 => const Color(0xffa3a3a3);
+
+  /// Dark theme color with index `70`.
+  @override
+  Color get b70 => const Color(0xffbababa);
+
+  /// Dark theme color with index `80`.
+  @override
+  Color get b80 => const Color(0xffd1d1d1);
+
+  /// Dark theme color with index `90`.
+  @override
+  Color get b90 => const Color(0xffe8e8e8);
+
+  /// Dark theme color with index `100`.
+  @override
+  Color get b100 => const Color(0xffffffff);
+}
+
+/// The background color used in [ColorScheme].
+@immutable
+abstract class BackgroundColor {
+  ///
+  const BackgroundColor({this.brightness = Brightness.dark});
+
+  /// The [Brightness] of the background color.
+  final Brightness brightness;
+
+  /// Used by [ColorScheme] to return a color with current brightness.
+  BackgroundColor withBrightness(Brightness brightness);
+
+  /// Light theme color with index 0.
+  Color get w0;
+
+  /// Light theme color with index 4.
+  Color get w4;
+
+  /// Light theme color with index 8.
+  Color get w8;
+
+  /// Light theme color with index 12.
+  Color get w12;
+
+  /// Light theme color with index 16.
+  Color get w16;
+
+  /// Light theme color with index 20.
+  Color get w20;
+
+  /// Dark theme color with index 0.
+  Color get b0;
+
+  /// Dark theme color with index 4.
+  Color get b4;
+
+  /// Dark theme color with index 8.
+  Color get b8;
+
+  /// Dark theme color with index 12.
+  Color get b12;
+
+  /// Dark theme color with index 16.
+  Color get b16;
+
+  /// Dark theme color with index 20.
+  Color get b20;
+
+  /// Returns a background color.
+  Color operator [](int index) {
+    switch (brightness) {
+      case Brightness.light:
+        switch (index) {
+          case 0:
+            return w0;
+          case 4:
+            return w4;
+          case 8:
+            return w8;
+          case 12:
+            return w12;
+          case 16:
+            return w16;
+          case 20:
+            return w20;
+          default:
+            throw Exception('Wrong index for backgrount color');
+        }
+      case Brightness.dark:
+      default:
+        switch (index) {
+          case 0:
+            return b0;
+          case 4:
+            return b4;
+          case 8:
+            return b8;
+          case 12:
+            return b12;
+          case 16:
+            return b16;
+          case 20:
+            return b20;
+          default:
+            throw Exception('Wrong index for backgrount color');
+        }
+    }
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        w0,
+        w4,
+        w8,
+        w12,
+        w16,
+        w20,
+        b0,
+        b4,
+        b8,
+        b12,
+        b16,
+        b20,
+      );
+
+  @override
+  bool operator ==(covariant BackgroundColor other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other.w0 == w0 &&
+        other.w4 == w4 &&
+        other.w8 == w8 &&
+        other.w12 == w12 &&
+        other.w16 == w16 &&
+        other.w20 == w20 &&
+        other.b0 == b0 &&
+        other.b4 == b4 &&
+        other.b8 == b8 &&
+        other.b12 == b12 &&
+        other.b16 == b16 &&
+        other.b20 == b20;
+  }
+}
+
+class _DefaultBackgroundColor extends BackgroundColor {
+  const _DefaultBackgroundColor({super.brightness});
+
+  /// Used by [ColorScheme] to return a color with current brightness.
+  @override
+  BackgroundColor withBrightness(Brightness brightness) =>
+      _DefaultBackgroundColor(brightness: brightness);
+
+  /// Light theme color with index 0.
+  @override
+  Color get w0 => const Color(0xffffffff);
+
+  /// Light theme color with index 4.
+  @override
+  Color get w4 => const Color(0xfff5f5f5);
+
+  /// Light theme color with index 8.
+  @override
+  Color get w8 => const Color(0xffebebeb);
+
+  /// Light theme color with index 12.
+  @override
+  Color get w12 => const Color(0xffe0e0e0);
+
+  /// Light theme color with index 16.
+  @override
+  Color get w16 => const Color(0xffd6d6d6);
+
+  /// Light theme color with index 20.
+  @override
+  Color get w20 => const Color(0xffcccccc);
+
+  /// Dark theme color with index 0.
+  @override
+  Color get b0 => const Color(0xff000000);
+
+  /// Dark theme color with index 4.
+  @override
+  Color get b4 => const Color(0xff0a0a0a);
+
+  /// Dark theme color with index 8.
+  @override
+  Color get b8 => const Color(0xff141414);
+
+  /// Dark theme color with index 12.
+  @override
+  Color get b12 => const Color(0xff1f1f1f);
+
+  /// Dark theme color with index 16.
+  @override
+  Color get b16 => const Color(0xff292929);
+
+  /// Dark theme color with index 20.
+  @override
+  Color get b20 => const Color(0xff333333);
+}
+
+/// Primary color used for color scheme.
+@immutable
+abstract class PrimaryColor {
+  /// Creates a [PrimaryColor].
+  const PrimaryColor({
+    this.brightness = Brightness.dark,
+    required this.name,
+  });
+
+  /// The [Brightness] of the primary color.
+  final Brightness brightness;
+
+  /// Used by [ColorScheme] to return a color with current brightness.
+  PrimaryColor withBrightness(Brightness brightness);
+
+  /// The name of the primary color.
+  final String name;
+
+  /// Light theme color with index 30.
+  Color get w30;
+
+  /// Light theme color with index 40.
+  Color get w40;
+
+  /// Light theme color with index 50.
+  Color get w50;
+
+  /// Light theme color with index 60.
+  Color get w60;
+
+  /// Light theme color with index 70.
+  Color get w70;
+
+  /// Dark theme color with index 30.
+  Color get b30;
+
+  /// Dark theme color with index 40.
+  Color get b40;
+
+  /// Dark theme color with index 50.
+  Color get b50;
+
+  /// Dark theme color with index 60.
+  Color get b60;
+
+  /// Dark theme color with index 70.
+  Color get b70;
 
   /// Returns a primary color.
   Color operator [](int index) {
-    switch (_brightness!) {
-      case Brightness.dark:
-        switch (index) {
-          case 30:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.3).toColor();
-          case 40:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.4).toColor();
-          case 50:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.5).toColor();
-          case 60:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.6).toColor();
-          case 70:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.7).toColor();
-          default:
-            throw Exception('Wrong index for primary color');
-        }
+    switch (brightness) {
       case Brightness.light:
         switch (index) {
           case 30:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.7).toColor();
+            return w30;
           case 40:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.6).toColor();
+            return w40;
           case 50:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.5).toColor();
+            return w50;
           case 60:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.4).toColor();
+            return w60;
           case 70:
-            return HSLColor.fromAHSL(_alpha, _hue, _saturation, 0.3).toColor();
+            return w70;
           default:
             throw Exception('Wrong index for primary color');
         }
+      case Brightness.dark:
       default:
-        return const Color(0x0);
+        switch (index) {
+          case 30:
+            return b30;
+          case 40:
+            return b40;
+          case 50:
+            return b50;
+          case 60:
+            return b60;
+          case 70:
+            return b70;
+          default:
+            throw Exception('Wrong index for primary color');
+        }
     }
   }
 
   /// Returns the color with difference in lightness.
-  Color get color =>
-      HSLColor.fromAHSL(_alpha, _hue, _saturation, _lightness).toColor();
-
-  /// [PrimaryColor] with a specific [Brightness].
-  PrimaryColor withBrightness(Brightness brightness) {
-    return PrimaryColor._(_name, _alpha, _hue, _saturation, _lightness,
-        brightness: brightness);
-  }
-
-  final String _name;
-
-  final Brightness? _brightness;
+  Color get color => this[50];
 
   @override
-  String toString() => _name.toString();
+  int get hashCode => Object.hash(
+        name,
+        w30,
+        w40,
+        w50,
+        w60,
+        w70,
+        b30,
+        b40,
+        b50,
+        b60,
+        b70,
+      );
 
-  static const _coral = PrimaryColor._('Coral', 1.0, 16, 1.0, 0.66);
-  static const _cornflowerBlue =
-      PrimaryColor._('Cornflower Blue', 1.0, 219, 0.79, 0.66);
-  static const _turquoise = PrimaryColor._('Turquoise', 1.0, 181, 0.8, 0.41);
-  static const _deepSkyBlue =
-      PrimaryColor._('Deep Sky Blue', 1.0, 195, 1.0, 0.5);
-  static const _dodgerBlue = PrimaryColor._('Dodger Blue', 1.0, 210, 0.9, 0.56);
-  static const _goldenrod = PrimaryColor._('Goldenrod', 1.0, 43, 0.74, 0.49);
-  static const _hotPink = PrimaryColor._('Hot Pink', 1.0, 330, 1.0, 0.7);
-  static const _purple = PrimaryColor._('Purple', 1.0, 260, 0.6, 0.65);
-  static const _orange = PrimaryColor._('Orange', 1.0, 33, 1.0, 0.5);
-  static const _royalBlue = PrimaryColor._('Royal Blue', 1.0, 225, 0.73, 0.57);
-  static const _sandyBrown = PrimaryColor._('Sandy Brown', 1.0, 20, 0.87, 0.67);
-  static const _slateBlue = PrimaryColor._('Slate Blue', 1.0, 248, 0.53, 0.58);
-  static const _steelBlue = PrimaryColor._('Steel Blue', 1.0, 207, 0.44, 0.49);
-  static const _violet = PrimaryColor._('Violet', 1.0, 300, 0.76, 0.7);
-  static const _springGreen =
-      PrimaryColor._('Spring Green', 1.0, 150, 0.8, 0.4);
-  static const _red = PrimaryColor._('Red', 1.0, 347.0, 0.9, 0.6);
+  @override
+  bool operator ==(covariant PrimaryColor other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other.name == name &&
+        other.w30 == w30 &&
+        other.w40 == w40 &&
+        other.w50 == w50 &&
+        other.w60 == w60 &&
+        other.w70 == w70 &&
+        other.b30 == b30 &&
+        other.b40 == b40 &&
+        other.b50 == b50 &&
+        other.b60 == b60 &&
+        other.b70 == b70;
+  }
+
+  @override
+  String toString() => name.toString();
+}
+
+class _CoralPrimaryColor extends PrimaryColor {
+  const _CoralPrimaryColor({super.brightness}) : super(name: 'Coral');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _CoralPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffff8f66);
+
+  @override
+  Color get w40 => const Color(0xffff6933);
+
+  @override
+  Color get w50 => const Color(0xffff4400);
+
+  @override
+  Color get w60 => const Color(0xffcc3600);
+
+  @override
+  Color get w70 => const Color(0xff992900);
+
+  @override
+  Color get b30 => const Color(0xff992900);
+
+  @override
+  Color get b40 => const Color(0xffcc3600);
+
+  @override
+  Color get b50 => const Color(0xffff4400);
+
+  @override
+  Color get b60 => const Color(0xffff6933);
+
+  @override
+  Color get b70 => const Color(0xffff8f66);
+}
+
+class _CornflowerBluePrimaryColor extends PrimaryColor {
+  const _CornflowerBluePrimaryColor({super.brightness})
+      : super(name: 'Cornflower Blue');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _CornflowerBluePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff76a0ef);
+
+  @override
+  Color get w40 => const Color(0xff4881ea);
+
+  @override
+  Color get w50 => const Color(0xff1b61e4);
+
+  @override
+  Color get w60 => const Color(0xff154eb7);
+
+  @override
+  Color get w70 => const Color(0xff103a89);
+
+  @override
+  Color get b30 => const Color(0xff103a89);
+
+  @override
+  Color get b40 => const Color(0xff154eb7);
+
+  @override
+  Color get b50 => const Color(0xff1b61e4);
+
+  @override
+  Color get b60 => const Color(0xff4881ea);
+
+  @override
+  Color get b70 => const Color(0xff76a0ef);
+}
+
+class _TurquoisePrimaryColor extends PrimaryColor {
+  const _TurquoisePrimaryColor({super.brightness}) : super(name: 'Turquoise');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _TurquoisePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff75eef0);
+
+  @override
+  Color get w40 => const Color(0xff47e8eb);
+
+  @override
+  Color get w50 => const Color(0xff19e2e6);
+
+  @override
+  Color get w60 => const Color(0xff14b5b8);
+
+  @override
+  Color get w70 => const Color(0xff0f888a);
+
+  @override
+  Color get b30 => const Color(0xff0f888a);
+
+  @override
+  Color get b40 => const Color(0xff14b5b8);
+
+  @override
+  Color get b50 => const Color(0xff19e2e6);
+
+  @override
+  Color get b60 => const Color(0xff47e8eb);
+
+  @override
+  Color get b70 => const Color(0xff75eef0);
+}
+
+class _DeepSkyBluePrimaryColor extends PrimaryColor {
+  const _DeepSkyBluePrimaryColor({super.brightness})
+      : super(name: 'Deep Sky Blue');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _DeepSkyBluePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff66d9ff);
+
+  @override
+  Color get w40 => const Color(0xff33ccff);
+
+  @override
+  Color get w50 => const Color(0xff00bfff);
+
+  @override
+  Color get w60 => const Color(0xff0099cc);
+
+  @override
+  Color get w70 => const Color(0xff007399);
+
+  @override
+  Color get b30 => const Color(0xff007399);
+
+  @override
+  Color get b40 => const Color(0xff0099cc);
+
+  @override
+  Color get b50 => const Color(0xff00bfff);
+
+  @override
+  Color get b60 => const Color(0xff33ccff);
+
+  @override
+  Color get b70 => const Color(0xff66d9ff);
+}
+
+class _DodgerBluePrimaryColor extends PrimaryColor {
+  const _DodgerBluePrimaryColor({super.brightness})
+      : super(name: 'Dodger Blue');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _DodgerBluePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff6eb3f7);
+
+  @override
+  Color get w40 => const Color(0xff3d99f5);
+
+  @override
+  Color get w50 => const Color(0xff0d80f2);
+
+  @override
+  Color get w60 => const Color(0xff0a66c2);
+
+  @override
+  Color get w70 => const Color(0xff084d91);
+
+  @override
+  Color get b30 => const Color(0xff084d91);
+
+  @override
+  Color get b40 => const Color(0xff0a66c2);
+
+  @override
+  Color get b50 => const Color(0xff0d80f2);
+
+  @override
+  Color get b60 => const Color(0xff3d99f5);
+
+  @override
+  Color get b70 => const Color(0xff6eb3f7);
+}
+
+class _GoldenrodPrimaryColor extends PrimaryColor {
+  const _GoldenrodPrimaryColor({super.brightness}) : super(name: 'Goldenrod');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _GoldenrodPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffebcb7a);
+
+  @override
+  Color get w40 => const Color(0xffe4ba4e);
+
+  @override
+  Color get w50 => const Color(0xffdea821);
+
+  @override
+  Color get w60 => const Color(0xffb1871b);
+
+  @override
+  Color get w70 => const Color(0xff856514);
+
+  @override
+  Color get b30 => const Color(0xff856514);
+
+  @override
+  Color get b40 => const Color(0xffb1871b);
+
+  @override
+  Color get b50 => const Color(0xffdea821);
+
+  @override
+  Color get b60 => const Color(0xffe4ba4e);
+
+  @override
+  Color get b70 => const Color(0xffebcb7a);
+}
+
+class _HotPinkPrimaryColor extends PrimaryColor {
+  const _HotPinkPrimaryColor({super.brightness}) : super(name: 'Hot Pink');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _HotPinkPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffff66b3);
+
+  @override
+  Color get w40 => const Color(0xffff3399);
+
+  @override
+  Color get w50 => const Color(0xffff0080);
+
+  @override
+  Color get w60 => const Color(0xffcc0066);
+
+  @override
+  Color get w70 => const Color(0xff99004d);
+
+  @override
+  Color get b30 => const Color(0xff99004d);
+
+  @override
+  Color get b40 => const Color(0xffcc0066);
+
+  @override
+  Color get b50 => const Color(0xffff0080);
+
+  @override
+  Color get b60 => const Color(0xffff3399);
+
+  @override
+  Color get b70 => const Color(0xffff66b3);
+}
+
+class _PurplePrimaryColor extends PrimaryColor {
+  const _PurplePrimaryColor({super.brightness}) : super(name: 'Purple');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _PurplePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffa385e0);
+
+  @override
+  Color get w40 => const Color(0xff855cd6);
+
+  @override
+  Color get w50 => const Color(0xff6633cc);
+
+  @override
+  Color get w60 => const Color(0xff5229a3);
+
+  @override
+  Color get w70 => const Color(0xff3d1f7a);
+
+  @override
+  Color get b30 => const Color(0xff3d1f7a);
+
+  @override
+  Color get b40 => const Color(0xff5229a3);
+
+  @override
+  Color get b50 => const Color(0xff6633cc);
+
+  @override
+  Color get b60 => const Color(0xff855cd6);
+
+  @override
+  Color get b70 => const Color(0xffa385e0);
+}
+
+class _OrangePrimaryColor extends PrimaryColor {
+  const _OrangePrimaryColor({super.brightness}) : super(name: 'Orange');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _OrangePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffffba66);
+
+  @override
+  Color get w40 => const Color(0xffffa333);
+
+  @override
+  Color get w50 => const Color(0xffff8c00);
+
+  @override
+  Color get w60 => const Color(0xffcc7000);
+
+  @override
+  Color get w70 => const Color(0xff995400);
+
+  @override
+  Color get b30 => const Color(0xff995400);
+
+  @override
+  Color get b40 => const Color(0xffcc7000);
+
+  @override
+  Color get b50 => const Color(0xffff8c00);
+
+  @override
+  Color get b60 => const Color(0xffffa333);
+
+  @override
+  Color get b70 => const Color(0xffffba66);
+}
+
+class _RoyalBluePrimaryColor extends PrimaryColor {
+  const _RoyalBluePrimaryColor({super.brightness}) : super(name: 'Royal Blue');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _RoyalBluePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff7b97ea);
+
+  @override
+  Color get w40 => const Color(0xff4f74e3);
+
+  @override
+  Color get w50 => const Color(0xff2251dd);
+
+  @override
+  Color get w60 => const Color(0xff1c41b0);
+
+  @override
+  Color get w70 => const Color(0xff153184);
+
+  @override
+  Color get b30 => const Color(0xff153184);
+
+  @override
+  Color get b40 => const Color(0xff1c41b0);
+
+  @override
+  Color get b50 => const Color(0xff2251dd);
+
+  @override
+  Color get b60 => const Color(0xff4f74e3);
+
+  @override
+  Color get b70 => const Color(0xff7b97ea);
+}
+
+class _SandyBrownPrimaryColor extends PrimaryColor {
+  const _SandyBrownPrimaryColor({super.brightness})
+      : super(name: 'Sandy Brown');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _SandyBrownPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xfff59c70);
+
+  @override
+  Color get w40 => const Color(0xfff27b40);
+
+  @override
+  Color get w50 => const Color(0xffee5b11);
+
+  @override
+  Color get w60 => const Color(0xffbf480d);
+
+  @override
+  Color get w70 => const Color(0xff8f360a);
+
+  @override
+  Color get b30 => const Color(0xff8f360a);
+
+  @override
+  Color get b40 => const Color(0xffbf480d);
+
+  @override
+  Color get b50 => const Color(0xffee5b11);
+
+  @override
+  Color get b60 => const Color(0xfff27b40);
+
+  @override
+  Color get b70 => const Color(0xfff59c70);
+}
+
+class _SlateBluePrimaryColor extends PrimaryColor {
+  const _SlateBluePrimaryColor({super.brightness}) : super(name: 'Slate Blue');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _SlateBluePrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff958adb);
+
+  @override
+  Color get w40 => const Color(0xff7163cf);
+
+  @override
+  Color get w50 => const Color(0xff4e3cc3);
+
+  @override
+  Color get w60 => const Color(0xff3e309c);
+
+  @override
+  Color get w70 => const Color(0xff2f2475);
+
+  @override
+  Color get b30 => const Color(0xff2f2475);
+
+  @override
+  Color get b40 => const Color(0xff3e309c);
+
+  @override
+  Color get b50 => const Color(0xff4e3cc3);
+
+  @override
+  Color get b60 => const Color(0xff7163cf);
+
+  @override
+  Color get b70 => const Color(0xff958adb);
+}
+
+// class _SteelBluePrimaryColor extends PrimaryColor {
+//   const _SteelBluePrimaryColor({super.brightness}) : super(name: 'Steel Blue');
+
+//   @override
+//   PrimaryColor withBrightness(Brightness brightness) =>
+//       _SteelBluePrimaryColor(brightness: brightness);
+
+//       @override
+//   Color get w30 => const Color(0x);
+
+//   @override
+//   Color get w40 => const Color(0x);
+
+//   @override
+//   Color get w50 => const Color(0x);
+
+//   @override
+//   Color get w60 => const Color(0x);
+
+//   @override
+//   Color get w70 => const Color(0x);
+
+//   @override
+//   Color get b30 => const Color(0x);
+
+//   @override
+//   Color get b40 => const Color(0x);
+
+//   @override
+//   Color get b50 => const Color(0x);
+
+//   @override
+//   Color get b60 => const Color(0x);
+
+//   @override
+//   Color get b70 => const Color(0x);
+// }
+
+class _VioletPrimaryColor extends PrimaryColor {
+  const _VioletPrimaryColor({super.brightness}) : super(name: 'Violet');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _VioletPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xffed78ed);
+
+  @override
+  Color get w40 => const Color(0xffe74be7);
+
+  @override
+  Color get w50 => const Color(0xffe01fe0);
+
+  @override
+  Color get w60 => const Color(0xffb418b4);
+
+  @override
+  Color get w70 => const Color(0xff871287);
+
+  @override
+  Color get b30 => const Color(0xff871287);
+
+  @override
+  Color get b40 => const Color(0xffb418b4);
+
+  @override
+  Color get b50 => const Color(0xffe01fe0);
+
+  @override
+  Color get b60 => const Color(0xffe74be7);
+
+  @override
+  Color get b70 => const Color(0xffed78ed);
+}
+
+class _SpringGreenPrimaryColor extends PrimaryColor {
+  const _SpringGreenPrimaryColor({super.brightness})
+      : super(name: 'Spring Green');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _SpringGreenPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xff75f0b3);
+
+  @override
+  Color get w40 => const Color(0xff47eb99);
+
+  @override
+  Color get w50 => const Color(0xff19e680);
+
+  @override
+  Color get w60 => const Color(0xff14b866);
+
+  @override
+  Color get w70 => const Color(0xff0f8a4d);
+
+  @override
+  Color get b30 => const Color(0xff0f8a4d);
+
+  @override
+  Color get b40 => const Color(0xff14b866);
+
+  @override
+  Color get b50 => const Color(0xff19e680);
+
+  @override
+  Color get b60 => const Color(0xff47eb99);
+
+  @override
+  Color get b70 => const Color(0xff75f0b3);
+}
+
+class _RedPrimaryColor extends PrimaryColor {
+  const _RedPrimaryColor({super.brightness}) : super(name: 'Red');
+
+  @override
+  PrimaryColor withBrightness(Brightness brightness) =>
+      _RedPrimaryColor(brightness: brightness);
+
+  @override
+  Color get w30 => const Color(0xfff76e8b);
+
+  @override
+  Color get w40 => const Color(0xfff53d65);
+
+  @override
+  Color get w50 => const Color(0xfff20d3e);
+
+  @override
+  Color get w60 => const Color(0xffc20a32);
+
+  @override
+  Color get w70 => const Color(0xff910825);
+
+  @override
+  Color get b30 => const Color(0xff910825);
+
+  @override
+  Color get b40 => const Color(0xffc20a32);
+
+  @override
+  Color get b50 => const Color(0xfff20d3e);
+
+  @override
+  Color get b60 => const Color(0xfff53d65);
+
+  @override
+  Color get b70 => const Color(0xfff76e8b);
 }
 
 /// Constants for [PrimaryColor].
 enum PrimaryColors {
   /// Coral color.
-  coral(PrimaryColor._coral),
+  coral(_CoralPrimaryColor()),
 
   /// Cornflower blue color.
-  cornflowerBlue(PrimaryColor._cornflowerBlue),
+  cornflowerBlue(_CornflowerBluePrimaryColor()),
 
   /// Turquoise color.
-  turquoise(PrimaryColor._turquoise),
+  turquoise(_TurquoisePrimaryColor()),
 
   /// Deep sky blue color.
-  deepSkyBlue(PrimaryColor._deepSkyBlue),
+  deepSkyBlue(_DeepSkyBluePrimaryColor()),
 
   /// Dodger blue color.
-  dodgerBlue(PrimaryColor._dodgerBlue),
+  dodgerBlue(_DodgerBluePrimaryColor()),
 
   /// Goldenrod color.
-  goldenrod(PrimaryColor._goldenrod),
+  goldenrod(_GoldenrodPrimaryColor()),
 
   /// Hot pink color.
-  hotPink(PrimaryColor._hotPink),
+  hotPink(_HotPinkPrimaryColor()),
 
   /// Purple color.
-  purple(PrimaryColor._purple),
+  purple(_PurplePrimaryColor()),
 
   /// Orange color.
-  orange(PrimaryColor._orange),
+  orange(_OrangePrimaryColor()),
 
   /// Royal blue color.
-  royalBlue(PrimaryColor._royalBlue),
+  royalBlue(_RoyalBluePrimaryColor()),
 
   /// Sandy brown color.
-  sandyBrown(PrimaryColor._sandyBrown),
+  sandyBrown(_SandyBrownPrimaryColor()),
 
   /// Slate blue color.
-  slateBlue(PrimaryColor._slateBlue),
+  slateBlue(_SlateBluePrimaryColor()),
 
-  /// Steel blue color.
-  steelBlue(PrimaryColor._steelBlue),
+  // /// Steel blue color.
+  // steelBlue(_SteelBluePrimaryColor()),
 
   /// Violet color.
-  violet(PrimaryColor._violet),
+  violet(_VioletPrimaryColor()),
 
   /// Spring green color.
-  springGreen(PrimaryColor._springGreen),
+  springGreen(_SpringGreenPrimaryColor()),
 
   /// Red color.
-  red(PrimaryColor._red);
+  red(_RedPrimaryColor());
 
   /// Creates a [PrimaryColors] enumeration.
   const PrimaryColors(this._primaryColor);
@@ -465,8 +1281,8 @@ enum PrimaryColors {
       return PrimaryColors.sandyBrown;
     } else if (primaryColor == PrimaryColors.slateBlue._primaryColor) {
       return PrimaryColors.slateBlue;
-    } else if (primaryColor == PrimaryColors.steelBlue._primaryColor) {
-      return PrimaryColors.steelBlue;
+      // } else if (primaryColor == PrimaryColors.steelBlue._primaryColor) {
+      //   return PrimaryColors.steelBlue;
     } else if (primaryColor == PrimaryColors.violet._primaryColor) {
       return PrimaryColors.violet;
     } else if (primaryColor == PrimaryColors.springGreen._primaryColor) {

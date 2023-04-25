@@ -444,7 +444,7 @@ class App extends StatelessWidget {
             builder: (context) {
               return _shouldBuildView[index]
                   ? widget.items[index].body(context)
-                  : Container();
+                  : const SizedBox();
             },
           ),
         ),

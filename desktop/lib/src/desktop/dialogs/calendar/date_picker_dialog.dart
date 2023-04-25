@@ -137,16 +137,18 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
             ColoredBox(
               color: Theme.of(context).colorScheme.background[0],
               child: CalendarDate(
+                key: _calendarPickerKey,
                 firstDate: widget.firstDate,
                 initialDate: widget.initialDate,
                 lastDate: widget.lastDate,
                 onDateChanged: (_) {},
                 currentDate: widget.currentDate,
                 initialCalendarMode: widget.initialCalendarMode,
-                key: _calendarPickerKey,
                 selectableDayPredicate: widget.selectableDayPredicate,
-                onDateSelected: (selectedDate) =>
-                    Navigator.pop(context, selectedDate),
+                onDateSelected: (selectedDate) => Navigator.pop(
+                  context,
+                  selectedDate,
+                ),
               ),
             ),
           ],

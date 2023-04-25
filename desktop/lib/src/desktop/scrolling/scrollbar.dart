@@ -334,9 +334,11 @@ class _ScrollbarState extends State<Scrollbar>
 
   void _handleIncrement(double value) {
     final _position = _currentController!.position;
-    _position.moveTo(_position.pixels + value,
-        curve: _kAnimationCurveIncrement,
-        duration: _kAnimationDurationIncrement);
+    _position.moveTo(
+      _position.pixels + value,
+      curve: _kAnimationCurveIncrement,
+      duration: _kAnimationDurationIncrement,
+    );
   }
 
   bool _shouldUpdatePainter(Axis notificationAxis) {

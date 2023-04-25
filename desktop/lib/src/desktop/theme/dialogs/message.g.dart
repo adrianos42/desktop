@@ -340,28 +340,22 @@ textStyle: The text style for the message.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is MessageThemeData &&
+  bool operator ==(covariant MessageThemeData other) {
+    return identical(this, other) ||
         other.textStyle == textStyle &&
-        other.titleTextStyle == titleTextStyle &&
-        other.titlePadding == titlePadding &&
-        other.padding == padding &&
-        other.highlightColor == highlightColor &&
-        other.backgroundColor == backgroundColor &&
-        other.itemSpacing == itemSpacing &&
-        other.infoColor == infoColor &&
-        other.errorColor == errorColor &&
-        other.warningColor == warningColor &&
-        other.successColor == successColor &&
-        other.animationCurve == animationCurve &&
-        other.duration == duration &&
-        other.animationDuration == animationDuration;
+            other.titleTextStyle == titleTextStyle &&
+            other.titlePadding == titlePadding &&
+            other.padding == padding &&
+            other.highlightColor == highlightColor &&
+            other.backgroundColor == backgroundColor &&
+            other.itemSpacing == itemSpacing &&
+            other.infoColor == infoColor &&
+            other.errorColor == errorColor &&
+            other.warningColor == warningColor &&
+            other.successColor == successColor &&
+            other.animationCurve == animationCurve &&
+            other.duration == duration &&
+            other.animationDuration == animationDuration;
   }
 }
 

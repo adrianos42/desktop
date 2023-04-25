@@ -245,23 +245,17 @@ height: The height of the tooltip's [child].
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is TooltipThemeData &&
+  bool operator ==(covariant TooltipThemeData other) {
+    return identical(this, other) ||
         other.height == height &&
-        other.maxWidth == maxWidth &&
-        other.verticalOffset == verticalOffset &&
-        other.backgroundColor == backgroundColor &&
-        other.textStyle == textStyle &&
-        other.padding == padding &&
-        other.margin == margin &&
-        other.showDuration == showDuration &&
-        other.waitDuration == waitDuration;
+            other.maxWidth == maxWidth &&
+            other.verticalOffset == verticalOffset &&
+            other.backgroundColor == backgroundColor &&
+            other.textStyle == textStyle &&
+            other.padding == padding &&
+            other.margin == margin &&
+            other.showDuration == showDuration &&
+            other.waitDuration == waitDuration;
   }
 }
 

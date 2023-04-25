@@ -144,18 +144,12 @@ color: The color of the hyperlink text.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is HyperlinkThemeData &&
+  bool operator ==(covariant HyperlinkThemeData other) {
+    return identical(this, other) ||
         other.color == color &&
-        other.hoverColor == hoverColor &&
-        other.textStyle == textStyle &&
-        other.highlightColor == highlightColor;
+            other.hoverColor == hoverColor &&
+            other.textStyle == textStyle &&
+            other.highlightColor == highlightColor;
   }
 }
 

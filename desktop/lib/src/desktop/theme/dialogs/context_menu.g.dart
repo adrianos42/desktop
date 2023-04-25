@@ -363,29 +363,23 @@ iconThemeData: The icon theme.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is ContextMenuThemeData &&
+  bool operator ==(covariant ContextMenuThemeData other) {
+    return identical(this, other) ||
         other.iconThemeData == iconThemeData &&
-        other.menuWidthStep == menuWidthStep &&
-        other.itemHeight == itemHeight &&
-        other.minMenuWidth == minMenuWidth &&
-        other.maxMenuWidth == maxMenuWidth &&
-        other.menuHorizontalPadding == menuHorizontalPadding &&
-        other.textStyle == textStyle &&
-        other.selectedColor == selectedColor &&
-        other.selectedHighlightColor == selectedHighlightColor &&
-        other.selectedHoverColor == selectedHoverColor &&
-        other.selectedForeground == selectedForeground &&
-        other.hoverColor == hoverColor &&
-        other.highlightColor == highlightColor &&
-        other.background == background &&
-        other.color == color;
+            other.menuWidthStep == menuWidthStep &&
+            other.itemHeight == itemHeight &&
+            other.minMenuWidth == minMenuWidth &&
+            other.maxMenuWidth == maxMenuWidth &&
+            other.menuHorizontalPadding == menuHorizontalPadding &&
+            other.textStyle == textStyle &&
+            other.selectedColor == selectedColor &&
+            other.selectedHighlightColor == selectedHighlightColor &&
+            other.selectedHoverColor == selectedHoverColor &&
+            other.selectedForeground == selectedForeground &&
+            other.hoverColor == hoverColor &&
+            other.highlightColor == highlightColor &&
+            other.background == background &&
+            other.color == color;
   }
 }
 

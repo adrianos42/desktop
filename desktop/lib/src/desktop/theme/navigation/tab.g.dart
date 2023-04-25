@@ -374,29 +374,23 @@ padding: The padding for the tab bar.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is TabThemeData &&
+  bool operator ==(covariant TabThemeData other) {
+    return identical(this, other) ||
         other.padding == padding &&
-        other.height == height &&
-        other.width == width &&
-        other.tabBarBackgroundColor == tabBarBackgroundColor &&
-        other.textStyle == textStyle &&
-        other.iconThemeData == iconThemeData &&
-        other.itemSpacing == itemSpacing &&
-        other.itemPadding == itemPadding &&
-        other.itemColor == itemColor &&
-        other.itemHoverColor == itemHoverColor &&
-        other.itemHighlightColor == itemHighlightColor &&
-        other.itemFilled == itemFilled &&
-        other.itemBackgroundColor == itemBackgroundColor &&
-        other.itemHoverBackgroundColor == itemHoverBackgroundColor &&
-        other.itemHighlightBackgroundColor == itemHighlightBackgroundColor;
+            other.height == height &&
+            other.width == width &&
+            other.tabBarBackgroundColor == tabBarBackgroundColor &&
+            other.textStyle == textStyle &&
+            other.iconThemeData == iconThemeData &&
+            other.itemSpacing == itemSpacing &&
+            other.itemPadding == itemPadding &&
+            other.itemColor == itemColor &&
+            other.itemHoverColor == itemHoverColor &&
+            other.itemHighlightColor == itemHighlightColor &&
+            other.itemFilled == itemFilled &&
+            other.itemBackgroundColor == itemBackgroundColor &&
+            other.itemHoverBackgroundColor == itemHoverBackgroundColor &&
+            other.itemHighlightBackgroundColor == itemHighlightBackgroundColor;
   }
 }
 

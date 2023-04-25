@@ -109,21 +109,15 @@ disabledColor:;;color:;;hoverColor:;;highlightColor:;;inhoverColor:;;foreground:
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is ScrollbarThemeData &&
+  bool operator ==(covariant ScrollbarThemeData other) {
+    return identical(this, other) ||
         other.disabledColor == disabledColor &&
-        other.color == color &&
-        other.hoverColor == hoverColor &&
-        other.highlightColor == highlightColor &&
-        other.inhoverColor == inhoverColor &&
-        other.foreground == foreground &&
-        other.trackColor == trackColor;
+            other.color == color &&
+            other.hoverColor == hoverColor &&
+            other.highlightColor == highlightColor &&
+            other.inhoverColor == inhoverColor &&
+            other.foreground == foreground &&
+            other.trackColor == trackColor;
   }
 }
 

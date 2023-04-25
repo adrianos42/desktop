@@ -130,18 +130,12 @@ textStyle: The style for the text. The color is ignored.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is TreeThemeData &&
+  bool operator ==(covariant TreeThemeData other) {
+    return identical(this, other) ||
         other.textStyle == textStyle &&
-        other.color == color &&
-        other.hoverColor == hoverColor &&
-        other.highlightColor == highlightColor;
+            other.color == color &&
+            other.hoverColor == hoverColor &&
+            other.highlightColor == highlightColor;
   }
 }
 

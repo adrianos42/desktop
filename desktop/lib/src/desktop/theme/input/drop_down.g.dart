@@ -279,25 +279,19 @@ iconThemeData: The icon theme of the button.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is DropDownThemeData &&
+  bool operator ==(covariant DropDownThemeData other) {
+    return identical(this, other) ||
         other.iconThemeData == iconThemeData &&
-        other.textStyle == textStyle &&
-        other.disabledColor == disabledColor &&
-        other.color == color &&
-        other.focusColor == focusColor &&
-        other.hoverColor == hoverColor &&
-        other.waitingColor == waitingColor &&
-        other.backgroundColor == backgroundColor &&
-        other.hoverBackgroundColor == hoverBackgroundColor &&
-        other.waitingBackgroundColor == waitingBackgroundColor &&
-        other.disabledBackgroundColor == disabledBackgroundColor;
+            other.textStyle == textStyle &&
+            other.disabledColor == disabledColor &&
+            other.color == color &&
+            other.focusColor == focusColor &&
+            other.hoverColor == hoverColor &&
+            other.waitingColor == waitingColor &&
+            other.backgroundColor == backgroundColor &&
+            other.hoverBackgroundColor == hoverBackgroundColor &&
+            other.waitingBackgroundColor == waitingBackgroundColor &&
+            other.disabledBackgroundColor == disabledBackgroundColor;
   }
 }
 

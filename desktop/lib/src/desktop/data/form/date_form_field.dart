@@ -130,7 +130,7 @@ class DateFormField extends FormField<String> {
                 DecoratedBox(
                   decoration: decoration,
                   child: Padding(
-                    padding: decoration.padding,
+                    padding: decoration.padding ?? EdgeInsets.zero,
                     child: Row(
                       children: [
                         Flexible(

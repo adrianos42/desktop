@@ -150,19 +150,14 @@ ${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.repla
           ..returns = refer('bool')
           ..requiredParameters.add(Parameter((b) => b
             ..name = 'other'
-            ..type = refer('Object')))
+            ..type = refer('covariant $targetThemeDataClassName')))
           ..annotations.add(refer('override'))
           ..body = Code(
             '''
-              if (identical(this, other)) {
-                return true;
-              }
-              if (other.runtimeType != runtimeType) {
-                return false;
-              }
-              ${fields.fold(
-              'return other is $targetThemeDataClassName',
-              (p, e) => '$p && other.${e.name} == ${e.name}',
+              return identical(this, other) || ${fields.fold(
+              '',
+              (p, e) =>
+                  '${p.isNotEmpty ? '$p &&' : ''} other.${e.name} == ${e.name} ',
             )};''',
           )),
       );

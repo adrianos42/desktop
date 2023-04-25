@@ -1,14 +1,18 @@
 # Changelog
 
+## 4.1.0
+
+- Allow implementing `ShadeColor`, `BackgroundColor` and `PrimaryColor` for custom themes in `ThemeData`.
+
 ## 4.0.0
 
 - Update for stable channel.
 - Theme option for widgets.
-- New options for [Tab].
-- Possibility to drag [ListTable] columns.
-- Initial implementation for [DatePickerDialog].
-- Initial implementation for [SelectableText].
-- Initial impletmenation for [TextFormField].
+- New options for `Tab`.
+- Possibility to drag `ListTable` columns.
+- Initial implementation for `DatePickerDialog`.
+- Initial implementation for `SelectableText`.
+- Initial impletmenation for `TextFormField`.
 - Fix progress widget styles.
 
 ## 4.0.0-dev.7

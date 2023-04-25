@@ -214,22 +214,16 @@ padding: The padding for the breadcrumb.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is BreadcrumbThemeData &&
+  bool operator ==(covariant BreadcrumbThemeData other) {
+    return identical(this, other) ||
         other.padding == padding &&
-        other.height == height &&
-        other.itemSpacing == itemSpacing &&
-        other.color == color &&
-        other.iconTheme == iconTheme &&
-        other.textStyle == textStyle &&
-        other.backgroundColor == backgroundColor &&
-        other.highlightColor == highlightColor;
+            other.height == height &&
+            other.itemSpacing == itemSpacing &&
+            other.color == color &&
+            other.iconTheme == iconTheme &&
+            other.textStyle == textStyle &&
+            other.backgroundColor == backgroundColor &&
+            other.highlightColor == highlightColor;
   }
 }
 

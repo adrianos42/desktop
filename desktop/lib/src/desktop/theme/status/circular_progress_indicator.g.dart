@@ -132,18 +132,12 @@ size: The size of the circular progress indicator.
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is CircularProgressIndicatorThemeData &&
+  bool operator ==(covariant CircularProgressIndicatorThemeData other) {
+    return identical(this, other) ||
         other.size == size &&
-        other.color == color &&
-        other.backgroundColor == backgroundColor &&
-        other.indeterminateDuration == indeterminateDuration;
+            other.color == color &&
+            other.backgroundColor == backgroundColor &&
+            other.indeterminateDuration == indeterminateDuration;
   }
 }
 
