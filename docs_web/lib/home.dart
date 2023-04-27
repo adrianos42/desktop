@@ -12,7 +12,7 @@ import 'theme/primaryColor.dart';
 import 'theme/typography.dart';
 import 'overview.dart';
 
-const String _version = '4.1.0';
+const String _version = '4.1.1';
 
 ///
 class DocHome extends StatefulWidget {
@@ -224,16 +224,12 @@ class _DocHomeState extends State<DocHome> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    // return BottomNavPage();
-    return _createHome();
-  }
+  Widget build(BuildContext context) => _createHome();
 }
 
 class _ThemeToggle extends StatefulWidget {
   const _ThemeToggle({
     required this.onPressed,
-    super.key,
   });
 
   final VoidCallback onPressed;
@@ -284,7 +280,7 @@ class DocApp extends StatelessWidget {
             if (kReleaseMode) {
               return OverviewPage();
             } else {
-              return TabPage();
+              return ButtonContextMenuPage();
             }
           },
         ),
@@ -299,6 +295,7 @@ class DocApp extends StatelessWidget {
               titleBuilder: (context) => const Text('Nav'),
               builder: (context) => NavPage(),
             ),
+
             ///TreeNode.child(
             ///  titleBuilder: (context) => const Text('Bottom Nav'),
             ///  builder: (context) => BottomNavPage(),
@@ -382,11 +379,6 @@ class DocApp extends StatelessWidget {
               titleBuilder: (context) => const Text('Radio'),
               builder: (context) => ButtonRadioPage(),
             ),
-            if (!kReleaseMode && false)
-              TreeNode.child(
-                titleBuilder: (context) => const Text('Select'),
-                builder: (context) => SelectInputPage(),
-              ),
             TreeNode.child(
               titleBuilder: (context) => const Text('Toggle Switch'),
               builder: (context) => ToggleSwitchPage(),
@@ -397,11 +389,13 @@ class DocApp extends StatelessWidget {
           titleBuilder: (context) => const Text('Status'),
           children: [
             TreeNode.child(
-              titleBuilder: (context) => const Text('Linear Progress Indicator'),
+              titleBuilder: (context) =>
+                  const Text('Linear Progress Indicator'),
               builder: (context) => LinearProgressIndicatorPage(),
             ),
             TreeNode.child(
-              titleBuilder: (context) => const Text('Circular Progress Indicator'),
+              titleBuilder: (context) =>
+                  const Text('Circular Progress Indicator'),
               builder: (context) => CircularProgressIndicatorPage(),
             ),
           ],

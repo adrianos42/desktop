@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.1
+
+- Use `Navigator` for context menus.
+
 ## 4.1.0
 
 - Allow implementing `ShadeColor`, `BackgroundColor` and `PrimaryColor` for custom themes in `ThemeData`.

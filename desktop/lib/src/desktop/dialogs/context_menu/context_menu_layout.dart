@@ -1,7 +1,9 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+/// Layout delegate for [ContextMenu].
 class ContextMenuLayoutDelegate extends SingleChildLayoutDelegate {
+  /// Creates a [ContextMenuLayoutDelegate].
   ContextMenuLayoutDelegate(this.position);
 
   final Rect position;
