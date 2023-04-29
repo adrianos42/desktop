@@ -67,7 +67,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(TapDragUpDetails details) {
+  void onSingleTapUp(TapUpDetails details) {
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {
@@ -349,8 +349,6 @@ class TextField extends StatefulWidget {
 class _TextFieldState extends State<TextField>
     with AutomaticKeepAliveClientMixin<TextField>, RestorationMixin
     implements TextSelectionGestureDetectorBuilderDelegate {
-  final GlobalKey _clearGlobalKey = GlobalKey();
-
   RestorableTextEditingController? _controller;
   TextEditingController get _effectiveController =>
       widget.controller ?? _controller!.value;

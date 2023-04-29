@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import 'dart:ui' show Brightness;
-
 import '../color_scheme.dart';
 import '../theme_text.dart';
 

@@ -1,16 +1,13 @@
 import 'dart:collection';
-import 'dart:ui' show PointerDeviceKind;
 import 'dart:math' as math;
+import 'dart:ui' show PointerDeviceKind;
 
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
-import 'tab_view.dart';
 
 /// Class for building nodes in a [Tree].
 @immutable

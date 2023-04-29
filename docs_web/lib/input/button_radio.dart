@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class ButtonRadioPage extends StatefulWidget {
@@ -10,7 +11,6 @@ class ButtonRadioPage extends StatefulWidget {
 
 class _ButtonRadioPageState extends State<ButtonRadioPage> {
   bool _value = false;
-  bool _disabled = false;
 
   @override
   Widget build(BuildContext context) {

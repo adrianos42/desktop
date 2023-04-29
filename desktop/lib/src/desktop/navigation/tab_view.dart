@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/rendering.dart';
 
 import '../theme/theme.dart';
-
 import 'route.dart';
 import 'tab_route.dart';
 import 'tab_scope.dart';

@@ -1,9 +1,10 @@
 library defaults;
 
-import 'package:desktop/desktop.dart';
-import 'package:dart_style/dart_style.dart';
-import 'package:markdown_docs_flutter/markdown_docs_flutter.dart';
 import 'dart:math' as math;
+
+import 'package:dart_style/dart_style.dart';
+import 'package:desktop/desktop.dart';
+import 'package:markdown_docs_flutter/markdown_docs_flutter.dart';
 
 ///
 class StyleItem {

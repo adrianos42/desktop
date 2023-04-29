@@ -1,15 +1,10 @@
-import 'dart:math' as math;
-
-import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../theme/theme.dart';
+import '../dialog.dart';
 import 'calendar_date.dart';
 import 'date_utlis.dart';
 import 'month_picker.dart';
-import '../dialog.dart';
-import '../../theme/theme.dart';
 
 /// Date picker dialog.
 ///

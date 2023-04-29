@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../icons.dart';
 import '../../input/button.dart';
 import '../../localizations.dart';
 import '../../theme/theme.dart';

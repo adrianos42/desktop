@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.2
+
+- Fix type error.
+
 ## 4.1.1
 
 - Use `Navigator` for context menus.
