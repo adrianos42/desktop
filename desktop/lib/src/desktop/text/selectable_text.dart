@@ -56,7 +56,8 @@ class _SelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(TapUpDetails details) {
+  void onSingleTapUp(dynamic details) {
+    // TODO TapDragUpDetails
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {
@@ -137,18 +138,12 @@ class SelectableText extends StatefulWidget {
     this.selectionControls,
     this.dragStartBehavior = DragStartBehavior.start,
     this.onSelectionChanged,
-    ToolbarOptions? toolbarOptions,
   })  : assert(
           (maxLines == null) || (minLines == null) || (maxLines >= minLines),
           "minLines can't be greater than maxLines",
         ),
         assert(maxLines == null || maxLines > 0),
         assert(minLines == null || minLines > 0),
-        toolbarOptions = toolbarOptions ??
-            const ToolbarOptions(
-              copy: true,
-              selectAll: true,
-            ),
         textSpan = null;
 
   ///
@@ -174,18 +169,12 @@ class SelectableText extends StatefulWidget {
     this.textWidthBasis,
     this.dragStartBehavior = DragStartBehavior.start,
     this.onSelectionChanged,
-    ToolbarOptions? toolbarOptions,
   })  : assert(
           (maxLines == null) || (minLines == null) || (maxLines >= minLines),
           "minLines can't be greater than maxLines",
         ),
         assert(maxLines == null || maxLines > 0),
         assert(minLines == null || minLines > 0),
-        toolbarOptions = toolbarOptions ??
-            const ToolbarOptions(
-              copy: true,
-              selectAll: true,
-            ),
         text = null;
 
   ///
@@ -216,8 +205,6 @@ class SelectableText extends StatefulWidget {
   final TextDirection? textDirection;
 
   final TextStyle? style;
-
-  final ToolbarOptions toolbarOptions;
 
   /// {@macro flutter.widgets.editableText.minLines}
   final int? minLines;
@@ -445,7 +432,6 @@ class _SelectableTextState extends State<SelectableText>
       style: widget.style ?? textStyle,
       textAlign: widget.textAlign,
       textDirection: widget.textDirection,
-      toolbarOptions: widget.toolbarOptions,
       onSelectionHandleTapped: _handleSelectionHandleTapped,
       selectionHeightStyle: ui.BoxHeightStyle.tight,
       selectionWidthStyle: ui.BoxWidthStyle.tight,

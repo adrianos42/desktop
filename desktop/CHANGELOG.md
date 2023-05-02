@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.0
+
+- Fix tab menu animation.
+
 ## 4.1.2
 
 - Fix type error.

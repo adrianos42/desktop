@@ -79,7 +79,7 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
                   padding: const EdgeInsets.all(40.0),
                   children: [
                     TextFormField(
-                      prefix: 'email',
+                      prefix: 'Email',
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       onChanged: (value) => _email = value,
@@ -96,7 +96,7 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: TextFormField(
-                        prefix: 'password',
+                        prefix: 'Password',
                         obscureText: true,
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,

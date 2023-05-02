@@ -5,7 +5,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.19.6 <4.0.0"
+  sdk: '>=3.1.0-56.0.dev <4.0.0'
 
 dependencies:
   flutter:
@@ -33,6 +33,7 @@ flutter:
   assets:
     - assets/GitHub-Mark-32px.png
     - assets/GitHub-Mark-Light-32px.png
+    - assets/dart-logo.png
 
     - assets/cats/pexels-1653357.webp
     - assets/cats/pexels-3030635.webp

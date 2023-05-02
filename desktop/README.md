@@ -1,4 +1,4 @@
-# desktop
+# Desktop
 
 Minimal desktop widgets for flutter.
 

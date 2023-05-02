@@ -1,15 +1,11 @@
 import 'dart:math' as math;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 import '../input/input.dart';
 import '../theme/theme.dart';
 import 'tab_scope.dart';
 import 'tab_view.dart';
-
-const Duration _kMenuTransitionDuration = Duration(milliseconds: 300);
 
 /// Controls the tab index.
 class TabController extends ChangeNotifier {
@@ -26,11 +22,10 @@ class TabController extends ChangeNotifier {
   int _index;
   set index(int value) {
     assert(value >= 0);
-    if (_index == value) {
-      return;
+    if (_index != value) {
+      _index = value;
+      notifyListeners();
     }
-    _index = value;
-    notifyListeners();
   }
 
   @mustCallSuper
@@ -173,7 +168,7 @@ class Tab extends StatefulWidget {
   /// The theme for [Tab].
   final TabThemeData? theme;
 
-  /// Controls the currently selected tab index of [Tab].
+  /// Controls selected index.
   final TabController? controller;
 
   /// The [AxisDirection] of the tab bar.
@@ -196,17 +191,17 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
   bool _menuShown = false;
   OverlayEntry? _menuOverlay;
   late Animation<double> _menuAnimation;
-  late AnimationController _menuController;
+  AnimationController? _menuController;
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static const Curve _animationCurve = Curves.easeInOutSine;
-
   void _createAnimation() {
+    final themeData = TabTheme.of(context);
+
     _menuAnimation = CurvedAnimation(
-      parent: _menuController,
-      curve: _animationCurve,
-      reverseCurve: _animationCurve,
+      parent: _menuController!,
+      curve: themeData.menuTrasitionCurve!,
+      reverseCurve: themeData.menuTrasitionReverseCurve!,
     );
 
     final Offset begin;
@@ -281,7 +276,7 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
 
   void _hideMenu() {
     setState(() {
-      _menuController.reverse();
+      _menuController!.reverse();
       _menuShown = false;
     });
   }
@@ -291,7 +286,7 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
     return isTrailing ? leadingLength + index : index;
   }
 
-  void _showMenu(TabThemeData themeData, bool isTrailing, int index) {
+  void _showMenu(bool isTrailing, int index) {
     setState(() {
       if (_menuIndex == -1) {
         _menuIndex = _getMenuIndex(isTrailing, index);
@@ -305,52 +300,57 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
           ...widget.trailingMenu ?? []
         ];
 
-        final Alignment alignment;
-
-        switch (widget.axis) {
-          case AxisDirection.up:
-            alignment = Alignment.topCenter;
-            break;
-          case AxisDirection.right:
-            alignment = Alignment.centerRight;
-            break;
-          case AxisDirection.down:
-            alignment = Alignment.bottomCenter;
-            break;
-          case AxisDirection.left:
-            alignment = Alignment.centerLeft;
-            break;
-        }
-
         _menuOverlay = OverlayEntry(
           maintainState: false,
-          builder: (context) => AnimatedBuilder(
-            animation: _menuAnimation,
-            builder: (context, _) => GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _hideMenu,
-              child: Container(
-                color: _menuColorTween.evaluate(_menuAnimation),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.deferToChild,
-                  onTap: () {},
-                  child: ClipRect(
-                    child: FractionalTranslation(
-                      translation: _menuOffsetTween.evaluate(_menuAnimation),
+          builder: (context) {
+            final Alignment alignment;
+
+            switch (widget.axis) {
+              case AxisDirection.up:
+                alignment = Alignment.topCenter;
+                break;
+              case AxisDirection.right:
+                alignment = Alignment.centerRight;
+                break;
+              case AxisDirection.down:
+                alignment = Alignment.bottomCenter;
+                break;
+              case AxisDirection.left:
+                alignment = Alignment.centerLeft;
+                break;
+            }
+
+            final themeData = TabTheme.of(context);
+
+            return AnimatedBuilder(
+              animation: _menuAnimation,
+              builder: (context, _) => GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _hideMenu,
+                child: ColoredBox(
+                  color: _menuColorTween.evaluate(_menuAnimation)!,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.deferToChild,
+                    onTap: () {},
+                    child: ClipRect(
                       child: Align(
                         alignment: alignment,
-                        child: Container(
-                          width: _direction == Axis.vertical
-                              ? null
-                              : double.infinity,
-                          height: _direction == Axis.horizontal
-                              ? null
-                              : double.infinity,
-                          color: themeData.tabBarBackgroundColor!,
-                          child: AnimatedSize(
-                            duration: _kMenuTransitionDuration,
-                            curve: _animationCurve,
-                            child: items[_menuIndex].builder(context),
+                        child: FractionalTranslation(
+                          translation:
+                              _menuOffsetTween.evaluate(_menuAnimation),
+                          child: Container(
+                            width: _direction == Axis.vertical
+                                ? null
+                                : double.infinity,
+                            height: _direction == Axis.horizontal
+                                ? null
+                                : double.infinity,
+                            color: themeData.tabBarBackgroundColor!,
+                            child: AnimatedSize(
+                              duration: themeData.menuTransitionDuration!,
+                              curve: themeData.menuTrasitionCurve!,
+                              child: items[_menuIndex].builder(context),
+                            ),
                           ),
                         ),
                       ),
@@ -358,12 +358,12 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
 
+        _menuController!.forward(from: 0.0);
         _overlay.insert(_menuOverlay!);
-        _menuController.forward(from: 0.0);
         _menuShown = true;
       } else if (_menuIndex == _getMenuIndex(isTrailing, index)) {
         _hideMenu();
@@ -432,7 +432,6 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
           hoverColor: themeData.itemHoverColor!,
         ),
         onPressed: () => _showMenu(
-          themeData,
           isTrailing,
           index,
         ),
@@ -597,19 +596,19 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
     _overlays.addAll(List<OverlayEntry>.generate(
         _length, (index) => _createPageOverlayEntry(index)));
 
-    _menuController = AnimationController(
-      vsync: this,
-      duration: _kMenuTransitionDuration,
-    )..addStatusListener(_handleMenuAnimationStatusChanged);
-
     _updateTabController();
-
-    _createAnimation();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    _menuController ??= AnimationController(
+      vsync: this,
+      duration: TabTheme.of(context).menuTransitionDuration!,
+    )..addStatusListener(_handleMenuAnimationStatusChanged);
+
+    _createAnimation();
   }
 
   @override
@@ -660,7 +659,7 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
     }
 
     _internalController?.dispose();
-    _menuController.dispose();
+    _menuController?.dispose();
 
     super.dispose();
   }

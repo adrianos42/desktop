@@ -67,7 +67,8 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(TapUpDetails details) {
+  void onSingleTapUp(dynamic details) {
+    // TODO TapDragUpDetails
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {

@@ -7,9 +7,10 @@ import 'navigation/navigation.dart';
 import 'scrolling.dart';
 import 'status/status.dart';
 import 'text/text.dart';
-import 'theme/colorscheme.dart';
-import 'theme/primaryColor.dart';
+import 'theme/color_scheme.dart';
+import 'theme/primary_color.dart';
 import 'theme/typography.dart';
+import 'theme/custom_theme.dart';
 import 'overview.dart';
 
 const String _version = '4.1.1';
@@ -55,9 +56,7 @@ class _DocHomeState extends State<DocHome> {
   ) {
     return ContextMenuItem(
       value: color,
-      child: Text(
-        color.toString(),
-      ),
+      child: Text(color.toString()),
     );
   }
 
@@ -265,6 +264,176 @@ class _ThemeToggleState extends State<_ThemeToggle> {
 class DocApp extends StatelessWidget {
   const DocApp({super.key});
 
+  static List<TreeNode> createItems(bool buildCustomThemeItem) {
+    return [
+      TreeNode.child(
+        titleBuilder: (context) => const Text('Overview'),
+        builder: (context) {
+          if (kReleaseMode) {
+            return const OverviewPage();
+          } else {
+            return TreePage();
+          }
+        },
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Navigation'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Breadcrumb'),
+            builder: (context) => BreadcrumbPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Nav'),
+            builder: (context) => NavPage(),
+          ),
+
+          ///TreeNode.child(
+          ///  titleBuilder: (context) => const Text('Bottom Nav'),
+          ///  builder: (context) => BottomNavPage(),
+          ///),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Tab'),
+            builder: (context) => TabPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Tree'),
+            builder: (context) => TreePage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Data'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('List Table'),
+            builder: (context) => ListTablePage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Text Form Field'),
+            builder: (context) => TextFormFieldPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Date Form Field'),
+            builder: (context) => DateFormFieldPage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Dialogs'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Dialog'),
+            builder: (context) => DialogPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Message'),
+            builder: (context) => DialogMessagePage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Tooltip'),
+            builder: (context) => TooltipPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Date Picker'),
+            builder: (context) => DatePickerPage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Input'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Button'),
+            builder: (context) => ButtonPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Context Menu'),
+            builder: (context) => ButtonContextMenuPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Drop Down Menu'),
+            builder: (context) => ButtonDropDownPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Hyperlink'),
+            builder: (context) => ButtonHyperlinkPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Slider'),
+            builder: (context) => SliderPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Checkbox'),
+            builder: (context) => CheckboxPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Radio'),
+            builder: (context) => ButtonRadioPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Toggle Switch'),
+            builder: (context) => ToggleSwitchPage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Status'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Linear Progress Indicator'),
+            builder: (context) => LinearProgressIndicatorPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) =>
+                const Text('Circular Progress Indicator'),
+            builder: (context) => CircularProgressIndicatorPage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Text'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Text Field'),
+            builder: (context) => TextFieldPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Selectable Text'),
+            builder: (context) => SelectableTextPage(),
+          ),
+        ],
+      ),
+      TreeNode.children(
+        titleBuilder: (context) => const Text('Theme'),
+        children: [
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Typography'),
+            builder: (context) => TypographyPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Color Scheme'),
+            builder: (context) => ColorschemePage(),
+          ),
+          if (buildCustomThemeItem)
+            TreeNode.child(
+              titleBuilder: (context) => const Text('Primary Colors'),
+              builder: (context) => const PrimaryColorPage(),
+            ),
+          if (buildCustomThemeItem)
+            TreeNode.child(
+              titleBuilder: (context) => const Text('Custom Theme'),
+              builder: (context) => const CustomTheme(),
+            ),
+        ],
+      ),
+      TreeNode.child(
+        titleBuilder: (context) => const Text('Scrollbar'),
+        builder: (context) => ScrollingPage(),
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return DocHome(
@@ -273,168 +442,7 @@ class DocApp extends StatelessWidget {
       allowThemeChange: true,
       allowThemeColorChange: true,
       allowDragging: false,
-      treeNodes: [
-        TreeNode.child(
-          titleBuilder: (context) => const Text('Overview'),
-          builder: (context) {
-            if (kReleaseMode) {
-              return OverviewPage();
-            } else {
-              return ButtonContextMenuPage();
-            }
-          },
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Navigation'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Breadcrumb'),
-              builder: (context) => BreadcrumbPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Nav'),
-              builder: (context) => NavPage(),
-            ),
-
-            ///TreeNode.child(
-            ///  titleBuilder: (context) => const Text('Bottom Nav'),
-            ///  builder: (context) => BottomNavPage(),
-            ///),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Tab'),
-              builder: (context) => TabPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Tree'),
-              builder: (context) => TreePage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Data'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('List Table'),
-              builder: (context) => ListTablePage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Text Form Field'),
-              builder: (context) => TextFormFieldPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Date Form Field'),
-              builder: (context) => DateFormFieldPage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Dialogs'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Dialog'),
-              builder: (context) => DialogPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Message'),
-              builder: (context) => DialogMessagePage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Tooltip'),
-              builder: (context) => TooltipPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Date Picker'),
-              builder: (context) => DatePickerPage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Input'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Button'),
-              builder: (context) => ButtonPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Context Menu'),
-              builder: (context) => ButtonContextMenuPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Drop Down Menu'),
-              builder: (context) => ButtonDropDownPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Hyperlink'),
-              builder: (context) => ButtonHyperlinkPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Slider'),
-              builder: (context) => SliderPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Checkbox'),
-              builder: (context) => CheckboxPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Radio'),
-              builder: (context) => ButtonRadioPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Toggle Switch'),
-              builder: (context) => ToggleSwitchPage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Status'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) =>
-                  const Text('Linear Progress Indicator'),
-              builder: (context) => LinearProgressIndicatorPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) =>
-                  const Text('Circular Progress Indicator'),
-              builder: (context) => CircularProgressIndicatorPage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Text'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Text Field'),
-              builder: (context) => TextFieldPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Selectable Text'),
-              builder: (context) => SelectableTextPage(),
-            ),
-          ],
-        ),
-        TreeNode.children(
-          titleBuilder: (context) => const Text('Theme'),
-          children: [
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Typography'),
-              builder: (context) => TypographyPage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Color Scheme'),
-              builder: (context) => ColorschemePage(),
-            ),
-            TreeNode.child(
-              titleBuilder: (context) => const Text('Primary Colors'),
-              builder: (context) => PrimaryColorPage(),
-            ),
-          ],
-        ),
-        TreeNode.child(
-          titleBuilder: (context) => const Text('Scrollbar'),
-          builder: (context) => ScrollingPage(),
-        ),
-      ],
+      treeNodes: createItems(true),
     );
   }
 }

@@ -33,7 +33,6 @@ class DateFormField extends FormField<String> {
     TextAlign textAlign = TextAlign.start,
     bool autofocus = false,
     bool readOnly = false,
-    ToolbarOptions? toolbarOptions, // TODO
     bool? showCursor,
     bool enableSuggestions = true, // TODO
     MaxLengthEnforcement? maxLengthEnforcement, // TODO

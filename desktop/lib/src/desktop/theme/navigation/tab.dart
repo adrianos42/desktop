@@ -163,4 +163,31 @@ class _TabThemeData {
   /// colorScheme.background[20]
   /// ```
   Color get itemHighlightBackgroundColor => colorScheme.background[20];
+
+  /// The duration of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Duration(milliseconds: 400)
+  /// ```
+  Duration get menuTransitionDuration => const Duration(milliseconds: 400);
+
+  /// The animation curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut
+  /// ```
+  Curve get menuTrasitionCurve => Curves.fastEaseInToSlowEaseOut;
+
+  /// The animation reverse curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut.flipped
+  /// ```
+  Curve get menuTrasitionReverseCurve => Curves.fastEaseInToSlowEaseOut.flipped;
 }

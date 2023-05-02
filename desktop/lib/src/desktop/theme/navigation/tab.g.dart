@@ -26,6 +26,9 @@ class TabThemeData {
     this.itemBackgroundColor,
     this.itemHoverBackgroundColor,
     this.itemHighlightBackgroundColor,
+    this.menuTransitionDuration,
+    this.menuTrasitionCurve,
+    this.menuTrasitionReverseCurve,
   });
 
   /// The padding for the tab bar.
@@ -168,6 +171,33 @@ class TabThemeData {
   /// ```
   final Color? itemHighlightBackgroundColor;
 
+  /// The duration of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Duration(milliseconds: 400)
+  /// ```
+  final Duration? menuTransitionDuration;
+
+  /// The animation curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut
+  /// ```
+  final Curve? menuTrasitionCurve;
+
+  /// The animation reverse curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut.flipped
+  /// ```
+  final Curve? menuTrasitionReverseCurve;
+
   /// Makes a copy of [TabThemeData] overwriting selected fields.
   TabThemeData copyWith({
     EdgeInsets? padding,
@@ -185,6 +215,9 @@ class TabThemeData {
     Color? itemBackgroundColor,
     Color? itemHoverBackgroundColor,
     Color? itemHighlightBackgroundColor,
+    Duration? menuTransitionDuration,
+    Curve? menuTrasitionCurve,
+    Curve? menuTrasitionReverseCurve,
   }) {
     return TabThemeData(
       padding: padding ?? this.padding,
@@ -205,6 +238,11 @@ class TabThemeData {
           itemHoverBackgroundColor ?? this.itemHoverBackgroundColor,
       itemHighlightBackgroundColor:
           itemHighlightBackgroundColor ?? this.itemHighlightBackgroundColor,
+      menuTransitionDuration:
+          menuTransitionDuration ?? this.menuTransitionDuration,
+      menuTrasitionCurve: menuTrasitionCurve ?? this.menuTrasitionCurve,
+      menuTrasitionReverseCurve:
+          menuTrasitionReverseCurve ?? this.menuTrasitionReverseCurve,
     );
   }
 
@@ -229,6 +267,9 @@ class TabThemeData {
       itemBackgroundColor: other.itemBackgroundColor,
       itemHoverBackgroundColor: other.itemHoverBackgroundColor,
       itemHighlightBackgroundColor: other.itemHighlightBackgroundColor,
+      menuTransitionDuration: other.menuTransitionDuration,
+      menuTrasitionCurve: other.menuTrasitionCurve,
+      menuTrasitionReverseCurve: other.menuTrasitionReverseCurve,
     );
   }
 
@@ -247,7 +288,10 @@ class TabThemeData {
         itemFilled != null &&
         itemBackgroundColor != null &&
         itemHoverBackgroundColor != null &&
-        itemHighlightBackgroundColor != null;
+        itemHighlightBackgroundColor != null &&
+        menuTransitionDuration != null &&
+        menuTrasitionCurve != null &&
+        menuTrasitionReverseCurve != null;
   }
 
   @override
@@ -268,6 +312,9 @@ class TabThemeData {
       itemBackgroundColor,
       itemHoverBackgroundColor,
       itemHighlightBackgroundColor,
+      menuTransitionDuration,
+      menuTrasitionCurve,
+      menuTrasitionReverseCurve,
     );
   }
 
@@ -369,6 +416,24 @@ padding: The padding for the tab bar.
 
  ```dart
  colorScheme.background[20]
+ ```;;menuTransitionDuration: The duration of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Duration(milliseconds: 400)
+ ```;;menuTrasitionCurve: The animation curve of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Curves.fastEaseInToSlowEaseOut
+ ```;;menuTrasitionReverseCurve: The animation reverse curve of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Curves.fastEaseInToSlowEaseOut.flipped
  ```;;
 ''';
   }
@@ -390,7 +455,11 @@ padding: The padding for the tab bar.
             other.itemFilled == itemFilled &&
             other.itemBackgroundColor == itemBackgroundColor &&
             other.itemHoverBackgroundColor == itemHoverBackgroundColor &&
-            other.itemHighlightBackgroundColor == itemHighlightBackgroundColor;
+            other.itemHighlightBackgroundColor ==
+                itemHighlightBackgroundColor &&
+            other.menuTransitionDuration == menuTransitionDuration &&
+            other.menuTrasitionCurve == menuTrasitionCurve &&
+            other.menuTrasitionReverseCurve == menuTrasitionReverseCurve;
   }
 }
 
@@ -441,6 +510,9 @@ class TabTheme extends InheritedTheme {
     Color? itemBackgroundColor,
     Color? itemHoverBackgroundColor,
     Color? itemHighlightBackgroundColor,
+    Duration? menuTransitionDuration,
+    Curve? menuTrasitionCurve,
+    Curve? menuTrasitionReverseCurve,
   }) {
     return Builder(
       key: key,
@@ -461,6 +533,9 @@ class TabTheme extends InheritedTheme {
           itemBackgroundColor: itemBackgroundColor,
           itemHoverBackgroundColor: itemHoverBackgroundColor,
           itemHighlightBackgroundColor: itemHighlightBackgroundColor,
+          menuTransitionDuration: menuTransitionDuration,
+          menuTrasitionCurve: menuTrasitionCurve,
+          menuTrasitionReverseCurve: menuTrasitionReverseCurve,
         ),
         child: child,
       ),
@@ -524,6 +599,14 @@ class TabTheme extends InheritedTheme {
       final Color itemHighlightBackgroundColor =
           tabThemeData.itemHighlightBackgroundColor ??
               _tabThemeData.itemHighlightBackgroundColor;
+      final Duration menuTransitionDuration =
+          tabThemeData.menuTransitionDuration ??
+              _tabThemeData.menuTransitionDuration;
+      final Curve menuTrasitionCurve =
+          tabThemeData.menuTrasitionCurve ?? _tabThemeData.menuTrasitionCurve;
+      final Curve menuTrasitionReverseCurve =
+          tabThemeData.menuTrasitionReverseCurve ??
+              _tabThemeData.menuTrasitionReverseCurve;
 
       return tabThemeData.copyWith(
         padding: padding,
@@ -541,6 +624,9 @@ class TabTheme extends InheritedTheme {
         itemBackgroundColor: itemBackgroundColor,
         itemHoverBackgroundColor: itemHoverBackgroundColor,
         itemHighlightBackgroundColor: itemHighlightBackgroundColor,
+        menuTransitionDuration: menuTransitionDuration,
+        menuTrasitionCurve: menuTrasitionCurve,
+        menuTrasitionReverseCurve: menuTrasitionReverseCurve,
       );
     }
 

@@ -9,7 +9,7 @@ export 'tab_scope.dart' show TabScope;
 
 const int _kIntialIndexValue = 0;
 
-const Duration _kMenuTransitionDuration = Duration(milliseconds: 300);
+const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
 
 class NavItem {
   const NavItem({
@@ -142,13 +142,12 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static const Curve _animationCurve = Curves.easeInOutSine;
+  static const Curve _animationCurve = Curves.fastLinearToSlowEaseIn;
 
   void _createAnimation() {
     _menuAnimation = CurvedAnimation(
       parent: _menuController,
       curve: _animationCurve,
-      reverseCurve: _animationCurve,
     );
 
     final Offset begin = widget.navAxis == Axis.vertical
@@ -217,7 +216,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
                 color: _menuColorTween.evaluate(_menuAnimation),
                 child: GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
-                  onTap: () {}, // TODO(as): Better way to do this?
+                  onTap: () {},
                   child: ClipRect(
                     child: FractionalTranslation(
                       translation: _menuOffsetTween.evaluate(_menuAnimation),

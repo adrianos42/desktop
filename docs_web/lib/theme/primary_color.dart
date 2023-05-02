@@ -1,11 +1,12 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class PrimaryColorPage extends StatefulWidget {
-  PrimaryColorPage({super.key});
+  const PrimaryColorPage({super.key});
 
   @override
-  _PrimaryColorPageState createState() => _PrimaryColorPageState();
+  PrimaryColorPageState createState() => PrimaryColorPageState();
 }
 
 Widget _itemPrimary(
@@ -80,7 +81,7 @@ Widget _createItemForColor(BuildContext context, Color color, int index) {
   );
 }
 
-class _PrimaryColorPageState extends State<PrimaryColorPage> {
+class PrimaryColorPageState extends State<PrimaryColorPage> {
   @override
   Widget build(BuildContext context) {
     final lightBackground = const ColorScheme(Brightness.light).background[0];
