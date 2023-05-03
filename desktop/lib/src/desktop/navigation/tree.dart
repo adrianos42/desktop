@@ -1,9 +1,11 @@
 import 'dart:collection';
 import 'dart:math' as math;
-import 'dart:ui' show PointerDeviceKind;
 
-import 'package:flutter/widgets.dart';
 import 'package:collection/collection.dart' show ListEquality;
+import 'package:flutter/gestures.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../icons.dart';
@@ -21,10 +23,10 @@ class TreeNode {
   }) : assert((builder == null || nodes == null) &&
             (builder != null || nodes != null));
 
-  /// Creates a node with a default text and a [Navigator] history.
+  /// Creates a node.
   static TreeNode child({
     required WidgetBuilder titleBuilder,
-    WidgetBuilder? builder,
+    required WidgetBuilder builder,
   }) {
     return TreeNode._(
       titleBuilder,
@@ -32,7 +34,7 @@ class TreeNode {
     );
   }
 
-  /// Creates a node with children and default text.
+  /// Creates a node with children.
   static TreeNode children({
     required WidgetBuilder titleBuilder,
     bool hideColumnCollapsedIcon = false,
@@ -307,16 +309,28 @@ class _TreeState extends State<Tree>
   void _updateCurrentIndex() {
     _current = _controller._index!
         .fold('', (previousValue, element) => '$previousValue/$element');
+
     _forceCollapseIndex = List.of(_controller._index!);
-    if (_forceCollapseIndex.isNotEmpty) {
-      _forceCollapseIndex.removeLast();
-    }
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final height = _nodesHeight[_current];
+      if (height != null &&
+          height >
+              _scrollController.position.viewportDimension +
+                  _scrollController.position.pixels) {
+        _scrollController.animateTo(
+          height,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   void _updateTreeController([TreeController? oldWidgetController]) {
     if (widget.controller == null && _internalController == null) {
       _internalController = TreeController();
-      _internalController!._index = _firstIndex(widget.nodes[1]); // TODO
+      _internalController!._index = _firstIndex(widget.nodes.first);
       _updateCurrentIndex();
       _internalController!.addListener(_onCurrentIndexChange);
     }
@@ -378,7 +392,7 @@ class _TreeState extends State<Tree>
   }
 
   List<int> _firstIndex(TreeNode node) {
-    final result = [1]; // TODO
+    final result = [0];
 
     if (node.nodes != null && node.nodes!.isNotEmpty) {
       result.addAll(_firstIndex(node.nodes!.first));
@@ -388,6 +402,7 @@ class _TreeState extends State<Tree>
   }
 
   final ScrollController _scrollController = ScrollController();
+  final Map<String, double> _nodesHeight = {};
 
   Widget _createTree(BuildContext context) {
     final List<Widget> children = List.empty(growable: true);
@@ -396,18 +411,18 @@ class _TreeState extends State<Tree>
       children.add(widget.title!);
     }
 
-    for (var i = 0; i < widget.nodes.length; i += 1) {
-      children.add(_TreeColumn(
-        node: widget.nodes[i],
-        parentName: const [],
-        name: i,
+    children.add(
+      _TreeColumn(
+        nodes: widget.nodes,
         updatePage: () {
           setState(() => _forceCollapseIndex = []);
         },
         controller: _controller,
-        forceCollapseIndex: _forceCollapseIndex,
-      ));
-    }
+        forceExpandIndex: _forceCollapseIndex,
+        parentForceExpand: true,
+        sizeChanged: (name, height) => _nodesHeight[name] = height,
+      ),
+    );
 
     return Container(
       alignment: Alignment.topLeft,
@@ -539,8 +554,6 @@ class _TreeState extends State<Tree>
     return LayoutBuilder(builder: (context, constraints) {
       final pagesResult = List<Widget>.empty(growable: true);
 
-      print(_forceCollapseIndex);
-
       _totalWidth = constraints.maxWidth;
 
       for (final entry in _pages.entries) {
@@ -642,135 +655,362 @@ class _TreeState extends State<Tree>
   }
 }
 
-class _TreeColumn extends StatefulWidget {
-  const _TreeColumn({
-    required this.node,
-    required this.parentName,
-    required this.name,
-    required this.updatePage,
-    required this.controller,
-    required this.forceCollapseIndex,
+class _TreeNodeState {
+  _TreeNodeState({
+    required this.collapsed,
   });
 
-  final TreeNode node;
-  final List<int> parentName;
-  final int name;
+  bool collapsed;
+}
+
+typedef _SizeTreeCallback = void Function(String name, double height);
+typedef _SizeCallback = void Function(int index, double height);
+
+class _NodeBuild {
+  const _NodeBuild(
+    this.name,
+    this.child,
+  );
+
+  final String name;
+  final Widget child;
+}
+
+class _TreeColumn extends StatefulWidget {
+  const _TreeColumn({
+    required this.nodes,
+    required this.updatePage,
+    required this.controller,
+    required this.forceExpandIndex,
+    required this.parentForceExpand,
+    required this.sizeChanged,
+  });
+
+  final List<TreeNode> nodes;
   final VoidCallback updatePage;
   final TreeController controller;
-  final List<int> forceCollapseIndex;
+  final bool parentForceExpand;
+  final List<int> forceExpandIndex;
+  final _SizeTreeCallback sizeChanged;
 
   @override
   _TreeColumnState createState() => _TreeColumnState();
 }
 
 class _TreeColumnState extends State<_TreeColumn> {
-  bool _collapsed = true;
+  final Map<String, _TreeNodeState> _nodeState = {};
 
-  late List<int> _name;
+  static String _indexName(List<int> index) =>
+      index.fold('', (p, e) => '$p/$e');
+
+  void _createNodeState(List<TreeNode> nodes, List<int> parentIndex) {
+    for (int i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].nodes != null) {
+        final index = [...parentIndex, i];
+        final name = _indexName(index);
+        if (!_nodeState.containsKey(name)) {
+          _nodeState[name] = _TreeNodeState(
+            collapsed: true,
+          );
+        }
+
+        _createNodeState(nodes[i].nodes!, index);
+      }
+    }
+  }
+
+  void _updateCollapseIndex(
+    List<TreeNode> nodes,
+    List<int> parentIndex, {
+    required List<int> forceExpandIndex,
+    required bool parentForceExpand,
+  }) {
+    for (int i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].nodes != null) {
+        int expand = -1;
+        final expandIndex = List.of(forceExpandIndex);
+
+        if (forceExpandIndex.isNotEmpty) {
+          expand = expandIndex.removeAt(0);
+        }
+
+        final index = [...parentIndex, i];
+        final name = _indexName(index);
+
+        final forcesExpand = expand == i && parentForceExpand;
+
+        if (forcesExpand) {
+          _nodeState[name]!.collapsed = false;
+        }
+
+        _updateCollapseIndex(
+          nodes[i].nodes!,
+          index,
+          forceExpandIndex: expandIndex,
+          parentForceExpand: forcesExpand,
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _name = [...widget.parentName, widget.name];
-
-    if (const ListEquality().equals(widget.forceCollapseIndex, _name)) {
-      _collapsed = false;
-    }
+    _createNodeState(widget.nodes, []);
+    _updateCollapseIndex(
+      widget.nodes,
+      [],
+      forceExpandIndex: widget.forceExpandIndex,
+      parentForceExpand: widget.parentForceExpand,
+    );
   }
 
   @override
   void didUpdateWidget(_TreeColumn oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.parentName != widget.parentName ||
-        oldWidget.name != widget.name) {
-      _name = [...widget.parentName, widget.name];
+    if (widget.nodes != oldWidget.nodes) {
+      _createNodeState(widget.nodes, []);
     }
 
-    if (oldWidget.forceCollapseIndex != widget.forceCollapseIndex) {
-      if (const ListEquality().equals(widget.forceCollapseIndex, _name)) {
-        _collapsed = false;
+    if (!(const ListEquality<int>()
+        .equals(oldWidget.forceExpandIndex, widget.forceExpandIndex))) {
+      _updateCollapseIndex(
+        widget.nodes,
+        [],
+        forceExpandIndex: widget.forceExpandIndex,
+        parentForceExpand: widget.parentForceExpand,
+      );
+    }
+  }
+
+  List<_NodeBuild> _buildNodes(
+      List<TreeNode> nodes, List<int> parentIndex, bool parentCollapsed) {
+    final treeTheme = TreeTheme.of(context);
+    final List<_NodeBuild> children = List.empty(growable: true);
+
+    for (int i = 0; i < nodes.length; i += 1) {
+      final index = [...parentIndex, i];
+      final name = _indexName(index);
+
+      if (nodes[i].nodes != null) {
+        final collapsed = _nodeState[name]!.collapsed;
+
+        children.add(
+          _NodeBuild(
+            name,
+            Offstage(
+              offstage: parentCollapsed,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16.0 * parentIndex.length),
+                  child: Button(
+                    bodyPadding: EdgeInsets.zero,
+                    theme: ButtonThemeData(
+                      color: treeTheme.color,
+                      hoverColor: treeTheme.hoverColor,
+                      highlightColor: treeTheme.highlightColor,
+                    ),
+                    padding: EdgeInsets.zero,
+                    body: _TreeNodeCollapse(
+                      collapsed,
+                      child: widget.nodes[i].titleBuilder(context),
+                    ),
+                    onPressed: () {
+                      widget.updatePage();
+                      setState(() => _nodeState[name]!.collapsed = !collapsed);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        children.addAll(_buildNodes(
+          nodes[i].nodes!,
+          index,
+          parentCollapsed || collapsed,
+        ));
+      } else {
+        final active =
+            const ListEquality<int>().equals(widget.controller._index, index);
+        final highlightColor = treeTheme.highlightColor;
+
+        children.add(
+          _NodeBuild(
+            name,
+            Offstage(
+              offstage: parentCollapsed,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 16.0 * parentIndex.length),
+                  child: Button(
+                    theme: ButtonThemeData(
+                      color: highlightColor,
+                      highlightColor: treeTheme.color,
+                    ),
+                    padding: EdgeInsets.zero,
+                    bodyPadding: EdgeInsets.zero,
+                    body: nodes[i].titleBuilder(context),
+                    active: active,
+                    onPressed: () => widget.controller.index = index,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
       }
     }
+
+    return children;
   }
 
   @override
   Widget build(BuildContext context) {
-    final treeTheme = TreeTheme.of(context);
+    final result = _buildNodes(widget.nodes, [], false);
+    final nodeNames = result.map((e) => e.name).toList();
 
-    if (widget.node.nodes != null) {
-      final List<_TreeColumn> children = List.empty(growable: true);
+    return _ListTableRows(
+      children: result.map((e) => e.child).toList(),
+      sizeChanged: (int i, double height) => widget.sizeChanged(
+        nodeNames[i],
+        height,
+      ),
+    );
+  }
+}
 
-      for (var i = 0; i < widget.node.nodes!.length; i += 1) {
-        children.add(_TreeColumn(
-          node: widget.node.nodes![i],
-          parentName: _name,
-          name: i,
-          updatePage: widget.updatePage,
-          controller: widget.controller,
-          forceCollapseIndex: widget.forceCollapseIndex,
-        ));
+class _ListTableRows extends MultiChildRenderObjectWidget {
+  const _ListTableRows({
+    required super.children,
+    required this.sizeChanged,
+  });
+
+  final _SizeCallback sizeChanged;
+
+  @override
+  _TreeColumnRender createRenderObject(BuildContext context) =>
+      _TreeColumnRender(sizeChanged: sizeChanged);
+
+  @override
+  void updateRenderObject(
+      BuildContext context, _TreeColumnRender renderObject) {}
+}
+
+class _TreeColumnParentData extends ContainerBoxParentData<RenderBox> {}
+
+///
+class _TreeColumnRender extends RenderBox
+    with
+        ContainerRenderObjectMixin<RenderBox, _TreeColumnParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _TreeColumnParentData> {
+  ///
+  _TreeColumnRender({
+    List<RenderBox>? children,
+    required this.sizeChanged,
+  }) {
+    addAll(children);
+  }
+
+  final _SizeCallback sizeChanged;
+
+  @override
+  void setupParentData(RenderObject child) {
+    if (child.parentData is! _TreeColumnParentData) {
+      child.parentData = _TreeColumnParentData();
+    }
+  }
+
+  @override
+  bool get sizedByParent => false;
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    double height = 0.0;
+
+    RenderBox? child = firstChild;
+
+    while (child != null) {
+      height += child
+          .getDryLayout(
+            BoxConstraints.tightFor(
+              width: constraints.maxWidth,
+            ),
+          )
+          .height;
+
+      child = childAfter(child);
+    }
+
+    return constraints.constrain(Size(constraints.maxWidth, height));
+  }
+
+  @override
+  void performLayout() {
+    RenderBox? child = firstChild;
+    double height;
+
+    height = 0.0;
+    int x = 0;
+
+    while (child != null) {
+      child.layout(
+        BoxConstraints.tightFor(width: constraints.maxWidth),
+        parentUsesSize: true,
+      );
+
+      (child.parentData! as _TreeColumnParentData).offset = Offset(0.0, height);
+
+      height += child.size.height;
+
+      sizeChanged(x, height);
+
+      child = childAfter(child);
+      x += 1;
+    }
+
+    size = Size(constraints.maxWidth, height);
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    RenderBox? child = firstChild;
+
+    while (child != null) {
+      final childParentData = child.parentData! as _TreeColumnParentData;
+
+      final bool isHit = result.addWithPaintOffset(
+        offset: childParentData.offset,
+        position: position,
+        hitTest: (BoxHitTestResult result, Offset transformed) {
+          assert(transformed == position - childParentData.offset);
+          return child!.hitTest(result, position: transformed);
+        },
+      );
+      if (isHit) {
+        return true;
       }
 
-      final chidrenWidget = Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
-      );
+      child = childAfter(child);
+    }
 
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Button(
-            bodyPadding: EdgeInsets.zero,
-            theme: ButtonThemeData(
-              color: treeTheme.color,
-              hoverColor: treeTheme.hoverColor,
-              highlightColor: treeTheme.highlightColor,
-            ),
-            padding: const EdgeInsets.only(right: 64.0), // TODO(as): Width.
-            body: _TreeNodeCollapse(
-              _collapsed,
-              // && !const ListEquality().equals(widget.forceCollapseIndex, name),
-              child: widget.node.titleBuilder(context),
-            ),
-            onPressed: () {
-              widget.updatePage();
-              setState(() => _collapsed = !_collapsed);
-            },
-          ),
-          Offstage(
-            child: chidrenWidget,
-            offstage: _collapsed,
-          ),
-        ],
-      );
-    } else {
-      final active =
-          const ListEquality().equals(widget.controller._index, _name);
-      final highlightColor = treeTheme.highlightColor;
+    return false;
+  }
 
-      return Align(
-        alignment: Alignment.centerLeft,
-        child: Button(
-          theme: ButtonThemeData(
-            color: highlightColor,
-            highlightColor: treeTheme.color,
-          ),
-          padding: EdgeInsets.zero,
-          bodyPadding: EdgeInsets.zero,
-          body: widget.node.titleBuilder(context),
-          active: active,
-          onPressed: () => widget.controller.index = _name,
-        ),
-      );
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    RenderBox? child = firstChild;
+
+    while (child != null) {
+      final childParentData = child.parentData! as _TreeColumnParentData;
+      context.paintChild(child, childParentData.offset + offset);
+
+      child = childAfter(child);
     }
   }
 }

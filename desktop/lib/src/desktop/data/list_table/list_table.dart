@@ -728,8 +728,7 @@ class _ListTableState extends State<ListTable> {
 }
 
 class _ListTableBorder extends MultiChildRenderObjectWidget {
-  _ListTableBorder({
-    super.key,
+  const _ListTableBorder({
     required super.children,
     required this.headerColumnBorder,
     required this.tableBorder,
@@ -789,8 +788,7 @@ class _ListTableBorder extends MultiChildRenderObjectWidget {
 }
 
 class _ListTableRows extends MultiChildRenderObjectWidget {
-  _ListTableRows({
-    super.key,
+  const _ListTableRows({
     required super.children,
     required this.headerColumnBorder,
     required this.tableBorder,
