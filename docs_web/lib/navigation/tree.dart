@@ -2,6 +2,32 @@ import 'package:desktop/desktop.dart';
 
 import '../defaults.dart';
 
+const _indexes = [
+  [0],
+  [1, 0],
+  [1, 1],
+  [1, 2],
+  [1, 3, 0],
+  [1, 3, 1],
+  [2],
+  [3, 0],
+  [3, 1],
+  [4, 0],
+  [4, 1],
+  [4, 2],
+  [5, 0],
+  [5, 1, 0],
+  [5, 2, 0],
+  [5, 2, 1],
+  [5, 2, 2, 0],
+  [5, 2, 2, 1, 0],
+  [5, 2, 2, 1, 1],
+  [5, 3],
+  [6, 0],
+  [6, 1],
+  [6, 2, 0],
+];
+
 class TreePage extends StatefulWidget {
   const TreePage({super.key});
 
@@ -16,98 +42,70 @@ class _TreePageState extends State<TreePage> {
   Widget _buildTreeControllerPage() {
     return Center(
       child: SingleChildScrollView(
+        controller: ScrollController(),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Button.text(
-              'Node 0',
-              onPressed: () => _controller.index = [0],
-            ),
-            Button.text(
-              'Node 1 -> 0',
-              onPressed: () => _controller.index = [1, 0],
-            ),
-            Button.text(
-              'Node 1 -> 1',
-              onPressed: () => _controller.index = [1, 1],
-            ),
-            Button.text(
-              'Node 1 -> 2',
-              onPressed: () => _controller.index = [1, 2],
-            ),
-            Button.text(
-              'Node 1 -> 3 -> 0',
-              onPressed: () => _controller.index = [1, 3, 0],
-            ),
-            Button.text(
-              'Node 1 -> 3 -> 1',
-              onPressed: () => _controller.index = [1, 3, 1],
-            ),
-            Button.text(
-              'Node 2',
-              onPressed: () => _controller.index = [2],
-            ),
-            Button.text(
-              'Node 3 -> 0',
-              onPressed: () => _controller.index = [3, 0],
-            ),
-            Button.text(
-              'Node 3 -> 1',
-              onPressed: () => _controller.index = [3, 1],
-            ),
-            Button.text(
-              'Node 4 -> 0',
-              onPressed: () => _controller.index = [4, 0],
-            ),
-            Button.text(
-              'Node 4 -> 1',
-              onPressed: () => _controller.index = [4, 1],
-            ),
-            Button.text(
-              'Node 4 -> 2',
-              onPressed: () => _controller.index = [4, 2],
-            ),
-            Button.text(
-              'Node 4 -> 3',
-              onPressed: () => _controller.index = [4, 3],
-            ),
-            Button.text(
-              'Node 5 -> 0',
-              onPressed: () => _controller.index = [5, 0],
-            ),
-            Button.text(
-              'Node 5 -> 1',
-              onPressed: () => _controller.index = [5, 1],
-            ),
-            Button.text(
-              'Node 5 -> 2',
-              onPressed: () => _controller.index = [5, 2],
-            ),
-            Button.text(
-              'Node 5 -> 3',
-              onPressed: () => _controller.index = [5, 3],
-            ),
-            Button.text(
-              'Node 6 -> 0',
-              onPressed: () => _controller.index = [6, 0],
-            ),
-            Button.text(
-              'Node 6 -> 1',
-              onPressed: () => _controller.index = [6, 1],
-            ),
-            Button.text(
-              'Node 6 -> 2',
-              onPressed: () => _controller.index = [6, 2],
-            ),
-            Button.text(
-              'Node 6 -> 3',
-              onPressed: () => _controller.index = [6, 3],
-            ),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _indexes
+                .map(
+                  (e) => Button.text(
+                    'Node ${e.fold('', (p, e) => '$p${p.isNotEmpty ? ' -> ' : ''} $e')}',
+                    onPressed: () => _controller.index = e,
+                  ),
+                )
+                .toList()),
       ),
     );
+  }
+
+  List<TreeNode> _generateTree(List<List<int>> indexes, String parentName) {
+    final nodes = <int, List<List<int>>>{};
+    final result = <TreeNode>[];
+
+    for (int i = 0; i < indexes.length; i += 1) {
+      if (indexes[i].isEmpty) {
+        throw 'Cannot be empty.';
+      }
+
+      final nodeIndexes = List.of(indexes[i]);
+      final index = nodeIndexes.removeAt(0);
+
+      nodes[index] ??= [];
+
+      if (nodeIndexes.isNotEmpty) {
+        nodes[index]!.add(nodeIndexes);
+      }
+    }
+
+    for (final i in nodes.keys) {
+      final name = i.toString();
+      final titleName =
+          '$parentName${parentName.isNotEmpty ? ' -> ' : 'Node '}$name';
+
+      if (nodes[i]!.isEmpty) {
+        result.add(
+          TreeNode.child(
+            titleBuilder: (context) => Text('Node $name'),
+            builder: (context) => Center(
+              child: Text(titleName),
+            ),
+          ),
+        );
+      } else {
+        result.add(
+          TreeNode.children(
+            titleBuilder: (context) => Text('Node $name'),
+            children: _generateTree(
+              nodes[i]!,
+              titleName,
+            ),
+          ),
+        );
+      }
+    }
+
+    return result;
   }
 
   @override
@@ -406,155 +404,6 @@ return Tree(
       styleItems: Defaults.createStyle(TreeTheme.of(context).toString()),
       items: [
         ItemTitle(
-          title: 'Controlled Tree',
-          codeText: codeSample,
-          body: (context) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: Tree(
-                controller: _controller,
-                title: Builder(
-                  builder: (context) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(
-                      'Tree',
-                      style: Theme.of(context).textTheme.body2,
-                    ),
-                  ),
-                ),
-                nodes: [
-                  TreeNode.child(
-                    titleBuilder: (context) => const Text('Node 0'),
-                    builder: (context) => _buildTreeControllerPage(),
-                  ),
-                  TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 1'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 2'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.children(
-                        titleBuilder: (context) => const Text('Node3'),
-                        children: [
-                          TreeNode.child(
-                            titleBuilder: (context) => const Text('Node 0'),
-                            builder: (context) => _buildTreeControllerPage(),
-                          ),
-                          TreeNode.child(
-                            titleBuilder: (context) => const Text('Node 1'),
-                            builder: (context) => _buildTreeControllerPage(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  TreeNode.child(
-                    titleBuilder: (context) => const Text('Node 2'),
-                    builder: (context) => _buildTreeControllerPage(),
-                  ),
-                  TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 3'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                    ],
-                  ),
-                  TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 4'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 2'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 3'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 4'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                    ],
-                  ),
-                  TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 5'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 2'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 3'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 4'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                    ],
-                  ),
-                  TreeNode.children(
-                    titleBuilder: (context) => const Text('Node 6'),
-                    children: [
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 0'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 1'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 2'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 3'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                      TreeNode.child(
-                        titleBuilder: (context) => const Text('Node 4'),
-                        builder: (context) => _buildTreeControllerPage(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        ItemTitle(
           title: 'Basic example',
           codeText: codeSample,
           body: (context) {
@@ -667,6 +516,37 @@ return Tree(
                       ),
                     ],
                   ),
+                ],
+              ),
+            );
+          },
+        ),
+        ItemTitle(
+          title: 'Controlled Tree',
+          codeText: codeSample,
+          body: (context) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: Tree(
+                      controller: _controller,
+                      title: Builder(
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Text(
+                            'Tree',
+                            style: Theme.of(context).textTheme.body2,
+                          ),
+                        ),
+                      ),
+                      nodes: _generateTree(_indexes, ''),
+                    ),
+                  ),
+                  _buildTreeControllerPage(),
                 ],
               ),
             );

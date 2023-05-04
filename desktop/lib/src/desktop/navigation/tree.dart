@@ -302,7 +302,6 @@ class _TreeState extends State<Tree>
   }
 
   void _onCurrentIndexChange() {
-    // TODO assert(_controller.index >= 0 && _controller.index < _length);
     setState(() => _updateCurrentIndex());
   }
 
@@ -313,16 +312,24 @@ class _TreeState extends State<Tree>
     _forceCollapseIndex = List.of(_controller._index!);
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      final height = _nodesHeight[_current];
-      if (height != null &&
-          height >
-              _scrollController.position.viewportDimension +
-                  _scrollController.position.pixels) {
-        _scrollController.animateTo(
-          height,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+      final nodeOffset = _nodesOffset[_current];
+      if (nodeOffset != null) {
+        final position = _scrollController.position;
+
+        final offsetToScroll =
+            nodeOffset.height > position.viewportDimension + position.pixels
+                ? nodeOffset.height - position.viewportDimension
+                : nodeOffset.offset < position.pixels
+                    ? nodeOffset.offset
+                    : null;
+
+        if (offsetToScroll != null) {
+          position.animateTo(
+            offsetToScroll,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.easeIn,
+          );
+        }
       }
     });
   }
@@ -401,42 +408,32 @@ class _TreeState extends State<Tree>
     return result;
   }
 
+  List<int> _lastIndex(List<TreeNode> nodes) {
+    return nodes.last.nodes != null
+        ? [nodes.length - 1, ..._lastIndex(nodes.last.nodes!)]
+        : [nodes.length - 1];
+  }
+
   final ScrollController _scrollController = ScrollController();
-  final Map<String, double> _nodesHeight = {};
+  final Map<String, _TreeNodeOffset> _nodesOffset = {};
 
   Widget _createTree(BuildContext context) {
-    final List<Widget> children = List.empty(growable: true);
-
-    if (widget.title != null) {
-      children.add(widget.title!);
-    }
-
-    children.add(
-      _TreeColumn(
-        nodes: widget.nodes,
-        updatePage: () {
-          setState(() => _forceCollapseIndex = []);
-        },
-        controller: _controller,
-        forceExpandIndex: _forceCollapseIndex,
-        parentForceExpand: true,
-        sizeChanged: (name, height) => _nodesHeight[name] = height,
-      ),
-    );
-
     return Container(
       alignment: Alignment.topLeft,
       width: initialColumnWidth,
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.only(left: 16.0),
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: children,
-          ),
+        controller: _scrollController,
+        child: _TreeColumn(
+          title: widget.title,
+          nodes: widget.nodes,
+          updatePage: () {
+            setState(() => _forceCollapseIndex = []);
+          },
+          controller: _controller,
+          forceExpandIndex: _forceCollapseIndex,
+          parentForceExpand: true,
+          sizeChanged: (name, offset) => _nodesOffset[name] = offset,
         ),
       ),
     );
@@ -447,15 +444,19 @@ class _TreeState extends State<Tree>
 
   late CurvedAnimation _columnAnimation;
 
-  void _createEntries(String previousName, String name, TreeNode node) {
-    final nameResult = '$previousName/$name';
+  void _createEntries(List<TreeNode> nodes, String previousName) {
+    for (int i = 0; i < nodes.length; i += 1) {
+      final name = i.toString();
+      final nameResult = '$previousName/$name';
 
-    if (node.nodes != null) {
-      for (var i = 0; i < node.nodes!.length; i += 1) {
-        _createEntries(nameResult, '$i', node.nodes![i]);
+      if (nodes[i].nodes != null) {
+        if (nodes[i].nodes!.isEmpty) {
+          throw 'Nodes children cannot be empty.';
+        }
+        _createEntries(nodes[i].nodes!, nameResult);
+      } else if (nodes[i].builder != null) {
+        _pages[nameResult] = _BuildTreePage(builder: nodes[i].builder!);
       }
-    } else if (node.builder != null) {
-      _pages[nameResult] = _BuildTreePage(builder: node.builder!);
     }
   }
 
@@ -464,6 +465,9 @@ class _TreeState extends State<Tree>
   void _mouseRoute(PointerEvent event) {
     _globalPointerDown = event.down;
   }
+
+  static String _indexName(List<int> index) =>
+      index.fold('', (p, e) => '$p/$e');
 
   @override
   void initState() {
@@ -474,7 +478,7 @@ class _TreeState extends State<Tree>
     }
 
     for (var i = 0; i < widget.nodes.length; i += 1) {
-      _createEntries('', '$i', widget.nodes[i]);
+      _createEntries(widget.nodes, '');
     }
 
     _indicatorSizecontroller = AnimationController(
@@ -509,7 +513,7 @@ class _TreeState extends State<Tree>
 
     if (oldWidget.nodes != widget.nodes) {
       for (var i = 0; i < widget.nodes.length; i += 1) {
-        _createEntries('', '$i', widget.nodes[i]);
+        _createEntries(widget.nodes, '');
       }
     }
 
@@ -524,10 +528,9 @@ class _TreeState extends State<Tree>
     if (widget.controller != oldWidget.controller) {
       _updateTreeController(oldWidget.controller);
     } else {
-      //final int _index = math.min(_controller.index, widget.items.length - 1);
-      //if (_index != _controller.index) {
-      //  _controller.index = _index;
-      //}
+      if (!_pages.containsKey(_indexName(_controller.index))) {
+        _controller.index = _lastIndex(widget.nodes);
+      }
     }
   }
 
@@ -655,16 +658,8 @@ class _TreeState extends State<Tree>
   }
 }
 
-class _TreeNodeState {
-  _TreeNodeState({
-    required this.collapsed,
-  });
-
-  bool collapsed;
-}
-
-typedef _SizeTreeCallback = void Function(String name, double height);
-typedef _SizeCallback = void Function(int index, double height);
+typedef _SizeTreeCallback = void Function(String name, _TreeNodeOffset offset);
+typedef _SizeCallback = void Function(int index, _TreeNodeOffset offset);
 
 class _NodeBuild {
   const _NodeBuild(
@@ -676,8 +671,28 @@ class _NodeBuild {
   final Widget child;
 }
 
+@immutable
+class _TreeNodeOffset {
+  const _TreeNodeOffset(this.offset, this.height);
+
+  final double offset;
+  final double height;
+
+  @override
+  int get hashCode => Object.hash(offset, height);
+
+  @override
+  bool operator ==(covariant _TreeNodeOffset other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    return other.offset == offset && other.height == other.height;
+  }
+}
+
 class _TreeColumn extends StatefulWidget {
   const _TreeColumn({
+    this.title,
     required this.nodes,
     required this.updatePage,
     required this.controller,
@@ -686,6 +701,7 @@ class _TreeColumn extends StatefulWidget {
     required this.sizeChanged,
   });
 
+  final Widget? title;
   final List<TreeNode> nodes;
   final VoidCallback updatePage;
   final TreeController controller;
@@ -698,20 +714,15 @@ class _TreeColumn extends StatefulWidget {
 }
 
 class _TreeColumnState extends State<_TreeColumn> {
-  final Map<String, _TreeNodeState> _nodeState = {};
-
-  static String _indexName(List<int> index) =>
-      index.fold('', (p, e) => '$p/$e');
+  final Map<String, bool> _nodesCollapsed = {};
 
   void _createNodeState(List<TreeNode> nodes, List<int> parentIndex) {
     for (int i = 0; i < nodes.length; i += 1) {
       if (nodes[i].nodes != null) {
         final index = [...parentIndex, i];
-        final name = _indexName(index);
-        if (!_nodeState.containsKey(name)) {
-          _nodeState[name] = _TreeNodeState(
-            collapsed: true,
-          );
+        final name =  _TreeState._indexName(index);
+        if (!_nodesCollapsed.containsKey(name)) {
+          _nodesCollapsed[name] = true;
         }
 
         _createNodeState(nodes[i].nodes!, index);
@@ -735,12 +746,12 @@ class _TreeColumnState extends State<_TreeColumn> {
         }
 
         final index = [...parentIndex, i];
-        final name = _indexName(index);
+        final name = _TreeState._indexName(index);
 
         final forcesExpand = expand == i && parentForceExpand;
 
         if (forcesExpand) {
-          _nodeState[name]!.collapsed = false;
+          _nodesCollapsed[name] = false;
         }
 
         _updateCollapseIndex(
@@ -792,10 +803,10 @@ class _TreeColumnState extends State<_TreeColumn> {
 
     for (int i = 0; i < nodes.length; i += 1) {
       final index = [...parentIndex, i];
-      final name = _indexName(index);
+      final name = _TreeState._indexName(index);
 
       if (nodes[i].nodes != null) {
-        final collapsed = _nodeState[name]!.collapsed;
+        final collapsed = _nodesCollapsed[name]!;
 
         children.add(
           _NodeBuild(
@@ -816,11 +827,11 @@ class _TreeColumnState extends State<_TreeColumn> {
                     padding: EdgeInsets.zero,
                     body: _TreeNodeCollapse(
                       collapsed,
-                      child: widget.nodes[i].titleBuilder(context),
+                      child: nodes[i].titleBuilder(context),
                     ),
                     onPressed: () {
                       widget.updatePage();
-                      setState(() => _nodeState[name]!.collapsed = !collapsed);
+                      setState(() => _nodesCollapsed[name] = !collapsed);
                     },
                   ),
                 ),
@@ -876,10 +887,14 @@ class _TreeColumnState extends State<_TreeColumn> {
     final nodeNames = result.map((e) => e.name).toList();
 
     return _ListTableRows(
-      children: result.map((e) => e.child).toList(),
-      sizeChanged: (int i, double height) => widget.sizeChanged(
+      children: [
+        if (widget.title != null) widget.title!,
+        ...result.map((e) => e.child)
+      ],
+      hasTitle: widget.title != null,
+      sizeChanged: (int i, _TreeNodeOffset offset) => widget.sizeChanged(
         nodeNames[i],
-        height,
+        offset,
       ),
     );
   }
@@ -889,35 +904,49 @@ class _ListTableRows extends MultiChildRenderObjectWidget {
   const _ListTableRows({
     required super.children,
     required this.sizeChanged,
+    required this.hasTitle,
   });
 
   final _SizeCallback sizeChanged;
+  final bool hasTitle;
 
   @override
   _TreeColumnRender createRenderObject(BuildContext context) =>
-      _TreeColumnRender(sizeChanged: sizeChanged);
+      _TreeColumnRender(
+        sizeChanged: sizeChanged,
+        hasTitle: hasTitle,
+      );
 
   @override
   void updateRenderObject(
-      BuildContext context, _TreeColumnRender renderObject) {}
+      BuildContext context, _TreeColumnRender renderObject) {
+    renderObject.hasTitle = hasTitle;
+  }
 }
 
 class _TreeColumnParentData extends ContainerBoxParentData<RenderBox> {}
 
-///
 class _TreeColumnRender extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _TreeColumnParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _TreeColumnParentData> {
-  ///
   _TreeColumnRender({
     List<RenderBox>? children,
     required this.sizeChanged,
-  }) {
+    required bool hasTitle,
+  }) : _hasTitle = hasTitle {
     addAll(children);
   }
 
   final _SizeCallback sizeChanged;
+
+  bool _hasTitle;
+  set hasTitle(bool value) {
+    if (value != _hasTitle) {
+      _hasTitle = value;
+      markNeedsLayout();
+    }
+  }
 
   @override
   void setupParentData(RenderObject child) {
@@ -956,6 +985,20 @@ class _TreeColumnRender extends RenderBox
     double height;
 
     height = 0.0;
+
+    if (_hasTitle && child != null) {
+      child.layout(
+        BoxConstraints.tightFor(width: constraints.maxWidth),
+        parentUsesSize: true,
+      );
+
+      (child.parentData! as _TreeColumnParentData).offset = Offset(0.0, height);
+
+      height += child.size.height;
+
+      child = childAfter(child);
+    }
+
     int x = 0;
 
     while (child != null) {
@@ -966,9 +1009,11 @@ class _TreeColumnRender extends RenderBox
 
       (child.parentData! as _TreeColumnParentData).offset = Offset(0.0, height);
 
+      final childOffset = height;
+
       height += child.size.height;
 
-      sizeChanged(x, height);
+      sizeChanged(x, _TreeNodeOffset(childOffset, height));
 
       child = childAfter(child);
       x += 1;

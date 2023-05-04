@@ -1,8 +1,9 @@
 # Changelog
 
-## 5.0.0
+## 4.2.0
 
 - Fix tab menu animation.
+- Implementation of controlled `Tree`.
 
 ## 4.1.2
 
