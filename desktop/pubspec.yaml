@@ -2,12 +2,13 @@ name: desktop
 description: Flutter design standard for desktop. Just simple, usable wigdets to create apps. See the gallery for examples of the components used.
 repository: https://github.com/adrianos42/desktop
 homepage: https://adrianos42.github.io/desktop
-version: 4.2.0
+version: 4.2.2
 funding: 
   - https://github.com/sponsors/adrianos42
 
 environment:
-  sdk: '>=2.19.6 <4.0.0'
+  #sdk: '>=2.19.6 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -17,13 +18,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  analyzer: '>=4.6.0'
+  flutter_lints: ^2.0.1
+  analyzer: ^5.11.1
   source_gen: any
-  build_runner: ^2.0.0
-  meta: ^1.7.0
-  code_builder: ^4.3.0
-  build: ^2.2.0
+  build_runner: ^2.3.3
+  meta: ^1.9.1
+  code_builder: ^4.4.0
+  build: ^2.3.1
   built_collection: ^5.1.1
 
 flutter:

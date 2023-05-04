@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.2.2
+
+- Fix sdk version.
+
+## 4.2.1
+
+- Fix dependencies.
+
 ## 4.2.0
 
 - Fix tab menu animation.

@@ -5,15 +5,16 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0-56.0.dev <4.0.0'
+  #sdk: '>=2.19.6 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   desktop: ^4.0.0
-  dart_style: ^2.2.4
-  url_launcher: ^6.0.3
-  intl: ^0.17.0
+  dart_style: ^2.3.1
+  url_launcher: ^6.1.10
+  intl: ^0.18.1
   markdown_docs_flutter: ^1.0.0
 
 dependency_overrides:

@@ -143,6 +143,17 @@ class ThemeData {
     );
   }
 
+  /// Creates a theme with light brightness.
+  factory ThemeData.light([PrimaryColor? primaryColor]) =>
+      ThemeData(brightness: Brightness.light, primaryColor: primaryColor);
+
+  /// Creates a theme with dart brightness.
+  factory ThemeData.dark([PrimaryColor? primaryColor]) =>
+      ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
+
+  /// Creates a default theme.
+  factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);
+
   const ThemeData._raw({
     required this.brightness,
     required this.colorScheme,
@@ -168,12 +179,7 @@ class ThemeData {
     required this.tooltipTheme,
   });
 
-  factory ThemeData.light([PrimaryColor? primaryColor]) =>
-      ThemeData(brightness: Brightness.light, primaryColor: primaryColor);
-
-  factory ThemeData.dark([PrimaryColor? primaryColor]) =>
-      ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
-
+  /// Creates a theme with a given brightness.
   ThemeData withBrightness(Brightness brightness) {
     final colorScheme = this.colorScheme.withBrightness(brightness);
     final textTheme = TextTheme.withColorScheme(colorScheme);
@@ -204,6 +210,7 @@ class ThemeData {
     );
   }
 
+  /// Creates a theme with selected fields.
   ThemeData copyWith({
     Brightness? brightness,
     ColorScheme? colorScheme,
@@ -258,8 +265,6 @@ class ThemeData {
       tooltipTheme: tooltipTheme ?? this.tooltipTheme,
     );
   }
-
-  factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);
 
   final Brightness brightness;
 
