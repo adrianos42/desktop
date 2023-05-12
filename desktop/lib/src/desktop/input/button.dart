@@ -21,6 +21,7 @@ class Button extends StatefulWidget {
     this.bodyPadding,
     this.trailingPadding,
     this.active,
+    this.onLongPress,
     this.focusNode,
     this.canRequestFocus = true,
     this.autofocus = false,
@@ -44,17 +45,15 @@ class Button extends StatefulWidget {
     bool? active,
     bool willChangeState = false,
     required VoidCallback? onPressed,
+    VoidCallback? onLongPress,
   }) {
     return Button(
-      body: Text(
-        text,
-        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
-      ),
+      key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       tooltip: tooltip,
       onPressed: onPressed,
-      key: key,
+      onLongPress: onLongPress,
       focusNode: focusNode,
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
@@ -63,6 +62,10 @@ class Button extends StatefulWidget {
       theme: theme,
       enableAnimation: true,
       filled: false,
+      body: Text(
+        text,
+        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
+      ),
     );
   }
 
@@ -79,15 +82,16 @@ class Button extends StatefulWidget {
     bool? active,
     bool willChangeState = false,
     required VoidCallback? onPressed,
+    VoidCallback? onLongPress,
     ButtonThemeData? theme,
   }) {
     return Button(
-      body: Icon(icon, size: size),
+      key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       tooltip: tooltip,
       onPressed: onPressed,
-      key: key,
+      onLongPress: onLongPress,
       focusNode: focusNode,
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
@@ -96,6 +100,7 @@ class Button extends StatefulWidget {
       enableAnimation: true,
       filled: false,
       theme: theme,
+      body: Icon(icon, size: size),
     );
   }
 
@@ -113,19 +118,17 @@ class Button extends StatefulWidget {
     bool enableAnimation = false,
     bool willChangeState = false,
     required VoidCallback? onPressed,
+    VoidCallback? onLongPress,
     ButtonThemeData? theme,
   }) {
     return Button(
-      body: Text(
-        text,
-        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
-      ),
+      key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
       theme: theme,
       tooltip: tooltip,
       onPressed: onPressed,
-      key: key,
+      onLongPress: onLongPress,
       focusNode: focusNode,
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
@@ -133,6 +136,10 @@ class Button extends StatefulWidget {
       filled: true,
       willChangeState: willChangeState,
       enableAnimation: enableAnimation,
+      body: Text(
+        text,
+        style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
+      ),
     );
   }
 
@@ -150,6 +157,9 @@ class Button extends StatefulWidget {
 
   /// Called when button is pressed.
   final VoidCallback? onPressed;
+
+  /// Called when button is long pressed.
+  final VoidCallback? onLongPress;
 
   /// The leading padding.
   final EdgeInsets? leadingPadding;
@@ -284,6 +294,8 @@ class _ButtonState extends State<Button>
   void _invoke([Intent? intent]) => _handleTap();
 
   void _handleTap() => widget.onPressed?.call();
+
+  void _handleLongPress() => widget.onLongPress?.call();
 
   void _handleFocusUpdate(bool hasFocus) {
     focused = hasFocus;
@@ -579,6 +591,7 @@ class _ButtonState extends State<Button>
             onTapUp: enabled ? _handleTapUp : null,
             onTapCancel: _handleTapCancel,
             onTap: enabled ? _handleTap : null,
+            onLongPress: enabled ? _handleLongPress : null,
             child: result,
           ),
         ),

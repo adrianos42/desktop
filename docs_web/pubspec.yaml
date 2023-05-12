@@ -15,6 +15,7 @@ dependencies:
   url_launcher: ^6.1.10
   intl: ^0.18.1
   markdown_docs_flutter: ^1.0.0
+  http: ^0.13.6
 
 dependency_overrides:
   desktop:
