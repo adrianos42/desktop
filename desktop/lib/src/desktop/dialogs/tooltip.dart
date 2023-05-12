@@ -51,7 +51,7 @@ class Tooltip extends StatefulWidget {
   final TooltipThemeData? theme;
 
   @override
-  _TooltipState createState() => _TooltipState();
+  State<Tooltip> createState() => _TooltipState();
 }
 
 class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {

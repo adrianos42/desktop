@@ -5,8 +5,6 @@ import 'package:flutter/widgets.dart';
 
 import '../localizations.dart';
 
-const Duration _kDialogDuration = Duration(milliseconds: 300);
-
 class NextTabIntent extends Intent {
   /// Creates an intent that is used with [NextTabIntent].
   const NextTabIntent();
@@ -214,9 +212,9 @@ class _DialogRoute<T> extends PopupRoute<T> {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     return Semantics(
-      child: _pageBuilder(context, animation, secondaryAnimation),
       scopesRoute: true,
       explicitChildNodes: true,
+      child: _pageBuilder(context, animation, secondaryAnimation),
     );
   }
 

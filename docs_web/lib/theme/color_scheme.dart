@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ColorschemePage extends StatefulWidget {
-  ColorschemePage({super.key});
+  const ColorschemePage({super.key});
 
   @override
-  _ColorschemePageState createState() => _ColorschemePageState();
+  State<ColorschemePage> createState() => _ColorschemePageState();
 }
 
 Widget _itemPrimary(

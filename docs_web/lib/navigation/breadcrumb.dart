@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class BreadcrumbPage extends StatefulWidget {
-  BreadcrumbPage({super.key});
+  const BreadcrumbPage({super.key});
 
   @override
-  _BreadcrumbPageState createState() => _BreadcrumbPageState();
+  State<BreadcrumbPage> createState() => _BreadcrumbPageState();
 }
 
 class _BreadcrumbPageState extends State<BreadcrumbPage> {

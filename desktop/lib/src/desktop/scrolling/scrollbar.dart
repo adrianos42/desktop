@@ -48,10 +48,10 @@ class Scrollbar extends StatefulWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  /// TODO(as): Focus.
+  // TODO(as): Focus.
   final bool autofocus;
 
-  /// TODO(as): Focus.
+  // TODO(as): Focus.
   final FocusNode? focusNode;
 
   /// A check that specifies whether a [ScrollNotification] should be
@@ -60,7 +60,7 @@ class Scrollbar extends StatefulWidget {
 
   /// The preferred smallest size the scrollbar thumb can shrink to when the total
   /// scrollable extent is large, the current visible viewport is small, and the
-  /// viewport is not overscrolled.
+  /// viewport is not over scrolled.
   final double minThumbLength;
 
   /// Indicates that the scrollbar should be visible, even when a scroll is not
@@ -68,7 +68,7 @@ class Scrollbar extends StatefulWidget {
   final bool isAlwaysShown;
 
   @override
-  _ScrollbarState createState() => _ScrollbarState();
+  State<Scrollbar> createState() => _ScrollbarState();
 }
 
 class _ScrollbarState extends State<Scrollbar>
@@ -333,25 +333,21 @@ class _ScrollbarState extends State<Scrollbar>
   }
 
   void _handleIncrement(double value) {
-    final _position = _currentController!.position;
-    _position.moveTo(
-      _position.pixels + value,
+    final position = _currentController!.position;
+    position.moveTo(
+      position.pixels + value,
       curve: _kAnimationCurveIncrement,
       duration: _kAnimationDurationIncrement,
     );
   }
 
   bool _shouldUpdatePainter(Axis notificationAxis) {
-    final ScrollController? scrollController =
+    final ScrollController scrollController =
         widget.controller ?? PrimaryScrollController.of(context);
     // Only update the painter of this scrollbar if the notification
     // metrics do not conflict with the information we have from the scroll
     // controller.
 
-    // We do not have a scroll controller dictating axis.
-    if (scrollController == null) {
-      return true;
-    }
     // Has more than one attached positions.
     if (scrollController.positions.length > 1) {
       return false;
@@ -503,21 +499,15 @@ class _ScrollbarState extends State<Scrollbar>
   bool get showScrollbar => widget.isAlwaysShown;
 
   void _validateInteractions(AnimationStatus status) {
-    final ScrollController? scrollController =
-        widget.controller ?? PrimaryScrollController.of(context);
     if (status == AnimationStatus.dismissed) {
       assert(_fadeoutOpacityAnimation.value == 0.0);
       // We do not check for a valid scroll position if the scrollbar is not
       // visible, because it cannot be interacted with.
-    } else if (scrollController != null) {
-      // Interactive scrollbars need to be properly configured. If it is visible
-      // for interaction, ensure we are set up properly.
-      assert(_debugCheckHasValidScrollPosition());
     }
   }
 
   bool _debugCheckHasValidScrollPosition() {
-    final ScrollController? scrollController =
+    final ScrollController scrollController =
         widget.controller ?? PrimaryScrollController.of(context);
     final bool tryPrimary = widget.controller == null;
     final String controllerForError =
@@ -530,14 +520,8 @@ class _ScrollbarState extends State<Scrollbar>
       when = 'the scrollbar is interactive';
     }
 
-    assert(
-      scrollController != null,
-      'A ScrollController is required when $when. '
-      '${tryPrimary ? 'The Scrollbar was not provided a ScrollController, '
-          'and attempted to use the PrimaryScrollController, but none was found.' : ''}',
-    );
     assert(() {
-      if (!scrollController!.hasClients) {
+      if (!scrollController.hasClients) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(
             "The Scrollbar's ScrollController has no ScrollPosition attached.",
@@ -563,7 +547,7 @@ class _ScrollbarState extends State<Scrollbar>
     }());
     assert(() {
       try {
-        scrollController!.position;
+        scrollController.position;
       } catch (_) {
         throw FlutterError.fromParts(<DiagnosticsNode>[
           ErrorSummary(

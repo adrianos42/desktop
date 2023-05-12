@@ -48,7 +48,7 @@ class TabView extends StatefulWidget {
   final List<NavigatorObserver> navigatorObservers;
 
   @override
-  _TabViewState createState() => _TabViewState();
+  State<TabView> createState() => _TabViewState();
 }
 
 class _TabViewState extends State<TabView> {

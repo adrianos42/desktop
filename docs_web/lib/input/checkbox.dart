@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class CheckboxPage extends StatefulWidget {
-  CheckboxPage({super.key});
+  const CheckboxPage({super.key});
 
   @override
-  _CheckboxPageState createState() => _CheckboxPageState();
+  State<CheckboxPage> createState() => _CheckboxPageState();
 }
 
 class _CheckboxPageState extends State<CheckboxPage> {

@@ -7,7 +7,7 @@ class OverviewPage extends StatefulWidget {
   const OverviewPage({super.key});
 
   @override
-  _OverviewPageState createState() => _OverviewPageState();
+  State<OverviewPage> createState() => _OverviewPageState();
 }
 
 class _OverviewPageState extends State<OverviewPage> {
@@ -118,49 +118,30 @@ class _OverviewPageState extends State<OverviewPage> {
                     },
                   ),
                   Defaults.createTitle(context, 'Other projects using Desktop'),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildPubIcon(),
-                      HyperlinkButton(
-                        'Desktop Charts',
-                        onPressed: (_) async {
-                          await launchUrl(
-                            Uri.parse(
-                                'https://pub.dev/packages/desktop_charts'),
-                          );
-                        },
-                      ),
-                    ],
+                  HyperlinkButton(
+                    'Desktop Charts',
+                    onPressed: (_) async {
+                      await launchUrl(
+                        Uri.parse('https://pub.dev/packages/desktop_charts'),
+                      );
+                    },
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildGithubIcon(),
-                      HyperlinkButton(
-                        'Desktop Charts [Github]',
-                        onPressed: (_) async {
-                          await launchUrl(
-                            Uri.parse(
-                                'https://github.com/adrianos42/desktop_charts'),
-                          );
-                        },
-                      ),
-                    ],
+                  HyperlinkButton(
+                    'Desktop Charts [Github]',
+                    onPressed: (_) async {
+                      await launchUrl(
+                        Uri.parse(
+                            'https://github.com/adrianos42/desktop_charts'),
+                      );
+                    },
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildGithubIcon(),
-                      HyperlinkButton(
-                        'Sudoku [Github]',
-                        onPressed: (_) async {
-                          await launchUrl(
-                            Uri.parse('https://github.com/adrianos42/sudoku'),
-                          );
-                        },
-                      ),
-                    ],
+                  HyperlinkButton(
+                    'Sudoku [Github]',
+                    onPressed: (_) async {
+                      await launchUrl(
+                        Uri.parse('https://github.com/adrianos42/sudoku'),
+                      );
+                    },
                   ),
 
                   // HyperlinkButton(

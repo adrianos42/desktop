@@ -80,7 +80,7 @@ class CalendarDate extends StatefulWidget {
   final DatePickerMode initialCalendarMode;
 
   @override
-  _CalendarDateState createState() => _CalendarDateState();
+  State<CalendarDate> createState() => _CalendarDateState();
 }
 
 class _CalendarDateState extends State<CalendarDate> {

@@ -1,5 +1,3 @@
-import 'dart:ui' show Brightness;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -106,7 +104,7 @@ class TextTheme {
         final textLow = colorScheme.shade[50];
         final textMedium = colorScheme.shade[70];
         final textHigh = colorScheme.shade[90];
-        
+
         result = TextTheme._raw(
           header: _TextThemes.header.apply(color: textHigh),
           subheader: _TextThemes.subheader.apply(color: textHigh),

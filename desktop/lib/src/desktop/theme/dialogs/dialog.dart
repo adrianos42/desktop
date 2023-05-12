@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../color_scheme.dart';
@@ -46,7 +45,7 @@ class _DialogThemeData {
   /// ```
   EdgeInsets get menuPadding => _kMenuPadding;
 
-  /// The title [EdgeInsets] pagging of the title.
+  /// The title [EdgeInsets] padding of the title.
   /// 
   /// Defaults to:
   /// 

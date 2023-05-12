@@ -6,7 +6,7 @@ class PrimaryColorPage extends StatefulWidget {
   const PrimaryColorPage({super.key});
 
   @override
-  PrimaryColorPageState createState() => PrimaryColorPageState();
+  State<PrimaryColorPage> createState() => PrimaryColorPageState();
 }
 
 Widget _itemPrimary(

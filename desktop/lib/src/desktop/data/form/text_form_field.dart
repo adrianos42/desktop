@@ -131,7 +131,7 @@ class TextFormField extends FormField<String> {
                 DecoratedBox(
                   decoration: decoration,
                   child: Padding(
-                    padding: decoration.padding ?? EdgeInsets.zero,
+                    padding: decoration.padding,
                     child: Row(
                       children: [
                         if (prefix != null)

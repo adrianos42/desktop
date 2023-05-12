@@ -67,8 +67,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(dynamic details) {
-    // TODO TapDragUpDetails
+  void onSingleTapUp(TapDragUpDetails details) {
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {
@@ -344,7 +343,7 @@ class TextField extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  _TextFieldState createState() => _TextFieldState();
+  State<TextField> createState() => _TextFieldState();
 }
 
 class _TextFieldState extends State<TextField>

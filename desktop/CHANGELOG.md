@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.3.0
+
+- New dart version support.
+
 ## 4.2.2
 
 - Fix sdk version.

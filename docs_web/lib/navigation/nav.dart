@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class NavPage extends StatefulWidget {
-  NavPage({super.key});
+  const NavPage({super.key});
 
   @override
-  _NavPageState createState() => _NavPageState();
+  State<NavPage> createState() => _NavPageState();
 }
 
 class _NavPageState extends State<NavPage> {

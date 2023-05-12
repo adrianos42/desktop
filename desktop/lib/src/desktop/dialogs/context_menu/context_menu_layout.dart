@@ -6,6 +6,7 @@ class ContextMenuLayoutDelegate extends SingleChildLayoutDelegate {
   /// Creates a [ContextMenuLayoutDelegate].
   ContextMenuLayoutDelegate(this.position);
 
+  /// The target position of the child.
   final Rect position;
 
   @override

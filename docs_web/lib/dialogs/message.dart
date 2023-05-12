@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class DialogMessagePage extends StatefulWidget {
-  DialogMessagePage({super.key});
+  const DialogMessagePage({super.key});
 
   @override
-  _DialogPageState createState() => _DialogPageState();
+  State<DialogMessagePage> createState() => _DialogPageState();
 }
 
 class _DialogPageState extends State<DialogMessagePage> {

@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 import '../defaults.dart';
 
 class DateFormFieldPage extends StatefulWidget {
-  DateFormFieldPage({super.key});
+  const DateFormFieldPage({super.key});
 
   @override
-  _DateFormFieldPageState createState() => _DateFormFieldPageState();
+  State<DateFormFieldPage> createState() => _DateFormFieldPageState();
 }
 
 class _DateFormFieldPageState extends State<DateFormFieldPage> {

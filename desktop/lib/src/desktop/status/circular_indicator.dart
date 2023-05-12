@@ -21,7 +21,7 @@ class CircularProgressIndicator extends StatefulWidget {
   final CircularProgressIndicatorThemeData? theme;
 
   @override
-  _CircularProgressIndicatorState createState() =>
+  State<CircularProgressIndicator> createState() =>
       _CircularProgressIndicatorState();
 }
 
@@ -97,10 +97,11 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
   @override
   void didUpdateWidget(CircularProgressIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.value == null && !_controller.isAnimating)
+    if (widget.value == null && !_controller.isAnimating) {
       _controller.repeat();
-    else if (widget.value != null && _controller.isAnimating)
+    } else if (widget.value != null && _controller.isAnimating) {
       _controller.stop();
+    }
   }
 
   @override

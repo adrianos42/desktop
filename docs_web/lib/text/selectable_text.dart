@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class SelectableTextPage extends StatefulWidget {
-  SelectableTextPage({super.key});
+  const SelectableTextPage({super.key});
 
   @override
-  _SelectableTextPageState createState() => _SelectableTextPageState();
+  State<SelectableTextPage> createState() => _SelectableTextPageState();
 }
 
 class _SelectableTextPageState extends State<SelectableTextPage> {

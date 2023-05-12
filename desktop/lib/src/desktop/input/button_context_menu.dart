@@ -47,7 +47,7 @@ class ContextMenuButton<T> extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  _ContextMenuButtonState<T> createState() => _ContextMenuButtonState<T>();
+  State<ContextMenuButton<T>> createState() => _ContextMenuButtonState<T>();
 }
 
 class _ContextMenuButtonState<T> extends State<ContextMenuButton<T>> {

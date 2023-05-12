@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TooltipPage extends StatefulWidget {
-  TooltipPage({super.key});
+  const TooltipPage({super.key});
 
   @override
-  _TooltipPageState createState() => _TooltipPageState();
+  State<TooltipPage> createState() => _TooltipPageState();
 }
 
 class _TooltipPageState extends State<TooltipPage> {

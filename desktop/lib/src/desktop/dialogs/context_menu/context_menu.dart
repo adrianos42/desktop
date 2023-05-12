@@ -29,12 +29,11 @@ abstract class ContextMenuEntry<T> extends StatefulWidget {
 
 class _MenuItem extends SingleChildRenderObjectWidget {
   const _MenuItem({
-    super.key,
     required super.child,
   });
 
   @override
-  RenderObject createRenderObject(BuildContext context) => _RenderMenuItem();
+  RenderObject createRenderObject(BuildContext context) => _RenderMenuItem(null);
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
@@ -218,7 +217,7 @@ class ContextMenuDivider extends ContextMenuEntry {
   bool represents(void value) => false;
 
   @override
-  _ContextMenuDividerState createState() => _ContextMenuDividerState();
+  State<ContextMenuDivider> createState() => _ContextMenuDividerState();
 }
 
 class _ContextMenuDividerState extends State<ContextMenuDivider> {
@@ -240,7 +239,6 @@ class _ContextMenuDividerState extends State<ContextMenuDivider> {
 
 class _MenuItemSelected extends InheritedWidget {
   const _MenuItemSelected({
-    super.key,
     required super.child,
     required this.selected,
   });
@@ -281,15 +279,15 @@ class _ContextMenu<T> extends StatelessWidget {
       final bool selected;
 
       if (controller(context).value != null) {
-        selected = item.represents(controller(context).value!);
+        selected = item.represents(controller(context).value as T);
       } else {
         selected = false;
       }
 
       return _MenuItem(
         child: _MenuItemSelected(
-          child: item,
           selected: selected,
+          child: item,
         ),
       );
     }).toList();
@@ -406,10 +404,10 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     final Widget pageChild = Semantics(
-      child: _pageBuilder(context, animation, secondaryAnimation),
       scopesRoute: true,
       explicitChildNodes: true,
       focused: true,
+      child: _pageBuilder(context, animation, secondaryAnimation),
     );
 
     return themes?.wrap(pageChild) ?? pageChild;
@@ -463,8 +461,8 @@ Future<T?> showMenu<T>({
               onTap: () {},
               child: contextMenuThemeData != null
                   ? ContextMenuTheme(
-                      child: _ContextMenu<T>(semanticLabel: semanticLabel),
                       data: contextMenuThemeData,
+                      child: _ContextMenu<T>(semanticLabel: semanticLabel),
                     )
                   : _ContextMenu<T>(semanticLabel: semanticLabel),
             ),

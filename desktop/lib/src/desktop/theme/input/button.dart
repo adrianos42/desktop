@@ -197,7 +197,7 @@ class _ButtonThemeData {
   /// ```
   Color get highlightForeground => textTheme.textHigh;
 
-  /// The duraton of the animation.
+  /// The duration of the animation.
   /// 
   /// Defaults to:
   /// 

@@ -49,10 +49,10 @@ const _kPageDuration = Duration(milliseconds: 200);
 const _kPageCurve = Curves.easeOut;
 
 class ScrollingPage extends StatefulWidget {
-  ScrollingPage({super.key});
+  const ScrollingPage({super.key});
 
   @override
-  _ScrollingPageState createState() => _ScrollingPageState();
+  State<ScrollingPage> createState() => _ScrollingPageState();
 }
 
 class _ScrollingPageState extends State<ScrollingPage> {
@@ -168,7 +168,7 @@ class _ImagePage extends StatefulWidget {
   final RequestAssetNameCallback? requestPrevious;
 
   @override
-  _ImagePageState createState() => _ImagePageState();
+  State<_ImagePage> createState() => _ImagePageState();
 }
 
 class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {

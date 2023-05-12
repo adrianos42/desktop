@@ -3,10 +3,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonRadioPage extends StatefulWidget {
-  ButtonRadioPage({super.key});
+  const ButtonRadioPage({super.key});
 
   @override
-  _ButtonRadioPageState createState() => _ButtonRadioPageState();
+  State<ButtonRadioPage> createState() => _ButtonRadioPageState();
 }
 
 class _ButtonRadioPageState extends State<ButtonRadioPage> {

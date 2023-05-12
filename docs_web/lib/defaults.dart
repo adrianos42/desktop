@@ -323,8 +323,6 @@ class Defaults extends StatefulWidget {
   ///
   static Widget createStylePage(
       BuildContext context, List<StyleItem> styleItems) {
-    final items = <Widget>[];
-
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -383,7 +381,7 @@ class Defaults extends StatefulWidget {
   }
 
   @override
-  DefaultsState createState() => DefaultsState();
+  State<Defaults> createState() => DefaultsState();
 }
 
 ///

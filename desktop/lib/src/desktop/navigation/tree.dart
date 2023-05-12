@@ -111,7 +111,7 @@ class TreeController extends ChangeNotifier {
 /// Context to see if the node is collapsed or not.
 class _TreeNodeCollapse extends InheritedWidget {
   /// Creates a context for the tree node.
-  const _TreeNodeCollapse(this._collapsed, {super.key, required super.child});
+  const _TreeNodeCollapse(this._collapsed, {required super.child});
 
   final bool _collapsed;
 
@@ -239,7 +239,7 @@ class Tree extends StatefulWidget {
   final TreeController? controller;
 
   @override
-  _TreeState createState() => _TreeState();
+  State<Tree> createState() => _TreeState();
 }
 
 class _BuildTreePage {
@@ -710,7 +710,7 @@ class _TreeColumn extends StatefulWidget {
   final _SizeTreeCallback sizeChanged;
 
   @override
-  _TreeColumnState createState() => _TreeColumnState();
+  State<_TreeColumn> createState() => _TreeColumnState();
 }
 
 class _TreeColumnState extends State<_TreeColumn> {

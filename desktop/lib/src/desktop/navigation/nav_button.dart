@@ -31,7 +31,7 @@ class NavGroup extends StatefulWidget {
   final ValueChanged<int> onChanged;
 
   @override
-  _NavGroupState createState() => _NavGroupState();
+  State<NavGroup> createState() => _NavGroupState();
 }
 
 class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
@@ -147,10 +147,10 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
         children: <Widget>[
           Flex(
             direction: axis,
-            children: titleItems,
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: titleItems,
           ),
           _SideIconRenderObjectWidget(
             vsync: this,
@@ -174,7 +174,6 @@ class _NavGroupState extends State<NavGroup> with TickerProviderStateMixin {
 
 class _NavButtonItem extends SingleChildRenderObjectWidget {
   const _NavButtonItem({
-    super.key,
     required this.onLayout,
     required super.child,
   });
@@ -194,7 +193,7 @@ class _NavButtonItem extends SingleChildRenderObjectWidget {
 }
 
 class _NavButtonRenderItem extends RenderProxyBox {
-  _NavButtonRenderItem(this.onLayout, [RenderBox? super.child]);
+  _NavButtonRenderItem(this.onLayout);
 
   ValueChanged<Size> onLayout;
 
@@ -207,7 +206,6 @@ class _NavButtonRenderItem extends RenderProxyBox {
 
 class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
   const _SideIconRenderObjectWidget({
-    super.key,
     required this.index,
     required this.vsync,
     required this.additionalConstraints,
@@ -351,8 +349,8 @@ class _RenderIconSide extends RenderConstrainedBox {
     final Canvas canvas = context.canvas;
     final Paint paint = Paint()..color = foreground;
 
-    Rect _rectLast;
-    Rect _rectNew;
+    Rect rectLast;
+    Rect rectNew;
 
     final double lOldOffset =
         lengths.sublist(0, oldIndex).fold(0.0, (value, elem) => value + elem);
@@ -367,20 +365,20 @@ class _RenderIconSide extends RenderConstrainedBox {
       final double dx = offset.dx + lOffset;
       final double oldDx = offset.dx + lOldOffset;
 
-      _rectLast = Rect.fromLTWH(oldDx, dy, oldLength, sideLength);
-      _rectNew = Rect.fromLTWH(dx, dy, length, sideLength);
+      rectLast = Rect.fromLTWH(oldDx, dy, oldLength, sideLength);
+      rectNew = Rect.fromLTWH(dx, dy, length, sideLength);
     } else {
       final double dx = offset.dx;
       final double dy = offset.dy + lOffset;
       final double oldDy = offset.dy + lOldOffset;
 
-      _rectLast = Rect.fromLTWH(dx, oldDy, sideLength, oldLength);
-      _rectNew = Rect.fromLTWH(dx, dy, sideLength, length);
+      rectLast = Rect.fromLTWH(dx, oldDy, sideLength, oldLength);
+      rectNew = Rect.fromLTWH(dx, dy, sideLength, length);
     }
 
-    final RectTween _rectTween = RectTween(begin: _rectLast, end: _rectNew);
+    final RectTween rectTween = RectTween(begin: rectLast, end: rectNew);
 
-    canvas.drawRect(_rectTween.lerp(position.value)!, paint);
+    canvas.drawRect(rectTween.lerp(position.value)!, paint);
   }
 }
 

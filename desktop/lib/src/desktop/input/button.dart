@@ -188,7 +188,7 @@ class Button extends StatefulWidget {
   final ButtonThemeData? theme;
 
   @override
-  _ButtonState createState() => _ButtonState();
+  State<Button> createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button>
@@ -545,12 +545,12 @@ class _ButtonState extends State<Button>
         );
 
         return ButtonScope(
-          child: result,
           hovered: enabled && (hovered || _focusHighlight),
           pressed: enabled && pressed,
           active: enabled && active,
           disabled: !enabled,
           color: foreground!,
+          child: result,
         );
       },
     );

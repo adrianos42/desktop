@@ -56,8 +56,7 @@ class _SelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(dynamic details) {
-    // TODO TapDragUpDetails
+  void onSingleTapUp(TapDragUpDetails details) {
     editableText.hideToolbar();
     if (delegate.selectionEnabled) {
       switch (defaultTargetPlatform) {
@@ -240,7 +239,7 @@ class SelectableText extends StatefulWidget {
   final TextWidthBasis? textWidthBasis;
 
   @override
-  _SelectableTextState createState() => _SelectableTextState();
+  State<SelectableText> createState() => _SelectableTextState();
 }
 
 class _SelectableTextState extends State<SelectableText>

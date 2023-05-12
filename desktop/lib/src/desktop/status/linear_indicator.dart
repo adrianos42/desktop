@@ -18,7 +18,7 @@ class LinearProgressIndicator extends StatefulWidget {
   final LinearProgressIndicatorThemeData? theme;
 
   @override
-  _LinearProgressIndicatorState createState() =>
+  State<LinearProgressIndicator> createState() =>
       _LinearProgressIndicatorState();
 }
 

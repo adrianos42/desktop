@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 /// The row in a [ListTable].
 class ListRow extends MultiChildRenderObjectWidget {
   /// Creates a [ListRow].
-  ListRow({
+  const ListRow({
     super.key,
     super.children,
     this.decoration,
@@ -32,8 +32,8 @@ class ListRow extends MultiChildRenderObjectWidget {
   final Color? backgroundColor;
 
   @override
-  _ListRowRender createRenderObject(BuildContext context) {
-    return _ListRowRender(
+  ListRowRender createRenderObject(BuildContext context) {
+    return ListRowRender(
       columnWidths: colSizes,
       columns: children.length,
       itemExtent: itemExtent,
@@ -46,7 +46,7 @@ class ListRow extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _ListRowRender renderObject) {
+      BuildContext context, covariant ListRowRender renderObject) {
     renderObject
       ..columnWidths = colSizes
       ..itemExtent = itemExtent
@@ -60,12 +60,12 @@ class ListRow extends MultiChildRenderObjectWidget {
 class _ListRowParentData extends ContainerBoxParentData<RenderBox> {}
 
 ///
-class _ListRowRender extends RenderBox
+class ListRowRender extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _ListRowParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _ListRowParentData> {
   ///
-  _ListRowRender({
+  ListRowRender({
     int? columns,
     required List<double> columnWidths,
     required BorderSide bottomBorder,

@@ -212,7 +212,7 @@ class DesktopApp extends StatefulWidget {
   final ScrollBehavior? scrollBehavior;
 
   @override
-  _DesktopAppState createState() => _DesktopAppState();
+  State<DesktopApp> createState() => _DesktopAppState();
 }
 
 class _DesktopAppState extends State<DesktopApp> {
@@ -383,9 +383,9 @@ class DesktopScrollBehavior extends ScrollBehavior {
       case TargetPlatform.macOS:
       case TargetPlatform.windows:
         return Scrollbar(
-          child: child,
           isAlwaysShown: isAlwaysShown,
           controller: details.controller,
+          child: child,
         );
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:

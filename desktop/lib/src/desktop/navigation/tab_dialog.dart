@@ -20,7 +20,7 @@ class TabDialog extends StatefulWidget {
   final double? width;
 
   @override
-  _TabDialogState createState() => _TabDialogState();
+  State<TabDialog> createState() => _TabDialogState();
 }
 
 class _TabDialogState extends State<TabDialog> {

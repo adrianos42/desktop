@@ -39,7 +39,7 @@ class ToggleSwitch extends StatefulWidget {
   final ToggleSwitchThemeData? theme;
 
   @override
-  _ToggleSwitchState createState() => _ToggleSwitchState();
+  State<ToggleSwitch> createState() => _ToggleSwitchState();
 }
 
 class _ToggleSwitchState extends State<ToggleSwitch>
@@ -193,7 +193,6 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
 class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   const _ToggleSwitchRenderObjectWidget({
-    super.key,
     this.onChanged,
     required this.value,
     required this.state,

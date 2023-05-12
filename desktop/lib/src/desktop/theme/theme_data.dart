@@ -51,7 +51,7 @@ class Theme extends StatefulWidget {
   }
 
   @override
-  _ThemeState createState() => _ThemeState();
+  State<Theme> createState() => _ThemeState();
 }
 
 class _ThemeState extends State<Theme> {
@@ -79,7 +79,6 @@ class _ThemeState extends State<Theme> {
 
 class _InheritedTheme extends InheritedTheme {
   const _InheritedTheme({
-    super.key,
     required this.theme,
     required super.child,
   });

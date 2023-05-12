@@ -8,7 +8,7 @@ import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
 
-typedef _MessageReasonCallback = void Function(MessageClosedReason);
+typedef MessageReasonCallback = void Function(MessageClosedReason);
 
 /// The kind of message to be displayed.
 enum MessageKind {
@@ -134,7 +134,7 @@ class Messenger extends StatefulWidget {
   }
 
   @override
-  _MessengerState createState() => _MessengerState();
+  State<Messenger> createState() => _MessengerState();
 }
 
 class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
@@ -301,7 +301,6 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
 
 class _MessengerScope extends InheritedWidget {
   const _MessengerScope({
-    super.key,
     required super.child,
     required _MessengerState messengerState,
     required int length,
@@ -346,7 +345,7 @@ class Message extends StatefulWidget {
 
   final VoidCallback stopTimer;
 
-  final _MessageReasonCallback remove;
+  final MessageReasonCallback remove;
 
   final MessageThemeData? theme;
 
@@ -362,7 +361,7 @@ class Message extends StatefulWidget {
   }
 
   @override
-  _MessageState createState() => _MessageState();
+  State<Message> createState() => _MessageState();
 }
 
 class _MessageState extends State<Message> {
@@ -523,7 +522,6 @@ class _MessageState extends State<Message> {
     }
 
     return Focus(
-      child: Container(alignment: Alignment.bottomCenter, child: result),
       autofocus: true,
       debugLabel: 'Dialog',
       onFocusChange: (value) {
@@ -531,6 +529,7 @@ class _MessageState extends State<Message> {
           _setFocus(value);
         }
       },
+      child: Container(alignment: Alignment.bottomCenter, child: result),
     );
   }
 }

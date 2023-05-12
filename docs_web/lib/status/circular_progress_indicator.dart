@@ -3,10 +3,10 @@ import '../defaults.dart';
 import 'dart:math' as math;
 
 class CircularProgressIndicatorPage extends StatefulWidget {
-  CircularProgressIndicatorPage({super.key});
+  const CircularProgressIndicatorPage({super.key});
 
   @override
-  _CircularProgressIndicatorPageState createState() => _CircularProgressIndicatorPageState();
+  State<CircularProgressIndicatorPage> createState() => _CircularProgressIndicatorPageState();
 }
 
 class _CircularProgressIndicatorPageState extends State<CircularProgressIndicatorPage>

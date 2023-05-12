@@ -5,7 +5,7 @@
 //   BottomNavPage({super.key});
 
 //   @override
-//   _BottomNavPageState createState() => _BottomNavPageState();
+//   State<BottomNavPage> createState() => _BottomNavPageState();
 // }
 
 // class _BottomNavPageState extends State<BottomNavPage> {

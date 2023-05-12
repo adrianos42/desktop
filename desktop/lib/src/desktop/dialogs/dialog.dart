@@ -4,8 +4,8 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/widgets.dart';
 
 import '../input/button.dart';
-import '../theme/theme.dart';
 import '../localizations.dart';
+import '../theme/theme.dart';
 
 const Duration _kDialogDuration = Duration(milliseconds: 200);
 const Curve _kDialogCurve = Curves.easeOut;
@@ -57,10 +57,10 @@ class DialogRoute<T> extends PopupRoute<T> {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     final Widget pageChild = Semantics(
-      child: _pageBuilder(context, animation, secondaryAnimation),
       scopesRoute: true,
       explicitChildNodes: true,
       focused: true,
+      child: _pageBuilder(context, animation, secondaryAnimation),
     );
 
     return themes?.wrap(pageChild) ?? pageChild;
@@ -213,8 +213,8 @@ class Dialog extends StatelessWidget {
             Padding(
               padding: dialogThemeData.titlePadding!,
               child: DefaultTextStyle(
-                child: title!,
                 style: dialogThemeData.titleTextStyle!,
+                child: title!,
               ),
             ),
           if (allowScroll)
@@ -235,9 +235,9 @@ class Dialog extends StatelessWidget {
                     0.0,
                   ),
                   child: DefaultTextStyle(
-                    child: body,
                     textAlign: dialogThemeData.bodyTextAlign!,
                     style: textTheme.body1,
+                    child: body,
                   ),
                 ),
               ),
@@ -246,9 +246,9 @@ class Dialog extends StatelessWidget {
             Padding(
               padding: dialogThemeData.bodyPadding!,
               child: DefaultTextStyle(
-                child: body,
                 textAlign: dialogThemeData.bodyTextAlign!,
                 style: textTheme.body1,
+                child: body,
               ),
             ),
           if (actions != null)
@@ -261,7 +261,7 @@ class Dialog extends StatelessWidget {
                 children: actions!
                     .map(
                       (e) => Padding(
-                        padding: EdgeInsets.only(left: 8.0),
+                        padding: const EdgeInsets.only(left: 8.0),
                         child: Button.text(
                           e.title,
                           onPressed: e.onPressed,
@@ -281,15 +281,15 @@ class Dialog extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Spacer(flex: 2),
-        Flexible(child: result, flex: 8),
+        Flexible(flex: 8, child: result),
         const Spacer(flex: 2),
       ],
     );
 
     return Focus(
-      child: Center(child: result),
       autofocus: true,
       debugLabel: 'Dialog',
+      child: Center(child: result),
     );
   }
 }

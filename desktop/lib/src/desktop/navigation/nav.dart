@@ -110,7 +110,7 @@ class Nav extends StatefulWidget {
   final bool visible;
 
   @override
-  _NavState createState() => _NavState();
+  State<Nav> createState() => _NavState();
 }
 
 class _NavState extends State<Nav> with SingleTickerProviderStateMixin {

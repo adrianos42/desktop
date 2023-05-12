@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TypographyPage extends StatefulWidget {
-  TypographyPage({super.key});
+  const TypographyPage({super.key});
 
   @override
-  _TypographyPageState createState() => _TypographyPageState();
+  State<TypographyPage> createState() => _TypographyPageState();
 }
 
 class _TypographyPageState extends State<TypographyPage> {

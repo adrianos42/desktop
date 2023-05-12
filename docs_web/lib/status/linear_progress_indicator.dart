@@ -3,10 +3,10 @@ import '../defaults.dart';
 import 'dart:math' as math;
 
 class LinearProgressIndicatorPage extends StatefulWidget {
-  LinearProgressIndicatorPage({super.key});
+  const LinearProgressIndicatorPage({super.key});
 
   @override
-  _LinearProgressIndicatorPageState createState() => _LinearProgressIndicatorPageState();
+  State<LinearProgressIndicatorPage> createState() => _LinearProgressIndicatorPageState();
 }
 
 class _LinearProgressIndicatorPageState extends State<LinearProgressIndicatorPage>

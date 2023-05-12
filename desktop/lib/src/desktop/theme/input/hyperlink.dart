@@ -6,7 +6,6 @@ import '../theme_text.dart';
 part 'hyperlink.g.dart';
 
 const double _kLineThickness = 1.0;
-const HSLColor _kDefaultColor = HSLColor.fromAHSL(1.0, 210, 0.9, 0.56);
 
 /// Theme data for [HyperlinkButton].
 @immutable

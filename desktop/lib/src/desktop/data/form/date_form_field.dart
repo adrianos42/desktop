@@ -26,7 +26,7 @@ class DateFormField extends FormField<String> {
     super.key,
     this.controller,
     String? initialValue,
-    TextInputAction? textInputAction, // TODO
+    TextInputAction? textInputAction, // TODO(as): field.
     TextStyle? style,
     StrutStyle? strutStyle,
     TextDirection? textDirection,
@@ -34,23 +34,23 @@ class DateFormField extends FormField<String> {
     bool autofocus = false,
     bool readOnly = false,
     bool? showCursor,
-    bool enableSuggestions = true, // TODO
-    MaxLengthEnforcement? maxLengthEnforcement, // TODO
-    bool expands = false, // TODO
-    int? maxLength, // TODO
+    bool enableSuggestions = true, // TODO(as): field.
+    MaxLengthEnforcement? maxLengthEnforcement, // TODO(as): field.
+    bool expands = false, // TODO(as): field.
+    int? maxLength, // TODO(as): field.
     this.onChanged,
     GestureTapCallback? onTap,
     VoidCallback? onEditingComplete,
     ValueChanged<String>? onFieldSubmitted,
     super.onSaved,
-    super.validator, // TODO
+    super.validator, // TODO(as): field.
     bool enabled = true,
     double cursorWidth = 2.0,
     double? cursorHeight,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
     bool? enableInteractiveSelection,
     TextSelectionControls? selectionControls,
-    Iterable<String>? autofillHints, // TODO
+    Iterable<String>? autofillHints, // TODO(as): field.
     AutovalidateMode? autovalidateMode,
     ScrollController? scrollController,
     super.restorationId,
@@ -129,7 +129,7 @@ class DateFormField extends FormField<String> {
                 DecoratedBox(
                   decoration: decoration,
                   child: Padding(
-                    padding: decoration.padding ?? EdgeInsets.zero,
+                    padding: decoration.padding,
                     child: Row(
                       children: [
                         Flexible(
@@ -307,6 +307,9 @@ class _TextFormFieldState extends FormFieldState<String> {
   }
 
   Future<void> _openDatePicker() async {
+    final formatCompactDate =
+        DesktopLocalizations.of(context).formatCompactDate;
+
     setState(() => _calendarButtonActive = true);
 
     DateTime? newDate;
@@ -322,8 +325,7 @@ class _TextFormFieldState extends FormFieldState<String> {
     }
 
     if (newDate != null && _textFormField.onChanged != null) {
-      final newDateText =
-          DesktopLocalizations.of(context).formatCompactDate(newDate);
+      final newDateText = formatCompactDate(newDate);
 
       _effectiveController.text = newDateText;
       super.didChange(newDateText);

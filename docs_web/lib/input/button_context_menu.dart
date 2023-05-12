@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonContextMenuPage extends StatefulWidget {
-  ButtonContextMenuPage({super.key});
+  const ButtonContextMenuPage({super.key});
 
   @override
-  _ButtonContextMenuPageState createState() => _ButtonContextMenuPageState();
+  State<ButtonContextMenuPage> createState() => _ButtonContextMenuPageState();
 }
 
 class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {

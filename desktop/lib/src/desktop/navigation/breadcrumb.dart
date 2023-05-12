@@ -1,13 +1,10 @@
 import 'package:flutter/widgets.dart';
 
+import '../app.dart';
 import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
-import '../app.dart';
 import 'tab_scope.dart' show TabScope;
-
-const double _kHeight = 36.0;
-const EdgeInsets _khorizontalPadding = EdgeInsets.symmetric(horizontal: 16.0);
 
 class _BreadcrumbItem {
   const _BreadcrumbItem(this.overlayEntry, this.itemBuilder);
@@ -101,7 +98,7 @@ class Breadcrumb extends StatefulWidget {
   final BreadcrumbThemeData? theme;
 
   @override
-  _BreadcrumbState createState() => _BreadcrumbState();
+  State<Breadcrumb> createState() => _BreadcrumbState();
 }
 
 class _BreadcrumbState extends State<Breadcrumb> {
@@ -193,8 +190,8 @@ class _BreadcrumbState extends State<Breadcrumb> {
     );
 
     result = TabScope(
-      child: result,
       axis: Axis.horizontal,
+      child: result,
     );
 
     return result;

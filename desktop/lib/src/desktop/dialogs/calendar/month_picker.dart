@@ -63,7 +63,7 @@ class MonthPicker extends StatefulWidget {
   final SelectableDayPredicate? selectableDayPredicate;
 
   @override
-  MonthPickerState createState() => MonthPickerState();
+  State<MonthPicker> createState() => MonthPickerState();
 }
 
 ///
@@ -479,7 +479,7 @@ class _DayPicker extends StatefulWidget {
   final SelectableDayPredicate? selectableDayPredicate;
 
   @override
-  _DayPickerState createState() => _DayPickerState();
+  State<_DayPicker> createState() => _DayPickerState();
 }
 
 class _DayPickerState extends State<_DayPicker> {
@@ -589,10 +589,10 @@ class _DayPickerState extends State<_DayPicker> {
     }
 
     return DaysMonth(
-      children: dayItems,
       daysOffset: dayOffset,
       boxSize: const Size(_kBoxSize, _kBoxSize),
       columns: DateTime.daysPerWeek,
+      children: dayItems,
     );
   }
 }

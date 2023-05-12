@@ -36,7 +36,7 @@ class Radio extends StatefulWidget {
   final RadioThemeData? theme;
 
   @override
-  _RadioState createState() => _RadioState();
+  State<Radio> createState() => _RadioState();
 }
 
 class _RadioState extends State<Radio> with TickerProviderStateMixin {
@@ -193,7 +193,6 @@ class _RadioState extends State<Radio> with TickerProviderStateMixin {
 
 class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
   const _RadioRenderObjectWidget({
-    super.key,
     this.onChanged,
     required this.value,
     required this.state,

@@ -175,7 +175,7 @@ class Tab extends StatefulWidget {
   final AxisDirection axis;
 
   @override
-  _TabState createState() => _TabState();
+  State<Tab> createState() => _TabState();
 }
 
 class _TabState extends State<Tab> with SingleTickerProviderStateMixin {

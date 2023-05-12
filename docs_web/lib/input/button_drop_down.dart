@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ButtonDropDownPage extends StatefulWidget {
-  ButtonDropDownPage({super.key});
+  const ButtonDropDownPage({super.key});
 
   @override
-  _ButtonDropDownPageState createState() => _ButtonDropDownPageState();
+  State<ButtonDropDownPage> createState() => _ButtonDropDownPageState();
 }
 
 class _ButtonDropDownPageState extends State<ButtonDropDownPage> {

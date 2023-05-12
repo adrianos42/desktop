@@ -6,8 +6,6 @@ import '../theme_text.dart';
 
 part 'tree.g.dart';
 
-const double _kPadding = 8.0;
-
 /// Theme data for [Tree].
 @immutable
 class _TreeThemeData {

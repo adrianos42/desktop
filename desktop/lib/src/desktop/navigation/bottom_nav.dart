@@ -35,7 +35,7 @@ class BottomNav extends StatefulWidget {
   final bool? isBackButtonEnabled;
 
   @override
-  _BottomNavState createState() => _BottomNavState();
+  State<BottomNav> createState() => _BottomNavState();
 }
 
 class _BottomNavState extends State<BottomNav>
@@ -136,7 +136,7 @@ class _BottomNavState extends State<BottomNav>
                 color: _menuColorTween.evaluate(_menuAnimation),
                 child: GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
-                  onTap: () {}, // TODO(as): Better way to do this?
+                  onTap: () {},
                   child: ClipRect(
                     child: FractionalTranslation(
                       translation: _menuOffsetTween.evaluate(_menuAnimation),

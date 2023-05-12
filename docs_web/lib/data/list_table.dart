@@ -79,10 +79,10 @@ const someDataTableRows = [
 ];
 
 class ListTablePage extends StatefulWidget {
-  ListTablePage({super.key});
+  const ListTablePage({super.key});
 
   @override
-  _ListTablePageState createState() => _ListTablePageState();
+  State<ListTablePage> createState() => _ListTablePageState();
 }
 
 class _ListTablePageState extends State<ListTablePage> {

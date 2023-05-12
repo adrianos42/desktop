@@ -103,7 +103,6 @@ class FeedbackColumn extends StatelessWidget {
       child: Stack(
         children: [
           _FeedbackColumnItems(
-            children: [header.builder(context, col), ...rowItems],
             heights: itemSize.height.isFinite
                 ? [
                     header.itemExtent,
@@ -115,6 +114,7 @@ class FeedbackColumn extends StatelessWidget {
             backgroundColor: backgroundColor,
             headerBorder: header.columnBorder,
             headerDecoration: header.decoration,
+            children: [header.builder(context, col), ...rowItems],
           )
         ],
       ),
@@ -124,7 +124,7 @@ class FeedbackColumn extends StatelessWidget {
 
 @immutable
 class _FeedbackColumnItems extends MultiChildRenderObjectWidget {
-  _FeedbackColumnItems({
+  const _FeedbackColumnItems({
     required super.children,
     required this.headerDecoration,
     required this.headerBorder,

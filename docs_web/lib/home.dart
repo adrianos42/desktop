@@ -13,7 +13,7 @@ import 'theme/typography.dart';
 import 'theme/custom_theme.dart';
 import 'overview.dart';
 
-const String _version = '4.2.0';
+const String _version = '4.3.0';
 
 ///
 class DocHome extends StatefulWidget {
@@ -47,7 +47,7 @@ class DocHome extends StatefulWidget {
   final bool allowDragging;
 
   @override
-  _DocHomeState createState() => _DocHomeState();
+  State<DocHome> createState() => _DocHomeState();
 }
 
 class _DocHomeState extends State<DocHome> {
@@ -234,7 +234,7 @@ class _ThemeToggle extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  _ThemeToggleState createState() => _ThemeToggleState();
+  State<_ThemeToggle> createState() => _ThemeToggleState();
 }
 
 class _ThemeToggleState extends State<_ThemeToggle> {
@@ -281,11 +281,11 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Breadcrumb'),
-            builder: (context) => BreadcrumbPage(),
+            builder: (context) => const BreadcrumbPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Nav'),
-            builder: (context) => NavPage(),
+            builder: (context) => const NavPage(),
           ),
 
           ///TreeNode.child(
@@ -294,11 +294,11 @@ class DocApp extends StatelessWidget {
           ///),
           TreeNode.child(
             titleBuilder: (context) => const Text('Tab'),
-            builder: (context) => TabPage(),
+            builder: (context) => const TabPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Tree'),
-            builder: (context) => TreePage(),
+            builder: (context) => const TreePage(),
           ),
         ],
       ),
@@ -307,15 +307,15 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('List Table'),
-            builder: (context) => ListTablePage(),
+            builder: (context) => const ListTablePage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Text Form Field'),
-            builder: (context) => TextFormFieldPage(),
+            builder: (context) => const TextFormFieldPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Date Form Field'),
-            builder: (context) => DateFormFieldPage(),
+            builder: (context) => const DateFormFieldPage(),
           ),
         ],
       ),
@@ -324,19 +324,19 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Dialog'),
-            builder: (context) => DialogPage(),
+            builder: (context) => const DialogPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Message'),
-            builder: (context) => DialogMessagePage(),
+            builder: (context) => const DialogMessagePage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Tooltip'),
-            builder: (context) => TooltipPage(),
+            builder: (context) => const TooltipPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Date Picker'),
-            builder: (context) => DatePickerPage(),
+            builder: (context) => const DatePickerPage(),
           ),
         ],
       ),
@@ -345,35 +345,35 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Button'),
-            builder: (context) => ButtonPage(),
+            builder: (context) => const ButtonPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Context Menu'),
-            builder: (context) => ButtonContextMenuPage(),
+            builder: (context) => const ButtonContextMenuPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Drop Down Menu'),
-            builder: (context) => ButtonDropDownPage(),
+            builder: (context) => const ButtonDropDownPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Hyperlink'),
-            builder: (context) => ButtonHyperlinkPage(),
+            builder: (context) => const ButtonHyperlinkPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Slider'),
-            builder: (context) => SliderPage(),
+            builder: (context) => const SliderPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Checkbox'),
-            builder: (context) => CheckboxPage(),
+            builder: (context) => const CheckboxPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Radio'),
-            builder: (context) => ButtonRadioPage(),
+            builder: (context) => const ButtonRadioPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Toggle Switch'),
-            builder: (context) => ToggleSwitchPage(),
+            builder: (context) => const ToggleSwitchPage(),
           ),
         ],
       ),
@@ -382,12 +382,12 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Linear Progress Indicator'),
-            builder: (context) => LinearProgressIndicatorPage(),
+            builder: (context) => const LinearProgressIndicatorPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) =>
                 const Text('Circular Progress Indicator'),
-            builder: (context) => CircularProgressIndicatorPage(),
+            builder: (context) => const CircularProgressIndicatorPage(),
           ),
         ],
       ),
@@ -396,11 +396,11 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Text Field'),
-            builder: (context) => TextFieldPage(),
+            builder: (context) => const TextFieldPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Selectable Text'),
-            builder: (context) => SelectableTextPage(),
+            builder: (context) => const SelectableTextPage(),
           ),
         ],
       ),
@@ -409,11 +409,11 @@ class DocApp extends StatelessWidget {
         children: [
           TreeNode.child(
             titleBuilder: (context) => const Text('Typography'),
-            builder: (context) => TypographyPage(),
+            builder: (context) => const TypographyPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Color Scheme'),
-            builder: (context) => ColorschemePage(),
+            builder: (context) => const ColorschemePage(),
           ),
           if (buildCustomThemeItem)
             TreeNode.child(
@@ -429,7 +429,7 @@ class DocApp extends StatelessWidget {
       ),
       TreeNode.child(
         titleBuilder: (context) => const Text('Scrollbar'),
-        builder: (context) => ScrollingPage(),
+        builder: (context) => const ScrollingPage(),
       ),
     ];
   }

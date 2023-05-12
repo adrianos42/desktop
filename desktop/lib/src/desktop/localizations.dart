@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 /// Defines the localized resource values used by the Desktop widgets.
 ///
@@ -58,15 +58,15 @@ class _DesktopLocalizationsDelegate
 class DefaultDesktopLocalizations implements DesktopLocalizations {
   const DefaultDesktopLocalizations();
 
-  static const List<String> _shortWeekdays = <String>[
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
-  ];
+  // static const List<String> _shortWeekdays = <String>[
+  //   'Mon',
+  //   'Tue',
+  //   'Wed',
+  //   'Thu',
+  //   'Fri',
+  //   'Sat',
+  //   'Sun',
+  // ];
 
   static const List<String> _weekdays = <String>[
     'Monday',
@@ -88,20 +88,20 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
     'S',
   ];
 
-  static const List<String> _shortMonths = <String>[
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
+  // static const List<String> _shortMonths = <String>[
+  //   'Jan',
+  //   'Feb',
+  //   'Mar',
+  //   'Apr',
+  //   'May',
+  //   'Jun',
+  //   'Jul',
+  //   'Aug',
+  //   'Sep',
+  //   'Oct',
+  //   'Nov',
+  //   'Dec',
+  // ];
 
   static const List<String> _months = <String>[
     'January',

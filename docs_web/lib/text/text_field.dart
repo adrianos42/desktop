@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class TextFieldPage extends StatefulWidget {
-  TextFieldPage({super.key});
+  const TextFieldPage({super.key});
 
   @override
-  _TextFieldPageState createState() => _TextFieldPageState();
+  State<TextFieldPage> createState() => _TextFieldPageState();
 }
 
 class _TextFieldPageState extends State<TextFieldPage> {

@@ -51,7 +51,7 @@ class Slider extends StatefulWidget {
   final SliderThemeData? theme;
 
   @override
-  _SliderState createState() => _SliderState();
+  State<Slider> createState() => _SliderState();
 }
 
 class _SliderState extends State<Slider> with TickerProviderStateMixin {
@@ -211,9 +211,9 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     if (widget.enableTooltip) {
       return Tooltip(
         message: (widget.value * 100).round().toString(),
-        child: result,
         theme: const TooltipThemeData(height: 14.0),
         preferBelow: false,
+        child: result,
       );
     } else {
       return result;
@@ -223,7 +223,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
 class _SliderRenderObjectWidget extends LeafRenderObjectWidget {
   const _SliderRenderObjectWidget({
-    super.key,
     required this.value,
     required this.state,
     required this.activeColor,
@@ -558,11 +557,11 @@ class _RenderSlider extends RenderConstrainedBox {
       color = activeColor;
 
       if (hovering || _state._hoverPositionController.isAnimating) {
-        //color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
+        // TODO(as): color = Color.lerp(color, hoverColor, _state._hoverPosition.value)!;
       }
 
       if (_dragging || _state._positionController.isAnimating) {
-        //color = Color.lerp(color, activeColor, _state._position.value)!;
+        // TODO(as): color = Color.lerp(color, activeColor, _state._position.value)!;
       }
     }
 

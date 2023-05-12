@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -50,7 +49,7 @@ class Checkbox extends StatefulWidget {
   final CheckboxThemeData? theme;
 
   @override
-  _CheckboxState createState() => _CheckboxState();
+  State<Checkbox> createState() => _CheckboxState();
 }
 
 class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
@@ -231,7 +230,6 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
 class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   const _CheckboxRenderObjectWidget({
-    super.key,
     this.onChanged,
     this.value,
     required this.state,
@@ -448,7 +446,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
 
   Paint _createStrokePaint() {
     return Paint()
-      ..color = _state._hovering ? Color(0xFF000000) : foregroundColor
+      ..color = _state._hovering ? const Color(0xFF000000) : foregroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = _kStrokeWidth;
   }

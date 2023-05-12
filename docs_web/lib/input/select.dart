@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class SelectInputPage extends StatefulWidget {
-  SelectInputPage({super.key});
+  const SelectInputPage({super.key});
 
   @override
-  _SelectInputPageState createState() => _SelectInputPageState();
+  State<SelectInputPage> createState() => _SelectInputPageState();
 }
 
 class _SelectInputPageState extends State<SelectInputPage> {

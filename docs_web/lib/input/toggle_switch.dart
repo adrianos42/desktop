@@ -2,10 +2,10 @@ import 'package:desktop/desktop.dart';
 import '../defaults.dart';
 
 class ToggleSwitchPage extends StatefulWidget {
-  ToggleSwitchPage({super.key});
+  const ToggleSwitchPage({super.key});
 
   @override
-  _ToggleSwitchPageState createState() => _ToggleSwitchPageState();
+  State<ToggleSwitchPage> createState() => _ToggleSwitchPageState();
 }
 
 class _ToggleSwitchPageState extends State<ToggleSwitchPage> {

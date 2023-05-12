@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
 
 const double _kMinInteractiveSize = 48.0;
 
@@ -124,7 +124,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
   /// The preferred smallest size the scrollbar can shrink to when the total
   /// scrollable extent is large, the current visible viewport is small, and the
-  /// viewport is not overscrolled.
+  /// viewport is not over scrolled.
   ///
   /// The size of the scrollbar may shrink to a smaller size than [minLength]
   /// to fit in the available paint area. E.g., when [minLength] is
@@ -142,9 +142,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   }
 
   /// The preferred smallest size the scrollbar can shrink to when viewport is
-  /// overscrolled.
+  /// over scrolled.
   ///
-  /// When overscrolling, the size of the scrollbar may shrink to a smaller size
+  /// When over scrolling, the size of the scrollbar may shrink to a smaller size
   /// than [minOverscrollLength] to fit in the available paint area. E.g., when
   /// [minOverscrollLength] is `double.infinity`, it will not be respected if
   /// the [viewportDimension] and [mainAxisMargin] are finite.
@@ -270,15 +270,15 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     final double newMinLength = (_beforeExtent > 0 && _afterExtent > 0)
         // Thumb extent is no smaller than minLength if scrolling normally.
         ? safeMinLength
-        // User is overscrolling. Thumb extent can be less than minLength
+        // User is over scrolling. Thumb extent can be less than minLength
         // but no smaller than minOverscrollLength. We can't use the
         // fractionVisible to produce intermediate values between minLength and
         // minOverscrollLength when the user is transitioning from regular
-        // scrolling to overscrolling, so we instead use the percentage of the
+        // scrolling to over scrolling, so we instead use the percentage of the
         // content that is still in the viewport to determine the size of the
         // thumb. iOS behavior appears to have the thumb reach its minimum size
-        // with ~20% of overscroll. We map the percentage of minLength from
-        // [0.8, 1.0] to [0.0, 1.0], so 0% to 20% of overscroll will produce
+        // with ~20% of over scroll. We map the percentage of minLength from
+        // [0.8, 1.0] to [0.0, 1.0], so 0% to 20% of over scroll will produce
         // values for the thumb that range between minLength and the smallest
         // possible value, minOverscrollLength.
         : safeMinLength *

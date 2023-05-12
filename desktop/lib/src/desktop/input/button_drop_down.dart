@@ -43,7 +43,7 @@ class DropDownButton<T> extends StatefulWidget {
   final DropDownThemeData? theme;
 
   @override
-  _DropDownButtonState<T> createState() => _DropDownButtonState<T>();
+  State<DropDownButton<T>> createState() => _DropDownButtonState<T>();
 }
 
 class _DropDownButtonState<T> extends State<DropDownButton<T>>
@@ -185,7 +185,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     if (widget.value != null) {
       bodyChild = widget
           .itemBuilder(context)
-          .firstWhere((value) => value.represents(widget.value!));
+          .firstWhere((value) => value.represents(widget.value as T));
     } else {
       bodyChild = Container();
     }
@@ -247,8 +247,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                 IgnorePointer(
                   ignoring: true,
                   child: ContextMenuTheme(
-                    child: bodyChild,
                     data: contextMenuThemeData.copyWith(background: background),
+                    child: bodyChild,
                   ),
                 ),
                 Align(

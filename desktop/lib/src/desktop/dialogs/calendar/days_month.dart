@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 ///
 class DaysMonth extends MultiChildRenderObjectWidget {
   /// Creates a [DaysMonth].
-  DaysMonth({
+  const DaysMonth({
     super.key,
     super.children,
     required this.daysOffset,
@@ -22,14 +22,14 @@ class DaysMonth extends MultiChildRenderObjectWidget {
   final int columns;
 
   @override
-  _DayPickerRender createRenderObject(BuildContext context) {
-    return _DayPickerRender(
+  DayPickerRender createRenderObject(BuildContext context) {
+    return DayPickerRender(
         daysOffset: daysOffset, boxSize: boxSize, columns: columns);
   }
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _DayPickerRender renderObject) {
+      BuildContext context, covariant DayPickerRender renderObject) {
     renderObject
       ..daysOffset = daysOffset
       ..boxSize = boxSize
@@ -40,12 +40,12 @@ class DaysMonth extends MultiChildRenderObjectWidget {
 class _DayPickerParentData extends ContainerBoxParentData<RenderBox> {}
 
 ///
-class _DayPickerRender extends RenderBox
+class DayPickerRender extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, _DayPickerParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, _DayPickerParentData> {
   ///
-  _DayPickerRender({
+  DayPickerRender({
     List<RenderBox>? children,
     required int daysOffset,
     required Size boxSize,
