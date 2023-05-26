@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:desktop/desktop.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
+import 'package:jovial_svg/jovial_svg.dart';
 
 import 'defaults.dart';
 
@@ -69,7 +67,13 @@ class _OverviewPageState extends State<OverviewPage> {
                     padding: const EdgeInsets.only(top: 12.0),
                     child: Button(
                       padding: EdgeInsets.zero,
-                      body: _VersionBadge(),
+                      body: ScalableImageWidget.fromSISource(
+                        si: ScalableImageSource.fromSvgHttpUrl(
+                          Uri.parse(
+                            'https://img.shields.io/pub/v/desktop.svg?style=flat-square',
+                          ),
+                        ),
+                      ),
                       onPressed: () async {
                         await launchUrl(
                           Uri.parse('https://pub.dev/packages/desktop'),
@@ -157,68 +161,6 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _VersionBadge extends StatefulWidget {
-  @override
-  State<_VersionBadge> createState() => _VersionBadgeState();
-}
-
-class _VersionBadgeState extends State<_VersionBadge> {
-  String version = '';
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    http.get(
-      Uri.parse(
-        'https://pub.dev/packages/desktop.json',
-      ),
-      headers: {'Accept': 'application/json'},
-    ).then((response) {
-      final pub = json.decode(response.body);
-      final versions = pub['versions'] as List<dynamic>;
-      final releases = versions.where((e) => !e.contains('-'));
-
-      setState(() => version = releases.first);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final themeData = Theme.of(context);
-    final colorScheme = themeData.colorScheme;
-    final textTheme = themeData.textTheme;
-
-    return SizedBox(
-      child: Row(
-        children: [
-          ColoredBox(
-            color: colorScheme.background[20],
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                'pub',
-                style: textTheme.caption,
-              ),
-            ),
-          ),
-          ColoredBox(
-            color: PrimaryColors.dodgerBlue.primaryColor
-                .withBrightness(colorScheme.brightness)[40],
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                'v$version',
-                style: textTheme.caption,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

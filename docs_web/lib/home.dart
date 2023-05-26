@@ -13,7 +13,7 @@ import 'theme/typography.dart';
 import 'theme/custom_theme.dart';
 import 'overview.dart';
 
-const String _version = '4.4.0';
+const String _version = '4.4.1';
 
 ///
 class DocHome extends StatefulWidget {

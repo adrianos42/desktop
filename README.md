@@ -1,6 +1,6 @@
 # Desktop
 
-[![pub package](https://img.shields.io/pub/v/desktop.svg)](https://pub.dartlang.org/packages/desktop)
+[![pub package](https://img.shields.io/pub/v/desktop.svg?style=flat-square)](https://pub.dartlang.org/packages/desktop)
 
 Minimal Desktop widgets for Flutter.
 

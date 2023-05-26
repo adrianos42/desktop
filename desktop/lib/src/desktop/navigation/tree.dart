@@ -91,7 +91,7 @@ class TreeController extends ChangeNotifier {
   bool _isDisposed = false;
 
   /// The index of the currently selected tab.
-  List<int> get index => _index!;
+  List<int> get index => _index ?? [];
   List<int>? _index;
   set index(List<int> value) {
     if (!const ListEquality<int>().equals(_index, value)) {
@@ -245,10 +245,11 @@ class Tree extends StatefulWidget {
 class _BuildTreePage {
   _BuildTreePage({
     required this.builder,
+    required this.shouldBuild,
   });
 
   final WidgetBuilder builder;
-  bool shouldBuild = false;
+  bool shouldBuild;
 }
 
 class _TreeState extends State<Tree>
@@ -455,7 +456,10 @@ class _TreeState extends State<Tree>
         }
         _createEntries(nodes[i].nodes!, nameResult);
       } else if (nodes[i].builder != null) {
-        _pages[nameResult] = _BuildTreePage(builder: nodes[i].builder!);
+        _pages[nameResult] = _BuildTreePage(
+          builder: nodes[i].builder!,
+          shouldBuild: _pages[nameResult]?.shouldBuild ?? false,
+        );
       }
     }
   }
@@ -617,9 +621,7 @@ class _TreeState extends State<Tree>
                               ? Theme.of(context).colorScheme.primary[50]
                               : hovered
                                   ? Theme.of(context).textTheme.textHigh
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .background[20],
+                                  : Theme.of(context).colorScheme.background[0],
                         ),
                       ),
                     ),
@@ -720,7 +722,7 @@ class _TreeColumnState extends State<_TreeColumn> {
     for (int i = 0; i < nodes.length; i += 1) {
       if (nodes[i].nodes != null) {
         final index = [...parentIndex, i];
-        final name =  _TreeState._indexName(index);
+        final name = _TreeState._indexName(index);
         if (!_nodesCollapsed.containsKey(name)) {
           _nodesCollapsed[name] = true;
         }
