@@ -13,7 +13,7 @@ import 'theme/typography.dart';
 import 'theme/custom_theme.dart';
 import 'overview.dart';
 
-const String _version = '4.4.1';
+const String _version = '4.5.0';
 
 ///
 class DocHome extends StatefulWidget {
@@ -272,7 +272,7 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
-            return const OverviewPage();
+            return const SearchTextFieldPage();
           }
         },
       ),
@@ -397,6 +397,10 @@ class DocApp extends StatelessWidget {
           TreeNode.child(
             titleBuilder: (context) => const Text('Text Field'),
             builder: (context) => const TextFieldPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Search Text Field'),
+            builder: (context) => const SearchTextFieldPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Selectable Text'),

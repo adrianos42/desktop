@@ -42,7 +42,7 @@ class Scrollbar extends StatefulWidget {
 
   /// The thickness of the scrollbar in the cross axis of the scrollable.
   ///
-  /// Will default to 6.0 pixels if null.
+  /// Will default to 8.0 pixels if null.
   final double? thickness;
 
   /// The widget below this widget in the tree.

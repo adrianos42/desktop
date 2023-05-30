@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.5.0
+
+- Creates `SearchTextField` component.
+- Adds option for margin in `ListTable`.
+- Fixes placeholder in `TextField`.
+
 ## 4.4.1
 
 - Fixes `Tree` building when nodes change.

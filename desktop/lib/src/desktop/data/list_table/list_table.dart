@@ -93,6 +93,7 @@ class ListTable extends StatefulWidget {
     this.onColumnIndexMappingChanged,
     required this.header,
     required this.rows,
+    this.margin,
   })  : assert(colCount > 0),
         assert(
           !allowColumnDragging ||
@@ -126,6 +127,8 @@ class ListTable extends StatefulWidget {
 
   /// If it's allowed to rearrange the columns by dragging them.
   final bool allowColumnDragging;
+
+  final EdgeInsetsGeometry? margin;
 
   // If the last column should collapse if it does not fit the minimum width anymore.
   // TODO(as): final bool collapseOnDrag;
@@ -608,10 +611,8 @@ class _ListTableState extends State<ListTable> {
   void didUpdateWidget(ListTable oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.colFraction != colFraction) {
-      setState(() {
-        colFraction = null;
-      });
+    if (oldWidget.colFraction != widget.colFraction) {
+      colFraction = null;
     }
   }
 
@@ -631,10 +632,18 @@ class _ListTableState extends State<ListTable> {
   Widget build(BuildContext context) {
     final ListTableThemeData listTableTheme = ListTableTheme.of(context);
 
+    final EdgeInsets margin;
+
+    if (widget.margin != null) {
+      margin = widget.margin!.resolve(Directionality.of(context));
+    } else {
+      margin = EdgeInsets.zero;
+    }
+
     final Widget result = LayoutBuilder(
       builder: (context, constraints) {
-        totalWidth = constraints.maxWidth;
-        totalHeight = constraints.maxHeight;
+        totalWidth = constraints.maxWidth - margin.horizontal;
+        totalHeight = constraints.maxHeight - margin.vertical;
 
         calculateColFractions();
         calculateColSizes();
@@ -655,72 +664,95 @@ class _ListTableState extends State<ListTable> {
         }
 
         if (constraints.maxHeight.isFinite) {
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  createHeader(),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: ScrollConfiguration.of(context).copyWith(
-                        scrollbars: showScrollbar,
+          return Padding(
+            padding: EdgeInsets.only(top: margin.top, bottom: margin.bottom),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: margin.right,
+                        left: margin.left,
                       ),
-                      child: ListView.custom(
-                        childrenDelegate: SliverChildBuilderDelegate(
-                          (context, index) => createListItem(index),
-                          childCount: widget.rows.length,
+                      child: createHeader(),
+                    ),
+                    Expanded(
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(
+                          scrollbars: showScrollbar,
                         ),
-                        controller: controller,
+                        child: ListView.custom(
+                          padding: EdgeInsets.only(
+                            right: margin.right,
+                            left: margin.left,
+                          ),
+                          childrenDelegate: SliverChildBuilderDelegate(
+                            (context, index) => createListItem(index),
+                            childCount: widget.rows.length,
+                          ),
+                          controller: controller,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: margin.right,
+                    left: margin.left,
                   ),
-                ],
-              ),
-              _ListTableBorder(
-                headerColumnBorder:
-                    widget.header.columnBorder ?? _defaultHeaderBorder,
-                tableBorder: widget.tableBorder ?? const TableBorder(),
-                columnWidths: colSizes,
-                headerExtent: _kHeaderHeight,
-                dragCancel: dragCancel,
-                dragEnd: dragEnd,
-                dragStart: dragStart,
-                dragUpdate: dragUpdate,
-                highlightColor: listTableTheme.borderHighlightColor!,
-                hoverColor: listTableTheme.borderHoverColor!,
-                draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
-                isDraggingColumn: isDraggingColumn,
-                children: targetChildren,
-              ),
-            ],
+                  child: _ListTableBorder(
+                    headerColumnBorder:
+                        widget.header.columnBorder ?? _defaultHeaderBorder,
+                    tableBorder: widget.tableBorder ?? const TableBorder(),
+                    columnWidths: colSizes,
+                    headerExtent: _kHeaderHeight,
+                    dragCancel: dragCancel,
+                    dragEnd: dragEnd,
+                    dragStart: dragStart,
+                    dragUpdate: dragUpdate,
+                    highlightColor: listTableTheme.borderHighlightColor!,
+                    hoverColor: listTableTheme.borderHoverColor!,
+                    draggingColumnTargetItemIndex:
+                        draggingColumnTargetItemIndex,
+                    isDraggingColumn: isDraggingColumn,
+                    children: targetChildren,
+                  ),
+                ),
+              ],
+            ),
           );
         } else {
-          return _ListTableRows(
-            headerColumnBorder:
-                widget.header.columnBorder ?? _defaultHeaderBorder,
-            tableBorder: widget.tableBorder ?? const TableBorder(),
-            columnWidths: colSizes,
-            headerExtent: _kHeaderHeight,
-            dragCancel: dragCancel,
-            dragEnd: dragEnd,
-            dragStart: dragStart,
-            dragUpdate: dragUpdate,
-            highlightColor: listTableTheme.borderHighlightColor!,
-            hoverColor: listTableTheme.borderHoverColor!,
-            draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
-            isDraggingColumn: isDraggingColumn,
-            rowCount: widget.rows.length + 1,
-            targetCount: targetChildren.length,
-            children: [
-              createHeader(),
-              ...List.generate(
-                widget.rows.length,
-                (index) => Builder(
-                  builder: (context) => createListItem(index),
+          return Padding(
+            padding: margin,
+            child: _ListTableRows(
+              headerColumnBorder:
+                  widget.header.columnBorder ?? _defaultHeaderBorder,
+              tableBorder: widget.tableBorder ?? const TableBorder(),
+              columnWidths: colSizes,
+              headerExtent: _kHeaderHeight,
+              dragCancel: dragCancel,
+              dragEnd: dragEnd,
+              dragStart: dragStart,
+              dragUpdate: dragUpdate,
+              highlightColor: listTableTheme.borderHighlightColor!,
+              hoverColor: listTableTheme.borderHoverColor!,
+              draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+              isDraggingColumn: isDraggingColumn,
+              rowCount: widget.rows.length + 1,
+              targetCount: targetChildren.length,
+              children: [
+                createHeader(),
+                ...List.generate(
+                  widget.rows.length,
+                  (index) => Builder(
+                    builder: (context) => createListItem(index),
+                  ),
                 ),
-              ),
-              ...targetChildren
-            ],
+                ...targetChildren
+              ],
+            ),
           );
         }
       },

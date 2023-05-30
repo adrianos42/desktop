@@ -124,6 +124,21 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 }
 
+/// Visibility of text field overlays based on the state of the current text entry.
+enum OverlayVisibilityMode {
+  /// Overlay will never appear regardless of the text entry state.
+  never,
+
+  /// Overlay will only appear when the current text entry is not empty.
+  editing,
+
+  /// Overlay will only appear when the current text entry is empty.
+  notEditing,
+
+  /// Always show the overlay regardless of the text entry state.
+  always,
+}
+
 /// Desktop text field.
 ///
 /// See also:
@@ -172,6 +187,10 @@ class TextField extends StatefulWidget {
     this.selectionControls,
     this.textInputAction,
     this.scrollBehavior,
+    this.prefix,
+    this.suffix,
+    this.prefixMode = OverlayVisibilityMode.always,
+    this.suffixMode = OverlayVisibilityMode.always,
     SmartDashesType? smartDashesType,
     SmartQuotesType? smartQuotesType,
     TextInputType? keyboardType,
@@ -339,6 +358,24 @@ class TextField extends StatefulWidget {
   /// {@template flutter.widgets.shadow.scrollBehavior}
   final ScrollBehavior? scrollBehavior;
 
+  /// Controls the visibility of the [prefix] widget based on the state of
+  /// text entry when the [prefix] argument is not null.
+  ///
+  /// Defaults to [OverlayVisibilityMode.always].
+  final OverlayVisibilityMode prefixMode;
+
+  /// An optional [Widget] to display before the text.
+  final Widget? prefix;
+
+  /// Controls the visibility of the [suffix] widget based on the state of
+  /// text entry when the [suffix] argument is not null.
+  ///
+  /// Defaults to [OverlayVisibilityMode.always].
+  final OverlayVisibilityMode suffixMode;
+
+  /// An optional [Widget] to display after the text.
+  final Widget? suffix;
+
   ///
   final EdgeInsets? padding;
 
@@ -462,6 +499,89 @@ class _TextFieldState extends State<TextField>
   //   if (cause == SelectionChangedCause.longPress) {}
   // }
 
+  bool _shouldShowAttachment({
+    required OverlayVisibilityMode attachment,
+    required bool hasText,
+  }) {
+    switch (attachment) {
+      case OverlayVisibilityMode.never:
+        return false;
+      case OverlayVisibilityMode.always:
+        return true;
+      case OverlayVisibilityMode.editing:
+        return hasText;
+      case OverlayVisibilityMode.notEditing:
+        return !hasText;
+    }
+  }
+
+  bool _showPrefixWidget(TextEditingValue text) {
+    return widget.prefix != null &&
+        _shouldShowAttachment(
+          attachment: widget.prefixMode,
+          hasText: text.text.isNotEmpty,
+        );
+  }
+
+  bool _showSuffixWidget(TextEditingValue text) {
+    return widget.suffix != null &&
+        _shouldShowAttachment(
+          attachment: widget.suffixMode,
+          hasText: text.text.isNotEmpty,
+        );
+  }
+
+  bool get _hasDecoration {
+    return widget.placeholder != null ||
+        widget.prefix != null ||
+        widget.suffix != null;
+  }
+
+  Widget _addTextDependentAttachments(Widget input) {
+    if (!_hasDecoration) {
+      return input;
+    }
+
+    final placeholderStyle = widget.placeholderStyle ??
+        TextStyle(
+          overflow: TextOverflow.ellipsis,
+          color: Theme.of(context).textTheme.textLow,
+        );
+
+    return ValueListenableBuilder(
+      valueListenable: _effectiveController,
+      child: input,
+      builder: (context, value, child) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (_showPrefixWidget(value)) widget.prefix!,
+            Expanded(
+              child: Stack(
+                children: [
+                  if (widget.placeholder != null && value.text.isEmpty)
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          widget.placeholder!,
+                          maxLines: widget.maxLines,
+                          style: placeholderStyle,
+                        ),
+                      ),
+                    ),
+                  child!
+                ],
+              ),
+            ),
+            if (_showSuffixWidget(value)) widget.suffix!,
+          ],
+        );
+      },
+    );
+  }
+
   @override
   bool get wantKeepAlive => _controller?.value.text.isNotEmpty == true;
 
@@ -516,56 +636,69 @@ class _TextFieldState extends State<TextField>
         ),
     ];
 
-    final editable = EditableText(
-      autocorrect: widget.autocorrect,
-      autofocus: widget.autofocus,
-      backgroundCursorColor: background, // TODO(as): ???
-      controller: controller,
-      cursorColor: characterColor,
-      cursorHeight: widget.cursorHeight,
-      cursorOffset: Offset.zero,
-      cursorOpacityAnimates: false,
-      cursorRadius: Radius.zero,
-      cursorWidth: widget.cursorWidth,
-      dragStartBehavior: widget.dragStartBehavior,
-      enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-      enableInteractiveSelection: widget.enableInteractiveSelection,
-      enableSuggestions: widget.enableSuggestions,
-      expands: widget.expands,
-      focusNode: focusNode,
-      inputFormatters: formatters,
-      key: editableTextKey,
-      keyboardAppearance: keyboardAppearance,
-      keyboardType: widget.keyboardType,
-      maxLines: widget.maxLines,
-      minLines: widget.minLines,
-      obscureText: widget.obscureText,
-      obscuringCharacter: widget.obscuringCharacter,
-      onAppPrivateCommand: widget.onAppPrivateCommand,
-      onChanged: widget.onChanged,
-      onEditingComplete: widget.onEditingComplete,
-      onSubmitted: widget.onSubmitted,
-      paintCursorAboveText: true,
-      readOnly: widget.readOnly,
-      rendererIgnoresPointer: true,
-      restorationId: 'editable',
-      scrollBehavior: widget.scrollBehavior ?? const _InputScrollBehavior(),
-      scrollController: widget.scrollController,
-      scrollPadding: widget.scrollPadding,
-      selectionColor: enabled ? selectionColor : colorScheme.background[0],
-      selectionControls:
-          widget.enableInteractiveSelection ? textSelectionControls : null,
-      showCursor: widget.showCursor,
-      showSelectionHandles: false,
-      smartDashesType: widget.smartDashesType,
-      smartQuotesType: widget.smartQuotesType,
-      strutStyle: widget.strutStyle,
-      style: widget.style ?? textStyle,
-      textAlign: widget.textAlign,
-      textCapitalization: widget.textCapitalization,
-      textDirection: widget.textDirection,
-      textInputAction: widget.textInputAction,
-      mouseCursor: MouseCursor.defer,
+    final editable = RepaintBoundary(
+      child: UnmanagedRestorationScope(
+        bucket: bucket,
+        child: MouseRegion(
+          cursor: effectiveMouseCursor,
+          onEnter: (_) => _handleHover(true),
+          onExit: (_) => _handleHover(false),
+          child: EditableText(
+            autocorrect: widget.autocorrect,
+            autofocus: widget.autofocus,
+            backgroundCursorColor: background, // TODO(as): ???
+            controller: controller,
+            cursorColor: characterColor,
+            cursorHeight: widget.cursorHeight,
+            cursorOffset: Offset.zero,
+            cursorOpacityAnimates: false,
+            cursorRadius: Radius.zero,
+            cursorWidth: widget.cursorWidth,
+            dragStartBehavior: widget.dragStartBehavior,
+            enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+            enableInteractiveSelection: widget.enableInteractiveSelection,
+            enableSuggestions: widget.enableSuggestions,
+            expands: widget.expands,
+            focusNode: focusNode,
+            inputFormatters: formatters,
+            key: editableTextKey,
+            keyboardAppearance: keyboardAppearance,
+            keyboardType: widget.keyboardType,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
+            obscureText: widget.obscureText,
+            obscuringCharacter: widget.obscuringCharacter,
+            onAppPrivateCommand: widget.onAppPrivateCommand,
+            onChanged: widget.onChanged,
+            onEditingComplete: widget.onEditingComplete,
+            onSubmitted: widget.onSubmitted,
+            paintCursorAboveText: true,
+            readOnly: widget.readOnly,
+            rendererIgnoresPointer: true,
+            restorationId: 'editable',
+            scrollBehavior:
+                widget.scrollBehavior ?? const _InputScrollBehavior(),
+            scrollController: widget.scrollController,
+            scrollPadding: widget.scrollPadding,
+            selectionColor:
+                enabled ? selectionColor : colorScheme.background[0],
+            selectionControls: widget.enableInteractiveSelection
+                ? textSelectionControls
+                : null,
+            showCursor: widget.showCursor,
+            showSelectionHandles: false,
+            smartDashesType: widget.smartDashesType,
+            smartQuotesType: widget.smartQuotesType,
+            strutStyle: widget.strutStyle,
+            style: widget.style ?? textStyle,
+            textAlign: widget.textAlign,
+            textCapitalization: widget.textCapitalization,
+            textDirection: widget.textDirection,
+            textInputAction: widget.textInputAction,
+            mouseCursor: MouseCursor.defer,
+          ),
+        ),
+      ),
     );
 
     final bool isMultiline = widget.maxLines != 1;
@@ -573,31 +706,22 @@ class _TextFieldState extends State<TextField>
     final Widget result = ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: TextFieldTapRegion(
-        child: MouseRegion(
-          cursor: effectiveMouseCursor,
-          onEnter: (_) => _handleHover(true),
-          onExit: (_) => _handleHover(false),
-          child: IgnorePointer(
-            ignoring: !enabled,
-            child: RepaintBoundary(
-              child: UnmanagedRestorationScope(
-                bucket: bucket,
-                child: Container(
-                  decoration: decoration,
-                  height: !isMultiline ? _kDefaultHeight : null,
-                  alignment: isMultiline ? Alignment.topLeft : Alignment.center,
-                  child: Padding(
-                    padding: widget.padding ??
-                        const EdgeInsets.symmetric(
-                          horizontal: 4.0,
-                          vertical: 4.0,
-                        ),
-                    child:
-                        _selectionGestureDetectorBuilder.buildGestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      child: editable,
+        child: IgnorePointer(
+          ignoring: !enabled,
+          child: Container(
+            decoration: decoration,
+            height: !isMultiline ? _kDefaultHeight : null,
+            alignment: isMultiline ? Alignment.topLeft : Alignment.center,
+            child: _addTextDependentAttachments(
+              Padding(
+                padding: widget.padding ??
+                    const EdgeInsets.symmetric(
+                      horizontal: 4.0,
+                      vertical: 4.0,
                     ),
-                  ),
+                child: _selectionGestureDetectorBuilder.buildGestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  child: editable,
                 ),
               ),
             ),
