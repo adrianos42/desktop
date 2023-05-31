@@ -90,8 +90,8 @@ return Button.text(
                   context,
                   barrierDismissible: false,
                   actions: [
-                    DialogAction(
-                      title: 'Close',
+                    Button.text(
+                      'Close',
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],

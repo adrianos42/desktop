@@ -27,8 +27,8 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
         context,
         title: const Text('Login'),
         actions: [
-          DialogAction(
-            title: 'Ok',
+          Button.text(
+            'Ok',
             onPressed: () => Navigator.of(context).pop(),
           )
         ],

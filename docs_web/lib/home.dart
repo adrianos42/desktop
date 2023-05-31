@@ -13,7 +13,7 @@ import 'theme/typography.dart';
 import 'theme/custom_theme.dart';
 import 'overview.dart';
 
-const String _version = '4.5.0';
+const String _version = '5.0.0-dev.1';
 
 ///
 class DocHome extends StatefulWidget {
@@ -93,8 +93,8 @@ class _DocHomeState extends State<DocHome> {
           color: Theme.of(context).textTheme.textPrimaryHigh,
           highlightColor: ButtonTheme.of(context).color,
         ),
-        child: ContextMenuButton(
-          const Icon(Icons.palette),
+        child: ContextMenuButton.icon(
+          Icons.palette,
           itemBuilder: itemBuilder,
           value: primaryColor,
           onSelected: (PrimaryColors value) {

@@ -1,6 +1,6 @@
 library input;
 
-export 'button.dart';
+export 'button.dart' show Button;
 export 'button_context_menu.dart';
 export 'button_drop_down.dart';
 export 'button_group.dart';

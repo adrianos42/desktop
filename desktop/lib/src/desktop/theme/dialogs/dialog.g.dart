@@ -13,6 +13,7 @@ class DialogThemeData {
   const DialogThemeData({
     this.constraints,
     this.menuPadding,
+    this.menuSpacing,
     this.titlePadding,
     this.bodyPadding,
     this.background,
@@ -40,7 +41,16 @@ class DialogThemeData {
   /// ```
   final EdgeInsets? menuPadding;
 
-  /// The title [EdgeInsets] pagging of the title.
+  /// The spacing the menu items.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 16.0
+  /// ```
+  final double? menuSpacing;
+
+  /// The title [EdgeInsets] padding of the title.
   ///
   /// Defaults to:
   ///
@@ -106,6 +116,7 @@ class DialogThemeData {
   DialogThemeData copyWith({
     BoxConstraints? constraints,
     EdgeInsets? menuPadding,
+    double? menuSpacing,
     EdgeInsets? titlePadding,
     EdgeInsets? bodyPadding,
     Color? background,
@@ -117,6 +128,7 @@ class DialogThemeData {
     return DialogThemeData(
       constraints: constraints ?? this.constraints,
       menuPadding: menuPadding ?? this.menuPadding,
+      menuSpacing: menuSpacing ?? this.menuSpacing,
       titlePadding: titlePadding ?? this.titlePadding,
       bodyPadding: bodyPadding ?? this.bodyPadding,
       background: background ?? this.background,
@@ -135,6 +147,7 @@ class DialogThemeData {
     return copyWith(
       constraints: other.constraints,
       menuPadding: other.menuPadding,
+      menuSpacing: other.menuSpacing,
       titlePadding: other.titlePadding,
       bodyPadding: other.bodyPadding,
       background: other.background,
@@ -148,6 +161,7 @@ class DialogThemeData {
   bool get _isConcrete {
     return constraints != null &&
         menuPadding != null &&
+        menuSpacing != null &&
         titlePadding != null &&
         bodyPadding != null &&
         background != null &&
@@ -162,6 +176,7 @@ class DialogThemeData {
     return Object.hash(
       constraints,
       menuPadding,
+      menuSpacing,
       titlePadding,
       bodyPadding,
       background,
@@ -176,56 +191,62 @@ class DialogThemeData {
   String toString() {
     return r'''
 constraints: The [BoxConstraints] of the [Dialog].
- 
+
  Defaults to:
- 
+
  ```dart
  BoxConstraints(minWidth: 640.0, minHeight: 120.0)
  ```;;menuPadding: The [EdgeInsets] padding of the menu.
- 
+
  Defaults to:
- 
+
  ```dart
  EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0)
- ```;;titlePadding: The title [EdgeInsets] pagging of the title.
- 
+ ```;;menuSpacing: The spacing the menu items.
+
  Defaults to:
- 
+
+ ```dart
+ 16.0
+ ```;;titlePadding: The title [EdgeInsets] padding of the title.
+
+ Defaults to:
+
  ```dart
  EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0)
  ```;;bodyPadding: The body [EdgeInsets] padding of the body.
  Defaults to:
- 
+
  ```dart
  EdgeInsets.all(16.0)
  ```;;background: The background color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
  ```;;barrierColor: The barrier color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[20].withOpacity(0.8)
  ```;;titleTextStyle: The [TextStyle] for the title.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.title
  ```;;bodyTextAlign: The [TextAlign] of the body text.
- 
+
  Defaults to:
- 
+
  ```dart
  TextAlign.left
  ```;;imageFilter: The [ImageFilter] used for the dialog`s barrier.
- 
+
  Defaults to:
- 
+
  ```dart
  ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0)
  ```;;
@@ -237,6 +258,7 @@ constraints: The [BoxConstraints] of the [Dialog].
     return identical(this, other) ||
         other.constraints == constraints &&
             other.menuPadding == menuPadding &&
+            other.menuSpacing == menuSpacing &&
             other.titlePadding == titlePadding &&
             other.bodyPadding == bodyPadding &&
             other.background == background &&
@@ -281,6 +303,7 @@ class DialogTheme extends InheritedTheme {
     required Widget child,
     BoxConstraints? constraints,
     EdgeInsets? menuPadding,
+    double? menuSpacing,
     EdgeInsets? titlePadding,
     EdgeInsets? bodyPadding,
     Color? background,
@@ -295,6 +318,7 @@ class DialogTheme extends InheritedTheme {
         data: DialogTheme.of(context).copyWith(
           constraints: constraints,
           menuPadding: menuPadding,
+          menuSpacing: menuSpacing,
           titlePadding: titlePadding,
           bodyPadding: bodyPadding,
           background: background,
@@ -341,6 +365,8 @@ class DialogTheme extends InheritedTheme {
           dialogThemeData.constraints ?? _dialogThemeData.constraints;
       final EdgeInsets menuPadding =
           dialogThemeData.menuPadding ?? _dialogThemeData.menuPadding;
+      final double menuSpacing =
+          dialogThemeData.menuSpacing ?? _dialogThemeData.menuSpacing;
       final EdgeInsets titlePadding =
           dialogThemeData.titlePadding ?? _dialogThemeData.titlePadding;
       final EdgeInsets bodyPadding =
@@ -359,6 +385,7 @@ class DialogTheme extends InheritedTheme {
       return dialogThemeData.copyWith(
         constraints: constraints,
         menuPadding: menuPadding,
+        menuSpacing: menuSpacing,
         titlePadding: titlePadding,
         bodyPadding: bodyPadding,
         background: background,

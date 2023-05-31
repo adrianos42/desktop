@@ -521,8 +521,8 @@ class App extends StatelessWidget {
                     (index) => widget.items[_index].options![index],
                   ),
                   if (widget.items.length > 1)
-                    ContextMenuButton<int>(
-                      const Icon(Icons.menu),
+                    ContextMenuButton<int>.icon(
+                      Icons.menu,
                       tooltip: 'Variations',
                       value: _index,
                       onSelected: (value) => setState(() => _index = value),

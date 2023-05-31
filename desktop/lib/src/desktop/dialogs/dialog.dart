@@ -80,17 +80,6 @@ class DialogRoute<T> extends PopupRoute<T> {
   }
 }
 
-class DialogAction {
-  const DialogAction({
-    required this.title,
-    required this.onPressed,
-  });
-
-  final String title;
-
-  final VoidCallback onPressed;
-}
-
 class Dialog extends StatelessWidget {
   /// Creates a [Dialog].
   const Dialog({
@@ -109,7 +98,7 @@ class Dialog extends StatelessWidget {
   final Widget? title;
 
   /// Widgets to be placed at the bottom right of the dialog.
-  final List<DialogAction>? actions;
+  final List<Widget>? actions;
 
   final bool allowScroll;
 
@@ -124,7 +113,7 @@ class Dialog extends StatelessWidget {
     String? barrierLabel,
     bool useRootNavigator = true,
     RouteSettings? routeSettings,
-    List<DialogAction>? actions,
+    List<Widget>? actions,
     DialogThemeData? theme,
     Widget? title,
     bool allowScroll = true,
@@ -201,6 +190,46 @@ class Dialog extends StatelessWidget {
 
     final Color backgroundColor = dialogThemeData.background!;
 
+    final Widget resultBody;
+    final bool isConstrained = dialogThemeData.constraints!.hasBoundedHeight;
+
+    if (allowScroll) {
+      final Widget child = Padding(
+        padding: EdgeInsets.fromLTRB(
+          0.0,
+          dialogThemeData.bodyPadding!.top,
+          0.0,
+          dialogThemeData.bodyPadding!.bottom,
+        ),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          padding: EdgeInsets.fromLTRB(
+            dialogThemeData.bodyPadding!.left,
+            0.0,
+            dialogThemeData.bodyPadding!.right,
+            0.0,
+          ),
+          child: DefaultTextStyle(
+            textAlign: dialogThemeData.bodyTextAlign!,
+            style: textTheme.body1,
+            child: body,
+          ),
+        ),
+      );
+
+      resultBody = isConstrained ? Expanded(child: child) : child;
+    } else {
+      final Widget child = Padding(
+        padding: dialogThemeData.bodyPadding!,
+        child: DefaultTextStyle(
+          textAlign: dialogThemeData.bodyTextAlign!,
+          style: textTheme.body1,
+          child: body,
+        ),
+      );
+      resultBody = isConstrained ? Expanded(child: child) : child;
+    }
+
     Widget result = Container(
       constraints: dialogThemeData.constraints,
       color: backgroundColor,
@@ -217,40 +246,7 @@ class Dialog extends StatelessWidget {
                 child: title!,
               ),
             ),
-          if (allowScroll)
-            Flexible(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  0.0,
-                  dialogThemeData.bodyPadding!.top,
-                  0.0,
-                  dialogThemeData.bodyPadding!.bottom,
-                ),
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  padding: EdgeInsets.fromLTRB(
-                    dialogThemeData.bodyPadding!.left,
-                    0.0,
-                    dialogThemeData.bodyPadding!.right,
-                    0.0,
-                  ),
-                  child: DefaultTextStyle(
-                    textAlign: dialogThemeData.bodyTextAlign!,
-                    style: textTheme.body1,
-                    child: body,
-                  ),
-                ),
-              ),
-            ),
-          if (!allowScroll)
-            Padding(
-              padding: dialogThemeData.bodyPadding!,
-              child: DefaultTextStyle(
-                textAlign: dialogThemeData.bodyTextAlign!,
-                style: textTheme.body1,
-                child: body,
-              ),
-            ),
+          resultBody,
           if (actions != null)
             Container(
               alignment: Alignment.centerRight,
@@ -258,17 +254,20 @@ class Dialog extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: actions!
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Button.text(
-                          e.title,
-                          onPressed: e.onPressed,
-                        ),
-                      ),
-                    )
-                    .toList(),
+                children: List.generate(
+                  actions!.length,
+                  (index) => Padding(
+                    padding: index > 0
+                        ? EdgeInsets.only(
+                            left: dialogThemeData.menuSpacing!,
+                          )
+                        : EdgeInsets.zero,
+                    child: ButtonTheme.copyWith(
+                      itemSpacing: 0.0,
+                      child: actions![index],
+                    ),
+                  ),
+                ),
               ),
             ),
         ],

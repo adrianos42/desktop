@@ -204,7 +204,7 @@ class ButtonThemeData {
   /// ```
   final Color? highlightForeground;
 
-  /// The duraton of the animation.
+  /// The duration of the animation.
   ///
   /// Defaults to:
   ///
@@ -455,7 +455,7 @@ axis: The axis of the button.
  
  ```dart
  textTheme.textHigh
- ```;;animationDuration: The duraton of the animation.
+ ```;;animationDuration: The duration of the animation.
  
  Defaults to:
  

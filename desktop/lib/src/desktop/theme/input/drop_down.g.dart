@@ -22,14 +22,15 @@ class DropDownThemeData {
     this.hoverBackgroundColor,
     this.waitingBackgroundColor,
     this.disabledBackgroundColor,
+    this.border,
   });
 
-  /// The icon theme of the button.
+  /// The icon theme of the button. The color is ignored.
   ///
   /// Defaults to:
   ///
   /// ```dart
-  /// IconThemeData(size: 19.0, color: hoverColor)
+  /// IconThemeData(size: 18.0)
   /// ```
   final IconThemeData? iconThemeData;
 
@@ -123,6 +124,15 @@ class DropDownThemeData {
   /// ```
   final Color? disabledBackgroundColor;
 
+  /// The color of the icon in the drop down.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// hoverColor
+  /// ```
+  final BorderSide? border;
+
   /// Makes a copy of [DropDownThemeData] overwriting selected fields.
   DropDownThemeData copyWith({
     IconThemeData? iconThemeData,
@@ -136,6 +146,7 @@ class DropDownThemeData {
     Color? hoverBackgroundColor,
     Color? waitingBackgroundColor,
     Color? disabledBackgroundColor,
+    BorderSide? border,
   }) {
     return DropDownThemeData(
       iconThemeData: iconThemeData ?? this.iconThemeData,
@@ -151,6 +162,7 @@ class DropDownThemeData {
           waitingBackgroundColor ?? this.waitingBackgroundColor,
       disabledBackgroundColor:
           disabledBackgroundColor ?? this.disabledBackgroundColor,
+      border: border ?? this.border,
     );
   }
 
@@ -171,6 +183,7 @@ class DropDownThemeData {
       hoverBackgroundColor: other.hoverBackgroundColor,
       waitingBackgroundColor: other.waitingBackgroundColor,
       disabledBackgroundColor: other.disabledBackgroundColor,
+      border: other.border,
     );
   }
 
@@ -185,7 +198,8 @@ class DropDownThemeData {
         backgroundColor != null &&
         hoverBackgroundColor != null &&
         waitingBackgroundColor != null &&
-        disabledBackgroundColor != null;
+        disabledBackgroundColor != null &&
+        border != null;
   }
 
   @override
@@ -202,78 +216,85 @@ class DropDownThemeData {
       hoverBackgroundColor,
       waitingBackgroundColor,
       disabledBackgroundColor,
+      border,
     );
   }
 
   @override
   String toString() {
     return r'''
-iconThemeData: The icon theme of the button.
- 
+iconThemeData: The icon theme of the button. The color is ignored.
+
  Defaults to:
- 
+
  ```dart
- IconThemeData(size: 19.0, color: hoverColor)
+ IconThemeData(size: 18.0)
  ```;;textStyle: The style of the button.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
  ```;;disabledColor: The color of the border when disabled.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;color: The color of the border.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;focusColor: The color of the border when focused.
- 
+
  Defaults to:
- 
+
  ```dart
  waitingColor
  ```;;hoverColor: The color of the border when hovered.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;waitingColor: The color of the border when the menu is open.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[20]
  ```;;backgroundColor: The background color of the button.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
  ```;;hoverBackgroundColor: The background color when the button is being hovered.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
  ```;;waitingBackgroundColor: The background color when the menu is open.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
  ```;;disabledBackgroundColor: The background color when the button is disabled.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
+ ```;;border: The color of the icon in the drop down.
+
+ Defaults to:
+
+ ```dart
+ hoverColor
  ```;;
 ''';
   }
@@ -291,7 +312,8 @@ iconThemeData: The icon theme of the button.
             other.backgroundColor == backgroundColor &&
             other.hoverBackgroundColor == hoverBackgroundColor &&
             other.waitingBackgroundColor == waitingBackgroundColor &&
-            other.disabledBackgroundColor == disabledBackgroundColor;
+            other.disabledBackgroundColor == disabledBackgroundColor &&
+            other.border == border;
   }
 }
 
@@ -338,6 +360,7 @@ class DropDownTheme extends InheritedTheme {
     Color? hoverBackgroundColor,
     Color? waitingBackgroundColor,
     Color? disabledBackgroundColor,
+    BorderSide? border,
   }) {
     return Builder(
       key: key,
@@ -354,6 +377,7 @@ class DropDownTheme extends InheritedTheme {
           hoverBackgroundColor: hoverBackgroundColor,
           waitingBackgroundColor: waitingBackgroundColor,
           disabledBackgroundColor: disabledBackgroundColor,
+          border: border,
         ),
         child: child,
       ),
@@ -413,6 +437,8 @@ class DropDownTheme extends InheritedTheme {
       final Color disabledBackgroundColor =
           dropDownThemeData.disabledBackgroundColor ??
               _dropDownThemeData.disabledBackgroundColor;
+      final BorderSide border =
+          dropDownThemeData.border ?? _dropDownThemeData.border;
 
       return dropDownThemeData.copyWith(
         iconThemeData: iconThemeData,
@@ -426,6 +452,7 @@ class DropDownTheme extends InheritedTheme {
         hoverBackgroundColor: hoverBackgroundColor,
         waitingBackgroundColor: waitingBackgroundColor,
         disabledBackgroundColor: disabledBackgroundColor,
+        border: border,
       );
     }
 

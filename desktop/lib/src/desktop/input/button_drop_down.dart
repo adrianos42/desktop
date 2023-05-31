@@ -199,7 +199,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
         : buttonThemeData.disabledColor!;
 
     final Color foreground = enabled
-        ? buttonThemeData.iconThemeData!.color!
+        ? borderColor
         : buttonThemeData.disabledColor!;
 
     _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
@@ -220,9 +220,8 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       builder: (context, child) {
         final borderColor =
             _color!.evaluate(AlwaysStoppedAnimation(_controller.value))!;
-        final border = Border.all(
-          color: borderColor,
-          width: 1.0,
+        final border = Border.fromBorderSide(
+          buttonThemeData.border!.copyWith(color: borderColor),
         );
         final background = _backgroundColor!
             .evaluate(AlwaysStoppedAnimation(_controller.value));
@@ -257,7 +256,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
                       waiting ? Icons.expand_less : Icons.expand_more,
-                      size: kDefaultIconSize,
+                      size: buttonThemeData.iconThemeData!.size,
                       color: foreground,
                     ),
                   ),

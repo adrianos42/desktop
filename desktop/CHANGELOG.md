@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.0-dev.1
+
+- `Widget` for dialog menus instead of text.
+- `ContextMenuButton` to have the same behavior as a `Button`.
+- Creates dropdown menu option for `ContextMenuButton`.
+- Option to add margin in `ListTable`.
+
 ## 4.5.0
 
 - Creates `SearchTextField` component.
@@ -7,6 +14,7 @@
 - Fixes placeholder in `TextField`.
 
 ## 4.4.1
+
 
 - Fixes `Tree` building when nodes change.
 

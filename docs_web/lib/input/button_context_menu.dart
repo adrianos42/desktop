@@ -54,12 +54,12 @@ return ContextMenuButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ContextMenuButton(
-                  const Icon(Icons.place),
+                ContextMenuButton.icon(
+                  Icons.place,
                   value: _firstValue,
-                  enabled: !_disabled,
-                  onSelected: (String value) =>
-                      setState(() => _firstValue = value),
+                  onSelected: !_disabled
+                      ? (String value) => setState(() => _firstValue = value)
+                      : null,
                   itemBuilder: (context) => const [
                     ContextMenuItem(
                       value: 'Florianópolis',
