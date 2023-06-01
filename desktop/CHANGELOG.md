@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.0-dev.2
+
+- Fixes dialog scrolling.
+
 ## 5.0.0-dev.1
 
 - `Widget` for dialog menus instead of text.
@@ -14,7 +18,6 @@
 - Fixes placeholder in `TextField`.
 
 ## 4.4.1
-
 
 - Fixes `Tree` building when nodes change.
 
