@@ -10,6 +10,405 @@ part of 'icons.dart';
 class Icons {
   const Icons._();
 
+  /// The `10k` material icon.
+  static const IconData $10k = IconData(
+    0xe951,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `10mp` material icon.
+  static const IconData $10mp = IconData(
+    0xe952,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `11mp` material icon.
+  static const IconData $11mp = IconData(
+    0xe953,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `123` material icon.
+  static const IconData $123 = IconData(
+    0xeb8d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `12mp` material icon.
+  static const IconData $12mp = IconData(
+    0xe954,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `13mp` material icon.
+  static const IconData $13mp = IconData(
+    0xe955,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `14mp` material icon.
+  static const IconData $14mp = IconData(
+    0xe956,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `15mp` material icon.
+  static const IconData $15mp = IconData(
+    0xe957,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `16mp` material icon.
+  static const IconData $16mp = IconData(
+    0xe958,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `17mp` material icon.
+  static const IconData $17mp = IconData(
+    0xe959,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `18UpRating` material icon.
+  static const IconData $18UpRating = IconData(
+    0xf8fd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `18mp` material icon.
+  static const IconData $18mp = IconData(
+    0xe95a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `19mp` material icon.
+  static const IconData $19mp = IconData(
+    0xe95b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `1k` material icon.
+  static const IconData $1k = IconData(
+    0xe95c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `1kPlus` material icon.
+  static const IconData $1kPlus = IconData(
+    0xe95d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `1xMobiledata` material icon.
+  static const IconData $1xMobiledata = IconData(
+    0xefcd,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `20mp` material icon.
+  static const IconData $20mp = IconData(
+    0xe95e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `21mp` material icon.
+  static const IconData $21mp = IconData(
+    0xe95f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `22mp` material icon.
+  static const IconData $22mp = IconData(
+    0xe960,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `23mp` material icon.
+  static const IconData $23mp = IconData(
+    0xe961,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `24mp` material icon.
+  static const IconData $24mp = IconData(
+    0xe962,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `2k` material icon.
+  static const IconData $2k = IconData(
+    0xe963,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `2kPlus` material icon.
+  static const IconData $2kPlus = IconData(
+    0xe964,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `2mp` material icon.
+  static const IconData $2mp = IconData(
+    0xe965,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `30fps` material icon.
+  static const IconData $30fps = IconData(
+    0xefce,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `30fpsSelect` material icon.
+  static const IconData $30fpsSelect = IconData(
+    0xefcf,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `360` material icon.
+  static const IconData $360 = IconData(
+    0xe577,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3dRotation` material icon.
+  static const IconData $3dRotation = IconData(
+    0xe84d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3gMobiledata` material icon.
+  static const IconData $3gMobiledata = IconData(
+    0xefd0,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3k` material icon.
+  static const IconData $3k = IconData(
+    0xe966,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3kPlus` material icon.
+  static const IconData $3kPlus = IconData(
+    0xe967,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3mp` material icon.
+  static const IconData $3mp = IconData(
+    0xe968,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `3p` material icon.
+  static const IconData $3p = IconData(
+    0xefd1,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `4gMobiledata` material icon.
+  static const IconData $4gMobiledata = IconData(
+    0xefd2,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `4gPlusMobiledata` material icon.
+  static const IconData $4gPlusMobiledata = IconData(
+    0xefd3,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `4k` material icon.
+  static const IconData $4k = IconData(
+    0xe072,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `4kPlus` material icon.
+  static const IconData $4kPlus = IconData(
+    0xe969,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `4mp` material icon.
+  static const IconData $4mp = IconData(
+    0xe96a,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `5g` material icon.
+  static const IconData $5g = IconData(
+    0xef38,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `5k` material icon.
+  static const IconData $5k = IconData(
+    0xe96b,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `5kPlus` material icon.
+  static const IconData $5kPlus = IconData(
+    0xe96c,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `5mp` material icon.
+  static const IconData $5mp = IconData(
+    0xe96d,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `60fps` material icon.
+  static const IconData $60fps = IconData(
+    0xefd4,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `60fpsSelect` material icon.
+  static const IconData $60fpsSelect = IconData(
+    0xefd5,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `6FtApart` material icon.
+  static const IconData $6FtApart = IconData(
+    0xf21e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `6k` material icon.
+  static const IconData $6k = IconData(
+    0xe96e,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `6kPlus` material icon.
+  static const IconData $6kPlus = IconData(
+    0xe96f,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `6mp` material icon.
+  static const IconData $6mp = IconData(
+    0xe970,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `7k` material icon.
+  static const IconData $7k = IconData(
+    0xe971,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `7kPlus` material icon.
+  static const IconData $7kPlus = IconData(
+    0xe972,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `7mp` material icon.
+  static const IconData $7mp = IconData(
+    0xe973,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `8k` material icon.
+  static const IconData $8k = IconData(
+    0xe974,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `8kPlus` material icon.
+  static const IconData $8kPlus = IconData(
+    0xe975,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `8mp` material icon.
+  static const IconData $8mp = IconData(
+    0xe976,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `9k` material icon.
+  static const IconData $9k = IconData(
+    0xe977,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `9kPlus` material icon.
+  static const IconData $9kPlus = IconData(
+    0xe978,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
+  /// The `9mp` material icon.
+  static const IconData $9mp = IconData(
+    0xe979,
+    fontFamily: _kFontFamily,
+    fontPackage: _kFontPackage,
+  );
+
   /// The `abc` material icon.
   static const IconData abc = IconData(
     0xeb94,
@@ -17,36 +416,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `ac_unit` material icon.
-  static const IconData ac_unit = IconData(
+  /// The `acUnit` material icon.
+  static const IconData acUnit = IconData(
     0xeb3b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `access_alarm` material icon.
-  static const IconData access_alarm = IconData(
+  /// The `accessAlarm` material icon.
+  static const IconData accessAlarm = IconData(
     0xe190,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `access_alarms` material icon.
-  static const IconData access_alarms = IconData(
+  /// The `accessAlarms` material icon.
+  static const IconData accessAlarms = IconData(
     0xe191,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `access_time` material icon.
-  static const IconData access_time = IconData(
+  /// The `accessTime` material icon.
+  static const IconData accessTime = IconData(
     0xe192,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `access_time_filled` material icon.
-  static const IconData access_time_filled = IconData(
+  /// The `accessTimeFilled` material icon.
+  static const IconData accessTimeFilled = IconData(
     0xefd6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -59,8 +458,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `accessibility_new` material icon.
-  static const IconData accessibility_new = IconData(
+  /// The `accessibilityNew` material icon.
+  static const IconData accessibilityNew = IconData(
     0xe92c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -73,50 +472,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `accessible_forward` material icon.
-  static const IconData accessible_forward = IconData(
+  /// The `accessibleForward` material icon.
+  static const IconData accessibleForward = IconData(
     0xe934,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `account_balance` material icon.
-  static const IconData account_balance = IconData(
+  /// The `accountBalance` material icon.
+  static const IconData accountBalance = IconData(
     0xe84f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `account_balance_wallet` material icon.
-  static const IconData account_balance_wallet = IconData(
+  /// The `accountBalanceWallet` material icon.
+  static const IconData accountBalanceWallet = IconData(
     0xe850,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `account_box` material icon.
-  static const IconData account_box = IconData(
+  /// The `accountBox` material icon.
+  static const IconData accountBox = IconData(
     0xe851,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `account_circle` material icon.
-  static const IconData account_circle = IconData(
+  /// The `accountCircle` material icon.
+  static const IconData accountCircle = IconData(
     0xe853,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `account_tree` material icon.
-  static const IconData account_tree = IconData(
+  /// The `accountTree` material icon.
+  static const IconData accountTree = IconData(
     0xe97a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ad_units` material icon.
-  static const IconData ad_units = IconData(
+  /// The `adUnits` material icon.
+  static const IconData adUnits = IconData(
     0xef39,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -136,183 +535,183 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_a_photo` material icon.
-  static const IconData add_a_photo = IconData(
+  /// The `addAPhoto` material icon.
+  static const IconData addAPhoto = IconData(
     0xe439,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_alarm` material icon.
-  static const IconData add_alarm = IconData(
+  /// The `addAlarm` material icon.
+  static const IconData addAlarm = IconData(
     0xe193,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_alert` material icon.
-  static const IconData add_alert = IconData(
+  /// The `addAlert` material icon.
+  static const IconData addAlert = IconData(
     0xe003,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_box` material icon.
-  static const IconData add_box = IconData(
+  /// The `addBox` material icon.
+  static const IconData addBox = IconData(
     0xe146,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_business` material icon.
-  static const IconData add_business = IconData(
+  /// The `addBusiness` material icon.
+  static const IconData addBusiness = IconData(
     0xe729,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_card` material icon.
-  static const IconData add_card = IconData(
+  /// The `addCard` material icon.
+  static const IconData addCard = IconData(
     0xeb86,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_chart` material icon.
-  static const IconData add_chart = IconData(
+  /// The `addChart` material icon.
+  static const IconData addChart = IconData(
     0xe97b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_circle` material icon.
-  static const IconData add_circle = IconData(
+  /// The `addCircle` material icon.
+  static const IconData addCircle = IconData(
     0xe147,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_circle_outline` material icon.
-  static const IconData add_circle_outline = IconData(
+  /// The `addCircleOutline` material icon.
+  static const IconData addCircleOutline = IconData(
     0xe148,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_comment` material icon.
-  static const IconData add_comment = IconData(
+  /// The `addComment` material icon.
+  static const IconData addComment = IconData(
     0xe266,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_home` material icon.
-  static const IconData add_home = IconData(
+  /// The `addHome` material icon.
+  static const IconData addHome = IconData(
     0xf8eb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_home_work` material icon.
-  static const IconData add_home_work = IconData(
+  /// The `addHomeWork` material icon.
+  static const IconData addHomeWork = IconData(
     0xf8ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_ic_call` material icon.
-  static const IconData add_ic_call = IconData(
+  /// The `addIcCall` material icon.
+  static const IconData addIcCall = IconData(
     0xe97c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_link` material icon.
-  static const IconData add_link = IconData(
+  /// The `addLink` material icon.
+  static const IconData addLink = IconData(
     0xe178,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_location` material icon.
-  static const IconData add_location = IconData(
+  /// The `addLocation` material icon.
+  static const IconData addLocation = IconData(
     0xe567,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_location_alt` material icon.
-  static const IconData add_location_alt = IconData(
+  /// The `addLocationAlt` material icon.
+  static const IconData addLocationAlt = IconData(
     0xef3a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_moderator` material icon.
-  static const IconData add_moderator = IconData(
+  /// The `addModerator` material icon.
+  static const IconData addModerator = IconData(
     0xe97d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_photo_alternate` material icon.
-  static const IconData add_photo_alternate = IconData(
+  /// The `addPhotoAlternate` material icon.
+  static const IconData addPhotoAlternate = IconData(
     0xe43e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_reaction` material icon.
-  static const IconData add_reaction = IconData(
+  /// The `addReaction` material icon.
+  static const IconData addReaction = IconData(
     0xe1d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_road` material icon.
-  static const IconData add_road = IconData(
+  /// The `addRoad` material icon.
+  static const IconData addRoad = IconData(
     0xef3b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_shopping_cart` material icon.
-  static const IconData add_shopping_cart = IconData(
+  /// The `addShoppingCart` material icon.
+  static const IconData addShoppingCart = IconData(
     0xe854,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_task` material icon.
-  static const IconData add_task = IconData(
+  /// The `addTask` material icon.
+  static const IconData addTask = IconData(
     0xf23a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_to_drive` material icon.
-  static const IconData add_to_drive = IconData(
+  /// The `addToDrive` material icon.
+  static const IconData addToDrive = IconData(
     0xe65c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_to_home_screen` material icon.
-  static const IconData add_to_home_screen = IconData(
+  /// The `addToHomeScreen` material icon.
+  static const IconData addToHomeScreen = IconData(
     0xe1fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_to_photos` material icon.
-  static const IconData add_to_photos = IconData(
+  /// The `addToPhotos` material icon.
+  static const IconData addToPhotos = IconData(
     0xe39d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `add_to_queue` material icon.
-  static const IconData add_to_queue = IconData(
+  /// The `addToQueue` material icon.
+  static const IconData addToQueue = IconData(
     0xe05c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -325,8 +724,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `adf_scanner` material icon.
-  static const IconData adf_scanner = IconData(
+  /// The `adfScanner` material icon.
+  static const IconData adfScanner = IconData(
     0xeada,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -339,8 +738,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `admin_panel_settings` material icon.
-  static const IconData admin_panel_settings = IconData(
+  /// The `adminPanelSettings` material icon.
+  static const IconData adminPanelSettings = IconData(
     0xef3d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -353,8 +752,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `ads_click` material icon.
-  static const IconData ads_click = IconData(
+  /// The `adsClick` material icon.
+  static const IconData adsClick = IconData(
     0xe762,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -374,64 +773,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_flat` material icon.
-  static const IconData airline_seat_flat = IconData(
+  /// The `airlineSeatFlat` material icon.
+  static const IconData airlineSeatFlat = IconData(
     0xe630,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_flat_angled` material icon.
-  static const IconData airline_seat_flat_angled = IconData(
+  /// The `airlineSeatFlatAngled` material icon.
+  static const IconData airlineSeatFlatAngled = IconData(
     0xe631,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_individual_suite` material icon.
-  static const IconData airline_seat_individual_suite = IconData(
+  /// The `airlineSeatIndividualSuite` material icon.
+  static const IconData airlineSeatIndividualSuite = IconData(
     0xe632,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_legroom_extra` material icon.
-  static const IconData airline_seat_legroom_extra = IconData(
+  /// The `airlineSeatLegroomExtra` material icon.
+  static const IconData airlineSeatLegroomExtra = IconData(
     0xe633,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_legroom_normal` material icon.
-  static const IconData airline_seat_legroom_normal = IconData(
+  /// The `airlineSeatLegroomNormal` material icon.
+  static const IconData airlineSeatLegroomNormal = IconData(
     0xe634,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_legroom_reduced` material icon.
-  static const IconData airline_seat_legroom_reduced = IconData(
+  /// The `airlineSeatLegroomReduced` material icon.
+  static const IconData airlineSeatLegroomReduced = IconData(
     0xe635,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_recline_extra` material icon.
-  static const IconData airline_seat_recline_extra = IconData(
+  /// The `airlineSeatReclineExtra` material icon.
+  static const IconData airlineSeatReclineExtra = IconData(
     0xe636,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_seat_recline_normal` material icon.
-  static const IconData airline_seat_recline_normal = IconData(
+  /// The `airlineSeatReclineNormal` material icon.
+  static const IconData airlineSeatReclineNormal = IconData(
     0xe637,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airline_stops` material icon.
-  static const IconData airline_stops = IconData(
+  /// The `airlineStops` material icon.
+  static const IconData airlineStops = IconData(
     0xe7d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -444,36 +843,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `airplane_ticket` material icon.
-  static const IconData airplane_ticket = IconData(
+  /// The `airplaneTicket` material icon.
+  static const IconData airplaneTicket = IconData(
     0xefd9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airplanemode_active` material icon.
-  static const IconData airplanemode_active = IconData(
+  /// The `airplanemodeActive` material icon.
+  static const IconData airplanemodeActive = IconData(
     0xe195,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airplanemode_inactive` material icon.
-  static const IconData airplanemode_inactive = IconData(
+  /// The `airplanemodeInactive` material icon.
+  static const IconData airplanemodeInactive = IconData(
     0xe194,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airplanemode_off` material icon.
-  static const IconData airplanemode_off = IconData(
+  /// The `airplanemodeOff` material icon.
+  static const IconData airplanemodeOff = IconData(
     0xe194,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `airplanemode_on` material icon.
-  static const IconData airplanemode_on = IconData(
+  /// The `airplanemodeOn` material icon.
+  static const IconData airplanemodeOn = IconData(
     0xe195,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -486,8 +885,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `airport_shuttle` material icon.
-  static const IconData airport_shuttle = IconData(
+  /// The `airportShuttle` material icon.
+  static const IconData airportShuttle = IconData(
     0xeb3c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -500,22 +899,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `alarm_add` material icon.
-  static const IconData alarm_add = IconData(
+  /// The `alarmAdd` material icon.
+  static const IconData alarmAdd = IconData(
     0xe856,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `alarm_off` material icon.
-  static const IconData alarm_off = IconData(
+  /// The `alarmOff` material icon.
+  static const IconData alarmOff = IconData(
     0xe857,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `alarm_on` material icon.
-  static const IconData alarm_on = IconData(
+  /// The `alarmOn` material icon.
+  static const IconData alarmOn = IconData(
     0xe858,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -528,85 +927,85 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_horizontal_center` material icon.
-  static const IconData align_horizontal_center = IconData(
+  /// The `alignHorizontalCenter` material icon.
+  static const IconData alignHorizontalCenter = IconData(
     0xe00f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_horizontal_left` material icon.
-  static const IconData align_horizontal_left = IconData(
+  /// The `alignHorizontalLeft` material icon.
+  static const IconData alignHorizontalLeft = IconData(
     0xe00d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_horizontal_right` material icon.
-  static const IconData align_horizontal_right = IconData(
+  /// The `alignHorizontalRight` material icon.
+  static const IconData alignHorizontalRight = IconData(
     0xe010,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_vertical_bottom` material icon.
-  static const IconData align_vertical_bottom = IconData(
+  /// The `alignVerticalBottom` material icon.
+  static const IconData alignVerticalBottom = IconData(
     0xe015,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_vertical_center` material icon.
-  static const IconData align_vertical_center = IconData(
+  /// The `alignVerticalCenter` material icon.
+  static const IconData alignVerticalCenter = IconData(
     0xe011,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `align_vertical_top` material icon.
-  static const IconData align_vertical_top = IconData(
+  /// The `alignVerticalTop` material icon.
+  static const IconData alignVerticalTop = IconData(
     0xe00c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `all_inbox` material icon.
-  static const IconData all_inbox = IconData(
+  /// The `allInbox` material icon.
+  static const IconData allInbox = IconData(
     0xe97f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `all_inclusive` material icon.
-  static const IconData all_inclusive = IconData(
+  /// The `allInclusive` material icon.
+  static const IconData allInclusive = IconData(
     0xeb3d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `all_out` material icon.
-  static const IconData all_out = IconData(
+  /// The `allOut` material icon.
+  static const IconData allOut = IconData(
     0xe90b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `alt_route` material icon.
-  static const IconData alt_route = IconData(
+  /// The `altRoute` material icon.
+  static const IconData altRoute = IconData(
     0xf184,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `alternate_email` material icon.
-  static const IconData alternate_email = IconData(
+  /// The `alternateEmail` material icon.
+  static const IconData alternateEmail = IconData(
     0xe0e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `amp_stories` material icon.
-  static const IconData amp_stories = IconData(
+  /// The `ampStories` material icon.
+  static const IconData ampStories = IconData(
     0xea13,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -668,29 +1067,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `app_blocking` material icon.
-  static const IconData app_blocking = IconData(
+  /// The `appBlocking` material icon.
+  static const IconData appBlocking = IconData(
     0xef3f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `app_registration` material icon.
-  static const IconData app_registration = IconData(
+  /// The `appRegistration` material icon.
+  static const IconData appRegistration = IconData(
     0xef40,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `app_settings_alt` material icon.
-  static const IconData app_settings_alt = IconData(
+  /// The `appSettingsAlt` material icon.
+  static const IconData appSettingsAlt = IconData(
     0xef41,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `app_shortcut` material icon.
-  static const IconData app_shortcut = IconData(
+  /// The `appShortcut` material icon.
+  static const IconData appShortcut = IconData(
     0xeae4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -717,8 +1116,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `apps_outage` material icon.
-  static const IconData apps_outage = IconData(
+  /// The `appsOutage` material icon.
+  static const IconData appsOutage = IconData(
     0xe7cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -738,141 +1137,141 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `area_chart` material icon.
-  static const IconData area_chart = IconData(
+  /// The `areaChart` material icon.
+  static const IconData areaChart = IconData(
     0xe770,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_back` material icon.
-  static const IconData arrow_back = IconData(
+  /// The `arrowBack` material icon.
+  static const IconData arrowBack = IconData(
     0xe5c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_back_ios` material icon.
-  static const IconData arrow_back_ios = IconData(
+  /// The `arrowBackIos` material icon.
+  static const IconData arrowBackIos = IconData(
     0xe5e0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_back_ios_new` material icon.
-  static const IconData arrow_back_ios_new = IconData(
+  /// The `arrowBackIosNew` material icon.
+  static const IconData arrowBackIosNew = IconData(
     0xe2ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_circle_down` material icon.
-  static const IconData arrow_circle_down = IconData(
+  /// The `arrowCircleDown` material icon.
+  static const IconData arrowCircleDown = IconData(
     0xf181,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_circle_left` material icon.
-  static const IconData arrow_circle_left = IconData(
+  /// The `arrowCircleLeft` material icon.
+  static const IconData arrowCircleLeft = IconData(
     0xeaa7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_circle_right` material icon.
-  static const IconData arrow_circle_right = IconData(
+  /// The `arrowCircleRight` material icon.
+  static const IconData arrowCircleRight = IconData(
     0xeaaa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_circle_up` material icon.
-  static const IconData arrow_circle_up = IconData(
+  /// The `arrowCircleUp` material icon.
+  static const IconData arrowCircleUp = IconData(
     0xf182,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_downward` material icon.
-  static const IconData arrow_downward = IconData(
+  /// The `arrowDownward` material icon.
+  static const IconData arrowDownward = IconData(
     0xe5db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_drop_down` material icon.
-  static const IconData arrow_drop_down = IconData(
+  /// The `arrowDropDown` material icon.
+  static const IconData arrowDropDown = IconData(
     0xe5c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_drop_down_circle` material icon.
-  static const IconData arrow_drop_down_circle = IconData(
+  /// The `arrowDropDownCircle` material icon.
+  static const IconData arrowDropDownCircle = IconData(
     0xe5c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_drop_up` material icon.
-  static const IconData arrow_drop_up = IconData(
+  /// The `arrowDropUp` material icon.
+  static const IconData arrowDropUp = IconData(
     0xe5c7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_forward` material icon.
-  static const IconData arrow_forward = IconData(
+  /// The `arrowForward` material icon.
+  static const IconData arrowForward = IconData(
     0xe5c8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_forward_ios` material icon.
-  static const IconData arrow_forward_ios = IconData(
+  /// The `arrowForwardIos` material icon.
+  static const IconData arrowForwardIos = IconData(
     0xe5e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_left` material icon.
-  static const IconData arrow_left = IconData(
+  /// The `arrowLeft` material icon.
+  static const IconData arrowLeft = IconData(
     0xe5de,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_outward` material icon.
-  static const IconData arrow_outward = IconData(
+  /// The `arrowOutward` material icon.
+  static const IconData arrowOutward = IconData(
     0xf8ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_right` material icon.
-  static const IconData arrow_right = IconData(
+  /// The `arrowRight` material icon.
+  static const IconData arrowRight = IconData(
     0xe5df,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_right_alt` material icon.
-  static const IconData arrow_right_alt = IconData(
+  /// The `arrowRightAlt` material icon.
+  static const IconData arrowRightAlt = IconData(
     0xe941,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `arrow_upward` material icon.
-  static const IconData arrow_upward = IconData(
+  /// The `arrowUpward` material icon.
+  static const IconData arrowUpward = IconData(
     0xe5d8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `art_track` material icon.
-  static const IconData art_track = IconData(
+  /// The `artTrack` material icon.
+  static const IconData artTrack = IconData(
     0xe060,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -885,8 +1284,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `aspect_ratio` material icon.
-  static const IconData aspect_ratio = IconData(
+  /// The `aspectRatio` material icon.
+  static const IconData aspectRatio = IconData(
     0xe85b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -906,43 +1305,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `assignment_ind` material icon.
-  static const IconData assignment_ind = IconData(
+  /// The `assignmentInd` material icon.
+  static const IconData assignmentInd = IconData(
     0xe85e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assignment_late` material icon.
-  static const IconData assignment_late = IconData(
+  /// The `assignmentLate` material icon.
+  static const IconData assignmentLate = IconData(
     0xe85f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assignment_return` material icon.
-  static const IconData assignment_return = IconData(
+  /// The `assignmentReturn` material icon.
+  static const IconData assignmentReturn = IconData(
     0xe860,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assignment_returned` material icon.
-  static const IconData assignment_returned = IconData(
+  /// The `assignmentReturned` material icon.
+  static const IconData assignmentReturned = IconData(
     0xe861,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assignment_turned_in` material icon.
-  static const IconData assignment_turned_in = IconData(
+  /// The `assignmentTurnedIn` material icon.
+  static const IconData assignmentTurnedIn = IconData(
     0xe862,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assist_walker` material icon.
-  static const IconData assist_walker = IconData(
+  /// The `assistWalker` material icon.
+  static const IconData assistWalker = IconData(
     0xf8d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -955,22 +1354,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `assistant_direction` material icon.
-  static const IconData assistant_direction = IconData(
+  /// The `assistantDirection` material icon.
+  static const IconData assistantDirection = IconData(
     0xe988,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assistant_photo` material icon.
-  static const IconData assistant_photo = IconData(
+  /// The `assistantPhoto` material icon.
+  static const IconData assistantPhoto = IconData(
     0xe3a0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `assured_workload` material icon.
-  static const IconData assured_workload = IconData(
+  /// The `assuredWorkload` material icon.
+  static const IconData assuredWorkload = IconData(
     0xeb6f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -983,22 +1382,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `attach_email` material icon.
-  static const IconData attach_email = IconData(
+  /// The `attachEmail` material icon.
+  static const IconData attachEmail = IconData(
     0xea5e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `attach_file` material icon.
-  static const IconData attach_file = IconData(
+  /// The `attachFile` material icon.
+  static const IconData attachFile = IconData(
     0xe226,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `attach_money` material icon.
-  static const IconData attach_money = IconData(
+  /// The `attachMoney` material icon.
+  static const IconData attachMoney = IconData(
     0xe227,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1025,8 +1424,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `audio_file` material icon.
-  static const IconData audio_file = IconData(
+  /// The `audioFile` material icon.
+  static const IconData audioFile = IconData(
     0xeb82,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1039,78 +1438,78 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_awesome` material icon.
-  static const IconData auto_awesome = IconData(
+  /// The `autoAwesome` material icon.
+  static const IconData autoAwesome = IconData(
     0xe65f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_awesome_mosaic` material icon.
-  static const IconData auto_awesome_mosaic = IconData(
+  /// The `autoAwesomeMosaic` material icon.
+  static const IconData autoAwesomeMosaic = IconData(
     0xe660,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_awesome_motion` material icon.
-  static const IconData auto_awesome_motion = IconData(
+  /// The `autoAwesomeMotion` material icon.
+  static const IconData autoAwesomeMotion = IconData(
     0xe661,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_delete` material icon.
-  static const IconData auto_delete = IconData(
+  /// The `autoDelete` material icon.
+  static const IconData autoDelete = IconData(
     0xea4c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_fix_high` material icon.
-  static const IconData auto_fix_high = IconData(
+  /// The `autoFixHigh` material icon.
+  static const IconData autoFixHigh = IconData(
     0xe663,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_fix_normal` material icon.
-  static const IconData auto_fix_normal = IconData(
+  /// The `autoFixNormal` material icon.
+  static const IconData autoFixNormal = IconData(
     0xe664,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_fix_off` material icon.
-  static const IconData auto_fix_off = IconData(
+  /// The `autoFixOff` material icon.
+  static const IconData autoFixOff = IconData(
     0xe665,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_graph` material icon.
-  static const IconData auto_graph = IconData(
+  /// The `autoGraph` material icon.
+  static const IconData autoGraph = IconData(
     0xe4fb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_mode` material icon.
-  static const IconData auto_mode = IconData(
+  /// The `autoMode` material icon.
+  static const IconData autoMode = IconData(
     0xec20,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `auto_stories` material icon.
-  static const IconData auto_stories = IconData(
+  /// The `autoStories` material icon.
+  static const IconData autoStories = IconData(
     0xe666,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `autofps_select` material icon.
-  static const IconData autofps_select = IconData(
+  /// The `autofpsSelect` material icon.
+  static const IconData autofpsSelect = IconData(
     0xefdc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1123,22 +1522,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `av_timer` material icon.
-  static const IconData av_timer = IconData(
+  /// The `avTimer` material icon.
+  static const IconData avTimer = IconData(
     0xe01b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `baby_changing_station` material icon.
-  static const IconData baby_changing_station = IconData(
+  /// The `babyChangingStation` material icon.
+  static const IconData babyChangingStation = IconData(
     0xf19b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `back_hand` material icon.
-  static const IconData back_hand = IconData(
+  /// The `backHand` material icon.
+  static const IconData backHand = IconData(
     0xe764,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1165,8 +1564,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `backup_table` material icon.
-  static const IconData backup_table = IconData(
+  /// The `backupTable` material icon.
+  static const IconData backupTable = IconData(
     0xef43,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1179,8 +1578,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bakery_dining` material icon.
-  static const IconData bakery_dining = IconData(
+  /// The `bakeryDining` material icon.
+  static const IconData bakeryDining = IconData(
     0xea53,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1207,15 +1606,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bar_chart` material icon.
-  static const IconData bar_chart = IconData(
+  /// The `barChart` material icon.
+  static const IconData barChart = IconData(
     0xe26b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `batch_prediction` material icon.
-  static const IconData batch_prediction = IconData(
+  /// The `batchPrediction` material icon.
+  static const IconData batchPrediction = IconData(
     0xf0f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1235,99 +1634,99 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_0_bar` material icon.
-  static const IconData battery_0_bar = IconData(
+  /// The `battery0Bar` material icon.
+  static const IconData battery0Bar = IconData(
     0xebdc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_1_bar` material icon.
-  static const IconData battery_1_bar = IconData(
+  /// The `battery1Bar` material icon.
+  static const IconData battery1Bar = IconData(
     0xebd9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_2_bar` material icon.
-  static const IconData battery_2_bar = IconData(
+  /// The `battery2Bar` material icon.
+  static const IconData battery2Bar = IconData(
     0xebe0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_3_bar` material icon.
-  static const IconData battery_3_bar = IconData(
+  /// The `battery3Bar` material icon.
+  static const IconData battery3Bar = IconData(
     0xebdd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_4_bar` material icon.
-  static const IconData battery_4_bar = IconData(
+  /// The `battery4Bar` material icon.
+  static const IconData battery4Bar = IconData(
     0xebe2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_5_bar` material icon.
-  static const IconData battery_5_bar = IconData(
+  /// The `battery5Bar` material icon.
+  static const IconData battery5Bar = IconData(
     0xebd4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_6_bar` material icon.
-  static const IconData battery_6_bar = IconData(
+  /// The `battery6Bar` material icon.
+  static const IconData battery6Bar = IconData(
     0xebd2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_alert` material icon.
-  static const IconData battery_alert = IconData(
+  /// The `batteryAlert` material icon.
+  static const IconData batteryAlert = IconData(
     0xe19c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_charging_full` material icon.
-  static const IconData battery_charging_full = IconData(
+  /// The `batteryChargingFull` material icon.
+  static const IconData batteryChargingFull = IconData(
     0xe1a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_full` material icon.
-  static const IconData battery_full = IconData(
+  /// The `batteryFull` material icon.
+  static const IconData batteryFull = IconData(
     0xe1a4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_saver` material icon.
-  static const IconData battery_saver = IconData(
+  /// The `batterySaver` material icon.
+  static const IconData batterySaver = IconData(
     0xefde,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_std` material icon.
-  static const IconData battery_std = IconData(
+  /// The `batteryStd` material icon.
+  static const IconData batteryStd = IconData(
     0xe1a5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `battery_unknown` material icon.
-  static const IconData battery_unknown = IconData(
+  /// The `batteryUnknown` material icon.
+  static const IconData batteryUnknown = IconData(
     0xe1a6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `beach_access` material icon.
-  static const IconData beach_access = IconData(
+  /// The `beachAccess` material icon.
+  static const IconData beachAccess = IconData(
     0xeb3e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1340,22 +1739,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bedroom_baby` material icon.
-  static const IconData bedroom_baby = IconData(
+  /// The `bedroomBaby` material icon.
+  static const IconData bedroomBaby = IconData(
     0xefe0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bedroom_child` material icon.
-  static const IconData bedroom_child = IconData(
+  /// The `bedroomChild` material icon.
+  static const IconData bedroomChild = IconData(
     0xefe1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bedroom_parent` material icon.
-  static const IconData bedroom_parent = IconData(
+  /// The `bedroomParent` material icon.
+  static const IconData bedroomParent = IconData(
     0xefe2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1368,8 +1767,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bedtime_off` material icon.
-  static const IconData bedtime_off = IconData(
+  /// The `bedtimeOff` material icon.
+  static const IconData bedtimeOff = IconData(
     0xeb76,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1389,8 +1788,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bike_scooter` material icon.
-  static const IconData bike_scooter = IconData(
+  /// The `bikeScooter` material icon.
+  static const IconData bikeScooter = IconData(
     0xef45,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1424,8 +1823,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `blinds_closed` material icon.
-  static const IconData blinds_closed = IconData(
+  /// The `blindsClosed` material icon.
+  static const IconData blindsClosed = IconData(
     0xec1f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1452,64 +1851,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bluetooth_audio` material icon.
-  static const IconData bluetooth_audio = IconData(
+  /// The `bluetoothAudio` material icon.
+  static const IconData bluetoothAudio = IconData(
     0xe60f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bluetooth_connected` material icon.
-  static const IconData bluetooth_connected = IconData(
+  /// The `bluetoothConnected` material icon.
+  static const IconData bluetoothConnected = IconData(
     0xe1a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bluetooth_disabled` material icon.
-  static const IconData bluetooth_disabled = IconData(
+  /// The `bluetoothDisabled` material icon.
+  static const IconData bluetoothDisabled = IconData(
     0xe1a9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bluetooth_drive` material icon.
-  static const IconData bluetooth_drive = IconData(
+  /// The `bluetoothDrive` material icon.
+  static const IconData bluetoothDrive = IconData(
     0xefe5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bluetooth_searching` material icon.
-  static const IconData bluetooth_searching = IconData(
+  /// The `bluetoothSearching` material icon.
+  static const IconData bluetoothSearching = IconData(
     0xe1aa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `blur_circular` material icon.
-  static const IconData blur_circular = IconData(
+  /// The `blurCircular` material icon.
+  static const IconData blurCircular = IconData(
     0xe3a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `blur_linear` material icon.
-  static const IconData blur_linear = IconData(
+  /// The `blurLinear` material icon.
+  static const IconData blurLinear = IconData(
     0xe3a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `blur_off` material icon.
-  static const IconData blur_off = IconData(
+  /// The `blurOff` material icon.
+  static const IconData blurOff = IconData(
     0xe3a4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `blur_on` material icon.
-  static const IconData blur_on = IconData(
+  /// The `blurOn` material icon.
+  static const IconData blurOn = IconData(
     0xe3a5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1529,8 +1928,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `book_online` material icon.
-  static const IconData book_online = IconData(
+  /// The `bookOnline` material icon.
+  static const IconData bookOnline = IconData(
     0xf217,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1543,36 +1942,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bookmark_add` material icon.
-  static const IconData bookmark_add = IconData(
+  /// The `bookmarkAdd` material icon.
+  static const IconData bookmarkAdd = IconData(
     0xe598,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bookmark_added` material icon.
-  static const IconData bookmark_added = IconData(
+  /// The `bookmarkAdded` material icon.
+  static const IconData bookmarkAdded = IconData(
     0xe599,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bookmark_border` material icon.
-  static const IconData bookmark_border = IconData(
+  /// The `bookmarkBorder` material icon.
+  static const IconData bookmarkBorder = IconData(
     0xe867,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bookmark_outline` material icon.
-  static const IconData bookmark_outline = IconData(
+  /// The `bookmarkOutline` material icon.
+  static const IconData bookmarkOutline = IconData(
     0xe867,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bookmark_remove` material icon.
-  static const IconData bookmark_remove = IconData(
+  /// The `bookmarkRemove` material icon.
+  static const IconData bookmarkRemove = IconData(
     0xe59a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1585,85 +1984,85 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_all` material icon.
-  static const IconData border_all = IconData(
+  /// The `borderAll` material icon.
+  static const IconData borderAll = IconData(
     0xe228,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_bottom` material icon.
-  static const IconData border_bottom = IconData(
+  /// The `borderBottom` material icon.
+  static const IconData borderBottom = IconData(
     0xe229,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_clear` material icon.
-  static const IconData border_clear = IconData(
+  /// The `borderClear` material icon.
+  static const IconData borderClear = IconData(
     0xe22a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_color` material icon.
-  static const IconData border_color = IconData(
+  /// The `borderColor` material icon.
+  static const IconData borderColor = IconData(
     0xe22b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_horizontal` material icon.
-  static const IconData border_horizontal = IconData(
+  /// The `borderHorizontal` material icon.
+  static const IconData borderHorizontal = IconData(
     0xe22c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_inner` material icon.
-  static const IconData border_inner = IconData(
+  /// The `borderInner` material icon.
+  static const IconData borderInner = IconData(
     0xe22d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_left` material icon.
-  static const IconData border_left = IconData(
+  /// The `borderLeft` material icon.
+  static const IconData borderLeft = IconData(
     0xe22e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_outer` material icon.
-  static const IconData border_outer = IconData(
+  /// The `borderOuter` material icon.
+  static const IconData borderOuter = IconData(
     0xe22f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_right` material icon.
-  static const IconData border_right = IconData(
+  /// The `borderRight` material icon.
+  static const IconData borderRight = IconData(
     0xe230,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_style` material icon.
-  static const IconData border_style = IconData(
+  /// The `borderStyle` material icon.
+  static const IconData borderStyle = IconData(
     0xe231,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_top` material icon.
-  static const IconData border_top = IconData(
+  /// The `borderTop` material icon.
+  static const IconData borderTop = IconData(
     0xe232,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `border_vertical` material icon.
-  static const IconData border_vertical = IconData(
+  /// The `borderVertical` material icon.
+  static const IconData borderVertical = IconData(
     0xe233,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1676,141 +2075,141 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `branding_watermark` material icon.
-  static const IconData branding_watermark = IconData(
+  /// The `brandingWatermark` material icon.
+  static const IconData brandingWatermark = IconData(
     0xe06b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `breakfast_dining` material icon.
-  static const IconData breakfast_dining = IconData(
+  /// The `breakfastDining` material icon.
+  static const IconData breakfastDining = IconData(
     0xea54,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_1` material icon.
-  static const IconData brightness_1 = IconData(
+  /// The `brightness1` material icon.
+  static const IconData brightness1 = IconData(
     0xe3a6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_2` material icon.
-  static const IconData brightness_2 = IconData(
+  /// The `brightness2` material icon.
+  static const IconData brightness2 = IconData(
     0xe3a7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_3` material icon.
-  static const IconData brightness_3 = IconData(
+  /// The `brightness3` material icon.
+  static const IconData brightness3 = IconData(
     0xe3a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_4` material icon.
-  static const IconData brightness_4 = IconData(
+  /// The `brightness4` material icon.
+  static const IconData brightness4 = IconData(
     0xe3a9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_5` material icon.
-  static const IconData brightness_5 = IconData(
+  /// The `brightness5` material icon.
+  static const IconData brightness5 = IconData(
     0xe3aa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_6` material icon.
-  static const IconData brightness_6 = IconData(
+  /// The `brightness6` material icon.
+  static const IconData brightness6 = IconData(
     0xe3ab,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_7` material icon.
-  static const IconData brightness_7 = IconData(
+  /// The `brightness7` material icon.
+  static const IconData brightness7 = IconData(
     0xe3ac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_auto` material icon.
-  static const IconData brightness_auto = IconData(
+  /// The `brightnessAuto` material icon.
+  static const IconData brightnessAuto = IconData(
     0xe1ab,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_high` material icon.
-  static const IconData brightness_high = IconData(
+  /// The `brightnessHigh` material icon.
+  static const IconData brightnessHigh = IconData(
     0xe1ac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_low` material icon.
-  static const IconData brightness_low = IconData(
+  /// The `brightnessLow` material icon.
+  static const IconData brightnessLow = IconData(
     0xe1ad,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brightness_medium` material icon.
-  static const IconData brightness_medium = IconData(
+  /// The `brightnessMedium` material icon.
+  static const IconData brightnessMedium = IconData(
     0xe1ae,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `broadcast_on_home` material icon.
-  static const IconData broadcast_on_home = IconData(
+  /// The `broadcastOnHome` material icon.
+  static const IconData broadcastOnHome = IconData(
     0xf8f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `broadcast_on_personal` material icon.
-  static const IconData broadcast_on_personal = IconData(
+  /// The `broadcastOnPersonal` material icon.
+  static const IconData broadcastOnPersonal = IconData(
     0xf8f9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `broken_image` material icon.
-  static const IconData broken_image = IconData(
+  /// The `brokenImage` material icon.
+  static const IconData brokenImage = IconData(
     0xe3ad,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `browse_gallery` material icon.
-  static const IconData browse_gallery = IconData(
+  /// The `browseGallery` material icon.
+  static const IconData browseGallery = IconData(
     0xebd1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `browser_not_supported` material icon.
-  static const IconData browser_not_supported = IconData(
+  /// The `browserNotSupported` material icon.
+  static const IconData browserNotSupported = IconData(
     0xef47,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `browser_updated` material icon.
-  static const IconData browser_updated = IconData(
+  /// The `browserUpdated` material icon.
+  static const IconData browserUpdated = IconData(
     0xe7cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `brunch_dining` material icon.
-  static const IconData brunch_dining = IconData(
+  /// The `brunchDining` material icon.
+  static const IconData brunchDining = IconData(
     0xea73,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1823,15 +2222,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `bubble_chart` material icon.
-  static const IconData bubble_chart = IconData(
+  /// The `bubbleChart` material icon.
+  static const IconData bubbleChart = IconData(
     0xe6dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bug_report` material icon.
-  static const IconData bug_report = IconData(
+  /// The `bugReport` material icon.
+  static const IconData bugReport = IconData(
     0xe868,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1844,8 +2243,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `build_circle` material icon.
-  static const IconData build_circle = IconData(
+  /// The `buildCircle` material icon.
+  static const IconData buildCircle = IconData(
     0xef48,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1858,15 +2257,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `burst_mode` material icon.
-  static const IconData burst_mode = IconData(
+  /// The `burstMode` material icon.
+  static const IconData burstMode = IconData(
     0xe43c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `bus_alert` material icon.
-  static const IconData bus_alert = IconData(
+  /// The `busAlert` material icon.
+  static const IconData busAlert = IconData(
     0xe98f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1879,8 +2278,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `business_center` material icon.
-  static const IconData business_center = IconData(
+  /// The `businessCenter` material icon.
+  static const IconData businessCenter = IconData(
     0xeb3f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1921,36 +2320,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `calendar_month` material icon.
-  static const IconData calendar_month = IconData(
+  /// The `calendarMonth` material icon.
+  static const IconData calendarMonth = IconData(
     0xebcc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `calendar_today` material icon.
-  static const IconData calendar_today = IconData(
+  /// The `calendarToday` material icon.
+  static const IconData calendarToday = IconData(
     0xe935,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `calendar_view_day` material icon.
-  static const IconData calendar_view_day = IconData(
+  /// The `calendarViewDay` material icon.
+  static const IconData calendarViewDay = IconData(
     0xe936,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `calendar_view_month` material icon.
-  static const IconData calendar_view_month = IconData(
+  /// The `calendarViewMonth` material icon.
+  static const IconData calendarViewMonth = IconData(
     0xefe7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `calendar_view_week` material icon.
-  static const IconData calendar_view_week = IconData(
+  /// The `calendarViewWeek` material icon.
+  static const IconData calendarViewWeek = IconData(
     0xefe8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -1963,57 +2362,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_end` material icon.
-  static const IconData call_end = IconData(
+  /// The `callEnd` material icon.
+  static const IconData callEnd = IconData(
     0xe0b1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_made` material icon.
-  static const IconData call_made = IconData(
+  /// The `callMade` material icon.
+  static const IconData callMade = IconData(
     0xe0b2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_merge` material icon.
-  static const IconData call_merge = IconData(
+  /// The `callMerge` material icon.
+  static const IconData callMerge = IconData(
     0xe0b3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_missed` material icon.
-  static const IconData call_missed = IconData(
+  /// The `callMissed` material icon.
+  static const IconData callMissed = IconData(
     0xe0b4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_missed_outgoing` material icon.
-  static const IconData call_missed_outgoing = IconData(
+  /// The `callMissedOutgoing` material icon.
+  static const IconData callMissedOutgoing = IconData(
     0xe0e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_received` material icon.
-  static const IconData call_received = IconData(
+  /// The `callReceived` material icon.
+  static const IconData callReceived = IconData(
     0xe0b5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_split` material icon.
-  static const IconData call_split = IconData(
+  /// The `callSplit` material icon.
+  static const IconData callSplit = IconData(
     0xe0b6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `call_to_action` material icon.
-  static const IconData call_to_action = IconData(
+  /// The `callToAction` material icon.
+  static const IconData callToAction = IconData(
     0xe06c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2026,50 +2425,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_alt` material icon.
-  static const IconData camera_alt = IconData(
+  /// The `cameraAlt` material icon.
+  static const IconData cameraAlt = IconData(
     0xe3b0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_enhance` material icon.
-  static const IconData camera_enhance = IconData(
+  /// The `cameraEnhance` material icon.
+  static const IconData cameraEnhance = IconData(
     0xe8fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_front` material icon.
-  static const IconData camera_front = IconData(
+  /// The `cameraFront` material icon.
+  static const IconData cameraFront = IconData(
     0xe3b1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_indoor` material icon.
-  static const IconData camera_indoor = IconData(
+  /// The `cameraIndoor` material icon.
+  static const IconData cameraIndoor = IconData(
     0xefe9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_outdoor` material icon.
-  static const IconData camera_outdoor = IconData(
+  /// The `cameraOutdoor` material icon.
+  static const IconData cameraOutdoor = IconData(
     0xefea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_rear` material icon.
-  static const IconData camera_rear = IconData(
+  /// The `cameraRear` material icon.
+  static const IconData cameraRear = IconData(
     0xe3b2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `camera_roll` material icon.
-  static const IconData camera_roll = IconData(
+  /// The `cameraRoll` material icon.
+  static const IconData cameraRoll = IconData(
     0xe3b3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2096,64 +2495,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `cancel_presentation` material icon.
-  static const IconData cancel_presentation = IconData(
+  /// The `cancelPresentation` material icon.
+  static const IconData cancelPresentation = IconData(
     0xe0e9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cancel_schedule_send` material icon.
-  static const IconData cancel_schedule_send = IconData(
+  /// The `cancelScheduleSend` material icon.
+  static const IconData cancelScheduleSend = IconData(
     0xea39,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `candlestick_chart` material icon.
-  static const IconData candlestick_chart = IconData(
+  /// The `candlestickChart` material icon.
+  static const IconData candlestickChart = IconData(
     0xead4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `car_crash` material icon.
-  static const IconData car_crash = IconData(
+  /// The `carCrash` material icon.
+  static const IconData carCrash = IconData(
     0xebf2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `car_rental` material icon.
-  static const IconData car_rental = IconData(
+  /// The `carRental` material icon.
+  static const IconData carRental = IconData(
     0xea55,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `car_repair` material icon.
-  static const IconData car_repair = IconData(
+  /// The `carRepair` material icon.
+  static const IconData carRepair = IconData(
     0xea56,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `card_giftcard` material icon.
-  static const IconData card_giftcard = IconData(
+  /// The `cardGiftcard` material icon.
+  static const IconData cardGiftcard = IconData(
     0xe8f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `card_membership` material icon.
-  static const IconData card_membership = IconData(
+  /// The `cardMembership` material icon.
+  static const IconData cardMembership = IconData(
     0xe8f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `card_travel` material icon.
-  static const IconData card_travel = IconData(
+  /// The `cardTravel` material icon.
+  static const IconData cardTravel = IconData(
     0xe8f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2187,15 +2586,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `cast_connected` material icon.
-  static const IconData cast_connected = IconData(
+  /// The `castConnected` material icon.
+  static const IconData castConnected = IconData(
     0xe308,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cast_for_education` material icon.
-  static const IconData cast_for_education = IconData(
+  /// The `castForEducation` material icon.
+  static const IconData castForEducation = IconData(
     0xefec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2208,8 +2607,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `catching_pokemon` material icon.
-  static const IconData catching_pokemon = IconData(
+  /// The `catchingPokemon` material icon.
+  static const IconData catchingPokemon = IconData(
     0xe508,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2229,29 +2628,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `cell_tower` material icon.
-  static const IconData cell_tower = IconData(
+  /// The `cellTower` material icon.
+  static const IconData cellTower = IconData(
     0xebba,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cell_wifi` material icon.
-  static const IconData cell_wifi = IconData(
+  /// The `cellWifi` material icon.
+  static const IconData cellWifi = IconData(
     0xe0ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `center_focus_strong` material icon.
-  static const IconData center_focus_strong = IconData(
+  /// The `centerFocusStrong` material icon.
+  static const IconData centerFocusStrong = IconData(
     0xe3b4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `center_focus_weak` material icon.
-  static const IconData center_focus_weak = IconData(
+  /// The `centerFocusWeak` material icon.
+  static const IconData centerFocusWeak = IconData(
     0xe3b5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2264,8 +2663,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `chair_alt` material icon.
-  static const IconData chair_alt = IconData(
+  /// The `chairAlt` material icon.
+  static const IconData chairAlt = IconData(
     0xefee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2278,22 +2677,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `change_circle` material icon.
-  static const IconData change_circle = IconData(
+  /// The `changeCircle` material icon.
+  static const IconData changeCircle = IconData(
     0xe2e7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `change_history` material icon.
-  static const IconData change_history = IconData(
+  /// The `changeHistory` material icon.
+  static const IconData changeHistory = IconData(
     0xe86b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `charging_station` material icon.
-  static const IconData charging_station = IconData(
+  /// The `chargingStation` material icon.
+  static const IconData chargingStation = IconData(
     0xf19d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2306,15 +2705,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `chat_bubble` material icon.
-  static const IconData chat_bubble = IconData(
+  /// The `chatBubble` material icon.
+  static const IconData chatBubble = IconData(
     0xe0ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `chat_bubble_outline` material icon.
-  static const IconData chat_bubble_outline = IconData(
+  /// The `chatBubbleOutline` material icon.
+  static const IconData chatBubbleOutline = IconData(
     0xe0cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2327,29 +2726,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `check_box` material icon.
-  static const IconData check_box = IconData(
+  /// The `checkBox` material icon.
+  static const IconData checkBox = IconData(
     0xe834,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `check_box_outline_blank` material icon.
-  static const IconData check_box_outline_blank = IconData(
+  /// The `checkBoxOutlineBlank` material icon.
+  static const IconData checkBoxOutlineBlank = IconData(
     0xe835,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `check_circle` material icon.
-  static const IconData check_circle = IconData(
+  /// The `checkCircle` material icon.
+  static const IconData checkCircle = IconData(
     0xe86c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `check_circle_outline` material icon.
-  static const IconData check_circle_outline = IconData(
+  /// The `checkCircleOutline` material icon.
+  static const IconData checkCircleOutline = IconData(
     0xe92d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2362,8 +2761,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `checklist_rtl` material icon.
-  static const IconData checklist_rtl = IconData(
+  /// The `checklistRtl` material icon.
+  static const IconData checklistRtl = IconData(
     0xe6b3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2376,36 +2775,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `chevron_left` material icon.
-  static const IconData chevron_left = IconData(
+  /// The `chevronLeft` material icon.
+  static const IconData chevronLeft = IconData(
     0xe5cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `chevron_right` material icon.
-  static const IconData chevron_right = IconData(
+  /// The `chevronRight` material icon.
+  static const IconData chevronRight = IconData(
     0xe5cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `child_care` material icon.
-  static const IconData child_care = IconData(
+  /// The `childCare` material icon.
+  static const IconData childCare = IconData(
     0xeb41,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `child_friendly` material icon.
-  static const IconData child_friendly = IconData(
+  /// The `childFriendly` material icon.
+  static const IconData childFriendly = IconData(
     0xeb42,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `chrome_reader_mode` material icon.
-  static const IconData chrome_reader_mode = IconData(
+  /// The `chromeReaderMode` material icon.
+  static const IconData chromeReaderMode = IconData(
     0xe86d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2425,29 +2824,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `circle_notifications` material icon.
-  static const IconData circle_notifications = IconData(
+  /// The `circleNotifications` material icon.
+  static const IconData circleNotifications = IconData(
     0xe994,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
   /// The `class` material icon.
-  static const IconData class_ = IconData(
+  static const IconData $class = IconData(
     0xe86e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `clean_hands` material icon.
-  static const IconData clean_hands = IconData(
+  /// The `cleanHands` material icon.
+  static const IconData cleanHands = IconData(
     0xf21f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cleaning_services` material icon.
-  static const IconData cleaning_services = IconData(
+  /// The `cleaningServices` material icon.
+  static const IconData cleaningServices = IconData(
     0xf0ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2460,8 +2859,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `clear_all` material icon.
-  static const IconData clear_all = IconData(
+  /// The `clearAll` material icon.
+  static const IconData clearAll = IconData(
     0xe0b8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2474,29 +2873,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `close_fullscreen` material icon.
-  static const IconData close_fullscreen = IconData(
+  /// The `closeFullscreen` material icon.
+  static const IconData closeFullscreen = IconData(
     0xf1cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `closed_caption` material icon.
-  static const IconData closed_caption = IconData(
+  /// The `closedCaption` material icon.
+  static const IconData closedCaption = IconData(
     0xe01c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `closed_caption_disabled` material icon.
-  static const IconData closed_caption_disabled = IconData(
+  /// The `closedCaptionDisabled` material icon.
+  static const IconData closedCaptionDisabled = IconData(
     0xf1dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `closed_caption_off` material icon.
-  static const IconData closed_caption_off = IconData(
+  /// The `closedCaptionOff` material icon.
+  static const IconData closedCaptionOff = IconData(
     0xe996,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2509,50 +2908,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_circle` material icon.
-  static const IconData cloud_circle = IconData(
+  /// The `cloudCircle` material icon.
+  static const IconData cloudCircle = IconData(
     0xe2be,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_done` material icon.
-  static const IconData cloud_done = IconData(
+  /// The `cloudDone` material icon.
+  static const IconData cloudDone = IconData(
     0xe2bf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_download` material icon.
-  static const IconData cloud_download = IconData(
+  /// The `cloudDownload` material icon.
+  static const IconData cloudDownload = IconData(
     0xe2c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_off` material icon.
-  static const IconData cloud_off = IconData(
+  /// The `cloudOff` material icon.
+  static const IconData cloudOff = IconData(
     0xe2c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_queue` material icon.
-  static const IconData cloud_queue = IconData(
+  /// The `cloudQueue` material icon.
+  static const IconData cloudQueue = IconData(
     0xe2c2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_sync` material icon.
-  static const IconData cloud_sync = IconData(
+  /// The `cloudSync` material icon.
+  static const IconData cloudSync = IconData(
     0xeb5a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cloud_upload` material icon.
-  static const IconData cloud_upload = IconData(
+  /// The `cloudUpload` material icon.
+  static const IconData cloudUpload = IconData(
     0xe2c3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2565,8 +2964,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `co_present` material icon.
-  static const IconData co_present = IconData(
+  /// The `coPresent` material icon.
+  static const IconData coPresent = IconData(
     0xeaf0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2579,8 +2978,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `code_off` material icon.
-  static const IconData code_off = IconData(
+  /// The `codeOff` material icon.
+  static const IconData codeOff = IconData(
     0xe4f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2593,8 +2992,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `coffee_maker` material icon.
-  static const IconData coffee_maker = IconData(
+  /// The `coffeeMaker` material icon.
+  static const IconData coffeeMaker = IconData(
     0xeff0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2607,15 +3006,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `collections_bookmark` material icon.
-  static const IconData collections_bookmark = IconData(
+  /// The `collectionsBookmark` material icon.
+  static const IconData collectionsBookmark = IconData(
     0xe431,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `color_lens` material icon.
-  static const IconData color_lens = IconData(
+  /// The `colorLens` material icon.
+  static const IconData colorLens = IconData(
     0xe3b7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2635,15 +3034,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `comment_bank` material icon.
-  static const IconData comment_bank = IconData(
+  /// The `commentBank` material icon.
+  static const IconData commentBank = IconData(
     0xea4e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `comments_disabled` material icon.
-  static const IconData comments_disabled = IconData(
+  /// The `commentsDisabled` material icon.
+  static const IconData commentsDisabled = IconData(
     0xe7a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2670,15 +3069,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `compare_arrows` material icon.
-  static const IconData compare_arrows = IconData(
+  /// The `compareArrows` material icon.
+  static const IconData compareArrows = IconData(
     0xe915,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `compass_calibration` material icon.
-  static const IconData compass_calibration = IconData(
+  /// The `compassCalibration` material icon.
+  static const IconData compassCalibration = IconData(
     0xe57c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2705,36 +3104,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `confirmation_num` material icon.
-  static const IconData confirmation_num = IconData(
+  /// The `confirmationNum` material icon.
+  static const IconData confirmationNum = IconData(
     0xe638,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `confirmation_number` material icon.
-  static const IconData confirmation_number = IconData(
+  /// The `confirmationNumber` material icon.
+  static const IconData confirmationNumber = IconData(
     0xe638,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `connect_without_contact` material icon.
-  static const IconData connect_without_contact = IconData(
+  /// The `connectWithoutContact` material icon.
+  static const IconData connectWithoutContact = IconData(
     0xf223,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `connected_tv` material icon.
-  static const IconData connected_tv = IconData(
+  /// The `connectedTv` material icon.
+  static const IconData connectedTv = IconData(
     0xe998,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `connecting_airports` material icon.
-  static const IconData connecting_airports = IconData(
+  /// The `connectingAirports` material icon.
+  static const IconData connectingAirports = IconData(
     0xe7c9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2747,36 +3146,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `contact_emergency` material icon.
-  static const IconData contact_emergency = IconData(
+  /// The `contactEmergency` material icon.
+  static const IconData contactEmergency = IconData(
     0xf8d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `contact_mail` material icon.
-  static const IconData contact_mail = IconData(
+  /// The `contactMail` material icon.
+  static const IconData contactMail = IconData(
     0xe0d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `contact_page` material icon.
-  static const IconData contact_page = IconData(
+  /// The `contactPage` material icon.
+  static const IconData contactPage = IconData(
     0xf22e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `contact_phone` material icon.
-  static const IconData contact_phone = IconData(
+  /// The `contactPhone` material icon.
+  static const IconData contactPhone = IconData(
     0xe0cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `contact_support` material icon.
-  static const IconData contact_support = IconData(
+  /// The `contactSupport` material icon.
+  static const IconData contactSupport = IconData(
     0xe94c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2796,43 +3195,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_copy` material icon.
-  static const IconData content_copy = IconData(
+  /// The `contentCopy` material icon.
+  static const IconData contentCopy = IconData(
     0xf08a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_cut` material icon.
-  static const IconData content_cut = IconData(
+  /// The `contentCut` material icon.
+  static const IconData contentCut = IconData(
     0xf08b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_paste` material icon.
-  static const IconData content_paste = IconData(
+  /// The `contentPaste` material icon.
+  static const IconData contentPaste = IconData(
     0xf098,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_paste_go` material icon.
-  static const IconData content_paste_go = IconData(
+  /// The `contentPasteGo` material icon.
+  static const IconData contentPasteGo = IconData(
     0xea8e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_paste_off` material icon.
-  static const IconData content_paste_off = IconData(
+  /// The `contentPasteOff` material icon.
+  static const IconData contentPasteOff = IconData(
     0xe4f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `content_paste_search` material icon.
-  static const IconData content_paste_search = IconData(
+  /// The `contentPasteSearch` material icon.
+  static const IconData contentPasteSearch = IconData(
     0xea9b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2845,22 +3244,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `control_camera` material icon.
-  static const IconData control_camera = IconData(
+  /// The `controlCamera` material icon.
+  static const IconData controlCamera = IconData(
     0xe074,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `control_point` material icon.
-  static const IconData control_point = IconData(
+  /// The `controlPoint` material icon.
+  static const IconData controlPoint = IconData(
     0xe3ba,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `control_point_duplicate` material icon.
-  static const IconData control_point_duplicate = IconData(
+  /// The `controlPointDuplicate` material icon.
+  static const IconData controlPointDuplicate = IconData(
     0xe3bb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2880,8 +3279,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `copy_all` material icon.
-  static const IconData copy_all = IconData(
+  /// The `copyAll` material icon.
+  static const IconData copyAll = IconData(
     0xe2ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2901,8 +3300,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `corporate_fare` material icon.
-  static const IconData corporate_fare = IconData(
+  /// The `corporateFare` material icon.
+  static const IconData corporateFare = IconData(
     0xf1d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2929,29 +3328,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `create_new_folder` material icon.
-  static const IconData create_new_folder = IconData(
+  /// The `createNewFolder` material icon.
+  static const IconData createNewFolder = IconData(
     0xe2cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `credit_card` material icon.
-  static const IconData credit_card = IconData(
+  /// The `creditCard` material icon.
+  static const IconData creditCard = IconData(
     0xe870,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `credit_card_off` material icon.
-  static const IconData credit_card_off = IconData(
+  /// The `creditCardOff` material icon.
+  static const IconData creditCardOff = IconData(
     0xe4f4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `credit_score` material icon.
-  static const IconData credit_score = IconData(
+  /// The `creditScore` material icon.
+  static const IconData creditScore = IconData(
     0xeff1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2964,8 +3363,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `crisis_alert` material icon.
-  static const IconData crisis_alert = IconData(
+  /// The `crisisAlert` material icon.
+  static const IconData crisisAlert = IconData(
     0xebe9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -2978,85 +3377,85 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_16_9` material icon.
-  static const IconData crop_16_9 = IconData(
+  /// The `crop169` material icon.
+  static const IconData crop169 = IconData(
     0xe3bc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_3_2` material icon.
-  static const IconData crop_3_2 = IconData(
+  /// The `crop32` material icon.
+  static const IconData crop32 = IconData(
     0xe3bd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_5_4` material icon.
-  static const IconData crop_5_4 = IconData(
+  /// The `crop54` material icon.
+  static const IconData crop54 = IconData(
     0xe3bf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_7_5` material icon.
-  static const IconData crop_7_5 = IconData(
+  /// The `crop75` material icon.
+  static const IconData crop75 = IconData(
     0xe3c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_din` material icon.
-  static const IconData crop_din = IconData(
+  /// The `cropDin` material icon.
+  static const IconData cropDin = IconData(
     0xe3c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_free` material icon.
-  static const IconData crop_free = IconData(
+  /// The `cropFree` material icon.
+  static const IconData cropFree = IconData(
     0xe3c2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_landscape` material icon.
-  static const IconData crop_landscape = IconData(
+  /// The `cropLandscape` material icon.
+  static const IconData cropLandscape = IconData(
     0xe3c3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_original` material icon.
-  static const IconData crop_original = IconData(
+  /// The `cropOriginal` material icon.
+  static const IconData cropOriginal = IconData(
     0xe3c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_portrait` material icon.
-  static const IconData crop_portrait = IconData(
+  /// The `cropPortrait` material icon.
+  static const IconData cropPortrait = IconData(
     0xe3c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_rotate` material icon.
-  static const IconData crop_rotate = IconData(
+  /// The `cropRotate` material icon.
+  static const IconData cropRotate = IconData(
     0xe437,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `crop_square` material icon.
-  static const IconData crop_square = IconData(
+  /// The `cropSquare` material icon.
+  static const IconData cropSquare = IconData(
     0xe3c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `cruelty_free` material icon.
-  static const IconData cruelty_free = IconData(
+  /// The `crueltyFree` material icon.
+  static const IconData crueltyFree = IconData(
     0xe799,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3069,64 +3468,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_bitcoin` material icon.
-  static const IconData currency_bitcoin = IconData(
+  /// The `currencyBitcoin` material icon.
+  static const IconData currencyBitcoin = IconData(
     0xebc5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_exchange` material icon.
-  static const IconData currency_exchange = IconData(
+  /// The `currencyExchange` material icon.
+  static const IconData currencyExchange = IconData(
     0xeb70,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_franc` material icon.
-  static const IconData currency_franc = IconData(
+  /// The `currencyFranc` material icon.
+  static const IconData currencyFranc = IconData(
     0xeafa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_lira` material icon.
-  static const IconData currency_lira = IconData(
+  /// The `currencyLira` material icon.
+  static const IconData currencyLira = IconData(
     0xeaef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_pound` material icon.
-  static const IconData currency_pound = IconData(
+  /// The `currencyPound` material icon.
+  static const IconData currencyPound = IconData(
     0xeaf1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_ruble` material icon.
-  static const IconData currency_ruble = IconData(
+  /// The `currencyRuble` material icon.
+  static const IconData currencyRuble = IconData(
     0xeaec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_rupee` material icon.
-  static const IconData currency_rupee = IconData(
+  /// The `currencyRupee` material icon.
+  static const IconData currencyRupee = IconData(
     0xeaf7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_yen` material icon.
-  static const IconData currency_yen = IconData(
+  /// The `currencyYen` material icon.
+  static const IconData currencyYen = IconData(
     0xeafb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `currency_yuan` material icon.
-  static const IconData currency_yuan = IconData(
+  /// The `currencyYuan` material icon.
+  static const IconData currencyYuan = IconData(
     0xeaf9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3139,8 +3538,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `curtains_closed` material icon.
-  static const IconData curtains_closed = IconData(
+  /// The `curtainsClosed` material icon.
+  static const IconData curtainsClosed = IconData(
     0xec1d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3167,8 +3566,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dark_mode` material icon.
-  static const IconData dark_mode = IconData(
+  /// The `darkMode` material icon.
+  static const IconData darkMode = IconData(
     0xe51c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3181,57 +3580,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dashboard_customize` material icon.
-  static const IconData dashboard_customize = IconData(
+  /// The `dashboardCustomize` material icon.
+  static const IconData dashboardCustomize = IconData(
     0xe99b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_array` material icon.
-  static const IconData data_array = IconData(
+  /// The `dataArray` material icon.
+  static const IconData dataArray = IconData(
     0xead1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_exploration` material icon.
-  static const IconData data_exploration = IconData(
+  /// The `dataExploration` material icon.
+  static const IconData dataExploration = IconData(
     0xe76f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_object` material icon.
-  static const IconData data_object = IconData(
+  /// The `dataObject` material icon.
+  static const IconData dataObject = IconData(
     0xead3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_saver_off` material icon.
-  static const IconData data_saver_off = IconData(
+  /// The `dataSaverOff` material icon.
+  static const IconData dataSaverOff = IconData(
     0xeff2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_saver_on` material icon.
-  static const IconData data_saver_on = IconData(
+  /// The `dataSaverOn` material icon.
+  static const IconData dataSaverOn = IconData(
     0xeff3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_thresholding` material icon.
-  static const IconData data_thresholding = IconData(
+  /// The `dataThresholding` material icon.
+  static const IconData dataThresholding = IconData(
     0xeb9f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `data_usage` material icon.
-  static const IconData data_usage = IconData(
+  /// The `dataUsage` material icon.
+  static const IconData dataUsage = IconData(
     0xe1af,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3244,15 +3643,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dataset_linked` material icon.
-  static const IconData dataset_linked = IconData(
+  /// The `datasetLinked` material icon.
+  static const IconData datasetLinked = IconData(
     0xf8ef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `date_range` material icon.
-  static const IconData date_range = IconData(
+  /// The `dateRange` material icon.
+  static const IconData dateRange = IconData(
     0xe916,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3286,57 +3685,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `delete_forever` material icon.
-  static const IconData delete_forever = IconData(
+  /// The `deleteForever` material icon.
+  static const IconData deleteForever = IconData(
     0xe92b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `delete_outline` material icon.
-  static const IconData delete_outline = IconData(
+  /// The `deleteOutline` material icon.
+  static const IconData deleteOutline = IconData(
     0xe92e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `delete_sweep` material icon.
-  static const IconData delete_sweep = IconData(
+  /// The `deleteSweep` material icon.
+  static const IconData deleteSweep = IconData(
     0xe16c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `delivery_dining` material icon.
-  static const IconData delivery_dining = IconData(
+  /// The `deliveryDining` material icon.
+  static const IconData deliveryDining = IconData(
     0xea72,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `density_large` material icon.
-  static const IconData density_large = IconData(
+  /// The `densityLarge` material icon.
+  static const IconData densityLarge = IconData(
     0xeba9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `density_medium` material icon.
-  static const IconData density_medium = IconData(
+  /// The `densityMedium` material icon.
+  static const IconData densityMedium = IconData(
     0xeb9e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `density_small` material icon.
-  static const IconData density_small = IconData(
+  /// The `densitySmall` material icon.
+  static const IconData densitySmall = IconData(
     0xeba8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `departure_board` material icon.
-  static const IconData departure_board = IconData(
+  /// The `departureBoard` material icon.
+  static const IconData departureBoard = IconData(
     0xe576,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3356,8 +3755,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `design_services` material icon.
-  static const IconData design_services = IconData(
+  /// The `designServices` material icon.
+  static const IconData designServices = IconData(
     0xf10a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3370,22 +3769,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `desktop_access_disabled` material icon.
-  static const IconData desktop_access_disabled = IconData(
+  /// The `desktopAccessDisabled` material icon.
+  static const IconData desktopAccessDisabled = IconData(
     0xe99d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `desktop_mac` material icon.
-  static const IconData desktop_mac = IconData(
+  /// The `desktopMac` material icon.
+  static const IconData desktopMac = IconData(
     0xe30b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `desktop_windows` material icon.
-  static const IconData desktop_windows = IconData(
+  /// The `desktopWindows` material icon.
+  static const IconData desktopWindows = IconData(
     0xe30c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3398,43 +3797,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `developer_board` material icon.
-  static const IconData developer_board = IconData(
+  /// The `developerBoard` material icon.
+  static const IconData developerBoard = IconData(
     0xe30d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `developer_board_off` material icon.
-  static const IconData developer_board_off = IconData(
+  /// The `developerBoardOff` material icon.
+  static const IconData developerBoardOff = IconData(
     0xe4ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `developer_mode` material icon.
-  static const IconData developer_mode = IconData(
+  /// The `developerMode` material icon.
+  static const IconData developerMode = IconData(
     0xe1b0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `device_hub` material icon.
-  static const IconData device_hub = IconData(
+  /// The `deviceHub` material icon.
+  static const IconData deviceHub = IconData(
     0xe335,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `device_thermostat` material icon.
-  static const IconData device_thermostat = IconData(
+  /// The `deviceThermostat` material icon.
+  static const IconData deviceThermostat = IconData(
     0xe1ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `device_unknown` material icon.
-  static const IconData device_unknown = IconData(
+  /// The `deviceUnknown` material icon.
+  static const IconData deviceUnknown = IconData(
     0xe339,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3447,22 +3846,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `devices_fold` material icon.
-  static const IconData devices_fold = IconData(
+  /// The `devicesFold` material icon.
+  static const IconData devicesFold = IconData(
     0xebde,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `devices_other` material icon.
-  static const IconData devices_other = IconData(
+  /// The `devicesOther` material icon.
+  static const IconData devicesOther = IconData(
     0xe337,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `dialer_sip` material icon.
-  static const IconData dialer_sip = IconData(
+  /// The `dialerSip` material icon.
+  static const IconData dialerSip = IconData(
     0xe0bb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3496,8 +3895,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dinner_dining` material icon.
-  static const IconData dinner_dining = IconData(
+  /// The `dinnerDining` material icon.
+  static const IconData dinnerDining = IconData(
     0xea57,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3510,155 +3909,155 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_bike` material icon.
-  static const IconData directions_bike = IconData(
+  /// The `directionsBike` material icon.
+  static const IconData directionsBike = IconData(
     0xe52f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_boat` material icon.
-  static const IconData directions_boat = IconData(
+  /// The `directionsBoat` material icon.
+  static const IconData directionsBoat = IconData(
     0xe532,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_boat_filled` material icon.
-  static const IconData directions_boat_filled = IconData(
+  /// The `directionsBoatFilled` material icon.
+  static const IconData directionsBoatFilled = IconData(
     0xeff5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_bus` material icon.
-  static const IconData directions_bus = IconData(
+  /// The `directionsBus` material icon.
+  static const IconData directionsBus = IconData(
     0xe530,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_bus_filled` material icon.
-  static const IconData directions_bus_filled = IconData(
+  /// The `directionsBusFilled` material icon.
+  static const IconData directionsBusFilled = IconData(
     0xeff6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_car` material icon.
-  static const IconData directions_car = IconData(
+  /// The `directionsCar` material icon.
+  static const IconData directionsCar = IconData(
     0xe531,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_car_filled` material icon.
-  static const IconData directions_car_filled = IconData(
+  /// The `directionsCarFilled` material icon.
+  static const IconData directionsCarFilled = IconData(
     0xeff7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_ferry` material icon.
-  static const IconData directions_ferry = IconData(
+  /// The `directionsFerry` material icon.
+  static const IconData directionsFerry = IconData(
     0xe532,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_off` material icon.
-  static const IconData directions_off = IconData(
+  /// The `directionsOff` material icon.
+  static const IconData directionsOff = IconData(
     0xf10f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_railway` material icon.
-  static const IconData directions_railway = IconData(
+  /// The `directionsRailway` material icon.
+  static const IconData directionsRailway = IconData(
     0xe534,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_railway_filled` material icon.
-  static const IconData directions_railway_filled = IconData(
+  /// The `directionsRailwayFilled` material icon.
+  static const IconData directionsRailwayFilled = IconData(
     0xeff8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_run` material icon.
-  static const IconData directions_run = IconData(
+  /// The `directionsRun` material icon.
+  static const IconData directionsRun = IconData(
     0xe566,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_subway` material icon.
-  static const IconData directions_subway = IconData(
+  /// The `directionsSubway` material icon.
+  static const IconData directionsSubway = IconData(
     0xe533,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_subway_filled` material icon.
-  static const IconData directions_subway_filled = IconData(
+  /// The `directionsSubwayFilled` material icon.
+  static const IconData directionsSubwayFilled = IconData(
     0xeff9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_train` material icon.
-  static const IconData directions_train = IconData(
+  /// The `directionsTrain` material icon.
+  static const IconData directionsTrain = IconData(
     0xe534,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_transit` material icon.
-  static const IconData directions_transit = IconData(
+  /// The `directionsTransit` material icon.
+  static const IconData directionsTransit = IconData(
     0xe535,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_transit_filled` material icon.
-  static const IconData directions_transit_filled = IconData(
+  /// The `directionsTransitFilled` material icon.
+  static const IconData directionsTransitFilled = IconData(
     0xeffa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `directions_walk` material icon.
-  static const IconData directions_walk = IconData(
+  /// The `directionsWalk` material icon.
+  static const IconData directionsWalk = IconData(
     0xe536,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `dirty_lens` material icon.
-  static const IconData dirty_lens = IconData(
+  /// The `dirtyLens` material icon.
+  static const IconData dirtyLens = IconData(
     0xef4b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `disabled_by_default` material icon.
-  static const IconData disabled_by_default = IconData(
+  /// The `disabledByDefault` material icon.
+  static const IconData disabledByDefault = IconData(
     0xf230,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `disabled_visible` material icon.
-  static const IconData disabled_visible = IconData(
+  /// The `disabledVisible` material icon.
+  static const IconData disabledVisible = IconData(
     0xe76e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `disc_full` material icon.
-  static const IconData disc_full = IconData(
+  /// The `discFull` material icon.
+  static const IconData discFull = IconData(
     0xe610,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3678,15 +4077,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `display_settings` material icon.
-  static const IconData display_settings = IconData(
+  /// The `displaySettings` material icon.
+  static const IconData displaySettings = IconData(
     0xeb97,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `dnd_forwardslash` material icon.
-  static const IconData dnd_forwardslash = IconData(
+  /// The `dndForwardslash` material icon.
+  static const IconData dndForwardslash = IconData(
     0xe611,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3699,78 +4098,78 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_disturb` material icon.
-  static const IconData do_disturb = IconData(
+  /// The `doDisturb` material icon.
+  static const IconData doDisturb = IconData(
     0xf08c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_disturb_alt` material icon.
-  static const IconData do_disturb_alt = IconData(
+  /// The `doDisturbAlt` material icon.
+  static const IconData doDisturbAlt = IconData(
     0xf08d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_disturb_off` material icon.
-  static const IconData do_disturb_off = IconData(
+  /// The `doDisturbOff` material icon.
+  static const IconData doDisturbOff = IconData(
     0xf08e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_disturb_on` material icon.
-  static const IconData do_disturb_on = IconData(
+  /// The `doDisturbOn` material icon.
+  static const IconData doDisturbOn = IconData(
     0xf08f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_disturb` material icon.
-  static const IconData do_not_disturb = IconData(
+  /// The `doNotDisturb` material icon.
+  static const IconData doNotDisturb = IconData(
     0xe612,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_disturb_alt` material icon.
-  static const IconData do_not_disturb_alt = IconData(
+  /// The `doNotDisturbAlt` material icon.
+  static const IconData doNotDisturbAlt = IconData(
     0xe611,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_disturb_off` material icon.
-  static const IconData do_not_disturb_off = IconData(
+  /// The `doNotDisturbOff` material icon.
+  static const IconData doNotDisturbOff = IconData(
     0xe643,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_disturb_on` material icon.
-  static const IconData do_not_disturb_on = IconData(
+  /// The `doNotDisturbOn` material icon.
+  static const IconData doNotDisturbOn = IconData(
     0xe644,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_disturb_on_total_silence` material icon.
-  static const IconData do_not_disturb_on_total_silence = IconData(
+  /// The `doNotDisturbOnTotalSilence` material icon.
+  static const IconData doNotDisturbOnTotalSilence = IconData(
     0xeffb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_step` material icon.
-  static const IconData do_not_step = IconData(
+  /// The `doNotStep` material icon.
+  static const IconData doNotStep = IconData(
     0xf19f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `do_not_touch` material icon.
-  static const IconData do_not_touch = IconData(
+  /// The `doNotTouch` material icon.
+  static const IconData doNotTouch = IconData(
     0xf1b0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3783,8 +4182,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `document_scanner` material icon.
-  static const IconData document_scanner = IconData(
+  /// The `documentScanner` material icon.
+  static const IconData documentScanner = IconData(
     0xe5fa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3797,22 +4196,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `domain_add` material icon.
-  static const IconData domain_add = IconData(
+  /// The `domainAdd` material icon.
+  static const IconData domainAdd = IconData(
     0xeb62,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `domain_disabled` material icon.
-  static const IconData domain_disabled = IconData(
+  /// The `domainDisabled` material icon.
+  static const IconData domainDisabled = IconData(
     0xe0ef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `domain_verification` material icon.
-  static const IconData domain_verification = IconData(
+  /// The `domainVerification` material icon.
+  static const IconData domainVerification = IconData(
     0xef4c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3825,50 +4224,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `done_all` material icon.
-  static const IconData done_all = IconData(
+  /// The `doneAll` material icon.
+  static const IconData doneAll = IconData(
     0xe877,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `done_outline` material icon.
-  static const IconData done_outline = IconData(
+  /// The `doneOutline` material icon.
+  static const IconData doneOutline = IconData(
     0xe92f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `donut_large` material icon.
-  static const IconData donut_large = IconData(
+  /// The `donutLarge` material icon.
+  static const IconData donutLarge = IconData(
     0xe917,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `donut_small` material icon.
-  static const IconData donut_small = IconData(
+  /// The `donutSmall` material icon.
+  static const IconData donutSmall = IconData(
     0xe918,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `door_back` material icon.
-  static const IconData door_back = IconData(
+  /// The `doorBack` material icon.
+  static const IconData doorBack = IconData(
     0xeffc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `door_front` material icon.
-  static const IconData door_front = IconData(
+  /// The `doorFront` material icon.
+  static const IconData doorFront = IconData(
     0xeffd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `door_sliding` material icon.
-  static const IconData door_sliding = IconData(
+  /// The `doorSliding` material icon.
+  static const IconData doorSliding = IconData(
     0xeffe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3881,15 +4280,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `double_arrow` material icon.
-  static const IconData double_arrow = IconData(
+  /// The `doubleArrow` material icon.
+  static const IconData doubleArrow = IconData(
     0xea50,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `downhill_skiing` material icon.
-  static const IconData downhill_skiing = IconData(
+  /// The `downhillSkiing` material icon.
+  static const IconData downhillSkiing = IconData(
     0xe509,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3902,15 +4301,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `download_done` material icon.
-  static const IconData download_done = IconData(
+  /// The `downloadDone` material icon.
+  static const IconData downloadDone = IconData(
     0xf091,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `download_for_offline` material icon.
-  static const IconData download_for_offline = IconData(
+  /// The `downloadForOffline` material icon.
+  static const IconData downloadForOffline = IconData(
     0xf000,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3930,15 +4329,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `drag_handle` material icon.
-  static const IconData drag_handle = IconData(
+  /// The `dragHandle` material icon.
+  static const IconData dragHandle = IconData(
     0xe25d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `drag_indicator` material icon.
-  static const IconData drag_indicator = IconData(
+  /// The `dragIndicator` material icon.
+  static const IconData dragIndicator = IconData(
     0xe945,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3951,36 +4350,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `drive_eta` material icon.
-  static const IconData drive_eta = IconData(
+  /// The `driveEta` material icon.
+  static const IconData driveEta = IconData(
     0xe613,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `drive_file_move` material icon.
-  static const IconData drive_file_move = IconData(
+  /// The `driveFileMove` material icon.
+  static const IconData driveFileMove = IconData(
     0xe675,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `drive_file_move_rtl` material icon.
-  static const IconData drive_file_move_rtl = IconData(
+  /// The `driveFileMoveRtl` material icon.
+  static const IconData driveFileMoveRtl = IconData(
     0xe76d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `drive_file_rename_outline` material icon.
-  static const IconData drive_file_rename_outline = IconData(
+  /// The `driveFileRenameOutline` material icon.
+  static const IconData driveFileRenameOutline = IconData(
     0xe9a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `drive_folder_upload` material icon.
-  static const IconData drive_folder_upload = IconData(
+  /// The `driveFolderUpload` material icon.
+  static const IconData driveFolderUpload = IconData(
     0xe9a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -3993,8 +4392,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dry_cleaning` material icon.
-  static const IconData dry_cleaning = IconData(
+  /// The `dryCleaning` material icon.
+  static const IconData dryCleaning = IconData(
     0xea58,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4014,22 +4413,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `dynamic_feed` material icon.
-  static const IconData dynamic_feed = IconData(
+  /// The `dynamicFeed` material icon.
+  static const IconData dynamicFeed = IconData(
     0xea14,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `dynamic_form` material icon.
-  static const IconData dynamic_form = IconData(
+  /// The `dynamicForm` material icon.
+  static const IconData dynamicForm = IconData(
     0xf1bf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `e_mobiledata` material icon.
-  static const IconData e_mobiledata = IconData(
+  /// The `eMobiledata` material icon.
+  static const IconData eMobiledata = IconData(
     0xf002,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4042,8 +4441,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `earbuds_battery` material icon.
-  static const IconData earbuds_battery = IconData(
+  /// The `earbudsBattery` material icon.
+  static const IconData earbudsBattery = IconData(
     0xf004,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4063,15 +4462,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `edgesensor_high` material icon.
-  static const IconData edgesensor_high = IconData(
+  /// The `edgesensorHigh` material icon.
+  static const IconData edgesensorHigh = IconData(
     0xf005,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edgesensor_low` material icon.
-  static const IconData edgesensor_low = IconData(
+  /// The `edgesensorLow` material icon.
+  static const IconData edgesensorLow = IconData(
     0xf006,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4084,57 +4483,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_attributes` material icon.
-  static const IconData edit_attributes = IconData(
+  /// The `editAttributes` material icon.
+  static const IconData editAttributes = IconData(
     0xe578,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_calendar` material icon.
-  static const IconData edit_calendar = IconData(
+  /// The `editCalendar` material icon.
+  static const IconData editCalendar = IconData(
     0xe742,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_location` material icon.
-  static const IconData edit_location = IconData(
+  /// The `editLocation` material icon.
+  static const IconData editLocation = IconData(
     0xe568,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_location_alt` material icon.
-  static const IconData edit_location_alt = IconData(
+  /// The `editLocationAlt` material icon.
+  static const IconData editLocationAlt = IconData(
     0xe1c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_note` material icon.
-  static const IconData edit_note = IconData(
+  /// The `editNote` material icon.
+  static const IconData editNote = IconData(
     0xe745,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_notifications` material icon.
-  static const IconData edit_notifications = IconData(
+  /// The `editNotifications` material icon.
+  static const IconData editNotifications = IconData(
     0xe525,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_off` material icon.
-  static const IconData edit_off = IconData(
+  /// The `editOff` material icon.
+  static const IconData editOff = IconData(
     0xe950,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `edit_road` material icon.
-  static const IconData edit_road = IconData(
+  /// The `editRoad` material icon.
+  static const IconData editRoad = IconData(
     0xef4d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4147,8 +4546,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `egg_alt` material icon.
-  static const IconData egg_alt = IconData(
+  /// The `eggAlt` material icon.
+  static const IconData eggAlt = IconData(
     0xeac8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4168,64 +4567,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `elderly_woman` material icon.
-  static const IconData elderly_woman = IconData(
+  /// The `elderlyWoman` material icon.
+  static const IconData elderlyWoman = IconData(
     0xeb69,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_bike` material icon.
-  static const IconData electric_bike = IconData(
+  /// The `electricBike` material icon.
+  static const IconData electricBike = IconData(
     0xeb1b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_bolt` material icon.
-  static const IconData electric_bolt = IconData(
+  /// The `electricBolt` material icon.
+  static const IconData electricBolt = IconData(
     0xec1c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_car` material icon.
-  static const IconData electric_car = IconData(
+  /// The `electricCar` material icon.
+  static const IconData electricCar = IconData(
     0xeb1c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_meter` material icon.
-  static const IconData electric_meter = IconData(
+  /// The `electricMeter` material icon.
+  static const IconData electricMeter = IconData(
     0xec1b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_moped` material icon.
-  static const IconData electric_moped = IconData(
+  /// The `electricMoped` material icon.
+  static const IconData electricMoped = IconData(
     0xeb1d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_rickshaw` material icon.
-  static const IconData electric_rickshaw = IconData(
+  /// The `electricRickshaw` material icon.
+  static const IconData electricRickshaw = IconData(
     0xeb1e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electric_scooter` material icon.
-  static const IconData electric_scooter = IconData(
+  /// The `electricScooter` material icon.
+  static const IconData electricScooter = IconData(
     0xeb1f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `electrical_services` material icon.
-  static const IconData electrical_services = IconData(
+  /// The `electricalServices` material icon.
+  static const IconData electricalServices = IconData(
     0xf102,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4252,85 +4651,85 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `emergency_recording` material icon.
-  static const IconData emergency_recording = IconData(
+  /// The `emergencyRecording` material icon.
+  static const IconData emergencyRecording = IconData(
     0xebf4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emergency_share` material icon.
-  static const IconData emergency_share = IconData(
+  /// The `emergencyShare` material icon.
+  static const IconData emergencyShare = IconData(
     0xebf6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_emotions` material icon.
-  static const IconData emoji_emotions = IconData(
+  /// The `emojiEmotions` material icon.
+  static const IconData emojiEmotions = IconData(
     0xea22,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_events` material icon.
-  static const IconData emoji_events = IconData(
+  /// The `emojiEvents` material icon.
+  static const IconData emojiEvents = IconData(
     0xea23,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_flags` material icon.
-  static const IconData emoji_flags = IconData(
+  /// The `emojiFlags` material icon.
+  static const IconData emojiFlags = IconData(
     0xea1a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_food_beverage` material icon.
-  static const IconData emoji_food_beverage = IconData(
+  /// The `emojiFoodBeverage` material icon.
+  static const IconData emojiFoodBeverage = IconData(
     0xea1b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_nature` material icon.
-  static const IconData emoji_nature = IconData(
+  /// The `emojiNature` material icon.
+  static const IconData emojiNature = IconData(
     0xea1c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_objects` material icon.
-  static const IconData emoji_objects = IconData(
+  /// The `emojiObjects` material icon.
+  static const IconData emojiObjects = IconData(
     0xea24,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_people` material icon.
-  static const IconData emoji_people = IconData(
+  /// The `emojiPeople` material icon.
+  static const IconData emojiPeople = IconData(
     0xea1d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_symbols` material icon.
-  static const IconData emoji_symbols = IconData(
+  /// The `emojiSymbols` material icon.
+  static const IconData emojiSymbols = IconData(
     0xea1e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `emoji_transportation` material icon.
-  static const IconData emoji_transportation = IconData(
+  /// The `emojiTransportation` material icon.
+  static const IconData emojiTransportation = IconData(
     0xea1f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `energy_savings_leaf` material icon.
-  static const IconData energy_savings_leaf = IconData(
+  /// The `energySavingsLeaf` material icon.
+  static const IconData energySavingsLeaf = IconData(
     0xec1a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4343,15 +4742,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `enhance_photo_translate` material icon.
-  static const IconData enhance_photo_translate = IconData(
+  /// The `enhancePhotoTranslate` material icon.
+  static const IconData enhancePhotoTranslate = IconData(
     0xe8fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `enhanced_encryption` material icon.
-  static const IconData enhanced_encryption = IconData(
+  /// The `enhancedEncryption` material icon.
+  static const IconData enhancedEncryption = IconData(
     0xe63f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4371,8 +4770,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `error_outline` material icon.
-  static const IconData error_outline = IconData(
+  /// The `errorOutline` material icon.
+  static const IconData errorOutline = IconData(
     0xe001,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4385,8 +4784,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `escalator_warning` material icon.
-  static const IconData escalator_warning = IconData(
+  /// The `escalatorWarning` material icon.
+  static const IconData escalatorWarning = IconData(
     0xf1ac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4399,15 +4798,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `euro_symbol` material icon.
-  static const IconData euro_symbol = IconData(
+  /// The `euroSymbol` material icon.
+  static const IconData euroSymbol = IconData(
     0xe926,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ev_station` material icon.
-  static const IconData ev_station = IconData(
+  /// The `evStation` material icon.
+  static const IconData evStation = IconData(
     0xe56d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4420,43 +4819,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `event_available` material icon.
-  static const IconData event_available = IconData(
+  /// The `eventAvailable` material icon.
+  static const IconData eventAvailable = IconData(
     0xe614,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `event_busy` material icon.
-  static const IconData event_busy = IconData(
+  /// The `eventBusy` material icon.
+  static const IconData eventBusy = IconData(
     0xe615,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `event_note` material icon.
-  static const IconData event_note = IconData(
+  /// The `eventNote` material icon.
+  static const IconData eventNote = IconData(
     0xe616,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `event_repeat` material icon.
-  static const IconData event_repeat = IconData(
+  /// The `eventRepeat` material icon.
+  static const IconData eventRepeat = IconData(
     0xeb7b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `event_seat` material icon.
-  static const IconData event_seat = IconData(
+  /// The `eventSeat` material icon.
+  static const IconData eventSeat = IconData(
     0xe903,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exit_to_app` material icon.
-  static const IconData exit_to_app = IconData(
+  /// The `exitToApp` material icon.
+  static const IconData exitToApp = IconData(
     0xe879,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4469,22 +4868,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `expand_circle_down` material icon.
-  static const IconData expand_circle_down = IconData(
+  /// The `expandCircleDown` material icon.
+  static const IconData expandCircleDown = IconData(
     0xe7cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `expand_less` material icon.
-  static const IconData expand_less = IconData(
+  /// The `expandLess` material icon.
+  static const IconData expandLess = IconData(
     0xe5ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `expand_more` material icon.
-  static const IconData expand_more = IconData(
+  /// The `expandMore` material icon.
+  static const IconData expandMore = IconData(
     0xe5cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4504,8 +4903,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `explore_off` material icon.
-  static const IconData explore_off = IconData(
+  /// The `exploreOff` material icon.
+  static const IconData exploreOff = IconData(
     0xe9a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4518,50 +4917,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_minus_1` material icon.
-  static const IconData exposure_minus_1 = IconData(
+  /// The `exposureMinus1` material icon.
+  static const IconData exposureMinus1 = IconData(
     0xe3cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_minus_2` material icon.
-  static const IconData exposure_minus_2 = IconData(
+  /// The `exposureMinus2` material icon.
+  static const IconData exposureMinus2 = IconData(
     0xe3cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_neg_1` material icon.
-  static const IconData exposure_neg_1 = IconData(
+  /// The `exposureNeg1` material icon.
+  static const IconData exposureNeg1 = IconData(
     0xe3cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_neg_2` material icon.
-  static const IconData exposure_neg_2 = IconData(
+  /// The `exposureNeg2` material icon.
+  static const IconData exposureNeg2 = IconData(
     0xe3cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_plus_1` material icon.
-  static const IconData exposure_plus_1 = IconData(
+  /// The `exposurePlus1` material icon.
+  static const IconData exposurePlus1 = IconData(
     0xe3cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_plus_2` material icon.
-  static const IconData exposure_plus_2 = IconData(
+  /// The `exposurePlus2` material icon.
+  static const IconData exposurePlus2 = IconData(
     0xe3ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `exposure_zero` material icon.
-  static const IconData exposure_zero = IconData(
+  /// The `exposureZero` material icon.
+  static const IconData exposureZero = IconData(
     0xe3cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4574,8 +4973,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `extension_off` material icon.
-  static const IconData extension_off = IconData(
+  /// The `extensionOff` material icon.
+  static const IconData extensionOff = IconData(
     0xe4f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4588,57 +4987,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_2` material icon.
-  static const IconData face_2 = IconData(
+  /// The `face2` material icon.
+  static const IconData face2 = IconData(
     0xf8da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_3` material icon.
-  static const IconData face_3 = IconData(
+  /// The `face3` material icon.
+  static const IconData face3 = IconData(
     0xf8db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_4` material icon.
-  static const IconData face_4 = IconData(
+  /// The `face4` material icon.
+  static const IconData face4 = IconData(
     0xf8dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_5` material icon.
-  static const IconData face_5 = IconData(
+  /// The `face5` material icon.
+  static const IconData face5 = IconData(
     0xf8dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_6` material icon.
-  static const IconData face_6 = IconData(
+  /// The `face6` material icon.
+  static const IconData face6 = IconData(
     0xf8de,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_retouching_natural` material icon.
-  static const IconData face_retouching_natural = IconData(
+  /// The `faceRetouchingNatural` material icon.
+  static const IconData faceRetouchingNatural = IconData(
     0xef4e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_retouching_off` material icon.
-  static const IconData face_retouching_off = IconData(
+  /// The `faceRetouchingOff` material icon.
+  static const IconData faceRetouchingOff = IconData(
     0xf007,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `face_unlock` material icon.
-  static const IconData face_unlock = IconData(
+  /// The `faceUnlock` material icon.
+  static const IconData faceUnlock = IconData(
     0xf008,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4651,8 +5050,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fact_check` material icon.
-  static const IconData fact_check = IconData(
+  /// The `factCheck` material icon.
+  static const IconData factCheck = IconData(
     0xf0c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4665,22 +5064,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `family_restroom` material icon.
-  static const IconData family_restroom = IconData(
+  /// The `familyRestroom` material icon.
+  static const IconData familyRestroom = IconData(
     0xf1a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fast_forward` material icon.
-  static const IconData fast_forward = IconData(
+  /// The `fastForward` material icon.
+  static const IconData fastForward = IconData(
     0xe01f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fast_rewind` material icon.
-  static const IconData fast_rewind = IconData(
+  /// The `fastRewind` material icon.
+  static const IconData fastRewind = IconData(
     0xe020,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4700,15 +5099,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `favorite_border` material icon.
-  static const IconData favorite_border = IconData(
+  /// The `favoriteBorder` material icon.
+  static const IconData favoriteBorder = IconData(
     0xe87e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `favorite_outline` material icon.
-  static const IconData favorite_outline = IconData(
+  /// The `favoriteOutline` material icon.
+  static const IconData favoriteOutline = IconData(
     0xe87e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4721,15 +5120,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `featured_play_list` material icon.
-  static const IconData featured_play_list = IconData(
+  /// The `featuredPlayList` material icon.
+  static const IconData featuredPlayList = IconData(
     0xe06d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `featured_video` material icon.
-  static const IconData featured_video = IconData(
+  /// The `featuredVideo` material icon.
+  static const IconData featuredVideo = IconData(
     0xe06e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4770,85 +5169,85 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fiber_dvr` material icon.
-  static const IconData fiber_dvr = IconData(
+  /// The `fiberDvr` material icon.
+  static const IconData fiberDvr = IconData(
     0xe05d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fiber_manual_record` material icon.
-  static const IconData fiber_manual_record = IconData(
+  /// The `fiberManualRecord` material icon.
+  static const IconData fiberManualRecord = IconData(
     0xe061,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fiber_new` material icon.
-  static const IconData fiber_new = IconData(
+  /// The `fiberNew` material icon.
+  static const IconData fiberNew = IconData(
     0xe05e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fiber_pin` material icon.
-  static const IconData fiber_pin = IconData(
+  /// The `fiberPin` material icon.
+  static const IconData fiberPin = IconData(
     0xe06a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fiber_smart_record` material icon.
-  static const IconData fiber_smart_record = IconData(
+  /// The `fiberSmartRecord` material icon.
+  static const IconData fiberSmartRecord = IconData(
     0xe062,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_copy` material icon.
-  static const IconData file_copy = IconData(
+  /// The `fileCopy` material icon.
+  static const IconData fileCopy = IconData(
     0xe173,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_download` material icon.
-  static const IconData file_download = IconData(
+  /// The `fileDownload` material icon.
+  static const IconData fileDownload = IconData(
     0xe2c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_download_done` material icon.
-  static const IconData file_download_done = IconData(
+  /// The `fileDownloadDone` material icon.
+  static const IconData fileDownloadDone = IconData(
     0xe9aa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_download_off` material icon.
-  static const IconData file_download_off = IconData(
+  /// The `fileDownloadOff` material icon.
+  static const IconData fileDownloadOff = IconData(
     0xe4fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_open` material icon.
-  static const IconData file_open = IconData(
+  /// The `fileOpen` material icon.
+  static const IconData fileOpen = IconData(
     0xeaf3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_present` material icon.
-  static const IconData file_present = IconData(
+  /// The `filePresent` material icon.
+  static const IconData filePresent = IconData(
     0xea0e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `file_upload` material icon.
-  static const IconData file_upload = IconData(
+  /// The `fileUpload` material icon.
+  static const IconData fileUpload = IconData(
     0xe2c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -4861,169 +5260,169 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_1` material icon.
-  static const IconData filter_1 = IconData(
+  /// The `filter1` material icon.
+  static const IconData filter1 = IconData(
     0xe3d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_2` material icon.
-  static const IconData filter_2 = IconData(
+  /// The `filter2` material icon.
+  static const IconData filter2 = IconData(
     0xe3d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_3` material icon.
-  static const IconData filter_3 = IconData(
+  /// The `filter3` material icon.
+  static const IconData filter3 = IconData(
     0xe3d2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_4` material icon.
-  static const IconData filter_4 = IconData(
+  /// The `filter4` material icon.
+  static const IconData filter4 = IconData(
     0xe3d4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_5` material icon.
-  static const IconData filter_5 = IconData(
+  /// The `filter5` material icon.
+  static const IconData filter5 = IconData(
     0xe3d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_6` material icon.
-  static const IconData filter_6 = IconData(
+  /// The `filter6` material icon.
+  static const IconData filter6 = IconData(
     0xe3d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_7` material icon.
-  static const IconData filter_7 = IconData(
+  /// The `filter7` material icon.
+  static const IconData filter7 = IconData(
     0xe3d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_8` material icon.
-  static const IconData filter_8 = IconData(
+  /// The `filter8` material icon.
+  static const IconData filter8 = IconData(
     0xe3d8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_9` material icon.
-  static const IconData filter_9 = IconData(
+  /// The `filter9` material icon.
+  static const IconData filter9 = IconData(
     0xe3d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_9_plus` material icon.
-  static const IconData filter_9_plus = IconData(
+  /// The `filter9Plus` material icon.
+  static const IconData filter9Plus = IconData(
     0xe3da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_alt` material icon.
-  static const IconData filter_alt = IconData(
+  /// The `filterAlt` material icon.
+  static const IconData filterAlt = IconData(
     0xef4f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_alt_off` material icon.
-  static const IconData filter_alt_off = IconData(
+  /// The `filterAltOff` material icon.
+  static const IconData filterAltOff = IconData(
     0xeb32,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_b_and_w` material icon.
-  static const IconData filter_b_and_w = IconData(
+  /// The `filterBAndW` material icon.
+  static const IconData filterBAndW = IconData(
     0xe3db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_center_focus` material icon.
-  static const IconData filter_center_focus = IconData(
+  /// The `filterCenterFocus` material icon.
+  static const IconData filterCenterFocus = IconData(
     0xe3dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_drama` material icon.
-  static const IconData filter_drama = IconData(
+  /// The `filterDrama` material icon.
+  static const IconData filterDrama = IconData(
     0xe3dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_frames` material icon.
-  static const IconData filter_frames = IconData(
+  /// The `filterFrames` material icon.
+  static const IconData filterFrames = IconData(
     0xe3de,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_hdr` material icon.
-  static const IconData filter_hdr = IconData(
+  /// The `filterHdr` material icon.
+  static const IconData filterHdr = IconData(
     0xe3df,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_list` material icon.
-  static const IconData filter_list = IconData(
+  /// The `filterList` material icon.
+  static const IconData filterList = IconData(
     0xe152,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_list_off` material icon.
-  static const IconData filter_list_off = IconData(
+  /// The `filterListOff` material icon.
+  static const IconData filterListOff = IconData(
     0xeb57,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_none` material icon.
-  static const IconData filter_none = IconData(
+  /// The `filterNone` material icon.
+  static const IconData filterNone = IconData(
     0xe3e0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_tilt_shift` material icon.
-  static const IconData filter_tilt_shift = IconData(
+  /// The `filterTiltShift` material icon.
+  static const IconData filterTiltShift = IconData(
     0xe3e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `filter_vintage` material icon.
-  static const IconData filter_vintage = IconData(
+  /// The `filterVintage` material icon.
+  static const IconData filterVintage = IconData(
     0xe3e3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `find_in_page` material icon.
-  static const IconData find_in_page = IconData(
+  /// The `findInPage` material icon.
+  static const IconData findInPage = IconData(
     0xe880,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `find_replace` material icon.
-  static const IconData find_replace = IconData(
+  /// The `findReplace` material icon.
+  static const IconData findReplace = IconData(
     0xe881,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5036,22 +5435,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fire_extinguisher` material icon.
-  static const IconData fire_extinguisher = IconData(
+  /// The `fireExtinguisher` material icon.
+  static const IconData fireExtinguisher = IconData(
     0xf1d8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fire_hydrant_alt` material icon.
-  static const IconData fire_hydrant_alt = IconData(
+  /// The `fireHydrantAlt` material icon.
+  static const IconData fireHydrantAlt = IconData(
     0xf8f1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fire_truck` material icon.
-  static const IconData fire_truck = IconData(
+  /// The `fireTruck` material icon.
+  static const IconData fireTruck = IconData(
     0xf8f2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5064,15 +5463,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `first_page` material icon.
-  static const IconData first_page = IconData(
+  /// The `firstPage` material icon.
+  static const IconData firstPage = IconData(
     0xe5dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fit_screen` material icon.
-  static const IconData fit_screen = IconData(
+  /// The `fitScreen` material icon.
+  static const IconData fitScreen = IconData(
     0xea10,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5085,8 +5484,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fitness_center` material icon.
-  static const IconData fitness_center = IconData(
+  /// The `fitnessCenter` material icon.
+  static const IconData fitnessCenter = IconData(
     0xeb43,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5099,8 +5498,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `flag_circle` material icon.
-  static const IconData flag_circle = IconData(
+  /// The `flagCircle` material icon.
+  static const IconData flagCircle = IconData(
     0xeaf8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5120,36 +5519,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `flash_auto` material icon.
-  static const IconData flash_auto = IconData(
+  /// The `flashAuto` material icon.
+  static const IconData flashAuto = IconData(
     0xe3e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flash_off` material icon.
-  static const IconData flash_off = IconData(
+  /// The `flashOff` material icon.
+  static const IconData flashOff = IconData(
     0xe3e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flash_on` material icon.
-  static const IconData flash_on = IconData(
+  /// The `flashOn` material icon.
+  static const IconData flashOn = IconData(
     0xe3e7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flashlight_off` material icon.
-  static const IconData flashlight_off = IconData(
+  /// The `flashlightOff` material icon.
+  static const IconData flashlightOff = IconData(
     0xf00a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flashlight_on` material icon.
-  static const IconData flashlight_on = IconData(
+  /// The `flashlightOn` material icon.
+  static const IconData flashlightOn = IconData(
     0xf00b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5169,22 +5568,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `flight_class` material icon.
-  static const IconData flight_class = IconData(
+  /// The `flightClass` material icon.
+  static const IconData flightClass = IconData(
     0xe7cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flight_land` material icon.
-  static const IconData flight_land = IconData(
+  /// The `flightLand` material icon.
+  static const IconData flightLand = IconData(
     0xe904,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flight_takeoff` material icon.
-  static const IconData flight_takeoff = IconData(
+  /// The `flightTakeoff` material icon.
+  static const IconData flightTakeoff = IconData(
     0xe905,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5197,29 +5596,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `flip_camera_android` material icon.
-  static const IconData flip_camera_android = IconData(
+  /// The `flipCameraAndroid` material icon.
+  static const IconData flipCameraAndroid = IconData(
     0xea37,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flip_camera_ios` material icon.
-  static const IconData flip_camera_ios = IconData(
+  /// The `flipCameraIos` material icon.
+  static const IconData flipCameraIos = IconData(
     0xea38,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flip_to_back` material icon.
-  static const IconData flip_to_back = IconData(
+  /// The `flipToBack` material icon.
+  static const IconData flipToBack = IconData(
     0xe882,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `flip_to_front` material icon.
-  static const IconData flip_to_front = IconData(
+  /// The `flipToFront` material icon.
+  static const IconData flipToFront = IconData(
     0xe883,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5246,22 +5645,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `flutter_dash` material icon.
-  static const IconData flutter_dash = IconData(
+  /// The `flutterDash` material icon.
+  static const IconData flutterDash = IconData(
     0xe00b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fmd_bad` material icon.
-  static const IconData fmd_bad = IconData(
+  /// The `fmdBad` material icon.
+  static const IconData fmdBad = IconData(
     0xf00e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fmd_good` material icon.
-  static const IconData fmd_good = IconData(
+  /// The `fmdGood` material icon.
+  static const IconData fmdGood = IconData(
     0xf00f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5274,78 +5673,78 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_copy` material icon.
-  static const IconData folder_copy = IconData(
+  /// The `folderCopy` material icon.
+  static const IconData folderCopy = IconData(
     0xebbd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_delete` material icon.
-  static const IconData folder_delete = IconData(
+  /// The `folderDelete` material icon.
+  static const IconData folderDelete = IconData(
     0xeb34,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_off` material icon.
-  static const IconData folder_off = IconData(
+  /// The `folderOff` material icon.
+  static const IconData folderOff = IconData(
     0xeb83,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_open` material icon.
-  static const IconData folder_open = IconData(
+  /// The `folderOpen` material icon.
+  static const IconData folderOpen = IconData(
     0xe2c8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_shared` material icon.
-  static const IconData folder_shared = IconData(
+  /// The `folderShared` material icon.
+  static const IconData folderShared = IconData(
     0xe2c9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_special` material icon.
-  static const IconData folder_special = IconData(
+  /// The `folderSpecial` material icon.
+  static const IconData folderSpecial = IconData(
     0xe617,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `folder_zip` material icon.
-  static const IconData folder_zip = IconData(
+  /// The `folderZip` material icon.
+  static const IconData folderZip = IconData(
     0xeb2c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `follow_the_signs` material icon.
-  static const IconData follow_the_signs = IconData(
+  /// The `followTheSigns` material icon.
+  static const IconData followTheSigns = IconData(
     0xf222,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `font_download` material icon.
-  static const IconData font_download = IconData(
+  /// The `fontDownload` material icon.
+  static const IconData fontDownload = IconData(
     0xe167,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `font_download_off` material icon.
-  static const IconData font_download_off = IconData(
+  /// The `fontDownloadOff` material icon.
+  static const IconData fontDownloadOff = IconData(
     0xe4f9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `food_bank` material icon.
-  static const IconData food_bank = IconData(
+  /// The `foodBank` material icon.
+  static const IconData foodBank = IconData(
     0xf1f2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5358,197 +5757,197 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fork_left` material icon.
-  static const IconData fork_left = IconData(
+  /// The `forkLeft` material icon.
+  static const IconData forkLeft = IconData(
     0xeba0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `fork_right` material icon.
-  static const IconData fork_right = IconData(
+  /// The `forkRight` material icon.
+  static const IconData forkRight = IconData(
     0xebac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_align_center` material icon.
-  static const IconData format_align_center = IconData(
+  /// The `formatAlignCenter` material icon.
+  static const IconData formatAlignCenter = IconData(
     0xe234,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_align_justify` material icon.
-  static const IconData format_align_justify = IconData(
+  /// The `formatAlignJustify` material icon.
+  static const IconData formatAlignJustify = IconData(
     0xe235,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_align_left` material icon.
-  static const IconData format_align_left = IconData(
+  /// The `formatAlignLeft` material icon.
+  static const IconData formatAlignLeft = IconData(
     0xe236,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_align_right` material icon.
-  static const IconData format_align_right = IconData(
+  /// The `formatAlignRight` material icon.
+  static const IconData formatAlignRight = IconData(
     0xe237,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_bold` material icon.
-  static const IconData format_bold = IconData(
+  /// The `formatBold` material icon.
+  static const IconData formatBold = IconData(
     0xe238,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_clear` material icon.
-  static const IconData format_clear = IconData(
+  /// The `formatClear` material icon.
+  static const IconData formatClear = IconData(
     0xe239,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_color_fill` material icon.
-  static const IconData format_color_fill = IconData(
+  /// The `formatColorFill` material icon.
+  static const IconData formatColorFill = IconData(
     0xe23a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_color_reset` material icon.
-  static const IconData format_color_reset = IconData(
+  /// The `formatColorReset` material icon.
+  static const IconData formatColorReset = IconData(
     0xe23b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_color_text` material icon.
-  static const IconData format_color_text = IconData(
+  /// The `formatColorText` material icon.
+  static const IconData formatColorText = IconData(
     0xe23c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_indent_decrease` material icon.
-  static const IconData format_indent_decrease = IconData(
+  /// The `formatIndentDecrease` material icon.
+  static const IconData formatIndentDecrease = IconData(
     0xe23d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_indent_increase` material icon.
-  static const IconData format_indent_increase = IconData(
+  /// The `formatIndentIncrease` material icon.
+  static const IconData formatIndentIncrease = IconData(
     0xe23e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_italic` material icon.
-  static const IconData format_italic = IconData(
+  /// The `formatItalic` material icon.
+  static const IconData formatItalic = IconData(
     0xe23f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_line_spacing` material icon.
-  static const IconData format_line_spacing = IconData(
+  /// The `formatLineSpacing` material icon.
+  static const IconData formatLineSpacing = IconData(
     0xe240,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_list_bulleted` material icon.
-  static const IconData format_list_bulleted = IconData(
+  /// The `formatListBulleted` material icon.
+  static const IconData formatListBulleted = IconData(
     0xe241,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_list_numbered` material icon.
-  static const IconData format_list_numbered = IconData(
+  /// The `formatListNumbered` material icon.
+  static const IconData formatListNumbered = IconData(
     0xe242,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_list_numbered_rtl` material icon.
-  static const IconData format_list_numbered_rtl = IconData(
+  /// The `formatListNumberedRtl` material icon.
+  static const IconData formatListNumberedRtl = IconData(
     0xe267,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_overline` material icon.
-  static const IconData format_overline = IconData(
+  /// The `formatOverline` material icon.
+  static const IconData formatOverline = IconData(
     0xeb65,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_paint` material icon.
-  static const IconData format_paint = IconData(
+  /// The `formatPaint` material icon.
+  static const IconData formatPaint = IconData(
     0xe243,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_quote` material icon.
-  static const IconData format_quote = IconData(
+  /// The `formatQuote` material icon.
+  static const IconData formatQuote = IconData(
     0xe244,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_shapes` material icon.
-  static const IconData format_shapes = IconData(
+  /// The `formatShapes` material icon.
+  static const IconData formatShapes = IconData(
     0xe25e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_size` material icon.
-  static const IconData format_size = IconData(
+  /// The `formatSize` material icon.
+  static const IconData formatSize = IconData(
     0xe245,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_strikethrough` material icon.
-  static const IconData format_strikethrough = IconData(
+  /// The `formatStrikethrough` material icon.
+  static const IconData formatStrikethrough = IconData(
     0xe246,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_textdirection_l_to_r` material icon.
-  static const IconData format_textdirection_l_to_r = IconData(
+  /// The `formatTextdirectionLToR` material icon.
+  static const IconData formatTextdirectionLToR = IconData(
     0xe247,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_textdirection_r_to_l` material icon.
-  static const IconData format_textdirection_r_to_l = IconData(
+  /// The `formatTextdirectionRToL` material icon.
+  static const IconData formatTextdirectionRToL = IconData(
     0xe248,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_underline` material icon.
-  static const IconData format_underline = IconData(
+  /// The `formatUnderline` material icon.
+  static const IconData formatUnderline = IconData(
     0xe765,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `format_underlined` material icon.
-  static const IconData format_underlined = IconData(
+  /// The `formatUnderlined` material icon.
+  static const IconData formatUnderlined = IconData(
     0xe765,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5575,29 +5974,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `forward_10` material icon.
-  static const IconData forward_10 = IconData(
+  /// The `forward10` material icon.
+  static const IconData forward10 = IconData(
     0xe056,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `forward_30` material icon.
-  static const IconData forward_30 = IconData(
+  /// The `forward30` material icon.
+  static const IconData forward30 = IconData(
     0xe057,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `forward_5` material icon.
-  static const IconData forward_5 = IconData(
+  /// The `forward5` material icon.
+  static const IconData forward5 = IconData(
     0xe058,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `forward_to_inbox` material icon.
-  static const IconData forward_to_inbox = IconData(
+  /// The `forwardToInbox` material icon.
+  static const IconData forwardToInbox = IconData(
     0xf187,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5610,22 +6009,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `free_breakfast` material icon.
-  static const IconData free_breakfast = IconData(
+  /// The `freeBreakfast` material icon.
+  static const IconData freeBreakfast = IconData(
     0xeb44,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `free_cancellation` material icon.
-  static const IconData free_cancellation = IconData(
+  /// The `freeCancellation` material icon.
+  static const IconData freeCancellation = IconData(
     0xe748,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `front_hand` material icon.
-  static const IconData front_hand = IconData(
+  /// The `frontHand` material icon.
+  static const IconData frontHand = IconData(
     0xe769,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5638,8 +6037,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `fullscreen_exit` material icon.
-  static const IconData fullscreen_exit = IconData(
+  /// The `fullscreenExit` material icon.
+  static const IconData fullscreenExit = IconData(
     0xe5d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5652,15 +6051,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `g_mobiledata` material icon.
-  static const IconData g_mobiledata = IconData(
+  /// The `gMobiledata` material icon.
+  static const IconData gMobiledata = IconData(
     0xf010,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `g_translate` material icon.
-  static const IconData g_translate = IconData(
+  /// The `gTranslate` material icon.
+  static const IconData gTranslate = IconData(
     0xe927,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5687,8 +6086,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `gas_meter` material icon.
-  static const IconData gas_meter = IconData(
+  /// The `gasMeter` material icon.
+  static const IconData gasMeter = IconData(
     0xec19,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5701,8 +6100,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `generating_tokens` material icon.
-  static const IconData generating_tokens = IconData(
+  /// The `generatingTokens` material icon.
+  static const IconData generatingTokens = IconData(
     0xe749,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5715,8 +6114,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `get_app` material icon.
-  static const IconData get_app = IconData(
+  /// The `getApp` material icon.
+  static const IconData getApp = IconData(
     0xe884,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5729,8 +6128,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `gif_box` material icon.
-  static const IconData gif_box = IconData(
+  /// The `gifBox` material icon.
+  static const IconData gifBox = IconData(
     0xe7a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5750,50 +6149,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `golf_course` material icon.
-  static const IconData golf_course = IconData(
+  /// The `golfCourse` material icon.
+  static const IconData golfCourse = IconData(
     0xeb45,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gpp_bad` material icon.
-  static const IconData gpp_bad = IconData(
+  /// The `gppBad` material icon.
+  static const IconData gppBad = IconData(
     0xf012,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gpp_good` material icon.
-  static const IconData gpp_good = IconData(
+  /// The `gppGood` material icon.
+  static const IconData gppGood = IconData(
     0xf013,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gpp_maybe` material icon.
-  static const IconData gpp_maybe = IconData(
+  /// The `gppMaybe` material icon.
+  static const IconData gppMaybe = IconData(
     0xf014,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gps_fixed` material icon.
-  static const IconData gps_fixed = IconData(
+  /// The `gpsFixed` material icon.
+  static const IconData gpsFixed = IconData(
     0xe1b3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gps_not_fixed` material icon.
-  static const IconData gps_not_fixed = IconData(
+  /// The `gpsNotFixed` material icon.
+  static const IconData gpsNotFixed = IconData(
     0xe1b4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `gps_off` material icon.
-  static const IconData gps_off = IconData(
+  /// The `gpsOff` material icon.
+  static const IconData gpsOff = IconData(
     0xe1b5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5827,8 +6226,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `graphic_eq` material icon.
-  static const IconData graphic_eq = IconData(
+  /// The `graphicEq` material icon.
+  static const IconData graphicEq = IconData(
     0xe1b8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5841,43 +6240,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_3x3` material icon.
-  static const IconData grid_3x3 = IconData(
+  /// The `grid3x3` material icon.
+  static const IconData grid3x3 = IconData(
     0xf015,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_4x4` material icon.
-  static const IconData grid_4x4 = IconData(
+  /// The `grid4x4` material icon.
+  static const IconData grid4x4 = IconData(
     0xf016,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_goldenratio` material icon.
-  static const IconData grid_goldenratio = IconData(
+  /// The `gridGoldenratio` material icon.
+  static const IconData gridGoldenratio = IconData(
     0xf017,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_off` material icon.
-  static const IconData grid_off = IconData(
+  /// The `gridOff` material icon.
+  static const IconData gridOff = IconData(
     0xe3eb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_on` material icon.
-  static const IconData grid_on = IconData(
+  /// The `gridOn` material icon.
+  static const IconData gridOn = IconData(
     0xe3ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `grid_view` material icon.
-  static const IconData grid_view = IconData(
+  /// The `gridView` material icon.
+  static const IconData gridView = IconData(
     0xe9b0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5890,29 +6289,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `group_add` material icon.
-  static const IconData group_add = IconData(
+  /// The `groupAdd` material icon.
+  static const IconData groupAdd = IconData(
     0xe7f0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `group_off` material icon.
-  static const IconData group_off = IconData(
+  /// The `groupOff` material icon.
+  static const IconData groupOff = IconData(
     0xe747,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `group_remove` material icon.
-  static const IconData group_remove = IconData(
+  /// The `groupRemove` material icon.
+  static const IconData groupRemove = IconData(
     0xe7ad,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `group_work` material icon.
-  static const IconData group_work = IconData(
+  /// The `groupWork` material icon.
+  static const IconData groupWork = IconData(
     0xe886,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5925,29 +6324,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `groups_2` material icon.
-  static const IconData groups_2 = IconData(
+  /// The `groups2` material icon.
+  static const IconData groups2 = IconData(
     0xf8df,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `groups_3` material icon.
-  static const IconData groups_3 = IconData(
+  /// The `groups3` material icon.
+  static const IconData groups3 = IconData(
     0xf8e0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `h_mobiledata` material icon.
-  static const IconData h_mobiledata = IconData(
+  /// The `hMobiledata` material icon.
+  static const IconData hMobiledata = IconData(
     0xf018,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `h_plus_mobiledata` material icon.
-  static const IconData h_plus_mobiledata = IconData(
+  /// The `hPlusMobiledata` material icon.
+  static const IconData hPlusMobiledata = IconData(
     0xf019,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -5988,71 +6387,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_auto` material icon.
-  static const IconData hdr_auto = IconData(
+  /// The `hdrAuto` material icon.
+  static const IconData hdrAuto = IconData(
     0xf01a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_auto_select` material icon.
-  static const IconData hdr_auto_select = IconData(
+  /// The `hdrAutoSelect` material icon.
+  static const IconData hdrAutoSelect = IconData(
     0xf01b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_enhanced_select` material icon.
-  static const IconData hdr_enhanced_select = IconData(
+  /// The `hdrEnhancedSelect` material icon.
+  static const IconData hdrEnhancedSelect = IconData(
     0xef51,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_off` material icon.
-  static const IconData hdr_off = IconData(
+  /// The `hdrOff` material icon.
+  static const IconData hdrOff = IconData(
     0xe3ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_off_select` material icon.
-  static const IconData hdr_off_select = IconData(
+  /// The `hdrOffSelect` material icon.
+  static const IconData hdrOffSelect = IconData(
     0xf01c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_on` material icon.
-  static const IconData hdr_on = IconData(
+  /// The `hdrOn` material icon.
+  static const IconData hdrOn = IconData(
     0xe3ee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_on_select` material icon.
-  static const IconData hdr_on_select = IconData(
+  /// The `hdrOnSelect` material icon.
+  static const IconData hdrOnSelect = IconData(
     0xf01d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_plus` material icon.
-  static const IconData hdr_plus = IconData(
+  /// The `hdrPlus` material icon.
+  static const IconData hdrPlus = IconData(
     0xf01e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_strong` material icon.
-  static const IconData hdr_strong = IconData(
+  /// The `hdrStrong` material icon.
+  static const IconData hdrStrong = IconData(
     0xe3f1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hdr_weak` material icon.
-  static const IconData hdr_weak = IconData(
+  /// The `hdrWeak` material icon.
+  static const IconData hdrWeak = IconData(
     0xe3f2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6065,8 +6464,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `headphones_battery` material icon.
-  static const IconData headphones_battery = IconData(
+  /// The `headphonesBattery` material icon.
+  static const IconData headphonesBattery = IconData(
     0xf020,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6079,15 +6478,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `headset_mic` material icon.
-  static const IconData headset_mic = IconData(
+  /// The `headsetMic` material icon.
+  static const IconData headsetMic = IconData(
     0xe311,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `headset_off` material icon.
-  static const IconData headset_off = IconData(
+  /// The `headsetOff` material icon.
+  static const IconData headsetOff = IconData(
     0xe33a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6100,8 +6499,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `health_and_safety` material icon.
-  static const IconData health_and_safety = IconData(
+  /// The `healthAndSafety` material icon.
+  static const IconData healthAndSafety = IconData(
     0xe1d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6114,22 +6513,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `hearing_disabled` material icon.
-  static const IconData hearing_disabled = IconData(
+  /// The `hearingDisabled` material icon.
+  static const IconData hearingDisabled = IconData(
     0xf104,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `heart_broken` material icon.
-  static const IconData heart_broken = IconData(
+  /// The `heartBroken` material icon.
+  static const IconData heartBroken = IconData(
     0xeac2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `heat_pump` material icon.
-  static const IconData heat_pump = IconData(
+  /// The `heatPump` material icon.
+  static const IconData heatPump = IconData(
     0xec18,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6149,15 +6548,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `help_center` material icon.
-  static const IconData help_center = IconData(
+  /// The `helpCenter` material icon.
+  static const IconData helpCenter = IconData(
     0xf1c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `help_outline` material icon.
-  static const IconData help_outline = IconData(
+  /// The `helpOutline` material icon.
+  static const IconData helpOutline = IconData(
     0xe8fd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6177,22 +6576,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `hide_image` material icon.
-  static const IconData hide_image = IconData(
+  /// The `hideImage` material icon.
+  static const IconData hideImage = IconData(
     0xf022,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hide_source` material icon.
-  static const IconData hide_source = IconData(
+  /// The `hideSource` material icon.
+  static const IconData hideSource = IconData(
     0xf023,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `high_quality` material icon.
-  static const IconData high_quality = IconData(
+  /// The `highQuality` material icon.
+  static const IconData highQuality = IconData(
     0xe024,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6205,22 +6604,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `highlight_alt` material icon.
-  static const IconData highlight_alt = IconData(
+  /// The `highlightAlt` material icon.
+  static const IconData highlightAlt = IconData(
     0xef52,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `highlight_off` material icon.
-  static const IconData highlight_off = IconData(
+  /// The `highlightOff` material icon.
+  static const IconData highlightOff = IconData(
     0xe888,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `highlight_remove` material icon.
-  static const IconData highlight_remove = IconData(
+  /// The `highlightRemove` material icon.
+  static const IconData highlightRemove = IconData(
     0xe888,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6240,15 +6639,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `history_edu` material icon.
-  static const IconData history_edu = IconData(
+  /// The `historyEdu` material icon.
+  static const IconData historyEdu = IconData(
     0xea3e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `history_toggle_off` material icon.
-  static const IconData history_toggle_off = IconData(
+  /// The `historyToggleOff` material icon.
+  static const IconData historyToggleOff = IconData(
     0xf17d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6268,15 +6667,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `hls_off` material icon.
-  static const IconData hls_off = IconData(
+  /// The `hlsOff` material icon.
+  static const IconData hlsOff = IconData(
     0xeb8c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `holiday_village` material icon.
-  static const IconData holiday_village = IconData(
+  /// The `holidayVillage` material icon.
+  static const IconData holidayVillage = IconData(
     0xe58a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6289,57 +6688,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `home_max` material icon.
-  static const IconData home_max = IconData(
+  /// The `homeMax` material icon.
+  static const IconData homeMax = IconData(
     0xf024,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `home_mini` material icon.
-  static const IconData home_mini = IconData(
+  /// The `homeMini` material icon.
+  static const IconData homeMini = IconData(
     0xf025,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `home_repair_service` material icon.
-  static const IconData home_repair_service = IconData(
+  /// The `homeRepairService` material icon.
+  static const IconData homeRepairService = IconData(
     0xf100,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `home_work` material icon.
-  static const IconData home_work = IconData(
+  /// The `homeWork` material icon.
+  static const IconData homeWork = IconData(
     0xea09,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `horizontal_distribute` material icon.
-  static const IconData horizontal_distribute = IconData(
+  /// The `horizontalDistribute` material icon.
+  static const IconData horizontalDistribute = IconData(
     0xe014,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `horizontal_rule` material icon.
-  static const IconData horizontal_rule = IconData(
+  /// The `horizontalRule` material icon.
+  static const IconData horizontalRule = IconData(
     0xf108,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `horizontal_split` material icon.
-  static const IconData horizontal_split = IconData(
+  /// The `horizontalSplit` material icon.
+  static const IconData horizontalSplit = IconData(
     0xe947,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hot_tub` material icon.
-  static const IconData hot_tub = IconData(
+  /// The `hotTub` material icon.
+  static const IconData hotTub = IconData(
     0xeb46,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6352,43 +6751,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `hotel_class` material icon.
-  static const IconData hotel_class = IconData(
+  /// The `hotelClass` material icon.
+  static const IconData hotelClass = IconData(
     0xe743,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hourglass_bottom` material icon.
-  static const IconData hourglass_bottom = IconData(
+  /// The `hourglassBottom` material icon.
+  static const IconData hourglassBottom = IconData(
     0xea5c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hourglass_disabled` material icon.
-  static const IconData hourglass_disabled = IconData(
+  /// The `hourglassDisabled` material icon.
+  static const IconData hourglassDisabled = IconData(
     0xef53,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hourglass_empty` material icon.
-  static const IconData hourglass_empty = IconData(
+  /// The `hourglassEmpty` material icon.
+  static const IconData hourglassEmpty = IconData(
     0xe88b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hourglass_full` material icon.
-  static const IconData hourglass_full = IconData(
+  /// The `hourglassFull` material icon.
+  static const IconData hourglassFull = IconData(
     0xe88c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `hourglass_top` material icon.
-  static const IconData hourglass_top = IconData(
+  /// The `hourglassTop` material icon.
+  static const IconData hourglassTop = IconData(
     0xea5b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6401,8 +6800,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `house_siding` material icon.
-  static const IconData house_siding = IconData(
+  /// The `houseSiding` material icon.
+  static const IconData houseSiding = IconData(
     0xf202,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6415,15 +6814,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `how_to_reg` material icon.
-  static const IconData how_to_reg = IconData(
+  /// The `howToReg` material icon.
+  static const IconData howToReg = IconData(
     0xe174,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `how_to_vote` material icon.
-  static const IconData how_to_vote = IconData(
+  /// The `howToVote` material icon.
+  static const IconData howToVote = IconData(
     0xe175,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6464,8 +6863,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `ice_skating` material icon.
-  static const IconData ice_skating = IconData(
+  /// The `iceSkating` material icon.
+  static const IconData iceSkating = IconData(
     0xe50b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6485,50 +6884,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `image_aspect_ratio` material icon.
-  static const IconData image_aspect_ratio = IconData(
+  /// The `imageAspectRatio` material icon.
+  static const IconData imageAspectRatio = IconData(
     0xe3f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `image_not_supported` material icon.
-  static const IconData image_not_supported = IconData(
+  /// The `imageNotSupported` material icon.
+  static const IconData imageNotSupported = IconData(
     0xf116,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `image_search` material icon.
-  static const IconData image_search = IconData(
+  /// The `imageSearch` material icon.
+  static const IconData imageSearch = IconData(
     0xe43f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `imagesearch_roller` material icon.
-  static const IconData imagesearch_roller = IconData(
+  /// The `imagesearchRoller` material icon.
+  static const IconData imagesearchRoller = IconData(
     0xe9b4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `import_contacts` material icon.
-  static const IconData import_contacts = IconData(
+  /// The `importContacts` material icon.
+  static const IconData importContacts = IconData(
     0xe0e0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `import_export` material icon.
-  static const IconData import_export = IconData(
+  /// The `importExport` material icon.
+  static const IconData importExport = IconData(
     0xe0c3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `important_devices` material icon.
-  static const IconData important_devices = IconData(
+  /// The `importantDevices` material icon.
+  static const IconData importantDevices = IconData(
     0xe912,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6541,15 +6940,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `incomplete_circle` material icon.
-  static const IconData incomplete_circle = IconData(
+  /// The `incompleteCircle` material icon.
+  static const IconData incompleteCircle = IconData(
     0xe79b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `indeterminate_check_box` material icon.
-  static const IconData indeterminate_check_box = IconData(
+  /// The `indeterminateCheckBox` material icon.
+  static const IconData indeterminateCheckBox = IconData(
     0xe909,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6562,8 +6961,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `info_outline` material icon.
-  static const IconData info_outline = IconData(
+  /// The `infoOutline` material icon.
+  static const IconData infoOutline = IconData(
     0xe88f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6576,64 +6975,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_chart` material icon.
-  static const IconData insert_chart = IconData(
+  /// The `insertChart` material icon.
+  static const IconData insertChart = IconData(
     0xe24b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_chart_outlined` material icon.
-  static const IconData insert_chart_outlined = IconData(
+  /// The `insertChartOutlined` material icon.
+  static const IconData insertChartOutlined = IconData(
     0xe26a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_comment` material icon.
-  static const IconData insert_comment = IconData(
+  /// The `insertComment` material icon.
+  static const IconData insertComment = IconData(
     0xe24c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_drive_file` material icon.
-  static const IconData insert_drive_file = IconData(
+  /// The `insertDriveFile` material icon.
+  static const IconData insertDriveFile = IconData(
     0xe24d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_emoticon` material icon.
-  static const IconData insert_emoticon = IconData(
+  /// The `insertEmoticon` material icon.
+  static const IconData insertEmoticon = IconData(
     0xe24e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_invitation` material icon.
-  static const IconData insert_invitation = IconData(
+  /// The `insertInvitation` material icon.
+  static const IconData insertInvitation = IconData(
     0xe24f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_link` material icon.
-  static const IconData insert_link = IconData(
+  /// The `insertLink` material icon.
+  static const IconData insertLink = IconData(
     0xe250,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_page_break` material icon.
-  static const IconData insert_page_break = IconData(
+  /// The `insertPageBreak` material icon.
+  static const IconData insertPageBreak = IconData(
     0xeaca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `insert_photo` material icon.
-  static const IconData insert_photo = IconData(
+  /// The `insertPhoto` material icon.
+  static const IconData insertPhoto = IconData(
     0xe251,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6646,22 +7045,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `install_desktop` material icon.
-  static const IconData install_desktop = IconData(
+  /// The `installDesktop` material icon.
+  static const IconData installDesktop = IconData(
     0xeb71,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `install_mobile` material icon.
-  static const IconData install_mobile = IconData(
+  /// The `installMobile` material icon.
+  static const IconData installMobile = IconData(
     0xeb72,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `integration_instructions` material icon.
-  static const IconData integration_instructions = IconData(
+  /// The `integrationInstructions` material icon.
+  static const IconData integrationInstructions = IconData(
     0xef54,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6674,8 +7073,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `interpreter_mode` material icon.
-  static const IconData interpreter_mode = IconData(
+  /// The `interpreterMode` material icon.
+  static const IconData interpreterMode = IconData(
     0xe83b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6688,36 +7087,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `inventory_2` material icon.
-  static const IconData inventory_2 = IconData(
+  /// The `inventory2` material icon.
+  static const IconData inventory2 = IconData(
     0xe1a1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `invert_colors` material icon.
-  static const IconData invert_colors = IconData(
+  /// The `invertColors` material icon.
+  static const IconData invertColors = IconData(
     0xe891,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `invert_colors_off` material icon.
-  static const IconData invert_colors_off = IconData(
+  /// The `invertColorsOff` material icon.
+  static const IconData invertColorsOff = IconData(
     0xe0c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `invert_colors_on` material icon.
-  static const IconData invert_colors_on = IconData(
+  /// The `invertColorsOn` material icon.
+  static const IconData invertColorsOn = IconData(
     0xe891,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ios_share` material icon.
-  static const IconData ios_share = IconData(
+  /// The `iosShare` material icon.
+  static const IconData iosShare = IconData(
     0xe6b8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6744,29 +7143,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `join_full` material icon.
-  static const IconData join_full = IconData(
+  /// The `joinFull` material icon.
+  static const IconData joinFull = IconData(
     0xeaeb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `join_inner` material icon.
-  static const IconData join_inner = IconData(
+  /// The `joinInner` material icon.
+  static const IconData joinInner = IconData(
     0xeaf4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `join_left` material icon.
-  static const IconData join_left = IconData(
+  /// The `joinLeft` material icon.
+  static const IconData joinLeft = IconData(
     0xeaf2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `join_right` material icon.
-  static const IconData join_right = IconData(
+  /// The `joinRight` material icon.
+  static const IconData joinRight = IconData(
     0xeaea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6779,8 +7178,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `kebab_dining` material icon.
-  static const IconData kebab_dining = IconData(
+  /// The `kebabDining` material icon.
+  static const IconData kebabDining = IconData(
     0xe842,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6793,8 +7192,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `key_off` material icon.
-  static const IconData key_off = IconData(
+  /// The `keyOff` material icon.
+  static const IconData keyOff = IconData(
     0xeb84,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6807,141 +7206,141 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_alt` material icon.
-  static const IconData keyboard_alt = IconData(
+  /// The `keyboardAlt` material icon.
+  static const IconData keyboardAlt = IconData(
     0xf028,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_arrow_down` material icon.
-  static const IconData keyboard_arrow_down = IconData(
+  /// The `keyboardArrowDown` material icon.
+  static const IconData keyboardArrowDown = IconData(
     0xe313,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_arrow_left` material icon.
-  static const IconData keyboard_arrow_left = IconData(
+  /// The `keyboardArrowLeft` material icon.
+  static const IconData keyboardArrowLeft = IconData(
     0xe314,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_arrow_right` material icon.
-  static const IconData keyboard_arrow_right = IconData(
+  /// The `keyboardArrowRight` material icon.
+  static const IconData keyboardArrowRight = IconData(
     0xe315,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_arrow_up` material icon.
-  static const IconData keyboard_arrow_up = IconData(
+  /// The `keyboardArrowUp` material icon.
+  static const IconData keyboardArrowUp = IconData(
     0xe316,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_backspace` material icon.
-  static const IconData keyboard_backspace = IconData(
+  /// The `keyboardBackspace` material icon.
+  static const IconData keyboardBackspace = IconData(
     0xe317,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_capslock` material icon.
-  static const IconData keyboard_capslock = IconData(
+  /// The `keyboardCapslock` material icon.
+  static const IconData keyboardCapslock = IconData(
     0xe318,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_command_key` material icon.
-  static const IconData keyboard_command_key = IconData(
+  /// The `keyboardCommandKey` material icon.
+  static const IconData keyboardCommandKey = IconData(
     0xeae7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_control` material icon.
-  static const IconData keyboard_control = IconData(
+  /// The `keyboardControl` material icon.
+  static const IconData keyboardControl = IconData(
     0xeae1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_control_key` material icon.
-  static const IconData keyboard_control_key = IconData(
+  /// The `keyboardControlKey` material icon.
+  static const IconData keyboardControlKey = IconData(
     0xeae6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_double_arrow_down` material icon.
-  static const IconData keyboard_double_arrow_down = IconData(
+  /// The `keyboardDoubleArrowDown` material icon.
+  static const IconData keyboardDoubleArrowDown = IconData(
     0xead0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_double_arrow_left` material icon.
-  static const IconData keyboard_double_arrow_left = IconData(
+  /// The `keyboardDoubleArrowLeft` material icon.
+  static const IconData keyboardDoubleArrowLeft = IconData(
     0xeac3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_double_arrow_right` material icon.
-  static const IconData keyboard_double_arrow_right = IconData(
+  /// The `keyboardDoubleArrowRight` material icon.
+  static const IconData keyboardDoubleArrowRight = IconData(
     0xeac9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_double_arrow_up` material icon.
-  static const IconData keyboard_double_arrow_up = IconData(
+  /// The `keyboardDoubleArrowUp` material icon.
+  static const IconData keyboardDoubleArrowUp = IconData(
     0xeacf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_hide` material icon.
-  static const IconData keyboard_hide = IconData(
+  /// The `keyboardHide` material icon.
+  static const IconData keyboardHide = IconData(
     0xe31a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_option_key` material icon.
-  static const IconData keyboard_option_key = IconData(
+  /// The `keyboardOptionKey` material icon.
+  static const IconData keyboardOptionKey = IconData(
     0xeae8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_return` material icon.
-  static const IconData keyboard_return = IconData(
+  /// The `keyboardReturn` material icon.
+  static const IconData keyboardReturn = IconData(
     0xe31b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_tab` material icon.
-  static const IconData keyboard_tab = IconData(
+  /// The `keyboardTab` material icon.
+  static const IconData keyboardTab = IconData(
     0xe31c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `keyboard_voice` material icon.
-  static const IconData keyboard_voice = IconData(
+  /// The `keyboardVoice` material icon.
+  static const IconData keyboardVoice = IconData(
     0xe31d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `king_bed` material icon.
-  static const IconData king_bed = IconData(
+  /// The `kingBed` material icon.
+  static const IconData kingBed = IconData(
     0xea45,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -6968,29 +7367,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `label_important` material icon.
-  static const IconData label_important = IconData(
+  /// The `labelImportant` material icon.
+  static const IconData labelImportant = IconData(
     0xe937,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `label_important_outline` material icon.
-  static const IconData label_important_outline = IconData(
+  /// The `labelImportantOutline` material icon.
+  static const IconData labelImportantOutline = IconData(
     0xe948,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `label_off` material icon.
-  static const IconData label_off = IconData(
+  /// The `labelOff` material icon.
+  static const IconData labelOff = IconData(
     0xe9b6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `label_outline` material icon.
-  static const IconData label_outline = IconData(
+  /// The `labelOutline` material icon.
+  static const IconData labelOutline = IconData(
     0xe893,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7031,29 +7430,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `laptop_chromebook` material icon.
-  static const IconData laptop_chromebook = IconData(
+  /// The `laptopChromebook` material icon.
+  static const IconData laptopChromebook = IconData(
     0xe31f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `laptop_mac` material icon.
-  static const IconData laptop_mac = IconData(
+  /// The `laptopMac` material icon.
+  static const IconData laptopMac = IconData(
     0xe320,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `laptop_windows` material icon.
-  static const IconData laptop_windows = IconData(
+  /// The `laptopWindows` material icon.
+  static const IconData laptopWindows = IconData(
     0xe321,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `last_page` material icon.
-  static const IconData last_page = IconData(
+  /// The `lastPage` material icon.
+  static const IconData lastPage = IconData(
     0xe5dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7073,8 +7472,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `layers_clear` material icon.
-  static const IconData layers_clear = IconData(
+  /// The `layersClear` material icon.
+  static const IconData layersClear = IconData(
     0xe53c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7087,29 +7486,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `leak_add` material icon.
-  static const IconData leak_add = IconData(
+  /// The `leakAdd` material icon.
+  static const IconData leakAdd = IconData(
     0xe3f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `leak_remove` material icon.
-  static const IconData leak_remove = IconData(
+  /// The `leakRemove` material icon.
+  static const IconData leakRemove = IconData(
     0xe3f9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `leave_bags_at_home` material icon.
-  static const IconData leave_bags_at_home = IconData(
+  /// The `leaveBagsAtHome` material icon.
+  static const IconData leaveBagsAtHome = IconData(
     0xf23b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `legend_toggle` material icon.
-  static const IconData legend_toggle = IconData(
+  /// The `legendToggle` material icon.
+  static const IconData legendToggle = IconData(
     0xf11b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7122,36 +7521,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `lens_blur` material icon.
-  static const IconData lens_blur = IconData(
+  /// The `lensBlur` material icon.
+  static const IconData lensBlur = IconData(
     0xf029,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `library_add` material icon.
-  static const IconData library_add = IconData(
+  /// The `libraryAdd` material icon.
+  static const IconData libraryAdd = IconData(
     0xe02e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `library_add_check` material icon.
-  static const IconData library_add_check = IconData(
+  /// The `libraryAddCheck` material icon.
+  static const IconData libraryAddCheck = IconData(
     0xe9b7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `library_books` material icon.
-  static const IconData library_books = IconData(
+  /// The `libraryBooks` material icon.
+  static const IconData libraryBooks = IconData(
     0xe02f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `library_music` material icon.
-  static const IconData library_music = IconData(
+  /// The `libraryMusic` material icon.
+  static const IconData libraryMusic = IconData(
     0xe030,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7164,8 +7563,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `light_mode` material icon.
-  static const IconData light_mode = IconData(
+  /// The `lightMode` material icon.
+  static const IconData lightMode = IconData(
     0xe518,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7178,43 +7577,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `lightbulb_circle` material icon.
-  static const IconData lightbulb_circle = IconData(
+  /// The `lightbulbCircle` material icon.
+  static const IconData lightbulbCircle = IconData(
     0xebfe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lightbulb_outline` material icon.
-  static const IconData lightbulb_outline = IconData(
+  /// The `lightbulbOutline` material icon.
+  static const IconData lightbulbOutline = IconData(
     0xe90f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `line_axis` material icon.
-  static const IconData line_axis = IconData(
+  /// The `lineAxis` material icon.
+  static const IconData lineAxis = IconData(
     0xea9a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `line_style` material icon.
-  static const IconData line_style = IconData(
+  /// The `lineStyle` material icon.
+  static const IconData lineStyle = IconData(
     0xe919,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `line_weight` material icon.
-  static const IconData line_weight = IconData(
+  /// The `lineWeight` material icon.
+  static const IconData lineWeight = IconData(
     0xe91a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `linear_scale` material icon.
-  static const IconData linear_scale = IconData(
+  /// The `linearScale` material icon.
+  static const IconData linearScale = IconData(
     0xe260,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7227,15 +7626,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `link_off` material icon.
-  static const IconData link_off = IconData(
+  /// The `linkOff` material icon.
+  static const IconData linkOff = IconData(
     0xe16f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `linked_camera` material icon.
-  static const IconData linked_camera = IconData(
+  /// The `linkedCamera` material icon.
+  static const IconData linkedCamera = IconData(
     0xe438,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7255,22 +7654,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `list_alt` material icon.
-  static const IconData list_alt = IconData(
+  /// The `listAlt` material icon.
+  static const IconData listAlt = IconData(
     0xe0ee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `live_help` material icon.
-  static const IconData live_help = IconData(
+  /// The `liveHelp` material icon.
+  static const IconData liveHelp = IconData(
     0xe0c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `live_tv` material icon.
-  static const IconData live_tv = IconData(
+  /// The `liveTv` material icon.
+  static const IconData liveTv = IconData(
     0xe639,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7283,281 +7682,281 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_activity` material icon.
-  static const IconData local_activity = IconData(
+  /// The `localActivity` material icon.
+  static const IconData localActivity = IconData(
     0xe53f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_airport` material icon.
-  static const IconData local_airport = IconData(
+  /// The `localAirport` material icon.
+  static const IconData localAirport = IconData(
     0xe53d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_atm` material icon.
-  static const IconData local_atm = IconData(
+  /// The `localAtm` material icon.
+  static const IconData localAtm = IconData(
     0xe53e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_attraction` material icon.
-  static const IconData local_attraction = IconData(
+  /// The `localAttraction` material icon.
+  static const IconData localAttraction = IconData(
     0xe53f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_bar` material icon.
-  static const IconData local_bar = IconData(
+  /// The `localBar` material icon.
+  static const IconData localBar = IconData(
     0xe540,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_cafe` material icon.
-  static const IconData local_cafe = IconData(
+  /// The `localCafe` material icon.
+  static const IconData localCafe = IconData(
     0xe541,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_car_wash` material icon.
-  static const IconData local_car_wash = IconData(
+  /// The `localCarWash` material icon.
+  static const IconData localCarWash = IconData(
     0xe542,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_convenience_store` material icon.
-  static const IconData local_convenience_store = IconData(
+  /// The `localConvenienceStore` material icon.
+  static const IconData localConvenienceStore = IconData(
     0xe543,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_dining` material icon.
-  static const IconData local_dining = IconData(
+  /// The `localDining` material icon.
+  static const IconData localDining = IconData(
     0xe556,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_drink` material icon.
-  static const IconData local_drink = IconData(
+  /// The `localDrink` material icon.
+  static const IconData localDrink = IconData(
     0xe544,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_fire_department` material icon.
-  static const IconData local_fire_department = IconData(
+  /// The `localFireDepartment` material icon.
+  static const IconData localFireDepartment = IconData(
     0xef55,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_florist` material icon.
-  static const IconData local_florist = IconData(
+  /// The `localFlorist` material icon.
+  static const IconData localFlorist = IconData(
     0xe545,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_gas_station` material icon.
-  static const IconData local_gas_station = IconData(
+  /// The `localGasStation` material icon.
+  static const IconData localGasStation = IconData(
     0xe546,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_grocery_store` material icon.
-  static const IconData local_grocery_store = IconData(
+  /// The `localGroceryStore` material icon.
+  static const IconData localGroceryStore = IconData(
     0xe547,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_hospital` material icon.
-  static const IconData local_hospital = IconData(
+  /// The `localHospital` material icon.
+  static const IconData localHospital = IconData(
     0xe548,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_hotel` material icon.
-  static const IconData local_hotel = IconData(
+  /// The `localHotel` material icon.
+  static const IconData localHotel = IconData(
     0xe549,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_laundry_service` material icon.
-  static const IconData local_laundry_service = IconData(
+  /// The `localLaundryService` material icon.
+  static const IconData localLaundryService = IconData(
     0xe54a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_library` material icon.
-  static const IconData local_library = IconData(
+  /// The `localLibrary` material icon.
+  static const IconData localLibrary = IconData(
     0xe54b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_mall` material icon.
-  static const IconData local_mall = IconData(
+  /// The `localMall` material icon.
+  static const IconData localMall = IconData(
     0xe54c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_movies` material icon.
-  static const IconData local_movies = IconData(
+  /// The `localMovies` material icon.
+  static const IconData localMovies = IconData(
     0xe54d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_offer` material icon.
-  static const IconData local_offer = IconData(
+  /// The `localOffer` material icon.
+  static const IconData localOffer = IconData(
     0xe54e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_parking` material icon.
-  static const IconData local_parking = IconData(
+  /// The `localParking` material icon.
+  static const IconData localParking = IconData(
     0xe54f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_pharmacy` material icon.
-  static const IconData local_pharmacy = IconData(
+  /// The `localPharmacy` material icon.
+  static const IconData localPharmacy = IconData(
     0xe550,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_phone` material icon.
-  static const IconData local_phone = IconData(
+  /// The `localPhone` material icon.
+  static const IconData localPhone = IconData(
     0xe551,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_pizza` material icon.
-  static const IconData local_pizza = IconData(
+  /// The `localPizza` material icon.
+  static const IconData localPizza = IconData(
     0xe552,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_play` material icon.
-  static const IconData local_play = IconData(
+  /// The `localPlay` material icon.
+  static const IconData localPlay = IconData(
     0xe553,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_police` material icon.
-  static const IconData local_police = IconData(
+  /// The `localPolice` material icon.
+  static const IconData localPolice = IconData(
     0xef56,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_post_office` material icon.
-  static const IconData local_post_office = IconData(
+  /// The `localPostOffice` material icon.
+  static const IconData localPostOffice = IconData(
     0xe554,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_print_shop` material icon.
-  static const IconData local_print_shop = IconData(
+  /// The `localPrintShop` material icon.
+  static const IconData localPrintShop = IconData(
     0xe555,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_printshop` material icon.
-  static const IconData local_printshop = IconData(
+  /// The `localPrintshop` material icon.
+  static const IconData localPrintshop = IconData(
     0xe555,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_restaurant` material icon.
-  static const IconData local_restaurant = IconData(
+  /// The `localRestaurant` material icon.
+  static const IconData localRestaurant = IconData(
     0xe556,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_see` material icon.
-  static const IconData local_see = IconData(
+  /// The `localSee` material icon.
+  static const IconData localSee = IconData(
     0xe557,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_shipping` material icon.
-  static const IconData local_shipping = IconData(
+  /// The `localShipping` material icon.
+  static const IconData localShipping = IconData(
     0xe558,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `local_taxi` material icon.
-  static const IconData local_taxi = IconData(
+  /// The `localTaxi` material icon.
+  static const IconData localTaxi = IconData(
     0xe559,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_city` material icon.
-  static const IconData location_city = IconData(
+  /// The `locationCity` material icon.
+  static const IconData locationCity = IconData(
     0xe7f1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_disabled` material icon.
-  static const IconData location_disabled = IconData(
+  /// The `locationDisabled` material icon.
+  static const IconData locationDisabled = IconData(
     0xe1b6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_history` material icon.
-  static const IconData location_history = IconData(
+  /// The `locationHistory` material icon.
+  static const IconData locationHistory = IconData(
     0xe55a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_off` material icon.
-  static const IconData location_off = IconData(
+  /// The `locationOff` material icon.
+  static const IconData locationOff = IconData(
     0xe0c7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_on` material icon.
-  static const IconData location_on = IconData(
+  /// The `locationOn` material icon.
+  static const IconData locationOn = IconData(
     0xe0c8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `location_searching` material icon.
-  static const IconData location_searching = IconData(
+  /// The `locationSearching` material icon.
+  static const IconData locationSearching = IconData(
     0xe1b7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7570,36 +7969,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `lock_clock` material icon.
-  static const IconData lock_clock = IconData(
+  /// The `lockClock` material icon.
+  static const IconData lockClock = IconData(
     0xef57,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lock_open` material icon.
-  static const IconData lock_open = IconData(
+  /// The `lockOpen` material icon.
+  static const IconData lockOpen = IconData(
     0xe898,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lock_outline` material icon.
-  static const IconData lock_outline = IconData(
+  /// The `lockOutline` material icon.
+  static const IconData lockOutline = IconData(
     0xe899,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lock_person` material icon.
-  static const IconData lock_person = IconData(
+  /// The `lockPerson` material icon.
+  static const IconData lockPerson = IconData(
     0xf8f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lock_reset` material icon.
-  static const IconData lock_reset = IconData(
+  /// The `lockReset` material icon.
+  static const IconData lockReset = IconData(
     0xeade,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7612,8 +8011,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `logo_dev` material icon.
-  static const IconData logo_dev = IconData(
+  /// The `logoDev` material icon.
+  static const IconData logoDev = IconData(
     0xead6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7633,43 +8032,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_3` material icon.
-  static const IconData looks_3 = IconData(
+  /// The `looks3` material icon.
+  static const IconData looks3 = IconData(
     0xe3fb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_4` material icon.
-  static const IconData looks_4 = IconData(
+  /// The `looks4` material icon.
+  static const IconData looks4 = IconData(
     0xe3fd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_5` material icon.
-  static const IconData looks_5 = IconData(
+  /// The `looks5` material icon.
+  static const IconData looks5 = IconData(
     0xe3fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_6` material icon.
-  static const IconData looks_6 = IconData(
+  /// The `looks6` material icon.
+  static const IconData looks6 = IconData(
     0xe3ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_one` material icon.
-  static const IconData looks_one = IconData(
+  /// The `looksOne` material icon.
+  static const IconData looksOne = IconData(
     0xe400,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `looks_two` material icon.
-  static const IconData looks_two = IconData(
+  /// The `looksTwo` material icon.
+  static const IconData looksTwo = IconData(
     0xe401,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7689,8 +8088,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `low_priority` material icon.
-  static const IconData low_priority = IconData(
+  /// The `lowPriority` material icon.
+  static const IconData lowPriority = IconData(
     0xe16d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7703,15 +8102,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `lte_mobiledata` material icon.
-  static const IconData lte_mobiledata = IconData(
+  /// The `lteMobiledata` material icon.
+  static const IconData lteMobiledata = IconData(
     0xf02c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `lte_plus_mobiledata` material icon.
-  static const IconData lte_plus_mobiledata = IconData(
+  /// The `ltePlusMobiledata` material icon.
+  static const IconData ltePlusMobiledata = IconData(
     0xf02d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7724,8 +8123,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `lunch_dining` material icon.
-  static const IconData lunch_dining = IconData(
+  /// The `lunchDining` material icon.
+  static const IconData lunchDining = IconData(
     0xea61,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7738,8 +8137,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `macro_off` material icon.
-  static const IconData macro_off = IconData(
+  /// The `macroOff` material icon.
+  static const IconData macroOff = IconData(
     0xf8d2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7752,15 +8151,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mail_lock` material icon.
-  static const IconData mail_lock = IconData(
+  /// The `mailLock` material icon.
+  static const IconData mailLock = IconData(
     0xec0a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mail_outline` material icon.
-  static const IconData mail_outline = IconData(
+  /// The `mailOutline` material icon.
+  static const IconData mailOutline = IconData(
     0xe0e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7780,43 +8179,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `man_2` material icon.
-  static const IconData man_2 = IconData(
+  /// The `man2` material icon.
+  static const IconData man2 = IconData(
     0xf8e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `man_3` material icon.
-  static const IconData man_3 = IconData(
+  /// The `man3` material icon.
+  static const IconData man3 = IconData(
     0xf8e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `man_4` material icon.
-  static const IconData man_4 = IconData(
+  /// The `man4` material icon.
+  static const IconData man4 = IconData(
     0xf8e3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `manage_accounts` material icon.
-  static const IconData manage_accounts = IconData(
+  /// The `manageAccounts` material icon.
+  static const IconData manageAccounts = IconData(
     0xf02e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `manage_history` material icon.
-  static const IconData manage_history = IconData(
+  /// The `manageHistory` material icon.
+  static const IconData manageHistory = IconData(
     0xebe7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `manage_search` material icon.
-  static const IconData manage_search = IconData(
+  /// The `manageSearch` material icon.
+  static const IconData manageSearch = IconData(
     0xf02f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7829,15 +8228,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `maps_home_work` material icon.
-  static const IconData maps_home_work = IconData(
+  /// The `mapsHomeWork` material icon.
+  static const IconData mapsHomeWork = IconData(
     0xf030,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `maps_ugc` material icon.
-  static const IconData maps_ugc = IconData(
+  /// The `mapsUgc` material icon.
+  static const IconData mapsUgc = IconData(
     0xef58,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7850,43 +8249,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_as_unread` material icon.
-  static const IconData mark_as_unread = IconData(
+  /// The `markAsUnread` material icon.
+  static const IconData markAsUnread = IconData(
     0xe9bc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_chat_read` material icon.
-  static const IconData mark_chat_read = IconData(
+  /// The `markChatRead` material icon.
+  static const IconData markChatRead = IconData(
     0xf18b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_chat_unread` material icon.
-  static const IconData mark_chat_unread = IconData(
+  /// The `markChatUnread` material icon.
+  static const IconData markChatUnread = IconData(
     0xf189,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_email_read` material icon.
-  static const IconData mark_email_read = IconData(
+  /// The `markEmailRead` material icon.
+  static const IconData markEmailRead = IconData(
     0xf18c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_email_unread` material icon.
-  static const IconData mark_email_unread = IconData(
+  /// The `markEmailUnread` material icon.
+  static const IconData markEmailUnread = IconData(
     0xf18a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mark_unread_chat_alt` material icon.
-  static const IconData mark_unread_chat_alt = IconData(
+  /// The `markUnreadChatAlt` material icon.
+  static const IconData markUnreadChatAlt = IconData(
     0xeb9d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7899,8 +8298,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `markunread_mailbox` material icon.
-  static const IconData markunread_mailbox = IconData(
+  /// The `markunreadMailbox` material icon.
+  static const IconData markunreadMailbox = IconData(
     0xe89b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7920,15 +8319,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `media_bluetooth_off` material icon.
-  static const IconData media_bluetooth_off = IconData(
+  /// The `mediaBluetoothOff` material icon.
+  static const IconData mediaBluetoothOff = IconData(
     0xf031,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `media_bluetooth_on` material icon.
-  static const IconData media_bluetooth_on = IconData(
+  /// The `mediaBluetoothOn` material icon.
+  static const IconData mediaBluetoothOn = IconData(
     0xf032,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7941,15 +8340,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `medical_information` material icon.
-  static const IconData medical_information = IconData(
+  /// The `medicalInformation` material icon.
+  static const IconData medicalInformation = IconData(
     0xebed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `medical_services` material icon.
-  static const IconData medical_services = IconData(
+  /// The `medicalServices` material icon.
+  static const IconData medicalServices = IconData(
     0xf109,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7962,15 +8361,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `medication_liquid` material icon.
-  static const IconData medication_liquid = IconData(
+  /// The `medicationLiquid` material icon.
+  static const IconData medicationLiquid = IconData(
     0xea87,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `meeting_room` material icon.
-  static const IconData meeting_room = IconData(
+  /// The `meetingRoom` material icon.
+  static const IconData meetingRoom = IconData(
     0xeb4f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -7990,15 +8389,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `menu_book` material icon.
-  static const IconData menu_book = IconData(
+  /// The `menuBook` material icon.
+  static const IconData menuBook = IconData(
     0xea19,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `menu_open` material icon.
-  static const IconData menu_open = IconData(
+  /// The `menuOpen` material icon.
+  static const IconData menuOpen = IconData(
     0xe9bd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8011,8 +8410,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `merge_type` material icon.
-  static const IconData merge_type = IconData(
+  /// The `mergeType` material icon.
+  static const IconData mergeType = IconData(
     0xe252,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8032,8 +8431,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `messenger_outline` material icon.
-  static const IconData messenger_outline = IconData(
+  /// The `messengerOutline` material icon.
+  static const IconData messengerOutline = IconData(
     0xe0cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8046,29 +8445,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mic_external_off` material icon.
-  static const IconData mic_external_off = IconData(
+  /// The `micExternalOff` material icon.
+  static const IconData micExternalOff = IconData(
     0xef59,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mic_external_on` material icon.
-  static const IconData mic_external_on = IconData(
+  /// The `micExternalOn` material icon.
+  static const IconData micExternalOn = IconData(
     0xef5a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mic_none` material icon.
-  static const IconData mic_none = IconData(
+  /// The `micNone` material icon.
+  static const IconData micNone = IconData(
     0xe02a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mic_off` material icon.
-  static const IconData mic_off = IconData(
+  /// The `micOff` material icon.
+  static const IconData micOff = IconData(
     0xe02b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8081,8 +8480,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `military_tech` material icon.
-  static const IconData military_tech = IconData(
+  /// The `militaryTech` material icon.
+  static const IconData militaryTech = IconData(
     0xea3f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8095,22 +8494,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `minor_crash` material icon.
-  static const IconData minor_crash = IconData(
+  /// The `minorCrash` material icon.
+  static const IconData minorCrash = IconData(
     0xebf1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `miscellaneous_services` material icon.
-  static const IconData miscellaneous_services = IconData(
+  /// The `miscellaneousServices` material icon.
+  static const IconData miscellaneousServices = IconData(
     0xf10c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `missed_video_call` material icon.
-  static const IconData missed_video_call = IconData(
+  /// The `missedVideoCall` material icon.
+  static const IconData missedVideoCall = IconData(
     0xe073,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8123,29 +8522,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mobile_friendly` material icon.
-  static const IconData mobile_friendly = IconData(
+  /// The `mobileFriendly` material icon.
+  static const IconData mobileFriendly = IconData(
     0xe200,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mobile_off` material icon.
-  static const IconData mobile_off = IconData(
+  /// The `mobileOff` material icon.
+  static const IconData mobileOff = IconData(
     0xe201,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mobile_screen_share` material icon.
-  static const IconData mobile_screen_share = IconData(
+  /// The `mobileScreenShare` material icon.
+  static const IconData mobileScreenShare = IconData(
     0xe0e7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mobiledata_off` material icon.
-  static const IconData mobiledata_off = IconData(
+  /// The `mobiledataOff` material icon.
+  static const IconData mobiledataOff = IconData(
     0xf034,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8158,64 +8557,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_comment` material icon.
-  static const IconData mode_comment = IconData(
+  /// The `modeComment` material icon.
+  static const IconData modeComment = IconData(
     0xe253,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_edit` material icon.
-  static const IconData mode_edit = IconData(
+  /// The `modeEdit` material icon.
+  static const IconData modeEdit = IconData(
     0xe254,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_edit_outline` material icon.
-  static const IconData mode_edit_outline = IconData(
+  /// The `modeEditOutline` material icon.
+  static const IconData modeEditOutline = IconData(
     0xf035,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_fan_off` material icon.
-  static const IconData mode_fan_off = IconData(
+  /// The `modeFanOff` material icon.
+  static const IconData modeFanOff = IconData(
     0xec17,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_night` material icon.
-  static const IconData mode_night = IconData(
+  /// The `modeNight` material icon.
+  static const IconData modeNight = IconData(
     0xf036,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_of_travel` material icon.
-  static const IconData mode_of_travel = IconData(
+  /// The `modeOfTravel` material icon.
+  static const IconData modeOfTravel = IconData(
     0xe7ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `mode_standby` material icon.
-  static const IconData mode_standby = IconData(
+  /// The `modeStandby` material icon.
+  static const IconData modeStandby = IconData(
     0xf037,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `model_training` material icon.
-  static const IconData model_training = IconData(
+  /// The `modelTraining` material icon.
+  static const IconData modelTraining = IconData(
     0xf0cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `monetization_on` material icon.
-  static const IconData monetization_on = IconData(
+  /// The `monetizationOn` material icon.
+  static const IconData monetizationOn = IconData(
     0xe263,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8228,15 +8627,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `money_off` material icon.
-  static const IconData money_off = IconData(
+  /// The `moneyOff` material icon.
+  static const IconData moneyOff = IconData(
     0xe25c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `money_off_csred` material icon.
-  static const IconData money_off_csred = IconData(
+  /// The `moneyOffCsred` material icon.
+  static const IconData moneyOffCsred = IconData(
     0xf038,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8249,22 +8648,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `monitor_heart` material icon.
-  static const IconData monitor_heart = IconData(
+  /// The `monitorHeart` material icon.
+  static const IconData monitorHeart = IconData(
     0xeaa2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `monitor_weight` material icon.
-  static const IconData monitor_weight = IconData(
+  /// The `monitorWeight` material icon.
+  static const IconData monitorWeight = IconData(
     0xf039,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `monochrome_photos` material icon.
-  static const IconData monochrome_photos = IconData(
+  /// The `monochromePhotos` material icon.
+  static const IconData monochromePhotos = IconData(
     0xe403,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8277,8 +8676,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `mood_bad` material icon.
-  static const IconData mood_bad = IconData(
+  /// The `moodBad` material icon.
+  static const IconData moodBad = IconData(
     0xe7f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8298,22 +8697,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `more_horiz` material icon.
-  static const IconData more_horiz = IconData(
+  /// The `moreHoriz` material icon.
+  static const IconData moreHoriz = IconData(
     0xeae1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `more_time` material icon.
-  static const IconData more_time = IconData(
+  /// The `moreTime` material icon.
+  static const IconData moreTime = IconData(
     0xea5d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `more_vert` material icon.
-  static const IconData more_vert = IconData(
+  /// The `moreVert` material icon.
+  static const IconData moreVert = IconData(
     0xe5d4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8326,36 +8725,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `motion_photos_auto` material icon.
-  static const IconData motion_photos_auto = IconData(
+  /// The `motionPhotosAuto` material icon.
+  static const IconData motionPhotosAuto = IconData(
     0xf03a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `motion_photos_off` material icon.
-  static const IconData motion_photos_off = IconData(
+  /// The `motionPhotosOff` material icon.
+  static const IconData motionPhotosOff = IconData(
     0xe9c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `motion_photos_on` material icon.
-  static const IconData motion_photos_on = IconData(
+  /// The `motionPhotosOn` material icon.
+  static const IconData motionPhotosOn = IconData(
     0xe9c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `motion_photos_pause` material icon.
-  static const IconData motion_photos_pause = IconData(
+  /// The `motionPhotosPause` material icon.
+  static const IconData motionPhotosPause = IconData(
     0xf227,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `motion_photos_paused` material icon.
-  static const IconData motion_photos_paused = IconData(
+  /// The `motionPhotosPaused` material icon.
+  static const IconData motionPhotosPaused = IconData(
     0xe9c2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8375,22 +8774,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `move_down` material icon.
-  static const IconData move_down = IconData(
+  /// The `moveDown` material icon.
+  static const IconData moveDown = IconData(
     0xeb61,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `move_to_inbox` material icon.
-  static const IconData move_to_inbox = IconData(
+  /// The `moveToInbox` material icon.
+  static const IconData moveToInbox = IconData(
     0xe168,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `move_up` material icon.
-  static const IconData move_up = IconData(
+  /// The `moveUp` material icon.
+  static const IconData moveUp = IconData(
     0xeb64,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8403,15 +8802,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `movie_creation` material icon.
-  static const IconData movie_creation = IconData(
+  /// The `movieCreation` material icon.
+  static const IconData movieCreation = IconData(
     0xe404,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `movie_filter` material icon.
-  static const IconData movie_filter = IconData(
+  /// The `movieFilter` material icon.
+  static const IconData movieFilter = IconData(
     0xe43a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8431,22 +8830,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `multiline_chart` material icon.
-  static const IconData multiline_chart = IconData(
+  /// The `multilineChart` material icon.
+  static const IconData multilineChart = IconData(
     0xe6df,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `multiple_stop` material icon.
-  static const IconData multiple_stop = IconData(
+  /// The `multipleStop` material icon.
+  static const IconData multipleStop = IconData(
     0xf1b9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `multitrack_audio` material icon.
-  static const IconData multitrack_audio = IconData(
+  /// The `multitrackAudio` material icon.
+  static const IconData multitrackAudio = IconData(
     0xe1b8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8459,50 +8858,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `music_note` material icon.
-  static const IconData music_note = IconData(
+  /// The `musicNote` material icon.
+  static const IconData musicNote = IconData(
     0xe405,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `music_off` material icon.
-  static const IconData music_off = IconData(
+  /// The `musicOff` material icon.
+  static const IconData musicOff = IconData(
     0xe440,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `music_video` material icon.
-  static const IconData music_video = IconData(
+  /// The `musicVideo` material icon.
+  static const IconData musicVideo = IconData(
     0xe063,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `my_library_add` material icon.
-  static const IconData my_library_add = IconData(
+  /// The `myLibraryAdd` material icon.
+  static const IconData myLibraryAdd = IconData(
     0xe02e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `my_library_books` material icon.
-  static const IconData my_library_books = IconData(
+  /// The `myLibraryBooks` material icon.
+  static const IconData myLibraryBooks = IconData(
     0xe02f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `my_library_music` material icon.
-  static const IconData my_library_music = IconData(
+  /// The `myLibraryMusic` material icon.
+  static const IconData myLibraryMusic = IconData(
     0xe030,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `my_location` material icon.
-  static const IconData my_location = IconData(
+  /// The `myLocation` material icon.
+  static const IconData myLocation = IconData(
     0xe55c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8522,22 +8921,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `nature_people` material icon.
-  static const IconData nature_people = IconData(
+  /// The `naturePeople` material icon.
+  static const IconData naturePeople = IconData(
     0xe407,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `navigate_before` material icon.
-  static const IconData navigate_before = IconData(
+  /// The `navigateBefore` material icon.
+  static const IconData navigateBefore = IconData(
     0xe408,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `navigate_next` material icon.
-  static const IconData navigate_next = IconData(
+  /// The `navigateNext` material icon.
+  static const IconData navigateNext = IconData(
     0xe409,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8550,106 +8949,106 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `near_me` material icon.
-  static const IconData near_me = IconData(
+  /// The `nearMe` material icon.
+  static const IconData nearMe = IconData(
     0xe569,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `near_me_disabled` material icon.
-  static const IconData near_me_disabled = IconData(
+  /// The `nearMeDisabled` material icon.
+  static const IconData nearMeDisabled = IconData(
     0xf1ef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `nearby_error` material icon.
-  static const IconData nearby_error = IconData(
+  /// The `nearbyError` material icon.
+  static const IconData nearbyError = IconData(
     0xf03b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `nearby_off` material icon.
-  static const IconData nearby_off = IconData(
+  /// The `nearbyOff` material icon.
+  static const IconData nearbyOff = IconData(
     0xf03c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `nest_cam_wired_stand` material icon.
-  static const IconData nest_cam_wired_stand = IconData(
+  /// The `nestCamWiredStand` material icon.
+  static const IconData nestCamWiredStand = IconData(
     0xec16,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_cell` material icon.
-  static const IconData network_cell = IconData(
+  /// The `networkCell` material icon.
+  static const IconData networkCell = IconData(
     0xe1b9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_check` material icon.
-  static const IconData network_check = IconData(
+  /// The `networkCheck` material icon.
+  static const IconData networkCheck = IconData(
     0xe640,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_locked` material icon.
-  static const IconData network_locked = IconData(
+  /// The `networkLocked` material icon.
+  static const IconData networkLocked = IconData(
     0xe61a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_ping` material icon.
-  static const IconData network_ping = IconData(
+  /// The `networkPing` material icon.
+  static const IconData networkPing = IconData(
     0xebca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_wifi` material icon.
-  static const IconData network_wifi = IconData(
+  /// The `networkWifi` material icon.
+  static const IconData networkWifi = IconData(
     0xe1ba,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_wifi_1_bar` material icon.
-  static const IconData network_wifi_1_bar = IconData(
+  /// The `networkWifi1Bar` material icon.
+  static const IconData networkWifi1Bar = IconData(
     0xebe4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_wifi_2_bar` material icon.
-  static const IconData network_wifi_2_bar = IconData(
+  /// The `networkWifi2Bar` material icon.
+  static const IconData networkWifi2Bar = IconData(
     0xebd6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `network_wifi_3_bar` material icon.
-  static const IconData network_wifi_3_bar = IconData(
+  /// The `networkWifi3Bar` material icon.
+  static const IconData networkWifi3Bar = IconData(
     0xebe1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `new_label` material icon.
-  static const IconData new_label = IconData(
+  /// The `newLabel` material icon.
+  static const IconData newLabel = IconData(
     0xe609,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `new_releases` material icon.
-  static const IconData new_releases = IconData(
+  /// The `newReleases` material icon.
+  static const IconData newReleases = IconData(
     0xe031,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8662,15 +9061,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `next_plan` material icon.
-  static const IconData next_plan = IconData(
+  /// The `nextPlan` material icon.
+  static const IconData nextPlan = IconData(
     0xef5d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `next_week` material icon.
-  static const IconData next_week = IconData(
+  /// The `nextWeek` material icon.
+  static const IconData nextWeek = IconData(
     0xe16a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8683,8 +9082,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `night_shelter` material icon.
-  static const IconData night_shelter = IconData(
+  /// The `nightShelter` material icon.
+  static const IconData nightShelter = IconData(
     0xf1f1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8704,155 +9103,155 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `nightlight_round` material icon.
-  static const IconData nightlight_round = IconData(
+  /// The `nightlightRound` material icon.
+  static const IconData nightlightRound = IconData(
     0xef5e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `nights_stay` material icon.
-  static const IconData nights_stay = IconData(
+  /// The `nightsStay` material icon.
+  static const IconData nightsStay = IconData(
     0xea46,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_accounts` material icon.
-  static const IconData no_accounts = IconData(
+  /// The `noAccounts` material icon.
+  static const IconData noAccounts = IconData(
     0xf03e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_adult_content` material icon.
-  static const IconData no_adult_content = IconData(
+  /// The `noAdultContent` material icon.
+  static const IconData noAdultContent = IconData(
     0xf8fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_backpack` material icon.
-  static const IconData no_backpack = IconData(
+  /// The `noBackpack` material icon.
+  static const IconData noBackpack = IconData(
     0xf237,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_cell` material icon.
-  static const IconData no_cell = IconData(
+  /// The `noCell` material icon.
+  static const IconData noCell = IconData(
     0xf1a4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_crash` material icon.
-  static const IconData no_crash = IconData(
+  /// The `noCrash` material icon.
+  static const IconData noCrash = IconData(
     0xebf0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_drinks` material icon.
-  static const IconData no_drinks = IconData(
+  /// The `noDrinks` material icon.
+  static const IconData noDrinks = IconData(
     0xf1a5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_encryption` material icon.
-  static const IconData no_encryption = IconData(
+  /// The `noEncryption` material icon.
+  static const IconData noEncryption = IconData(
     0xe641,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_encryption_gmailerrorred` material icon.
-  static const IconData no_encryption_gmailerrorred = IconData(
+  /// The `noEncryptionGmailerrorred` material icon.
+  static const IconData noEncryptionGmailerrorred = IconData(
     0xf03f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_flash` material icon.
-  static const IconData no_flash = IconData(
+  /// The `noFlash` material icon.
+  static const IconData noFlash = IconData(
     0xf1a6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_food` material icon.
-  static const IconData no_food = IconData(
+  /// The `noFood` material icon.
+  static const IconData noFood = IconData(
     0xf1a7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_luggage` material icon.
-  static const IconData no_luggage = IconData(
+  /// The `noLuggage` material icon.
+  static const IconData noLuggage = IconData(
     0xf23b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_meals` material icon.
-  static const IconData no_meals = IconData(
+  /// The `noMeals` material icon.
+  static const IconData noMeals = IconData(
     0xf1d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_meeting_room` material icon.
-  static const IconData no_meeting_room = IconData(
+  /// The `noMeetingRoom` material icon.
+  static const IconData noMeetingRoom = IconData(
     0xeb4e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_photography` material icon.
-  static const IconData no_photography = IconData(
+  /// The `noPhotography` material icon.
+  static const IconData noPhotography = IconData(
     0xf1a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_sim` material icon.
-  static const IconData no_sim = IconData(
+  /// The `noSim` material icon.
+  static const IconData noSim = IconData(
     0xe0cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_stroller` material icon.
-  static const IconData no_stroller = IconData(
+  /// The `noStroller` material icon.
+  static const IconData noStroller = IconData(
     0xf1af,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `no_transfer` material icon.
-  static const IconData no_transfer = IconData(
+  /// The `noTransfer` material icon.
+  static const IconData noTransfer = IconData(
     0xf1d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `noise_aware` material icon.
-  static const IconData noise_aware = IconData(
+  /// The `noiseAware` material icon.
+  static const IconData noiseAware = IconData(
     0xebec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `noise_control_off` material icon.
-  static const IconData noise_control_off = IconData(
+  /// The `noiseControlOff` material icon.
+  static const IconData noiseControlOff = IconData(
     0xebf3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `nordic_walking` material icon.
-  static const IconData nordic_walking = IconData(
+  /// The `nordicWalking` material icon.
+  static const IconData nordicWalking = IconData(
     0xe50e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8865,43 +9264,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `north_east` material icon.
-  static const IconData north_east = IconData(
+  /// The `northEast` material icon.
+  static const IconData northEast = IconData(
     0xf1e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `north_west` material icon.
-  static const IconData north_west = IconData(
+  /// The `northWest` material icon.
+  static const IconData northWest = IconData(
     0xf1e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `not_accessible` material icon.
-  static const IconData not_accessible = IconData(
+  /// The `notAccessible` material icon.
+  static const IconData notAccessible = IconData(
     0xf0fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `not_interested` material icon.
-  static const IconData not_interested = IconData(
+  /// The `notInterested` material icon.
+  static const IconData notInterested = IconData(
     0xe033,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `not_listed_location` material icon.
-  static const IconData not_listed_location = IconData(
+  /// The `notListedLocation` material icon.
+  static const IconData notListedLocation = IconData(
     0xe575,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `not_started` material icon.
-  static const IconData not_started = IconData(
+  /// The `notStarted` material icon.
+  static const IconData notStarted = IconData(
     0xf0d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8914,15 +9313,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `note_add` material icon.
-  static const IconData note_add = IconData(
+  /// The `noteAdd` material icon.
+  static const IconData noteAdd = IconData(
     0xe89c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `note_alt` material icon.
-  static const IconData note_alt = IconData(
+  /// The `noteAlt` material icon.
+  static const IconData noteAlt = IconData(
     0xf040,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8935,15 +9334,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `notification_add` material icon.
-  static const IconData notification_add = IconData(
+  /// The `notificationAdd` material icon.
+  static const IconData notificationAdd = IconData(
     0xe399,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `notification_important` material icon.
-  static const IconData notification_important = IconData(
+  /// The `notificationImportant` material icon.
+  static const IconData notificationImportant = IconData(
     0xe004,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -8956,50 +9355,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `notifications_active` material icon.
-  static const IconData notifications_active = IconData(
+  /// The `notificationsActive` material icon.
+  static const IconData notificationsActive = IconData(
     0xe7f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `notifications_none` material icon.
-  static const IconData notifications_none = IconData(
+  /// The `notificationsNone` material icon.
+  static const IconData notificationsNone = IconData(
     0xe7f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `notifications_off` material icon.
-  static const IconData notifications_off = IconData(
+  /// The `notificationsOff` material icon.
+  static const IconData notificationsOff = IconData(
     0xe7f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `notifications_on` material icon.
-  static const IconData notifications_on = IconData(
+  /// The `notificationsOn` material icon.
+  static const IconData notificationsOn = IconData(
     0xe7f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `notifications_paused` material icon.
-  static const IconData notifications_paused = IconData(
+  /// The `notificationsPaused` material icon.
+  static const IconData notificationsPaused = IconData(
     0xe7f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `now_wallpaper` material icon.
-  static const IconData now_wallpaper = IconData(
+  /// The `nowWallpaper` material icon.
+  static const IconData nowWallpaper = IconData(
     0xe75f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `now_widgets` material icon.
-  static const IconData now_widgets = IconData(
+  /// The `nowWidgets` material icon.
+  static const IconData nowWidgets = IconData(
     0xe75e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9012,50 +9411,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `offline_bolt` material icon.
-  static const IconData offline_bolt = IconData(
+  /// The `offlineBolt` material icon.
+  static const IconData offlineBolt = IconData(
     0xe932,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `offline_pin` material icon.
-  static const IconData offline_pin = IconData(
+  /// The `offlinePin` material icon.
+  static const IconData offlinePin = IconData(
     0xe90a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `offline_share` material icon.
-  static const IconData offline_share = IconData(
+  /// The `offlineShare` material icon.
+  static const IconData offlineShare = IconData(
     0xe9c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `oil_barrel` material icon.
-  static const IconData oil_barrel = IconData(
+  /// The `oilBarrel` material icon.
+  static const IconData oilBarrel = IconData(
     0xec15,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `on_device_training` material icon.
-  static const IconData on_device_training = IconData(
+  /// The `onDeviceTraining` material icon.
+  static const IconData onDeviceTraining = IconData(
     0xebfd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ondemand_video` material icon.
-  static const IconData ondemand_video = IconData(
+  /// The `ondemandVideo` material icon.
+  static const IconData ondemandVideo = IconData(
     0xe63a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `online_prediction` material icon.
-  static const IconData online_prediction = IconData(
+  /// The `onlinePrediction` material icon.
+  static const IconData onlinePrediction = IconData(
     0xf0eb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9068,43 +9467,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `open_in_browser` material icon.
-  static const IconData open_in_browser = IconData(
+  /// The `openInBrowser` material icon.
+  static const IconData openInBrowser = IconData(
     0xe89d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `open_in_full` material icon.
-  static const IconData open_in_full = IconData(
+  /// The `openInFull` material icon.
+  static const IconData openInFull = IconData(
     0xf1ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `open_in_new` material icon.
-  static const IconData open_in_new = IconData(
+  /// The `openInNew` material icon.
+  static const IconData openInNew = IconData(
     0xe89e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `open_in_new_off` material icon.
-  static const IconData open_in_new_off = IconData(
+  /// The `openInNewOff` material icon.
+  static const IconData openInNewOff = IconData(
     0xe4f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `open_with` material icon.
-  static const IconData open_with = IconData(
+  /// The `openWith` material icon.
+  static const IconData openWith = IconData(
     0xe89f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `other_houses` material icon.
-  static const IconData other_houses = IconData(
+  /// The `otherHouses` material icon.
+  static const IconData otherHouses = IconData(
     0xe58c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9131,8 +9530,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `outdoor_grill` material icon.
-  static const IconData outdoor_grill = IconData(
+  /// The `outdoorGrill` material icon.
+  static const IconData outdoorGrill = IconData(
     0xea47,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9145,8 +9544,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `outlined_flag` material icon.
-  static const IconData outlined_flag = IconData(
+  /// The `outlinedFlag` material icon.
+  static const IconData outlinedFlag = IconData(
     0xe16e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9194,15 +9593,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pan_tool` material icon.
-  static const IconData pan_tool = IconData(
+  /// The `panTool` material icon.
+  static const IconData panTool = IconData(
     0xe925,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pan_tool_alt` material icon.
-  static const IconData pan_tool_alt = IconData(
+  /// The `panToolAlt` material icon.
+  static const IconData panToolAlt = IconData(
     0xebb9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9215,71 +9614,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_fish_eye` material icon.
-  static const IconData panorama_fish_eye = IconData(
+  /// The `panoramaFishEye` material icon.
+  static const IconData panoramaFishEye = IconData(
     0xe40c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_fisheye` material icon.
-  static const IconData panorama_fisheye = IconData(
+  /// The `panoramaFisheye` material icon.
+  static const IconData panoramaFisheye = IconData(
     0xe40c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_horizontal` material icon.
-  static const IconData panorama_horizontal = IconData(
+  /// The `panoramaHorizontal` material icon.
+  static const IconData panoramaHorizontal = IconData(
     0xe40d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_horizontal_select` material icon.
-  static const IconData panorama_horizontal_select = IconData(
+  /// The `panoramaHorizontalSelect` material icon.
+  static const IconData panoramaHorizontalSelect = IconData(
     0xef60,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_photosphere` material icon.
-  static const IconData panorama_photosphere = IconData(
+  /// The `panoramaPhotosphere` material icon.
+  static const IconData panoramaPhotosphere = IconData(
     0xe9c9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_photosphere_select` material icon.
-  static const IconData panorama_photosphere_select = IconData(
+  /// The `panoramaPhotosphereSelect` material icon.
+  static const IconData panoramaPhotosphereSelect = IconData(
     0xe9ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_vertical` material icon.
-  static const IconData panorama_vertical = IconData(
+  /// The `panoramaVertical` material icon.
+  static const IconData panoramaVertical = IconData(
     0xe40e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_vertical_select` material icon.
-  static const IconData panorama_vertical_select = IconData(
+  /// The `panoramaVerticalSelect` material icon.
+  static const IconData panoramaVerticalSelect = IconData(
     0xef61,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_wide_angle` material icon.
-  static const IconData panorama_wide_angle = IconData(
+  /// The `panoramaWideAngle` material icon.
+  static const IconData panoramaWideAngle = IconData(
     0xe40f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `panorama_wide_angle_select` material icon.
-  static const IconData panorama_wide_angle_select = IconData(
+  /// The `panoramaWideAngleSelect` material icon.
+  static const IconData panoramaWideAngleSelect = IconData(
     0xef62,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9299,8 +9698,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `party_mode` material icon.
-  static const IconData party_mode = IconData(
+  /// The `partyMode` material icon.
+  static const IconData partyMode = IconData(
     0xe7fa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9334,29 +9733,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pause_circle` material icon.
-  static const IconData pause_circle = IconData(
+  /// The `pauseCircle` material icon.
+  static const IconData pauseCircle = IconData(
     0xe1a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pause_circle_filled` material icon.
-  static const IconData pause_circle_filled = IconData(
+  /// The `pauseCircleFilled` material icon.
+  static const IconData pauseCircleFilled = IconData(
     0xe035,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pause_circle_outline` material icon.
-  static const IconData pause_circle_outline = IconData(
+  /// The `pauseCircleOutline` material icon.
+  static const IconData pauseCircleOutline = IconData(
     0xe036,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pause_presentation` material icon.
-  static const IconData pause_presentation = IconData(
+  /// The `pausePresentation` material icon.
+  static const IconData pausePresentation = IconData(
     0xe0ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9383,8 +9782,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pedal_bike` material icon.
-  static const IconData pedal_bike = IconData(
+  /// The `pedalBike` material icon.
+  static const IconData pedalBike = IconData(
     0xeb29,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9397,8 +9796,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pending_actions` material icon.
-  static const IconData pending_actions = IconData(
+  /// The `pendingActions` material icon.
+  static const IconData pendingActions = IconData(
     0xf1bb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9418,15 +9817,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `people_alt` material icon.
-  static const IconData people_alt = IconData(
+  /// The `peopleAlt` material icon.
+  static const IconData peopleAlt = IconData(
     0xea21,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `people_outline` material icon.
-  static const IconData people_outline = IconData(
+  /// The `peopleOutline` material icon.
+  static const IconData peopleOutline = IconData(
     0xe7fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9439,71 +9838,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_camera_mic` material icon.
-  static const IconData perm_camera_mic = IconData(
+  /// The `permCameraMic` material icon.
+  static const IconData permCameraMic = IconData(
     0xe8a2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_contact_cal` material icon.
-  static const IconData perm_contact_cal = IconData(
+  /// The `permContactCal` material icon.
+  static const IconData permContactCal = IconData(
     0xe8a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_contact_calendar` material icon.
-  static const IconData perm_contact_calendar = IconData(
+  /// The `permContactCalendar` material icon.
+  static const IconData permContactCalendar = IconData(
     0xe8a3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_data_setting` material icon.
-  static const IconData perm_data_setting = IconData(
+  /// The `permDataSetting` material icon.
+  static const IconData permDataSetting = IconData(
     0xe8a4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_device_info` material icon.
-  static const IconData perm_device_info = IconData(
+  /// The `permDeviceInfo` material icon.
+  static const IconData permDeviceInfo = IconData(
     0xe8a5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_device_information` material icon.
-  static const IconData perm_device_information = IconData(
+  /// The `permDeviceInformation` material icon.
+  static const IconData permDeviceInformation = IconData(
     0xe8a5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_identity` material icon.
-  static const IconData perm_identity = IconData(
+  /// The `permIdentity` material icon.
+  static const IconData permIdentity = IconData(
     0xe8a6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_media` material icon.
-  static const IconData perm_media = IconData(
+  /// The `permMedia` material icon.
+  static const IconData permMedia = IconData(
     0xe8a7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_phone_msg` material icon.
-  static const IconData perm_phone_msg = IconData(
+  /// The `permPhoneMsg` material icon.
+  static const IconData permPhoneMsg = IconData(
     0xe8a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `perm_scan_wifi` material icon.
-  static const IconData perm_scan_wifi = IconData(
+  /// The `permScanWifi` material icon.
+  static const IconData permScanWifi = IconData(
     0xe8a9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9516,127 +9915,127 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_2` material icon.
-  static const IconData person_2 = IconData(
+  /// The `person2` material icon.
+  static const IconData person2 = IconData(
     0xf8e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_3` material icon.
-  static const IconData person_3 = IconData(
+  /// The `person3` material icon.
+  static const IconData person3 = IconData(
     0xf8e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_4` material icon.
-  static const IconData person_4 = IconData(
+  /// The `person4` material icon.
+  static const IconData person4 = IconData(
     0xf8e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_add` material icon.
-  static const IconData person_add = IconData(
+  /// The `personAdd` material icon.
+  static const IconData personAdd = IconData(
     0xe7fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_add_alt` material icon.
-  static const IconData person_add_alt = IconData(
+  /// The `personAddAlt` material icon.
+  static const IconData personAddAlt = IconData(
     0xea4d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_add_alt_1` material icon.
-  static const IconData person_add_alt_1 = IconData(
+  /// The `personAddAlt1` material icon.
+  static const IconData personAddAlt1 = IconData(
     0xef65,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_add_disabled` material icon.
-  static const IconData person_add_disabled = IconData(
+  /// The `personAddDisabled` material icon.
+  static const IconData personAddDisabled = IconData(
     0xe9cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_off` material icon.
-  static const IconData person_off = IconData(
+  /// The `personOff` material icon.
+  static const IconData personOff = IconData(
     0xe510,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_outline` material icon.
-  static const IconData person_outline = IconData(
+  /// The `personOutline` material icon.
+  static const IconData personOutline = IconData(
     0xe7ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_pin` material icon.
-  static const IconData person_pin = IconData(
+  /// The `personPin` material icon.
+  static const IconData personPin = IconData(
     0xe55a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_pin_circle` material icon.
-  static const IconData person_pin_circle = IconData(
+  /// The `personPinCircle` material icon.
+  static const IconData personPinCircle = IconData(
     0xe56a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_remove` material icon.
-  static const IconData person_remove = IconData(
+  /// The `personRemove` material icon.
+  static const IconData personRemove = IconData(
     0xef66,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_remove_alt_1` material icon.
-  static const IconData person_remove_alt_1 = IconData(
+  /// The `personRemoveAlt1` material icon.
+  static const IconData personRemoveAlt1 = IconData(
     0xef67,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `person_search` material icon.
-  static const IconData person_search = IconData(
+  /// The `personSearch` material icon.
+  static const IconData personSearch = IconData(
     0xf106,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `personal_injury` material icon.
-  static const IconData personal_injury = IconData(
+  /// The `personalInjury` material icon.
+  static const IconData personalInjury = IconData(
     0xe6da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `personal_video` material icon.
-  static const IconData personal_video = IconData(
+  /// The `personalVideo` material icon.
+  static const IconData personalVideo = IconData(
     0xe63b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pest_control` material icon.
-  static const IconData pest_control = IconData(
+  /// The `pestControl` material icon.
+  static const IconData pestControl = IconData(
     0xf0fa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pest_control_rodent` material icon.
-  static const IconData pest_control_rodent = IconData(
+  /// The `pestControlRodent` material icon.
+  static const IconData pestControlRodent = IconData(
     0xf0fd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9663,78 +10062,78 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_android` material icon.
-  static const IconData phone_android = IconData(
+  /// The `phoneAndroid` material icon.
+  static const IconData phoneAndroid = IconData(
     0xe324,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_bluetooth_speaker` material icon.
-  static const IconData phone_bluetooth_speaker = IconData(
+  /// The `phoneBluetoothSpeaker` material icon.
+  static const IconData phoneBluetoothSpeaker = IconData(
     0xe61b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_callback` material icon.
-  static const IconData phone_callback = IconData(
+  /// The `phoneCallback` material icon.
+  static const IconData phoneCallback = IconData(
     0xe649,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_disabled` material icon.
-  static const IconData phone_disabled = IconData(
+  /// The `phoneDisabled` material icon.
+  static const IconData phoneDisabled = IconData(
     0xe9cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_enabled` material icon.
-  static const IconData phone_enabled = IconData(
+  /// The `phoneEnabled` material icon.
+  static const IconData phoneEnabled = IconData(
     0xe9cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_forwarded` material icon.
-  static const IconData phone_forwarded = IconData(
+  /// The `phoneForwarded` material icon.
+  static const IconData phoneForwarded = IconData(
     0xe61c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_in_talk` material icon.
-  static const IconData phone_in_talk = IconData(
+  /// The `phoneInTalk` material icon.
+  static const IconData phoneInTalk = IconData(
     0xe61d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_iphone` material icon.
-  static const IconData phone_iphone = IconData(
+  /// The `phoneIphone` material icon.
+  static const IconData phoneIphone = IconData(
     0xe325,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_locked` material icon.
-  static const IconData phone_locked = IconData(
+  /// The `phoneLocked` material icon.
+  static const IconData phoneLocked = IconData(
     0xe61e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_missed` material icon.
-  static const IconData phone_missed = IconData(
+  /// The `phoneMissed` material icon.
+  static const IconData phoneMissed = IconData(
     0xe61f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phone_paused` material icon.
-  static const IconData phone_paused = IconData(
+  /// The `phonePaused` material icon.
+  static const IconData phonePaused = IconData(
     0xe620,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9747,36 +10146,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `phonelink_erase` material icon.
-  static const IconData phonelink_erase = IconData(
+  /// The `phonelinkErase` material icon.
+  static const IconData phonelinkErase = IconData(
     0xe0db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phonelink_lock` material icon.
-  static const IconData phonelink_lock = IconData(
+  /// The `phonelinkLock` material icon.
+  static const IconData phonelinkLock = IconData(
     0xe0dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phonelink_off` material icon.
-  static const IconData phonelink_off = IconData(
+  /// The `phonelinkOff` material icon.
+  static const IconData phonelinkOff = IconData(
     0xe327,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phonelink_ring` material icon.
-  static const IconData phonelink_ring = IconData(
+  /// The `phonelinkRing` material icon.
+  static const IconData phonelinkRing = IconData(
     0xe0dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `phonelink_setup` material icon.
-  static const IconData phonelink_setup = IconData(
+  /// The `phonelinkSetup` material icon.
+  static const IconData phonelinkSetup = IconData(
     0xe0de,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9789,64 +10188,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_album` material icon.
-  static const IconData photo_album = IconData(
+  /// The `photoAlbum` material icon.
+  static const IconData photoAlbum = IconData(
     0xe411,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_camera` material icon.
-  static const IconData photo_camera = IconData(
+  /// The `photoCamera` material icon.
+  static const IconData photoCamera = IconData(
     0xe412,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_camera_back` material icon.
-  static const IconData photo_camera_back = IconData(
+  /// The `photoCameraBack` material icon.
+  static const IconData photoCameraBack = IconData(
     0xef68,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_camera_front` material icon.
-  static const IconData photo_camera_front = IconData(
+  /// The `photoCameraFront` material icon.
+  static const IconData photoCameraFront = IconData(
     0xef69,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_filter` material icon.
-  static const IconData photo_filter = IconData(
+  /// The `photoFilter` material icon.
+  static const IconData photoFilter = IconData(
     0xe43b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_library` material icon.
-  static const IconData photo_library = IconData(
+  /// The `photoLibrary` material icon.
+  static const IconData photoLibrary = IconData(
     0xe413,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_size_select_actual` material icon.
-  static const IconData photo_size_select_actual = IconData(
+  /// The `photoSizeSelectActual` material icon.
+  static const IconData photoSizeSelectActual = IconData(
     0xe432,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_size_select_large` material icon.
-  static const IconData photo_size_select_large = IconData(
+  /// The `photoSizeSelectLarge` material icon.
+  static const IconData photoSizeSelectLarge = IconData(
     0xe433,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `photo_size_select_small` material icon.
-  static const IconData photo_size_select_small = IconData(
+  /// The `photoSizeSelectSmall` material icon.
+  static const IconData photoSizeSelectSmall = IconData(
     0xe434,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9866,43 +10265,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `piano_off` material icon.
-  static const IconData piano_off = IconData(
+  /// The `pianoOff` material icon.
+  static const IconData pianoOff = IconData(
     0xe520,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `picture_as_pdf` material icon.
-  static const IconData picture_as_pdf = IconData(
+  /// The `pictureAsPdf` material icon.
+  static const IconData pictureAsPdf = IconData(
     0xe415,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `picture_in_picture` material icon.
-  static const IconData picture_in_picture = IconData(
+  /// The `pictureInPicture` material icon.
+  static const IconData pictureInPicture = IconData(
     0xe8aa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `picture_in_picture_alt` material icon.
-  static const IconData picture_in_picture_alt = IconData(
+  /// The `pictureInPictureAlt` material icon.
+  static const IconData pictureInPictureAlt = IconData(
     0xe911,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pie_chart` material icon.
-  static const IconData pie_chart = IconData(
+  /// The `pieChart` material icon.
+  static const IconData pieChart = IconData(
     0xe6c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pie_chart_outline` material icon.
-  static const IconData pie_chart_outline = IconData(
+  /// The `pieChartOutline` material icon.
+  static const IconData pieChartOutline = IconData(
     0xf044,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9915,22 +10314,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pin_drop` material icon.
-  static const IconData pin_drop = IconData(
+  /// The `pinDrop` material icon.
+  static const IconData pinDrop = IconData(
     0xe55e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pin_end` material icon.
-  static const IconData pin_end = IconData(
+  /// The `pinEnd` material icon.
+  static const IconData pinEnd = IconData(
     0xe767,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pin_invoke` material icon.
-  static const IconData pin_invoke = IconData(
+  /// The `pinInvoke` material icon.
+  static const IconData pinInvoke = IconData(
     0xe763,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9943,8 +10342,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `pivot_table_chart` material icon.
-  static const IconData pivot_table_chart = IconData(
+  /// The `pivotTableChart` material icon.
+  static const IconData pivotTableChart = IconData(
     0xe9ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -9971,99 +10370,99 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_arrow` material icon.
-  static const IconData play_arrow = IconData(
+  /// The `playArrow` material icon.
+  static const IconData playArrow = IconData(
     0xe037,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_circle` material icon.
-  static const IconData play_circle = IconData(
+  /// The `playCircle` material icon.
+  static const IconData playCircle = IconData(
     0xe1c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_circle_fill` material icon.
-  static const IconData play_circle_fill = IconData(
+  /// The `playCircleFill` material icon.
+  static const IconData playCircleFill = IconData(
     0xe038,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_circle_filled` material icon.
-  static const IconData play_circle_filled = IconData(
+  /// The `playCircleFilled` material icon.
+  static const IconData playCircleFilled = IconData(
     0xe038,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_circle_outline` material icon.
-  static const IconData play_circle_outline = IconData(
+  /// The `playCircleOutline` material icon.
+  static const IconData playCircleOutline = IconData(
     0xe039,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_disabled` material icon.
-  static const IconData play_disabled = IconData(
+  /// The `playDisabled` material icon.
+  static const IconData playDisabled = IconData(
     0xef6a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_for_work` material icon.
-  static const IconData play_for_work = IconData(
+  /// The `playForWork` material icon.
+  static const IconData playForWork = IconData(
     0xe906,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `play_lesson` material icon.
-  static const IconData play_lesson = IconData(
+  /// The `playLesson` material icon.
+  static const IconData playLesson = IconData(
     0xf047,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_add` material icon.
-  static const IconData playlist_add = IconData(
+  /// The `playlistAdd` material icon.
+  static const IconData playlistAdd = IconData(
     0xe03b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_add_check` material icon.
-  static const IconData playlist_add_check = IconData(
+  /// The `playlistAddCheck` material icon.
+  static const IconData playlistAddCheck = IconData(
     0xe065,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_add_check_circle` material icon.
-  static const IconData playlist_add_check_circle = IconData(
+  /// The `playlistAddCheckCircle` material icon.
+  static const IconData playlistAddCheckCircle = IconData(
     0xe7e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_add_circle` material icon.
-  static const IconData playlist_add_circle = IconData(
+  /// The `playlistAddCircle` material icon.
+  static const IconData playlistAddCircle = IconData(
     0xe7e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_play` material icon.
-  static const IconData playlist_play = IconData(
+  /// The `playlistPlay` material icon.
+  static const IconData playlistPlay = IconData(
     0xe05f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `playlist_remove` material icon.
-  static const IconData playlist_remove = IconData(
+  /// The `playlistRemove` material icon.
+  static const IconData playlistRemove = IconData(
     0xeb80,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10076,8 +10475,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `plus_one` material icon.
-  static const IconData plus_one = IconData(
+  /// The `plusOne` material icon.
+  static const IconData plusOne = IconData(
     0xe800,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10090,8 +10489,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `point_of_sale` material icon.
-  static const IconData point_of_sale = IconData(
+  /// The `pointOfSale` material icon.
+  static const IconData pointOfSale = IconData(
     0xf17e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10132,8 +10531,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `portable_wifi_off` material icon.
-  static const IconData portable_wifi_off = IconData(
+  /// The `portableWifiOff` material icon.
+  static const IconData portableWifiOff = IconData(
     0xe0ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10146,8 +10545,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `post_add` material icon.
-  static const IconData post_add = IconData(
+  /// The `postAdd` material icon.
+  static const IconData postAdd = IconData(
     0xea20,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10160,43 +10559,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `power_input` material icon.
-  static const IconData power_input = IconData(
+  /// The `powerInput` material icon.
+  static const IconData powerInput = IconData(
     0xe336,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `power_off` material icon.
-  static const IconData power_off = IconData(
+  /// The `powerOff` material icon.
+  static const IconData powerOff = IconData(
     0xe646,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `power_settings_new` material icon.
-  static const IconData power_settings_new = IconData(
+  /// The `powerSettingsNew` material icon.
+  static const IconData powerSettingsNew = IconData(
     0xe8ac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `precision_manufacturing` material icon.
-  static const IconData precision_manufacturing = IconData(
+  /// The `precisionManufacturing` material icon.
+  static const IconData precisionManufacturing = IconData(
     0xf049,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `pregnant_woman` material icon.
-  static const IconData pregnant_woman = IconData(
+  /// The `pregnantWoman` material icon.
+  static const IconData pregnantWoman = IconData(
     0xe91e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `present_to_all` material icon.
-  static const IconData present_to_all = IconData(
+  /// The `presentToAll` material icon.
+  static const IconData presentToAll = IconData(
     0xe0df,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10209,15 +10608,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `price_change` material icon.
-  static const IconData price_change = IconData(
+  /// The `priceChange` material icon.
+  static const IconData priceChange = IconData(
     0xf04a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `price_check` material icon.
-  static const IconData price_check = IconData(
+  /// The `priceCheck` material icon.
+  static const IconData priceCheck = IconData(
     0xf04b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10230,36 +10629,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `print_disabled` material icon.
-  static const IconData print_disabled = IconData(
+  /// The `printDisabled` material icon.
+  static const IconData printDisabled = IconData(
     0xe9cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `priority_high` material icon.
-  static const IconData priority_high = IconData(
+  /// The `priorityHigh` material icon.
+  static const IconData priorityHigh = IconData(
     0xe645,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `privacy_tip` material icon.
-  static const IconData privacy_tip = IconData(
+  /// The `privacyTip` material icon.
+  static const IconData privacyTip = IconData(
     0xf0dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `private_connectivity` material icon.
-  static const IconData private_connectivity = IconData(
+  /// The `privateConnectivity` material icon.
+  static const IconData privateConnectivity = IconData(
     0xe744,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `production_quantity_limits` material icon.
-  static const IconData production_quantity_limits = IconData(
+  /// The `productionQuantityLimits` material icon.
+  static const IconData productionQuantityLimits = IconData(
     0xe1d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10272,8 +10671,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `propane_tank` material icon.
-  static const IconData propane_tank = IconData(
+  /// The `propaneTank` material icon.
+  static const IconData propaneTank = IconData(
     0xec13,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10286,8 +10685,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `psychology_alt` material icon.
-  static const IconData psychology_alt = IconData(
+  /// The `psychologyAlt` material icon.
+  static const IconData psychologyAlt = IconData(
     0xf8ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10300,8 +10699,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `public_off` material icon.
-  static const IconData public_off = IconData(
+  /// The `publicOff` material icon.
+  static const IconData publicOff = IconData(
     0xf1ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10314,71 +10713,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `published_with_changes` material icon.
-  static const IconData published_with_changes = IconData(
+  /// The `publishedWithChanges` material icon.
+  static const IconData publishedWithChanges = IconData(
     0xf232,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `punch_clock` material icon.
-  static const IconData punch_clock = IconData(
+  /// The `punchClock` material icon.
+  static const IconData punchClock = IconData(
     0xeaa8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `push_pin` material icon.
-  static const IconData push_pin = IconData(
+  /// The `pushPin` material icon.
+  static const IconData pushPin = IconData(
     0xf10d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `qr_code` material icon.
-  static const IconData qr_code = IconData(
+  /// The `qrCode` material icon.
+  static const IconData qrCode = IconData(
     0xef6b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `qr_code_2` material icon.
-  static const IconData qr_code_2 = IconData(
+  /// The `qrCode2` material icon.
+  static const IconData qrCode2 = IconData(
     0xe00a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `qr_code_scanner` material icon.
-  static const IconData qr_code_scanner = IconData(
+  /// The `qrCodeScanner` material icon.
+  static const IconData qrCodeScanner = IconData(
     0xf206,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `query_builder` material icon.
-  static const IconData query_builder = IconData(
+  /// The `queryBuilder` material icon.
+  static const IconData queryBuilder = IconData(
     0xe8ae,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `query_stats` material icon.
-  static const IconData query_stats = IconData(
+  /// The `queryStats` material icon.
+  static const IconData queryStats = IconData(
     0xe4fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `question_answer` material icon.
-  static const IconData question_answer = IconData(
+  /// The `questionAnswer` material icon.
+  static const IconData questionAnswer = IconData(
     0xe8af,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `question_mark` material icon.
-  static const IconData question_mark = IconData(
+  /// The `questionMark` material icon.
+  static const IconData questionMark = IconData(
     0xeb8b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10391,29 +10790,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `queue_music` material icon.
-  static const IconData queue_music = IconData(
+  /// The `queueMusic` material icon.
+  static const IconData queueMusic = IconData(
     0xe03d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `queue_play_next` material icon.
-  static const IconData queue_play_next = IconData(
+  /// The `queuePlayNext` material icon.
+  static const IconData queuePlayNext = IconData(
     0xe066,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `quick_contacts_dialer` material icon.
-  static const IconData quick_contacts_dialer = IconData(
+  /// The `quickContactsDialer` material icon.
+  static const IconData quickContactsDialer = IconData(
     0xe0cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `quick_contacts_mail` material icon.
-  static const IconData quick_contacts_mail = IconData(
+  /// The `quickContactsMail` material icon.
+  static const IconData quickContactsMail = IconData(
     0xe0d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10440,8 +10839,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `r_mobiledata` material icon.
-  static const IconData r_mobiledata = IconData(
+  /// The `rMobiledata` material icon.
+  static const IconData rMobiledata = IconData(
     0xf04d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10461,92 +10860,92 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `radio_button_checked` material icon.
-  static const IconData radio_button_checked = IconData(
+  /// The `radioButtonChecked` material icon.
+  static const IconData radioButtonChecked = IconData(
     0xe837,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `radio_button_off` material icon.
-  static const IconData radio_button_off = IconData(
+  /// The `radioButtonOff` material icon.
+  static const IconData radioButtonOff = IconData(
     0xe836,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `radio_button_on` material icon.
-  static const IconData radio_button_on = IconData(
+  /// The `radioButtonOn` material icon.
+  static const IconData radioButtonOn = IconData(
     0xe837,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `radio_button_unchecked` material icon.
-  static const IconData radio_button_unchecked = IconData(
+  /// The `radioButtonUnchecked` material icon.
+  static const IconData radioButtonUnchecked = IconData(
     0xe836,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `railway_alert` material icon.
-  static const IconData railway_alert = IconData(
+  /// The `railwayAlert` material icon.
+  static const IconData railwayAlert = IconData(
     0xe9d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ramen_dining` material icon.
-  static const IconData ramen_dining = IconData(
+  /// The `ramenDining` material icon.
+  static const IconData ramenDining = IconData(
     0xea64,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ramp_left` material icon.
-  static const IconData ramp_left = IconData(
+  /// The `rampLeft` material icon.
+  static const IconData rampLeft = IconData(
     0xeb9c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ramp_right` material icon.
-  static const IconData ramp_right = IconData(
+  /// The `rampRight` material icon.
+  static const IconData rampRight = IconData(
     0xeb96,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rate_review` material icon.
-  static const IconData rate_review = IconData(
+  /// The `rateReview` material icon.
+  static const IconData rateReview = IconData(
     0xe560,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `raw_off` material icon.
-  static const IconData raw_off = IconData(
+  /// The `rawOff` material icon.
+  static const IconData rawOff = IconData(
     0xf04f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `raw_on` material icon.
-  static const IconData raw_on = IconData(
+  /// The `rawOn` material icon.
+  static const IconData rawOn = IconData(
     0xf050,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `read_more` material icon.
-  static const IconData read_more = IconData(
+  /// The `readMore` material icon.
+  static const IconData readMore = IconData(
     0xef6d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `real_estate_agent` material icon.
-  static const IconData real_estate_agent = IconData(
+  /// The `realEstateAgent` material icon.
+  static const IconData realEstateAgent = IconData(
     0xe73a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10559,15 +10958,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `receipt_long` material icon.
-  static const IconData receipt_long = IconData(
+  /// The `receiptLong` material icon.
+  static const IconData receiptLong = IconData(
     0xef6e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `recent_actors` material icon.
-  static const IconData recent_actors = IconData(
+  /// The `recentActors` material icon.
+  static const IconData recentActors = IconData(
     0xe03f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10580,8 +10979,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `record_voice_over` material icon.
-  static const IconData record_voice_over = IconData(
+  /// The `recordVoiceOver` material icon.
+  static const IconData recordVoiceOver = IconData(
     0xe91f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10622,8 +11021,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `reduce_capacity` material icon.
-  static const IconData reduce_capacity = IconData(
+  /// The `reduceCapacity` material icon.
+  static const IconData reduceCapacity = IconData(
     0xf21c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10636,8 +11035,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `remember_me` material icon.
-  static const IconData remember_me = IconData(
+  /// The `rememberMe` material icon.
+  static const IconData rememberMe = IconData(
     0xf051,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10650,57 +11049,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_circle` material icon.
-  static const IconData remove_circle = IconData(
+  /// The `removeCircle` material icon.
+  static const IconData removeCircle = IconData(
     0xe15c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_circle_outline` material icon.
-  static const IconData remove_circle_outline = IconData(
+  /// The `removeCircleOutline` material icon.
+  static const IconData removeCircleOutline = IconData(
     0xe15d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_done` material icon.
-  static const IconData remove_done = IconData(
+  /// The `removeDone` material icon.
+  static const IconData removeDone = IconData(
     0xe9d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_from_queue` material icon.
-  static const IconData remove_from_queue = IconData(
+  /// The `removeFromQueue` material icon.
+  static const IconData removeFromQueue = IconData(
     0xe067,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_moderator` material icon.
-  static const IconData remove_moderator = IconData(
+  /// The `removeModerator` material icon.
+  static const IconData removeModerator = IconData(
     0xe9d4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_red_eye` material icon.
-  static const IconData remove_red_eye = IconData(
+  /// The `removeRedEye` material icon.
+  static const IconData removeRedEye = IconData(
     0xe417,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_road` material icon.
-  static const IconData remove_road = IconData(
+  /// The `removeRoad` material icon.
+  static const IconData removeRoad = IconData(
     0xebfc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `remove_shopping_cart` material icon.
-  static const IconData remove_shopping_cart = IconData(
+  /// The `removeShoppingCart` material icon.
+  static const IconData removeShoppingCart = IconData(
     0xe928,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10727,22 +11126,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `repeat_on` material icon.
-  static const IconData repeat_on = IconData(
+  /// The `repeatOn` material icon.
+  static const IconData repeatOn = IconData(
     0xe9d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `repeat_one` material icon.
-  static const IconData repeat_one = IconData(
+  /// The `repeatOne` material icon.
+  static const IconData repeatOne = IconData(
     0xe041,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `repeat_one_on` material icon.
-  static const IconData repeat_one_on = IconData(
+  /// The `repeatOneOn` material icon.
+  static const IconData repeatOneOn = IconData(
     0xe9d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10755,29 +11154,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `replay_10` material icon.
-  static const IconData replay_10 = IconData(
+  /// The `replay10` material icon.
+  static const IconData replay10 = IconData(
     0xe059,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `replay_30` material icon.
-  static const IconData replay_30 = IconData(
+  /// The `replay30` material icon.
+  static const IconData replay30 = IconData(
     0xe05a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `replay_5` material icon.
-  static const IconData replay_5 = IconData(
+  /// The `replay5` material icon.
+  static const IconData replay5 = IconData(
     0xe05b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `replay_circle_filled` material icon.
-  static const IconData replay_circle_filled = IconData(
+  /// The `replayCircleFilled` material icon.
+  static const IconData replayCircleFilled = IconData(
     0xe9d8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10790,8 +11189,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `reply_all` material icon.
-  static const IconData reply_all = IconData(
+  /// The `replyAll` material icon.
+  static const IconData replyAll = IconData(
     0xe15f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10804,50 +11203,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `report_gmailerrorred` material icon.
-  static const IconData report_gmailerrorred = IconData(
+  /// The `reportGmailerrorred` material icon.
+  static const IconData reportGmailerrorred = IconData(
     0xf052,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `report_off` material icon.
-  static const IconData report_off = IconData(
+  /// The `reportOff` material icon.
+  static const IconData reportOff = IconData(
     0xe170,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `report_problem` material icon.
-  static const IconData report_problem = IconData(
+  /// The `reportProblem` material icon.
+  static const IconData reportProblem = IconData(
     0xe8b2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `request_page` material icon.
-  static const IconData request_page = IconData(
+  /// The `requestPage` material icon.
+  static const IconData requestPage = IconData(
     0xf22c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `request_quote` material icon.
-  static const IconData request_quote = IconData(
+  /// The `requestQuote` material icon.
+  static const IconData requestQuote = IconData(
     0xf1b6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `reset_tv` material icon.
-  static const IconData reset_tv = IconData(
+  /// The `resetTv` material icon.
+  static const IconData resetTv = IconData(
     0xe9d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `restart_alt` material icon.
-  static const IconData restart_alt = IconData(
+  /// The `restartAlt` material icon.
+  static const IconData restartAlt = IconData(
     0xf053,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10860,8 +11259,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `restaurant_menu` material icon.
-  static const IconData restaurant_menu = IconData(
+  /// The `restaurantMenu` material icon.
+  static const IconData restaurantMenu = IconData(
     0xe561,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10874,15 +11273,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `restore_from_trash` material icon.
-  static const IconData restore_from_trash = IconData(
+  /// The `restoreFromTrash` material icon.
+  static const IconData restoreFromTrash = IconData(
     0xe938,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `restore_page` material icon.
-  static const IconData restore_page = IconData(
+  /// The `restorePage` material icon.
+  static const IconData restorePage = IconData(
     0xe929,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10895,15 +11294,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `rice_bowl` material icon.
-  static const IconData rice_bowl = IconData(
+  /// The `riceBowl` material icon.
+  static const IconData riceBowl = IconData(
     0xf1f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ring_volume` material icon.
-  static const IconData ring_volume = IconData(
+  /// The `ringVolume` material icon.
+  static const IconData ringVolume = IconData(
     0xe0d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10916,29 +11315,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `rocket_launch` material icon.
-  static const IconData rocket_launch = IconData(
+  /// The `rocketLaunch` material icon.
+  static const IconData rocketLaunch = IconData(
     0xeb9b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `roller_shades` material icon.
-  static const IconData roller_shades = IconData(
+  /// The `rollerShades` material icon.
+  static const IconData rollerShades = IconData(
     0xec12,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `roller_shades_closed` material icon.
-  static const IconData roller_shades_closed = IconData(
+  /// The `rollerShadesClosed` material icon.
+  static const IconData rollerShadesClosed = IconData(
     0xec11,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `roller_skating` material icon.
-  static const IconData roller_skating = IconData(
+  /// The `rollerSkating` material icon.
+  static const IconData rollerSkating = IconData(
     0xebcd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -10958,64 +11357,64 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `room_preferences` material icon.
-  static const IconData room_preferences = IconData(
+  /// The `roomPreferences` material icon.
+  static const IconData roomPreferences = IconData(
     0xf1b8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `room_service` material icon.
-  static const IconData room_service = IconData(
+  /// The `roomService` material icon.
+  static const IconData roomService = IconData(
     0xeb49,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rotate_90_degrees_ccw` material icon.
-  static const IconData rotate_90_degrees_ccw = IconData(
+  /// The `rotate90DegreesCcw` material icon.
+  static const IconData rotate90DegreesCcw = IconData(
     0xe418,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rotate_90_degrees_cw` material icon.
-  static const IconData rotate_90_degrees_cw = IconData(
+  /// The `rotate90DegreesCw` material icon.
+  static const IconData rotate90DegreesCw = IconData(
     0xeaab,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rotate_left` material icon.
-  static const IconData rotate_left = IconData(
+  /// The `rotateLeft` material icon.
+  static const IconData rotateLeft = IconData(
     0xe419,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rotate_right` material icon.
-  static const IconData rotate_right = IconData(
+  /// The `rotateRight` material icon.
+  static const IconData rotateRight = IconData(
     0xe41a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `roundabout_left` material icon.
-  static const IconData roundabout_left = IconData(
+  /// The `roundaboutLeft` material icon.
+  static const IconData roundaboutLeft = IconData(
     0xeb99,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `roundabout_right` material icon.
-  static const IconData roundabout_right = IconData(
+  /// The `roundaboutRight` material icon.
+  static const IconData roundaboutRight = IconData(
     0xeba3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rounded_corner` material icon.
-  static const IconData rounded_corner = IconData(
+  /// The `roundedCorner` material icon.
+  static const IconData roundedCorner = IconData(
     0xe920,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11042,8 +11441,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `rss_feed` material icon.
-  static const IconData rss_feed = IconData(
+  /// The `rssFeed` material icon.
+  static const IconData rssFeed = IconData(
     0xe0e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11070,43 +11469,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `rule_folder` material icon.
-  static const IconData rule_folder = IconData(
+  /// The `ruleFolder` material icon.
+  static const IconData ruleFolder = IconData(
     0xf1c9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `run_circle` material icon.
-  static const IconData run_circle = IconData(
+  /// The `runCircle` material icon.
+  static const IconData runCircle = IconData(
     0xef6f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `running_with_errors` material icon.
-  static const IconData running_with_errors = IconData(
+  /// The `runningWithErrors` material icon.
+  static const IconData runningWithErrors = IconData(
     0xe51d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `rv_hookup` material icon.
-  static const IconData rv_hookup = IconData(
+  /// The `rvHookup` material icon.
+  static const IconData rvHookup = IconData(
     0xe642,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `safety_check` material icon.
-  static const IconData safety_check = IconData(
+  /// The `safetyCheck` material icon.
+  static const IconData safetyCheck = IconData(
     0xebef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `safety_divider` material icon.
-  static const IconData safety_divider = IconData(
+  /// The `safetyDivider` material icon.
+  static const IconData safetyDivider = IconData(
     0xe1cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11133,8 +11532,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `satellite_alt` material icon.
-  static const IconData satellite_alt = IconData(
+  /// The `satelliteAlt` material icon.
+  static const IconData satelliteAlt = IconData(
     0xeb3a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11147,22 +11546,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `save_alt` material icon.
-  static const IconData save_alt = IconData(
+  /// The `saveAlt` material icon.
+  static const IconData saveAlt = IconData(
     0xe171,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `save_as` material icon.
-  static const IconData save_as = IconData(
+  /// The `saveAs` material icon.
+  static const IconData saveAs = IconData(
     0xeb60,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `saved_search` material icon.
-  static const IconData saved_search = IconData(
+  /// The `savedSearch` material icon.
+  static const IconData savedSearch = IconData(
     0xea11,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11189,8 +11588,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `scatter_plot` material icon.
-  static const IconData scatter_plot = IconData(
+  /// The `scatterPlot` material icon.
+  static const IconData scatterPlot = IconData(
     0xe268,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11203,8 +11602,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `schedule_send` material icon.
-  static const IconData schedule_send = IconData(
+  /// The `scheduleSend` material icon.
+  static const IconData scheduleSend = IconData(
     0xea0a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11245,50 +11644,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_lock_landscape` material icon.
-  static const IconData screen_lock_landscape = IconData(
+  /// The `screenLockLandscape` material icon.
+  static const IconData screenLockLandscape = IconData(
     0xe1be,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_lock_portrait` material icon.
-  static const IconData screen_lock_portrait = IconData(
+  /// The `screenLockPortrait` material icon.
+  static const IconData screenLockPortrait = IconData(
     0xe1bf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_lock_rotation` material icon.
-  static const IconData screen_lock_rotation = IconData(
+  /// The `screenLockRotation` material icon.
+  static const IconData screenLockRotation = IconData(
     0xe1c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_rotation` material icon.
-  static const IconData screen_rotation = IconData(
+  /// The `screenRotation` material icon.
+  static const IconData screenRotation = IconData(
     0xe1c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_rotation_alt` material icon.
-  static const IconData screen_rotation_alt = IconData(
+  /// The `screenRotationAlt` material icon.
+  static const IconData screenRotationAlt = IconData(
     0xebee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_search_desktop` material icon.
-  static const IconData screen_search_desktop = IconData(
+  /// The `screenSearchDesktop` material icon.
+  static const IconData screenSearchDesktop = IconData(
     0xef70,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `screen_share` material icon.
-  static const IconData screen_share = IconData(
+  /// The `screenShare` material icon.
+  static const IconData screenShare = IconData(
     0xe0e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11301,15 +11700,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `screenshot_monitor` material icon.
-  static const IconData screenshot_monitor = IconData(
+  /// The `screenshotMonitor` material icon.
+  static const IconData screenshotMonitor = IconData(
     0xec08,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `scuba_diving` material icon.
-  static const IconData scuba_diving = IconData(
+  /// The `scubaDiving` material icon.
+  static const IconData scubaDiving = IconData(
     0xebce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11322,22 +11721,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sd_card` material icon.
-  static const IconData sd_card = IconData(
+  /// The `sdCard` material icon.
+  static const IconData sdCard = IconData(
     0xe623,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sd_card_alert` material icon.
-  static const IconData sd_card_alert = IconData(
+  /// The `sdCardAlert` material icon.
+  static const IconData sdCardAlert = IconData(
     0xf057,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sd_storage` material icon.
-  static const IconData sd_storage = IconData(
+  /// The `sdStorage` material icon.
+  static const IconData sdStorage = IconData(
     0xe1c2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11350,8 +11749,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `search_off` material icon.
-  static const IconData search_off = IconData(
+  /// The `searchOff` material icon.
+  static const IconData searchOff = IconData(
     0xea76,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11364,22 +11763,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `security_update` material icon.
-  static const IconData security_update = IconData(
+  /// The `securityUpdate` material icon.
+  static const IconData securityUpdate = IconData(
     0xf058,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `security_update_good` material icon.
-  static const IconData security_update_good = IconData(
+  /// The `securityUpdateGood` material icon.
+  static const IconData securityUpdateGood = IconData(
     0xf059,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `security_update_warning` material icon.
-  static const IconData security_update_warning = IconData(
+  /// The `securityUpdateWarning` material icon.
+  static const IconData securityUpdateWarning = IconData(
     0xf05a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11392,15 +11791,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `select_all` material icon.
-  static const IconData select_all = IconData(
+  /// The `selectAll` material icon.
+  static const IconData selectAll = IconData(
     0xe162,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `self_improvement` material icon.
-  static const IconData self_improvement = IconData(
+  /// The `selfImprovement` material icon.
+  static const IconData selfImprovement = IconData(
     0xea78,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11420,43 +11819,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `send_and_archive` material icon.
-  static const IconData send_and_archive = IconData(
+  /// The `sendAndArchive` material icon.
+  static const IconData sendAndArchive = IconData(
     0xea0c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `send_time_extension` material icon.
-  static const IconData send_time_extension = IconData(
+  /// The `sendTimeExtension` material icon.
+  static const IconData sendTimeExtension = IconData(
     0xeadb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `send_to_mobile` material icon.
-  static const IconData send_to_mobile = IconData(
+  /// The `sendToMobile` material icon.
+  static const IconData sendToMobile = IconData(
     0xf05c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sensor_door` material icon.
-  static const IconData sensor_door = IconData(
+  /// The `sensorDoor` material icon.
+  static const IconData sensorDoor = IconData(
     0xf1b5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sensor_occupied` material icon.
-  static const IconData sensor_occupied = IconData(
+  /// The `sensorOccupied` material icon.
+  static const IconData sensorOccupied = IconData(
     0xec10,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sensor_window` material icon.
-  static const IconData sensor_window = IconData(
+  /// The `sensorWindow` material icon.
+  static const IconData sensorWindow = IconData(
     0xf1b4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11469,57 +11868,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sensors_off` material icon.
-  static const IconData sensors_off = IconData(
+  /// The `sensorsOff` material icon.
+  static const IconData sensorsOff = IconData(
     0xe51f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_dissatisfied` material icon.
-  static const IconData sentiment_dissatisfied = IconData(
+  /// The `sentimentDissatisfied` material icon.
+  static const IconData sentimentDissatisfied = IconData(
     0xe811,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_neutral` material icon.
-  static const IconData sentiment_neutral = IconData(
+  /// The `sentimentNeutral` material icon.
+  static const IconData sentimentNeutral = IconData(
     0xe812,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_satisfied` material icon.
-  static const IconData sentiment_satisfied = IconData(
+  /// The `sentimentSatisfied` material icon.
+  static const IconData sentimentSatisfied = IconData(
     0xe813,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_satisfied_alt` material icon.
-  static const IconData sentiment_satisfied_alt = IconData(
+  /// The `sentimentSatisfiedAlt` material icon.
+  static const IconData sentimentSatisfiedAlt = IconData(
     0xe0ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_very_dissatisfied` material icon.
-  static const IconData sentiment_very_dissatisfied = IconData(
+  /// The `sentimentVeryDissatisfied` material icon.
+  static const IconData sentimentVeryDissatisfied = IconData(
     0xe814,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sentiment_very_satisfied` material icon.
-  static const IconData sentiment_very_satisfied = IconData(
+  /// The `sentimentVerySatisfied` material icon.
+  static const IconData sentimentVerySatisfied = IconData(
     0xe815,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `set_meal` material icon.
-  static const IconData set_meal = IconData(
+  /// The `setMeal` material icon.
+  static const IconData setMeal = IconData(
     0xf1ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11532,155 +11931,155 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_accessibility` material icon.
-  static const IconData settings_accessibility = IconData(
+  /// The `settingsAccessibility` material icon.
+  static const IconData settingsAccessibility = IconData(
     0xf05d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_applications` material icon.
-  static const IconData settings_applications = IconData(
+  /// The `settingsApplications` material icon.
+  static const IconData settingsApplications = IconData(
     0xe8b9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_backup_restore` material icon.
-  static const IconData settings_backup_restore = IconData(
+  /// The `settingsBackupRestore` material icon.
+  static const IconData settingsBackupRestore = IconData(
     0xe8ba,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_bluetooth` material icon.
-  static const IconData settings_bluetooth = IconData(
+  /// The `settingsBluetooth` material icon.
+  static const IconData settingsBluetooth = IconData(
     0xe8bb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_brightness` material icon.
-  static const IconData settings_brightness = IconData(
+  /// The `settingsBrightness` material icon.
+  static const IconData settingsBrightness = IconData(
     0xe8bd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_cell` material icon.
-  static const IconData settings_cell = IconData(
+  /// The `settingsCell` material icon.
+  static const IconData settingsCell = IconData(
     0xe8bc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_display` material icon.
-  static const IconData settings_display = IconData(
+  /// The `settingsDisplay` material icon.
+  static const IconData settingsDisplay = IconData(
     0xe8bd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_ethernet` material icon.
-  static const IconData settings_ethernet = IconData(
+  /// The `settingsEthernet` material icon.
+  static const IconData settingsEthernet = IconData(
     0xe8be,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_input_antenna` material icon.
-  static const IconData settings_input_antenna = IconData(
+  /// The `settingsInputAntenna` material icon.
+  static const IconData settingsInputAntenna = IconData(
     0xe8bf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_input_component` material icon.
-  static const IconData settings_input_component = IconData(
+  /// The `settingsInputComponent` material icon.
+  static const IconData settingsInputComponent = IconData(
     0xe8c0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_input_composite` material icon.
-  static const IconData settings_input_composite = IconData(
+  /// The `settingsInputComposite` material icon.
+  static const IconData settingsInputComposite = IconData(
     0xe8c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_input_hdmi` material icon.
-  static const IconData settings_input_hdmi = IconData(
+  /// The `settingsInputHdmi` material icon.
+  static const IconData settingsInputHdmi = IconData(
     0xe8c2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_input_svideo` material icon.
-  static const IconData settings_input_svideo = IconData(
+  /// The `settingsInputSvideo` material icon.
+  static const IconData settingsInputSvideo = IconData(
     0xe8c3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_overscan` material icon.
-  static const IconData settings_overscan = IconData(
+  /// The `settingsOverscan` material icon.
+  static const IconData settingsOverscan = IconData(
     0xe8c4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_phone` material icon.
-  static const IconData settings_phone = IconData(
+  /// The `settingsPhone` material icon.
+  static const IconData settingsPhone = IconData(
     0xe8c5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_power` material icon.
-  static const IconData settings_power = IconData(
+  /// The `settingsPower` material icon.
+  static const IconData settingsPower = IconData(
     0xe8c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_remote` material icon.
-  static const IconData settings_remote = IconData(
+  /// The `settingsRemote` material icon.
+  static const IconData settingsRemote = IconData(
     0xe8c7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_suggest` material icon.
-  static const IconData settings_suggest = IconData(
+  /// The `settingsSuggest` material icon.
+  static const IconData settingsSuggest = IconData(
     0xf05e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_system_daydream` material icon.
-  static const IconData settings_system_daydream = IconData(
+  /// The `settingsSystemDaydream` material icon.
+  static const IconData settingsSystemDaydream = IconData(
     0xe1c3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `settings_voice` material icon.
-  static const IconData settings_voice = IconData(
+  /// The `settingsVoice` material icon.
+  static const IconData settingsVoice = IconData(
     0xe8c8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `severe_cold` material icon.
-  static const IconData severe_cold = IconData(
+  /// The `severeCold` material icon.
+  static const IconData severeCold = IconData(
     0xebd3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shape_line` material icon.
-  static const IconData shape_line = IconData(
+  /// The `shapeLine` material icon.
+  static const IconData shapeLine = IconData(
     0xf8d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11693,15 +12092,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `share_arrival_time` material icon.
-  static const IconData share_arrival_time = IconData(
+  /// The `shareArrivalTime` material icon.
+  static const IconData shareArrivalTime = IconData(
     0xe524,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `share_location` material icon.
-  static const IconData share_location = IconData(
+  /// The `shareLocation` material icon.
+  static const IconData shareLocation = IconData(
     0xf05f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11714,8 +12113,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `shield_moon` material icon.
-  static const IconData shield_moon = IconData(
+  /// The `shieldMoon` material icon.
+  static const IconData shieldMoon = IconData(
     0xeaa9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11728,15 +12127,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `shop_2` material icon.
-  static const IconData shop_2 = IconData(
+  /// The `shop2` material icon.
+  static const IconData shop2 = IconData(
     0xe19e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shop_two` material icon.
-  static const IconData shop_two = IconData(
+  /// The `shopTwo` material icon.
+  static const IconData shopTwo = IconData(
     0xe8ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11749,36 +12148,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `shopping_bag` material icon.
-  static const IconData shopping_bag = IconData(
+  /// The `shoppingBag` material icon.
+  static const IconData shoppingBag = IconData(
     0xf1cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shopping_basket` material icon.
-  static const IconData shopping_basket = IconData(
+  /// The `shoppingBasket` material icon.
+  static const IconData shoppingBasket = IconData(
     0xe8cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shopping_cart` material icon.
-  static const IconData shopping_cart = IconData(
+  /// The `shoppingCart` material icon.
+  static const IconData shoppingCart = IconData(
     0xe8cc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shopping_cart_checkout` material icon.
-  static const IconData shopping_cart_checkout = IconData(
+  /// The `shoppingCartCheckout` material icon.
+  static const IconData shoppingCartCheckout = IconData(
     0xeb88,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `short_text` material icon.
-  static const IconData short_text = IconData(
+  /// The `shortText` material icon.
+  static const IconData shortText = IconData(
     0xe261,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11791,8 +12190,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `show_chart` material icon.
-  static const IconData show_chart = IconData(
+  /// The `showChart` material icon.
+  static const IconData showChart = IconData(
     0xe6e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11812,15 +12211,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `shuffle_on` material icon.
-  static const IconData shuffle_on = IconData(
+  /// The `shuffleOn` material icon.
+  static const IconData shuffleOn = IconData(
     0xe9e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `shutter_speed` material icon.
-  static const IconData shutter_speed = IconData(
+  /// The `shutterSpeed` material icon.
+  static const IconData shutterSpeed = IconData(
     0xe43d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11833,149 +12232,148 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sign_language` material icon.
-  static const IconData sign_language = IconData(
+  /// The `signLanguage` material icon.
+  static const IconData signLanguage = IconData(
     0xebe5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_0_bar` material icon.
-  static const IconData signal_cellular_0_bar = IconData(
+  /// The `signalCellular0Bar` material icon.
+  static const IconData signalCellular0Bar = IconData(
     0xf0a8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_4_bar` material icon.
-  static const IconData signal_cellular_4_bar = IconData(
+  /// The `signalCellular4Bar` material icon.
+  static const IconData signalCellular4Bar = IconData(
     0xe1c8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_alt` material icon.
-  static const IconData signal_cellular_alt = IconData(
+  /// The `signalCellularAlt` material icon.
+  static const IconData signalCellularAlt = IconData(
     0xe202,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_alt_1_bar` material icon.
-  static const IconData signal_cellular_alt_1_bar = IconData(
+  /// The `signalCellularAlt1Bar` material icon.
+  static const IconData signalCellularAlt1Bar = IconData(
     0xebdf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_alt_2_bar` material icon.
-  static const IconData signal_cellular_alt_2_bar = IconData(
+  /// The `signalCellularAlt2Bar` material icon.
+  static const IconData signalCellularAlt2Bar = IconData(
     0xebe3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_connected_no_internet_0_bar` material icon.
-  static const IconData signal_cellular_connected_no_internet_0_bar = IconData(
+  /// The `signalCellularConnectedNoInternet0Bar` material icon.
+  static const IconData signalCellularConnectedNoInternet0Bar = IconData(
     0xf0ac,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_connected_no_internet_4_bar` material icon.
-  static const IconData signal_cellular_connected_no_internet_4_bar = IconData(
+  /// The `signalCellularConnectedNoInternet4Bar` material icon.
+  static const IconData signalCellularConnectedNoInternet4Bar = IconData(
     0xe1cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_no_sim` material icon.
-  static const IconData signal_cellular_no_sim = IconData(
+  /// The `signalCellularNoSim` material icon.
+  static const IconData signalCellularNoSim = IconData(
     0xe1ce,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_nodata` material icon.
-  static const IconData signal_cellular_nodata = IconData(
+  /// The `signalCellularNodata` material icon.
+  static const IconData signalCellularNodata = IconData(
     0xf062,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_null` material icon.
-  static const IconData signal_cellular_null = IconData(
+  /// The `signalCellularNull` material icon.
+  static const IconData signalCellularNull = IconData(
     0xe1cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_cellular_off` material icon.
-  static const IconData signal_cellular_off = IconData(
+  /// The `signalCellularOff` material icon.
+  static const IconData signalCellularOff = IconData(
     0xe1d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_0_bar` material icon.
-  static const IconData signal_wifi_0_bar = IconData(
+  /// The `signalWifi0Bar` material icon.
+  static const IconData signalWifi0Bar = IconData(
     0xf0b0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_4_bar` material icon.
-  static const IconData signal_wifi_4_bar = IconData(
+  /// The `signalWifi4Bar` material icon.
+  static const IconData signalWifi4Bar = IconData(
     0xe1d8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_4_bar_lock` material icon.
-  static const IconData signal_wifi_4_bar_lock = IconData(
+  /// The `signalWifi4BarLock` material icon.
+  static const IconData signalWifi4BarLock = IconData(
     0xe1d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_bad` material icon.
-  static const IconData signal_wifi_bad = IconData(
+  /// The `signalWifiBad` material icon.
+  static const IconData signalWifiBad = IconData(
     0xf063,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_connected_no_internet_4` material icon.
-  static const IconData signal_wifi_connected_no_internet_4 = IconData(
+  /// The `signalWifiConnectedNoInternet4` material icon.
+  static const IconData signalWifiConnectedNoInternet4 = IconData(
     0xf064,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_off` material icon.
-  static const IconData signal_wifi_off = IconData(
+  /// The `signalWifiOff` material icon.
+  static const IconData signalWifiOff = IconData(
     0xe1da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_statusbar_4_bar` material icon.
-  static const IconData signal_wifi_statusbar_4_bar = IconData(
+  /// The `signalWifiStatusbar4Bar` material icon.
+  static const IconData signalWifiStatusbar4Bar = IconData(
     0xf065,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_statusbar_connected_no_internet_4` material icon.
-  static const IconData signal_wifi_statusbar_connected_no_internet_4 =
-      IconData(
+  /// The `signalWifiStatusbarConnectedNoInternet4` material icon.
+  static const IconData signalWifiStatusbarConnectedNoInternet4 = IconData(
     0xf066,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `signal_wifi_statusbar_null` material icon.
-  static const IconData signal_wifi_statusbar_null = IconData(
+  /// The `signalWifiStatusbarNull` material icon.
+  static const IconData signalWifiStatusbarNull = IconData(
     0xf067,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -11988,29 +12386,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sim_card` material icon.
-  static const IconData sim_card = IconData(
+  /// The `simCard` material icon.
+  static const IconData simCard = IconData(
     0xe32b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sim_card_alert` material icon.
-  static const IconData sim_card_alert = IconData(
+  /// The `simCardAlert` material icon.
+  static const IconData simCardAlert = IconData(
     0xe624,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sim_card_download` material icon.
-  static const IconData sim_card_download = IconData(
+  /// The `simCardDownload` material icon.
+  static const IconData simCardDownload = IconData(
     0xf068,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `single_bed` material icon.
-  static const IconData single_bed = IconData(
+  /// The `singleBed` material icon.
+  static const IconData singleBed = IconData(
     0xea48,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12030,15 +12428,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `skip_next` material icon.
-  static const IconData skip_next = IconData(
+  /// The `skipNext` material icon.
+  static const IconData skipNext = IconData(
     0xe044,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `skip_previous` material icon.
-  static const IconData skip_previous = IconData(
+  /// The `skipPrevious` material icon.
+  static const IconData skipPrevious = IconData(
     0xe045,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12058,36 +12456,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `slow_motion_video` material icon.
-  static const IconData slow_motion_video = IconData(
+  /// The `slowMotionVideo` material icon.
+  static const IconData slowMotionVideo = IconData(
     0xe068,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `smart_button` material icon.
-  static const IconData smart_button = IconData(
+  /// The `smartButton` material icon.
+  static const IconData smartButton = IconData(
     0xf1c1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `smart_display` material icon.
-  static const IconData smart_display = IconData(
+  /// The `smartDisplay` material icon.
+  static const IconData smartDisplay = IconData(
     0xf06a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `smart_screen` material icon.
-  static const IconData smart_screen = IconData(
+  /// The `smartScreen` material icon.
+  static const IconData smartScreen = IconData(
     0xf06b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `smart_toy` material icon.
-  static const IconData smart_toy = IconData(
+  /// The `smartToy` material icon.
+  static const IconData smartToy = IconData(
     0xf06c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12100,15 +12498,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `smoke_free` material icon.
-  static const IconData smoke_free = IconData(
+  /// The `smokeFree` material icon.
+  static const IconData smokeFree = IconData(
     0xeb4a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `smoking_rooms` material icon.
-  static const IconData smoking_rooms = IconData(
+  /// The `smokingRooms` material icon.
+  static const IconData smokingRooms = IconData(
     0xeb4b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12121,8 +12519,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sms_failed` material icon.
-  static const IconData sms_failed = IconData(
+  /// The `smsFailed` material icon.
+  static const IconData smsFailed = IconData(
     0xe626,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12135,8 +12533,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `snippet_folder` material icon.
-  static const IconData snippet_folder = IconData(
+  /// The `snippetFolder` material icon.
+  static const IconData snippetFolder = IconData(
     0xf1c7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12177,15 +12575,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `social_distance` material icon.
-  static const IconData social_distance = IconData(
+  /// The `socialDistance` material icon.
+  static const IconData socialDistance = IconData(
     0xe1cb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `solar_power` material icon.
-  static const IconData solar_power = IconData(
+  /// The `solarPower` material icon.
+  static const IconData solarPower = IconData(
     0xec0f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12198,8 +12596,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sort_by_alpha` material icon.
-  static const IconData sort_by_alpha = IconData(
+  /// The `sortByAlpha` material icon.
+  static const IconData sortByAlpha = IconData(
     0xe053,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12212,8 +12610,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `soup_kitchen` material icon.
-  static const IconData soup_kitchen = IconData(
+  /// The `soupKitchen` material icon.
+  static const IconData soupKitchen = IconData(
     0xe7d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12233,22 +12631,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `south_america` material icon.
-  static const IconData south_america = IconData(
+  /// The `southAmerica` material icon.
+  static const IconData southAmerica = IconData(
     0xe7e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `south_east` material icon.
-  static const IconData south_east = IconData(
+  /// The `southEast` material icon.
+  static const IconData southEast = IconData(
     0xf1e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `south_west` material icon.
-  static const IconData south_west = IconData(
+  /// The `southWest` material icon.
+  static const IconData southWest = IconData(
     0xf1e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12261,36 +12659,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `space_bar` material icon.
-  static const IconData space_bar = IconData(
+  /// The `spaceBar` material icon.
+  static const IconData spaceBar = IconData(
     0xe256,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `space_dashboard` material icon.
-  static const IconData space_dashboard = IconData(
+  /// The `spaceDashboard` material icon.
+  static const IconData spaceDashboard = IconData(
     0xe66b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `spatial_audio` material icon.
-  static const IconData spatial_audio = IconData(
+  /// The `spatialAudio` material icon.
+  static const IconData spatialAudio = IconData(
     0xebeb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `spatial_audio_off` material icon.
-  static const IconData spatial_audio_off = IconData(
+  /// The `spatialAudioOff` material icon.
+  static const IconData spatialAudioOff = IconData(
     0xebe8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `spatial_tracking` material icon.
-  static const IconData spatial_tracking = IconData(
+  /// The `spatialTracking` material icon.
+  static const IconData spatialTracking = IconData(
     0xebea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12303,29 +12701,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `speaker_group` material icon.
-  static const IconData speaker_group = IconData(
+  /// The `speakerGroup` material icon.
+  static const IconData speakerGroup = IconData(
     0xe32e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `speaker_notes` material icon.
-  static const IconData speaker_notes = IconData(
+  /// The `speakerNotes` material icon.
+  static const IconData speakerNotes = IconData(
     0xe8cd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `speaker_notes_off` material icon.
-  static const IconData speaker_notes_off = IconData(
+  /// The `speakerNotesOff` material icon.
+  static const IconData speakerNotesOff = IconData(
     0xe92a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `speaker_phone` material icon.
-  static const IconData speaker_phone = IconData(
+  /// The `speakerPhone` material icon.
+  static const IconData speakerPhone = IconData(
     0xe0d2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12366,134 +12764,134 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_bar` material icon.
-  static const IconData sports_bar = IconData(
+  /// The `sportsBar` material icon.
+  static const IconData sportsBar = IconData(
     0xf1f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_baseball` material icon.
-  static const IconData sports_baseball = IconData(
+  /// The `sportsBaseball` material icon.
+  static const IconData sportsBaseball = IconData(
     0xea51,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_basketball` material icon.
-  static const IconData sports_basketball = IconData(
+  /// The `sportsBasketball` material icon.
+  static const IconData sportsBasketball = IconData(
     0xea26,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_cricket` material icon.
-  static const IconData sports_cricket = IconData(
+  /// The `sportsCricket` material icon.
+  static const IconData sportsCricket = IconData(
     0xea27,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_esports` material icon.
-  static const IconData sports_esports = IconData(
+  /// The `sportsEsports` material icon.
+  static const IconData sportsEsports = IconData(
     0xea28,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_football` material icon.
-  static const IconData sports_football = IconData(
+  /// The `sportsFootball` material icon.
+  static const IconData sportsFootball = IconData(
     0xea29,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_golf` material icon.
-  static const IconData sports_golf = IconData(
+  /// The `sportsGolf` material icon.
+  static const IconData sportsGolf = IconData(
     0xea2a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_gymnastics` material icon.
-  static const IconData sports_gymnastics = IconData(
+  /// The `sportsGymnastics` material icon.
+  static const IconData sportsGymnastics = IconData(
     0xebc4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_handball` material icon.
-  static const IconData sports_handball = IconData(
+  /// The `sportsHandball` material icon.
+  static const IconData sportsHandball = IconData(
     0xea33,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_hockey` material icon.
-  static const IconData sports_hockey = IconData(
+  /// The `sportsHockey` material icon.
+  static const IconData sportsHockey = IconData(
     0xea2b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_kabaddi` material icon.
-  static const IconData sports_kabaddi = IconData(
+  /// The `sportsKabaddi` material icon.
+  static const IconData sportsKabaddi = IconData(
     0xea34,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_martial_arts` material icon.
-  static const IconData sports_martial_arts = IconData(
+  /// The `sportsMartialArts` material icon.
+  static const IconData sportsMartialArts = IconData(
     0xeae9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_mma` material icon.
-  static const IconData sports_mma = IconData(
+  /// The `sportsMma` material icon.
+  static const IconData sportsMma = IconData(
     0xea2c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_motorsports` material icon.
-  static const IconData sports_motorsports = IconData(
+  /// The `sportsMotorsports` material icon.
+  static const IconData sportsMotorsports = IconData(
     0xea2d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_rugby` material icon.
-  static const IconData sports_rugby = IconData(
+  /// The `sportsRugby` material icon.
+  static const IconData sportsRugby = IconData(
     0xea2e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_score` material icon.
-  static const IconData sports_score = IconData(
+  /// The `sportsScore` material icon.
+  static const IconData sportsScore = IconData(
     0xf06e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_soccer` material icon.
-  static const IconData sports_soccer = IconData(
+  /// The `sportsSoccer` material icon.
+  static const IconData sportsSoccer = IconData(
     0xea2f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_tennis` material icon.
-  static const IconData sports_tennis = IconData(
+  /// The `sportsTennis` material icon.
+  static const IconData sportsTennis = IconData(
     0xea32,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sports_volleyball` material icon.
-  static const IconData sports_volleyball = IconData(
+  /// The `sportsVolleyball` material icon.
+  static const IconData sportsVolleyball = IconData(
     0xea31,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12506,29 +12904,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `square_foot` material icon.
-  static const IconData square_foot = IconData(
+  /// The `squareFoot` material icon.
+  static const IconData squareFoot = IconData(
     0xea49,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `ssid_chart` material icon.
-  static const IconData ssid_chart = IconData(
+  /// The `ssidChart` material icon.
+  static const IconData ssidChart = IconData(
     0xeb66,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stacked_bar_chart` material icon.
-  static const IconData stacked_bar_chart = IconData(
+  /// The `stackedBarChart` material icon.
+  static const IconData stackedBarChart = IconData(
     0xe9e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stacked_line_chart` material icon.
-  static const IconData stacked_line_chart = IconData(
+  /// The `stackedLineChart` material icon.
+  static const IconData stackedLineChart = IconData(
     0xf22b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12555,43 +12953,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_border` material icon.
-  static const IconData star_border = IconData(
+  /// The `starBorder` material icon.
+  static const IconData starBorder = IconData(
     0xe83a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_border_purple500` material icon.
-  static const IconData star_border_purple500 = IconData(
+  /// The `starBorderPurple500` material icon.
+  static const IconData starBorderPurple500 = IconData(
     0xf099,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_half` material icon.
-  static const IconData star_half = IconData(
+  /// The `starHalf` material icon.
+  static const IconData starHalf = IconData(
     0xe839,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_outline` material icon.
-  static const IconData star_outline = IconData(
+  /// The `starOutline` material icon.
+  static const IconData starOutline = IconData(
     0xf06f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_purple500` material icon.
-  static const IconData star_purple500 = IconData(
+  /// The `starPurple500` material icon.
+  static const IconData starPurple500 = IconData(
     0xf09a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `star_rate` material icon.
-  static const IconData star_rate = IconData(
+  /// The `starRate` material icon.
+  static const IconData starRate = IconData(
     0xf0ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12611,36 +13009,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `stay_current_landscape` material icon.
-  static const IconData stay_current_landscape = IconData(
+  /// The `stayCurrentLandscape` material icon.
+  static const IconData stayCurrentLandscape = IconData(
     0xe0d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stay_current_portrait` material icon.
-  static const IconData stay_current_portrait = IconData(
+  /// The `stayCurrentPortrait` material icon.
+  static const IconData stayCurrentPortrait = IconData(
     0xe0d4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stay_primary_landscape` material icon.
-  static const IconData stay_primary_landscape = IconData(
+  /// The `stayPrimaryLandscape` material icon.
+  static const IconData stayPrimaryLandscape = IconData(
     0xe0d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stay_primary_portrait` material icon.
-  static const IconData stay_primary_portrait = IconData(
+  /// The `stayPrimaryPortrait` material icon.
+  static const IconData stayPrimaryPortrait = IconData(
     0xe0d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sticky_note_2` material icon.
-  static const IconData sticky_note_2 = IconData(
+  /// The `stickyNote2` material icon.
+  static const IconData stickyNote2 = IconData(
     0xf1fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12653,15 +13051,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `stop_circle` material icon.
-  static const IconData stop_circle = IconData(
+  /// The `stopCircle` material icon.
+  static const IconData stopCircle = IconData(
     0xef71,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `stop_screen_share` material icon.
-  static const IconData stop_screen_share = IconData(
+  /// The `stopScreenShare` material icon.
+  static const IconData stopScreenShare = IconData(
     0xe0e3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12681,8 +13079,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `store_mall_directory` material icon.
-  static const IconData store_mall_directory = IconData(
+  /// The `storeMallDirectory` material icon.
+  static const IconData storeMallDirectory = IconData(
     0xe563,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12730,8 +13128,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `strikethrough_s` material icon.
-  static const IconData strikethrough_s = IconData(
+  /// The `strikethroughS` material icon.
+  static const IconData strikethroughS = IconData(
     0xe257,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12751,15 +13149,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `subdirectory_arrow_left` material icon.
-  static const IconData subdirectory_arrow_left = IconData(
+  /// The `subdirectoryArrowLeft` material icon.
+  static const IconData subdirectoryArrowLeft = IconData(
     0xe5d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `subdirectory_arrow_right` material icon.
-  static const IconData subdirectory_arrow_right = IconData(
+  /// The `subdirectoryArrowRight` material icon.
+  static const IconData subdirectoryArrowRight = IconData(
     0xe5da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12793,8 +13191,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `subtitles_off` material icon.
-  static const IconData subtitles_off = IconData(
+  /// The `subtitlesOff` material icon.
+  static const IconData subtitlesOff = IconData(
     0xef72,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12821,15 +13219,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `supervised_user_circle` material icon.
-  static const IconData supervised_user_circle = IconData(
+  /// The `supervisedUserCircle` material icon.
+  static const IconData supervisedUserCircle = IconData(
     0xe939,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `supervisor_account` material icon.
-  static const IconData supervisor_account = IconData(
+  /// The `supervisorAccount` material icon.
+  static const IconData supervisorAccount = IconData(
     0xe8d3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12842,8 +13240,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `support_agent` material icon.
-  static const IconData support_agent = IconData(
+  /// The `supportAgent` material icon.
+  static const IconData supportAgent = IconData(
     0xf0e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12856,50 +13254,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `surround_sound` material icon.
-  static const IconData surround_sound = IconData(
+  /// The `surroundSound` material icon.
+  static const IconData surroundSound = IconData(
     0xe049,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_calls` material icon.
-  static const IconData swap_calls = IconData(
+  /// The `swapCalls` material icon.
+  static const IconData swapCalls = IconData(
     0xe0d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_horiz` material icon.
-  static const IconData swap_horiz = IconData(
+  /// The `swapHoriz` material icon.
+  static const IconData swapHoriz = IconData(
     0xe8d4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_horizontal_circle` material icon.
-  static const IconData swap_horizontal_circle = IconData(
+  /// The `swapHorizontalCircle` material icon.
+  static const IconData swapHorizontalCircle = IconData(
     0xe933,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_vert` material icon.
-  static const IconData swap_vert = IconData(
+  /// The `swapVert` material icon.
+  static const IconData swapVert = IconData(
     0xe8d5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_vert_circle` material icon.
-  static const IconData swap_vert_circle = IconData(
+  /// The `swapVertCircle` material icon.
+  static const IconData swapVertCircle = IconData(
     0xe8d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swap_vertical_circle` material icon.
-  static const IconData swap_vertical_circle = IconData(
+  /// The `swapVerticalCircle` material icon.
+  static const IconData swapVerticalCircle = IconData(
     0xe8d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -12912,113 +13310,113 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_down` material icon.
-  static const IconData swipe_down = IconData(
+  /// The `swipeDown` material icon.
+  static const IconData swipeDown = IconData(
     0xeb53,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_down_alt` material icon.
-  static const IconData swipe_down_alt = IconData(
+  /// The `swipeDownAlt` material icon.
+  static const IconData swipeDownAlt = IconData(
     0xeb30,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_left` material icon.
-  static const IconData swipe_left = IconData(
+  /// The `swipeLeft` material icon.
+  static const IconData swipeLeft = IconData(
     0xeb59,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_left_alt` material icon.
-  static const IconData swipe_left_alt = IconData(
+  /// The `swipeLeftAlt` material icon.
+  static const IconData swipeLeftAlt = IconData(
     0xeb33,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_right` material icon.
-  static const IconData swipe_right = IconData(
+  /// The `swipeRight` material icon.
+  static const IconData swipeRight = IconData(
     0xeb52,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_right_alt` material icon.
-  static const IconData swipe_right_alt = IconData(
+  /// The `swipeRightAlt` material icon.
+  static const IconData swipeRightAlt = IconData(
     0xeb56,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_up` material icon.
-  static const IconData swipe_up = IconData(
+  /// The `swipeUp` material icon.
+  static const IconData swipeUp = IconData(
     0xeb2e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_up_alt` material icon.
-  static const IconData swipe_up_alt = IconData(
+  /// The `swipeUpAlt` material icon.
+  static const IconData swipeUpAlt = IconData(
     0xeb35,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `swipe_vertical` material icon.
-  static const IconData swipe_vertical = IconData(
+  /// The `swipeVertical` material icon.
+  static const IconData swipeVertical = IconData(
     0xeb51,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_access_shortcut` material icon.
-  static const IconData switch_access_shortcut = IconData(
+  /// The `switchAccessShortcut` material icon.
+  static const IconData switchAccessShortcut = IconData(
     0xe7e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_access_shortcut_add` material icon.
-  static const IconData switch_access_shortcut_add = IconData(
+  /// The `switchAccessShortcutAdd` material icon.
+  static const IconData switchAccessShortcutAdd = IconData(
     0xe7e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_account` material icon.
-  static const IconData switch_account = IconData(
+  /// The `switchAccount` material icon.
+  static const IconData switchAccount = IconData(
     0xe9ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_camera` material icon.
-  static const IconData switch_camera = IconData(
+  /// The `switchCamera` material icon.
+  static const IconData switchCamera = IconData(
     0xe41e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_left` material icon.
-  static const IconData switch_left = IconData(
+  /// The `switchLeft` material icon.
+  static const IconData switchLeft = IconData(
     0xf1d1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_right` material icon.
-  static const IconData switch_right = IconData(
+  /// The `switchRight` material icon.
+  static const IconData switchRight = IconData(
     0xf1d2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `switch_video` material icon.
-  static const IconData switch_video = IconData(
+  /// The `switchVideo` material icon.
+  static const IconData switchVideo = IconData(
     0xe41f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13038,71 +13436,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `sync_alt` material icon.
-  static const IconData sync_alt = IconData(
+  /// The `syncAlt` material icon.
+  static const IconData syncAlt = IconData(
     0xea18,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sync_disabled` material icon.
-  static const IconData sync_disabled = IconData(
+  /// The `syncDisabled` material icon.
+  static const IconData syncDisabled = IconData(
     0xe628,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sync_lock` material icon.
-  static const IconData sync_lock = IconData(
+  /// The `syncLock` material icon.
+  static const IconData syncLock = IconData(
     0xeaee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `sync_problem` material icon.
-  static const IconData sync_problem = IconData(
+  /// The `syncProblem` material icon.
+  static const IconData syncProblem = IconData(
     0xe629,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_security_update` material icon.
-  static const IconData system_security_update = IconData(
+  /// The `systemSecurityUpdate` material icon.
+  static const IconData systemSecurityUpdate = IconData(
     0xf072,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_security_update_good` material icon.
-  static const IconData system_security_update_good = IconData(
+  /// The `systemSecurityUpdateGood` material icon.
+  static const IconData systemSecurityUpdateGood = IconData(
     0xf073,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_security_update_warning` material icon.
-  static const IconData system_security_update_warning = IconData(
+  /// The `systemSecurityUpdateWarning` material icon.
+  static const IconData systemSecurityUpdateWarning = IconData(
     0xf074,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_update` material icon.
-  static const IconData system_update = IconData(
+  /// The `systemUpdate` material icon.
+  static const IconData systemUpdate = IconData(
     0xe62a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_update_alt` material icon.
-  static const IconData system_update_alt = IconData(
+  /// The `systemUpdateAlt` material icon.
+  static const IconData systemUpdateAlt = IconData(
     0xe8d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `system_update_tv` material icon.
-  static const IconData system_update_tv = IconData(
+  /// The `systemUpdateTv` material icon.
+  static const IconData systemUpdateTv = IconData(
     0xe8d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13115,43 +13513,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `tab_unselected` material icon.
-  static const IconData tab_unselected = IconData(
+  /// The `tabUnselected` material icon.
+  static const IconData tabUnselected = IconData(
     0xe8d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `table_bar` material icon.
-  static const IconData table_bar = IconData(
+  /// The `tableBar` material icon.
+  static const IconData tableBar = IconData(
     0xead2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `table_chart` material icon.
-  static const IconData table_chart = IconData(
+  /// The `tableChart` material icon.
+  static const IconData tableChart = IconData(
     0xe265,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `table_restaurant` material icon.
-  static const IconData table_restaurant = IconData(
+  /// The `tableRestaurant` material icon.
+  static const IconData tableRestaurant = IconData(
     0xeac6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `table_rows` material icon.
-  static const IconData table_rows = IconData(
+  /// The `tableRows` material icon.
+  static const IconData tableRows = IconData(
     0xf101,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `table_view` material icon.
-  static const IconData table_view = IconData(
+  /// The `tableView` material icon.
+  static const IconData tableView = IconData(
     0xf1be,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13164,15 +13562,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `tablet_android` material icon.
-  static const IconData tablet_android = IconData(
+  /// The `tabletAndroid` material icon.
+  static const IconData tabletAndroid = IconData(
     0xe330,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `tablet_mac` material icon.
-  static const IconData tablet_mac = IconData(
+  /// The `tabletMac` material icon.
+  static const IconData tabletMac = IconData(
     0xe331,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13185,22 +13583,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `tag_faces` material icon.
-  static const IconData tag_faces = IconData(
+  /// The `tagFaces` material icon.
+  static const IconData tagFaces = IconData(
     0xe420,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `takeout_dining` material icon.
-  static const IconData takeout_dining = IconData(
+  /// The `takeoutDining` material icon.
+  static const IconData takeoutDining = IconData(
     0xea74,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `tap_and_play` material icon.
-  static const IconData tap_and_play = IconData(
+  /// The `tapAndPlay` material icon.
+  static const IconData tapAndPlay = IconData(
     0xe62b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13220,15 +13618,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `task_alt` material icon.
-  static const IconData task_alt = IconData(
+  /// The `taskAlt` material icon.
+  static const IconData taskAlt = IconData(
     0xe2e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `taxi_alert` material icon.
-  static const IconData taxi_alert = IconData(
+  /// The `taxiAlert` material icon.
+  static const IconData taxiAlert = IconData(
     0xef74,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13241,15 +13639,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `temple_buddhist` material icon.
-  static const IconData temple_buddhist = IconData(
+  /// The `templeBuddhist` material icon.
+  static const IconData templeBuddhist = IconData(
     0xeab3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `temple_hindu` material icon.
-  static const IconData temple_hindu = IconData(
+  /// The `templeHindu` material icon.
+  static const IconData templeHindu = IconData(
     0xeaaf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13269,78 +13667,78 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_decrease` material icon.
-  static const IconData text_decrease = IconData(
+  /// The `textDecrease` material icon.
+  static const IconData textDecrease = IconData(
     0xeadd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_fields` material icon.
-  static const IconData text_fields = IconData(
+  /// The `textFields` material icon.
+  static const IconData textFields = IconData(
     0xe262,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_format` material icon.
-  static const IconData text_format = IconData(
+  /// The `textFormat` material icon.
+  static const IconData textFormat = IconData(
     0xe165,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_increase` material icon.
-  static const IconData text_increase = IconData(
+  /// The `textIncrease` material icon.
+  static const IconData textIncrease = IconData(
     0xeae2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotate_up` material icon.
-  static const IconData text_rotate_up = IconData(
+  /// The `textRotateUp` material icon.
+  static const IconData textRotateUp = IconData(
     0xe93a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotate_vertical` material icon.
-  static const IconData text_rotate_vertical = IconData(
+  /// The `textRotateVertical` material icon.
+  static const IconData textRotateVertical = IconData(
     0xe93b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotation_angledown` material icon.
-  static const IconData text_rotation_angledown = IconData(
+  /// The `textRotationAngledown` material icon.
+  static const IconData textRotationAngledown = IconData(
     0xe93c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotation_angleup` material icon.
-  static const IconData text_rotation_angleup = IconData(
+  /// The `textRotationAngleup` material icon.
+  static const IconData textRotationAngleup = IconData(
     0xe93d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotation_down` material icon.
-  static const IconData text_rotation_down = IconData(
+  /// The `textRotationDown` material icon.
+  static const IconData textRotationDown = IconData(
     0xe93e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_rotation_none` material icon.
-  static const IconData text_rotation_none = IconData(
+  /// The `textRotationNone` material icon.
+  static const IconData textRotationNone = IconData(
     0xe93f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `text_snippet` material icon.
-  static const IconData text_snippet = IconData(
+  /// The `textSnippet` material icon.
+  static const IconData textSnippet = IconData(
     0xf1c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13360,8 +13758,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `theater_comedy` material icon.
-  static const IconData theater_comedy = IconData(
+  /// The `theaterComedy` material icon.
+  static const IconData theaterComedy = IconData(
     0xea66,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13381,57 +13779,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `thermostat_auto` material icon.
-  static const IconData thermostat_auto = IconData(
+  /// The `thermostatAuto` material icon.
+  static const IconData thermostatAuto = IconData(
     0xf077,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_down` material icon.
-  static const IconData thumb_down = IconData(
+  /// The `thumbDown` material icon.
+  static const IconData thumbDown = IconData(
     0xe8db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_down_alt` material icon.
-  static const IconData thumb_down_alt = IconData(
+  /// The `thumbDownAlt` material icon.
+  static const IconData thumbDownAlt = IconData(
     0xe816,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_down_off_alt` material icon.
-  static const IconData thumb_down_off_alt = IconData(
+  /// The `thumbDownOffAlt` material icon.
+  static const IconData thumbDownOffAlt = IconData(
     0xe9f2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_up` material icon.
-  static const IconData thumb_up = IconData(
+  /// The `thumbUp` material icon.
+  static const IconData thumbUp = IconData(
     0xe8dc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_up_alt` material icon.
-  static const IconData thumb_up_alt = IconData(
+  /// The `thumbUpAlt` material icon.
+  static const IconData thumbUpAlt = IconData(
     0xe817,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumb_up_off_alt` material icon.
-  static const IconData thumb_up_off_alt = IconData(
+  /// The `thumbUpOffAlt` material icon.
+  static const IconData thumbUpOffAlt = IconData(
     0xe9f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `thumbs_up_down` material icon.
-  static const IconData thumbs_up_down = IconData(
+  /// The `thumbsUpDown` material icon.
+  static const IconData thumbsUpDown = IconData(
     0xe8dd,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13451,8 +13849,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `time_to_leave` material icon.
-  static const IconData time_to_leave = IconData(
+  /// The `timeToLeave` material icon.
+  static const IconData timeToLeave = IconData(
     0xe62c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13479,50 +13877,50 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `timer_10` material icon.
-  static const IconData timer_10 = IconData(
+  /// The `timer10` material icon.
+  static const IconData timer10 = IconData(
     0xe423,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `timer_10_select` material icon.
-  static const IconData timer_10_select = IconData(
+  /// The `timer10Select` material icon.
+  static const IconData timer10Select = IconData(
     0xf07a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `timer_3` material icon.
-  static const IconData timer_3 = IconData(
+  /// The `timer3` material icon.
+  static const IconData timer3 = IconData(
     0xe424,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `timer_3_select` material icon.
-  static const IconData timer_3_select = IconData(
+  /// The `timer3Select` material icon.
+  static const IconData timer3Select = IconData(
     0xf07b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `timer_off` material icon.
-  static const IconData timer_off = IconData(
+  /// The `timerOff` material icon.
+  static const IconData timerOff = IconData(
     0xe426,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `tips_and_updates` material icon.
-  static const IconData tips_and_updates = IconData(
+  /// The `tipsAndUpdates` material icon.
+  static const IconData tipsAndUpdates = IconData(
     0xe79a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `tire_repair` material icon.
-  static const IconData tire_repair = IconData(
+  /// The `tireRepair` material icon.
+  static const IconData tireRepair = IconData(
     0xebc8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13549,15 +13947,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `toggle_off` material icon.
-  static const IconData toggle_off = IconData(
+  /// The `toggleOff` material icon.
+  static const IconData toggleOff = IconData(
     0xe9f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `toggle_on` material icon.
-  static const IconData toggle_on = IconData(
+  /// The `toggleOn` material icon.
+  static const IconData toggleOn = IconData(
     0xe9f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13598,8 +13996,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `touch_app` material icon.
-  static const IconData touch_app = IconData(
+  /// The `touchApp` material icon.
+  static const IconData touchApp = IconData(
     0xe913,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13619,8 +14017,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `track_changes` material icon.
-  static const IconData track_changes = IconData(
+  /// The `trackChanges` material icon.
+  static const IconData trackChanges = IconData(
     0xe8e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13654,8 +14052,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `transfer_within_a_station` material icon.
-  static const IconData transfer_within_a_station = IconData(
+  /// The `transferWithinAStation` material icon.
+  static const IconData transferWithinAStation = IconData(
     0xe572,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13675,8 +14073,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `transit_enterexit` material icon.
-  static const IconData transit_enterexit = IconData(
+  /// The `transitEnterexit` material icon.
+  static const IconData transitEnterexit = IconData(
     0xe579,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13689,43 +14087,43 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `travel_explore` material icon.
-  static const IconData travel_explore = IconData(
+  /// The `travelExplore` material icon.
+  static const IconData travelExplore = IconData(
     0xe2db,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `trending_down` material icon.
-  static const IconData trending_down = IconData(
+  /// The `trendingDown` material icon.
+  static const IconData trendingDown = IconData(
     0xe8e3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `trending_flat` material icon.
-  static const IconData trending_flat = IconData(
+  /// The `trendingFlat` material icon.
+  static const IconData trendingFlat = IconData(
     0xe8e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `trending_neutral` material icon.
-  static const IconData trending_neutral = IconData(
+  /// The `trendingNeutral` material icon.
+  static const IconData trendingNeutral = IconData(
     0xe8e4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `trending_up` material icon.
-  static const IconData trending_up = IconData(
+  /// The `trendingUp` material icon.
+  static const IconData trendingUp = IconData(
     0xe8e5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `trip_origin` material icon.
-  static const IconData trip_origin = IconData(
+  /// The `tripOrigin` material icon.
+  static const IconData tripOrigin = IconData(
     0xe57b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13739,7 +14137,7 @@ class Icons {
   );
 
   /// The `try` material icon.
-  static const IconData try_ = IconData(
+  static const IconData $try = IconData(
     0xf07c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13773,57 +14171,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_left` material icon.
-  static const IconData turn_left = IconData(
+  /// The `turnLeft` material icon.
+  static const IconData turnLeft = IconData(
     0xeba6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_right` material icon.
-  static const IconData turn_right = IconData(
+  /// The `turnRight` material icon.
+  static const IconData turnRight = IconData(
     0xebab,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_sharp_left` material icon.
-  static const IconData turn_sharp_left = IconData(
+  /// The `turnSharpLeft` material icon.
+  static const IconData turnSharpLeft = IconData(
     0xeba7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_sharp_right` material icon.
-  static const IconData turn_sharp_right = IconData(
+  /// The `turnSharpRight` material icon.
+  static const IconData turnSharpRight = IconData(
     0xebaa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_slight_left` material icon.
-  static const IconData turn_slight_left = IconData(
+  /// The `turnSlightLeft` material icon.
+  static const IconData turnSlightLeft = IconData(
     0xeba4,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turn_slight_right` material icon.
-  static const IconData turn_slight_right = IconData(
+  /// The `turnSlightRight` material icon.
+  static const IconData turnSlightRight = IconData(
     0xeb9a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turned_in` material icon.
-  static const IconData turned_in = IconData(
+  /// The `turnedIn` material icon.
+  static const IconData turnedIn = IconData(
     0xe8e6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `turned_in_not` material icon.
-  static const IconData turned_in_not = IconData(
+  /// The `turnedInNot` material icon.
+  static const IconData turnedInNot = IconData(
     0xe8e7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13836,36 +14234,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `tv_off` material icon.
-  static const IconData tv_off = IconData(
+  /// The `tvOff` material icon.
+  static const IconData tvOff = IconData(
     0xe647,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `two_wheeler` material icon.
-  static const IconData two_wheeler = IconData(
+  /// The `twoWheeler` material icon.
+  static const IconData twoWheeler = IconData(
     0xe9f9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `type_specimen` material icon.
-  static const IconData type_specimen = IconData(
+  /// The `typeSpecimen` material icon.
+  static const IconData typeSpecimen = IconData(
     0xf8f0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `u_turn_left` material icon.
-  static const IconData u_turn_left = IconData(
+  /// The `uTurnLeft` material icon.
+  static const IconData uTurnLeft = IconData(
     0xeba1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `u_turn_right` material icon.
-  static const IconData u_turn_right = IconData(
+  /// The `uTurnRight` material icon.
+  static const IconData uTurnRight = IconData(
     0xeba2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13892,29 +14290,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `unfold_less` material icon.
-  static const IconData unfold_less = IconData(
+  /// The `unfoldLess` material icon.
+  static const IconData unfoldLess = IconData(
     0xe5d6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `unfold_less_double` material icon.
-  static const IconData unfold_less_double = IconData(
+  /// The `unfoldLessDouble` material icon.
+  static const IconData unfoldLessDouble = IconData(
     0xf8cf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `unfold_more` material icon.
-  static const IconData unfold_more = IconData(
+  /// The `unfoldMore` material icon.
+  static const IconData unfoldMore = IconData(
     0xe5d7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `unfold_more_double` material icon.
-  static const IconData unfold_more_double = IconData(
+  /// The `unfoldMoreDouble` material icon.
+  static const IconData unfoldMoreDouble = IconData(
     0xf8d0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13948,8 +14346,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `update_disabled` material icon.
-  static const IconData update_disabled = IconData(
+  /// The `updateDisabled` material icon.
+  static const IconData updateDisabled = IconData(
     0xe075,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13969,8 +14367,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `upload_file` material icon.
-  static const IconData upload_file = IconData(
+  /// The `uploadFile` material icon.
+  static const IconData uploadFile = IconData(
     0xe9fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13983,8 +14381,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `usb_off` material icon.
-  static const IconData usb_off = IconData(
+  /// The `usbOff` material icon.
+  static const IconData usbOff = IconData(
     0xe4fa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -13997,15 +14395,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `vape_free` material icon.
-  static const IconData vape_free = IconData(
+  /// The `vapeFree` material icon.
+  static const IconData vapeFree = IconData(
     0xebc6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vaping_rooms` material icon.
-  static const IconData vaping_rooms = IconData(
+  /// The `vapingRooms` material icon.
+  static const IconData vapingRooms = IconData(
     0xebcf,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14018,57 +14416,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `verified_user` material icon.
-  static const IconData verified_user = IconData(
+  /// The `verifiedUser` material icon.
+  static const IconData verifiedUser = IconData(
     0xe8e8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_align_bottom` material icon.
-  static const IconData vertical_align_bottom = IconData(
+  /// The `verticalAlignBottom` material icon.
+  static const IconData verticalAlignBottom = IconData(
     0xe258,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_align_center` material icon.
-  static const IconData vertical_align_center = IconData(
+  /// The `verticalAlignCenter` material icon.
+  static const IconData verticalAlignCenter = IconData(
     0xe259,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_align_top` material icon.
-  static const IconData vertical_align_top = IconData(
+  /// The `verticalAlignTop` material icon.
+  static const IconData verticalAlignTop = IconData(
     0xe25a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_distribute` material icon.
-  static const IconData vertical_distribute = IconData(
+  /// The `verticalDistribute` material icon.
+  static const IconData verticalDistribute = IconData(
     0xe076,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_shades` material icon.
-  static const IconData vertical_shades = IconData(
+  /// The `verticalShades` material icon.
+  static const IconData verticalShades = IconData(
     0xec0e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_shades_closed` material icon.
-  static const IconData vertical_shades_closed = IconData(
+  /// The `verticalShadesClosed` material icon.
+  static const IconData verticalShadesClosed = IconData(
     0xec0d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vertical_split` material icon.
-  static const IconData vertical_split = IconData(
+  /// The `verticalSplit` material icon.
+  static const IconData verticalSplit = IconData(
     0xe949,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14081,71 +14479,71 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_call` material icon.
-  static const IconData video_call = IconData(
+  /// The `videoCall` material icon.
+  static const IconData videoCall = IconData(
     0xe070,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_camera_back` material icon.
-  static const IconData video_camera_back = IconData(
+  /// The `videoCameraBack` material icon.
+  static const IconData videoCameraBack = IconData(
     0xf07f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_camera_front` material icon.
-  static const IconData video_camera_front = IconData(
+  /// The `videoCameraFront` material icon.
+  static const IconData videoCameraFront = IconData(
     0xf080,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_chat` material icon.
-  static const IconData video_chat = IconData(
+  /// The `videoChat` material icon.
+  static const IconData videoChat = IconData(
     0xf8a0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_collection` material icon.
-  static const IconData video_collection = IconData(
+  /// The `videoCollection` material icon.
+  static const IconData videoCollection = IconData(
     0xe04a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_file` material icon.
-  static const IconData video_file = IconData(
+  /// The `videoFile` material icon.
+  static const IconData videoFile = IconData(
     0xeb87,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_label` material icon.
-  static const IconData video_label = IconData(
+  /// The `videoLabel` material icon.
+  static const IconData videoLabel = IconData(
     0xe071,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_library` material icon.
-  static const IconData video_library = IconData(
+  /// The `videoLibrary` material icon.
+  static const IconData videoLibrary = IconData(
     0xe04a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_settings` material icon.
-  static const IconData video_settings = IconData(
+  /// The `videoSettings` material icon.
+  static const IconData videoSettings = IconData(
     0xea75,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `video_stable` material icon.
-  static const IconData video_stable = IconData(
+  /// The `videoStable` material icon.
+  static const IconData videoStable = IconData(
     0xf081,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14158,169 +14556,169 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `videocam_off` material icon.
-  static const IconData videocam_off = IconData(
+  /// The `videocamOff` material icon.
+  static const IconData videocamOff = IconData(
     0xe04c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `videogame_asset` material icon.
-  static const IconData videogame_asset = IconData(
+  /// The `videogameAsset` material icon.
+  static const IconData videogameAsset = IconData(
     0xe338,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `videogame_asset_off` material icon.
-  static const IconData videogame_asset_off = IconData(
+  /// The `videogameAssetOff` material icon.
+  static const IconData videogameAssetOff = IconData(
     0xe500,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_agenda` material icon.
-  static const IconData view_agenda = IconData(
+  /// The `viewAgenda` material icon.
+  static const IconData viewAgenda = IconData(
     0xe8e9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_array` material icon.
-  static const IconData view_array = IconData(
+  /// The `viewArray` material icon.
+  static const IconData viewArray = IconData(
     0xe8ea,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_carousel` material icon.
-  static const IconData view_carousel = IconData(
+  /// The `viewCarousel` material icon.
+  static const IconData viewCarousel = IconData(
     0xe8eb,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_column` material icon.
-  static const IconData view_column = IconData(
+  /// The `viewColumn` material icon.
+  static const IconData viewColumn = IconData(
     0xe8ec,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_comfortable` material icon.
-  static const IconData view_comfortable = IconData(
+  /// The `viewComfortable` material icon.
+  static const IconData viewComfortable = IconData(
     0xe42a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_comfy` material icon.
-  static const IconData view_comfy = IconData(
+  /// The `viewComfy` material icon.
+  static const IconData viewComfy = IconData(
     0xe42a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_comfy_alt` material icon.
-  static const IconData view_comfy_alt = IconData(
+  /// The `viewComfyAlt` material icon.
+  static const IconData viewComfyAlt = IconData(
     0xeb73,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_compact` material icon.
-  static const IconData view_compact = IconData(
+  /// The `viewCompact` material icon.
+  static const IconData viewCompact = IconData(
     0xe42b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_compact_alt` material icon.
-  static const IconData view_compact_alt = IconData(
+  /// The `viewCompactAlt` material icon.
+  static const IconData viewCompactAlt = IconData(
     0xeb74,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_cozy` material icon.
-  static const IconData view_cozy = IconData(
+  /// The `viewCozy` material icon.
+  static const IconData viewCozy = IconData(
     0xeb75,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_day` material icon.
-  static const IconData view_day = IconData(
+  /// The `viewDay` material icon.
+  static const IconData viewDay = IconData(
     0xe8ed,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_headline` material icon.
-  static const IconData view_headline = IconData(
+  /// The `viewHeadline` material icon.
+  static const IconData viewHeadline = IconData(
     0xe8ee,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_in_ar` material icon.
-  static const IconData view_in_ar = IconData(
+  /// The `viewInAr` material icon.
+  static const IconData viewInAr = IconData(
     0xe9fe,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_kanban` material icon.
-  static const IconData view_kanban = IconData(
+  /// The `viewKanban` material icon.
+  static const IconData viewKanban = IconData(
     0xeb7f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_list` material icon.
-  static const IconData view_list = IconData(
+  /// The `viewList` material icon.
+  static const IconData viewList = IconData(
     0xe8ef,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_module` material icon.
-  static const IconData view_module = IconData(
+  /// The `viewModule` material icon.
+  static const IconData viewModule = IconData(
     0xe8f0,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_quilt` material icon.
-  static const IconData view_quilt = IconData(
+  /// The `viewQuilt` material icon.
+  static const IconData viewQuilt = IconData(
     0xe8f1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_sidebar` material icon.
-  static const IconData view_sidebar = IconData(
+  /// The `viewSidebar` material icon.
+  static const IconData viewSidebar = IconData(
     0xf114,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_stream` material icon.
-  static const IconData view_stream = IconData(
+  /// The `viewStream` material icon.
+  static const IconData viewStream = IconData(
     0xe8f2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_timeline` material icon.
-  static const IconData view_timeline = IconData(
+  /// The `viewTimeline` material icon.
+  static const IconData viewTimeline = IconData(
     0xeb85,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `view_week` material icon.
-  static const IconData view_week = IconData(
+  /// The `viewWeek` material icon.
+  static const IconData viewWeek = IconData(
     0xe8f3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14347,22 +14745,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `visibility_off` material icon.
-  static const IconData visibility_off = IconData(
+  /// The `visibilityOff` material icon.
+  static const IconData visibilityOff = IconData(
     0xe8f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `voice_chat` material icon.
-  static const IconData voice_chat = IconData(
+  /// The `voiceChat` material icon.
+  static const IconData voiceChat = IconData(
     0xe62e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `voice_over_off` material icon.
-  static const IconData voice_over_off = IconData(
+  /// The `voiceOverOff` material icon.
+  static const IconData voiceOverOff = IconData(
     0xe94a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14382,57 +14780,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `volume_down` material icon.
-  static const IconData volume_down = IconData(
+  /// The `volumeDown` material icon.
+  static const IconData volumeDown = IconData(
     0xe04d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `volume_mute` material icon.
-  static const IconData volume_mute = IconData(
+  /// The `volumeMute` material icon.
+  static const IconData volumeMute = IconData(
     0xe04e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `volume_off` material icon.
-  static const IconData volume_off = IconData(
+  /// The `volumeOff` material icon.
+  static const IconData volumeOff = IconData(
     0xe04f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `volume_up` material icon.
-  static const IconData volume_up = IconData(
+  /// The `volumeUp` material icon.
+  static const IconData volumeUp = IconData(
     0xe050,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `volunteer_activism` material icon.
-  static const IconData volunteer_activism = IconData(
+  /// The `volunteerActivism` material icon.
+  static const IconData volunteerActivism = IconData(
     0xea70,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vpn_key` material icon.
-  static const IconData vpn_key = IconData(
+  /// The `vpnKey` material icon.
+  static const IconData vpnKey = IconData(
     0xe0da,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vpn_key_off` material icon.
-  static const IconData vpn_key_off = IconData(
+  /// The `vpnKeyOff` material icon.
+  static const IconData vpnKeyOff = IconData(
     0xeb7a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `vpn_lock` material icon.
-  static const IconData vpn_lock = IconData(
+  /// The `vpnLock` material icon.
+  static const IconData vpnLock = IconData(
     0xe62f,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14452,22 +14850,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `wallet_giftcard` material icon.
-  static const IconData wallet_giftcard = IconData(
+  /// The `walletGiftcard` material icon.
+  static const IconData walletGiftcard = IconData(
     0xe8f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wallet_membership` material icon.
-  static const IconData wallet_membership = IconData(
+  /// The `walletMembership` material icon.
+  static const IconData walletMembership = IconData(
     0xe8f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wallet_travel` material icon.
-  static const IconData wallet_travel = IconData(
+  /// The `walletTravel` material icon.
+  static const IconData walletTravel = IconData(
     0xe8f8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14494,8 +14892,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `warning_amber` material icon.
-  static const IconData warning_amber = IconData(
+  /// The `warningAmber` material icon.
+  static const IconData warningAmber = IconData(
     0xf083,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14515,15 +14913,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `watch_later` material icon.
-  static const IconData watch_later = IconData(
+  /// The `watchLater` material icon.
+  static const IconData watchLater = IconData(
     0xe924,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `watch_off` material icon.
-  static const IconData watch_off = IconData(
+  /// The `watchOff` material icon.
+  static const IconData watchOff = IconData(
     0xeae3,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14536,22 +14934,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `water_damage` material icon.
-  static const IconData water_damage = IconData(
+  /// The `waterDamage` material icon.
+  static const IconData waterDamage = IconData(
     0xf203,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `water_drop` material icon.
-  static const IconData water_drop = IconData(
+  /// The `waterDrop` material icon.
+  static const IconData waterDrop = IconData(
     0xe798,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `waterfall_chart` material icon.
-  static const IconData waterfall_chart = IconData(
+  /// The `waterfallChart` material icon.
+  static const IconData waterfallChart = IconData(
     0xea00,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14564,57 +14962,57 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `waving_hand` material icon.
-  static const IconData waving_hand = IconData(
+  /// The `wavingHand` material icon.
+  static const IconData wavingHand = IconData(
     0xe766,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_auto` material icon.
-  static const IconData wb_auto = IconData(
+  /// The `wbAuto` material icon.
+  static const IconData wbAuto = IconData(
     0xe42c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_cloudy` material icon.
-  static const IconData wb_cloudy = IconData(
+  /// The `wbCloudy` material icon.
+  static const IconData wbCloudy = IconData(
     0xe42d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_incandescent` material icon.
-  static const IconData wb_incandescent = IconData(
+  /// The `wbIncandescent` material icon.
+  static const IconData wbIncandescent = IconData(
     0xe42e,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_iridescent` material icon.
-  static const IconData wb_iridescent = IconData(
+  /// The `wbIridescent` material icon.
+  static const IconData wbIridescent = IconData(
     0xe436,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_shade` material icon.
-  static const IconData wb_shade = IconData(
+  /// The `wbShade` material icon.
+  static const IconData wbShade = IconData(
     0xea01,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_sunny` material icon.
-  static const IconData wb_sunny = IconData(
+  /// The `wbSunny` material icon.
+  static const IconData wbSunny = IconData(
     0xe430,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wb_twilight` material icon.
-  static const IconData wb_twilight = IconData(
+  /// The `wbTwilight` material icon.
+  static const IconData wbTwilight = IconData(
     0xe1c6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14634,22 +15032,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `web_asset` material icon.
-  static const IconData web_asset = IconData(
+  /// The `webAsset` material icon.
+  static const IconData webAsset = IconData(
     0xe069,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `web_asset_off` material icon.
-  static const IconData web_asset_off = IconData(
+  /// The `webAssetOff` material icon.
+  static const IconData webAssetOff = IconData(
     0xe4f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `web_stories` material icon.
-  static const IconData web_stories = IconData(
+  /// The `webStories` material icon.
+  static const IconData webStories = IconData(
     0xe595,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14690,15 +15088,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `wheelchair_pickup` material icon.
-  static const IconData wheelchair_pickup = IconData(
+  /// The `wheelchairPickup` material icon.
+  static const IconData wheelchairPickup = IconData(
     0xf1ab,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `where_to_vote` material icon.
-  static const IconData where_to_vote = IconData(
+  /// The `whereToVote` material icon.
+  static const IconData whereToVote = IconData(
     0xe177,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14711,22 +15109,22 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `width_full` material icon.
-  static const IconData width_full = IconData(
+  /// The `widthFull` material icon.
+  static const IconData widthFull = IconData(
     0xf8f5,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `width_normal` material icon.
-  static const IconData width_normal = IconData(
+  /// The `widthNormal` material icon.
+  static const IconData widthNormal = IconData(
     0xf8f6,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `width_wide` material icon.
-  static const IconData width_wide = IconData(
+  /// The `widthWide` material icon.
+  static const IconData widthWide = IconData(
     0xf8f7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14739,106 +15137,106 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_1_bar` material icon.
-  static const IconData wifi_1_bar = IconData(
+  /// The `wifi1Bar` material icon.
+  static const IconData wifi1Bar = IconData(
     0xe4ca,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_2_bar` material icon.
-  static const IconData wifi_2_bar = IconData(
+  /// The `wifi2Bar` material icon.
+  static const IconData wifi2Bar = IconData(
     0xe4d9,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_calling` material icon.
-  static const IconData wifi_calling = IconData(
+  /// The `wifiCalling` material icon.
+  static const IconData wifiCalling = IconData(
     0xef77,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_calling_3` material icon.
-  static const IconData wifi_calling_3 = IconData(
+  /// The `wifiCalling3` material icon.
+  static const IconData wifiCalling3 = IconData(
     0xf085,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_channel` material icon.
-  static const IconData wifi_channel = IconData(
+  /// The `wifiChannel` material icon.
+  static const IconData wifiChannel = IconData(
     0xeb6a,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_find` material icon.
-  static const IconData wifi_find = IconData(
+  /// The `wifiFind` material icon.
+  static const IconData wifiFind = IconData(
     0xeb31,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_lock` material icon.
-  static const IconData wifi_lock = IconData(
+  /// The `wifiLock` material icon.
+  static const IconData wifiLock = IconData(
     0xe1e1,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_off` material icon.
-  static const IconData wifi_off = IconData(
+  /// The `wifiOff` material icon.
+  static const IconData wifiOff = IconData(
     0xe648,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_password` material icon.
-  static const IconData wifi_password = IconData(
+  /// The `wifiPassword` material icon.
+  static const IconData wifiPassword = IconData(
     0xeb6b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_protected_setup` material icon.
-  static const IconData wifi_protected_setup = IconData(
+  /// The `wifiProtectedSetup` material icon.
+  static const IconData wifiProtectedSetup = IconData(
     0xf0fc,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_tethering` material icon.
-  static const IconData wifi_tethering = IconData(
+  /// The `wifiTethering` material icon.
+  static const IconData wifiTethering = IconData(
     0xe1e2,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_tethering_error` material icon.
-  static const IconData wifi_tethering_error = IconData(
+  /// The `wifiTetheringError` material icon.
+  static const IconData wifiTetheringError = IconData(
     0xf086,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_tethering_error_rounded` material icon.
-  static const IconData wifi_tethering_error_rounded = IconData(
+  /// The `wifiTetheringErrorRounded` material icon.
+  static const IconData wifiTetheringErrorRounded = IconData(
     0xf086,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wifi_tethering_off` material icon.
-  static const IconData wifi_tethering_off = IconData(
+  /// The `wifiTetheringOff` material icon.
+  static const IconData wifiTetheringOff = IconData(
     0xf087,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wind_power` material icon.
-  static const IconData wind_power = IconData(
+  /// The `windPower` material icon.
+  static const IconData windPower = IconData(
     0xec0c,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14851,8 +15249,8 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `wine_bar` material icon.
-  static const IconData wine_bar = IconData(
+  /// The `wineBar` material icon.
+  static const IconData wineBar = IconData(
     0xf1e8,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14865,15 +15263,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `woman_2` material icon.
-  static const IconData woman_2 = IconData(
+  /// The `woman2` material icon.
+  static const IconData woman2 = IconData(
     0xf8e7,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `woo_commerce` material icon.
-  static const IconData woo_commerce = IconData(
+  /// The `wooCommerce` material icon.
+  static const IconData wooCommerce = IconData(
     0xea6d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14893,29 +15291,29 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `work_history` material icon.
-  static const IconData work_history = IconData(
+  /// The `workHistory` material icon.
+  static const IconData workHistory = IconData(
     0xec09,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `work_off` material icon.
-  static const IconData work_off = IconData(
+  /// The `workOff` material icon.
+  static const IconData workOff = IconData(
     0xe942,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `work_outline` material icon.
-  static const IconData work_outline = IconData(
+  /// The `workOutline` material icon.
+  static const IconData workOutline = IconData(
     0xe943,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `workspace_premium` material icon.
-  static const IconData workspace_premium = IconData(
+  /// The `workspacePremium` material icon.
+  static const IconData workspacePremium = IconData(
     0xe7af,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14928,15 +15326,15 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `wrap_text` material icon.
-  static const IconData wrap_text = IconData(
+  /// The `wrapText` material icon.
+  static const IconData wrapText = IconData(
     0xe25b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `wrong_location` material icon.
-  static const IconData wrong_location = IconData(
+  /// The `wrongLocation` material icon.
+  static const IconData wrongLocation = IconData(
     0xef78,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
@@ -14956,36 +15354,36 @@ class Icons {
     fontPackage: _kFontPackage,
   );
 
-  /// The `youtube_searched_for` material icon.
-  static const IconData youtube_searched_for = IconData(
+  /// The `youtubeSearchedFor` material icon.
+  static const IconData youtubeSearchedFor = IconData(
     0xe8fa,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `zoom_in` material icon.
-  static const IconData zoom_in = IconData(
+  /// The `zoomIn` material icon.
+  static const IconData zoomIn = IconData(
     0xe8ff,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `zoom_in_map` material icon.
-  static const IconData zoom_in_map = IconData(
+  /// The `zoomInMap` material icon.
+  static const IconData zoomInMap = IconData(
     0xeb2d,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `zoom_out` material icon.
-  static const IconData zoom_out = IconData(
+  /// The `zoomOut` material icon.
+  static const IconData zoomOut = IconData(
     0xe900,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,
   );
 
-  /// The `zoom_out_map` material icon.
-  static const IconData zoom_out_map = IconData(
+  /// The `zoomOutMap` material icon.
+  static const IconData zoomOutMap = IconData(
     0xe56b,
     fontFamily: _kFontFamily,
     fontPackage: _kFontPackage,

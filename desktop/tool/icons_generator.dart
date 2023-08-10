@@ -5,6 +5,16 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart';
 
+extension StringCase on String {
+  String toCamelCase() => replaceAllMapped(
+      RegExp(r'(^[A-Z])|(?:_([a-z]))|(_)'),
+      (match) => match[1] != null
+          ? match[1]!.toLowerCase()
+          : match[2] != null
+              ? match[2]!.toUpperCase()
+              : '');
+}
+
 ///
 class IconsGenerator extends Generator {
   ///
@@ -19,17 +29,16 @@ class IconsGenerator extends Generator {
 
     for (final line in myFile) {
       final items = line.split(' ');
-      
-      var name = items[0];
+
+      var name = items[0].toCamelCase();
       final code = items[1];
 
       if (name.startsWith(RegExp(r'\d'))) {
-        name = '_$name';
-        continue; // TODO(as): Add icons that start with a number.
+        name = '\$$name';
       }
 
       if (name == 'try' || name == 'class') {
-        name = '${name}_';
+        name = '\$$name';
       }
 
       fields.add(Field((b) => b
@@ -37,7 +46,7 @@ class IconsGenerator extends Generator {
         ..static = true
         ..modifier = FieldModifier.constant
         ..type = refer('IconData')
-        ..docs.add('/// The `${items[0]}` material icon.')
+        ..docs.add('/// The `${items[0].toCamelCase()}` material icon.')
         ..assignment = Code('''
         IconData(
           0x$code,
@@ -47,18 +56,24 @@ class IconsGenerator extends Generator {
       ''')));
     }
 
-    final themeLibrary = Library((b) => b
-      ..body.add(
-        Class((b) => b
-          ..name = 'Icons'
-          ..docs.add('''/// Icons from sharp 'Material Icons'.''')
-          ..fields.addAll(fields)
-          ..constructors.add(
-            Constructor((b) => b
-              ..name = '_'
-              ..constant = true),
-          )),
-      ));
+    final themeLibrary = Library(
+      (b) => b
+        ..body.add(
+          Class(
+            (b) => b
+              ..name = 'Icons'
+              ..docs.add('''/// Icons from sharp 'Material Icons'.''')
+              ..fields.addAll(fields)
+              ..constructors.add(
+                Constructor(
+                  (b) => b
+                    ..name = '_'
+                    ..constant = true,
+                ),
+              ),
+          ),
+        ),
+    );
 
     return themeLibrary.accept(DartEmitter()).toString();
   }

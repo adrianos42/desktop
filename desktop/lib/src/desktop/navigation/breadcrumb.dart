@@ -150,7 +150,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
           padding: EdgeInsets.symmetric(horizontal: itemSpacing),
           child: IconTheme(
             data: themeData.iconTheme!.copyWith(color: color),
-            child: const Icon(Icons.chevron_right),
+            child: const Icon(Icons.chevronRight),
           ),
         ));
       }

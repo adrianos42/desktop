@@ -311,6 +311,6 @@ class _ContextMenuButtonDropdown<T> extends ContextMenuButton<T> {
 class _ContextMenuButtonDropdownState<T> extends _ContextMenuButtonState<T> {
   @override
   Widget? get trailing => Icon(
-        _buttonActive ? Icons.expand_less : Icons.expand_more,
+        _buttonActive ? Icons.expandLess : Icons.expandMore,
       );
 }

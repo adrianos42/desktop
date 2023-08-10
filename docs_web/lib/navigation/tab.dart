@@ -568,7 +568,7 @@ return Tab(
           codeText: codeSamplePositioned,
           options: [
             Button.icon(
-              Icons.keyboard_arrow_left,
+              Icons.keyboardArrowLeft,
               onPressed: () => setState(
                 () => _positionAxis = AxisDirection.left,
               ),
@@ -576,7 +576,7 @@ return Tab(
               tooltip: 'left',
             ),
             Button.icon(
-              Icons.keyboard_arrow_up,
+              Icons.keyboardArrowUp,
               onPressed: () => setState(
                 () => _positionAxis = AxisDirection.up,
               ),
@@ -584,7 +584,7 @@ return Tab(
               tooltip: 'up',
             ),
             Button.icon(
-              Icons.keyboard_arrow_right,
+              Icons.keyboardArrowRight,
               onPressed: () => setState(
                 () => _positionAxis = AxisDirection.right,
               ),
@@ -592,7 +592,7 @@ return Tab(
               tooltip: 'right',
             ),
             Button.icon(
-              Icons.keyboard_arrow_down,
+              Icons.keyboardArrowDown,
               onPressed: () => setState(
                 () => _positionAxis = AxisDirection.down,
               ),

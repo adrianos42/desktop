@@ -224,7 +224,7 @@ return ListTable(
           codeText: someDataSample,
           options: [
             Button.icon(
-              Icons.drag_indicator,
+              Icons.dragIndicator,
               active: _allowDragDataExample,
               tooltip: 'Allow column dragging',
               onPressed: () => setState(
@@ -262,7 +262,7 @@ return ListTable(
           codeText: codeSample,
           options: [
             Button.icon(
-              Icons.drag_indicator,
+              Icons.dragIndicator,
               tooltip: 'Allow column dragging',
               active: _allowDragBordelessExample,
               onPressed: () => setState(

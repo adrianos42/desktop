@@ -186,7 +186,7 @@ class DateFormField extends FormField<String> {
                           // Considering the padding inside [TextField].
                           padding: const EdgeInsets.only(left: 4.0, right: 8.0),
                           child: Button.icon(
-                            Icons.edit_calendar,
+                            Icons.editCalendar,
                             active: field._calendarButtonActive,
                             theme: const ButtonThemeData(itemSpacing: 0.0),
                             onPressed: field._openDatePicker,

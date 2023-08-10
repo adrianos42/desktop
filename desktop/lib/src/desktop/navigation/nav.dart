@@ -316,7 +316,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
         alignment: Alignment.center,
         padding: itemsSpacing,
         child: NavMenuButton(
-          const Icon(Icons.arrow_back),
+          const Icon(Icons.arrowBack),
           axis: widget.navAxis,
           active: false,
           onPressed: enabled ? () => _goBack() : null,

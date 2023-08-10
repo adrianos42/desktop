@@ -128,7 +128,7 @@ class _TreeNodeTextCollapse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconCollpased =
-        TreeNode.isCollapsed(context) ? Icons.expand_more : Icons.expand_less;
+        TreeNode.isCollapsed(context) ? Icons.expandMore : Icons.expandLess;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

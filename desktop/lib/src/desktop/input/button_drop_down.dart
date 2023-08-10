@@ -255,7 +255,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
-                      waiting ? Icons.expand_less : Icons.expand_more,
+                      waiting ? Icons.expandLess : Icons.expandMore,
                       size: buttonThemeData.iconThemeData!.size,
                       color: foreground,
                     ),

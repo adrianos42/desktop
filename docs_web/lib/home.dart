@@ -144,7 +144,7 @@ class _DocHomeState extends State<DocHome> {
                     Container(
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Button.icon(
-                        Icons.menu_open,
+                        Icons.menuOpen,
                         theme: ButtonThemeData(
                           color: textTheme.textLow,
                           highlightColor: textTheme.textPrimaryHigh,
@@ -245,7 +245,7 @@ class _ThemeToggleState extends State<_ThemeToggle> {
     switch (themeData.brightness) {
       case Brightness.dark:
         return Button.icon(
-          Icons.dark_mode,
+          Icons.darkMode,
           onPressed: widget.onPressed,
           theme: ButtonThemeData(
             color: iconForeground,
@@ -253,7 +253,7 @@ class _ThemeToggleState extends State<_ThemeToggle> {
         );
       case Brightness.light:
         return Button.icon(
-          Icons.light_mode,
+          Icons.lightMode,
           onPressed: widget.onPressed,
           theme: ButtonThemeData(color: iconForeground),
         );

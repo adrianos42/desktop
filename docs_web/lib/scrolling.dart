@@ -374,7 +374,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                             ),
                             if (widget.requestPrevious != null)
                               Button.icon(
-                                Icons.keyboard_arrow_left,
+                                Icons.keyboardArrowLeft,
                                 onPressed: canRequestPrevious
                                     ? _requestPrevious
                                     : null,
@@ -384,7 +384,7 @@ class _ImagePageState extends State<_ImagePage> with TickerProviderStateMixin {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12),
                                 child: Button.icon(
-                                  Icons.keyboard_arrow_right,
+                                  Icons.keyboardArrowRight,
                                   onPressed:
                                       canRequestNext ? _requestNext : null,
                                   tooltip: 'Next',

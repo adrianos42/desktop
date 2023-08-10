@@ -69,7 +69,7 @@ return Button.text(
           body: (context) => Align(
             alignment: Alignment.center,
             child: Button.icon(
-              Icons.control_camera,
+              Icons.controlCamera,
               onPressed: () {},
             ),
           ),
@@ -81,7 +81,7 @@ return Button.text(
             alignment: Alignment.center,
             child: Button(
               body: const Text('Button'),
-              leading: const Icon(Icons.control_camera),
+              leading: const Icon(Icons.controlCamera),
               onPressed: () {},
             ),
           ),
