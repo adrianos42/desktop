@@ -14,14 +14,12 @@ dependencies:
   dart_style: ^2.3.1
   url_launcher: ^6.1.10
   intl: ^0.18.1
-  markdown_docs_flutter: ^1.0.0
+  markdown_docs_flutter: 1.0.0-dev.3
   jovial_svg: ^1.1.14
 
 dependency_overrides:
   desktop:
     path: ../desktop
-  markdown_docs_flutter:
-    path: ../../markdown_docs_flutter/markdown_docs_flutter
 
 dev_dependencies:
   flutter_lints: ^2.0.1

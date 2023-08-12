@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.0-dev.3
+
+- Changes icon names.
+
 ## 5.0.0-dev.2
 
 - Fixes dialog scrolling.

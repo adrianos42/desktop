@@ -95,7 +95,7 @@ packages:
       path: "../desktop"
       relative: true
     source: path
-    version: "4.4.1"
+    version: "5.0.0-dev.3"
   fake_async:
     dependency: transitive
     description:
@@ -217,17 +217,19 @@ packages:
   markdown_docs:
     dependency: transitive
     description:
-      path: "../../markdown_docs"
-      relative: true
-    source: path
+      name: markdown_docs
+      sha256: "6ffec8e2785c40516bcc759c5012b2807e2547a9fdc32cc03c24cc160f918af3"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.0-dev.3"
   markdown_docs_flutter:
     dependency: "direct main"
     description:
-      path: "../../markdown_docs_flutter/markdown_docs_flutter"
-      relative: true
-    source: path
-    version: "1.0.0-dev.2"
+      name: markdown_docs_flutter
+      sha256: a5d0b7dd619f5d0ee8f2d8368e5bc52ae9bef201ef907c20b99087d61ed9159d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0-dev.3"
   matcher:
     dependency: transitive
     description:

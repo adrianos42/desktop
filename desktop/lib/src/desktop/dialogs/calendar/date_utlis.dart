@@ -37,7 +37,7 @@ class DateUtils {
     return DateTime(date.year, date.month, date.day);
   }
 
-  static _DateTimeRange datesOnly(_DateTimeRange range) {
+  static _DateTimeRange _datesOnly(_DateTimeRange range) {
     return _DateTimeRange(
         start: dateOnly(range.start), end: dateOnly(range.end));
   }

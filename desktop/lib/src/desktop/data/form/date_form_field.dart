@@ -436,7 +436,7 @@ class _TextFormFieldState extends FormFieldState<String> {
 
 // TODO(as): Use theme.
 const double _kDefaultCalendarSpacing = 8.0;
-const double _KDefaultHeight = 320.0 + _kDefaultCalendarSpacing * 2;
+const double _kDefaultHeight = 320.0 + _kDefaultCalendarSpacing * 2;
 
 class _DatePickerController {
   _DatePickerController._({
@@ -457,8 +457,8 @@ class _DatePickerController {
         child: CustomSingleChildLayout(
           delegate: ContextMenuLayoutDelegate(position),
           child: SizedBox(
-            width: _KDefaultHeight,
-            height: _KDefaultHeight,
+            width: _kDefaultHeight,
+            height: _kDefaultHeight,
             child: GestureDetector(
               behavior: HitTestBehavior.deferToChild,
               onTap: () {},
