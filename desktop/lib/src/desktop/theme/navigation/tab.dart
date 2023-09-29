@@ -79,8 +79,10 @@ class _TabThemeData {
   /// ```dart
   /// IconThemeData(size: kDefaultIconSize)
   /// ```
-  IconThemeData get iconThemeData =>
-      const IconThemeData(size: kDefaultIconSize);
+  IconThemeData get iconThemeData => const IconThemeData(
+        size: kDefaultIconSize,
+        fill: 1.0,
+      );
 
   /// The space between items inside the tab bar, if they are simple text or an icon.
   ///

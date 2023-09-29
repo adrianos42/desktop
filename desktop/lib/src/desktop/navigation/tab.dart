@@ -42,8 +42,8 @@ class TabController extends ChangeNotifier {
 class TabItem {
   /// Creates a [TabItem].
   const TabItem({
-    required this.builder,
     required this.itemBuilder,
+    required this.builder,
   });
 
   /// Creates a [TabItem] with a [Text] title.
@@ -52,8 +52,8 @@ class TabItem {
     required WidgetBuilder builder,
   }) {
     return TabItem(
-      builder: builder,
       itemBuilder: (context) => Text(title),
+      builder: builder,
     );
   }
 
@@ -69,6 +69,7 @@ class TabItem {
     List<NavigatorObserver> navigatorObservers = const [],
   }) {
     return TabItem(
+      itemBuilder: itemBuilder,
       builder: (context) => TabView(
         builder: builder,
         navigatorKey: navigatorKey,
@@ -79,7 +80,6 @@ class TabItem {
         onUnknownRoute: onUnknownRoute,
         routes: routes,
       ),
-      itemBuilder: itemBuilder,
     );
   }
 
@@ -641,9 +641,9 @@ class _TabState extends State<Tab> with SingleTickerProviderStateMixin {
     if (widget.controller != oldWidget.controller) {
       _updateTabController(oldWidget.controller);
     } else {
-      final int _index = math.min(_controller.index, widget.items.length - 1);
-      if (_index != _controller.index) {
-        _controller.index = _index;
+      final int index = math.min(_controller.index, widget.items.length - 1);
+      if (index != _controller.index) {
+        _controller.index = index;
       }
     }
 

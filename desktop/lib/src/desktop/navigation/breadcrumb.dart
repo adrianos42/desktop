@@ -17,9 +17,9 @@ class BreadcrumbController extends ChangeNotifier {
   /// Creates a [BreadcrumbController] with a initial page.
   BreadcrumbController({
     required IndexedWidgetBuilder builder,
-    required IndexedWidgetBuilder breadCrumbBuilder,
+    required IndexedWidgetBuilder breadcrumbBuilder,
   }) {
-    push(builder: builder, breadcrumbBuilder: breadCrumbBuilder);
+    push(builder: builder, breadcrumbBuilder: breadcrumbBuilder);
   }
 
   bool _isDisposed = false;
@@ -44,6 +44,23 @@ class BreadcrumbController extends ChangeNotifier {
     required IndexedWidgetBuilder breadcrumbBuilder,
   }) {
     final int index = _items.length;
+
+    _items.add(
+      _BreadcrumbItem(
+        OverlayEntry(builder: (context) => builder(context, index)),
+        (context) => breadcrumbBuilder(context, index),
+      ),
+    );
+
+    notifyListeners();
+  }
+
+  void replace({
+    required IndexedWidgetBuilder builder,
+    required IndexedWidgetBuilder breadcrumbBuilder,
+  }) {
+    final int index = 0;
+    _items.clear();
 
     _items.add(
       _BreadcrumbItem(

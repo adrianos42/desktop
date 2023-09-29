@@ -63,7 +63,10 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// IconThemeData(size: 20.0)
   /// ```
-  IconThemeData get iconTheme => const IconThemeData(size: 20.0);
+  IconThemeData get iconTheme => const IconThemeData(
+        size: 20.0,
+        fill: 1.0,
+      );
 
   /// The style for the text.
   ///

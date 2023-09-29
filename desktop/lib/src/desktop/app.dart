@@ -358,6 +358,7 @@ class _DesktopAppState extends State<DesktopApp> {
         child: IconTheme(
           data: IconThemeData(
             color: effectiveThemeData.textTheme.textHigh,
+            fill: 1.0,
           ),
           child: Builder(builder: _buildWidgetApp),
         ),

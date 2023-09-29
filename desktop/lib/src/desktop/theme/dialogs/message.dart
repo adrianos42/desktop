@@ -5,7 +5,7 @@ import '../theme_text.dart';
 
 part 'message.g.dart';
 
-const Duration _kDefaultMessageDuration = Duration(seconds: 6);
+const Duration _kDefaultMessageDuration = Duration(seconds: 4);
 
 /// Theme data for [Message].
 @immutable

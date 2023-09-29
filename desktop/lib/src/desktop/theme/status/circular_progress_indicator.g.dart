@@ -31,7 +31,7 @@ class CircularProgressIndicatorThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.primary[kHighlightColorIndex]
+  /// colorScheme.primary[50]
   /// ```
   final Color? color;
 
@@ -114,7 +114,7 @@ size: The size of the circular progress indicator.
  Defaults to:
 
  ```dart
- colorScheme.primary[kHighlightColorIndex]
+ colorScheme.primary[50]
  ```;;backgroundColor: The background color of the circular progress indicator.
 
  Defaults to:

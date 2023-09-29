@@ -3,16 +3,16 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"canvaskit/chromium/canvaskit.wasm": "fc18c3010856029414b70cae1afc5cd9",
-"canvaskit/chromium/canvaskit.js": "8c8392ce4a4364cbb240aa09b5652e05",
-"canvaskit/skwasm.worker.js": "19659053a277272607529ef87acf9d8a",
-"canvaskit/skwasm.wasm": "6711032e17bf49924b2b001cef0d3ea3",
-"canvaskit/canvaskit.wasm": "f48eaf57cada79163ec6dec7929486ea",
-"canvaskit/canvaskit.js": "76f7d822f42397160c5dfc69cbc9b2de",
-"canvaskit/skwasm.js": "1df4d741f441fa1a4d10530ced463ef8",
-"index.html": "33a78f95adce76769f22db4c44b1ebbd",
-"/": "33a78f95adce76769f22db4c44b1ebbd",
-"assets/NOTICES": "ecb61338b8906ead0e585cda842d9590",
+const RESOURCES = {"canvaskit/chromium/canvaskit.wasm": "be0e3b33510f5b7b0cc76cc4d3e50048",
+"canvaskit/chromium/canvaskit.js": "96ae916cd2d1b7320fff853ee22aebb0",
+"canvaskit/skwasm.worker.js": "51253d3321b11ddb8d73fa8aa87d3b15",
+"canvaskit/skwasm.wasm": "1a074e8452fe5e0d02b112e22cdcf455",
+"canvaskit/canvaskit.wasm": "42df12e09ecc0d5a4a34a69d7ee44314",
+"canvaskit/canvaskit.js": "bbf39143dfd758d8d847453b120c8ebb",
+"canvaskit/skwasm.js": "95f16c6690f955a45b2317496983dbe9",
+"index.html": "519b251c9a1904236b3e7f440076adaf",
+"/": "519b251c9a1904236b3e7f440076adaf",
+"assets/NOTICES": "50ad138df0944e29daf304fef1bd76d5",
 "assets/assets/GitHub-Mark-32px.png": "f87561b8bb354ef83b09a66e54f70e08",
 "assets/assets/cats/pexels-156321.webp": "adbf6cf7f654b13b96d888973df523e9",
 "assets/assets/cats/pexels-96428.webp": "8004f91831d894808dff9c898947215d",
@@ -114,7 +114,7 @@ const RESOURCES = {"canvaskit/chromium/canvaskit.wasm": "fc18c3010856029414b70ca
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Light.ttf": "fabde431316f09ed8c275e20e817fbef",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Medium.ttf": "9ca7848f37491852b10287aca8bf390b",
 "assets/packages/desktop/fonts/IBM_Plex_Serif/IBMPlexSerif-Regular.ttf": "bfc0c1efd48c7e6dcbd2504c849a3a51",
-"assets/packages/desktop/fonts/Material_Icons_Sharp_Regular/MaterialIconsSharp-Regular.otf": "36d117e2e6fb22a84bf0670ed182bb28",
+"assets/packages/desktop/fonts/Material_Icons_Sharp_Regular/MaterialIconsSharp-Regular.otf": "ca3f9796f3c9766ae4135db0251436a0",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-Italic.ttf": "0d808068d751810c39b3c92048c169f8",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-LightItalic.ttf": "fe20230f0cc36e530e86b666c1f43a50",
 "assets/packages/desktop/fonts/IBM_Plex_Mono/IBMPlexMono-BoldItalic.ttf": "b03a7a2377df83ff85df47516874447c",
@@ -137,7 +137,7 @@ const RESOURCES = {"canvaskit/chromium/canvaskit.wasm": "fc18c3010856029414b70ca
 "icons/Icon-192.png": "f9606f95519ac4aac78099a8873f5116",
 "flutter.js": "6fef97aeca90b426343ba6c5c9dc5d4a",
 "manifest.json": "b84436d4ff185318efa7890db21d84b2",
-"main.dart.js": "d83ebb52fd13eaebf0d94e25be3c9743",
+"main.dart.js": "b0600917d1a31be242b6292c48f28e6b",
 "docs.png": "f9606f95519ac4aac78099a8873f5116"};
 // The application shell files that are downloaded before a service worker can
 // start.

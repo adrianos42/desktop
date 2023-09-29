@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
@@ -7,25 +9,90 @@ import 'tab_scope.dart';
 
 export 'tab_scope.dart' show TabScope;
 
-const int _kIntialIndexValue = 0;
-
 const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
 
 class NavItem {
   const NavItem({
     required this.builder,
-    required this.title,
-    required this.icon,
+    this.title,
+    this.icon,
   });
 
   /// Page builder.
   final IndexedWidgetBuilder builder;
 
   /// Icon used if the nav axis is vertical.
-  final IconData icon;
+  final IconData? icon;
 
   /// The title shown in case the nav axis is horizontal.
-  final String title;
+  final String? title;
+}
+
+class NavMenuItem {
+  const NavMenuItem({
+    required this.builder,
+    required this.icon,
+    this.enabled = true,
+  });
+
+  /// An icon to be built for the menu.
+  final WidgetBuilder icon;
+
+  /// The widget builder for the menu view.
+  final WidgetBuilder builder;
+
+  final bool enabled;
+}
+
+/// Controls the tab index.
+class NavController extends ChangeNotifier {
+  /// Creates a [NavController].
+  NavController({
+    int initialIndex = 0,
+  })  : _index = initialIndex,
+        assert(initialIndex >= 0);
+
+  bool _isDisposed = false;
+
+  /// The index of the currently selected tab.
+  int get index => _index;
+  int _index;
+  set index(int value) {
+    assert(value >= 0);
+    if (_index != value) {
+      _index = value;
+      notifyListeners();
+    }
+  }
+
+  @mustCallSuper
+  @override
+  void dispose() {
+    super.dispose();
+    _isDisposed = true;
+  }
+}
+
+class NavContext extends InheritedWidget {
+  const NavContext._({
+    required super.child,
+    required _NavState state,
+  }) : _state = state;
+
+  final _NavState _state;
+
+  int get index => _state._controller.index;
+  set index(int value) {
+    _state._controller.index = value;
+  }
+
+  int get menuIndex => _state._menuIndex;
+  set menuIndex(int value) {
+    _state._showMenuFromIndex(value);
+  }
+
+  @override
+  bool updateShouldNotify(NavContext oldWidget) => false;
 }
 
 /// Navigation widget [Nav]...
@@ -33,7 +100,7 @@ class NavItem {
 ///```dart
 /// Nav(
 ///   trailingMenu: [
-///     NavItem(
+///     NavMenuItem(
 ///       title: 'home',
 ///       builder: (context) => NavDialog(
 ///         child: Container(
@@ -43,9 +110,9 @@ class NavItem {
 ///           child: Text('Home page'),
 ///         ),
 ///       ),
-///       icon: Icons.home,
+///       icon: (context) => Icon(Icons.home)
 ///     ),
-///     NavItem(
+///     NavMenuItem(
 ///       title: 'settings',
 ///       builder: (context) => NavDialog(
 ///         child: Container(
@@ -55,22 +122,22 @@ class NavItem {
 ///           child: Text('Settings page'),
 ///         ),
 ///       ),
-///       icon: Icons.settings,
+///       icon: (context) => Icon(Icons.settings),
 ///     ),
 ///   ],
 ///   items: [
 ///     NavItem(
-///       builder: (context) => Center(child: Text('page1')),
+///       builder: (context, _) => Center(child: Text('page1')),
 ///       title: 'page1',
 ///       icon: Icons.today,
 ///     ),
 ///     NavItem(
-///       builder: (context) => Center(child: Text('page2')),
+///       builder: (context, _) => Center(child: Text('page2')),
 ///       title: 'page2',
 ///       icon: Icons.stars,
 ///     ),
 ///     NavItem(
-///       builder: (context) => Center(child: Text('page3')),
+///       builder: (context, _) => Center(child: Text('page3')),
 ///       title: 'page3',
 ///       icon: Icons.share,
 ///     ),
@@ -83,20 +150,21 @@ class Nav extends StatefulWidget {
     super.key,
     required this.items,
     this.navAxis = Axis.vertical,
-    this.trailingMenu,
+    this.trailingMenu = const [],
     this.onPressBackButton,
     this.isBackButtonEnabled,
     this.visible = true,
-  })  : assert(items.length > 0);
+    this.controller,
+  }) : assert(items.length > 0);
 
   /// The items with builder and route names for transition among pages.
   final List<NavItem> items;
 
   /// Menu before the navigation items.
-  final List<NavItem>? trailingMenu;
+  final List<NavMenuItem> trailingMenu;
 
-  /// Callback for the back button. 
-  /// 
+  /// Callback for the back button.
+  ///
   /// Defaults to null.
   final VoidCallback? onPressBackButton;
 
@@ -109,17 +177,24 @@ class Nav extends StatefulWidget {
   /// If the nav bar should be visible.
   final bool visible;
 
+  /// Controls selected index.
+  final NavController? controller;
+
+  static NavContext? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<NavContext>();
+
   @override
   State<Nav> createState() => _NavState();
 }
 
 class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
-  int _index = _kIntialIndexValue;
-
   int get _length => widget.items.length;
 
-  String? _menus;
+  int _menuIndex = -1;
   OverlayEntry? _menuOverlay;
+
+  NavController? _internalController;
+  NavController get _controller => widget.controller ?? _internalController!;
 
   // static final Map<LocalKey, ActionFactory> _actions =
   //     <LocalKey, ActionFactory>{
@@ -142,12 +217,13 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   late Tween<Offset> _menuOffsetTween;
   final ColorTween _menuColorTween = ColorTween();
 
-  static const Curve _animationCurve = Curves.fastLinearToSlowEaseIn;
+  List<NavMenuItem> get _trailingMenu => widget.trailingMenu.reversed.toList();
 
   void _createAnimation() {
     _menuAnimation = CurvedAnimation(
       parent: _menuController,
-      curve: _animationCurve,
+      curve: Curves.fastEaseInToSlowEaseOut,
+      reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
     );
 
     final Offset begin = widget.navAxis == Axis.vertical
@@ -161,17 +237,17 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     );
   }
 
-  void nextView() => _indexChanged((_index + 1) % _length);
+  void nextView() => _indexChanged((_controller.index + 1) % _length);
 
-  void previousView() => _indexChanged((_index - 1) % _length);
+  void previousView() => _indexChanged((_controller.index - 1) % _length);
 
   bool _indexChanged(int index) {
-    if (index != _index) {
-      if (index < 0 || index >= _length || _menus != null) {
+    if (index != _controller.index) {
+      if (index < 0 || index >= _length || _menuIndex != -1) {
         return false;
       }
 
-      setState(() => _index = index);
+      setState(() => _controller.index = index);
 
       return true;
     }
@@ -179,24 +255,58 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     return false;
   }
 
+  void _updateNavController([NavController? oldWidgetController]) {
+    if (widget.controller == null && _internalController == null) {
+      _internalController = NavController();
+    }
+    if (widget.controller != null && _internalController != null) {
+      _internalController!.dispose();
+      _internalController = null;
+    }
+    if (oldWidgetController != widget.controller) {
+      if (oldWidgetController?._isDisposed == false) {
+        oldWidgetController!.removeListener(_onCurrentIndexChange);
+      }
+      widget.controller?.addListener(_onCurrentIndexChange);
+    }
+  }
+
+  void _onCurrentIndexChange() {
+    assert(_controller.index >= 0 && _controller.index < _length);
+    setState(() {});
+  }
+
   void _handleMenuAnimationStatusChanged(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed && _menus == null) {
+    if (status == AnimationStatus.dismissed) {
       _menuOverlay?.remove();
       _menuOverlay = null;
     }
   }
 
   void _hideMenu() {
-    setState(() {
-      _menus = null;
-      _menuController.reverse();
-    });
+    if (_menuIndex != -1) {
+      setState(() {
+        _menuIndex = -1;
+        _menuController.reverse();
+      });
+    }
   }
 
-  void _showMenu(NavItem item, int index) {
-    if (_menus == null) {
+  void _showMenuFromIndex(int index) {
+    _showMenu(_trailingMenu[index], index);
+  }
+
+  void _showMenu(NavMenuItem item, int index) {
+    if (_menuController.isAnimating) {
+      return;
+    }
+
+    if (_menuIndex == -1) {
+      _menuOverlay?.remove();
+      _menuOverlay = null;
+
       setState(() {
-        _menus = item.title;
+        _menuIndex = index;
 
         final Color barrierColor = DialogTheme.of(context).barrierColor!;
         _menuColorTween.begin = barrierColor.withOpacity(0.0);
@@ -220,7 +330,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
                   child: ClipRect(
                     child: FractionalTranslation(
                       translation: _menuOffsetTween.evaluate(_menuAnimation),
-                      child: item.builder(context, index),
+                      child: item.builder(context),
                     ),
                   ),
                 ),
@@ -238,17 +348,21 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   }
 
   Widget _createMenuItems(
-      EdgeInsets itemsSpacing, NavThemeData navThemeData, List<NavItem> items) {
+    EdgeInsets itemsSpacing,
+    NavThemeData navThemeData,
+    List<NavMenuItem> items,
+  ) {
     final List<Widget> itemsMenu = List<Widget>.empty(growable: true);
 
-    for (int i = 0; i < items.length; i += 1) {
+    for (int i = items.length - 1; i >= 0 ; i -= 1) {
+      final item = items[i];
       itemsMenu.add(
         NavMenuButton(
-          Icon(items[i].icon),
+          item.icon(context),
           axis: widget.navAxis,
-          active: _menus == items[i].title,
-          onPressed: _menus == null || _menus == items[i].title
-              ? () => _showMenu(items[i], i)
+          active: _menuIndex == i,
+          onPressed: items[i].enabled && (_menuIndex == -1 || _menuIndex == i)
+              ? () => _showMenu(item, i)
               : null,
         ),
       );
@@ -269,19 +383,20 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
       padding: itemsSpacing,
       child: NavGroup(
         navWidgets: widget.navAxis == Axis.horizontal
-            ? (context, index) => Text(widget.items[index].title)
+            ? (context, index) => Text(widget.items[index].title ?? '')
             : (context, index) => Icon(widget.items[index].icon),
         axis: widget.navAxis,
-        enabled: _menus == null,
+        enabled: _menuIndex == -1,
         navItems: widget.items,
-        index: _index,
+        index: _controller.index,
         onChanged: (value) => _indexChanged(value),
       ),
     );
   }
 
   void _goBack() {
-    if (_menus != null) {
+    if (_menuIndex != -1) {
+      _hideMenu();
     } else {
       widget.onPressBackButton!();
     }
@@ -310,7 +425,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     final navList = <Widget>[];
 
     if (widget.onPressBackButton != null) {
-      final enabled = (widget.isBackButtonEnabled ?? true) || _menus != null;
+      final enabled = (widget.isBackButtonEnabled ?? true) || _menuIndex != -1;
 
       final value = Container(
         alignment: Alignment.center,
@@ -330,11 +445,15 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     navList.add(
       _createNavItems(itemsSpacing, navThemeData),
     );
+
     navList.add(const Spacer());
 
-    if (widget.trailingMenu != null && widget.trailingMenu!.isNotEmpty) {
-      navList.add(
-          _createMenuItems(itemsSpacing, navThemeData, widget.trailingMenu!));
+    if (widget.trailingMenu.isNotEmpty) {
+      navList.add(_createMenuItems(
+        itemsSpacing,
+        navThemeData,
+        _trailingMenu,
+      ));
     }
 
     Widget result = Container(
@@ -383,13 +502,15 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     )..addStatusListener(_handleMenuAnimationStatusChanged);
 
     _createAnimation();
+
+    _updateNavController();
   }
 
   OverlayEntry _createPageOverlayEntry(int index) {
     return OverlayEntry(
         maintainState: true,
         builder: (context) {
-          final bool active = index == _index;
+          final bool active = index == _controller.index;
           _shouldBuildView[index] = active || _shouldBuildView[index];
           return Offstage(
             offstage: !active,
@@ -404,7 +525,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
           );
         });
   }
-  
+
   @override
   void didUpdateWidget(Nav oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -433,10 +554,23 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     if (oldWidget.navAxis != widget.navAxis) {
       _createAnimation();
     }
+
+    if (widget.controller != oldWidget.controller) {
+      _updateNavController(oldWidget.controller);
+    } else {
+      final int index = math.min(_controller.index, widget.items.length - 1);
+      if (index != _controller.index) {
+        _controller.index = index;
+      }
+    }
   }
 
   @override
   void dispose() {
+    if (widget.controller?._isDisposed == false) {
+      _controller.removeListener(_onCurrentIndexChange);
+    }
+
     _menuController.dispose();
 
     super.dispose();
@@ -463,9 +597,11 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
     result = TabScope(
       axis: widget.navAxis,
-      currentIndex: _index,
+      currentIndex: _controller.index,
       child: result,
     );
+
+    result = NavContext._(state: this, child: result);
 
     return result;
   }

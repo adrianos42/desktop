@@ -130,7 +130,7 @@ class _NavBottomGroupState extends State<NavBottomGroup>
           ),
           _SideIconRenderObjectWidget(
             vsync: this,
-            text: widget.navItems.map((e) => e.title).toList(),
+            text: widget.navItems.map((e) => e.title ?? '').toList(),
             duration: navThemeData.animationDuration!,
             lengths: itemLengths,
             crossLength: crossLenth,

@@ -121,9 +121,8 @@ return Nav(
           body: (context) {
             return Nav(
               trailingMenu: [
-                NavItem(
-                  title: 'settings',
-                  builder: (context, _) => TabDialog(
+                NavMenuItem(
+                  builder: (context) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(32.0),
@@ -134,7 +133,7 @@ return Nav(
                       ),
                     ),
                   ),
-                  icon: Icons.settings,
+                  icon: (context) => const Icon(Icons.settings),
                 ),
               ],
               items: [
@@ -176,9 +175,8 @@ return Nav(
             return Nav(
               navAxis: Axis.horizontal,
               trailingMenu: [
-                NavItem(
-                  title: 'settings',
-                  builder: (context, _) => TabDialog(
+                NavMenuItem(
+                  builder: (context) => TabDialog(
                     child: Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(32.0),
@@ -189,7 +187,7 @@ return Nav(
                       ),
                     ),
                   ),
-                  icon: Icons.settings,
+                  icon: (context) => const Icon(Icons.settings),
                 ),
               ],
               items: [

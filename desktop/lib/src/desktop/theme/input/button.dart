@@ -38,13 +38,16 @@ class _ButtonThemeData {
   /// ```dart
   /// IconThemeData(size: kDefaultIconSize, color: color)
   /// ```
-  IconThemeData get iconThemeData =>
-      IconThemeData(size: kDefaultIconSize, color: color);
+  IconThemeData get iconThemeData => IconThemeData(
+        size: kDefaultIconSize,
+        color: color,
+        fill: 1.0,
+      );
 
   /// Spacing used in body and button paddings.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 4.0
   /// ```
@@ -53,7 +56,7 @@ class _ButtonThemeData {
   /// Spacing used in body padding when the button is filled.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 12.0
   /// ```
@@ -62,7 +65,7 @@ class _ButtonThemeData {
   /// The height of the button.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 32.0
   /// ```
@@ -71,7 +74,7 @@ class _ButtonThemeData {
   /// The minimum width of the button.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 12.0
   /// ```
@@ -80,7 +83,7 @@ class _ButtonThemeData {
   /// The text style.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
@@ -92,7 +95,7 @@ class _ButtonThemeData {
   /// The color when the button is disabled.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.disabled
   /// ```
@@ -101,16 +104,16 @@ class _ButtonThemeData {
   /// The color when button is not filled.
   ///
   /// Defaults to:
-  /// 
-  /// ```dart 
-  /// colorScheme.primary[kHighlightColorIndex]
+  ///
+  /// ```dart
+  /// colorScheme.primary[60]
   /// ```
   Color get color => colorScheme.primary[kHighlightColorIndex];
 
   /// The color when the button has focus.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// hoverColor
   /// ```
@@ -119,8 +122,8 @@ class _ButtonThemeData {
   /// The color when the button is being hovered.
   ///
   /// Defaults to:
-  /// 
-  /// ```dart 
+  ///
+  /// ```dart
   /// textTheme.textHigh
   /// ```
   Color get hoverColor => textTheme.textHigh;
@@ -128,7 +131,7 @@ class _ButtonThemeData {
   /// The color when the button is pressed.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textLow
   /// ```
@@ -137,8 +140,8 @@ class _ButtonThemeData {
   /// The background color when the button is filled.
   ///
   /// Defaults to:
-  /// 
-  /// ```dart 
+  ///
+  /// ```dart
   /// colorScheme.primary[30]
   /// ```
   Color get background => colorScheme.primary[30];
@@ -146,7 +149,7 @@ class _ButtonThemeData {
   /// The background color when the button is being focused.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
@@ -155,7 +158,7 @@ class _ButtonThemeData {
   /// The background color when the button is being hovered.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
@@ -164,8 +167,8 @@ class _ButtonThemeData {
   /// The background color when the button is pressed.
   ///
   /// Defaults to:
-  /// 
-  /// ```dart 
+  ///
+  /// ```dart
   /// colorScheme.background[20]
   /// ```
   Color get highlightBackground => colorScheme.background[20];
@@ -173,7 +176,7 @@ class _ButtonThemeData {
   /// The foreground color when the button is filled.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
@@ -182,7 +185,7 @@ class _ButtonThemeData {
   /// The foreground color when the button is being hovered.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
@@ -191,16 +194,16 @@ class _ButtonThemeData {
   /// The foreground color when the button is pressed.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textHigh
   /// ```
   Color get highlightForeground => textTheme.textHigh;
 
   /// The duration of the animation.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// Duration(milliseconds: 100)
   /// ```

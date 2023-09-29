@@ -29,8 +29,10 @@ class _NavThemeData {
   /// ```dart
   /// IconThemeData(size: width - 8.0 * 2.0)
   /// ```
-  IconThemeData get iconThemeData =>
-      IconThemeData(size: width - _kPadding * 2.0);
+  IconThemeData get iconThemeData => IconThemeData(
+        size: width - _kPadding * 2.0,
+        fill: 1.0,
+      );
 
   /// The space between items inside the navbar.
   ///

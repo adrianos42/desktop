@@ -182,6 +182,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
     final IconThemeData iconThemeData = IconThemeData(
       color: themeData.textTheme.textLow,
       size: scaledIconSize,
+      fill: 1.0,
     );
 
     final Widget prefix;

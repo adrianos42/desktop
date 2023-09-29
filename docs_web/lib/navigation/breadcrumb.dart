@@ -30,7 +30,7 @@ class _BreadcrumbPageState extends State<BreadcrumbPage> {
 
     breadcrumbController = BreadcrumbController(
       builder: buildPage,
-      breadCrumbBuilder: buildItem,
+      breadcrumbBuilder: buildItem,
     );
   }
 

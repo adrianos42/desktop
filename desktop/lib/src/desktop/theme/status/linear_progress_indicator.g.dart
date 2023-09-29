@@ -31,7 +31,7 @@ class LinearProgressIndicatorThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.primary[kHighlightColorIndex]
+  /// colorScheme.primary[50]
   /// ```
   final Color? color;
 
@@ -114,7 +114,7 @@ height: The height of the linear progress indicator.
  Defaults to:
  
  ```dart
- colorScheme.primary[kHighlightColorIndex]
+ colorScheme.primary[50]
  ```;;backgroundColor: The background color of the linear progress indicator.
 
  Defaults to:

@@ -192,8 +192,6 @@ class Dialog extends StatelessWidget {
     final Widget resultBody;
     final bool isConstrained = dialogThemeData.constraints!.hasBoundedHeight;
 
-    print(isConstrained);
-
     if (allowScroll) {
       final Widget child = Padding(
         padding: EdgeInsets.fromLTRB(

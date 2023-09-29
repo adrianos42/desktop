@@ -110,7 +110,7 @@ class ButtonThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.primary[kHighlightColorIndex]
+  /// colorScheme.primary[60]
   /// ```
   final Color? color;
 
@@ -356,109 +356,109 @@ axis: The axis of the button.
  ```;;itemSpacing: Spacing used in body and button paddings.
 
  Defaults to:
- 
+
  ```dart
  4.0
  ```;;filledSpacing: Spacing used in body padding when the button is filled.
 
  Defaults to:
- 
+
  ```dart
  12.0
  ```;;height: The height of the button.
 
  Defaults to:
- 
+
  ```dart
  32.0
  ```;;minWidth: The minimum width of the button.
 
  Defaults to:
- 
+
  ```dart
  12.0
  ```;;textStyle: The text style.
 
  Defaults to:
- 
+
  ```dart
  textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
  ```;;disabledColor: The color when the button is disabled.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;color: The color when button is not filled.
 
  Defaults to:
- 
- ```dart 
- colorScheme.primary[kHighlightColorIndex]
+
+ ```dart
+ colorScheme.primary[60]
  ```;;focusColor: The color when the button has focus.
 
  Defaults to:
- 
+
  ```dart
  hoverColor
  ```;;hoverColor: The color when the button is being hovered.
 
  Defaults to:
- 
- ```dart 
+
+ ```dart
  textTheme.textHigh
  ```;;highlightColor: The color when the button is pressed.
 
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;background: The background color when the button is filled.
 
  Defaults to:
- 
- ```dart 
+
+ ```dart
  colorScheme.primary[30]
  ```;;focusBackground: The background color when the button is being focused.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;hoverBackground: The background color when the button is being hovered.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[30]
  ```;;highlightBackground: The background color when the button is pressed.
 
  Defaults to:
- 
- ```dart 
+
+ ```dart
  colorScheme.background[20]
  ```;;foreground: The foreground color when the button is filled.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;hoverForeground: The foreground color when the button is being hovered.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;highlightForeground: The foreground color when the button is pressed.
 
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;animationDuration: The duration of the animation.
- 
+
  Defaults to:
- 
+
  ```dart
  Duration(milliseconds: 100)
  ```;;

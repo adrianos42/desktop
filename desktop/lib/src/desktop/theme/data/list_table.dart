@@ -20,14 +20,18 @@ class _ListTableThemeData {
   final ColorScheme colorScheme;
 
   ///
-  IconThemeData get iconThemeData =>
-      IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh);
+  IconThemeData get iconThemeData => IconThemeData(
+        size: kDefaultIconSize,
+        color: textTheme.textHigh,
+        fill: 1.0,
+      );
 
   ///
   double get itemHeight => _kDefaultItemHeight;
 
   ///
-  TextStyle get textStyle => textTheme.body1.copyWith(fontSize: kDefaultFontSize);
+  TextStyle get textStyle =>
+      textTheme.body1.copyWith(fontSize: kDefaultFontSize);
 
   ///
   Color get selectedColor => colorScheme.primary[30];

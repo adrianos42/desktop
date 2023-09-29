@@ -13,7 +13,8 @@ class TabScope extends InheritedWidget {
   final int? currentIndex;
 
   @override
-  bool updateShouldNotify(TabScope oldWidget) => true;
+  bool updateShouldNotify(TabScope oldWidget) =>
+      oldWidget.axis != axis || oldWidget.currentIndex != currentIndex;
 
   static TabScope? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<TabScope>();

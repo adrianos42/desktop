@@ -184,7 +184,7 @@ class _BottomNavState extends State<BottomNav>
               // Icon(widget.items[index].icon),
               Padding(
                 padding: const EdgeInsets.only(left: 0),
-                child: Text(widget.items[index].title),
+                child: Text(widget.items[index].title ?? ''),
               ),
             ],
           );

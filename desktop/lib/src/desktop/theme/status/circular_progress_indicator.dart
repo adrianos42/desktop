@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../color_scheme.dart';
-import '../constants.dart';
 import '../theme_text.dart';
 
 part 'circular_progress_indicator.g.dart';
@@ -31,9 +30,9 @@ class _CircularProgressIndicatorThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.primary[kHighlightColorIndex]
+  /// colorScheme.primary[50]
   /// ```
-  Color get color => colorScheme.primary[kHighlightColorIndex];
+  Color get color => colorScheme.primary[50];
 
   /// The background color of the circular progress indicator.
   ///

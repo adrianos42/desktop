@@ -30,8 +30,11 @@ class _ContextMenuThemeData {
   /// ```dart
   /// IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh)
   /// ```
-  IconThemeData get iconThemeData =>
-      IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh);
+  IconThemeData get iconThemeData => IconThemeData(
+        size: kDefaultIconSize,
+        color: textTheme.textHigh,
+        fill: 1.0,
+      );
 
   /// The menu step width.
   ///
