@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.0
+
+- Changes icon names.
+- Dialog menu with widget.
+
 ## 5.0.0-dev.3
 
 - Changes icon names.
