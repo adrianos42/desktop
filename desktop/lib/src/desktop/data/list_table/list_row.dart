@@ -293,18 +293,16 @@ class ListRowRender extends RenderBox
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final Canvas canvas = context.canvas;
-
     if (backgroundColor != null) {
       final paint = Paint()..color = backgroundColor!;
-      canvas.drawRect(
+      context.canvas.drawRect(
           Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height), paint);
     }
 
     if (_decoration != null) {
       _rowDecorationPainter ??= _decoration!.createBoxPainter(markNeedsPaint);
       _rowDecorationPainter!.paint(
-        canvas,
+        context.canvas,
         Offset(offset.dx, offset.dy),
         configuration.copyWith(size: Size(size.width, size.height)),
       );
@@ -347,7 +345,7 @@ class ListRowRender extends RenderBox
         );
       }
       
-      canvas.drawPath(path, paint);
+      context.canvas.drawPath(path, paint);
     }
   }
 }

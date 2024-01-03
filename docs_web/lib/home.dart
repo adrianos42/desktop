@@ -13,7 +13,7 @@ import 'theme/typography.dart';
 import 'theme/custom_theme.dart';
 import 'overview.dart';
 
-const String _version = '5.0.0';
+const String _version = '5.0.1';
 
 ///
 class DocHome extends StatefulWidget {
@@ -272,7 +272,7 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
-            return const DialogPage();
+            return const ListTablePage();
           }
         },
       ),

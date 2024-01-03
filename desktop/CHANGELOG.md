@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.1
+
+- Fixes `ListTable` canvas issue.
+
 ## 5.0.0
 
 - Changes icon names.

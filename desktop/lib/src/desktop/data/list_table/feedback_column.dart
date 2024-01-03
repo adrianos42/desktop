@@ -385,9 +385,7 @@ class _FeedbackColumnRender extends RenderBox
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final Canvas canvas = context.canvas;
-
-    canvas.drawRect(
+    context.canvas.drawRect(
       Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
       Paint()..color = backgroundColor,
     );
@@ -406,13 +404,18 @@ class _FeedbackColumnRender extends RenderBox
           child = childAfter(child);
         }
 
-        _paintInsideBorders(canvas, offset);
+        _paintInsideBorders(context.canvas, offset);
       },
       clipBehavior: Clip.hardEdge,
       oldLayer: _clipLayer.layer,
     );
 
-    ListTableRender.paintStaticTableBorder(canvas, offset, size, tableBorder);
+    ListTableRender.paintStaticTableBorder(
+      context.canvas,
+      offset,
+      size,
+      tableBorder,
+    );
   }
 
   final LayerHandle<ClipRectLayer> _clipLayer = LayerHandle<ClipRectLayer>();

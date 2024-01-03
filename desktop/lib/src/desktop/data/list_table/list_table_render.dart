@@ -572,7 +572,6 @@ class ListTableRender extends RenderBox
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final Canvas canvas = context.canvas;
     final Paint paint = Paint();
     final Path path = Path();
 
@@ -599,7 +598,7 @@ class ListTableRender extends RenderBox
       }
     }
 
-    paintStaticTableBorder(canvas, offset, size, tableBorder);
+    paintStaticTableBorder(context.canvas, offset, size, tableBorder);
 
     final double topBorderWidth = tableBorder.top.style == BorderStyle.solid
         ? tableBorder.top.width
@@ -641,7 +640,7 @@ class ListTableRender extends RenderBox
         );
       }
 
-      canvas.drawPath(path, paint);
+      context.canvas.drawPath(path, paint);
     }
 
     if (tableBorder.verticalInside.style == BorderStyle.solid ||
@@ -697,7 +696,7 @@ class ListTableRender extends RenderBox
           );
         }
 
-        canvas.drawPath(path, paint);
+        context.canvas.drawPath(path, paint);
       }
     }
 
@@ -756,7 +755,7 @@ class ListTableRender extends RenderBox
           );
         }
 
-        canvas.drawPath(path, paint);
+        context.canvas.drawPath(path, paint);
       }
     }
   }
