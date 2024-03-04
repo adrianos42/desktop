@@ -33,7 +33,7 @@ class _SliderThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get activeColor => colorScheme.primary[kHighlightColorIndex];
+  Color get activeColor => colorScheme.primary[highlightColorIndex];
 
   /// The active hover color.
   /// 
@@ -51,7 +51,7 @@ class _SliderThemeData {
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
-  Color get trackColor => colorScheme.shade[kItemBackgroundIndex];
+  Color get trackColor => colorScheme.shade[itemBackgroundIndex];
 
   /// The highlight color.
   /// 

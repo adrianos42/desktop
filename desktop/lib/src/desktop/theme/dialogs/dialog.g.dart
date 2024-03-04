@@ -358,29 +358,29 @@ class DialogTheme extends InheritedTheme {
 
       dialogThemeData ??= themeData.dialogTheme;
 
-      final _dialogThemeData =
+      final dialogValue =
           _DialogThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final BoxConstraints constraints =
-          dialogThemeData.constraints ?? _dialogThemeData.constraints;
+          dialogThemeData.constraints ?? dialogValue.constraints;
       final EdgeInsets menuPadding =
-          dialogThemeData.menuPadding ?? _dialogThemeData.menuPadding;
+          dialogThemeData.menuPadding ?? dialogValue.menuPadding;
       final double menuSpacing =
-          dialogThemeData.menuSpacing ?? _dialogThemeData.menuSpacing;
+          dialogThemeData.menuSpacing ?? dialogValue.menuSpacing;
       final EdgeInsets titlePadding =
-          dialogThemeData.titlePadding ?? _dialogThemeData.titlePadding;
+          dialogThemeData.titlePadding ?? dialogValue.titlePadding;
       final EdgeInsets bodyPadding =
-          dialogThemeData.bodyPadding ?? _dialogThemeData.bodyPadding;
+          dialogThemeData.bodyPadding ?? dialogValue.bodyPadding;
       final Color background =
-          dialogThemeData.background ?? _dialogThemeData.background;
+          dialogThemeData.background ?? dialogValue.background;
       final Color barrierColor =
-          dialogThemeData.barrierColor ?? _dialogThemeData.barrierColor;
+          dialogThemeData.barrierColor ?? dialogValue.barrierColor;
       final TextStyle titleTextStyle =
-          dialogThemeData.titleTextStyle ?? _dialogThemeData.titleTextStyle;
+          dialogThemeData.titleTextStyle ?? dialogValue.titleTextStyle;
       final TextAlign bodyTextAlign =
-          dialogThemeData.bodyTextAlign ?? _dialogThemeData.bodyTextAlign;
+          dialogThemeData.bodyTextAlign ?? dialogValue.bodyTextAlign;
       final ImageFilter imageFilter =
-          dialogThemeData.imageFilter ?? _dialogThemeData.imageFilter;
+          dialogThemeData.imageFilter ?? dialogValue.imageFilter;
 
       return dialogThemeData.copyWith(
         constraints: constraints,

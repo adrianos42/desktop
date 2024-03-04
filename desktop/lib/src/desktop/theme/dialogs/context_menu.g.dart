@@ -87,7 +87,7 @@ class ContextMenuThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body1.copyWith(fontSize: kDefaultFontSize)
+  /// textTheme.body1.copyWith(fontSize: defaultFontSize)
   /// ```
   final TextStyle? textStyle;
 
@@ -309,7 +309,7 @@ iconThemeData: The icon theme.
  Defaults to:
 
  ```dart
- textTheme.body1.copyWith(fontSize: kDefaultFontSize)
+ textTheme.body1.copyWith(fontSize: defaultFontSize)
  ```;;selectedColor: The color of an item when selected.
 
  Defaults to:
@@ -482,43 +482,42 @@ class ContextMenuTheme extends InheritedTheme {
 
       contextMenuThemeData ??= themeData.contextMenuTheme;
 
-      final _contextMenuThemeData =
+      final contextMenuValue =
           _ContextMenuThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
-      final IconThemeData iconThemeData = contextMenuThemeData.iconThemeData ??
-          _contextMenuThemeData.iconThemeData;
-      final double menuWidthStep = contextMenuThemeData.menuWidthStep ??
-          _contextMenuThemeData.menuWidthStep;
+      final IconThemeData iconThemeData =
+          contextMenuThemeData.iconThemeData ?? contextMenuValue.iconThemeData;
+      final double menuWidthStep =
+          contextMenuThemeData.menuWidthStep ?? contextMenuValue.menuWidthStep;
       final double itemHeight =
-          contextMenuThemeData.itemHeight ?? _contextMenuThemeData.itemHeight;
-      final double minMenuWidth = contextMenuThemeData.minMenuWidth ??
-          _contextMenuThemeData.minMenuWidth;
-      final double maxMenuWidth = contextMenuThemeData.maxMenuWidth ??
-          _contextMenuThemeData.maxMenuWidth;
+          contextMenuThemeData.itemHeight ?? contextMenuValue.itemHeight;
+      final double minMenuWidth =
+          contextMenuThemeData.minMenuWidth ?? contextMenuValue.minMenuWidth;
+      final double maxMenuWidth =
+          contextMenuThemeData.maxMenuWidth ?? contextMenuValue.maxMenuWidth;
       final double menuHorizontalPadding =
           contextMenuThemeData.menuHorizontalPadding ??
-              _contextMenuThemeData.menuHorizontalPadding;
+              contextMenuValue.menuHorizontalPadding;
       final TextStyle textStyle =
-          contextMenuThemeData.textStyle ?? _contextMenuThemeData.textStyle;
-      final Color selectedColor = contextMenuThemeData.selectedColor ??
-          _contextMenuThemeData.selectedColor;
+          contextMenuThemeData.textStyle ?? contextMenuValue.textStyle;
+      final Color selectedColor =
+          contextMenuThemeData.selectedColor ?? contextMenuValue.selectedColor;
       final Color selectedHighlightColor =
           contextMenuThemeData.selectedHighlightColor ??
-              _contextMenuThemeData.selectedHighlightColor;
+              contextMenuValue.selectedHighlightColor;
       final Color selectedHoverColor =
           contextMenuThemeData.selectedHoverColor ??
-              _contextMenuThemeData.selectedHoverColor;
+              contextMenuValue.selectedHoverColor;
       final Color selectedForeground =
           contextMenuThemeData.selectedForeground ??
-              _contextMenuThemeData.selectedForeground;
+              contextMenuValue.selectedForeground;
       final Color hoverColor =
-          contextMenuThemeData.hoverColor ?? _contextMenuThemeData.hoverColor;
+          contextMenuThemeData.hoverColor ?? contextMenuValue.hoverColor;
       final Color highlightColor = contextMenuThemeData.highlightColor ??
-          _contextMenuThemeData.highlightColor;
+          contextMenuValue.highlightColor;
       final Color background =
-          contextMenuThemeData.background ?? _contextMenuThemeData.background;
-      final Color color =
-          contextMenuThemeData.color ?? _contextMenuThemeData.color;
+          contextMenuThemeData.background ?? contextMenuValue.background;
+      final Color color = contextMenuThemeData.color ?? contextMenuValue.color;
 
       return contextMenuThemeData.copyWith(
         iconThemeData: iconThemeData,

@@ -57,11 +57,19 @@ class MessageController {
     required Completer<MessageClosedReason> completer,
     required bool hasMenu,
     required Duration duration,
+    required int count,
     required this.close,
+    required String message,
+    required MessageKind kind,
+    String? title,
   })  : _overlayEntry = overlayEntry,
         _completer = completer,
         _durarion = duration,
-        _hasMenu = hasMenu;
+        _hasMenu = hasMenu,
+        _count = count,
+        _kind = kind,
+        _title = title,
+        _message = message;
 
   final OverlayEntry _overlayEntry;
 
@@ -70,6 +78,14 @@ class MessageController {
   final Duration _durarion;
 
   final Completer<MessageClosedReason> _completer;
+
+  final int _count;
+
+  final String _message;
+
+  final MessageKind _kind;
+
+  final String? _title;
 
   final VoidCallback close;
 
@@ -174,6 +190,35 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     _messageController ??=
         Message._createAnimationController(messageThemeData, vsync: this);
 
+    int count = 1;
+    bool replaceFirst = false;
+
+    if (!clearMessages &&
+        _messages.isNotEmpty &&
+        (actions == null || actions.isEmpty)) {
+      if (_messages.first._kind == kind &&
+          _messages.first._message == message &&
+          _messages.first._title == title) {
+        count = _messages.first._count + 1;
+        replaceFirst = true;
+      } else {
+        MessageController? entry;
+
+        try {
+          entry = _messages.firstWhere((e) =>
+              e._kind == kind && e._message == message && e._title == title);
+        } catch (_) {}
+
+        if (entry != null) {
+          if (!_messages.remove(entry)) {
+            throw 'Could not remove entry from messages';
+          }
+
+          count = entry._count + 1;
+        }
+      }
+    }
+
     entry = MessageController._(
       overlayEntry: OverlayEntry(
         builder: (context) => Message(
@@ -186,12 +231,17 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
           remove: removeCurrentMessage,
           actions: actions,
           theme: messageThemeData,
+          count: count,
         ),
         maintainState: false,
       ),
+      count: count,
+      kind: kind,
+      message: message,
       completer: Completer<MessageClosedReason>(),
       hasMenu: actions?.isNotEmpty ?? false,
       duration: duration ?? messageThemeData.duration!,
+      title: title,
       close: () {
         if (_messages.first == entry) {
           removeCurrentMessage(MessageClosedReason.close);
@@ -202,7 +252,14 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
       },
     );
 
-    if (clearMessages && _messages.isNotEmpty) {
+    if (replaceFirst) {
+      _messages.first._overlayEntry.remove();
+      _messages.removeFirst();
+      _messages.addFirst(entry);
+
+      Overlay.of(context, rootOverlay: true).insert(entry._overlayEntry);
+      _startTimer();
+    } else if (clearMessages && _messages.isNotEmpty) {
       for (final entry in _messages) {
         entry._completer.complete(MessageClosedReason.remove);
       }
@@ -328,6 +385,7 @@ class Message extends StatefulWidget {
     required this.resumeTimer,
     required this.stopTimer,
     required this.remove,
+    required this.count,
     this.theme,
   });
 
@@ -348,6 +406,8 @@ class Message extends StatefulWidget {
   final MessageReasonCallback remove;
 
   final MessageThemeData? theme;
+
+  final int count;
 
   static AnimationController _createAnimationController(
     MessageThemeData messageThemeData, {
@@ -439,16 +499,14 @@ class _MessageState extends State<Message> {
         break;
     }
 
+    final focusColor =
+        _hasFocus ? messageThemeData.highlightColor! : iconForeground;
+
     Widget result = Container(
       padding: messageThemeData.padding!,
       decoration: BoxDecoration(
         color: backgroundColor,
-        border: Border(
-          top: BorderSide(
-            color:
-                _hasFocus ? messageThemeData.highlightColor! : iconForeground,
-          ),
-        ),
+        border: Border(top: BorderSide(color: focusColor)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -470,9 +528,11 @@ class _MessageState extends State<Message> {
                     if (widget.title != null)
                       Padding(
                         padding: messageThemeData.titlePadding!,
-                        child: Text(widget.title!,
-                            textAlign: TextAlign.start,
-                            style: messageThemeData.titleTextStyle!),
+                        child: Text(
+                          widget.title!,
+                          textAlign: TextAlign.start,
+                          style: messageThemeData.titleTextStyle!,
+                        ),
                       ),
                     Text(
                       widget.message,
@@ -495,6 +555,14 @@ class _MessageState extends State<Message> {
                         )
                         .toList(),
                   ),
+                ),
+              if (widget.count > 1)
+                Text(
+                  widget.count.toString(),
+                  style: Theme.of(context).textTheme.caption.copyWith(
+                        color: focusColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
             ],
           ),

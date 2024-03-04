@@ -76,7 +76,7 @@ class TabThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   final TextStyle? textStyle;
 
@@ -354,7 +354,7 @@ padding: The padding for the tab bar.
  Defaults to:
 
  ```dart
- textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+ textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
  ```;;iconThemeData: The theme for the icon. The color is ignored.
 
  Defaults to:
@@ -568,45 +568,43 @@ class TabTheme extends InheritedTheme {
 
       tabThemeData ??= themeData.tabTheme;
 
-      final _tabThemeData =
+      final tabValue =
           _TabThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
-      final EdgeInsets padding = tabThemeData.padding ?? _tabThemeData.padding;
-      final double height = tabThemeData.height ?? _tabThemeData.height;
-      final double width = tabThemeData.width ?? _tabThemeData.width;
-      final Color tabBarBackgroundColor = tabThemeData.tabBarBackgroundColor ??
-          _tabThemeData.tabBarBackgroundColor;
-      final TextStyle textStyle =
-          tabThemeData.textStyle ?? _tabThemeData.textStyle;
+      final EdgeInsets padding = tabThemeData.padding ?? tabValue.padding;
+      final double height = tabThemeData.height ?? tabValue.height;
+      final double width = tabThemeData.width ?? tabValue.width;
+      final Color tabBarBackgroundColor =
+          tabThemeData.tabBarBackgroundColor ?? tabValue.tabBarBackgroundColor;
+      final TextStyle textStyle = tabThemeData.textStyle ?? tabValue.textStyle;
       final IconThemeData iconThemeData =
-          tabThemeData.iconThemeData ?? _tabThemeData.iconThemeData;
+          tabThemeData.iconThemeData ?? tabValue.iconThemeData;
       final double itemSpacing =
-          tabThemeData.itemSpacing ?? _tabThemeData.itemSpacing;
+          tabThemeData.itemSpacing ?? tabValue.itemSpacing;
       final EdgeInsets itemPadding =
-          tabThemeData.itemPadding ?? _tabThemeData.itemPadding;
-      final Color itemColor = tabThemeData.itemColor ?? _tabThemeData.itemColor;
+          tabThemeData.itemPadding ?? tabValue.itemPadding;
+      final Color itemColor = tabThemeData.itemColor ?? tabValue.itemColor;
       final Color itemHoverColor =
-          tabThemeData.itemHoverColor ?? _tabThemeData.itemHoverColor;
+          tabThemeData.itemHoverColor ?? tabValue.itemHoverColor;
       final Color itemHighlightColor =
-          tabThemeData.itemHighlightColor ?? _tabThemeData.itemHighlightColor;
-      final bool itemFilled =
-          tabThemeData.itemFilled ?? _tabThemeData.itemFilled;
+          tabThemeData.itemHighlightColor ?? tabValue.itemHighlightColor;
+      final bool itemFilled = tabThemeData.itemFilled ?? tabValue.itemFilled;
       final Color itemBackgroundColor =
-          tabThemeData.itemBackgroundColor ?? _tabThemeData.itemBackgroundColor;
+          tabThemeData.itemBackgroundColor ?? tabValue.itemBackgroundColor;
       final Color itemHoverBackgroundColor =
           tabThemeData.itemHoverBackgroundColor ??
-              _tabThemeData.itemHoverBackgroundColor;
+              tabValue.itemHoverBackgroundColor;
       final Color itemHighlightBackgroundColor =
           tabThemeData.itemHighlightBackgroundColor ??
-              _tabThemeData.itemHighlightBackgroundColor;
+              tabValue.itemHighlightBackgroundColor;
       final Duration menuTransitionDuration =
           tabThemeData.menuTransitionDuration ??
-              _tabThemeData.menuTransitionDuration;
+              tabValue.menuTransitionDuration;
       final Curve menuTrasitionCurve =
-          tabThemeData.menuTrasitionCurve ?? _tabThemeData.menuTrasitionCurve;
+          tabThemeData.menuTrasitionCurve ?? tabValue.menuTrasitionCurve;
       final Curve menuTrasitionReverseCurve =
           tabThemeData.menuTrasitionReverseCurve ??
-              _tabThemeData.menuTrasitionReverseCurve;
+              tabValue.menuTrasitionReverseCurve;
 
       return tabThemeData.copyWith(
         padding: padding,

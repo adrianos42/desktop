@@ -264,21 +264,21 @@ class RadioTheme extends InheritedTheme {
 
       radioThemeData ??= themeData.radioTheme;
 
-      final _radioThemeData =
+      final radioValue =
           _RadioThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final Color disabledColor =
-          radioThemeData.disabledColor ?? _radioThemeData.disabledColor;
+          radioThemeData.disabledColor ?? radioValue.disabledColor;
       final Color activeColor =
-          radioThemeData.activeColor ?? _radioThemeData.activeColor;
+          radioThemeData.activeColor ?? radioValue.activeColor;
       final Color activeHoverColor =
-          radioThemeData.activeHoverColor ?? _radioThemeData.activeHoverColor;
+          radioThemeData.activeHoverColor ?? radioValue.activeHoverColor;
       final Color inactiveColor =
-          radioThemeData.inactiveColor ?? _radioThemeData.inactiveColor;
-      final Color inactiveHoverColor = radioThemeData.inactiveHoverColor ??
-          _radioThemeData.inactiveHoverColor;
+          radioThemeData.inactiveColor ?? radioValue.inactiveColor;
+      final Color inactiveHoverColor =
+          radioThemeData.inactiveHoverColor ?? radioValue.inactiveHoverColor;
       final Color foreground =
-          radioThemeData.foreground ?? _radioThemeData.foreground;
+          radioThemeData.foreground ?? radioValue.foreground;
 
       return radioThemeData.copyWith(
         disabledColor: disabledColor,

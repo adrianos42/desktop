@@ -22,10 +22,10 @@ class _TreeThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize)
   /// ```
   TextStyle get textStyle =>
-      textTheme.body2.copyWith(fontSize: kDefaultFontSize);
+      textTheme.body2.copyWith(fontSize: defaultFontSize);
 
   /// The color of the tree item.
   ///
@@ -52,5 +52,5 @@ class _TreeThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get highlightColor => colorScheme.primary[kHighlightColorIndex];
+  Color get highlightColor => colorScheme.primary[highlightColorIndex];
 }

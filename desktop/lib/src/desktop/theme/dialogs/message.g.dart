@@ -456,37 +456,37 @@ class MessageTheme extends InheritedTheme {
 
       messageThemeData ??= themeData.messageTheme;
 
-      final _messageThemeData =
+      final messageValue =
           _MessageThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final TextStyle textStyle =
-          messageThemeData.textStyle ?? _messageThemeData.textStyle;
+          messageThemeData.textStyle ?? messageValue.textStyle;
       final TextStyle titleTextStyle =
-          messageThemeData.titleTextStyle ?? _messageThemeData.titleTextStyle;
+          messageThemeData.titleTextStyle ?? messageValue.titleTextStyle;
       final EdgeInsets titlePadding =
-          messageThemeData.titlePadding ?? _messageThemeData.titlePadding;
+          messageThemeData.titlePadding ?? messageValue.titlePadding;
       final EdgeInsets padding =
-          messageThemeData.padding ?? _messageThemeData.padding;
+          messageThemeData.padding ?? messageValue.padding;
       final Color highlightColor =
-          messageThemeData.highlightColor ?? _messageThemeData.highlightColor;
+          messageThemeData.highlightColor ?? messageValue.highlightColor;
       final Color backgroundColor =
-          messageThemeData.backgroundColor ?? _messageThemeData.backgroundColor;
+          messageThemeData.backgroundColor ?? messageValue.backgroundColor;
       final double itemSpacing =
-          messageThemeData.itemSpacing ?? _messageThemeData.itemSpacing;
+          messageThemeData.itemSpacing ?? messageValue.itemSpacing;
       final Color infoColor =
-          messageThemeData.infoColor ?? _messageThemeData.infoColor;
+          messageThemeData.infoColor ?? messageValue.infoColor;
       final Color errorColor =
-          messageThemeData.errorColor ?? _messageThemeData.errorColor;
+          messageThemeData.errorColor ?? messageValue.errorColor;
       final Color warningColor =
-          messageThemeData.warningColor ?? _messageThemeData.warningColor;
+          messageThemeData.warningColor ?? messageValue.warningColor;
       final Color successColor =
-          messageThemeData.successColor ?? _messageThemeData.successColor;
+          messageThemeData.successColor ?? messageValue.successColor;
       final Curve animationCurve =
-          messageThemeData.animationCurve ?? _messageThemeData.animationCurve;
+          messageThemeData.animationCurve ?? messageValue.animationCurve;
       final Duration duration =
-          messageThemeData.duration ?? _messageThemeData.duration;
-      final Duration animationDuration = messageThemeData.animationDuration ??
-          _messageThemeData.animationDuration;
+          messageThemeData.duration ?? messageValue.duration;
+      final Duration animationDuration =
+          messageThemeData.animationDuration ?? messageValue.animationDuration;
 
       return messageThemeData.copyWith(
         textStyle: textStyle,

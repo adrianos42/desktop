@@ -39,7 +39,7 @@ class _ButtonThemeData {
   /// IconThemeData(size: kDefaultIconSize, color: color)
   /// ```
   IconThemeData get iconThemeData => IconThemeData(
-        size: kDefaultIconSize,
+        size: defaultIconSize,
         color: color,
         fill: 1.0,
       );
@@ -85,10 +85,10 @@ class _ButtonThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => textTheme.body2.copyWith(
-        fontSize: kDefaultFontSize,
+        fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
 
@@ -108,7 +108,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get color => colorScheme.primary[kHighlightColorIndex];
+  Color get color => colorScheme.primary[highlightColorIndex];
 
   /// The color when the button has focus.
   ///

@@ -240,19 +240,19 @@ class SliderTheme extends InheritedTheme {
 
       sliderThemeData ??= themeData.sliderTheme;
 
-      final _sliderThemeData =
+      final sliderValue =
           _SliderThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final Color disabledColor =
-          sliderThemeData.disabledColor ?? _sliderThemeData.disabledColor;
+          sliderThemeData.disabledColor ?? sliderValue.disabledColor;
       final Color activeColor =
-          sliderThemeData.activeColor ?? _sliderThemeData.activeColor;
+          sliderThemeData.activeColor ?? sliderValue.activeColor;
       final Color activeHoverColor =
-          sliderThemeData.activeHoverColor ?? _sliderThemeData.activeHoverColor;
+          sliderThemeData.activeHoverColor ?? sliderValue.activeHoverColor;
       final Color trackColor =
-          sliderThemeData.trackColor ?? _sliderThemeData.trackColor;
+          sliderThemeData.trackColor ?? sliderValue.trackColor;
       final Color hightlightColor =
-          sliderThemeData.hightlightColor ?? _sliderThemeData.hightlightColor;
+          sliderThemeData.hightlightColor ?? sliderValue.hightlightColor;
 
       return sliderThemeData.copyWith(
         disabledColor: disabledColor,

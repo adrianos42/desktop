@@ -204,22 +204,22 @@ class ScrollbarTheme extends InheritedTheme {
 
       scrollbarThemeData ??= themeData.scrollbarTheme;
 
-      final _scrollbarThemeData =
+      final scrollbarValue =
           _ScrollbarThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final Color disabledColor =
-          scrollbarThemeData.disabledColor ?? _scrollbarThemeData.disabledColor;
-      final Color color = scrollbarThemeData.color ?? _scrollbarThemeData.color;
+          scrollbarThemeData.disabledColor ?? scrollbarValue.disabledColor;
+      final Color color = scrollbarThemeData.color ?? scrollbarValue.color;
       final Color hoverColor =
-          scrollbarThemeData.hoverColor ?? _scrollbarThemeData.hoverColor;
-      final Color highlightColor = scrollbarThemeData.highlightColor ??
-          _scrollbarThemeData.highlightColor;
+          scrollbarThemeData.hoverColor ?? scrollbarValue.hoverColor;
+      final Color highlightColor =
+          scrollbarThemeData.highlightColor ?? scrollbarValue.highlightColor;
       final Color inhoverColor =
-          scrollbarThemeData.inhoverColor ?? _scrollbarThemeData.inhoverColor;
+          scrollbarThemeData.inhoverColor ?? scrollbarValue.inhoverColor;
       final Color foreground =
-          scrollbarThemeData.foreground ?? _scrollbarThemeData.foreground;
+          scrollbarThemeData.foreground ?? scrollbarValue.foreground;
       final Color trackColor =
-          scrollbarThemeData.trackColor ?? _scrollbarThemeData.trackColor;
+          scrollbarThemeData.trackColor ?? scrollbarValue.trackColor;
 
       return scrollbarThemeData.copyWith(
         disabledColor: disabledColor,

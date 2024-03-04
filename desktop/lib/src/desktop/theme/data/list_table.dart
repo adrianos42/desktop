@@ -21,7 +21,7 @@ class _ListTableThemeData {
 
   ///
   IconThemeData get iconThemeData => IconThemeData(
-        size: kDefaultIconSize,
+        size: defaultIconSize,
         color: textTheme.textHigh,
         fill: 1.0,
       );
@@ -31,7 +31,7 @@ class _ListTableThemeData {
 
   ///
   TextStyle get textStyle =>
-      textTheme.body1.copyWith(fontSize: kDefaultFontSize);
+      textTheme.body1.copyWith(fontSize: defaultFontSize);
 
   ///
   Color get selectedColor => colorScheme.primary[30];

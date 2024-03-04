@@ -346,26 +346,26 @@ class TooltipTheme extends InheritedTheme {
 
       tooltipThemeData ??= themeData.tooltipTheme;
 
-      final _tooltipThemeData =
+      final tooltipValue =
           _TooltipThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
-      final double height = tooltipThemeData.height ?? _tooltipThemeData.height;
+      final double height = tooltipThemeData.height ?? tooltipValue.height;
       final double maxWidth =
-          tooltipThemeData.maxWidth ?? _tooltipThemeData.maxWidth;
+          tooltipThemeData.maxWidth ?? tooltipValue.maxWidth;
       final double verticalOffset =
-          tooltipThemeData.verticalOffset ?? _tooltipThemeData.verticalOffset;
+          tooltipThemeData.verticalOffset ?? tooltipValue.verticalOffset;
       final Color backgroundColor =
-          tooltipThemeData.backgroundColor ?? _tooltipThemeData.backgroundColor;
+          tooltipThemeData.backgroundColor ?? tooltipValue.backgroundColor;
       final TextStyle textStyle =
-          tooltipThemeData.textStyle ?? _tooltipThemeData.textStyle;
+          tooltipThemeData.textStyle ?? tooltipValue.textStyle;
       final EdgeInsetsGeometry padding =
-          tooltipThemeData.padding ?? _tooltipThemeData.padding;
+          tooltipThemeData.padding ?? tooltipValue.padding;
       final EdgeInsetsGeometry margin =
-          tooltipThemeData.margin ?? _tooltipThemeData.margin;
+          tooltipThemeData.margin ?? tooltipValue.margin;
       final Duration showDuration =
-          tooltipThemeData.showDuration ?? _tooltipThemeData.showDuration;
+          tooltipThemeData.showDuration ?? tooltipValue.showDuration;
       final Duration waitDuration =
-          tooltipThemeData.waitDuration ?? _tooltipThemeData.waitDuration;
+          tooltipThemeData.waitDuration ?? tooltipValue.waitDuration;
 
       return tooltipThemeData.copyWith(
         height: height,

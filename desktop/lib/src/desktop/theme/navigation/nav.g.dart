@@ -276,19 +276,19 @@ class NavTheme extends InheritedTheme {
 
       navThemeData ??= themeData.navTheme;
 
-      final _navThemeData =
+      final navValue =
           _NavThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final IconThemeData iconThemeData =
-          navThemeData.iconThemeData ?? _navThemeData.iconThemeData;
+          navThemeData.iconThemeData ?? navValue.iconThemeData;
       final double itemsSpacing =
-          navThemeData.itemsSpacing ?? _navThemeData.itemsSpacing;
-      final double width = navThemeData.width ?? _navThemeData.width;
-      final double height = navThemeData.height ?? _navThemeData.height;
+          navThemeData.itemsSpacing ?? navValue.itemsSpacing;
+      final double width = navThemeData.width ?? navValue.width;
+      final double height = navThemeData.height ?? navValue.height;
       final double indicatorWidth =
-          navThemeData.indicatorWidth ?? _navThemeData.indicatorWidth;
+          navThemeData.indicatorWidth ?? navValue.indicatorWidth;
       final Duration animationDuration =
-          navThemeData.animationDuration ?? _navThemeData.animationDuration;
+          navThemeData.animationDuration ?? navValue.animationDuration;
 
       return navThemeData.copyWith(
         iconThemeData: iconThemeData,

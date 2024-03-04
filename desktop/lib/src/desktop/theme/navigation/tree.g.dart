@@ -22,7 +22,7 @@ class TreeThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize)
   /// ```
   final TextStyle? textStyle;
 
@@ -106,7 +106,7 @@ textStyle: The style for the text. The color is ignored.
  Defaults to:
 
  ```dart
- textTheme.body2.copyWith(fontSize: kDefaultFontSize)
+ textTheme.body2.copyWith(fontSize: defaultFontSize)
  ```;;color: The color of the tree item.
 
  Defaults to:
@@ -216,16 +216,15 @@ class TreeTheme extends InheritedTheme {
 
       treeThemeData ??= themeData.treeTheme;
 
-      final _treeThemeData =
+      final treeValue =
           _TreeThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final TextStyle textStyle =
-          treeThemeData.textStyle ?? _treeThemeData.textStyle;
-      final Color color = treeThemeData.color ?? _treeThemeData.color;
-      final Color hoverColor =
-          treeThemeData.hoverColor ?? _treeThemeData.hoverColor;
+          treeThemeData.textStyle ?? treeValue.textStyle;
+      final Color color = treeThemeData.color ?? treeValue.color;
+      final Color hoverColor = treeThemeData.hoverColor ?? treeValue.hoverColor;
       final Color highlightColor =
-          treeThemeData.highlightColor ?? _treeThemeData.highlightColor;
+          treeThemeData.highlightColor ?? treeValue.highlightColor;
 
       return treeThemeData.copyWith(
         textStyle: textStyle,

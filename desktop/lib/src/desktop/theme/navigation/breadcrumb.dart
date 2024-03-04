@@ -73,10 +73,10 @@ class _BreadcrumbThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => textTheme.body2.copyWith(
-        fontSize: kDefaultFontSize,
+        fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
 

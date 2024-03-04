@@ -36,7 +36,6 @@ class Scrollbar extends StatefulWidget {
     this.notificationPredicate = defaultScrollNotificationPredicate,
   });
 
-  /// {@template flutter.widgets.Scrollbar.controller}
   /// The [ScrollController] used to implement Scrollbar dragging.
   final ScrollController? controller;
 

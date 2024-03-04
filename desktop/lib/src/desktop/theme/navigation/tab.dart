@@ -65,10 +65,10 @@ class _TabThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => textTheme.body2.copyWith(
-        fontSize: kDefaultFontSize,
+        fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
 
@@ -80,7 +80,7 @@ class _TabThemeData {
   /// IconThemeData(size: kDefaultIconSize)
   /// ```
   IconThemeData get iconThemeData => const IconThemeData(
-        size: kDefaultIconSize,
+        size: defaultIconSize,
         fill: 1.0,
       );
 

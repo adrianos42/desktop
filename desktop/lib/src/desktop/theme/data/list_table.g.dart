@@ -277,38 +277,38 @@ class ListTableTheme extends InheritedTheme {
 
       listTableThemeData ??= themeData.listTableTheme;
 
-      final _listTableThemeData =
+      final listTableValue =
           _ListTableThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final IconThemeData iconThemeData =
-          listTableThemeData.iconThemeData ?? _listTableThemeData.iconThemeData;
+          listTableThemeData.iconThemeData ?? listTableValue.iconThemeData;
       final double itemHeight =
-          listTableThemeData.itemHeight ?? _listTableThemeData.itemHeight;
+          listTableThemeData.itemHeight ?? listTableValue.itemHeight;
       final TextStyle textStyle =
-          listTableThemeData.textStyle ?? _listTableThemeData.textStyle;
+          listTableThemeData.textStyle ?? listTableValue.textStyle;
       final Color selectedColor =
-          listTableThemeData.selectedColor ?? _listTableThemeData.selectedColor;
+          listTableThemeData.selectedColor ?? listTableValue.selectedColor;
       final Color selectedHighlightColor =
           listTableThemeData.selectedHighlightColor ??
-              _listTableThemeData.selectedHighlightColor;
+              listTableValue.selectedHighlightColor;
       final Color selectedHoverColor = listTableThemeData.selectedHoverColor ??
-          _listTableThemeData.selectedHoverColor;
+          listTableValue.selectedHoverColor;
       final Color hoverColor =
-          listTableThemeData.hoverColor ?? _listTableThemeData.hoverColor;
-      final Color highlightColor = listTableThemeData.highlightColor ??
-          _listTableThemeData.highlightColor;
+          listTableThemeData.hoverColor ?? listTableValue.hoverColor;
+      final Color highlightColor =
+          listTableThemeData.highlightColor ?? listTableValue.highlightColor;
       final Color background =
-          listTableThemeData.background ?? _listTableThemeData.background;
+          listTableThemeData.background ?? listTableValue.background;
       final Color borderColor =
-          listTableThemeData.borderColor ?? _listTableThemeData.borderColor;
+          listTableThemeData.borderColor ?? listTableValue.borderColor;
       final Color borderHoverColor = listTableThemeData.borderHoverColor ??
-          _listTableThemeData.borderHoverColor;
+          listTableValue.borderHoverColor;
       final Color borderHighlightColor =
           listTableThemeData.borderHighlightColor ??
-              _listTableThemeData.borderHighlightColor;
+              listTableValue.borderHighlightColor;
       final Color borderIndicatorColor =
           listTableThemeData.borderIndicatorColor ??
-              _listTableThemeData.borderIndicatorColor;
+              listTableValue.borderIndicatorColor;
 
       return listTableThemeData.copyWith(
         iconThemeData: iconThemeData,

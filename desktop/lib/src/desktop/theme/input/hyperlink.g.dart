@@ -230,16 +230,16 @@ class HyperlinkTheme extends InheritedTheme {
 
       hyperlinkThemeData ??= themeData.hyperlinkTheme;
 
-      final _hyperlinkThemeData =
+      final hyperlinkValue =
           _HyperlinkThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
-      final Color color = hyperlinkThemeData.color ?? _hyperlinkThemeData.color;
+      final Color color = hyperlinkThemeData.color ?? hyperlinkValue.color;
       final Color hoverColor =
-          hyperlinkThemeData.hoverColor ?? _hyperlinkThemeData.hoverColor;
+          hyperlinkThemeData.hoverColor ?? hyperlinkValue.hoverColor;
       final TextStyle textStyle =
-          hyperlinkThemeData.textStyle ?? _hyperlinkThemeData.textStyle;
-      final Color highlightColor = hyperlinkThemeData.highlightColor ??
-          _hyperlinkThemeData.highlightColor;
+          hyperlinkThemeData.textStyle ?? hyperlinkValue.textStyle;
+      final Color highlightColor =
+          hyperlinkThemeData.highlightColor ?? hyperlinkValue.highlightColor;
 
       return hyperlinkThemeData.copyWith(
         color: color,

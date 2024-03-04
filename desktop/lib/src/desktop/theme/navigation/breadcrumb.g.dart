@@ -71,7 +71,7 @@ class BreadcrumbThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+  /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   final TextStyle? textStyle;
 
@@ -196,7 +196,7 @@ padding: The padding for the breadcrumb.
  Defaults to:
 
  ```dart
- textTheme.body2.copyWith(fontSize: kDefaultFontSize, overflow: TextOverflow.ellipsis)
+ textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
  ```;;backgroundColor: The background color of the breadcrumb.
 
  Defaults to:
@@ -312,25 +312,24 @@ class BreadcrumbTheme extends InheritedTheme {
 
       breadcrumbThemeData ??= themeData.breadcrumbTheme;
 
-      final _breadcrumbThemeData =
+      final breadcrumbValue =
           _BreadcrumbThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final EdgeInsets padding =
-          breadcrumbThemeData.padding ?? _breadcrumbThemeData.padding;
+          breadcrumbThemeData.padding ?? breadcrumbValue.padding;
       final double height =
-          breadcrumbThemeData.height ?? _breadcrumbThemeData.height;
+          breadcrumbThemeData.height ?? breadcrumbValue.height;
       final double itemSpacing =
-          breadcrumbThemeData.itemSpacing ?? _breadcrumbThemeData.itemSpacing;
-      final Color color =
-          breadcrumbThemeData.color ?? _breadcrumbThemeData.color;
+          breadcrumbThemeData.itemSpacing ?? breadcrumbValue.itemSpacing;
+      final Color color = breadcrumbThemeData.color ?? breadcrumbValue.color;
       final IconThemeData iconTheme =
-          breadcrumbThemeData.iconTheme ?? _breadcrumbThemeData.iconTheme;
+          breadcrumbThemeData.iconTheme ?? breadcrumbValue.iconTheme;
       final TextStyle textStyle =
-          breadcrumbThemeData.textStyle ?? _breadcrumbThemeData.textStyle;
+          breadcrumbThemeData.textStyle ?? breadcrumbValue.textStyle;
       final Color backgroundColor = breadcrumbThemeData.backgroundColor ??
-          _breadcrumbThemeData.backgroundColor;
-      final Color highlightColor = breadcrumbThemeData.highlightColor ??
-          _breadcrumbThemeData.highlightColor;
+          breadcrumbValue.backgroundColor;
+      final Color highlightColor =
+          breadcrumbThemeData.highlightColor ?? breadcrumbValue.highlightColor;
 
       return breadcrumbThemeData.copyWith(
         padding: padding,

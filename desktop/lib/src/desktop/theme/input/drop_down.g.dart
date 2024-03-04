@@ -410,35 +410,35 @@ class DropDownTheme extends InheritedTheme {
 
       dropDownThemeData ??= themeData.dropDownTheme;
 
-      final _dropDownThemeData =
+      final dropDownValue =
           _DropDownThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final IconThemeData iconThemeData =
-          dropDownThemeData.iconThemeData ?? _dropDownThemeData.iconThemeData;
+          dropDownThemeData.iconThemeData ?? dropDownValue.iconThemeData;
       final TextStyle textStyle =
-          dropDownThemeData.textStyle ?? _dropDownThemeData.textStyle;
+          dropDownThemeData.textStyle ?? dropDownValue.textStyle;
       final Color disabledColor =
-          dropDownThemeData.disabledColor ?? _dropDownThemeData.disabledColor;
-      final Color color = dropDownThemeData.color ?? _dropDownThemeData.color;
+          dropDownThemeData.disabledColor ?? dropDownValue.disabledColor;
+      final Color color = dropDownThemeData.color ?? dropDownValue.color;
       final Color focusColor =
-          dropDownThemeData.focusColor ?? _dropDownThemeData.focusColor;
+          dropDownThemeData.focusColor ?? dropDownValue.focusColor;
       final Color hoverColor =
-          dropDownThemeData.hoverColor ?? _dropDownThemeData.hoverColor;
+          dropDownThemeData.hoverColor ?? dropDownValue.hoverColor;
       final Color waitingColor =
-          dropDownThemeData.waitingColor ?? _dropDownThemeData.waitingColor;
-      final Color backgroundColor = dropDownThemeData.backgroundColor ??
-          _dropDownThemeData.backgroundColor;
+          dropDownThemeData.waitingColor ?? dropDownValue.waitingColor;
+      final Color backgroundColor =
+          dropDownThemeData.backgroundColor ?? dropDownValue.backgroundColor;
       final Color hoverBackgroundColor =
           dropDownThemeData.hoverBackgroundColor ??
-              _dropDownThemeData.hoverBackgroundColor;
+              dropDownValue.hoverBackgroundColor;
       final Color waitingBackgroundColor =
           dropDownThemeData.waitingBackgroundColor ??
-              _dropDownThemeData.waitingBackgroundColor;
+              dropDownValue.waitingBackgroundColor;
       final Color disabledBackgroundColor =
           dropDownThemeData.disabledBackgroundColor ??
-              _dropDownThemeData.disabledBackgroundColor;
+              dropDownValue.disabledBackgroundColor;
       final BorderSide border =
-          dropDownThemeData.border ?? _dropDownThemeData.border;
+          dropDownThemeData.border ?? dropDownValue.border;
 
       return dropDownThemeData.copyWith(
         iconThemeData: iconThemeData,

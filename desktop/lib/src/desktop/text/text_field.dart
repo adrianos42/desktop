@@ -355,7 +355,7 @@ class TextField extends StatefulWidget {
   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
   final MaxLengthEnforcement? maxLengthEnforcement;
 
-  /// {@template flutter.widgets.shadow.scrollBehavior}
+  ///
   final ScrollBehavior? scrollBehavior;
 
   /// Controls the visibility of the [prefix] widget based on the state of

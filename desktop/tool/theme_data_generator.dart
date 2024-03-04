@@ -212,6 +212,7 @@ ${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.repla
 
       final themeIdent = '${themeName.toCamelCase()}Theme';
       final themeDataIdent = '${themeName.toCamelCase()}ThemeData';
+      final themeValueIdent = '${themeName.toCamelCase()}Value';
 
       themeMethods.add(
         Method((b) => b
@@ -349,12 +350,12 @@ ${fields.fold('', (p, e) => '$p${e.name}:${e.getter!.documentationComment!.repla
 
               $themeDataIdent ??= themeData.$themeIdent;
               
-              final _$themeDataIdent = ${classElement.name}(textTheme: textTheme, colorScheme: colorScheme);
+              final $themeValueIdent = ${classElement.name}(textTheme: textTheme, colorScheme: colorScheme);
 
               ${fields.fold(
             '',
             (p, e) =>
-                '$p final ${e.type} ${e.name} = $themeDataIdent.${e.name} ?? _$themeDataIdent.${e.name};',
+                '$p final ${e.type} ${e.name} = $themeDataIdent.${e.name} ?? $themeValueIdent.${e.name};',
           )}
 
               return $themeDataIdent.copyWith(${fields.fold('', (p, e) => '$p${e.name}: ${e.name},')});

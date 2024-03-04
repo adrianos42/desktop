@@ -221,20 +221,19 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
       linearProgressIndicatorThemeData ??=
           themeData.linearProgressIndicatorTheme;
 
-      final _linearProgressIndicatorThemeData =
-          _LinearProgressIndicatorThemeData(
-              textTheme: textTheme, colorScheme: colorScheme);
+      final linearProgressIndicatorValue = _LinearProgressIndicatorThemeData(
+          textTheme: textTheme, colorScheme: colorScheme);
 
       final double height = linearProgressIndicatorThemeData.height ??
-          _linearProgressIndicatorThemeData.height;
+          linearProgressIndicatorValue.height;
       final Color color = linearProgressIndicatorThemeData.color ??
-          _linearProgressIndicatorThemeData.color;
+          linearProgressIndicatorValue.color;
       final Color backgroundColor =
           linearProgressIndicatorThemeData.backgroundColor ??
-              _linearProgressIndicatorThemeData.backgroundColor;
+              linearProgressIndicatorValue.backgroundColor;
       final Duration indeterminateDuration =
           linearProgressIndicatorThemeData.indeterminateDuration ??
-              _linearProgressIndicatorThemeData.indeterminateDuration;
+              linearProgressIndicatorValue.indeterminateDuration;
 
       return linearProgressIndicatorThemeData.copyWith(
         height: height,

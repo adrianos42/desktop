@@ -222,20 +222,20 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
       circularProgressIndicatorThemeData ??=
           themeData.circularProgressIndicatorTheme;
 
-      final _circularProgressIndicatorThemeData =
+      final circularProgressIndicatorValue =
           _CircularProgressIndicatorThemeData(
               textTheme: textTheme, colorScheme: colorScheme);
 
       final double size = circularProgressIndicatorThemeData.size ??
-          _circularProgressIndicatorThemeData.size;
+          circularProgressIndicatorValue.size;
       final Color color = circularProgressIndicatorThemeData.color ??
-          _circularProgressIndicatorThemeData.color;
+          circularProgressIndicatorValue.color;
       final Color backgroundColor =
           circularProgressIndicatorThemeData.backgroundColor ??
-              _circularProgressIndicatorThemeData.backgroundColor;
+              circularProgressIndicatorValue.backgroundColor;
       final Duration indeterminateDuration =
           circularProgressIndicatorThemeData.indeterminateDuration ??
-              _circularProgressIndicatorThemeData.indeterminateDuration;
+              circularProgressIndicatorValue.indeterminateDuration;
 
       return circularProgressIndicatorThemeData.copyWith(
         size: size,

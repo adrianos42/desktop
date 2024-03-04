@@ -288,23 +288,23 @@ class CheckboxTheme extends InheritedTheme {
 
       checkboxThemeData ??= themeData.checkboxTheme;
 
-      final _checkboxThemeData =
+      final checkboxValue =
           _CheckboxThemeData(textTheme: textTheme, colorScheme: colorScheme);
 
       final Color disabledColor =
-          checkboxThemeData.disabledColor ?? _checkboxThemeData.disabledColor;
+          checkboxThemeData.disabledColor ?? checkboxValue.disabledColor;
       final Color activeColor =
-          checkboxThemeData.activeColor ?? _checkboxThemeData.activeColor;
-      final Color activeHoverColor = checkboxThemeData.activeHoverColor ??
-          _checkboxThemeData.activeHoverColor;
+          checkboxThemeData.activeColor ?? checkboxValue.activeColor;
+      final Color activeHoverColor =
+          checkboxThemeData.activeHoverColor ?? checkboxValue.activeHoverColor;
       final Color inactiveColor =
-          checkboxThemeData.inactiveColor ?? _checkboxThemeData.inactiveColor;
+          checkboxThemeData.inactiveColor ?? checkboxValue.inactiveColor;
       final Color inactiveHoverColor = checkboxThemeData.inactiveHoverColor ??
-          _checkboxThemeData.inactiveHoverColor;
+          checkboxValue.inactiveHoverColor;
       final Color foreground =
-          checkboxThemeData.foreground ?? _checkboxThemeData.foreground;
+          checkboxThemeData.foreground ?? checkboxValue.foreground;
       final double containerSize =
-          checkboxThemeData.containerSize ?? _checkboxThemeData.containerSize;
+          checkboxThemeData.containerSize ?? checkboxValue.containerSize;
 
       return checkboxThemeData.copyWith(
         disabledColor: disabledColor,

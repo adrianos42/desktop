@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 8),
-                child: Icon(Icons.camera_enhance),
+                child: Icon(Icons.cameraEnhance),
               ),
               Text('Node 0'),
             ],
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 8),
-                    child: Icon(Icons.location_city),
+                    child: Icon(Icons.locationCity),
                   ),
                   Text('Node 0'),
                 ],

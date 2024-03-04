@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0
+
+- Group messages by kind and show how many has been created.
+
 ## 5.0.1
 
 - Fixes `ListTable` canvas issue.

@@ -31,7 +31,7 @@ class _ContextMenuThemeData {
   /// IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh)
   /// ```
   IconThemeData get iconThemeData => IconThemeData(
-        size: kDefaultIconSize,
+        size: defaultIconSize,
         color: textTheme.textHigh,
         fill: 1.0,
       );
@@ -86,10 +86,10 @@ class _ContextMenuThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// textTheme.body1.copyWith(fontSize: kDefaultFontSize)
+  /// textTheme.body1.copyWith(fontSize: defaultFontSize)
   /// ```
   TextStyle get textStyle =>
-      textTheme.body1.copyWith(fontSize: kDefaultFontSize);
+      textTheme.body1.copyWith(fontSize: defaultFontSize);
 
   /// The color of an item when selected.
   ///

@@ -272,7 +272,7 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
-            return const ListTablePage();
+            return const DialogMessagePage();
           }
         },
       ),
