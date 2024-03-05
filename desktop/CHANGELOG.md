@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.1
+
+- Fix padding in message count.
+
 ## 5.1.0
 
 - Group messages by kind and show how many has been created.

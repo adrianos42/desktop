@@ -557,12 +557,15 @@ class _MessageState extends State<Message> {
                   ),
                 ),
               if (widget.count > 1)
-                Text(
-                  widget.count.toString(),
-                  style: Theme.of(context).textTheme.caption.copyWith(
-                        color: focusColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                Padding(
+                  padding: EdgeInsets.only(left: messageThemeData.itemSpacing!),
+                  child: Text(
+                    widget.count.toString(),
+                    style: Theme.of(context).textTheme.caption.copyWith(
+                          color: focusColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
             ],
           ),
