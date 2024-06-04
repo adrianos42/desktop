@@ -1,7 +1,7 @@
 page:
 	rm -rf ../docs/*
 	mkdir -p ../docs
-	flutter build web -v
+	flutter build web -v --wasm
 	cp -r -v build/web/* ../docs
 
 android:
