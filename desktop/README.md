@@ -4,6 +4,8 @@ Minimal desktop widgets for flutter.
 
 [Gallery](https://adrianos42.github.io/desktop/)
 
+## Components
+
 * Navigation
   * Breadcrumb
   * Nav
@@ -33,3 +35,7 @@ Minimal desktop widgets for flutter.
   * Text field
   * Selectable text
 * Scrollbar
+
+## Generating Theme Files
+
+To generate the theme files, run `dart run build_runner build`.

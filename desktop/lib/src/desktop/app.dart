@@ -41,21 +41,22 @@ class DesktopApp extends StatefulWidget {
     this.localeListResolutionCallback,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.showPerformanceOverlay = false,
-    this.checkerboardRasterCacheImages = false,
-    this.checkerboardOffscreenLayers = false,
     this.showSemanticsDebugger = false,
     this.debugShowCheckedModeBanner = true,
     this.shortcuts,
     this.actions,
     this.scrollBehavior,
     this.restorationScopeId,
+    this.onNavigationNotification,
+    this.debugShowWidgetInspector = false,
     Map<String, WidgetBuilder> this.routes = const <String, WidgetBuilder>{},
     List<NavigatorObserver> this.navigatorObservers =
         const <NavigatorObserver>[],
   })  : routeInformationParser = null,
         routeInformationProvider = null,
         routerDelegate = null,
-        backButtonDispatcher = null;
+        backButtonDispatcher = null,
+        routerConfig = null;
 
   /// Creates a [DesktopApp] that uses the [Router] instead of a [Navigator].
   const DesktopApp.router({
@@ -75,14 +76,15 @@ class DesktopApp extends StatefulWidget {
     this.localeResolutionCallback,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.showPerformanceOverlay = false,
-    this.checkerboardRasterCacheImages = false,
-    this.checkerboardOffscreenLayers = false,
+    this.routerConfig,
     this.showSemanticsDebugger = false,
     this.debugShowCheckedModeBanner = true,
     this.shortcuts,
     this.actions,
     this.scrollBehavior,
     this.restorationScopeId,
+    this.debugShowWidgetInspector = false,
+    this.onNavigationNotification,
   })  : navigatorObservers = null,
         navigatorKey = null,
         onGenerateRoute = null,
@@ -185,11 +187,39 @@ class DesktopApp extends StatefulWidget {
   ///  * <https://flutter.dev/debugging/#performanceoverlay>
   final bool showPerformanceOverlay;
 
-  /// Turns on checkerboarding of raster cache images.
-  final bool checkerboardRasterCacheImages;
+  /// Turns on an overlay that enables inspecting the widget tree.
+  ///
+  /// The inspector is only available in debug mode as it depends on
+  /// [RenderObject.debugDescribeChildren] which should not be called outside of
+  /// debug mode.
+  final bool debugShowWidgetInspector;
 
-  /// Turns on checkerboarding of layers rendered to offscreen bitmaps.
-  final bool checkerboardOffscreenLayers;
+  /// {@template flutter.widgets.widgetsApp.onNavigationNotification}
+  /// The callback to use when receiving a [NavigationNotification].
+  ///
+  /// By default this updates the engine with the navigation status and stops
+  /// bubbling the notification.
+  ///
+  /// See also:
+  ///
+  ///  * [NotificationListener.onNotification], which uses this callback.
+  /// {@endtemplate}
+  final NotificationListenerCallback<NavigationNotification>?
+      onNavigationNotification;
+
+  /// {@template flutter.widgets.widgetsApp.routerConfig}
+  /// An object to configure the underlying [Router].
+  ///
+  /// If the [routerConfig] is provided, the other router related delegates,
+  /// [routeInformationParser], [routeInformationProvider], [routerDelegate],
+  /// and [backButtonDispatcher], must all be null.
+  ///
+  /// See also:
+  ///
+  ///  * [Router.withConfig], which receives this object when this
+  ///    widget builds the [Router].
+  /// {@endtemplate}
+  final RouterConfig<Object>? routerConfig;
 
   /// Turns on an overlay that shows the accessibility information
   /// reported by the framework.
@@ -301,8 +331,9 @@ class _DesktopAppState extends State<DesktopApp> {
         localeListResolutionCallback: widget.localeListResolutionCallback,
         supportedLocales: widget.supportedLocales,
         showPerformanceOverlay: widget.showPerformanceOverlay,
-        checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
-        checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+        debugShowWidgetInspector: widget.debugShowWidgetInspector,
+        onNavigationNotification: widget.onNavigationNotification,
+        routerConfig: widget.routerConfig,
         showSemanticsDebugger: widget.showSemanticsDebugger,
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
         inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,
@@ -335,8 +366,8 @@ class _DesktopAppState extends State<DesktopApp> {
       localeListResolutionCallback: widget.localeListResolutionCallback,
       supportedLocales: widget.supportedLocales,
       showPerformanceOverlay: widget.showPerformanceOverlay,
-      checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
-      checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+      debugShowWidgetInspector: widget.debugShowWidgetInspector,
+      onNavigationNotification: widget.onNavigationNotification,
       showSemanticsDebugger: widget.showSemanticsDebugger,
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
       inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,

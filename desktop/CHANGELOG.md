@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.2
+
+- Fix flutter breaking changes.
+
 ## 5.1.1
 
 - Fix padding in message count.

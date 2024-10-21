@@ -59,7 +59,6 @@ class BreadcrumbController extends ChangeNotifier {
     required IndexedWidgetBuilder builder,
     required IndexedWidgetBuilder breadcrumbBuilder,
   }) {
-    final int index = 0;
     _items.clear();
 
     _items.add(
