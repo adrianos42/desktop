@@ -33,7 +33,8 @@ class _MenuItem extends SingleChildRenderObjectWidget {
   });
 
   @override
-  RenderObject createRenderObject(BuildContext context) => _RenderMenuItem(null);
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderMenuItem(null);
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
@@ -66,8 +67,10 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
     required this.value,
     this.enabled = true,
     this.height,
-    required this.child,
-  });
+    this.child,
+    this.builder,
+  }) : assert(child != null && builder == null ||
+            child == null && builder != null);
 
   final T value;
 
@@ -75,7 +78,9 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
 
   final double? height;
 
-  final Widget child;
+  final Widget? child;
+
+  final ContextMenuItemStateBuilder? builder;
 
   @override
   bool represents(T value) => value == this.value;
@@ -88,7 +93,7 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
 class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
     with ComponentStateMixin {
   @protected
-  Widget buildChild() => widget.child;
+  Widget buildChild() => widget.child ?? widget.builder!(states);
 
   void _handleHoverEntered() {
     if (!hovered && (pressed || !_globalPointerDown)) {
@@ -483,3 +488,5 @@ typedef ContextMenuCanceled = void Function();
 
 typedef ContextMenuItemBuilder<T> = List<ContextMenuEntry<T>> Function(
     BuildContext context);
+
+typedef ContextMenuItemStateBuilder = Widget Function(Set<ComponentState> states);

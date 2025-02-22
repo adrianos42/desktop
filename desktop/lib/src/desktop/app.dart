@@ -266,15 +266,6 @@ class _DesktopAppState extends State<DesktopApp> {
     yield DefaultDesktopLocalizations.delegate;
   }
 
-  Widget _inspectorSelectButtonBuilder(
-    BuildContext context,
-    VoidCallback onPressed,
-  ) =>
-      Button.icon(
-        Icons.search,
-        onPressed: onPressed,
-      );
-
   Widget _builder(BuildContext context, Widget? child) {
     return SafeArea(
       maintainBottomViewPadding: true,
@@ -336,7 +327,6 @@ class _DesktopAppState extends State<DesktopApp> {
         routerConfig: widget.routerConfig,
         showSemanticsDebugger: widget.showSemanticsDebugger,
         debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-        inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,
         shortcuts: shortcuts,
         actions: widget.actions,
         restorationScopeId: widget.restorationScopeId,
@@ -370,7 +360,6 @@ class _DesktopAppState extends State<DesktopApp> {
       onNavigationNotification: widget.onNavigationNotification,
       showSemanticsDebugger: widget.showSemanticsDebugger,
       debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-      inspectorSelectButtonBuilder: _inspectorSelectButtonBuilder,
       shortcuts: shortcuts,
       actions: widget.actions,
       restorationScopeId: widget.restorationScopeId,

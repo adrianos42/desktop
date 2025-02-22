@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.3
+
+- Removes deprecated flutter field.
+
 ## 5.1.2
 
 - Fix flutter breaking changes.
