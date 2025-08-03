@@ -29,6 +29,7 @@ class Button extends StatefulWidget {
     required this.onPressed,
     this.willChangeState = false,
     this.enableAnimation = true,
+    this.mainAxisAlignment = MainAxisAlignment.center,
   }) : assert(body != null || trailing != null || leading != null);
 
   /// Creates a button with a text.
@@ -120,6 +121,7 @@ class Button extends StatefulWidget {
     required VoidCallback? onPressed,
     VoidCallback? onLongPress,
     ButtonThemeData? theme,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     return Button(
       key: key,
@@ -136,6 +138,7 @@ class Button extends StatefulWidget {
       filled: true,
       willChangeState: willChangeState,
       enableAnimation: enableAnimation,
+      mainAxisAlignment: mainAxisAlignment,
       body: Text(
         text,
         style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
@@ -193,6 +196,8 @@ class Button extends StatefulWidget {
 
   /// Heuristic to indicate that the active or onPressed will change.
   final bool willChangeState;
+
+  final MainAxisAlignment mainAxisAlignment;
 
   /// The style [ButtonThemeData] of the button.
   final ButtonThemeData? theme;
@@ -292,6 +297,9 @@ class ButtonState<B extends Button> extends State<B>
         _shouldShowFocus;
   }
 
+  ButtonThemeData _buttonThemeData(BuildContext context) =>
+      ButtonTheme.of(context).merge(widget.theme);
+
   void _invoke([Intent? intent]) => _handleTap();
 
   void _handleTap() => onPressed?.call();
@@ -305,8 +313,7 @@ class ButtonState<B extends Button> extends State<B>
   ///
   void updateColor([bool animates = true]) {
     if (mounted) {
-      final ButtonThemeData buttonThemeData =
-          ButtonTheme.of(context).merge(widget.theme);
+      final ButtonThemeData buttonThemeData = _buttonThemeData(context);
 
       final Color disabledForeground = buttonThemeData.disabledColor!;
 
@@ -338,6 +345,7 @@ class ButtonState<B extends Button> extends State<B>
         final Color pressedForeground = buttonThemeData.highlightForeground!;
         final Color enabledForeground = buttonThemeData.foreground!;
         final Color hoveredForeground = buttonThemeData.hoverForeground!;
+        final Color disabledBackgound = buttonThemeData.disabledBackground!;
 
         foregroundColor = isActive || pressed
             ? pressedForeground
@@ -351,7 +359,7 @@ class ButtonState<B extends Button> extends State<B>
                 : hovered
                     ? hoveredBackground
                     : enabledBackground
-            : Theme.of(context).colorScheme.background[0];
+            : disabledBackgound;
       }
 
       final bool wasPressed = pressed;
@@ -466,8 +474,7 @@ class ButtonState<B extends Button> extends State<B>
 
   @override
   Widget build(BuildContext context) {
-    final ButtonThemeData buttonThemeData =
-        ButtonTheme.of(context).merge(widget.theme);
+    final ButtonThemeData buttonThemeData = _buttonThemeData(context);
 
     final itemSpacing = buttonThemeData.itemSpacing!;
 
@@ -538,29 +545,24 @@ class ButtonState<B extends Button> extends State<B>
             child: Flex(
               direction: buttonThemeData.axis!,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: widget.mainAxisAlignment,
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (leading != null)
-                  Flexible(
-                    child: Padding(
-                      padding: leadingPadding,
-                      child: leading,
-                    ),
+                  Padding(
+                    padding: leadingPadding,
+                    child: leading,
                   ),
                 // The widget that is always placed in the button.
-                Flexible(
-                  child: Padding(
+                if (widget.body != null)
+                  Padding(
                     padding: bodyPadding,
                     child: widget.body,
                   ),
-                ),
                 if (trailing != null)
-                  Flexible(
-                    child: Padding(
-                      padding: trailingPadding,
-                      child: trailing,
-                    ),
+                  Padding(
+                    padding: trailingPadding,
+                    child: trailing,
                   ),
               ],
             ),

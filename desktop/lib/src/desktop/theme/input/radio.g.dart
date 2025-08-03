@@ -13,9 +13,8 @@ class RadioThemeData {
   const RadioThemeData({
     this.disabledColor,
     this.activeColor,
-    this.activeHoverColor,
+    this.hoverColor,
     this.inactiveColor,
-    this.inactiveHoverColor,
     this.foreground,
   });
 
@@ -42,27 +41,18 @@ class RadioThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.primary[60]
+  /// textTheme.textHigh
   /// ```
-  final Color? activeHoverColor;
+  final Color? hoverColor;
 
   /// The inactive color.
   ///
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.shade[50]
+  /// textTheme.textLow
   /// ```
   final Color? inactiveColor;
-
-  /// The inactive hover color.
-  ///
-  /// Defaults to:
-  ///
-  /// ```dart
-  /// colorScheme.shade[100]
-  /// ```
-  final Color? inactiveHoverColor;
 
   /// The foreground color.
   ///
@@ -77,17 +67,15 @@ class RadioThemeData {
   RadioThemeData copyWith({
     Color? disabledColor,
     Color? activeColor,
-    Color? activeHoverColor,
+    Color? hoverColor,
     Color? inactiveColor,
-    Color? inactiveHoverColor,
     Color? foreground,
   }) {
     return RadioThemeData(
       disabledColor: disabledColor ?? this.disabledColor,
       activeColor: activeColor ?? this.activeColor,
-      activeHoverColor: activeHoverColor ?? this.activeHoverColor,
+      hoverColor: hoverColor ?? this.hoverColor,
       inactiveColor: inactiveColor ?? this.inactiveColor,
-      inactiveHoverColor: inactiveHoverColor ?? this.inactiveHoverColor,
       foreground: foreground ?? this.foreground,
     );
   }
@@ -100,9 +88,8 @@ class RadioThemeData {
     return copyWith(
       disabledColor: other.disabledColor,
       activeColor: other.activeColor,
-      activeHoverColor: other.activeHoverColor,
+      hoverColor: other.hoverColor,
       inactiveColor: other.inactiveColor,
-      inactiveHoverColor: other.inactiveHoverColor,
       foreground: other.foreground,
     );
   }
@@ -110,61 +97,53 @@ class RadioThemeData {
   bool get _isConcrete {
     return disabledColor != null &&
         activeColor != null &&
-        activeHoverColor != null &&
+        hoverColor != null &&
         inactiveColor != null &&
-        inactiveHoverColor != null &&
         foreground != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disabledColor,
       activeColor,
-      activeHoverColor,
+      hoverColor,
       inactiveColor,
-      inactiveHoverColor,
       foreground,
-    );
+    ]);
   }
 
   @override
   String toString() {
     return r'''
 disabledColor: The disabled color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;activeColor: The active color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.primary[50]
- ```;;activeHoverColor: The active hover color.
- 
+ ```;;hoverColor: The active hover color.
+
  Defaults to:
- 
+
  ```dart
- colorScheme.primary[60]
+ textTheme.textHigh
  ```;;inactiveColor: The inactive color.
- 
+
  Defaults to:
- 
+
  ```dart
- colorScheme.shade[50]
- ```;;inactiveHoverColor: The inactive hover color.
- 
- Defaults to:
- 
- ```dart
- colorScheme.shade[100]
+ textTheme.textLow
  ```;;foreground: The foreground color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;
@@ -176,9 +155,8 @@ disabledColor: The disabled color.
     return identical(this, other) ||
         other.disabledColor == disabledColor &&
             other.activeColor == activeColor &&
-            other.activeHoverColor == activeHoverColor &&
+            other.hoverColor == hoverColor &&
             other.inactiveColor == inactiveColor &&
-            other.inactiveHoverColor == inactiveHoverColor &&
             other.foreground == foreground;
   }
 }
@@ -187,11 +165,7 @@ disabledColor: The disabled color.
 @immutable
 class RadioTheme extends InheritedTheme {
   /// Creates a [RadioTheme].
-  const RadioTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const RadioTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [RadioTheme].
   final RadioThemeData data;
@@ -204,10 +178,8 @@ class RadioTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => RadioTheme(
-        data: RadioTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          RadioTheme(data: RadioTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -217,9 +189,8 @@ class RadioTheme extends InheritedTheme {
     required Widget child,
     Color? disabledColor,
     Color? activeColor,
-    Color? activeHoverColor,
+    Color? hoverColor,
     Color? inactiveColor,
-    Color? inactiveHoverColor,
     Color? foreground,
   }) {
     return Builder(
@@ -228,9 +199,8 @@ class RadioTheme extends InheritedTheme {
         data: RadioTheme.of(context).copyWith(
           disabledColor: disabledColor,
           activeColor: activeColor,
-          activeHoverColor: activeHoverColor,
+          hoverColor: hoverColor,
           inactiveColor: inactiveColor,
-          inactiveHoverColor: inactiveHoverColor,
           foreground: foreground,
         ),
         child: child,
@@ -240,12 +210,9 @@ class RadioTheme extends InheritedTheme {
 
   /// Returns a copy of [RadioTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final RadioTheme? radioTheme =
-        context.findAncestorWidgetOfExactType<RadioTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final RadioTheme? radioTheme = context
+        .findAncestorWidgetOfExactType<RadioTheme>();
     return identical(this, radioTheme)
         ? child
         : RadioTheme(data: data, child: child);
@@ -253,39 +220,33 @@ class RadioTheme extends InheritedTheme {
 
   /// Returns the nearest [RadioTheme].
   static RadioThemeData of(BuildContext context) {
-    final RadioTheme? radioTheme =
-        context.dependOnInheritedWidgetOfExactType<RadioTheme>();
+    final RadioTheme? radioTheme = context
+        .dependOnInheritedWidgetOfExactType<RadioTheme>();
     RadioThemeData? radioThemeData = radioTheme?.data;
 
     if (radioThemeData == null || !radioThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       radioThemeData ??= themeData.radioTheme;
 
-      final radioValue =
-          _RadioThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final radioValue = _RadioThemeData(themeData);
 
       final Color disabledColor =
           radioThemeData.disabledColor ?? radioValue.disabledColor;
       final Color activeColor =
           radioThemeData.activeColor ?? radioValue.activeColor;
-      final Color activeHoverColor =
-          radioThemeData.activeHoverColor ?? radioValue.activeHoverColor;
+      final Color hoverColor =
+          radioThemeData.hoverColor ?? radioValue.hoverColor;
       final Color inactiveColor =
           radioThemeData.inactiveColor ?? radioValue.inactiveColor;
-      final Color inactiveHoverColor =
-          radioThemeData.inactiveHoverColor ?? radioValue.inactiveHoverColor;
       final Color foreground =
           radioThemeData.foreground ?? radioValue.foreground;
 
       return radioThemeData.copyWith(
         disabledColor: disabledColor,
         activeColor: activeColor,
-        activeHoverColor: activeHoverColor,
+        hoverColor: hoverColor,
         inactiveColor: inactiveColor,
-        inactiveHoverColor: inactiveHoverColor,
         foreground: foreground,
       );
     }

@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -10,64 +11,65 @@ class CircularProgressIndicator extends StatefulWidget {
   /// Creates a [CircularProgressIndicator].
   const CircularProgressIndicator({
     super.key,
-    this.theme,
+    this.backgroundColor,
+    this.color,
+    this.indeterminateDuration,
+    this.size,
+    this.strokeWidth,
     this.value,
   });
 
   /// The progress value.
   final double? value;
 
-  /// The theme [CircularProgressIndicatorThemeData] for the [CircularProgressIndicator].
-  final CircularProgressIndicatorThemeData? theme;
+  // The progress indicator's size.
+  // Defaults to [CircularProgressIndicatorThemeData.size].
+  final double? size;
+
+  // The progress indicator's color.
+  // Defaults to [CircularProgressIndicatorThemeData.color].
+  final Color? color;
+
+  // The progress indicator's background color.
+  // Defaults to [CircularProgressIndicatorThemeData.backgroundColor].
+  final Color? backgroundColor;
+
+  // The progress indicator's indeterminateDuration.
+  // Defaults to [CircularProgressIndicatorThemeData.indeterminateDuration].
+  final Duration? indeterminateDuration;
+
+  // The progress indicator's stroke width.
+  // Defaults to [CircularProgressIndicatorThemeData.strokeWidth].
+  final double? strokeWidth;
 
   @override
   State<CircularProgressIndicator> createState() =>
       _CircularProgressIndicatorState();
 }
 
-final Animatable<double> _kStrokeHeadTween = CurveTween(
-  curve: const Interval(0.0, 0.4, curve: Curves.fastOutSlowIn),
-).chain(CurveTween(
-  curve: const SawTooth(5),
-));
-
-final Animatable<double> _kStrokeTailTween = CurveTween(
-  curve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-).chain(CurveTween(
-  curve: const SawTooth(5),
-));
-
-final Animatable<int> _kStepTween = StepTween(begin: 0, end: 5);
-
-final Animatable<double> _kRotationTween = CurveTween(curve: const SawTooth(5));
-
 class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  Widget _buildIndicator(BuildContext context, double headValue,
-      double tailValue, int stepValue, double rotationValue) {
-    final CircularProgressIndicatorThemeData
-        circularProgressIndicatorThemeData =
-        CircularProgressIndicatorTheme.of(context).merge(widget.theme);
+  late Animation<double> _animation;
+
+  Widget _buildIndicator(BuildContext context, double headValue) {
+    final CircularProgressIndicatorThemeData themeData =
+        CircularProgressIndicatorTheme.of(context);
 
     return SizedBox(
-      width: circularProgressIndicatorThemeData.size,
-      height: circularProgressIndicatorThemeData.size,
+      width: widget.size ?? themeData.size,
+      height: widget.size ?? themeData.size,
       child: CustomPaint(
         painter: _CircularProgressIndicatorPainter(
-          valueColor: circularProgressIndicatorThemeData.color!,
+          valueColor: widget.color ?? themeData.color!,
           backgroundColor: widget.value != null
-              ? circularProgressIndicatorThemeData.backgroundColor!
+              ? widget.backgroundColor ?? themeData.backgroundColor!
               : null,
           value: widget.value, // may be null
           headValue:
               headValue, // remaining arguments are ignored if widget.value is not null
-          tailValue: tailValue,
-          stepValue: stepValue,
-          rotationValue: rotationValue,
-          strokeWidth:
-              (circularProgressIndicatorThemeData.size! / 10.0).roundToDouble(),
+          strokeWidth: widget.strokeWidth ?? themeData.strokeWidth!,
         ),
       ),
     );
@@ -76,8 +78,11 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
+    _controller = AnimationController(vsync: this);
+
+    _animation = CurvedAnimation(
+      curve: const Interval(0.0, 1.0, curve: Curves.linear),
+      parent: _controller,
     );
   }
 
@@ -85,9 +90,9 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _controller.duration = CircularProgressIndicatorTheme.of(context)
-        .merge(widget.theme)
-        .indeterminateDuration!;
+    _controller.duration =
+        widget.indeterminateDuration ??
+        CircularProgressIndicatorTheme.of(context).indeterminateDuration!;
 
     if (widget.value == null) {
       _controller.repeat();
@@ -102,6 +107,12 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
     } else if (widget.value != null && _controller.isAnimating) {
       _controller.stop();
     }
+
+    if (widget.indeterminateDuration != oldWidget.indeterminateDuration) {
+      _controller.duration =
+          widget.indeterminateDuration ??
+          CircularProgressIndicatorTheme.of(context).indeterminateDuration!;
+    }
   }
 
   @override
@@ -113,19 +124,13 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
   @override
   Widget build(BuildContext context) {
     if (widget.value != null) {
-      return _buildIndicator(context, 0.0, 0.0, 0, 0.0);
+      return _buildIndicator(context, 0.0);
     }
 
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget? child) {
-        return _buildIndicator(
-          context,
-          _kStrokeHeadTween.evaluate(_controller),
-          _kStrokeTailTween.evaluate(_controller),
-          _kStepTween.evaluate(_controller),
-          _kRotationTween.evaluate(_controller),
-        );
+        return _buildIndicator(context, _animation.value);
       },
     );
   }
@@ -137,36 +142,22 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     required this.valueColor,
     this.value,
     required this.headValue,
-    required this.tailValue,
-    required this.stepValue,
-    required this.rotationValue,
     required this.strokeWidth,
-  })  : arcStart = value != null
-            ? _startAngle
-            : _startAngle +
-                tailValue * 3 / 2 * math.pi +
-                rotationValue * math.pi * 1.7 -
-                stepValue * 0.8 * math.pi,
-        arcSweep = value != null
-            ? clampDouble(value, 0.0, 1.0) * _sweep
-            : math.max(
-                headValue * 3 / 2 * math.pi - tailValue * 3 / 2 * math.pi,
-                _epsilon);
+  }) : arcStart = _startAngle,
+       arcSweep = value != null
+           ? clampDouble(value, 0.0, 1.0) * _sweep
+           : _twoPi;
 
   final Color? backgroundColor;
   final Color valueColor;
   final double? value;
   final double headValue;
-  final double tailValue;
-  final int stepValue;
-  final double rotationValue;
   final double strokeWidth;
   final double arcStart;
   final double arcSweep;
 
   static const double _twoPi = math.pi * 2.0;
-  static const double _epsilon = .001;
-  static const double _sweep = _twoPi - _epsilon;
+  static const double _sweep = _twoPi;
   static const double _startAngle = -math.pi / 2.0;
 
   @override
@@ -174,7 +165,9 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     final Paint paint = Paint()
       ..color = valueColor
       ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.butt;
+
     if (backgroundColor != null) {
       final Paint backgroundPaint = Paint()
         ..color = backgroundColor!
@@ -184,7 +177,14 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     }
 
     if (value == null) {
-      paint.strokeCap = StrokeCap.square;
+      paint.shader = ui.Gradient.sweep(
+        Offset(size.width / 2.0, size.height / 2.0),
+        [Colors.black, valueColor],
+        [0.0, 1.0],
+        TileMode.repeated,
+        headValue * _sweep,
+        _twoPi + headValue * _sweep,
+      );
     }
 
     canvas.drawArc(Offset.zero & size, arcStart, arcSweep, false, paint);
@@ -196,9 +196,6 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
         oldPainter.valueColor != valueColor ||
         oldPainter.value != value ||
         oldPainter.headValue != headValue ||
-        oldPainter.tailValue != tailValue ||
-        oldPainter.stepValue != stepValue ||
-        oldPainter.rotationValue != rotationValue ||
         oldPainter.strokeWidth != strokeWidth;
   }
 }

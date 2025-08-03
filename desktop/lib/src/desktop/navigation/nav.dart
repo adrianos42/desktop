@@ -4,32 +4,62 @@ import 'package:flutter/widgets.dart';
 
 import '../icons.dart';
 import '../theme/theme.dart';
+import 'floating_menu_bar.dart';
 import 'nav_button.dart';
 import 'tab_scope.dart';
 
 export 'tab_scope.dart' show TabScope;
 
-const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
-
 class NavItem {
   const NavItem({
     required this.builder,
-    this.title,
-    this.icon,
+    required this.title,
+    this.iconBuilder,
+    this.titleBuilder,
   });
 
   /// Page builder.
   final IndexedWidgetBuilder builder;
 
   /// Icon used if the nav axis is vertical.
-  final IconData? icon;
+  final WidgetBuilder? iconBuilder;
 
-  /// The title shown in case the nav axis is horizontal.
-  final String? title;
+  /// A widget that replaces the title when the nav is expanded.
+  final WidgetBuilder? titleBuilder;
+
+  /// The page title.
+  final String title;
 }
 
 class NavMenuItem {
   const NavMenuItem({
+    required this.builder,
+    required this.icon,
+    this.title,
+    this.titleBuilder,
+    this.enabled = true,
+    this.axis,
+  });
+
+  /// An icon to be built for the menu.
+  final WidgetBuilder icon;
+
+  /// A title to be display when the nav is extended.
+  final String? title;
+
+  /// A widget that replaces the title when the nav is expanded.
+  final WidgetBuilder? titleBuilder;
+
+  /// The widget builder for the menu view.
+  final WidgetBuilder builder;
+
+  final AxisDirection? axis;
+
+  final bool enabled;
+}
+
+class NavInfoItem {
+  const NavInfoItem({
     required this.builder,
     required this.icon,
     this.enabled = true,
@@ -47,10 +77,9 @@ class NavMenuItem {
 /// Controls the tab index.
 class NavController extends ChangeNotifier {
   /// Creates a [NavController].
-  NavController({
-    int initialIndex = 0,
-  })  : _index = initialIndex,
-        assert(initialIndex >= 0);
+  NavController({int initialIndex = 0})
+    : _index = initialIndex,
+      assert(initialIndex >= 0);
 
   bool _isDisposed = false;
 
@@ -74,10 +103,8 @@ class NavController extends ChangeNotifier {
 }
 
 class NavContext extends InheritedWidget {
-  const NavContext._({
-    required super.child,
-    required _NavState state,
-  }) : _state = state;
+  const NavContext._({required super.child, required _NavState state})
+    : _state = state;
 
   final _NavState _state;
 
@@ -86,9 +113,15 @@ class NavContext extends InheritedWidget {
     _state._controller.index = value;
   }
 
-  int get menuIndex => _state._menuIndex;
+  int get menuIndex => _state.menuIndex;
   set menuIndex(int value) {
-    _state._showMenuFromIndex(value);
+    _state._showMenu(
+      value,
+      false,
+      _state.widget.navAxis == Axis.horizontal
+          ? AxisDirection.down
+          : AxisDirection.right,
+    );
   }
 
   @override
@@ -146,7 +179,7 @@ class NavContext extends InheritedWidget {
 ///```
 class Nav extends StatefulWidget {
   /// Creates a navigation bar.
-  const Nav({
+  const Nav._({
     super.key,
     required this.items,
     this.navAxis = Axis.vertical,
@@ -155,12 +188,98 @@ class Nav extends StatefulWidget {
     this.isBackButtonEnabled,
     this.visible = true,
     this.controller,
-  }) : assert(items.length > 0);
+    this.navbarGestures,
+    this.navbarWidget,
+    this.compact = false,
+    this.infoItems = const [],
+    this.contentMenu,
+  }) : assert(items.length > 0),
+       assert(!compact || navAxis == Axis.vertical),
+       assert(navbarWidget == null || (!compact && navAxis == Axis.vertical)),
+       assert(navbarGestures == null || navAxis == Axis.horizontal);
+
+  factory Nav.horizontal({
+    Key? key,
+    required List<NavItem> items,
+    List<NavMenuItem> trailingMenu = const [],
+    List<NavInfoItem> infoItems = const [],
+    VoidCallback? onPressBackButton,
+    bool? isBackButtonEnabled,
+    NavController? controller,
+    Map<Type, GestureRecognizerFactory>? navbarGestures,
+    WidgetBuilder? contentMenu,
+  }) {
+    return Nav._(
+      items: items,
+      trailingMenu: trailingMenu,
+      controller: controller,
+      isBackButtonEnabled: isBackButtonEnabled,
+      key: key,
+      navAxis: Axis.horizontal,
+      navbarGestures: navbarGestures,
+      onPressBackButton: onPressBackButton,
+      visible: true,
+      contentMenu: contentMenu,
+      infoItems: infoItems,
+    );
+  }
+
+  factory Nav.vertical({
+    Key? key,
+    required List<NavItem> items,
+    List<NavMenuItem> trailingMenu = const [],
+    VoidCallback? onPressBackButton,
+    bool? isBackButtonEnabled,
+    NavController? controller,
+    bool visible = true,
+    WidgetBuilder? navbarWidget,
+    WidgetBuilder? contentMenu,
+  }) {
+    return Nav._(
+      items: items,
+      trailingMenu: trailingMenu,
+      controller: controller,
+      isBackButtonEnabled: isBackButtonEnabled,
+      key: key,
+      navAxis: Axis.vertical,
+      onPressBackButton: onPressBackButton,
+      visible: visible,
+      navbarWidget: navbarWidget,
+      compact: false,
+      contentMenu: contentMenu,
+    );
+  }
+
+  factory Nav.compact({
+    Key? key,
+    required List<NavItem> items,
+    List<NavMenuItem> trailingMenu = const [],
+    VoidCallback? onPressBackButton,
+    bool? isBackButtonEnabled,
+    NavController? controller,
+    WidgetBuilder? contentMenu,
+  }) {
+    return Nav._(
+      items: items,
+      trailingMenu: trailingMenu,
+      controller: controller,
+      isBackButtonEnabled: isBackButtonEnabled,
+      key: key,
+      navAxis: Axis.vertical,
+      onPressBackButton: onPressBackButton,
+      visible: true,
+      compact: true,
+      contentMenu: contentMenu,
+    );
+  }
 
   /// The items with builder and route names for transition among pages.
   final List<NavItem> items;
 
-  /// Menu before the navigation items.
+  /// Info after the navigation items.
+  final List<NavInfoItem> infoItems;
+
+  /// Menu after the navigation items.
   final List<NavMenuItem> trailingMenu;
 
   /// Callback for the back button.
@@ -177,21 +296,29 @@ class Nav extends StatefulWidget {
   /// If the nav bar should be visible.
   final bool visible;
 
+  /// If the nav bar should be visible.
+  final bool compact;
+
+  final WidgetBuilder? navbarWidget;
+
+  /// A widget that's above all pages. Usually used for [FloatingMenuBar].
+  final WidgetBuilder? contentMenu;
+
   /// Controls selected index.
   final NavController? controller;
 
   static NavContext? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<NavContext>();
 
+  final Map<Type, GestureRecognizerFactory>? navbarGestures;
+
   @override
   State<Nav> createState() => _NavState();
 }
 
-class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
+class _NavState extends State<Nav>
+    with SingleTickerProviderStateMixin, NavMenuMixin {
   int get _length => widget.items.length;
-
-  int _menuIndex = -1;
-  OverlayEntry? _menuOverlay;
 
   NavController? _internalController;
   NavController get _controller => widget.controller ?? _internalController!;
@@ -210,32 +337,30 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   final GlobalKey<OverlayState> _overlayKey = GlobalKey<OverlayState>();
 
-  OverlayState get _overlay => _overlayKey.currentState!;
-
-  late Animation<double> _menuAnimation;
-  late AnimationController _menuController;
-  late Tween<Offset> _menuOffsetTween;
-  final ColorTween _menuColorTween = ColorTween();
+  OverlayEntry? _contentOverlay;
 
   List<NavMenuItem> get _trailingMenu => widget.trailingMenu.reversed.toList();
 
-  void _createAnimation() {
-    _menuAnimation = CurvedAnimation(
-      parent: _menuController,
-      curve: Curves.fastEaseInToSlowEaseOut,
-      reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
-    );
+  List<NavInfoItem> get _infoItems => widget.infoItems.reversed.toList();
 
-    final Offset begin = widget.navAxis == Axis.vertical
-        ? const Offset(-1.0, 0.0)
-        : const Offset(0.0, -1.0);
-    const Offset end = Offset(0.0, 0.0);
+  late Duration _menuTransitionDuration;
+  late Curve _menuTrasitionCurve;
+  late Color _navBarBackgroundColor;
 
-    _menuOffsetTween = Tween<Offset>(
-      begin: begin,
-      end: end,
-    );
-  }
+  @override
+  OverlayState get overlay => _overlayKey.currentState!;
+
+  @override
+  Duration get menuTransitionDuration => _menuTransitionDuration;
+
+  @override
+  Curve get menuTrasitionCurve => _menuTrasitionCurve;
+
+  @override
+  Color get navBarBackgroundColor => _navBarBackgroundColor;
+
+  @override
+  Color get barrierColor => DialogTheme.of(context).barrierColor!;
 
   void nextView() => _indexChanged((_controller.index + 1) % _length);
 
@@ -243,7 +368,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   bool _indexChanged(int index) {
     if (index != _controller.index) {
-      if (index < 0 || index >= _length || _menuIndex != -1) {
+      if (index < 0 || index >= _length || menuIndex != -1) {
         return false;
       }
 
@@ -271,6 +396,17 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     }
   }
 
+  void _showMenu(int index, bool isInfoMenu, AxisDirection axis) {
+    final builders = [
+      ..._infoItems.map((e) => e.builder),
+      ..._trailingMenu.map((e) => e.builder),
+    ];
+
+    setState(() {
+      showMenu(index, axis: axis, builders: builders, isInfoMenu: isInfoMenu);
+    });
+  }
+
   void _onCurrentIndexChange() {
     assert(_controller.index >= 0 && _controller.index < _length);
     setState(() {});
@@ -278,115 +414,121 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
   void _handleMenuAnimationStatusChanged(AnimationStatus status) {
     if (status == AnimationStatus.dismissed) {
-      _menuOverlay?.remove();
-      _menuOverlay = null;
-    }
-  }
-
-  void _hideMenu() {
-    if (_menuIndex != -1) {
-      setState(() {
-        _menuIndex = -1;
-        _menuController.reverse();
-      });
-    }
-  }
-
-  void _showMenuFromIndex(int index) {
-    _showMenu(_trailingMenu[index], index);
-  }
-
-  void _showMenu(NavMenuItem item, int index) {
-    if (_menuController.isAnimating) {
-      return;
-    }
-
-    if (_menuIndex == -1) {
-      _menuOverlay?.remove();
-      _menuOverlay = null;
-
-      setState(() {
-        _menuIndex = index;
-
-        final Color barrierColor = DialogTheme.of(context).barrierColor!;
-        _menuColorTween.begin = barrierColor.withOpacity(0.0);
-        _menuColorTween.end = barrierColor.withOpacity(0.8);
-
-        _menuOverlay = OverlayEntry(
-          maintainState: false,
-          builder: (context) => AnimatedBuilder(
-            animation: _menuAnimation,
-            builder: (context, _) => GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _hideMenu,
-              child: Container(
-                alignment: widget.navAxis == Axis.vertical
-                    ? Alignment.centerLeft
-                    : Alignment.topCenter,
-                color: _menuColorTween.evaluate(_menuAnimation),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.deferToChild,
-                  onTap: () {},
-                  child: ClipRect(
-                    child: FractionalTranslation(
-                      translation: _menuOffsetTween.evaluate(_menuAnimation),
-                      child: item.builder(context),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-
-        _overlay.insert(_menuOverlay!);
-        _menuController.forward(from: 0.0);
-      });
-    } else {
-      _hideMenu();
+      menuOverlay?.remove();
+      menuOverlay = null;
+      setState(() => menuIndex = -1);
     }
   }
 
   Widget _createMenuItems(
-    EdgeInsets itemsSpacing,
+    EdgeInsets itemSpacing,
     NavThemeData navThemeData,
     List<NavMenuItem> items,
   ) {
     final List<Widget> itemsMenu = List<Widget>.empty(growable: true);
 
-    for (int i = items.length - 1; i >= 0 ; i -= 1) {
-      final item = items[i];
+    for (int i = items.length - 1; i >= 0; i -= 1) {
+      final NavMenuItem item = items[i];
+
+      final int index = i + widget.infoItems.length;
+      final bool enabled = !menuShown || menuIndex == index;
+      final axis =
+          item.axis ??
+          (widget.navAxis == Axis.horizontal
+              ? AxisDirection.up
+              : AxisDirection.left);
+
       itemsMenu.add(
         NavMenuButton(
           item.icon(context),
           axis: widget.navAxis,
-          active: _menuIndex == i,
-          onPressed: items[i].enabled && (_menuIndex == -1 || _menuIndex == i)
-              ? () => _showMenu(item, i)
-              : null,
+          active: menuIndex == index,
+          onPressed: () => _showMenu(index, false, axis),
+          titleBuilder: item.titleBuilder,
+          title: item.title,
+          enabled: item.enabled && enabled,
+          compact: widget.compact || widget.navAxis == Axis.horizontal,
         ),
       );
     }
 
-    return Padding(
-      padding: itemsSpacing,
+    return Container(
+      constraints: BoxConstraints(minWidth: navThemeData.width!),
       child: Flex(
         direction: widget.navAxis,
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: itemsMenu,
       ),
     );
   }
 
-  Widget _createNavItems(EdgeInsets itemsSpacing, NavThemeData navThemeData) {
+  Widget _createInfoItems(
+    EdgeInsets itemSpacing,
+    NavThemeData navThemeData,
+    List<NavInfoItem> items,
+  ) {
+    final List<Widget> itemsMenu = List<Widget>.empty(growable: true);
+
+    final bool enabled = menuIndex < widget.infoItems.length;
+
+    for (int i = items.length - 1; i >= 0; i -= 1) {
+      final NavInfoItem item = items[i];
+
+      itemsMenu.add(
+        NavMenuButton(
+          item.icon(context),
+          axis: Axis.horizontal,
+          active: menuIndex == i,
+          onHover: () {
+            if (menuIndex != i || menuController!.isAnimating) {
+              _showMenu(i, true, AxisDirection.up);
+            }
+          },
+          compact: true,
+          enabled: items[i].enabled && enabled,
+        ),
+      );
+    }
+
+    return MouseRegion(
+      onExit: enabled
+          ? (event) {
+              if (event.localPosition.dy < navThemeData.height!) {
+                setState(hideMenu);
+              }
+            }
+          : null,
+      hitTestBehavior: HitTestBehavior.translucent,
+      opaque: false,
+      child: Container(
+        constraints: BoxConstraints(minWidth: navThemeData.width!),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: itemsMenu,
+        ),
+      ),
+    );
+  }
+
+  void _goBack() {
+    if (menuIndex != -1) {
+      setState(hideMenu);
+    } else {
+      widget.onPressBackButton!();
+    }
+  }
+
+  Widget _createHorizontalItems(
+    EdgeInsets itemSpacing,
+    NavThemeData navThemeData,
+  ) {
     return Padding(
-      padding: itemsSpacing,
-      child: NavGroup(
-        navWidgets: widget.navAxis == Axis.horizontal
-            ? (context, index) => Text(widget.items[index].title ?? '')
-            : (context, index) => Icon(widget.items[index].icon),
-        axis: widget.navAxis,
-        enabled: _menuIndex == -1,
+      padding: itemSpacing,
+      child: NavGroupHorizontal(
+        navWidgets: (context, index) => Text(widget.items[index].title),
+        enabled: !menuShown,
         navItems: widget.items,
         index: _controller.index,
         onChanged: (value) => _indexChanged(value),
@@ -394,15 +536,23 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     );
   }
 
-  void _goBack() {
-    if (_menuIndex != -1) {
-      _hideMenu();
-    } else {
-      widget.onPressBackButton!();
-    }
+  Widget _createVerticalItems(
+    EdgeInsets itemSpacing,
+    NavThemeData navThemeData,
+  ) {
+    return Padding(
+      padding: itemSpacing,
+      child: NavGroupVertical(
+        compact: widget.compact,
+        enabled: !menuShown,
+        navItems: widget.items,
+        index: _controller.index,
+        onChanged: (value) => _indexChanged(value),
+      ),
+    );
   }
 
-  Widget _createNavBar() {
+  Widget _createVerticalBar() {
     final ThemeData themeData = Theme.of(context);
     final ColorScheme colorScheme = themeData.colorScheme;
 
@@ -410,57 +560,135 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
     final backgroundColor = colorScheme.background[0];
 
-    BoxConstraints constraints;
-    EdgeInsets itemsSpacing;
+    final BoxConstraints constraints = BoxConstraints(
+      minWidth: navThemeData.width!,
+      //maxWidth: 400.0,
+    );
 
-    if (widget.navAxis == Axis.horizontal) {
-      constraints = BoxConstraints.tightFor(height: navThemeData.height);
-      itemsSpacing =
-          EdgeInsets.symmetric(horizontal: navThemeData.itemsSpacing!);
-    } else {
-      constraints = BoxConstraints.tightFor(width: navThemeData.width);
-      itemsSpacing = EdgeInsets.symmetric(vertical: navThemeData.itemsSpacing!);
-    }
+    final EdgeInsets itemSpacing = EdgeInsets.symmetric(
+      vertical: navThemeData.itemSpacing!,
+    );
 
     final navList = <Widget>[];
 
     if (widget.onPressBackButton != null) {
-      final enabled = (widget.isBackButtonEnabled ?? true) || _menuIndex != -1;
+      final enabled = (widget.isBackButtonEnabled ?? true) || menuIndex != -1;
 
       final value = Container(
         alignment: Alignment.center,
-        padding: itemsSpacing,
+        padding: itemSpacing,
         child: NavMenuButton(
           const Icon(Icons.arrowBack),
-          axis: widget.navAxis,
+          axis: Axis.vertical,
+          titleBuilder: null,
           active: false,
+          enabled: true,
+          title: 'Back',
           onPressed: enabled ? () => _goBack() : null,
-          tooltip: 'Back',
         ),
       );
 
       navList.add(value);
     }
 
-    navList.add(
-      _createNavItems(itemsSpacing, navThemeData),
-    );
+    navList.add(_createVerticalItems(itemSpacing, navThemeData));
 
-    navList.add(const Spacer());
+    if (widget.navbarWidget != null) {
+      navList.add(Expanded(child: widget.navbarWidget!(context)));
+    } else {
+      navList.add(const Spacer());
+    }
 
     if (widget.trailingMenu.isNotEmpty) {
-      navList.add(_createMenuItems(
-        itemsSpacing,
-        navThemeData,
-        _trailingMenu,
-      ));
+      navList.add(_createMenuItems(itemSpacing, navThemeData, _trailingMenu));
+    }
+
+    return Container(
+      constraints: constraints,
+      color: backgroundColor,
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: navList,
+        ),
+      ),
+    );
+  }
+
+  Widget _createHorizontalBar() {
+    final ThemeData themeData = Theme.of(context);
+    final ColorScheme colorScheme = themeData.colorScheme;
+
+    final NavThemeData navThemeData = NavTheme.of(context);
+
+    final backgroundColor = colorScheme.background[0];
+
+    final BoxConstraints constraints = BoxConstraints.tightFor(
+      height: navThemeData.height,
+    );
+    final EdgeInsets itemSpacing = EdgeInsets.symmetric(
+      horizontal: navThemeData.itemSpacing!,
+    );
+
+    final navList = <Widget>[];
+
+    if (widget.onPressBackButton != null) {
+      final enabled = (widget.isBackButtonEnabled ?? true) || menuIndex != -1;
+
+      final value = Container(
+        alignment: Alignment.center,
+        padding: itemSpacing,
+        child: NavMenuButton(
+          const Icon(Icons.arrowBack),
+          axis: Axis.horizontal,
+          titleBuilder: null,
+          active: false,
+          enabled: true,
+          onPressed: enabled ? () => _goBack() : null,
+          title: 'Back',
+        ),
+      );
+
+      navList.add(value);
+    }
+
+    navList.add(_createHorizontalItems(itemSpacing, navThemeData));
+
+    if (widget.navbarGestures != null) {
+      navList.add(
+        Expanded(
+          child: RawGestureDetector(
+            gestures: widget.navbarGestures!,
+            behavior: HitTestBehavior.opaque,
+          ),
+        ),
+      );
+    } else {
+      navList.add(const Spacer());
+    }
+
+    if (widget.infoItems.isNotEmpty) {
+      navList.add(
+        Padding(
+          padding: EdgeInsets.only(
+            right: widget.trailingMenu.isNotEmpty
+                ? navThemeData.itemSpacing!
+                : 0.0,
+          ),
+          child: _createInfoItems(itemSpacing, navThemeData, _infoItems),
+        ),
+      );
+    }
+
+    if (widget.trailingMenu.isNotEmpty) {
+      navList.add(_createMenuItems(itemSpacing, navThemeData, _trailingMenu));
     }
 
     Widget result = Container(
       constraints: constraints,
       color: backgroundColor,
-      child: Flex(
-        direction: widget.navAxis,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: navList,
@@ -479,6 +707,27 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     return result;
   }
 
+  OverlayEntry _createPageOverlayEntry(int index) {
+    return OverlayEntry(
+      maintainState: true,
+      builder: (context) {
+        final bool active = index == _controller.index;
+        _shouldBuildView[index] = active || _shouldBuildView[index];
+        return Offstage(
+          offstage: !active,
+          child: TickerMode(
+            enabled: active,
+            child: Builder(
+              builder: _shouldBuildView[index]
+                  ? (context) => widget.items[index].builder(context, index)
+                  : (context) => Container(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -493,37 +742,42 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
 
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
 
-    _overlays.addAll(List<OverlayEntry>.generate(
-        _length, (index) => _createPageOverlayEntry(index)));
+    _overlays.addAll(
+      List<OverlayEntry>.generate(
+        _length,
+        (index) => _createPageOverlayEntry(index),
+      ),
+    );
 
-    _menuController = AnimationController(
-      vsync: this,
-      duration: _kMenuTransitionDuration,
-    )..addStatusListener(_handleMenuAnimationStatusChanged);
-
-    _createAnimation();
+    if (widget.contentMenu != null) {
+      _contentOverlay = OverlayEntry(
+        builder: (context) => widget.contentMenu!(context),
+      );
+    }
 
     _updateNavController();
   }
 
-  OverlayEntry _createPageOverlayEntry(int index) {
-    return OverlayEntry(
-        maintainState: true,
-        builder: (context) {
-          final bool active = index == _controller.index;
-          _shouldBuildView[index] = active || _shouldBuildView[index];
-          return Offstage(
-            offstage: !active,
-            child: TickerMode(
-              enabled: active,
-              child: Builder(
-                builder: _shouldBuildView[index]
-                    ? (context) => widget.items[index].builder(context, index)
-                    : (context) => Container(),
-              ),
-            ),
-          );
-        });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final NavThemeData themeData = NavTheme.of(context);
+
+    _menuTransitionDuration = themeData.menuTransitionDuration!;
+    _menuTrasitionCurve = themeData.menuTrasitionCurve!;
+    _navBarBackgroundColor = themeData.navBarBackgroundColor!;
+
+    menuController ??= AnimationController(
+      vsync: this,
+      duration: themeData.menuTransitionDuration!,
+    )..addStatusListener(_handleMenuAnimationStatusChanged);
+
+    menuAnimation ??= CurvedAnimation(
+      parent: menuController!,
+      curve: themeData.menuTrasitionCurve!,
+      reverseCurve: themeData.menuTrasitionReverseCurve!,
+    );
   }
 
   @override
@@ -531,28 +785,42 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
 
     if (widget.items.length - _shouldBuildView.length > 0) {
-      _shouldBuildView.addAll(List<bool>.filled(
-          widget.items.length - _shouldBuildView.length, false));
+      _shouldBuildView.addAll(
+        List<bool>.filled(widget.items.length - _shouldBuildView.length, false),
+      );
 
-      for (int index = _overlays.length;
-          index < widget.items.length - _shouldBuildView.length;
-          index += 1) {
+      for (
+        int index = _overlays.length;
+        index < widget.items.length - _shouldBuildView.length;
+        index += 1
+      ) {
         _overlays.add(_createPageOverlayEntry(index));
       }
     } else {
       _shouldBuildView.removeRange(
-          widget.items.length, _shouldBuildView.length);
+        widget.items.length,
+        _shouldBuildView.length,
+      );
 
-      for (final overlayEntry
-          in _overlays.getRange(widget.items.length, _overlays.length)) {
+      for (final overlayEntry in _overlays.getRange(
+        widget.items.length,
+        _overlays.length,
+      )) {
         overlayEntry.remove();
       }
 
       _overlays.removeRange(widget.items.length, _overlays.length);
     }
 
-    if (oldWidget.navAxis != widget.navAxis) {
-      _createAnimation();
+    if (oldWidget.contentMenu != widget.contentMenu) {
+      if (widget.contentMenu == null) {
+        _contentOverlay?.remove();
+        _contentOverlay = null;
+      } else {
+        _contentOverlay = OverlayEntry(
+          builder: (context) => widget.contentMenu!(context),
+        );
+      }
     }
 
     if (widget.controller != oldWidget.controller) {
@@ -571,7 +839,7 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
       _controller.removeListener(_onCurrentIndexChange);
     }
 
-    _menuController.dispose();
+    menuController!.dispose();
 
     super.dispose();
   }
@@ -580,17 +848,22 @@ class _NavState extends State<Nav> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Axis navAxis = widget.navAxis;
 
+    final overlays = [..._overlays];
+    if (_contentOverlay != null) {
+      overlays.add(_contentOverlay!);
+    }
+
     Widget result = Flex(
       direction: flipAxis(navAxis),
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        if (widget.visible) _createNavBar(),
+        if (widget.visible && widget.navAxis == Axis.vertical)
+          _createVerticalBar(),
+        if (widget.visible && widget.navAxis == Axis.horizontal)
+          _createHorizontalBar(),
         Expanded(
-          child: Overlay(
-            key: _overlayKey,
-            initialEntries: _overlays,
-          ),
+          child: Overlay(key: _overlayKey, initialEntries: overlays),
         ),
       ],
     );

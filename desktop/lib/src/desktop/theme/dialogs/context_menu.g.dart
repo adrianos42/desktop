@@ -246,7 +246,7 @@ class ContextMenuThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       iconThemeData,
       menuWidthStep,
       itemHeight,
@@ -262,7 +262,7 @@ class ContextMenuThemeData {
       highlightColor,
       background,
       color,
-    );
+    ]);
   }
 
   @override
@@ -387,11 +387,7 @@ iconThemeData: The icon theme.
 @immutable
 class ContextMenuTheme extends InheritedTheme {
   /// Creates a [ContextMenuTheme].
-  const ContextMenuTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const ContextMenuTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [ContextMenuTheme].
   final ContextMenuThemeData data;
@@ -458,12 +454,9 @@ class ContextMenuTheme extends InheritedTheme {
 
   /// Returns a copy of [ContextMenuTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final ContextMenuTheme? contextMenuTheme =
-        context.findAncestorWidgetOfExactType<ContextMenuTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final ContextMenuTheme? contextMenuTheme = context
+        .findAncestorWidgetOfExactType<ContextMenuTheme>();
     return identical(this, contextMenuTheme)
         ? child
         : ContextMenuTheme(data: data, child: child);
@@ -471,19 +464,16 @@ class ContextMenuTheme extends InheritedTheme {
 
   /// Returns the nearest [ContextMenuTheme].
   static ContextMenuThemeData of(BuildContext context) {
-    final ContextMenuTheme? contextMenuTheme =
-        context.dependOnInheritedWidgetOfExactType<ContextMenuTheme>();
+    final ContextMenuTheme? contextMenuTheme = context
+        .dependOnInheritedWidgetOfExactType<ContextMenuTheme>();
     ContextMenuThemeData? contextMenuThemeData = contextMenuTheme?.data;
 
     if (contextMenuThemeData == null || !contextMenuThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       contextMenuThemeData ??= themeData.contextMenuTheme;
 
-      final contextMenuValue =
-          _ContextMenuThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final contextMenuValue = _ContextMenuThemeData(themeData);
 
       final IconThemeData iconThemeData =
           contextMenuThemeData.iconThemeData ?? contextMenuValue.iconThemeData;
@@ -497,23 +487,24 @@ class ContextMenuTheme extends InheritedTheme {
           contextMenuThemeData.maxMenuWidth ?? contextMenuValue.maxMenuWidth;
       final double menuHorizontalPadding =
           contextMenuThemeData.menuHorizontalPadding ??
-              contextMenuValue.menuHorizontalPadding;
+          contextMenuValue.menuHorizontalPadding;
       final TextStyle textStyle =
           contextMenuThemeData.textStyle ?? contextMenuValue.textStyle;
       final Color selectedColor =
           contextMenuThemeData.selectedColor ?? contextMenuValue.selectedColor;
       final Color selectedHighlightColor =
           contextMenuThemeData.selectedHighlightColor ??
-              contextMenuValue.selectedHighlightColor;
+          contextMenuValue.selectedHighlightColor;
       final Color selectedHoverColor =
           contextMenuThemeData.selectedHoverColor ??
-              contextMenuValue.selectedHoverColor;
+          contextMenuValue.selectedHoverColor;
       final Color selectedForeground =
           contextMenuThemeData.selectedForeground ??
-              contextMenuValue.selectedForeground;
+          contextMenuValue.selectedForeground;
       final Color hoverColor =
           contextMenuThemeData.hoverColor ?? contextMenuValue.hoverColor;
-      final Color highlightColor = contextMenuThemeData.highlightColor ??
+      final Color highlightColor =
+          contextMenuThemeData.highlightColor ??
           contextMenuValue.highlightColor;
       final Color background =
           contextMenuThemeData.background ?? contextMenuValue.background;

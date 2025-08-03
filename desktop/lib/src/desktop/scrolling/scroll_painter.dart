@@ -187,7 +187,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     final color = thumbColor.evaluate(thumbColorAnimation)!;
     return Paint()
       ..color =
-          color.withOpacity(color.opacity * fadeoutOpacityAnimation.value);
+          color.withValues(alpha: color.a * fadeoutOpacityAnimation.value);
   }
 
   Paint get _trackPaint {

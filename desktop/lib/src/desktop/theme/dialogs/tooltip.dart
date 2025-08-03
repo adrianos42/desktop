@@ -8,13 +8,14 @@ part 'tooltip.g.dart';
 /// Theme data for [Tooltip].
 @immutable
 class _TooltipThemeData {
-  const _TooltipThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+   _TooltipThemeData(ThemeData themeData) {
+    _themeData = themeData.invertedTheme;
+  }
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  late final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The height of the tooltip's [child].
   ///
@@ -50,7 +51,7 @@ class _TooltipThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get backgroundColor => colorScheme.background[0];
+  Color get backgroundColor => _colorScheme.background[0];
 
   /// The [TextStyle] for the tooltip text.
   /// 
@@ -59,7 +60,7 @@ class _TooltipThemeData {
   /// ```dart
   /// textTheme.caption
   /// ```
-  TextStyle get textStyle => textTheme.caption;
+  TextStyle get textStyle => _textTheme.caption;
 
   /// The amount of space by which to inset the tooltip's [child].
   ///

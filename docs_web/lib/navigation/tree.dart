@@ -37,6 +37,8 @@ class TreePage extends StatefulWidget {
 
 class _TreePageState extends State<TreePage> {
   bool _isShowingTree = true;
+  bool _basicExampleDrag = false;
+  
   final TreeController _controller = TreeController();
 
   Widget _buildTreeControllerPage() {
@@ -406,6 +408,16 @@ return Tree(
         ItemTitle(
           title: 'Basic example',
           codeText: codeSample,
+          options: [
+            Button.icon(
+              Icons.dragHandle,
+              tooltip: 'Allow tree dragging',
+              active: _basicExampleDrag,
+              onPressed: () => setState(
+                () => _basicExampleDrag = !_basicExampleDrag,
+              ),
+            ),
+          ],
           body: (context) {
             return Padding(
               padding: const EdgeInsets.only(top: 12.0),
@@ -419,6 +431,7 @@ return Tree(
                     ),
                   ),
                 ),
+                allowDragging: _basicExampleDrag,
                 nodes: [
                   TreeNode.child(
                     titleBuilder: (context) => const Text('Node 0'),

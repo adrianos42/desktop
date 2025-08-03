@@ -1,7 +1,5 @@
 import 'dart:ui' show Brightness;
-
 import 'package:flutter/widgets.dart';
-
 export 'theme_data.dart' show ThemeData, Theme;
 
 const PrimaryColor _kDefaultPrimary = _DodgerBluePrimaryColor();
@@ -12,45 +10,38 @@ const BackgroundColor _backgroundColor = _DefaultBackgroundColor();
 @immutable
 class ColorScheme {
   ///
-  const ColorScheme(
-    this.brightness, {
+  const ColorScheme({
     PrimaryColor? primary,
     BackgroundColor? backgroundColor,
     ShadeColor? shade,
+    Color? disabledColor,
+    Color? errorColor,
   })  : _primary = primary ?? _kDefaultPrimary,
         _shade = shade ?? _kDefaultShadeColor,
-        _background = backgroundColor ?? _backgroundColor;
-
-  /// Returns a color scheme with a different brightness.
-  ColorScheme withBrightness(Brightness brightness) {
-    return ColorScheme(brightness, primary: _primary);
-  }
-
-  /// The color scheme brightness.
-  final Brightness brightness;
+        _background = backgroundColor ?? _backgroundColor,
+        _disabled = disabledColor ?? const Color(0xff404040),
+        _error = errorColor ?? const Color(0xffd74242);
 
   final ShadeColor _shade;
   final PrimaryColor _primary;
   final BackgroundColor _background;
+  final Color _disabled;
+  final Color _error;
 
   /// Shade color.
-  ShadeColor get shade => _shade.withBrightness(brightness);
+  ShadeColor get shade => _shade;
 
   /// Primary color.
-  PrimaryColor get primary => _primary.withBrightness(brightness);
+  PrimaryColor get primary => _primary;
 
   /// Background color.
-  BackgroundColor get background => _background.withBrightness(brightness);
+  BackgroundColor get background => _background;
 
   /// Disabled color.
-  Color get disabled => brightness == Brightness.light
-      ? const Color(0xffbfbfbf)
-      : const Color(0xff404040);
+  Color get disabled => _disabled;
 
   /// Error color.
-  Color get error => brightness == Brightness.light
-      ? const Color(0xfff20d0d)
-      : const Color(0xffd74242);
+  Color get error => _error;
 }
 
 /// Shade color used in [ColorScheme].
@@ -139,7 +130,6 @@ abstract class ShadeColor {
             throw Exception('Wrong index for shade color');
         }
       case Brightness.dark:
-      default:
         switch (index) {
           case 30:
             return b30;
@@ -336,7 +326,6 @@ abstract class BackgroundColor {
             throw Exception('Wrong index for backgrount color');
         }
       case Brightness.dark:
-      default:
         switch (index) {
           case 0:
             return b0;
@@ -457,33 +446,11 @@ class _DefaultBackgroundColor extends BackgroundColor {
 abstract class PrimaryColor {
   /// Creates a [PrimaryColor].
   const PrimaryColor({
-    this.brightness = Brightness.dark,
     required this.name,
   });
 
-  /// The [Brightness] of the primary color.
-  final Brightness brightness;
-
-  /// Used by [ColorScheme] to return a color with current brightness.
-  PrimaryColor withBrightness(Brightness brightness);
-
   /// The name of the primary color.
   final String name;
-
-  /// Light theme color with index 30.
-  Color get w30;
-
-  /// Light theme color with index 40.
-  Color get w40;
-
-  /// Light theme color with index 50.
-  Color get w50;
-
-  /// Light theme color with index 60.
-  Color get w60;
-
-  /// Light theme color with index 70.
-  Color get w70;
 
   /// Dark theme color with index 30.
   Color get b30;
@@ -502,38 +469,19 @@ abstract class PrimaryColor {
 
   /// Returns a primary color.
   Color operator [](int index) {
-    switch (brightness) {
-      case Brightness.light:
-        switch (index) {
-          case 30:
-            return w30;
-          case 40:
-            return w40;
-          case 50:
-            return w50;
-          case 60:
-            return w60;
-          case 70:
-            return w70;
-          default:
-            throw Exception('Wrong index for primary color');
-        }
-      case Brightness.dark:
+    switch (index) {
+      case 30:
+        return b30;
+      case 40:
+        return b40;
+      case 50:
+        return b50;
+      case 60:
+        return b60;
+      case 70:
+        return b70;
       default:
-        switch (index) {
-          case 30:
-            return b30;
-          case 40:
-            return b40;
-          case 50:
-            return b50;
-          case 60:
-            return b60;
-          case 70:
-            return b70;
-          default:
-            throw Exception('Wrong index for primary color');
-        }
+        throw Exception('Wrong index for primary color');
     }
   }
 
@@ -541,19 +489,7 @@ abstract class PrimaryColor {
   Color get color => this[50];
 
   @override
-  int get hashCode => Object.hash(
-        name,
-        w30,
-        w40,
-        w50,
-        w60,
-        w70,
-        b30,
-        b40,
-        b50,
-        b60,
-        b70,
-      );
+  int get hashCode => Object.hash(name, b30, b40, b50, b60, b70);
 
   @override
   bool operator ==(covariant PrimaryColor other) {
@@ -564,11 +500,6 @@ abstract class PrimaryColor {
       return false;
     }
     return other.name == name &&
-        other.w30 == w30 &&
-        other.w40 == w40 &&
-        other.w50 == w50 &&
-        other.w60 == w60 &&
-        other.w70 == w70 &&
         other.b30 == b30 &&
         other.b40 == b40 &&
         other.b50 == b50 &&
@@ -581,26 +512,7 @@ abstract class PrimaryColor {
 }
 
 class _CoralPrimaryColor extends PrimaryColor {
-  const _CoralPrimaryColor({super.brightness}) : super(name: 'Coral');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _CoralPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffff8f66);
-
-  @override
-  Color get w40 => const Color(0xffff6933);
-
-  @override
-  Color get w50 => const Color(0xffff4400);
-
-  @override
-  Color get w60 => const Color(0xffcc3600);
-
-  @override
-  Color get w70 => const Color(0xff992900);
+  const _CoralPrimaryColor() : super(name: 'Coral');
 
   @override
   Color get b30 => const Color(0xff992900);
@@ -619,27 +531,7 @@ class _CoralPrimaryColor extends PrimaryColor {
 }
 
 class _CornflowerBluePrimaryColor extends PrimaryColor {
-  const _CornflowerBluePrimaryColor({super.brightness})
-      : super(name: 'Cornflower Blue');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _CornflowerBluePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff76a0ef);
-
-  @override
-  Color get w40 => const Color(0xff4881ea);
-
-  @override
-  Color get w50 => const Color(0xff1b61e4);
-
-  @override
-  Color get w60 => const Color(0xff154eb7);
-
-  @override
-  Color get w70 => const Color(0xff103a89);
+  const _CornflowerBluePrimaryColor() : super(name: 'Cornflower Blue');
 
   @override
   Color get b30 => const Color(0xff103a89);
@@ -658,26 +550,7 @@ class _CornflowerBluePrimaryColor extends PrimaryColor {
 }
 
 class _TurquoisePrimaryColor extends PrimaryColor {
-  const _TurquoisePrimaryColor({super.brightness}) : super(name: 'Turquoise');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _TurquoisePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff75eef0);
-
-  @override
-  Color get w40 => const Color(0xff47e8eb);
-
-  @override
-  Color get w50 => const Color(0xff19e2e6);
-
-  @override
-  Color get w60 => const Color(0xff14b5b8);
-
-  @override
-  Color get w70 => const Color(0xff0f888a);
+  const _TurquoisePrimaryColor() : super(name: 'Turquoise');
 
   @override
   Color get b30 => const Color(0xff0f888a);
@@ -696,27 +569,7 @@ class _TurquoisePrimaryColor extends PrimaryColor {
 }
 
 class _DeepSkyBluePrimaryColor extends PrimaryColor {
-  const _DeepSkyBluePrimaryColor({super.brightness})
-      : super(name: 'Deep Sky Blue');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _DeepSkyBluePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff66d9ff);
-
-  @override
-  Color get w40 => const Color(0xff33ccff);
-
-  @override
-  Color get w50 => const Color(0xff00bfff);
-
-  @override
-  Color get w60 => const Color(0xff0099cc);
-
-  @override
-  Color get w70 => const Color(0xff007399);
+  const _DeepSkyBluePrimaryColor() : super(name: 'Deep Sky Blue');
 
   @override
   Color get b30 => const Color(0xff007399);
@@ -735,27 +588,7 @@ class _DeepSkyBluePrimaryColor extends PrimaryColor {
 }
 
 class _DodgerBluePrimaryColor extends PrimaryColor {
-  const _DodgerBluePrimaryColor({super.brightness})
-      : super(name: 'Dodger Blue');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _DodgerBluePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff6eb3f7);
-
-  @override
-  Color get w40 => const Color(0xff3d99f5);
-
-  @override
-  Color get w50 => const Color(0xff0d80f2);
-
-  @override
-  Color get w60 => const Color(0xff0a66c2);
-
-  @override
-  Color get w70 => const Color(0xff084d91);
+  const _DodgerBluePrimaryColor() : super(name: 'Dodger Blue');
 
   @override
   Color get b30 => const Color(0xff084d91);
@@ -774,26 +607,7 @@ class _DodgerBluePrimaryColor extends PrimaryColor {
 }
 
 class _GoldenrodPrimaryColor extends PrimaryColor {
-  const _GoldenrodPrimaryColor({super.brightness}) : super(name: 'Goldenrod');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _GoldenrodPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffebcb7a);
-
-  @override
-  Color get w40 => const Color(0xffe4ba4e);
-
-  @override
-  Color get w50 => const Color(0xffdea821);
-
-  @override
-  Color get w60 => const Color(0xffb1871b);
-
-  @override
-  Color get w70 => const Color(0xff856514);
+  const _GoldenrodPrimaryColor() : super(name: 'Goldenrod');
 
   @override
   Color get b30 => const Color(0xff856514);
@@ -812,26 +626,7 @@ class _GoldenrodPrimaryColor extends PrimaryColor {
 }
 
 class _HotPinkPrimaryColor extends PrimaryColor {
-  const _HotPinkPrimaryColor({super.brightness}) : super(name: 'Hot Pink');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _HotPinkPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffff66b3);
-
-  @override
-  Color get w40 => const Color(0xffff3399);
-
-  @override
-  Color get w50 => const Color(0xffff0080);
-
-  @override
-  Color get w60 => const Color(0xffcc0066);
-
-  @override
-  Color get w70 => const Color(0xff99004d);
+  const _HotPinkPrimaryColor() : super(name: 'Hot Pink');
 
   @override
   Color get b30 => const Color(0xff99004d);
@@ -850,26 +645,7 @@ class _HotPinkPrimaryColor extends PrimaryColor {
 }
 
 class _PurplePrimaryColor extends PrimaryColor {
-  const _PurplePrimaryColor({super.brightness}) : super(name: 'Purple');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _PurplePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffa385e0);
-
-  @override
-  Color get w40 => const Color(0xff855cd6);
-
-  @override
-  Color get w50 => const Color(0xff6633cc);
-
-  @override
-  Color get w60 => const Color(0xff5229a3);
-
-  @override
-  Color get w70 => const Color(0xff3d1f7a);
+  const _PurplePrimaryColor() : super(name: 'Purple');
 
   @override
   Color get b30 => const Color(0xff3d1f7a);
@@ -888,26 +664,7 @@ class _PurplePrimaryColor extends PrimaryColor {
 }
 
 class _OrangePrimaryColor extends PrimaryColor {
-  const _OrangePrimaryColor({super.brightness}) : super(name: 'Orange');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _OrangePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffffba66);
-
-  @override
-  Color get w40 => const Color(0xffffa333);
-
-  @override
-  Color get w50 => const Color(0xffff8c00);
-
-  @override
-  Color get w60 => const Color(0xffcc7000);
-
-  @override
-  Color get w70 => const Color(0xff995400);
+  const _OrangePrimaryColor() : super(name: 'Orange');
 
   @override
   Color get b30 => const Color(0xff995400);
@@ -926,26 +683,7 @@ class _OrangePrimaryColor extends PrimaryColor {
 }
 
 class _RoyalBluePrimaryColor extends PrimaryColor {
-  const _RoyalBluePrimaryColor({super.brightness}) : super(name: 'Royal Blue');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _RoyalBluePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff7b97ea);
-
-  @override
-  Color get w40 => const Color(0xff4f74e3);
-
-  @override
-  Color get w50 => const Color(0xff2251dd);
-
-  @override
-  Color get w60 => const Color(0xff1c41b0);
-
-  @override
-  Color get w70 => const Color(0xff153184);
+  const _RoyalBluePrimaryColor() : super(name: 'Royal Blue');
 
   @override
   Color get b30 => const Color(0xff153184);
@@ -964,27 +702,7 @@ class _RoyalBluePrimaryColor extends PrimaryColor {
 }
 
 class _SandyBrownPrimaryColor extends PrimaryColor {
-  const _SandyBrownPrimaryColor({super.brightness})
-      : super(name: 'Sandy Brown');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _SandyBrownPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xfff59c70);
-
-  @override
-  Color get w40 => const Color(0xfff27b40);
-
-  @override
-  Color get w50 => const Color(0xffee5b11);
-
-  @override
-  Color get w60 => const Color(0xffbf480d);
-
-  @override
-  Color get w70 => const Color(0xff8f360a);
+  const _SandyBrownPrimaryColor() : super(name: 'Sandy Brown');
 
   @override
   Color get b30 => const Color(0xff8f360a);
@@ -1003,26 +721,7 @@ class _SandyBrownPrimaryColor extends PrimaryColor {
 }
 
 class _SlateBluePrimaryColor extends PrimaryColor {
-  const _SlateBluePrimaryColor({super.brightness}) : super(name: 'Slate Blue');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _SlateBluePrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff958adb);
-
-  @override
-  Color get w40 => const Color(0xff7163cf);
-
-  @override
-  Color get w50 => const Color(0xff4e3cc3);
-
-  @override
-  Color get w60 => const Color(0xff3e309c);
-
-  @override
-  Color get w70 => const Color(0xff2f2475);
+  const _SlateBluePrimaryColor() : super(name: 'Slate Blue');
 
   @override
   Color get b30 => const Color(0xff2f2475);
@@ -1041,26 +740,7 @@ class _SlateBluePrimaryColor extends PrimaryColor {
 }
 
 // class _SteelBluePrimaryColor extends PrimaryColor {
-//   const _SteelBluePrimaryColor({super.brightness}) : super(name: 'Steel Blue');
-
-//   @override
-//   PrimaryColor withBrightness(Brightness brightness) =>
-//       _SteelBluePrimaryColor(brightness: brightness);
-
-//       @override
-//   Color get w30 => const Color(0x);
-
-//   @override
-//   Color get w40 => const Color(0x);
-
-//   @override
-//   Color get w50 => const Color(0x);
-
-//   @override
-//   Color get w60 => const Color(0x);
-
-//   @override
-//   Color get w70 => const Color(0x);
+//   const _SteelBluePrimaryColor() : super(name: 'Steel Blue');
 
 //   @override
 //   Color get b30 => const Color(0x);
@@ -1079,26 +759,7 @@ class _SlateBluePrimaryColor extends PrimaryColor {
 // }
 
 class _VioletPrimaryColor extends PrimaryColor {
-  const _VioletPrimaryColor({super.brightness}) : super(name: 'Violet');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _VioletPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xffed78ed);
-
-  @override
-  Color get w40 => const Color(0xffe74be7);
-
-  @override
-  Color get w50 => const Color(0xffe01fe0);
-
-  @override
-  Color get w60 => const Color(0xffb418b4);
-
-  @override
-  Color get w70 => const Color(0xff871287);
+  const _VioletPrimaryColor() : super(name: 'Violet');
 
   @override
   Color get b30 => const Color(0xff871287);
@@ -1117,27 +778,7 @@ class _VioletPrimaryColor extends PrimaryColor {
 }
 
 class _SpringGreenPrimaryColor extends PrimaryColor {
-  const _SpringGreenPrimaryColor({super.brightness})
-      : super(name: 'Spring Green');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _SpringGreenPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xff75f0b3);
-
-  @override
-  Color get w40 => const Color(0xff47eb99);
-
-  @override
-  Color get w50 => const Color(0xff19e680);
-
-  @override
-  Color get w60 => const Color(0xff14b866);
-
-  @override
-  Color get w70 => const Color(0xff0f8a4d);
+  const _SpringGreenPrimaryColor() : super(name: 'Spring Green');
 
   @override
   Color get b30 => const Color(0xff0f8a4d);
@@ -1156,26 +797,7 @@ class _SpringGreenPrimaryColor extends PrimaryColor {
 }
 
 class _RedPrimaryColor extends PrimaryColor {
-  const _RedPrimaryColor({super.brightness}) : super(name: 'Red');
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) =>
-      _RedPrimaryColor(brightness: brightness);
-
-  @override
-  Color get w30 => const Color(0xfff76e8b);
-
-  @override
-  Color get w40 => const Color(0xfff53d65);
-
-  @override
-  Color get w50 => const Color(0xfff20d3e);
-
-  @override
-  Color get w60 => const Color(0xffc20a32);
-
-  @override
-  Color get w70 => const Color(0xff910825);
+  const _RedPrimaryColor() : super(name: 'Red');
 
   @override
   Color get b30 => const Color(0xff910825);
@@ -1293,4 +915,148 @@ enum PrimaryColors {
 
     return null;
   }
+}
+
+class Colors {
+  static const Color aliceBlue = Color(0xfff0f8ff);
+  static const Color antiqueWhite = Color(0xfffaebd7);
+  static const Color aqua = Color(0xff00ffff);
+  static const Color aquamarine = Color(0xff7fffd4);
+  static const Color azure = Color(0xfff0ffff);
+  static const Color beige = Color(0xfff5f5dc);
+  static const Color bisque = Color(0xffffe4c4);
+  static const Color black = Color(0xff000000);
+  static const Color blanchedAlmond = Color(0xffffebcd);
+  static const Color blue = Color(0xff0000ff);
+  static const Color blueViolet = Color(0xff8a2be2);
+  static const Color brown = Color(0xffa52a2a);
+  static const Color burlyWood = Color(0xffdeb887);
+  static const Color cadetBlue = Color(0xff5f9ea0);
+  static const Color chartreuse = Color(0xff7fff00);
+  static const Color chocolate = Color(0xffd2691e);
+  static const Color coral = Color(0xffff7f50);
+  static const Color cornflowerBlue = Color(0xff6495ed);
+  static const Color cornsilk = Color(0xfffff8dc);
+  static const Color crimson = Color(0xffdc143c);
+  static const Color cyan = Color(0xff00ffff);
+  static const Color darkBlue = Color(0xff00008b);
+  static const Color darkCyan = Color(0xff008b8b);
+  static const Color darkGoldenrod = Color(0xffb8860b);
+  static const Color darkGray = Color(0xffa9a9a9);
+  static const Color darkGreen = Color(0xff006400);
+  static const Color darkKhaki = Color(0xffbdb76b);
+  static const Color darkMagenta = Color(0xff8b008b);
+  static const Color darkOliveGreen = Color(0xff556b2f);
+  static const Color darkOrange = Color(0xffff8c00);
+  static const Color darkOrchid = Color(0xff9932cc);
+  static const Color darkRed = Color(0xff8b0000);
+  static const Color darkSalmon = Color(0xffe9967a);
+  static const Color darkSeaGreen = Color(0xff8fbc8f);
+  static const Color darkSlateBlue = Color(0xff483d8b);
+  static const Color darkSlateGray = Color(0xff2f4f4f);
+  static const Color darkTurquoise = Color(0xff00ced1);
+  static const Color darkViolet = Color(0xff9400d3);
+  static const Color deepPink = Color(0xffff1493);
+  static const Color deepSkyBlue = Color(0xff00bfff);
+  static const Color dimGray = Color(0xff696969);
+  static const Color dodgerBlue = Color(0xff1e90ff);
+  static const Color firebrick = Color(0xffb22222);
+  static const Color floralWhite = Color(0xfffffaf0);
+  static const Color forestGreen = Color(0xff228b22);
+  static const Color fuchsia = Color(0xffff00ff);
+  static const Color gainsboro = Color(0xffdcdcdc);
+  static const Color ghostWhite = Color(0xfff8f8ff);
+  static const Color gold = Color(0xffffd700);
+  static const Color goldenrod = Color(0xffdaa520);
+  static const Color gray = Color(0xff808080);
+  static const Color green = Color(0xff008000);
+  static const Color greenYellow = Color(0xffadff2f);
+  static const Color honeydew = Color(0xfff0fff0);
+  static const Color hotPink = Color(0xffff69b4);
+  static const Color indianRed = Color(0xffcd5c5c);
+  static const Color indigo = Color(0xff4b0082);
+  static const Color ivory = Color(0xfffffff0);
+  static const Color khaki = Color(0xfff0e68c);
+  static const Color lavender = Color(0xffe6e6fa);
+  static const Color lavenderBlush = Color(0xfffff0f5);
+  static const Color lawnGreen = Color(0xff7cfc00);
+  static const Color lemonChiffon = Color(0xfffffacd);
+  static const Color lightBlue = Color(0xffadd8e6);
+  static const Color lightCoral = Color(0xfff08080);
+  static const Color lightCyan = Color(0xffe0ffff);
+  static const Color lightGoldenrodYellow = Color(0xfffafad2);
+  static const Color lightGray = Color(0xffd3d3d3);
+  static const Color lightGreen = Color(0xff90ee90);
+  static const Color lightPink = Color(0xffffb6c1);
+  static const Color lightSalmon = Color(0xffffa07a);
+  static const Color lightSeaGreen = Color(0xff20b2aa);
+  static const Color lightSkyBlue = Color(0xff87cefa);
+  static const Color lightSlateGray = Color(0xff778899);
+  static const Color lightSteelBlue = Color(0xffb0c4de);
+  static const Color lightYellow = Color(0xffffffe0);
+  static const Color lime = Color(0xff00ff00);
+  static const Color limeGreen = Color(0xff32cd32);
+  static const Color linen = Color(0xfffaf0e6);
+  static const Color magenta = Color(0xffff00ff);
+  static const Color maroon = Color(0xff800000);
+  static const Color mediumAquamarine = Color(0xff66cdaa);
+  static const Color mediumBlue = Color(0xff0000cd);
+  static const Color mediumOrchid = Color(0xffba55d3);
+  static const Color mediumPurple = Color(0xff9370db);
+  static const Color mediumSeaGreen = Color(0xff3cb371);
+  static const Color mediumSlateBlue = Color(0xff7b68ee);
+  static const Color mediumSpringGreen = Color(0xff00fa9a);
+  static const Color mediumTurquoise = Color(0xff48d1cc);
+  static const Color mediumVioletRed = Color(0xffc71585);
+  static const Color midnightBlue = Color(0xff191970);
+  static const Color mintCream = Color(0xfff5fffa);
+  static const Color mistyRose = Color(0xffffe4e1);
+  static const Color moccasin = Color(0xffffe4b5);
+  static const Color navajoWhite = Color(0xffffdead);
+  static const Color navy = Color(0xff000080);
+  static const Color oldLace = Color(0xfffdf5e6);
+  static const Color olive = Color(0xff808000);
+  static const Color oliveDrab = Color(0xff6b8e23);
+  static const Color orange = Color(0xffffa500);
+  static const Color orangeRed = Color(0xffff4500);
+  static const Color orchid = Color(0xffda70d6);
+  static const Color paleGoldenrod = Color(0xffeee8aa);
+  static const Color paleGreen = Color(0xff98fb98);
+  static const Color paleTurquoise = Color(0xffafeeee);
+  static const Color paleVioletRed = Color(0xffdb7093);
+  static const Color papayaWhip = Color(0xffffefd5);
+  static const Color peachPuff = Color(0xffffdab9);
+  static const Color peru = Color(0xffcd853f);
+  static const Color pink = Color(0xffffc0cb);
+  static const Color plum = Color(0xffdda0dd);
+  static const Color powderBlue = Color(0xffb0e0e6);
+  static const Color purple = Color(0xff800080);
+  static const Color red = Color(0xffff0000);
+  static const Color rosyBrown = Color(0xffbc8f8f);
+  static const Color royalBlue = Color(0xff4169e1);
+  static const Color saddleBrown = Color(0xff8b4513);
+  static const Color salmon = Color(0xfffa8072);
+  static const Color sandyBrown = Color(0xfff4a460);
+  static const Color seaGreen = Color(0xff2e8b57);
+  static const Color seaShell = Color(0xfffff5ee);
+  static const Color sienna = Color(0xffa0522d);
+  static const Color silver = Color(0xffc0c0c0);
+  static const Color skyBlue = Color(0xff87ceeb);
+  static const Color slateBlue = Color(0xff6a5acd);
+  static const Color slateGray = Color(0xff708090);
+  static const Color snow = Color(0xfffffafa);
+  static const Color springGreen = Color(0xff00ff7f);
+  static const Color steelBlue = Color(0xff4682b4);
+  static const Color tan = Color(0xffd2b48c);
+  static const Color teal = Color(0xff008080);
+  static const Color thistle = Color(0xffd8bfd8);
+  static const Color tomato = Color(0xffff6347);
+  static const Color transparent = Color(0x00ffffff);
+  static const Color turquoise = Color(0xff40e0d0);
+  static const Color violet = Color(0xffee82ee);
+  static const Color wheat = Color(0xfff5deb3);
+  static const Color white = Color(0xffffffff);
+  static const Color whiteSmoke = Color(0xfff5f5f5);
+  static const Color yellow = Color(0xffffff00);
+  static const Color yellowGreen = Color(0xff9acd32);
 }

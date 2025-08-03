@@ -1,11 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'dialogs/message.dart';
-import 'icons.dart';
-import 'input/button.dart';
 import 'localizations.dart';
 import 'navigation/route.dart';
 import 'scrolling/scrolling.dart';
@@ -368,8 +364,7 @@ class _DesktopAppState extends State<DesktopApp> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData effectiveThemeData =
-        widget.theme ?? ThemeData(brightness: Brightness.dark);
+    final ThemeData effectiveThemeData = widget.theme ?? ThemeData();
 
     return Theme(
       data: effectiveThemeData,

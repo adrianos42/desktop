@@ -17,6 +17,7 @@ class CheckboxThemeData {
     this.inactiveColor,
     this.inactiveHoverColor,
     this.foreground,
+    this.hoverForeground,
     this.containerSize,
   });
 
@@ -74,6 +75,15 @@ class CheckboxThemeData {
   /// ```
   final Color? foreground;
 
+  /// The hover foreground color.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.background[0]
+  /// ```
+  final Color? hoverForeground;
+
   /// The container size.
   ///
   /// Defaults to:
@@ -91,6 +101,7 @@ class CheckboxThemeData {
     Color? inactiveColor,
     Color? inactiveHoverColor,
     Color? foreground,
+    Color? hoverForeground,
     double? containerSize,
   }) {
     return CheckboxThemeData(
@@ -100,6 +111,7 @@ class CheckboxThemeData {
       inactiveColor: inactiveColor ?? this.inactiveColor,
       inactiveHoverColor: inactiveHoverColor ?? this.inactiveHoverColor,
       foreground: foreground ?? this.foreground,
+      hoverForeground: hoverForeground ?? this.hoverForeground,
       containerSize: containerSize ?? this.containerSize,
     );
   }
@@ -116,6 +128,7 @@ class CheckboxThemeData {
       inactiveColor: other.inactiveColor,
       inactiveHoverColor: other.inactiveHoverColor,
       foreground: other.foreground,
+      hoverForeground: other.hoverForeground,
       containerSize: other.containerSize,
     );
   }
@@ -127,20 +140,22 @@ class CheckboxThemeData {
         inactiveColor != null &&
         inactiveHoverColor != null &&
         foreground != null &&
+        hoverForeground != null &&
         containerSize != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disabledColor,
       activeColor,
       activeHoverColor,
       inactiveColor,
       inactiveHoverColor,
       foreground,
+      hoverForeground,
       containerSize,
-    );
+    ]);
   }
 
   @override
@@ -182,6 +197,12 @@ disabledColor: The disabled color.
  
  ```dart
  colorScheme.shade[100]
+ ```;;hoverForeground: The hover foreground color.
+ 
+ Defaults to:
+ 
+ ```dart
+ colorScheme.background[0]
  ```;;containerSize: The container size.
  
  Defaults to:
@@ -201,6 +222,7 @@ disabledColor: The disabled color.
             other.inactiveColor == inactiveColor &&
             other.inactiveHoverColor == inactiveHoverColor &&
             other.foreground == foreground &&
+            other.hoverForeground == hoverForeground &&
             other.containerSize == containerSize;
   }
 }
@@ -209,11 +231,7 @@ disabledColor: The disabled color.
 @immutable
 class CheckboxTheme extends InheritedTheme {
   /// Creates a [CheckboxTheme].
-  const CheckboxTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const CheckboxTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [CheckboxTheme].
   final CheckboxThemeData data;
@@ -243,6 +261,7 @@ class CheckboxTheme extends InheritedTheme {
     Color? inactiveColor,
     Color? inactiveHoverColor,
     Color? foreground,
+    Color? hoverForeground,
     double? containerSize,
   }) {
     return Builder(
@@ -255,6 +274,7 @@ class CheckboxTheme extends InheritedTheme {
           inactiveColor: inactiveColor,
           inactiveHoverColor: inactiveHoverColor,
           foreground: foreground,
+          hoverForeground: hoverForeground,
           containerSize: containerSize,
         ),
         child: child,
@@ -264,12 +284,9 @@ class CheckboxTheme extends InheritedTheme {
 
   /// Returns a copy of [CheckboxTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final CheckboxTheme? checkboxTheme =
-        context.findAncestorWidgetOfExactType<CheckboxTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final CheckboxTheme? checkboxTheme = context
+        .findAncestorWidgetOfExactType<CheckboxTheme>();
     return identical(this, checkboxTheme)
         ? child
         : CheckboxTheme(data: data, child: child);
@@ -277,19 +294,16 @@ class CheckboxTheme extends InheritedTheme {
 
   /// Returns the nearest [CheckboxTheme].
   static CheckboxThemeData of(BuildContext context) {
-    final CheckboxTheme? checkboxTheme =
-        context.dependOnInheritedWidgetOfExactType<CheckboxTheme>();
+    final CheckboxTheme? checkboxTheme = context
+        .dependOnInheritedWidgetOfExactType<CheckboxTheme>();
     CheckboxThemeData? checkboxThemeData = checkboxTheme?.data;
 
     if (checkboxThemeData == null || !checkboxThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       checkboxThemeData ??= themeData.checkboxTheme;
 
-      final checkboxValue =
-          _CheckboxThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final checkboxValue = _CheckboxThemeData(themeData);
 
       final Color disabledColor =
           checkboxThemeData.disabledColor ?? checkboxValue.disabledColor;
@@ -299,10 +313,13 @@ class CheckboxTheme extends InheritedTheme {
           checkboxThemeData.activeHoverColor ?? checkboxValue.activeHoverColor;
       final Color inactiveColor =
           checkboxThemeData.inactiveColor ?? checkboxValue.inactiveColor;
-      final Color inactiveHoverColor = checkboxThemeData.inactiveHoverColor ??
+      final Color inactiveHoverColor =
+          checkboxThemeData.inactiveHoverColor ??
           checkboxValue.inactiveHoverColor;
       final Color foreground =
           checkboxThemeData.foreground ?? checkboxValue.foreground;
+      final Color hoverForeground =
+          checkboxThemeData.hoverForeground ?? checkboxValue.hoverForeground;
       final double containerSize =
           checkboxThemeData.containerSize ?? checkboxValue.containerSize;
 
@@ -313,6 +330,7 @@ class CheckboxTheme extends InheritedTheme {
         inactiveColor: inactiveColor,
         inactiveHoverColor: inactiveHoverColor,
         foreground: foreground,
+        hoverForeground: hoverForeground,
         containerSize: containerSize,
       );
     }

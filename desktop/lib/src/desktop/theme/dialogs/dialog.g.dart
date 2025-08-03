@@ -11,7 +11,6 @@ part of 'dialog.dart';
 class DialogThemeData {
   /// Creates a [DialogThemeData].
   const DialogThemeData({
-    this.constraints,
     this.menuPadding,
     this.menuSpacing,
     this.titlePadding,
@@ -21,16 +20,8 @@ class DialogThemeData {
     this.titleTextStyle,
     this.bodyTextAlign,
     this.imageFilter,
+    this.constraints,
   });
-
-  /// The [BoxConstraints] of the [Dialog].
-  ///
-  /// Defaults to:
-  ///
-  /// ```dart
-  /// BoxConstraints(minWidth: 640.0, minHeight: 120.0)
-  /// ```
-  final BoxConstraints? constraints;
 
   /// The [EdgeInsets] padding of the menu.
   ///
@@ -81,7 +72,7 @@ class DialogThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.background[20].withOpacity(0.8)
+  /// colorScheme.background[20].withValues(alpha: (0.8)
   /// ```
   final Color? barrierColor;
 
@@ -112,9 +103,17 @@ class DialogThemeData {
   /// ```
   final ImageFilter? imageFilter;
 
+  /// The [BoxConstraints] of the [Dialog].
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// BoxConstraints(minWidth: 640.0, minHeight: 120.0)
+  /// ```
+  final BoxConstraints? constraints;
+
   /// Makes a copy of [DialogThemeData] overwriting selected fields.
   DialogThemeData copyWith({
-    BoxConstraints? constraints,
     EdgeInsets? menuPadding,
     double? menuSpacing,
     EdgeInsets? titlePadding,
@@ -124,9 +123,9 @@ class DialogThemeData {
     TextStyle? titleTextStyle,
     TextAlign? bodyTextAlign,
     ImageFilter? imageFilter,
+    BoxConstraints? constraints,
   }) {
     return DialogThemeData(
-      constraints: constraints ?? this.constraints,
       menuPadding: menuPadding ?? this.menuPadding,
       menuSpacing: menuSpacing ?? this.menuSpacing,
       titlePadding: titlePadding ?? this.titlePadding,
@@ -136,6 +135,7 @@ class DialogThemeData {
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       bodyTextAlign: bodyTextAlign ?? this.bodyTextAlign,
       imageFilter: imageFilter ?? this.imageFilter,
+      constraints: constraints ?? this.constraints,
     );
   }
 
@@ -145,7 +145,6 @@ class DialogThemeData {
       return this;
     }
     return copyWith(
-      constraints: other.constraints,
       menuPadding: other.menuPadding,
       menuSpacing: other.menuSpacing,
       titlePadding: other.titlePadding,
@@ -155,12 +154,12 @@ class DialogThemeData {
       titleTextStyle: other.titleTextStyle,
       bodyTextAlign: other.bodyTextAlign,
       imageFilter: other.imageFilter,
+      constraints: other.constraints,
     );
   }
 
   bool get _isConcrete {
-    return constraints != null &&
-        menuPadding != null &&
+    return menuPadding != null &&
         menuSpacing != null &&
         titlePadding != null &&
         bodyPadding != null &&
@@ -168,13 +167,13 @@ class DialogThemeData {
         barrierColor != null &&
         titleTextStyle != null &&
         bodyTextAlign != null &&
-        imageFilter != null;
+        imageFilter != null &&
+        constraints != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
-      constraints,
+    return Object.hashAll([
       menuPadding,
       menuSpacing,
       titlePadding,
@@ -184,19 +183,14 @@ class DialogThemeData {
       titleTextStyle,
       bodyTextAlign,
       imageFilter,
-    );
+      constraints,
+    ]);
   }
 
   @override
   String toString() {
     return r'''
-constraints: The [BoxConstraints] of the [Dialog].
-
- Defaults to:
-
- ```dart
- BoxConstraints(minWidth: 640.0, minHeight: 120.0)
- ```;;menuPadding: The [EdgeInsets] padding of the menu.
+menuPadding: The [EdgeInsets] padding of the menu.
 
  Defaults to:
 
@@ -230,7 +224,7 @@ constraints: The [BoxConstraints] of the [Dialog].
  Defaults to:
 
  ```dart
- colorScheme.background[20].withOpacity(0.8)
+ colorScheme.background[20].withValues(alpha: (0.8)
  ```;;titleTextStyle: The [TextStyle] for the title.
 
  Defaults to:
@@ -249,6 +243,12 @@ constraints: The [BoxConstraints] of the [Dialog].
 
  ```dart
  ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0)
+ ```;;constraints: The [BoxConstraints] of the [Dialog].
+
+ Defaults to:
+
+ ```dart
+ BoxConstraints(minWidth: 640.0, minHeight: 120.0)
  ```;;
 ''';
   }
@@ -256,8 +256,7 @@ constraints: The [BoxConstraints] of the [Dialog].
   @override
   bool operator ==(covariant DialogThemeData other) {
     return identical(this, other) ||
-        other.constraints == constraints &&
-            other.menuPadding == menuPadding &&
+        other.menuPadding == menuPadding &&
             other.menuSpacing == menuSpacing &&
             other.titlePadding == titlePadding &&
             other.bodyPadding == bodyPadding &&
@@ -265,7 +264,8 @@ constraints: The [BoxConstraints] of the [Dialog].
             other.barrierColor == barrierColor &&
             other.titleTextStyle == titleTextStyle &&
             other.bodyTextAlign == bodyTextAlign &&
-            other.imageFilter == imageFilter;
+            other.imageFilter == imageFilter &&
+            other.constraints == constraints;
   }
 }
 
@@ -273,11 +273,7 @@ constraints: The [BoxConstraints] of the [Dialog].
 @immutable
 class DialogTheme extends InheritedTheme {
   /// Creates a [DialogTheme].
-  const DialogTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const DialogTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [DialogTheme].
   final DialogThemeData data;
@@ -290,10 +286,8 @@ class DialogTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => DialogTheme(
-        data: DialogTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          DialogTheme(data: DialogTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -301,7 +295,6 @@ class DialogTheme extends InheritedTheme {
   static Widget copyWith({
     Key? key,
     required Widget child,
-    BoxConstraints? constraints,
     EdgeInsets? menuPadding,
     double? menuSpacing,
     EdgeInsets? titlePadding,
@@ -311,12 +304,12 @@ class DialogTheme extends InheritedTheme {
     TextStyle? titleTextStyle,
     TextAlign? bodyTextAlign,
     ImageFilter? imageFilter,
+    BoxConstraints? constraints,
   }) {
     return Builder(
       key: key,
       builder: (context) => DialogTheme(
         data: DialogTheme.of(context).copyWith(
-          constraints: constraints,
           menuPadding: menuPadding,
           menuSpacing: menuSpacing,
           titlePadding: titlePadding,
@@ -326,6 +319,7 @@ class DialogTheme extends InheritedTheme {
           titleTextStyle: titleTextStyle,
           bodyTextAlign: bodyTextAlign,
           imageFilter: imageFilter,
+          constraints: constraints,
         ),
         child: child,
       ),
@@ -334,12 +328,9 @@ class DialogTheme extends InheritedTheme {
 
   /// Returns a copy of [DialogTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final DialogTheme? dialogTheme =
-        context.findAncestorWidgetOfExactType<DialogTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final DialogTheme? dialogTheme = context
+        .findAncestorWidgetOfExactType<DialogTheme>();
     return identical(this, dialogTheme)
         ? child
         : DialogTheme(data: data, child: child);
@@ -347,22 +338,17 @@ class DialogTheme extends InheritedTheme {
 
   /// Returns the nearest [DialogTheme].
   static DialogThemeData of(BuildContext context) {
-    final DialogTheme? dialogTheme =
-        context.dependOnInheritedWidgetOfExactType<DialogTheme>();
+    final DialogTheme? dialogTheme = context
+        .dependOnInheritedWidgetOfExactType<DialogTheme>();
     DialogThemeData? dialogThemeData = dialogTheme?.data;
 
     if (dialogThemeData == null || !dialogThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       dialogThemeData ??= themeData.dialogTheme;
 
-      final dialogValue =
-          _DialogThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final dialogValue = _DialogThemeData(themeData);
 
-      final BoxConstraints constraints =
-          dialogThemeData.constraints ?? dialogValue.constraints;
       final EdgeInsets menuPadding =
           dialogThemeData.menuPadding ?? dialogValue.menuPadding;
       final double menuSpacing =
@@ -381,9 +367,10 @@ class DialogTheme extends InheritedTheme {
           dialogThemeData.bodyTextAlign ?? dialogValue.bodyTextAlign;
       final ImageFilter imageFilter =
           dialogThemeData.imageFilter ?? dialogValue.imageFilter;
+      final BoxConstraints constraints =
+          dialogThemeData.constraints ?? dialogValue.constraints;
 
       return dialogThemeData.copyWith(
-        constraints: constraints,
         menuPadding: menuPadding,
         menuSpacing: menuSpacing,
         titlePadding: titlePadding,
@@ -393,6 +380,7 @@ class DialogTheme extends InheritedTheme {
         titleTextStyle: titleTextStyle,
         bodyTextAlign: bodyTextAlign,
         imageFilter: imageFilter,
+        constraints: constraints,
       );
     }
 

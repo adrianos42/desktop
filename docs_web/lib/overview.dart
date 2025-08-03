@@ -13,10 +13,7 @@ class OverviewPage extends StatefulWidget {
 
 class _OverviewPageState extends State<OverviewPage> {
   Widget buildGithubIcon() {
-    final brightness = Theme.brightnessOf(context);
-    final assetsFile = brightness == Brightness.light
-        ? 'assets/GitHub-Mark-32px.png'
-        : 'assets/GitHub-Mark-Light-32px.png';
+    const assetsFile = 'assets/GitHub-Mark-Light-32px.png';
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),

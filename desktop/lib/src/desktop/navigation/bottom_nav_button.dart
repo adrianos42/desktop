@@ -63,7 +63,7 @@ class _NavBottomGroupState extends State<NavBottomGroup>
         //  width: navThemeData.height,
       );
       final EdgeInsets buttonBodyPadding = EdgeInsets.symmetric(
-        horizontal: navThemeData.itemsSpacing!,
+        horizontal: navThemeData.itemSpacing!,
       );
       final double buttonHeight = navThemeData.height!;
       double? buttonWidth;
@@ -130,7 +130,8 @@ class _NavBottomGroupState extends State<NavBottomGroup>
           ),
           _SideIconRenderObjectWidget(
             vsync: this,
-            text: widget.navItems.map((e) => e.title ?? '').toList(),
+            // text: widget.navItems.map((e) => e.title!(context)).toList(),
+            text: const [],
             duration: navThemeData.animationDuration!,
             lengths: itemLengths,
             crossLength: crossLenth,

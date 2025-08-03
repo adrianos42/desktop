@@ -204,7 +204,7 @@ class DropDownThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       iconThemeData,
       textStyle,
       disabledColor,
@@ -217,7 +217,7 @@ class DropDownThemeData {
       waitingBackgroundColor,
       disabledBackgroundColor,
       border,
-    );
+    ]);
   }
 
   @override
@@ -321,11 +321,7 @@ iconThemeData: The icon theme of the button. The color is ignored.
 @immutable
 class DropDownTheme extends InheritedTheme {
   /// Creates a [DropDownTheme].
-  const DropDownTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const DropDownTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [DropDownTheme].
   final DropDownThemeData data;
@@ -386,12 +382,9 @@ class DropDownTheme extends InheritedTheme {
 
   /// Returns a copy of [DropDownTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final DropDownTheme? dropDownTheme =
-        context.findAncestorWidgetOfExactType<DropDownTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final DropDownTheme? dropDownTheme = context
+        .findAncestorWidgetOfExactType<DropDownTheme>();
     return identical(this, dropDownTheme)
         ? child
         : DropDownTheme(data: data, child: child);
@@ -399,19 +392,16 @@ class DropDownTheme extends InheritedTheme {
 
   /// Returns the nearest [DropDownTheme].
   static DropDownThemeData of(BuildContext context) {
-    final DropDownTheme? dropDownTheme =
-        context.dependOnInheritedWidgetOfExactType<DropDownTheme>();
+    final DropDownTheme? dropDownTheme = context
+        .dependOnInheritedWidgetOfExactType<DropDownTheme>();
     DropDownThemeData? dropDownThemeData = dropDownTheme?.data;
 
     if (dropDownThemeData == null || !dropDownThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       dropDownThemeData ??= themeData.dropDownTheme;
 
-      final dropDownValue =
-          _DropDownThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final dropDownValue = _DropDownThemeData(themeData);
 
       final IconThemeData iconThemeData =
           dropDownThemeData.iconThemeData ?? dropDownValue.iconThemeData;
@@ -430,13 +420,13 @@ class DropDownTheme extends InheritedTheme {
           dropDownThemeData.backgroundColor ?? dropDownValue.backgroundColor;
       final Color hoverBackgroundColor =
           dropDownThemeData.hoverBackgroundColor ??
-              dropDownValue.hoverBackgroundColor;
+          dropDownValue.hoverBackgroundColor;
       final Color waitingBackgroundColor =
           dropDownThemeData.waitingBackgroundColor ??
-              dropDownValue.waitingBackgroundColor;
+          dropDownValue.waitingBackgroundColor;
       final Color disabledBackgroundColor =
           dropDownThemeData.disabledBackgroundColor ??
-              dropDownValue.disabledBackgroundColor;
+          dropDownValue.disabledBackgroundColor;
       final BorderSide border =
           dropDownThemeData.border ?? dropDownValue.border;
 

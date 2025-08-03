@@ -15,6 +15,9 @@ class TreeThemeData {
     this.color,
     this.hoverColor,
     this.highlightColor,
+    this.indicatorHighlightColor,
+    this.indicatorHoverColor,
+    this.indicatorColor,
   });
 
   /// The style for the text. The color is ignored.
@@ -53,18 +56,52 @@ class TreeThemeData {
   /// ```
   final Color? highlightColor;
 
+  /// The indicator highlight color.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.primary[60]
+  /// ```
+  final Color? indicatorHighlightColor;
+
+  /// The indicator hover highlight color.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// textTheme.textHigh
+  /// ```
+  final Color? indicatorHoverColor;
+
+  /// The indicator color.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.background[20]
+  /// ```
+  final Color? indicatorColor;
+
   /// Makes a copy of [TreeThemeData] overwriting selected fields.
   TreeThemeData copyWith({
     TextStyle? textStyle,
     Color? color,
     Color? hoverColor,
     Color? highlightColor,
+    Color? indicatorHighlightColor,
+    Color? indicatorHoverColor,
+    Color? indicatorColor,
   }) {
     return TreeThemeData(
       textStyle: textStyle ?? this.textStyle,
       color: color ?? this.color,
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
+      indicatorHighlightColor:
+          indicatorHighlightColor ?? this.indicatorHighlightColor,
+      indicatorHoverColor: indicatorHoverColor ?? this.indicatorHoverColor,
+      indicatorColor: indicatorColor ?? this.indicatorColor,
     );
   }
 
@@ -78,6 +115,9 @@ class TreeThemeData {
       color: other.color,
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
+      indicatorHighlightColor: other.indicatorHighlightColor,
+      indicatorHoverColor: other.indicatorHoverColor,
+      indicatorColor: other.indicatorColor,
     );
   }
 
@@ -85,17 +125,23 @@ class TreeThemeData {
     return textStyle != null &&
         color != null &&
         hoverColor != null &&
-        highlightColor != null;
+        highlightColor != null &&
+        indicatorHighlightColor != null &&
+        indicatorHoverColor != null &&
+        indicatorColor != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       textStyle,
       color,
       hoverColor,
       highlightColor,
-    );
+      indicatorHighlightColor,
+      indicatorHoverColor,
+      indicatorColor,
+    ]);
   }
 
   @override
@@ -125,6 +171,24 @@ textStyle: The style for the text. The color is ignored.
 
  ```dart
  colorScheme.primary[60]
+ ```;;indicatorHighlightColor: The indicator highlight color.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.primary[60]
+ ```;;indicatorHoverColor: The indicator hover highlight color.
+
+ Defaults to:
+
+ ```dart
+ textTheme.textHigh
+ ```;;indicatorColor: The indicator color.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[20]
  ```;;
 ''';
   }
@@ -135,7 +199,10 @@ textStyle: The style for the text. The color is ignored.
         other.textStyle == textStyle &&
             other.color == color &&
             other.hoverColor == hoverColor &&
-            other.highlightColor == highlightColor;
+            other.highlightColor == highlightColor &&
+            other.indicatorHighlightColor == indicatorHighlightColor &&
+            other.indicatorHoverColor == indicatorHoverColor &&
+            other.indicatorColor == indicatorColor;
   }
 }
 
@@ -143,11 +210,7 @@ textStyle: The style for the text. The color is ignored.
 @immutable
 class TreeTheme extends InheritedTheme {
   /// Creates a [TreeTheme].
-  const TreeTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const TreeTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [TreeTheme].
   final TreeThemeData data;
@@ -160,10 +223,8 @@ class TreeTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => TreeTheme(
-        data: TreeTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          TreeTheme(data: TreeTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -175,6 +236,9 @@ class TreeTheme extends InheritedTheme {
     Color? color,
     Color? hoverColor,
     Color? highlightColor,
+    Color? indicatorHighlightColor,
+    Color? indicatorHoverColor,
+    Color? indicatorColor,
   }) {
     return Builder(
       key: key,
@@ -184,6 +248,9 @@ class TreeTheme extends InheritedTheme {
           color: color,
           hoverColor: hoverColor,
           highlightColor: highlightColor,
+          indicatorHighlightColor: indicatorHighlightColor,
+          indicatorHoverColor: indicatorHoverColor,
+          indicatorColor: indicatorColor,
         ),
         child: child,
       ),
@@ -192,12 +259,9 @@ class TreeTheme extends InheritedTheme {
 
   /// Returns a copy of [TreeTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final TreeTheme? treeTheme =
-        context.findAncestorWidgetOfExactType<TreeTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final TreeTheme? treeTheme = context
+        .findAncestorWidgetOfExactType<TreeTheme>();
     return identical(this, treeTheme)
         ? child
         : TreeTheme(data: data, child: child);
@@ -205,19 +269,16 @@ class TreeTheme extends InheritedTheme {
 
   /// Returns the nearest [TreeTheme].
   static TreeThemeData of(BuildContext context) {
-    final TreeTheme? treeTheme =
-        context.dependOnInheritedWidgetOfExactType<TreeTheme>();
+    final TreeTheme? treeTheme = context
+        .dependOnInheritedWidgetOfExactType<TreeTheme>();
     TreeThemeData? treeThemeData = treeTheme?.data;
 
     if (treeThemeData == null || !treeThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       treeThemeData ??= themeData.treeTheme;
 
-      final treeValue =
-          _TreeThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final treeValue = _TreeThemeData(themeData);
 
       final TextStyle textStyle =
           treeThemeData.textStyle ?? treeValue.textStyle;
@@ -225,12 +286,22 @@ class TreeTheme extends InheritedTheme {
       final Color hoverColor = treeThemeData.hoverColor ?? treeValue.hoverColor;
       final Color highlightColor =
           treeThemeData.highlightColor ?? treeValue.highlightColor;
+      final Color indicatorHighlightColor =
+          treeThemeData.indicatorHighlightColor ??
+          treeValue.indicatorHighlightColor;
+      final Color indicatorHoverColor =
+          treeThemeData.indicatorHoverColor ?? treeValue.indicatorHoverColor;
+      final Color indicatorColor =
+          treeThemeData.indicatorColor ?? treeValue.indicatorColor;
 
       return treeThemeData.copyWith(
         textStyle: textStyle,
         color: color,
         hoverColor: hoverColor,
         highlightColor: highlightColor,
+        indicatorHighlightColor: indicatorHighlightColor,
+        indicatorHoverColor: indicatorHoverColor,
+        indicatorColor: indicatorColor,
       );
     }
 

@@ -12,29 +12,20 @@ const EdgeInsets _kTitlePadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0);
 const EdgeInsets _kMenuPadding = EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0);
 const double _kMinDialogWidth = 640.0;
 const double _kMinDialogHeight = 120.0;
+const BoxConstraints _constraints = BoxConstraints(
+  minWidth: _kMinDialogWidth,
+  minHeight: _kMinDialogHeight,
+);
 
 /// Theme data for [Dialog].
 @immutable
 class _DialogThemeData {
-  const _DialogThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _DialogThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
 
-  /// The [BoxConstraints] of the [Dialog].
-  ///
-  /// Defaults to:
-  ///
-  /// ```dart
-  /// BoxConstraints(minWidth: 640.0, minHeight: 120.0)
-  /// ```
-  BoxConstraints get constraints => const BoxConstraints(
-        minWidth: _kMinDialogWidth,
-        minHeight: _kMinDialogHeight,
-      );
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The [EdgeInsets] padding of the menu.
   ///
@@ -78,16 +69,16 @@ class _DialogThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get background => colorScheme.background[0];
+  Color get background => _colorScheme.background[0];
 
   /// The barrier color.
   ///
   /// Defaults to:
   ///
   /// ```dart
-  /// colorScheme.background[20].withOpacity(0.8)
+  /// colorScheme.background[20].withValues(alpha: (0.8)
   /// ```
-  Color get barrierColor => colorScheme.background[20].withOpacity(0.8);
+  Color get barrierColor => _colorScheme.background[20].withValues(alpha: 0.8);
 
   /// The [TextStyle] for the title.
   ///
@@ -96,7 +87,7 @@ class _DialogThemeData {
   /// ```dart
   /// textTheme.title
   /// ```
-  TextStyle get titleTextStyle => textTheme.title;
+  TextStyle get titleTextStyle => _textTheme.title;
 
   /// The [TextAlign] of the body text.
   ///
@@ -115,4 +106,13 @@ class _DialogThemeData {
   /// ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0)
   /// ```
   ImageFilter get imageFilter => ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0);
+
+  /// The [BoxConstraints] of the [Dialog].
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// BoxConstraints(minWidth: 640.0, minHeight: 120.0)
+  /// ```
+  BoxConstraints get constraints => _constraints;
 }

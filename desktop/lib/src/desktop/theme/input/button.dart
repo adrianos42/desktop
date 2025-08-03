@@ -14,13 +14,15 @@ const double _kMinWidth = 12.0;
 /// Theme data for [Button].
 @immutable
 class _ButtonThemeData {
-  const _ButtonThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _ButtonThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.contentTextTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
+  ColorScheme get _contentColorScheme => _themeData.contentColorScheme;
+
+  bool get _isDark => _themeData.brightness == Brightness.dark;
 
   /// The axis of the button.
   ///
@@ -87,7 +89,7 @@ class _ButtonThemeData {
   /// ```dart
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
-  TextStyle get textStyle => textTheme.body2.copyWith(
+  TextStyle get textStyle => _textTheme.body2.copyWith(
         fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
@@ -99,7 +101,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.disabled
   /// ```
-  Color get disabledColor => colorScheme.disabled;
+  Color get disabledColor => _contentColorScheme.disabled;
 
   /// The color when button is not filled.
   ///
@@ -108,7 +110,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get color => colorScheme.primary[highlightColorIndex];
+  Color get color => _colorScheme.primary[highlightColorIndex];
 
   /// The color when the button has focus.
   ///
@@ -126,7 +128,7 @@ class _ButtonThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get hoverColor => textTheme.textHigh;
+  Color get hoverColor => _textTheme.textHigh;
 
   /// The color when the button is pressed.
   ///
@@ -135,7 +137,7 @@ class _ButtonThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get highlightColor => textTheme.textLow;
+  Color get highlightColor => _textTheme.textLow;
 
   /// The background color when the button is filled.
   ///
@@ -144,7 +146,18 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.primary[30]
   /// ```
-  Color get background => colorScheme.primary[30];
+  Color get background =>
+      _isDark ? _colorScheme.primary[30] : _textTheme.textHigh;
+
+  /// The background color when the button is disabled.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.disabled
+  /// ```
+  Color get disabledBackground =>
+      _isDark ? _colorScheme.disabled : _contentColorScheme.disabled;
 
   /// The background color when the button is being focused.
   ///
@@ -153,7 +166,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get focusBackground => colorScheme.shade[100];
+  Color get focusBackground => _colorScheme.shade[100];
 
   /// The background color when the button is being hovered.
   ///
@@ -162,7 +175,8 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
-  Color get hoverBackground => colorScheme.shade[30];
+  Color get hoverBackground =>
+      _isDark ? _colorScheme.background[20] : _textTheme.textLow;
 
   /// The background color when the button is pressed.
   ///
@@ -171,7 +185,8 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.background[20]
   /// ```
-  Color get highlightBackground => colorScheme.background[20];
+  Color get highlightBackground =>
+      _isDark ? _colorScheme.shade[30] : _textTheme.textMedium;
 
   /// The foreground color when the button is filled.
   ///
@@ -180,7 +195,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get foreground => colorScheme.shade[100];
+  Color get foreground => _colorScheme.shade[100];
 
   /// The foreground color when the button is being hovered.
   ///
@@ -189,7 +204,7 @@ class _ButtonThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get hoverForeground => colorScheme.shade[100];
+  Color get hoverForeground => _colorScheme.shade[100];
 
   /// The foreground color when the button is pressed.
   ///
@@ -198,7 +213,8 @@ class _ButtonThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get highlightForeground => textTheme.textHigh;
+  Color get highlightForeground =>
+      _isDark ? _textTheme.textHigh : _contentColorScheme.background[20];
 
   /// The duration of the animation.
   ///

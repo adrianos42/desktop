@@ -15,6 +15,7 @@ class LinearProgressIndicatorThemeData {
     this.color,
     this.backgroundColor,
     this.indeterminateDuration,
+    this.padding,
   });
 
   /// The height of the linear progress indicator.
@@ -22,7 +23,7 @@ class LinearProgressIndicatorThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// 4.0
+  /// 2.0
   /// ```
   final double? height;
 
@@ -53,12 +54,22 @@ class LinearProgressIndicatorThemeData {
   /// ```
   final Duration? indeterminateDuration;
 
+  /// The vertical padding.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// EdgeInsets.symmetric(vertical: 2.0)
+  /// ```
+  final EdgeInsets? padding;
+
   /// Makes a copy of [LinearProgressIndicatorThemeData] overwriting selected fields.
   LinearProgressIndicatorThemeData copyWith({
     double? height,
     Color? color,
     Color? backgroundColor,
     Duration? indeterminateDuration,
+    EdgeInsets? padding,
   }) {
     return LinearProgressIndicatorThemeData(
       height: height ?? this.height,
@@ -66,12 +77,14 @@ class LinearProgressIndicatorThemeData {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       indeterminateDuration:
           indeterminateDuration ?? this.indeterminateDuration,
+      padding: padding ?? this.padding,
     );
   }
 
   /// Merges the theme data [LinearProgressIndicatorThemeData].
   LinearProgressIndicatorThemeData merge(
-      LinearProgressIndicatorThemeData? other) {
+    LinearProgressIndicatorThemeData? other,
+  ) {
     if (other == null) {
       return this;
     }
@@ -80,6 +93,7 @@ class LinearProgressIndicatorThemeData {
       color: other.color,
       backgroundColor: other.backgroundColor,
       indeterminateDuration: other.indeterminateDuration,
+      padding: other.padding,
     );
   }
 
@@ -87,17 +101,19 @@ class LinearProgressIndicatorThemeData {
     return height != null &&
         color != null &&
         backgroundColor != null &&
-        indeterminateDuration != null;
+        indeterminateDuration != null &&
+        padding != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       height,
       color,
       backgroundColor,
       indeterminateDuration,
-    );
+      padding,
+    ]);
   }
 
   @override
@@ -108,7 +124,7 @@ height: The height of the linear progress indicator.
  Defaults to:
  
  ```dart
- 4.0
+ 2.0
  ```;;color: The color of the linear progress indicator.
 
  Defaults to:
@@ -127,6 +143,12 @@ height: The height of the linear progress indicator.
  
  ```dart
  Duration(milliseconds: 4000)
+ ```;;padding: The vertical padding.
+
+ Defaults to:
+ 
+ ```dart
+ EdgeInsets.symmetric(vertical: 2.0)
  ```;;
 ''';
   }
@@ -137,7 +159,8 @@ height: The height of the linear progress indicator.
         other.height == height &&
             other.color == color &&
             other.backgroundColor == backgroundColor &&
-            other.indeterminateDuration == indeterminateDuration;
+            other.indeterminateDuration == indeterminateDuration &&
+            other.padding == padding;
   }
 }
 
@@ -177,6 +200,7 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
     Color? color,
     Color? backgroundColor,
     Duration? indeterminateDuration,
+    EdgeInsets? padding,
   }) {
     return Builder(
       key: key,
@@ -186,6 +210,7 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
           color: color,
           backgroundColor: backgroundColor,
           indeterminateDuration: indeterminateDuration,
+          padding: padding,
         ),
         child: child,
       ),
@@ -194,12 +219,9 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
 
   /// Returns a copy of [LinearProgressIndicatorTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final LinearProgressIndicatorTheme? linearProgressIndicatorTheme =
-        context.findAncestorWidgetOfExactType<LinearProgressIndicatorTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final LinearProgressIndicatorTheme? linearProgressIndicatorTheme = context
+        .findAncestorWidgetOfExactType<LinearProgressIndicatorTheme>();
     return identical(this, linearProgressIndicatorTheme)
         ? child
         : LinearProgressIndicatorTheme(data: data, child: child);
@@ -215,31 +237,36 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
     if (linearProgressIndicatorThemeData == null ||
         !linearProgressIndicatorThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       linearProgressIndicatorThemeData ??=
           themeData.linearProgressIndicatorTheme;
 
       final linearProgressIndicatorValue = _LinearProgressIndicatorThemeData(
-          textTheme: textTheme, colorScheme: colorScheme);
+        themeData,
+      );
 
-      final double height = linearProgressIndicatorThemeData.height ??
+      final double height =
+          linearProgressIndicatorThemeData.height ??
           linearProgressIndicatorValue.height;
-      final Color color = linearProgressIndicatorThemeData.color ??
+      final Color color =
+          linearProgressIndicatorThemeData.color ??
           linearProgressIndicatorValue.color;
       final Color backgroundColor =
           linearProgressIndicatorThemeData.backgroundColor ??
-              linearProgressIndicatorValue.backgroundColor;
+          linearProgressIndicatorValue.backgroundColor;
       final Duration indeterminateDuration =
           linearProgressIndicatorThemeData.indeterminateDuration ??
-              linearProgressIndicatorValue.indeterminateDuration;
+          linearProgressIndicatorValue.indeterminateDuration;
+      final EdgeInsets padding =
+          linearProgressIndicatorThemeData.padding ??
+          linearProgressIndicatorValue.padding;
 
       return linearProgressIndicatorThemeData.copyWith(
         height: height,
         color: color,
         backgroundColor: backgroundColor,
         indeterminateDuration: indeterminateDuration,
+        padding: padding,
       );
     }
 

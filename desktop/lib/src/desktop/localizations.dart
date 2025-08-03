@@ -30,6 +30,24 @@ abstract class DesktopLocalizations {
 
   String formatCompactDate(DateTime date);
 
+  String get cutButtonLabel;
+
+  String get copyButtonLabel;
+
+  String get pasteButtonLabel;
+
+  String get selectAllButtonLabel;
+
+  String get deleteButtonTooltip;
+
+  String get lookUpButtonLabel;
+
+  String get searchWebButtonLabel;
+
+  String get shareButtonLabel;
+
+  String get scanTextButtonLabel;
+
   static DesktopLocalizations of(BuildContext context) {
     return Localizations.of<DesktopLocalizations>(
         context, DesktopLocalizations)!;
@@ -176,6 +194,33 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
     }
     return result.toString();
   }
+
+  @override
+  String get cutButtonLabel => 'Cut';
+
+  @override
+  String get copyButtonLabel => 'Copy';
+
+  @override
+  String get pasteButtonLabel => 'Paste';
+
+  @override
+  String get selectAllButtonLabel => 'Select all';
+
+  @override
+  String get deleteButtonTooltip => 'Delete';
+
+  @override
+  String get lookUpButtonLabel => 'Look Up';
+
+  @override
+  String get searchWebButtonLabel => 'Search Web';
+
+  @override
+  String get shareButtonLabel => 'Share';
+
+  @override
+  String get scanTextButtonLabel => 'Scan text';
 
   @override
   TextInputFormatter get dateFormInputFormatter =>

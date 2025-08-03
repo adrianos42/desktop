@@ -4,10 +4,6 @@ page:
 	flutter build web -v --wasm
 	cp -r -v build/web/* ../docs
 
-android:
-	flutter build apk
-	flutter install --use-application-binary=build/app/outputs/flutter-apk/app-release.apk
-
 linux:
 	flutter build linux --verbose --release
 	rm -rf ~/opt/desktop_docs
@@ -26,4 +22,4 @@ linux:
 	@echo "Exec=${HOME}/opt/desktop_docs/desktop" >> ~/.local/share/applications/desktop_docs.desktop
 	@echo "Icon=${HOME}/opt/desktop_docs/icon.svg" >> ~/.local/share/applications/desktop_docs.desktop
 
-.PHONY: linux android
+.PHONY: linux

@@ -1,5 +1,7 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
+import 'content.dart';
 
 class ButtonPage extends StatefulWidget {
   const ButtonPage({super.key});
@@ -9,7 +11,10 @@ class ButtonPage extends StatefulWidget {
 }
 
 class _ButtonPageState extends State<ButtonPage> {
+  bool _disabledFilled = false;
+  bool _contentFilled = false;
   bool _disabledText = false;
+  bool _disabledIcon = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +50,44 @@ return Button.text(
     final ButtonThemeData themeData = ButtonTheme.of(context);
 
     return Defaults(
+      header: 'Button',
       styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
+          title: 'Filled',
+          body: (context) => InputContent(
+            enabled: _contentFilled,
+            child: Button.filled(
+              'Login',
+              onPressed: !_disabledFilled ? () {} : null,
+            ),
+          ),
+          codeText: enabledCode,
+          options: [
+            Button.icon(
+              Icons.lightMode,
+              active: _contentFilled,
+              onPressed: () => setState(
+                () => _contentFilled = !_contentFilled,
+              ),
+            ),
+            Button.icon(
+              Icons.close,
+              active: _disabledFilled,
+              onPressed: () =>
+                  setState(() => _disabledFilled = !_disabledFilled),
+            ),
+          ],
+        ),
+        ItemTitle(
+          title: 'Text',
+          body: (context) => Center(
             child: Button.text(
               'Button',
               onPressed: !_disabledText ? () {} : null,
             ),
           ),
           codeText: !_disabledText ? enabledCode : disabledCode,
-          title: 'Text',
           options: [
             Button.icon(
               Icons.close,
@@ -66,17 +97,24 @@ return Button.text(
           ],
         ),
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: Button.icon(
+          title: 'Icon',
+          body: (context) => Center(
+            child:  Button.icon(
               Icons.controlCamera,
-              onPressed: () {},
+              onPressed: !_disabledIcon ? () {} : null,
             ),
           ),
           codeText: enabledCode,
-          title: 'Icon',
+          options: [
+            Button.icon(
+              Icons.close,
+              active: _disabledIcon,
+              onPressed: () => setState(() => _disabledIcon = !_disabledIcon),
+            ),
+          ],
         ),
         ItemTitle(
+          title: 'Text and icon',
           body: (context) => Align(
             alignment: Alignment.center,
             child: Button(
@@ -86,33 +124,9 @@ return Button.text(
             ),
           ),
           codeText: enabledCode,
-          title: 'Text and icon',
         ),
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: Button.filled(
-              'Login',
-              onPressed: () {},
-            ),
-          ),
-          codeText: enabledCode,
-          title: 'Filled',
-        ),
-        // ItemTitle(
-        //   body: (context) => const Align(
-        //     alignment: Alignment.center,
-        //     child: Button(
-        //       body: Text('Button'),
-        //       leading: Icon(Icons.control_camera),
-        //       onPressed: null,
-        //     ),
-        //   ),
-        //   codeText: disabledCode,
-        //   title: 'Disabled',
-        //   height: 200.0,
-        // ),
-        ItemTitle(
+          title: 'Custom',
           body: (context) => Align(
             alignment: Alignment.center,
             child: Button(
@@ -126,10 +140,8 @@ return Button.text(
             ),
           ),
           codeText: customCode,
-          title: 'Custom',
         ),
       ],
-      header: 'Button',
     );
   }
 }

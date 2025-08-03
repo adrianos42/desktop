@@ -1,5 +1,7 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
+import 'content.dart';
 
 class CheckboxPage extends StatefulWidget {
   const CheckboxPage({super.key});
@@ -12,10 +14,12 @@ class _CheckboxPageState extends State<CheckboxPage> {
   bool first = false;
   bool second = false;
   bool? third;
+  bool _disabled = false;
+  bool _buttonContent = false;
 
   @override
   Widget build(BuildContext context) {
-    const enabledCode = '''
+    const exampleCode = '''
 return Container(
   width: 200.0,
   child: Row(
@@ -48,102 +52,73 @@ return Container(
 );
 ''';
 
-    const disabledCode = '''
-return Container(
-  width: 200.0,
-  child: Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Checkbox(
-        value: true,
-        tristate: false,
-      ),
-      Checkbox(
-        value: false,
-        tristate: false,
-      ),
-      Checkbox(
-        value: null,
-        tristate: true,
-      ),
-    ],
-  ),
-);
-''';
-
     final themeData = CheckboxTheme.of(context);
 
     return Defaults(
+      header: 'Checkbox',
       styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 200.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Checkbox(
-                    value: first,
-                    tristate: false,
-                    onChanged: (fvalue) {
-                      setState(() => first = fvalue!);
-                    },
-                  ),
-                  Checkbox(
-                    value: second,
-                    tristate: false,
-                    onChanged: (fvalue) {
-                      setState(() => second = fvalue!);
-                    },
-                  ),
-                  Checkbox(
-                    value: third,
-                    tristate: true,
-                    onChanged: (fvalue) {
-                      setState(() => third = fvalue);
-                    },
-                  ),
-                ],
+          title: 'Example',
+          body: (context) => InputContent(
+            enabled: _buttonContent,
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 200.0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Checkbox(
+                      value: first,
+                      tristate: false,
+                      onChanged: !_disabled
+                          ? (fvalue) {
+                              setState(() => first = fvalue!);
+                            }
+                          : null,
+                    ),
+                    Checkbox(
+                      value: second,
+                      tristate: false,
+                      onChanged: !_disabled
+                          ? (fvalue) {
+                              setState(() => second = fvalue!);
+                            }
+                          : null,
+                    ),
+                    Checkbox(
+                      value: third,
+                      tristate: true,
+                      onChanged: !_disabled
+                          ? (fvalue) {
+                              setState(() => third = fvalue);
+                            }
+                          : null,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          codeText: enabledCode,
-          title: 'Enabled',
-        ),
-        ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 200.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Checkbox(
-                    value: true,
-                    tristate: false,
-                  ),
-                  Checkbox(
-                    value: false,
-                    tristate: false,
-                  ),
-                  Checkbox(
-                    value: null,
-                    tristate: true,
-                  ),
-                ],
+          options: [
+            Button.icon(
+              Icons.lightMode,
+              active: _buttonContent,
+              onPressed: () => setState(
+                () => _buttonContent = !_buttonContent,
               ),
             ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
+            Button.icon(
+              Icons.close,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
+            ),
+          ],
+          codeText: exampleCode,
         ),
       ],
-      header: 'Checkbox',
     );
   }
 }

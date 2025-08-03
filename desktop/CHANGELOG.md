@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.0.0-dev.1
+
+- Removes light mode from theme data.
+- Light mode only for content.
+- Changes linear progress indicator height.
+- Adds option for extended vertical nav.
+- Add info menu type for horizontal nav.
+- Creates floating menu.
+- Upddates radio input for group usage.
+
 ## 5.1.3
 
 - Removes deprecated flutter field.

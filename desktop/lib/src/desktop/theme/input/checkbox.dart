@@ -10,13 +10,15 @@ const double _kContainerSize = 32.0;
 /// Theme data for [Checkbox].
 @immutable
 class _CheckboxThemeData {
-  const _CheckboxThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _CheckboxThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.contentTextTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
+  ColorScheme get _contentColorScheme => _themeData.contentColorScheme;
+
+  bool get _isDark => _themeData.brightness == Brightness.dark;
 
   /// The disabled color.
   /// 
@@ -25,7 +27,7 @@ class _CheckboxThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get disabledColor => colorScheme.disabled;
+  Color get disabledColor => _contentColorScheme.disabled;
 
   /// The active color.
   /// 
@@ -34,7 +36,7 @@ class _CheckboxThemeData {
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
-  Color get activeColor => colorScheme.primary[50];
+  Color get activeColor => _isDark ? _colorScheme.primary[50] : _textTheme.textHigh;
 
   /// The active hover color.
   /// 
@@ -43,7 +45,7 @@ class _CheckboxThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get activeHoverColor => textTheme.textHigh;
+  Color get activeHoverColor =>  _textTheme.textLow;
 
   /// The inactive color.
   /// 
@@ -52,7 +54,7 @@ class _CheckboxThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get inactiveColor => textTheme.textLow;
+  Color get inactiveColor => _isDark ? _textTheme.textLow : _textTheme.textHigh;
 
   /// The inactive hover color.
   /// 
@@ -61,7 +63,7 @@ class _CheckboxThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get inactiveHoverColor => textTheme.textHigh;
+  Color get inactiveHoverColor => _isDark ? _textTheme.textHigh : _textTheme.textLow;
 
   /// The foreground color.
   /// 
@@ -70,7 +72,16 @@ class _CheckboxThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get foreground => colorScheme.shade[100];
+  Color get foreground => _colorScheme.shade[100];
+
+  /// The hover foreground color.
+  /// 
+  /// Defaults to:
+  /// 
+  /// ```dart
+  /// colorScheme.background[0]
+  /// ```
+  Color get hoverForeground => _contentColorScheme.background[0];
 
   /// The container size.
   /// 

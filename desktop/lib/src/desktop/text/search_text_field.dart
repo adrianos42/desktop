@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'text_field.dart';
 import '../icons.dart';
-import '../theme/theme.dart';
 import '../input/button.dart';
+import '../theme/theme.dart';
+import 'text_field.dart';
 
 class SearchTextField extends StatefulWidget {
   /// Creates a [SearchTextField].

@@ -110,7 +110,7 @@ class _ScrollingPageState extends State<ScrollingPage> {
                   return GestureDetector(
                     onTap: () async {
                       // TODO(as): Create a merge instead.
-                      final themeData = ThemeData.dark();
+                      final themeData = ThemeData();
 
                       Dialog.showCustomDialog(
                         context,
@@ -157,7 +157,6 @@ class _ImagePage extends StatefulWidget {
     this.requestNext,
     this.requestPrevious,
     required this.close,
-    super.key,
   });
 
   final int assetIndex;

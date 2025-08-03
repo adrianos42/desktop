@@ -90,7 +90,7 @@ class ScrollbarThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disabledColor,
       color,
       hoverColor,
@@ -98,7 +98,7 @@ class ScrollbarThemeData {
       inhoverColor,
       foreground,
       trackColor,
-    );
+    ]);
   }
 
   @override
@@ -125,11 +125,7 @@ disabledColor:;;color:;;hoverColor:;;highlightColor:;;inhoverColor:;;foreground:
 @immutable
 class ScrollbarTheme extends InheritedTheme {
   /// Creates a [ScrollbarTheme].
-  const ScrollbarTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const ScrollbarTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [ScrollbarTheme].
   final ScrollbarThemeData data;
@@ -180,12 +176,9 @@ class ScrollbarTheme extends InheritedTheme {
 
   /// Returns a copy of [ScrollbarTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final ScrollbarTheme? scrollbarTheme =
-        context.findAncestorWidgetOfExactType<ScrollbarTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final ScrollbarTheme? scrollbarTheme = context
+        .findAncestorWidgetOfExactType<ScrollbarTheme>();
     return identical(this, scrollbarTheme)
         ? child
         : ScrollbarTheme(data: data, child: child);
@@ -193,19 +186,16 @@ class ScrollbarTheme extends InheritedTheme {
 
   /// Returns the nearest [ScrollbarTheme].
   static ScrollbarThemeData of(BuildContext context) {
-    final ScrollbarTheme? scrollbarTheme =
-        context.dependOnInheritedWidgetOfExactType<ScrollbarTheme>();
+    final ScrollbarTheme? scrollbarTheme = context
+        .dependOnInheritedWidgetOfExactType<ScrollbarTheme>();
     ScrollbarThemeData? scrollbarThemeData = scrollbarTheme?.data;
 
     if (scrollbarThemeData == null || !scrollbarThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       scrollbarThemeData ??= themeData.scrollbarTheme;
 
-      final scrollbarValue =
-          _ScrollbarThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final scrollbarValue = _ScrollbarThemeData(themeData);
 
       final Color disabledColor =
           scrollbarThemeData.disabledColor ?? scrollbarValue.disabledColor;

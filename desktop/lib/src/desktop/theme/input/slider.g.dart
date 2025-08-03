@@ -104,13 +104,13 @@ class SliderThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disabledColor,
       activeColor,
       activeHoverColor,
       trackColor,
       hightlightColor,
-    );
+    ]);
   }
 
   @override
@@ -165,11 +165,7 @@ disabledColor: The disabled color.
 @immutable
 class SliderTheme extends InheritedTheme {
   /// Creates a [SliderTheme].
-  const SliderTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const SliderTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [SliderTheme].
   final SliderThemeData data;
@@ -182,10 +178,8 @@ class SliderTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => SliderTheme(
-        data: SliderTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          SliderTheme(data: SliderTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -216,12 +210,9 @@ class SliderTheme extends InheritedTheme {
 
   /// Returns a copy of [SliderTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final SliderTheme? sliderTheme =
-        context.findAncestorWidgetOfExactType<SliderTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final SliderTheme? sliderTheme = context
+        .findAncestorWidgetOfExactType<SliderTheme>();
     return identical(this, sliderTheme)
         ? child
         : SliderTheme(data: data, child: child);
@@ -229,19 +220,16 @@ class SliderTheme extends InheritedTheme {
 
   /// Returns the nearest [SliderTheme].
   static SliderThemeData of(BuildContext context) {
-    final SliderTheme? sliderTheme =
-        context.dependOnInheritedWidgetOfExactType<SliderTheme>();
+    final SliderTheme? sliderTheme = context
+        .dependOnInheritedWidgetOfExactType<SliderTheme>();
     SliderThemeData? sliderThemeData = sliderTheme?.data;
 
     if (sliderThemeData == null || !sliderThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       sliderThemeData ??= themeData.sliderTheme;
 
-      final sliderValue =
-          _SliderThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final sliderValue = _SliderThemeData(themeData);
 
       final Color disabledColor =
           sliderThemeData.disabledColor ?? sliderValue.disabledColor;

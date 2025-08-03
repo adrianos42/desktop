@@ -10,13 +10,12 @@ const Duration _kDefaultMessageDuration = Duration(seconds: 4);
 /// Theme data for [Message].
 @immutable
 class _MessageThemeData {
-  const _MessageThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _MessageThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The text style for the message.
   ///
@@ -25,7 +24,7 @@ class _MessageThemeData {
   /// ```dart
   /// textTheme.caption
   /// ```
-  TextStyle get textStyle => textTheme.caption;
+  TextStyle get textStyle => _textTheme.caption;
 
   /// The text style for the title.
   ///
@@ -34,7 +33,7 @@ class _MessageThemeData {
   /// ```dart
   /// textTheme.caption.copyWith(fontWeight: FontWeight.w500)
   /// ```
-  TextStyle get titleTextStyle => textTheme.caption.copyWith(
+  TextStyle get titleTextStyle => _textTheme.caption.copyWith(
         fontWeight: FontWeight.w500,
       );
 
@@ -63,7 +62,7 @@ class _MessageThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get highlightColor => colorScheme.shade[100];
+  Color get highlightColor => _colorScheme.shade[100];
 
   /// The background color.
   ///
@@ -72,7 +71,7 @@ class _MessageThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get backgroundColor => colorScheme.background[0];
+  Color get backgroundColor => _colorScheme.background[0];
 
   /// The space between two items.
   ///

@@ -146,7 +146,7 @@ class BreadcrumbThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       padding,
       height,
       itemSpacing,
@@ -155,7 +155,7 @@ class BreadcrumbThemeData {
       textStyle,
       backgroundColor,
       highlightColor,
-    );
+    ]);
   }
 
   @override
@@ -231,11 +231,7 @@ padding: The padding for the breadcrumb.
 @immutable
 class BreadcrumbTheme extends InheritedTheme {
   /// Creates a [BreadcrumbTheme].
-  const BreadcrumbTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const BreadcrumbTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [BreadcrumbTheme].
   final BreadcrumbThemeData data;
@@ -288,12 +284,9 @@ class BreadcrumbTheme extends InheritedTheme {
 
   /// Returns a copy of [BreadcrumbTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final BreadcrumbTheme? breadcrumbTheme =
-        context.findAncestorWidgetOfExactType<BreadcrumbTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final BreadcrumbTheme? breadcrumbTheme = context
+        .findAncestorWidgetOfExactType<BreadcrumbTheme>();
     return identical(this, breadcrumbTheme)
         ? child
         : BreadcrumbTheme(data: data, child: child);
@@ -301,19 +294,16 @@ class BreadcrumbTheme extends InheritedTheme {
 
   /// Returns the nearest [BreadcrumbTheme].
   static BreadcrumbThemeData of(BuildContext context) {
-    final BreadcrumbTheme? breadcrumbTheme =
-        context.dependOnInheritedWidgetOfExactType<BreadcrumbTheme>();
+    final BreadcrumbTheme? breadcrumbTheme = context
+        .dependOnInheritedWidgetOfExactType<BreadcrumbTheme>();
     BreadcrumbThemeData? breadcrumbThemeData = breadcrumbTheme?.data;
 
     if (breadcrumbThemeData == null || !breadcrumbThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       breadcrumbThemeData ??= themeData.breadcrumbTheme;
 
-      final breadcrumbValue =
-          _BreadcrumbThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final breadcrumbValue = _BreadcrumbThemeData(themeData);
 
       final EdgeInsets padding =
           breadcrumbThemeData.padding ?? breadcrumbValue.padding;
@@ -326,7 +316,8 @@ class BreadcrumbTheme extends InheritedTheme {
           breadcrumbThemeData.iconTheme ?? breadcrumbValue.iconTheme;
       final TextStyle textStyle =
           breadcrumbThemeData.textStyle ?? breadcrumbValue.textStyle;
-      final Color backgroundColor = breadcrumbThemeData.backgroundColor ??
+      final Color backgroundColor =
+          breadcrumbThemeData.backgroundColor ??
           breadcrumbValue.backgroundColor;
       final Color highlightColor =
           breadcrumbThemeData.highlightColor ?? breadcrumbValue.highlightColor;

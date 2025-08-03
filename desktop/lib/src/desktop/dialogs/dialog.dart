@@ -6,8 +6,9 @@ import 'package:flutter/widgets.dart';
 import '../localizations.dart';
 import '../theme/theme.dart';
 
-const Duration _kDialogDuration = Duration(milliseconds: 200);
-const Curve _kDialogCurve = Curves.easeOut;
+const Duration _kDuration = Duration(milliseconds: 200);
+const Duration _kReverseDuration = Duration(milliseconds: 200);
+const Curve _kCurve = Curves.fastEaseInToSlowEaseOut;
 
 /// A [DialogRound] for dialogs.
 class DialogRoute<T> extends PopupRoute<T> {
@@ -32,7 +33,7 @@ class DialogRoute<T> extends PopupRoute<T> {
 
   final RoutePageBuilder _pageBuilder;
 
-  final _curve = _kDialogCurve;
+  final _curve = _kCurve;
 
   ///
   final CapturedThemes? themes;
@@ -50,7 +51,10 @@ class DialogRoute<T> extends PopupRoute<T> {
   final Color? _barrierColor;
 
   @override
-  Duration get transitionDuration => _kDialogDuration;
+  Duration get transitionDuration => _kDuration;
+  
+  @override
+  Duration get reverseTransitionDuration => _kReverseDuration;
 
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,

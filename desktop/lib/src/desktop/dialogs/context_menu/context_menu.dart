@@ -11,8 +11,8 @@ import 'context_menu_layout.dart';
 const double _kDividerHeight = 1.0;
 const double _kDividerThickness = 1.0;
 
-const Duration _kContextDuration = Duration(milliseconds: 100);
-const Curve _kContextCurve = Curves.easeOutQuad;
+const Duration _kContextDuration = Duration(milliseconds: 200);
+const Curve _kContextCurve = Curves.fastEaseInToSlowEaseOut;
 
 /// A context menu entry.
 abstract class ContextMenuEntry<T> extends StatefulWidget {

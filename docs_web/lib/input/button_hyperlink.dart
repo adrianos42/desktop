@@ -1,5 +1,7 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
+import 'content.dart';
 
 class ButtonHyperlinkPage extends StatefulWidget {
   const ButtonHyperlinkPage({super.key});
@@ -10,6 +12,7 @@ class ButtonHyperlinkPage extends StatefulWidget {
 
 class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
   bool _disabled = false;
+  bool _buttonContent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +24,41 @@ return HyperlinkButton(
 ''';
 
     return Defaults(
+      header: 'Hyperlink',
       styleItems: Defaults.createStyle(HyperlinkTheme.of(context).toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              height: 50,
-              child: HyperlinkButton(
-                'https://github.com/adrianos42/desktop',
-                onPressed: !_disabled ? (value) {} : null,
+          title: 'Example',
+          body: (context) => InputContent(
+            enabled: _buttonContent,
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                height: 50,
+                child: HyperlinkButton(
+                  'https://github.com/adrianos42/desktop',
+                  onPressed: !_disabled ? (value) {} : null,
+                ),
               ),
             ),
           ),
           codeText: codeText,
-          title: 'Example',
           options: [
             Button.icon(
-              Icons.hideSource,
+              Icons.lightMode,
+              active: _buttonContent,
+              onPressed: () => setState(
+                () => _buttonContent = !_buttonContent,
+              ),
+            ),
+            Button.icon(
+              Icons.close,
               active: _disabled,
               onPressed: () => setState(() => _disabled = !_disabled),
             ),
           ],
         ),
       ],
-      header: 'Hyperlink',
     );
   }
 }

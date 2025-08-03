@@ -1,29 +1,26 @@
 import 'package:flutter/widgets.dart';
 
 import '../color_scheme.dart';
-import '../theme_text.dart';
 
 part 'linear_progress_indicator.g.dart';
 
 /// Theme data for [LinearProgressIndicator].
 @immutable
 class _LinearProgressIndicatorThemeData {
-  const _LinearProgressIndicatorThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _LinearProgressIndicatorThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The height of the linear progress indicator.
   ///
   /// Defaults to:
   /// 
   /// ```dart
-  /// 4.0
+  /// 2.0
   /// ```
-  double get height => 4.0;
+  double get height => 2.0;
 
   /// The color of the linear progress indicator.
   ///
@@ -32,7 +29,7 @@ class _LinearProgressIndicatorThemeData {
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
-  Color get color => colorScheme.primary[50];
+  Color get color => _colorScheme.primary[50];
 
   /// The background color of the linear progress indicator.
   ///
@@ -41,7 +38,7 @@ class _LinearProgressIndicatorThemeData {
   /// ```dart
   /// colorScheme.disabled
   /// ```
-  Color get backgroundColor => colorScheme.disabled;
+  Color get backgroundColor => _colorScheme.disabled;
 
   /// The indeterminate animation duration.
   ///
@@ -50,5 +47,14 @@ class _LinearProgressIndicatorThemeData {
   /// ```dart
   /// Duration(milliseconds: 4000)
   /// ```
-  Duration get indeterminateDuration => const Duration(milliseconds: 4000);
+  Duration get indeterminateDuration => const Duration(milliseconds: 3000);
+
+  /// The vertical padding.
+  ///
+  /// Defaults to:
+  /// 
+  /// ```dart
+  /// EdgeInsets.symmetric(vertical: 2.0)
+  /// ```
+  EdgeInsets get padding => const EdgeInsets.symmetric(vertical: 6.0);
 }

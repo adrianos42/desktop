@@ -9,13 +9,12 @@ part 'slider.g.dart';
 /// Theme data for [Slider].
 @immutable
 class _SliderThemeData {
-  const _SliderThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _SliderThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The disabled color.
   /// 
@@ -24,7 +23,7 @@ class _SliderThemeData {
   /// ```dart
   /// colorScheme.disabled
   /// ```
-  Color get disabledColor => colorScheme.disabled;
+  Color get disabledColor => _colorScheme.disabled;
 
   /// The active color.
   /// 
@@ -33,7 +32,7 @@ class _SliderThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get activeColor => colorScheme.primary[highlightColorIndex];
+  Color get activeColor =>_colorScheme.primary[highlightColorIndex];
 
   /// The active hover color.
   /// 
@@ -42,7 +41,7 @@ class _SliderThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get activeHoverColor => textTheme.textHigh;
+  Color get activeHoverColor => _textTheme.textHigh;
 
   /// The track color.
   /// 
@@ -51,7 +50,7 @@ class _SliderThemeData {
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
-  Color get trackColor => colorScheme.shade[itemBackgroundIndex];
+  Color get trackColor => _colorScheme.shade[itemBackgroundIndex];
 
   /// The highlight color.
   /// 
@@ -60,5 +59,5 @@ class _SliderThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get hightlightColor => textTheme.textLow;
+  Color get hightlightColor => _textTheme.textLow;
 }

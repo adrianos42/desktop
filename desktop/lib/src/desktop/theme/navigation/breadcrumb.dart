@@ -12,13 +12,12 @@ const double _kPadding = 8.0;
 /// Theme data for [Breadcrumb].
 @immutable
 class _BreadcrumbThemeData {
-  const _BreadcrumbThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _BreadcrumbThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The padding for the breadcrumb.
   ///
@@ -54,7 +53,7 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get color => textTheme.textLow;
+  Color get color => _textTheme.textLow;
 
   /// The theme for the breadcrumb icon.
   ///
@@ -75,7 +74,7 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
-  TextStyle get textStyle => textTheme.body2.copyWith(
+  TextStyle get textStyle => _textTheme.body2.copyWith(
         fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
@@ -87,7 +86,7 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get backgroundColor => colorScheme.background[0];
+  Color get backgroundColor => _colorScheme.background[0];
 
   /// The color of the breadcrumb items.
   ///
@@ -96,5 +95,5 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// textTheme.textPrimaryHigh
   /// ```
-  Color get highlightColor => textTheme.textPrimaryHigh;
+  Color get highlightColor => _textTheme.textPrimaryHigh;
 }

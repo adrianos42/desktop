@@ -64,26 +64,6 @@ class _CustomPrimaryColor extends PrimaryColor {
 
   @override
   Color get b70 => const Color(0xff59ce8f);
-
-  @override
-  Color get w30 => throw UnimplementedError();
-
-  @override
-  Color get w40 => throw UnimplementedError();
-
-  @override
-  Color get w50 => throw UnimplementedError();
-
-  @override
-  Color get w60 => throw UnimplementedError();
-
-  @override
-  Color get w70 => throw UnimplementedError();
-
-  @override
-  PrimaryColor withBrightness(Brightness brightness) {
-    return _CustomPrimaryColor();
-  }
 }
 
 class CustomTheme extends StatelessWidget {
@@ -95,16 +75,15 @@ class CustomTheme extends StatelessWidget {
       color: const _CustomBackgroundColor().b0,
       child: Theme(
         data: ThemeData(
-          brightness: Brightness.dark,
           backgroundColor: const _CustomBackgroundColor(),
           primaryColor: const _CustomPrimaryColor(),
         ),
         child: DocHome(
           packageName: 'Desktop Custom Theme',
           packageVersion: '1.0.0',
-          allowThemeChange: false,
           allowThemeColorChange: false,
           treeNodes: DocApp.createItems(false),
+          allowDragging: true,
         ),
       ),
     );

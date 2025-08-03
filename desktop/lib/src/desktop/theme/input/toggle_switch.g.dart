@@ -118,14 +118,14 @@ class ToggleSwitchThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       disabledColor,
       activeColor,
       activeHoverColor,
       inactiveColor,
       inactiveHoverColor,
       foreground,
-    );
+    ]);
   }
 
   @override
@@ -240,12 +240,9 @@ class ToggleSwitchTheme extends InheritedTheme {
 
   /// Returns a copy of [ToggleSwitchTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final ToggleSwitchTheme? toggleSwitchTheme =
-        context.findAncestorWidgetOfExactType<ToggleSwitchTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final ToggleSwitchTheme? toggleSwitchTheme = context
+        .findAncestorWidgetOfExactType<ToggleSwitchTheme>();
     return identical(this, toggleSwitchTheme)
         ? child
         : ToggleSwitchTheme(data: data, child: child);
@@ -253,31 +250,31 @@ class ToggleSwitchTheme extends InheritedTheme {
 
   /// Returns the nearest [ToggleSwitchTheme].
   static ToggleSwitchThemeData of(BuildContext context) {
-    final ToggleSwitchTheme? toggleSwitchTheme =
-        context.dependOnInheritedWidgetOfExactType<ToggleSwitchTheme>();
+    final ToggleSwitchTheme? toggleSwitchTheme = context
+        .dependOnInheritedWidgetOfExactType<ToggleSwitchTheme>();
     ToggleSwitchThemeData? toggleSwitchThemeData = toggleSwitchTheme?.data;
 
     if (toggleSwitchThemeData == null || !toggleSwitchThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       toggleSwitchThemeData ??= themeData.toggleSwitchTheme;
 
-      final toggleSwitchValue = _ToggleSwitchThemeData(
-          textTheme: textTheme, colorScheme: colorScheme);
+      final toggleSwitchValue = _ToggleSwitchThemeData(themeData);
 
-      final Color disabledColor = toggleSwitchThemeData.disabledColor ??
+      final Color disabledColor =
+          toggleSwitchThemeData.disabledColor ??
           toggleSwitchValue.disabledColor;
       final Color activeColor =
           toggleSwitchThemeData.activeColor ?? toggleSwitchValue.activeColor;
-      final Color activeHoverColor = toggleSwitchThemeData.activeHoverColor ??
+      final Color activeHoverColor =
+          toggleSwitchThemeData.activeHoverColor ??
           toggleSwitchValue.activeHoverColor;
-      final Color inactiveColor = toggleSwitchThemeData.inactiveColor ??
+      final Color inactiveColor =
+          toggleSwitchThemeData.inactiveColor ??
           toggleSwitchValue.inactiveColor;
       final Color inactiveHoverColor =
           toggleSwitchThemeData.inactiveHoverColor ??
-              toggleSwitchValue.inactiveHoverColor;
+          toggleSwitchValue.inactiveHoverColor;
       final Color foreground =
           toggleSwitchThemeData.foreground ?? toggleSwitchValue.foreground;
 

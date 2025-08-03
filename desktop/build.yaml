@@ -22,8 +22,10 @@ targets:
           - lib/src/desktop/theme/data/list_table.dart
           - lib/src/desktop/theme/dialogs/context_menu.dart
           - lib/src/desktop/theme/dialogs/dialog.dart
+          - lib/src/desktop/theme/dialogs/drawer.dart
           - lib/src/desktop/theme/dialogs/message.dart
           - lib/src/desktop/theme/dialogs/tooltip.dart
+          - lib/src/desktop/theme/dialogs/floating_menu_bar.dart
           - lib/src/desktop/theme/input/button.dart
           - lib/src/desktop/theme/input/checkbox.dart
           - lib/src/desktop/theme/input/drop_down.dart

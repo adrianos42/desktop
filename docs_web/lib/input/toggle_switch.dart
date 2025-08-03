@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class ToggleSwitchPage extends StatefulWidget {
@@ -10,10 +11,11 @@ class ToggleSwitchPage extends StatefulWidget {
 
 class _ToggleSwitchPageState extends State<ToggleSwitchPage> {
   bool value = false;
+  bool _disabled = false;
 
   @override
   Widget build(BuildContext context) {
-    const enabledCode = '''
+    const exampleCode = '''
 return ToggleSwitch(
   onChanged: (fvalue) {
     setState(() => value = fvalue);
@@ -23,61 +25,46 @@ return ToggleSwitch(
 );
 ''';
 
-    const disabledCode = '''
-return ToggleSwitch(
-  autofocus: false,
-  value: false,
-);
-''';
-
     return Defaults(
-      styleItems: Defaults.createStyle(ToggleSwitchTheme.of(context).toString()),
+      header: 'Toggle Switch',
+      styleItems:
+          Defaults.createStyle(ToggleSwitchTheme.of(context).toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 200.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ToggleSwitch(
-                    onChanged: (fvalue) {
-                      setState(() => value = fvalue);
-                    },
-                    autofocus: false,
-                    value: value,
-                  ),
-                ],
+          title: 'Example',
+          body: (context) => Center(
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 200.0,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ToggleSwitch(
+                      onChanged: !_disabled
+                          ? (fvalue) {
+                              setState(() => value = fvalue);
+                            }
+                          : null,
+                      autofocus: false,
+                      value: value,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          codeText: enabledCode,
-          title: 'Enabled',
-        ),
-        ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 100.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  ToggleSwitch(
-                    autofocus: false,
-                    value: false,
-                  ),
-                ],
-              ),
+          codeText: exampleCode,
+          options: [
+            Button.icon(
+              Icons.close,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
             ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
+          ],
         ),
       ],
-      header: 'Toggle Switch',
     );
   }
 }

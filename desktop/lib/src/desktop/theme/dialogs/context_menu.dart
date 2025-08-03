@@ -15,13 +15,12 @@ const double _kMaxMenuWidth = 6.0 * _kMenuWidthStep;
 /// Theme data for [ContextMenu].
 @immutable
 class _ContextMenuThemeData {
-  const _ContextMenuThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _ContextMenuThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The icon theme.
   ///
@@ -32,7 +31,7 @@ class _ContextMenuThemeData {
   /// ```
   IconThemeData get iconThemeData => IconThemeData(
         size: defaultIconSize,
-        color: textTheme.textHigh,
+        color: _textTheme.textHigh,
         fill: 1.0,
       );
 
@@ -89,7 +88,7 @@ class _ContextMenuThemeData {
   /// textTheme.body1.copyWith(fontSize: defaultFontSize)
   /// ```
   TextStyle get textStyle =>
-      textTheme.body1.copyWith(fontSize: defaultFontSize);
+      _textTheme.body1.copyWith(fontSize: defaultFontSize);
 
   /// The color of an item when selected.
   ///
@@ -98,7 +97,7 @@ class _ContextMenuThemeData {
   /// ```dart
   /// colorScheme.primary[30]
   /// ```
-  Color get selectedColor => colorScheme.primary[30];
+  Color get selectedColor => _colorScheme.primary[30];
 
   /// The color of an item when selected and highlighted.
   ///
@@ -125,7 +124,7 @@ class _ContextMenuThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get selectedForeground => textTheme.textHigh;
+  Color get selectedForeground => _textTheme.textHigh;
 
   /// The color of an item when hovering over it.
   ///
@@ -134,7 +133,7 @@ class _ContextMenuThemeData {
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
-  Color get hoverColor => colorScheme.shade[30];
+  Color get hoverColor => _colorScheme.shade[30];
 
   /// The color of an item when highlighted color.
   ///
@@ -143,7 +142,7 @@ class _ContextMenuThemeData {
   /// ```dart
   /// colorScheme.background[20]
   /// ```
-  Color get highlightColor => colorScheme.background[20];
+  Color get highlightColor => _colorScheme.background[20];
 
   ///  The background color of the menu.
   ///
@@ -152,7 +151,7 @@ class _ContextMenuThemeData {
   /// ```dart
   /// colorScheme.background[8]
   /// ```
-  Color get background => colorScheme.background[8];
+  Color get background => _colorScheme.background[8];
 
   /// The color of the menu border.
   ///
@@ -161,5 +160,5 @@ class _ContextMenuThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get color => textTheme.textLow;
+  Color get color => _textTheme.textLow;
 }

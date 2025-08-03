@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class SliderPage extends StatefulWidget {
@@ -11,10 +12,11 @@ class SliderPage extends StatefulWidget {
 class _SliderPageState extends State<SliderPage> {
   double first = 0.2;
   double second = 0.0;
+  bool _disabled = false;
 
   @override
   Widget build(BuildContext context) {
-    const enabledCode = '''
+    const expampleCode = '''
 return Container(
   width: 200.0,
   child: Column(
@@ -32,27 +34,13 @@ return Container(
 );
 ''';
 
-    const disabledCode = '''
-return Container(
-  width: 200.0,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Slider(
-        value: 0.3,
-      ),
-    ],
-  ),
-);
-''';
-
     return Defaults(
+      header: 'Slider',
       styleItems: Defaults.createStyle(SliderTheme.of(context).toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
+          title: 'Example',
+          body: (context) => Center(
             child: SizedBox(
               width: 200.0,
               child: Column(
@@ -66,38 +54,26 @@ return Container(
                   ),
                   Slider(
                     value: first,
-                    onChanged: (value) {
-                      setState(() => first = value);
-                    },
+                    onChanged: !_disabled
+                        ? (value) {
+                            setState(() => first = value);
+                          }
+                        : null,
                   ),
                 ],
               ),
             ),
           ),
-          codeText: enabledCode,
-          title: 'Enabled',
-        ),
-        ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 200.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Slider(
-                    value: 0.3,
-                  ),
-                ],
-              ),
+          options: [
+            Button.icon(
+              Icons.close,
+              active: _disabled,
+              onPressed: () => setState(() => _disabled = !_disabled),
             ),
-          ),
-          codeText: disabledCode,
-          title: 'Disabled',
+          ],
+          codeText: expampleCode,
         ),
       ],
-      header: 'Slider',
     );
   }
 }

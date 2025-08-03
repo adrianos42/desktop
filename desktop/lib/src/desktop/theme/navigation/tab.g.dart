@@ -296,7 +296,7 @@ class TabThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       padding,
       height,
       width,
@@ -315,7 +315,7 @@ class TabThemeData {
       menuTransitionDuration,
       menuTrasitionCurve,
       menuTrasitionReverseCurve,
-    );
+    ]);
   }
 
   @override
@@ -467,11 +467,7 @@ padding: The padding for the tab bar.
 @immutable
 class TabTheme extends InheritedTheme {
   /// Creates a [TabTheme].
-  const TabTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const TabTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [TabTheme].
   final TabThemeData data;
@@ -484,10 +480,8 @@ class TabTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => TabTheme(
-        data: TabTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          TabTheme(data: TabTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -544,12 +538,9 @@ class TabTheme extends InheritedTheme {
 
   /// Returns a copy of [TabTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final TabTheme? tabTheme =
-        context.findAncestorWidgetOfExactType<TabTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final TabTheme? tabTheme = context
+        .findAncestorWidgetOfExactType<TabTheme>();
     return identical(this, tabTheme)
         ? child
         : TabTheme(data: data, child: child);
@@ -557,19 +548,16 @@ class TabTheme extends InheritedTheme {
 
   /// Returns the nearest [TabTheme].
   static TabThemeData of(BuildContext context) {
-    final TabTheme? tabTheme =
-        context.dependOnInheritedWidgetOfExactType<TabTheme>();
+    final TabTheme? tabTheme = context
+        .dependOnInheritedWidgetOfExactType<TabTheme>();
     TabThemeData? tabThemeData = tabTheme?.data;
 
     if (tabThemeData == null || !tabThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       tabThemeData ??= themeData.tabTheme;
 
-      final tabValue =
-          _TabThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final tabValue = _TabThemeData(themeData);
 
       final EdgeInsets padding = tabThemeData.padding ?? tabValue.padding;
       final double height = tabThemeData.height ?? tabValue.height;
@@ -593,18 +581,18 @@ class TabTheme extends InheritedTheme {
           tabThemeData.itemBackgroundColor ?? tabValue.itemBackgroundColor;
       final Color itemHoverBackgroundColor =
           tabThemeData.itemHoverBackgroundColor ??
-              tabValue.itemHoverBackgroundColor;
+          tabValue.itemHoverBackgroundColor;
       final Color itemHighlightBackgroundColor =
           tabThemeData.itemHighlightBackgroundColor ??
-              tabValue.itemHighlightBackgroundColor;
+          tabValue.itemHighlightBackgroundColor;
       final Duration menuTransitionDuration =
           tabThemeData.menuTransitionDuration ??
-              tabValue.menuTransitionDuration;
+          tabValue.menuTransitionDuration;
       final Curve menuTrasitionCurve =
           tabThemeData.menuTrasitionCurve ?? tabValue.menuTrasitionCurve;
       final Curve menuTrasitionReverseCurve =
           tabThemeData.menuTrasitionReverseCurve ??
-              tabValue.menuTrasitionReverseCurve;
+          tabValue.menuTrasitionReverseCurve;
 
       return tabThemeData.copyWith(
         padding: padding,

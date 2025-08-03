@@ -26,21 +26,7 @@ class Theme extends StatefulWidget {
     final _InheritedTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
 
-    return inheritedTheme?.theme.data ?? ThemeData.dark();
-  }
-
-  static Brightness brightnessOf(BuildContext context) {
-    final _InheritedTheme inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
-
-    return inheritedTheme.theme.data.brightness;
-  }
-
-  static ThemeData invertedThemeOf(BuildContext context) {
-    final _InheritedTheme inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
-
-    return inheritedTheme.theme.data.invertedTheme;
+    return inheritedTheme?.theme.data ?? ThemeData.fallback();
   }
 
   static void updateThemeData(BuildContext context, ThemeData themeData) {
@@ -48,6 +34,17 @@ class Theme extends StatefulWidget {
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
 
     inheritedTheme.theme.updateThemeData(themeData);
+  }
+
+  static Widget withBrightness(
+    BuildContext context, {
+    required Widget child,
+    Brightness brightness = Brightness.dark,
+  }) {
+    return Theme(
+      data: of(context).copyWith(brightness: brightness),
+      child: child,
+    );
   }
 
   @override
@@ -69,7 +66,7 @@ class _ThemeState extends State<Theme> {
       theme: this,
       child: Builder(
         builder: (context) => DefaultTextStyle(
-          style: Theme.of(context).textTheme.body1,
+          style: data.contentTextTheme.body1,
           child: widget.child,
         ),
       ),
@@ -103,26 +100,30 @@ class _InheritedTheme extends InheritedTheme {
 class ThemeData {
   /// Creates a [ThemeData].
   factory ThemeData({
-    required Brightness brightness,
     PrimaryColor? primaryColor,
     BackgroundColor? backgroundColor,
     ShadeColor? shadeColor,
   }) {
     final colorScheme = ColorScheme(
-      brightness,
       primary: primaryColor,
       backgroundColor: backgroundColor,
       shade: shadeColor,
     );
 
+    final contentColorScheme = ColorScheme(
+      primary: colorScheme.primary,
+      shade: colorScheme.shade.withBrightness(Brightness.dark),
+      backgroundColor: colorScheme.background.withBrightness(Brightness.dark),
+    );
+
     return ThemeData._raw(
-      brightness: brightness,
       colorScheme: colorScheme,
       textTheme: TextTheme.withColorScheme(colorScheme),
       navTheme: const NavThemeData(),
       buttonTheme: const ButtonThemeData(),
       dropDownTheme: const DropDownThemeData(),
       dialogTheme: const DialogThemeData(),
+      drawerTheme: const DrawerThemeData(),
       contextMenuTheme: const ContextMenuThemeData(),
       hyperlinkTheme: const HyperlinkThemeData(),
       radioTheme: const RadioThemeData(),
@@ -139,28 +140,24 @@ class ThemeData {
       breadcrumbTheme: const BreadcrumbThemeData(),
       messageTheme: const MessageThemeData(),
       tooltipTheme: const TooltipThemeData(),
+      floatingMenuBarTheme: const FloatingMenuBarThemeData(),
+      brightness: Brightness.dark,
+      contentColorScheme: contentColorScheme,
+      contentTextTheme: TextTheme.withColorScheme(contentColorScheme),
     );
   }
 
-  /// Creates a theme with light brightness.
-  factory ThemeData.light([PrimaryColor? primaryColor]) =>
-      ThemeData(brightness: Brightness.light, primaryColor: primaryColor);
-
-  /// Creates a theme with dart brightness.
-  factory ThemeData.dark([PrimaryColor? primaryColor]) =>
-      ThemeData(brightness: Brightness.dark, primaryColor: primaryColor);
-
   /// Creates a default theme.
-  factory ThemeData.fallback() => ThemeData(brightness: Brightness.dark);
+  factory ThemeData.fallback() => ThemeData();
 
   const ThemeData._raw({
-    required this.brightness,
     required this.colorScheme,
     required this.textTheme,
     required this.navTheme,
     required this.buttonTheme,
     required this.dropDownTheme,
     required this.dialogTheme,
+    required this.drawerTheme,
     required this.contextMenuTheme,
     required this.hyperlinkTheme,
     required this.radioTheme,
@@ -176,100 +173,21 @@ class ThemeData {
     required this.breadcrumbTheme,
     required this.messageTheme,
     required this.tooltipTheme,
+    required this.floatingMenuBarTheme,
+    this.brightness = Brightness.dark,
+    required this.contentColorScheme,
+    required this.contentTextTheme,
   });
-
-  /// Creates a theme with a given brightness.
-  ThemeData withBrightness(Brightness brightness) {
-    final colorScheme = this.colorScheme.withBrightness(brightness);
-    final textTheme = TextTheme.withColorScheme(colorScheme);
-
-    return ThemeData._raw(
-      brightness: brightness,
-      colorScheme: colorScheme,
-      textTheme: textTheme,
-      navTheme: navTheme,
-      buttonTheme: buttonTheme,
-      dropDownTheme: dropDownTheme,
-      dialogTheme: dialogTheme,
-      contextMenuTheme: contextMenuTheme,
-      hyperlinkTheme: hyperlinkTheme,
-      radioTheme: radioTheme,
-      checkboxTheme: checkboxTheme,
-      sliderTheme: sliderTheme,
-      toggleSwitchTheme: toggleSwitchTheme,
-      scrollbarTheme: scrollbarTheme,
-      tabTheme: tabTheme,
-      treeTheme: treeTheme,
-      listTableTheme: listTableTheme,
-      circularProgressIndicatorTheme: circularProgressIndicatorTheme,
-      linearProgressIndicatorTheme: linearProgressIndicatorTheme,
-      breadcrumbTheme: breadcrumbTheme,
-      messageTheme: messageTheme,
-      tooltipTheme: tooltipTheme,
-    );
-  }
-
-  /// Creates a theme with selected fields.
-  ThemeData copyWith({
-    Brightness? brightness,
-    ColorScheme? colorScheme,
-    TextTheme? textTheme,
-    NavThemeData? navTheme,
-    TabThemeData? tabTheme,
-    TreeThemeData? treeTheme,
-    ButtonThemeData? buttonTheme,
-    DropDownThemeData? dropDownTheme,
-    DialogThemeData? dialogTheme,
-    ContextMenuThemeData? contextMenuTheme,
-    HyperlinkThemeData? hyperlinkTheme,
-    RadioThemeData? radioTheme,
-    CheckboxThemeData? checkboxTheme,
-    ToggleSwitchThemeData? toggleSwitchTheme,
-    SliderThemeData? sliderTheme,
-    ScrollbarThemeData? scrollbarTheme,
-    ListTableThemeData? listTableTheme,
-    CircularProgressIndicatorThemeData? circularProgressIndicatorTheme,
-    LinearProgressIndicatorThemeData? linearProgressIndicatorTheme,
-    BreadcrumbThemeData? breadcrumbTheme,
-    MessageThemeData? messageTheme,
-    TooltipThemeData? tooltipTheme,
-  }) {
-    final newColorScheme =
-        colorScheme?.withBrightness(brightness ?? this.brightness) ??
-            this.colorScheme.withBrightness(brightness ?? this.brightness);
-    return ThemeData._raw(
-      brightness: brightness ?? this.brightness,
-      colorScheme: newColorScheme,
-      textTheme: textTheme ?? TextTheme.withColorScheme(newColorScheme),
-      navTheme: navTheme ?? this.navTheme,
-      buttonTheme: buttonTheme ?? this.buttonTheme,
-      dropDownTheme: dropDownTheme ?? this.dropDownTheme,
-      dialogTheme: dialogTheme ?? this.dialogTheme,
-      contextMenuTheme: contextMenuTheme ?? this.contextMenuTheme,
-      hyperlinkTheme: hyperlinkTheme ?? this.hyperlinkTheme,
-      radioTheme: radioTheme ?? this.radioTheme,
-      checkboxTheme: checkboxTheme ?? this.checkboxTheme,
-      sliderTheme: sliderTheme ?? this.sliderTheme,
-      toggleSwitchTheme: toggleSwitchTheme ?? this.toggleSwitchTheme,
-      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
-      tabTheme: tabTheme ?? this.tabTheme,
-      treeTheme: treeTheme ?? this.treeTheme,
-      listTableTheme: listTableTheme ?? this.listTableTheme,
-      circularProgressIndicatorTheme:
-          circularProgressIndicatorTheme ?? this.circularProgressIndicatorTheme,
-      linearProgressIndicatorTheme:
-          linearProgressIndicatorTheme ?? this.linearProgressIndicatorTheme,
-      breadcrumbTheme: breadcrumbTheme ?? this.breadcrumbTheme,
-      messageTheme: messageTheme ?? this.messageTheme,
-      tooltipTheme: tooltipTheme ?? this.tooltipTheme,
-    );
-  }
 
   final Brightness brightness;
 
   final ColorScheme colorScheme;
 
   final TextTheme textTheme;
+
+  final ColorScheme contentColorScheme;
+
+  final TextTheme contentTextTheme;
 
   final NavThemeData navTheme;
 
@@ -282,6 +200,8 @@ class ThemeData {
   final DropDownThemeData dropDownTheme;
 
   final DialogThemeData dialogTheme;
+
+  final DrawerThemeData drawerTheme;
 
   final ContextMenuThemeData contextMenuTheme;
 
@@ -309,20 +229,98 @@ class ThemeData {
 
   final TooltipThemeData tooltipTheme;
 
-  ThemeData get invertedTheme {
-    final Brightness inverseBrightness =
-        brightness == Brightness.dark ? Brightness.light : Brightness.dark;
+  final FloatingMenuBarThemeData floatingMenuBarTheme;
 
-    final invertedColorScheme = colorScheme.withBrightness(inverseBrightness);
+  /// Creates a theme with selected fields.
+  ThemeData copyWith({
+    ColorScheme? colorScheme,
+    TextTheme? textTheme,
+    NavThemeData? navTheme,
+    TabThemeData? tabTheme,
+    TreeThemeData? treeTheme,
+    ButtonThemeData? buttonTheme,
+    DropDownThemeData? dropDownTheme,
+    DialogThemeData? dialogTheme,
+    DrawerThemeData? drawerTheme,
+    ContextMenuThemeData? contextMenuTheme,
+    HyperlinkThemeData? hyperlinkTheme,
+    RadioThemeData? radioTheme,
+    CheckboxThemeData? checkboxTheme,
+    ToggleSwitchThemeData? toggleSwitchTheme,
+    SliderThemeData? sliderTheme,
+    ScrollbarThemeData? scrollbarTheme,
+    ListTableThemeData? listTableTheme,
+    CircularProgressIndicatorThemeData? circularProgressIndicatorTheme,
+    LinearProgressIndicatorThemeData? linearProgressIndicatorTheme,
+    BreadcrumbThemeData? breadcrumbTheme,
+    MessageThemeData? messageTheme,
+    TooltipThemeData? tooltipTheme,
+    FloatingMenuBarThemeData? floatingMenuBarTheme,
+    Brightness? brightness,
+  }) {
+    final effectiveColorScheme = colorScheme ?? this.colorScheme;
+    final effectiveBrightness = brightness ?? this.brightness;
+
+    final contentColorScheme = ColorScheme(
+      primary: effectiveColorScheme.primary,
+      shade: effectiveColorScheme.shade.withBrightness(effectiveBrightness),
+      backgroundColor:
+          effectiveColorScheme.background.withBrightness(effectiveBrightness),
+      disabledColor: effectiveBrightness == Brightness.light
+          ? const Color(0xffbfbfbf)
+          : null,
+    );
 
     return ThemeData._raw(
-      brightness: inverseBrightness,
-      colorScheme: invertedColorScheme,
+      colorScheme: effectiveColorScheme,
+      textTheme: textTheme ?? TextTheme.withColorScheme(effectiveColorScheme),
+      navTheme: navTheme ?? this.navTheme,
+      buttonTheme: buttonTheme ?? this.buttonTheme,
+      dropDownTheme: dropDownTheme ?? this.dropDownTheme,
+      dialogTheme: dialogTheme ?? this.dialogTheme,
+      drawerTheme: drawerTheme ?? this.drawerTheme,
+      contextMenuTheme: contextMenuTheme ?? this.contextMenuTheme,
+      hyperlinkTheme: hyperlinkTheme ?? this.hyperlinkTheme,
+      radioTheme: radioTheme ?? this.radioTheme,
+      checkboxTheme: checkboxTheme ?? this.checkboxTheme,
+      sliderTheme: sliderTheme ?? this.sliderTheme,
+      toggleSwitchTheme: toggleSwitchTheme ?? this.toggleSwitchTheme,
+      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
+      tabTheme: tabTheme ?? this.tabTheme,
+      treeTheme: treeTheme ?? this.treeTheme,
+      listTableTheme: listTableTheme ?? this.listTableTheme,
+      circularProgressIndicatorTheme:
+          circularProgressIndicatorTheme ?? this.circularProgressIndicatorTheme,
+      linearProgressIndicatorTheme:
+          linearProgressIndicatorTheme ?? this.linearProgressIndicatorTheme,
+      breadcrumbTheme: breadcrumbTheme ?? this.breadcrumbTheme,
+      messageTheme: messageTheme ?? this.messageTheme,
+      tooltipTheme: tooltipTheme ?? this.tooltipTheme,
+      floatingMenuBarTheme: floatingMenuBarTheme ?? this.floatingMenuBarTheme,
+      brightness: effectiveBrightness,
+      contentColorScheme: contentColorScheme,
+      contentTextTheme:
+          TextTheme.withColorScheme(contentColorScheme, effectiveBrightness),
+    );
+  }
+
+  ThemeData get invertedTheme {
+    final contentColorScheme = ColorScheme(
+      primary: colorScheme.primary,
+      shade: colorScheme.shade.withBrightness(Brightness.light),
+      backgroundColor: colorScheme.background.withBrightness(Brightness.light),
+      disabledColor: const Color(0xffbfbfbf),
+    );
+
+    return ThemeData._raw(
+      colorScheme: contentColorScheme,
       navTheme: navTheme,
-      textTheme: TextTheme.withColorScheme(invertedColorScheme),
+      textTheme:
+          TextTheme.withColorScheme(contentColorScheme, Brightness.light),
       buttonTheme: buttonTheme,
       dropDownTheme: dropDownTheme,
       dialogTheme: dialogTheme,
+      drawerTheme: drawerTheme,
       contextMenuTheme: contextMenuTheme,
       hyperlinkTheme: hyperlinkTheme,
       radioTheme: radioTheme,
@@ -338,13 +336,18 @@ class ThemeData {
       breadcrumbTheme: breadcrumbTheme,
       messageTheme: messageTheme,
       tooltipTheme: tooltipTheme,
+      floatingMenuBarTheme: floatingMenuBarTheme,
+      contentColorScheme: colorScheme,
+      contentTextTheme: TextTheme.withColorScheme(
+        contentColorScheme,
+        Brightness.dark,
+      ),
     );
   }
 
   @override
   int get hashCode {
     return Object.hash(
-      brightness,
       colorScheme,
       textTheme,
       navTheme,
@@ -367,6 +370,9 @@ class ThemeData {
         breadcrumbTheme,
         messageTheme,
         tooltipTheme,
+        floatingMenuBarTheme,
+        drawerTheme,
+        brightness,
       ),
     );
   }
@@ -380,13 +386,13 @@ class ThemeData {
       return false;
     }
     return other is ThemeData &&
-        other.brightness == brightness &&
         other.colorScheme == colorScheme &&
         other.textTheme == textTheme &&
         other.navTheme == navTheme &&
         other.buttonTheme == buttonTheme &&
         other.dropDownTheme == dropDownTheme &&
         other.dialogTheme == dialogTheme &&
+        other.drawerTheme == drawerTheme &&
         other.contextMenuTheme == contextMenuTheme &&
         other.hyperlinkTheme == hyperlinkTheme &&
         other.radioTheme == radioTheme &&
@@ -402,6 +408,7 @@ class ThemeData {
         other.linearProgressIndicatorTheme == linearProgressIndicatorTheme &&
         other.breadcrumbTheme == breadcrumbTheme &&
         other.messageTheme == messageTheme &&
-        other.tooltipTheme == tooltipTheme;
+        other.tooltipTheme == tooltipTheme &&
+        other.floatingMenuBarTheme == floatingMenuBarTheme;
   }
 }

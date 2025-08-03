@@ -23,7 +23,6 @@ class DocHome extends StatefulWidget {
     required this.packageVersion,
     required this.packageName,
     this.allowThemeColorChange = false,
-    this.allowThemeChange = true,
     this.allowDragging = false,
     required this.treeNodes,
   }) : assert(treeNodes.isNotEmpty, 'Empty documentation.');
@@ -36,9 +35,6 @@ class DocHome extends StatefulWidget {
 
   ///
   final bool allowThemeColorChange;
-
-  ///
-  final bool allowThemeChange;
 
   ///
   final List<TreeNode> treeNodes;
@@ -99,14 +95,12 @@ class _DocHomeState extends State<DocHome> {
           value: primaryColor,
           onSelected: (PrimaryColors value) {
             final themeData = Theme.of(context);
-            final colorScheme = themeData.colorScheme;
             _primaryColor = value;
 
             Theme.updateThemeData(
               context,
               themeData.copyWith(
                 colorScheme: ColorScheme(
-                  colorScheme.brightness,
                   primary: value.primaryColor,
                 ),
               ),
@@ -120,7 +114,6 @@ class _DocHomeState extends State<DocHome> {
   Widget _createHome() {
     return Builder(builder: (context) {
       final orientation = MediaQuery.maybeOf(context)?.orientation;
-      final textTheme = Theme.of(context).textTheme;
 
       final isShowingTree =
           _isShowingTree ?? orientation == Orientation.landscape;
@@ -145,10 +138,6 @@ class _DocHomeState extends State<DocHome> {
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Button.icon(
                         Icons.menuOpen,
-                        theme: ButtonThemeData(
-                          color: textTheme.textLow,
-                          highlightColor: textTheme.textPrimaryHigh,
-                        ),
                         active: isShowingTree,
                         size: 22.0,
                         onPressed: () =>
@@ -157,10 +146,7 @@ class _DocHomeState extends State<DocHome> {
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 16.0,
-                      ),
+                      padding: const EdgeInsets.all(8.0),
                       child: Builder(
                         builder: (context) {
                           return Tooltip(
@@ -180,23 +166,10 @@ class _DocHomeState extends State<DocHome> {
                     ),
                   ],
                 ),
-                if (widget.allowThemeChange || widget.allowThemeColorChange)
+                if (widget.allowThemeColorChange)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (widget.allowThemeColorChange) _createColorButton(),
-                        if (widget.allowThemeChange)
-                          _ThemeToggle(
-                            onPressed: () => setState(() {
-                              final invertedTheme =
-                                  Theme.of(context).invertedTheme;
-                              Theme.updateThemeData(context, invertedTheme);
-                            }),
-                          ),
-                      ],
-                    ),
+                    child: _createColorButton(),
                   )
               ],
             ),
@@ -226,41 +199,6 @@ class _DocHomeState extends State<DocHome> {
   Widget build(BuildContext context) => _createHome();
 }
 
-class _ThemeToggle extends StatefulWidget {
-  const _ThemeToggle({
-    required this.onPressed,
-  });
-
-  final VoidCallback onPressed;
-
-  @override
-  State<_ThemeToggle> createState() => _ThemeToggleState();
-}
-
-class _ThemeToggleState extends State<_ThemeToggle> {
-  @override
-  Widget build(BuildContext context) {
-    final themeData = Theme.of(context);
-    final iconForeground = themeData.textTheme.textHigh;
-    switch (themeData.brightness) {
-      case Brightness.dark:
-        return Button.icon(
-          Icons.darkMode,
-          onPressed: widget.onPressed,
-          theme: ButtonThemeData(
-            color: iconForeground,
-          ),
-        );
-      case Brightness.light:
-        return Button.icon(
-          Icons.lightMode,
-          onPressed: widget.onPressed,
-          theme: ButtonThemeData(color: iconForeground),
-        );
-    }
-  }
-}
-
 class DocApp extends StatelessWidget {
   const DocApp({super.key});
 
@@ -272,7 +210,11 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
-            return const DialogMessagePage();
+            // return const ButtonPage();
+            // return const NavPage();
+            // return const DrawerPage();
+            // return const ButtonRadioPage();
+            return const BreadcrumbPage();
           }
         },
       ),
@@ -325,6 +267,10 @@ class DocApp extends StatelessWidget {
           TreeNode.child(
             titleBuilder: (context) => const Text('Dialog'),
             builder: (context) => const DialogPage(),
+          ),
+          TreeNode.child(
+            titleBuilder: (context) => const Text('Drawer'),
+            builder: (context) => const DrawerPage(),
           ),
           TreeNode.child(
             titleBuilder: (context) => const Text('Message'),
@@ -443,7 +389,6 @@ class DocApp extends StatelessWidget {
     return DocHome(
       packageName: 'Desktop',
       packageVersion: _version,
-      allowThemeChange: true,
       allowThemeColorChange: true,
       allowDragging: false,
       treeNodes: createItems(true),

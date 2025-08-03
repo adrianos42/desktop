@@ -1,5 +1,7 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
+import 'content.dart';
 
 class ButtonDropDownPage extends StatefulWidget {
   const ButtonDropDownPage({super.key});
@@ -13,6 +15,7 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
   int? initialCustomValue;
 
   bool _disabled = false;
+  // bool _buttonContent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +38,19 @@ return SizedBox(
     isField: true,
     itemBuilder: (context) => [
       ContextMenuItem(
-        child: Text('Florianópolis'),
+        child: Text('Item 1'),
         value: 0,
       ),
       ContextMenuItem(
-        child: Text('Joinville'),
+        child: Text('Item 2'),
         value: 1,
       ),
       ContextMenuItem(
-        child: Text('Palhoça'),
+        child: Text('Item 3'),
         value: 2,
       ),
       ContextMenuItem(
-        child: Text('Pedra Branca'),
+        child: Text('Item 4'),
         value: 3,
       ),
     ],
@@ -59,42 +62,54 @@ return SizedBox(
       styleItems: Defaults.createStyle(DropDownTheme.of(context).toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              width: 200.0,
+          title: 'Example',
+          body: (context) => InputContent(
+            enabled: false,
+            child: Align(
               alignment: Alignment.topCenter,
-              margin: const EdgeInsets.all(24.0),
-              child: ContextMenuTheme.copyWith(
-                child: DropDownButton(
-                  enabled: !_disabled,
-                  onSelected: (int value) {
-                    setState(() => initialValue = value);
-                  },
-                  value: initialValue,
-                  itemBuilder: (context) => const [
-                    ContextMenuItem(
-                      value: 0,
-                      child: Text('Florianópolis'),
+              child: SizedBox(
+                width: 200.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: ContextMenuTheme.copyWith(
+                    child: DropDownButton(
+                      enabled: !_disabled,
+                      onSelected: (int value) {
+                        setState(() => initialValue = value);
+                      },
+                      value: initialValue,
+                      itemBuilder: (context) => const [
+                        ContextMenuItem(
+                          value: 0,
+                          child: Text('Item 1'),
+                        ),
+                        ContextMenuItem(
+                          value: 1,
+                          child: Text('Item 2'),
+                        ),
+                        ContextMenuItem(
+                          value: 2,
+                          child: Text('Item 3'),
+                        ),
+                        ContextMenuItem(
+                          value: 3,
+                          child: Text('Item 4'),
+                        ),
+                      ],
                     ),
-                    ContextMenuItem(
-                      value: 1,
-                      child: Text('Joinville'),
-                    ),
-                    ContextMenuItem(
-                      value: 2,
-                      child: Text('Palhoça'),
-                    ),
-                    ContextMenuItem(
-                      value: 3,
-                      child: Text('Pedra Branca'),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
           options: [
+            // Button.icon(
+            //   Icons.lightMode,
+            //   active: _buttonContent,
+            //   onPressed: () => setState(
+            //     () => _buttonContent = !_buttonContent,
+            //   ),
+            // ),
             Button.icon(
               Icons.close,
               active: _disabled,
@@ -102,9 +117,9 @@ return SizedBox(
             ),
           ],
           codeText: codeText,
-          title: 'Example',
         ),
         ItemTitle(
+          title: 'Custom background',
           body: (context) => Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -130,19 +145,19 @@ return SizedBox(
                     itemBuilder: (context) => const [
                       ContextMenuItem(
                         value: 0,
-                        child: Text('Florianópolis'),
+                        child: Text('Item 1'),
                       ),
                       ContextMenuItem(
                         value: 1,
-                        child: Text('Joinville'),
+                        child: Text('Item 2'),
                       ),
                       ContextMenuItem(
                         value: 2,
-                        child: Text('Palhoça'),
+                        child: Text('Item 3'),
                       ),
                       ContextMenuItem(
                         value: 3,
-                        child: Text('Pedra Branca'),
+                        child: Text('Item 4'),
                       ),
                     ],
                   ),
@@ -151,7 +166,6 @@ return SizedBox(
             ),
           ),
           codeText: codeText,
-          title: 'Custom background',
         ),
       ],
       header: 'Drop Down Menu',

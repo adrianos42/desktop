@@ -177,7 +177,7 @@ class _ListTableState extends State<ListTable> {
   Widget createHeaderFeedback(int col, double colWidth) {
     return FeedbackColumn(
       backgroundColor:
-          Theme.of(context).colorScheme.background[0].withOpacity(0.85),
+          Theme.of(context).colorScheme.background[0].withValues(alpha: 0.85),
       col: col,
       itemSize: Size(colWidth, totalHeight!),
       header: FeedbackHeaderItem(

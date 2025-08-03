@@ -24,6 +24,7 @@ class ButtonThemeData {
     this.hoverColor,
     this.highlightColor,
     this.background,
+    this.disabledBackground,
     this.focusBackground,
     this.hoverBackground,
     this.highlightBackground,
@@ -150,6 +151,15 @@ class ButtonThemeData {
   /// ```
   final Color? background;
 
+  /// The background color when the button is disabled.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.disabled
+  /// ```
+  final Color? disabledBackground;
+
   /// The background color when the button is being focused.
   ///
   /// Defaults to:
@@ -228,6 +238,7 @@ class ButtonThemeData {
     Color? hoverColor,
     Color? highlightColor,
     Color? background,
+    Color? disabledBackground,
     Color? focusBackground,
     Color? hoverBackground,
     Color? highlightBackground,
@@ -250,6 +261,7 @@ class ButtonThemeData {
       hoverColor: hoverColor ?? this.hoverColor,
       highlightColor: highlightColor ?? this.highlightColor,
       background: background ?? this.background,
+      disabledBackground: disabledBackground ?? this.disabledBackground,
       focusBackground: focusBackground ?? this.focusBackground,
       hoverBackground: hoverBackground ?? this.hoverBackground,
       highlightBackground: highlightBackground ?? this.highlightBackground,
@@ -279,6 +291,7 @@ class ButtonThemeData {
       hoverColor: other.hoverColor,
       highlightColor: other.highlightColor,
       background: other.background,
+      disabledBackground: other.disabledBackground,
       focusBackground: other.focusBackground,
       hoverBackground: other.hoverBackground,
       highlightBackground: other.highlightBackground,
@@ -303,6 +316,7 @@ class ButtonThemeData {
         hoverColor != null &&
         highlightColor != null &&
         background != null &&
+        disabledBackground != null &&
         focusBackground != null &&
         hoverBackground != null &&
         highlightBackground != null &&
@@ -314,7 +328,7 @@ class ButtonThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       axis,
       iconThemeData,
       itemSpacing,
@@ -328,6 +342,7 @@ class ButtonThemeData {
       hoverColor,
       highlightColor,
       background,
+      disabledBackground,
       focusBackground,
       hoverBackground,
       highlightBackground,
@@ -335,7 +350,7 @@ class ButtonThemeData {
       hoverForeground,
       highlightForeground,
       animationDuration,
-    );
+    ]);
   }
 
   @override
@@ -419,6 +434,12 @@ axis: The axis of the button.
 
  ```dart
  colorScheme.primary[30]
+ ```;;disabledBackground: The background color when the button is disabled.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.disabled
  ```;;focusBackground: The background color when the button is being focused.
 
  Defaults to:
@@ -481,6 +502,7 @@ axis: The axis of the button.
             other.hoverColor == hoverColor &&
             other.highlightColor == highlightColor &&
             other.background == background &&
+            other.disabledBackground == disabledBackground &&
             other.focusBackground == focusBackground &&
             other.hoverBackground == hoverBackground &&
             other.highlightBackground == highlightBackground &&
@@ -495,11 +517,7 @@ axis: The axis of the button.
 @immutable
 class ButtonTheme extends InheritedTheme {
   /// Creates a [ButtonTheme].
-  const ButtonTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const ButtonTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [ButtonTheme].
   final ButtonThemeData data;
@@ -512,10 +530,8 @@ class ButtonTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => ButtonTheme(
-        data: ButtonTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          ButtonTheme(data: ButtonTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -536,6 +552,7 @@ class ButtonTheme extends InheritedTheme {
     Color? hoverColor,
     Color? highlightColor,
     Color? background,
+    Color? disabledBackground,
     Color? focusBackground,
     Color? hoverBackground,
     Color? highlightBackground,
@@ -561,6 +578,7 @@ class ButtonTheme extends InheritedTheme {
           hoverColor: hoverColor,
           highlightColor: highlightColor,
           background: background,
+          disabledBackground: disabledBackground,
           focusBackground: focusBackground,
           hoverBackground: hoverBackground,
           highlightBackground: highlightBackground,
@@ -576,12 +594,9 @@ class ButtonTheme extends InheritedTheme {
 
   /// Returns a copy of [ButtonTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final ButtonTheme? buttonTheme =
-        context.findAncestorWidgetOfExactType<ButtonTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final ButtonTheme? buttonTheme = context
+        .findAncestorWidgetOfExactType<ButtonTheme>();
     return identical(this, buttonTheme)
         ? child
         : ButtonTheme(data: data, child: child);
@@ -589,19 +604,16 @@ class ButtonTheme extends InheritedTheme {
 
   /// Returns the nearest [ButtonTheme].
   static ButtonThemeData of(BuildContext context) {
-    final ButtonTheme? buttonTheme =
-        context.dependOnInheritedWidgetOfExactType<ButtonTheme>();
+    final ButtonTheme? buttonTheme = context
+        .dependOnInheritedWidgetOfExactType<ButtonTheme>();
     ButtonThemeData? buttonThemeData = buttonTheme?.data;
 
     if (buttonThemeData == null || !buttonThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       buttonThemeData ??= themeData.buttonTheme;
 
-      final buttonValue =
-          _ButtonThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final buttonValue = _ButtonThemeData(themeData);
 
       final Axis axis = buttonThemeData.axis ?? buttonValue.axis;
       final IconThemeData iconThemeData =
@@ -625,17 +637,21 @@ class ButtonTheme extends InheritedTheme {
           buttonThemeData.highlightColor ?? buttonValue.highlightColor;
       final Color background =
           buttonThemeData.background ?? buttonValue.background;
+      final Color disabledBackground =
+          buttonThemeData.disabledBackground ?? buttonValue.disabledBackground;
       final Color focusBackground =
           buttonThemeData.focusBackground ?? buttonValue.focusBackground;
       final Color hoverBackground =
           buttonThemeData.hoverBackground ?? buttonValue.hoverBackground;
-      final Color highlightBackground = buttonThemeData.highlightBackground ??
+      final Color highlightBackground =
+          buttonThemeData.highlightBackground ??
           buttonValue.highlightBackground;
       final Color foreground =
           buttonThemeData.foreground ?? buttonValue.foreground;
       final Color hoverForeground =
           buttonThemeData.hoverForeground ?? buttonValue.hoverForeground;
-      final Color highlightForeground = buttonThemeData.highlightForeground ??
+      final Color highlightForeground =
+          buttonThemeData.highlightForeground ??
           buttonValue.highlightForeground;
       final Duration animationDuration =
           buttonThemeData.animationDuration ?? buttonValue.animationDuration;
@@ -654,6 +670,7 @@ class ButtonTheme extends InheritedTheme {
         hoverColor: hoverColor,
         highlightColor: highlightColor,
         background: background,
+        disabledBackground: disabledBackground,
         focusBackground: focusBackground,
         hoverBackground: hoverBackground,
         highlightBackground: highlightBackground,

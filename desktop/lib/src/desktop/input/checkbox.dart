@@ -187,6 +187,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
         : theme.inactiveHoverColor!;
     final inactiveColor = theme.inactiveColor!;
     final foregroundColor = theme.foreground!;
+    final foregroundHoverColor = theme.hoverForeground!;
     // TODO(as): final focusColor = theme.activeHoverColor!;
     final disabledColor = theme.disabledColor!;
 
@@ -218,6 +219,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
               disabledColor: disabledColor,
               onChanged: enabled ? (value) => widget.onChanged!(value!) : null,
               foregroundColor: foregroundColor,
+              foregroundHoverColor: foregroundHoverColor,
               additionalConstraints: additionalConstraints,
               forceEnabled: widget.forceEnabled,
             ),
@@ -235,6 +237,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.state,
     required this.activeColor,
     required this.foregroundColor,
+    required this.foregroundHoverColor,
     required this.inactiveColor,
     required this.disabledColor,
     required this.hoverColor,
@@ -247,6 +250,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
   final _CheckboxState state;
   final Color activeColor;
   final Color foregroundColor;
+  final Color foregroundHoverColor;
   final Color inactiveColor;
   final Color disabledColor;
   final ValueChanged<bool?>? onChanged;
@@ -261,6 +265,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
         state: state,
         activeColor: activeColor,
         foregroundColor: foregroundColor,
+        foregroundHoverColor: foregroundHoverColor,
         inactiveColor: inactiveColor,
         disabledColor: disabledColor,
         onChanged: onChanged,
@@ -276,6 +281,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
       ..value = value
       ..activeColor = activeColor
       ..foregroundColor = foregroundColor
+      ..foregroundHoverColor = foregroundHoverColor
       ..inactiveColor = inactiveColor
       ..disabledColor = disabledColor
       ..onChanged = onChanged
@@ -294,6 +300,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
     required _CheckboxState state,
     required Color activeColor,
     required Color foregroundColor,
+    required Color foregroundHoverColor,
     required Color inactiveColor,
     required Color disabledColor,
     required Color hoverColor,
@@ -305,6 +312,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
         _activeColor = activeColor,
         _disabledColor = disabledColor,
         _foregroundColor = foregroundColor,
+        _foregroundHoverColor = foregroundHoverColor,
         _inactiveColor = inactiveColor,
         _hoverColor = hoverColor,
         _hovering = hovering,
@@ -343,6 +351,16 @@ class _RenderCheckbox extends RenderConstrainedBox {
       return;
     }
     _foregroundColor = value;
+    markNeedsPaint();
+  }
+
+  Color get foregroundHoverColor => _foregroundHoverColor;
+  Color _foregroundHoverColor;
+  set foregroundHoverColor(Color value) {
+    if (value == _foregroundHoverColor) {
+      return;
+    }
+    _foregroundHoverColor = value;
     markNeedsPaint();
   }
 
@@ -446,7 +464,7 @@ class _RenderCheckbox extends RenderConstrainedBox {
 
   Paint _createStrokePaint() {
     return Paint()
-      ..color = _state._hovering ? const Color(0xFF000000) : foregroundColor
+      ..color = _state._hovering ? foregroundHoverColor : foregroundColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = _kStrokeWidth;
   }

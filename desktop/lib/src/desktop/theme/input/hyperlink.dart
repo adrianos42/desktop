@@ -10,13 +10,13 @@ const double _kLineThickness = 1.0;
 /// Theme data for [HyperlinkButton].
 @immutable
 class _HyperlinkThemeData {
-  const _HyperlinkThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _HyperlinkThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.contentTextTheme;
+
+  bool get _isDark => _themeData.brightness == Brightness.dark;
 
   /// The color of the hyperlink text.
   ///
@@ -27,9 +27,7 @@ class _HyperlinkThemeData {
   /// .withBrightness(colorScheme.brightness)
   /// .color
   /// ```
-  Color get color => PrimaryColors.dodgerBlue.primaryColor
-      .withBrightness(colorScheme.brightness)
-      .color;
+  Color get color => PrimaryColors.dodgerBlue.primaryColor.color;
 
   /// The color of the hyperlink text when hovered.
   ///
@@ -38,7 +36,7 @@ class _HyperlinkThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get hoverColor => textTheme.textHigh;
+  Color get hoverColor => _isDark ? _textTheme.textHigh : _textTheme.textLow;
 
   /// The text style of the hyperlink.
   ///
@@ -52,7 +50,7 @@ class _HyperlinkThemeData {
   ///   overflow: TextOverflow.ellipsis,
   /// )
   /// ```
-  TextStyle get textStyle => textTheme.body2.copyWith(
+  TextStyle get textStyle => _textTheme.body2.copyWith(
         fontSize: 14.0,
         decoration: TextDecoration.underline,
         decorationThickness: _kLineThickness,
@@ -66,5 +64,5 @@ class _HyperlinkThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get highlightColor => textTheme.textLow;
+  Color get highlightColor => _isDark ? _textTheme.textLow : _textTheme.textHigh;
 }

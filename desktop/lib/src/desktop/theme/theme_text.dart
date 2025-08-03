@@ -96,10 +96,11 @@ class TextTheme {
     required this.monospace,
   });
 
-  factory TextTheme.withColorScheme(ColorScheme colorScheme) {
+  factory TextTheme.withColorScheme(ColorScheme colorScheme,
+      [Brightness brightness = Brightness.dark]) {
     TextTheme result;
 
-    switch (colorScheme.brightness) {
+    switch (brightness) {
       case Brightness.dark:
         final textLow = colorScheme.shade[50];
         final textMedium = colorScheme.shade[70];

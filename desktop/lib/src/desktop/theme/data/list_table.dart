@@ -11,18 +11,17 @@ const double _kDefaultItemHeight = 34.0;
 /// Theme data for [ListTable].
 @immutable
 class _ListTableThemeData {
-  const _ListTableThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _ListTableThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   ///
   IconThemeData get iconThemeData => IconThemeData(
         size: defaultIconSize,
-        color: textTheme.textHigh,
+        color: _textTheme.textHigh,
         fill: 1.0,
       );
 
@@ -31,35 +30,35 @@ class _ListTableThemeData {
 
   ///
   TextStyle get textStyle =>
-      textTheme.body1.copyWith(fontSize: defaultFontSize);
+      _textTheme.body1.copyWith(fontSize: defaultFontSize);
 
   ///
-  Color get selectedColor => colorScheme.primary[30];
+  Color get selectedColor => _colorScheme.primary[30];
 
   ///
-  Color get selectedHighlightColor => colorScheme.primary[60];
+  Color get selectedHighlightColor => _colorScheme.primary[60];
 
   ///
-  Color get selectedHoverColor => colorScheme.primary[30];
+  Color get selectedHoverColor => _colorScheme.primary[30];
 
   ///
-  Color get hoverColor => colorScheme.background[20];
+  Color get hoverColor => _colorScheme.background[20];
 
   ///
-  Color get highlightColor => colorScheme.background[12];
+  Color get highlightColor => _colorScheme.background[12];
 
   ///
-  Color get background => colorScheme.background[0];
+  Color get background => _colorScheme.background[0];
 
   ///
-  Color get borderColor => colorScheme.shade[40];
+  Color get borderColor => _colorScheme.shade[40];
 
   ///
-  Color get borderHoverColor => textTheme.textHigh;
+  Color get borderHoverColor => _textTheme.textHigh;
 
   ///
-  Color get borderHighlightColor => colorScheme.primary[50];
+  Color get borderHighlightColor => _colorScheme.primary[50];
 
   ///
-  Color get borderIndicatorColor => colorScheme.primary[50];
+  Color get borderIndicatorColor => _colorScheme.primary[50];
 }

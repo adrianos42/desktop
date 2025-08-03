@@ -10,7 +10,7 @@ void main() {
       const DesktopApp(
         home: DocApp(),
         showPerformanceOverlay: false,
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
       ),
     );
   });

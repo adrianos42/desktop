@@ -8,13 +8,12 @@ part 'toggle_switch.g.dart';
 /// Theme data for [ToggleSwitch].
 @immutable
 class _ToggleSwitchThemeData {
-  const _ToggleSwitchThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _ToggleSwitchThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The disabled color.
   /// 
@@ -23,7 +22,7 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// colorScheme.disabled
   /// ```
-  Color get disabledColor => colorScheme.disabled;
+  Color get disabledColor => _colorScheme.disabled;
 
   /// The active color.
   /// 
@@ -32,7 +31,7 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
-  Color get activeColor => colorScheme.primary[50];
+  Color get activeColor =>  _colorScheme.primary[50];
 
   /// The active hover color.
   /// 
@@ -41,7 +40,7 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get activeHoverColor => textTheme.textHigh;
+  Color get activeHoverColor => _textTheme.textHigh;
 
   /// The inactive color.
   /// 
@@ -50,7 +49,7 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get inactiveColor => textTheme.textLow;
+  Color get inactiveColor => _textTheme.textLow;
 
   /// The inactive hover color.
   /// 
@@ -59,7 +58,7 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get inactiveHoverColor => textTheme.textHigh;
+  Color get inactiveHoverColor => _textTheme.textHigh;
 
   /// The foreground color.
   /// 
@@ -68,5 +67,5 @@ class _ToggleSwitchThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get foreground => colorScheme.shade[100];
+  Color get foreground => _colorScheme.shade[100];
 }

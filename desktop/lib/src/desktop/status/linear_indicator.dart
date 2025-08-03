@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,13 +11,34 @@ class LinearProgressIndicator extends StatefulWidget {
   const LinearProgressIndicator({
     super.key,
     this.value,
-    this.theme,
+    this.backgroundColor,
+    this.color,
+    this.height,
+    this.indeterminateDuration,
+    this.padding,
   });
 
   final double? value;
 
-  /// The theme [LinearProgressIndicatorThemeData] for the [LinearProgressIndicator].
-  final LinearProgressIndicatorThemeData? theme;
+  // The indicator's height.
+  // Defaults to [LinearProgressIndicatorThemeData.height].
+  final double? height;
+
+  // The progress indicator's color.
+  // Defaults to [LinearProgressIndicatorThemeData.color].
+  final Color? color;
+
+  // The progress indicator's backgroundColor.
+  // Defaults to [LinearProgressIndicatorThemeData.backgroundColor].
+  final Color? backgroundColor;
+
+  // The progress indicator's indeterminateDuration.
+  // Defaults to [LinearProgressIndicatorThemeData.indeterminateDuration].
+  final Duration? indeterminateDuration;
+
+  // The progress indicator's padding.
+  // Defaults to [LinearProgressIndicatorThemeData.padding].
+  final EdgeInsets? padding;
 
   @override
   State<LinearProgressIndicator> createState() =>
@@ -29,21 +52,22 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
   double currentWidth = 0.0;
 
   Widget _buildIndicator(BuildContext context, double animationValue) {
-    final LinearProgressIndicatorThemeData linearProgressIndicatorThemeData =
-        LinearProgressIndicatorTheme.of(context).merge(widget.theme);
+    final LinearProgressIndicatorThemeData themeData =
+        LinearProgressIndicatorTheme.of(context);
 
     return Container(
       constraints: BoxConstraints(
         minWidth: double.infinity,
-        minHeight: linearProgressIndicatorThemeData.height!,
-        maxHeight: linearProgressIndicatorThemeData.height!,
+        minHeight: widget.height ?? themeData.height!,
+        maxHeight: widget.height ?? themeData.height!,
       ),
+      margin: widget.padding ?? themeData.padding!,
       child: CustomPaint(
         painter: _LinearProgressIndicatorPainter(
           backgroundColor: widget.value != null
-              ? linearProgressIndicatorThemeData.backgroundColor
+              ? widget.backgroundColor ?? themeData.backgroundColor
               : null,
-          valueColor: linearProgressIndicatorThemeData.color!,
+          valueColor: widget.color ?? themeData.color!,
           value: widget.value,
           animationValue: animationValue,
         ),
@@ -62,9 +86,9 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _controller.duration = LinearProgressIndicatorTheme.of(context)
-        .merge(widget.theme)
-        .indeterminateDuration!;
+    _controller.duration =
+        widget.indeterminateDuration ??
+        LinearProgressIndicatorTheme.of(context).indeterminateDuration!;
 
     if (widget.value == null) {
       _controller.repeat();
@@ -80,6 +104,12 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
     } else if (widget.value != null && _controller.isAnimating) {
       _controller.stop();
     }
+
+    if (widget.indeterminateDuration != oldWidget.indeterminateDuration) {
+      _controller.duration =
+          widget.indeterminateDuration ??
+          LinearProgressIndicatorTheme.of(context).indeterminateDuration!;
+    }
   }
 
   @override
@@ -94,14 +124,16 @@ class _LinearProgressIndicatorState extends State<LinearProgressIndicator>
       return _buildIndicator(context, _controller.value);
     }
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return AnimatedBuilder(
-        animation: _controller.view,
-        builder: (BuildContext context, Widget? child) {
-          return _buildIndicator(context, _controller.value);
-        },
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedBuilder(
+          animation: _controller.view,
+          builder: (BuildContext context, Widget? child) {
+            return _buildIndicator(context, _controller.value);
+          },
+        );
+      },
+    );
   }
 }
 
@@ -118,8 +150,11 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
   final double? value;
   final double animationValue;
 
-  static const Curve line1Head =
-      Interval(0.0, 0.4, curve: Curves.fastOutSlowIn);
+  static const Curve line1Head = Interval(
+    0.0,
+    0.4,
+    curve: Curves.fastOutSlowIn,
+  );
 
   static const Curve line1Tail = Interval(
     0.4,
@@ -136,8 +171,6 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
       canvas.drawRect(Offset.zero & size, paint);
     }
 
-    paint.color = valueColor;
-
     void drawBar(double x, double width) {
       if (width <= 0.0) {
         return;
@@ -149,11 +182,19 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
     }
 
     if (value != null) {
+      paint.color = valueColor;
       drawBar(0.0, clampDouble(value!, 0.0, 1.0) * size.width); // TODO(as): ???
     } else {
       final double x1 = size.width * line1Tail.transform(animationValue);
       final double width1 =
           size.width * line1Head.transform(animationValue) - x1;
+
+      paint.shader = ui.Gradient.linear(
+        Offset(x1, 0.0),
+        Offset(x1 + width1, size.height),
+        [Colors.black, valueColor],
+        [0.0, 0.5],
+      );
 
       drawBar(x1, width1);
     }

@@ -6,11 +6,12 @@ class LinearProgressIndicatorPage extends StatefulWidget {
   const LinearProgressIndicatorPage({super.key});
 
   @override
-  State<LinearProgressIndicatorPage> createState() => _LinearProgressIndicatorPageState();
+  State<LinearProgressIndicatorPage> createState() =>
+      _LinearProgressIndicatorPageState();
 }
 
-class _LinearProgressIndicatorPageState extends State<LinearProgressIndicatorPage>
-    with TickerProviderStateMixin {
+class _LinearProgressIndicatorPageState
+    extends State<LinearProgressIndicatorPage> with TickerProviderStateMixin {
   double linearValue = 0.5;
 
   @override
@@ -26,6 +27,7 @@ class _LinearProgressIndicatorPageState extends State<LinearProgressIndicatorPag
       styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
+          title: 'Linear indeterminate',
           body: (context) => Container(
             alignment: Alignment.center,
             padding:
@@ -33,9 +35,9 @@ class _LinearProgressIndicatorPageState extends State<LinearProgressIndicatorPag
             child: const LinearProgressIndicator(),
           ),
           codeText: linearIndeterminateCodeExample,
-          title: 'Linear indeterminate',
         ),
         ItemTitle(
+          title: 'Linear',
           options: [
             Button.icon(
               Icons.remove,
@@ -57,16 +59,10 @@ class _LinearProgressIndicatorPageState extends State<LinearProgressIndicatorPag
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: LinearProgressIndicator(value: linearValue),
-                ),
-              ],
+              children: [LinearProgressIndicator(value: linearValue)],
             ),
           ),
           codeText: linearCodeExample,
-          title: 'Linear',
         ),
       ],
     );

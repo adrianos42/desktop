@@ -6,11 +6,12 @@ class CircularProgressIndicatorPage extends StatefulWidget {
   const CircularProgressIndicatorPage({super.key});
 
   @override
-  State<CircularProgressIndicatorPage> createState() => _CircularProgressIndicatorPageState();
+  State<CircularProgressIndicatorPage> createState() =>
+      _CircularProgressIndicatorPageState();
 }
 
-class _CircularProgressIndicatorPageState extends State<CircularProgressIndicatorPage>
-    with TickerProviderStateMixin {
+class _CircularProgressIndicatorPageState
+    extends State<CircularProgressIndicatorPage> with TickerProviderStateMixin {
   double circularValue = 0.5;
 
   @override

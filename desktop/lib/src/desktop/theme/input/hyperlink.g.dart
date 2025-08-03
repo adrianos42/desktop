@@ -97,12 +97,7 @@ class HyperlinkThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
-      color,
-      hoverColor,
-      textStyle,
-      highlightColor,
-    );
+    return Object.hashAll([color, hoverColor, textStyle, highlightColor]);
   }
 
   @override
@@ -157,11 +152,7 @@ color: The color of the hyperlink text.
 @immutable
 class HyperlinkTheme extends InheritedTheme {
   /// Creates a [HyperlinkTheme].
-  const HyperlinkTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const HyperlinkTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [HyperlinkTheme].
   final HyperlinkThemeData data;
@@ -206,12 +197,9 @@ class HyperlinkTheme extends InheritedTheme {
 
   /// Returns a copy of [HyperlinkTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final HyperlinkTheme? hyperlinkTheme =
-        context.findAncestorWidgetOfExactType<HyperlinkTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final HyperlinkTheme? hyperlinkTheme = context
+        .findAncestorWidgetOfExactType<HyperlinkTheme>();
     return identical(this, hyperlinkTheme)
         ? child
         : HyperlinkTheme(data: data, child: child);
@@ -219,19 +207,16 @@ class HyperlinkTheme extends InheritedTheme {
 
   /// Returns the nearest [HyperlinkTheme].
   static HyperlinkThemeData of(BuildContext context) {
-    final HyperlinkTheme? hyperlinkTheme =
-        context.dependOnInheritedWidgetOfExactType<HyperlinkTheme>();
+    final HyperlinkTheme? hyperlinkTheme = context
+        .dependOnInheritedWidgetOfExactType<HyperlinkTheme>();
     HyperlinkThemeData? hyperlinkThemeData = hyperlinkTheme?.data;
 
     if (hyperlinkThemeData == null || !hyperlinkThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       hyperlinkThemeData ??= themeData.hyperlinkTheme;
 
-      final hyperlinkValue =
-          _HyperlinkThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final hyperlinkValue = _HyperlinkThemeData(themeData);
 
       final Color color = hyperlinkThemeData.color ?? hyperlinkValue.color;
       final Color hoverColor =

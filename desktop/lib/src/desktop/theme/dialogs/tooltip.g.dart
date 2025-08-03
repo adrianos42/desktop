@@ -165,7 +165,7 @@ class TooltipThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       height,
       maxWidth,
       verticalOffset,
@@ -175,7 +175,7 @@ class TooltipThemeData {
       margin,
       showDuration,
       waitDuration,
-    );
+    ]);
   }
 
   @override
@@ -263,11 +263,7 @@ height: The height of the tooltip's [child].
 @immutable
 class TooltipTheme extends InheritedTheme {
   /// Creates a [TooltipTheme].
-  const TooltipTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const TooltipTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [TooltipTheme].
   final TooltipThemeData data;
@@ -322,12 +318,9 @@ class TooltipTheme extends InheritedTheme {
 
   /// Returns a copy of [TooltipTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final TooltipTheme? tooltipTheme =
-        context.findAncestorWidgetOfExactType<TooltipTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final TooltipTheme? tooltipTheme = context
+        .findAncestorWidgetOfExactType<TooltipTheme>();
     return identical(this, tooltipTheme)
         ? child
         : TooltipTheme(data: data, child: child);
@@ -335,19 +328,16 @@ class TooltipTheme extends InheritedTheme {
 
   /// Returns the nearest [TooltipTheme].
   static TooltipThemeData of(BuildContext context) {
-    final TooltipTheme? tooltipTheme =
-        context.dependOnInheritedWidgetOfExactType<TooltipTheme>();
+    final TooltipTheme? tooltipTheme = context
+        .dependOnInheritedWidgetOfExactType<TooltipTheme>();
     TooltipThemeData? tooltipThemeData = tooltipTheme?.data;
 
     if (tooltipThemeData == null || !tooltipThemeData._isConcrete) {
-      final ThemeData themeData = Theme.of(context).invertedTheme;
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
+      final ThemeData themeData = Theme.of(context);
 
       tooltipThemeData ??= themeData.tooltipTheme;
 
-      final tooltipValue =
-          _TooltipThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final tooltipValue = _TooltipThemeData(themeData);
 
       final double height = tooltipThemeData.height ?? tooltipValue.height;
       final double maxWidth =

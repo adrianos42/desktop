@@ -234,32 +234,6 @@ return Tab(
 
 const codeSampleWithMenu = '''
 return Tab(
-  leadingMenu: [
-    TabMenuItem.text(
-      'menu 0',
-      builder: (context) => Container(
-        height: 200.0,
-        alignment: Alignment.center,
-        child: const Text('menu 0'),
-      ),
-    ),
-    TabMenuItem.text(
-      'menu 1',
-      builder: (context) => Container(
-        height: 400.0,
-        alignment: Alignment.center,
-        child: const Text('menu 1'),
-      ),
-    ),
-    TabMenuItem.text(
-      'menu 2',
-      builder: (context) => Container(
-        height: 80.0,
-        alignment: Alignment.center,
-        child: const Text('menu 2'),
-      ),
-    ),
-  ],
   trailingMenu: [
     TabMenuItem.text(
       'menu 3',
@@ -495,19 +469,11 @@ return Tab(
           codeText: codeSampleWithMenu,
           body: (context) {
             return Tab(
-              leadingMenu: [
-                TabMenuItem.text(
-                  'menu 0',
-                  builder: (context) => Container(
-                    height: 200.0,
-                    alignment: Alignment.center,
-                    child: const Text('menu 0'),
-                  ),
-                ),
+              trailingMenu: [
                 TabMenuItem.text(
                   'menu 1',
                   builder: (context) => Container(
-                    height: 400.0,
+                    height: 120.0,
                     alignment: Alignment.center,
                     child: const Text('menu 1'),
                   ),
@@ -515,17 +481,15 @@ return Tab(
                 TabMenuItem.text(
                   'menu 2',
                   builder: (context) => Container(
-                    height: 80.0,
+                    height: 240.0,
                     alignment: Alignment.center,
                     child: const Text('menu 2'),
                   ),
                 ),
-              ],
-              trailingMenu: [
                 TabMenuItem.text(
                   'menu 3',
                   builder: (context) => Container(
-                    height: 120.0,
+                    height: 80.0,
                     alignment: Alignment.center,
                     child: const Text('menu 3'),
                   ),

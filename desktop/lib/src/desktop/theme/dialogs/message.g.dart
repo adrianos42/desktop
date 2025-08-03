@@ -230,7 +230,7 @@ class MessageThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       textStyle,
       titleTextStyle,
       titlePadding,
@@ -245,7 +245,7 @@ class MessageThemeData {
       animationCurve,
       duration,
       animationDuration,
-    );
+    ]);
   }
 
   @override
@@ -363,11 +363,7 @@ textStyle: The text style for the message.
 @immutable
 class MessageTheme extends InheritedTheme {
   /// Creates a [MessageTheme].
-  const MessageTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const MessageTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [MessageTheme].
   final MessageThemeData data;
@@ -432,12 +428,9 @@ class MessageTheme extends InheritedTheme {
 
   /// Returns a copy of [MessageTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final MessageTheme? messageTheme =
-        context.findAncestorWidgetOfExactType<MessageTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final MessageTheme? messageTheme = context
+        .findAncestorWidgetOfExactType<MessageTheme>();
     return identical(this, messageTheme)
         ? child
         : MessageTheme(data: data, child: child);
@@ -445,19 +438,16 @@ class MessageTheme extends InheritedTheme {
 
   /// Returns the nearest [MessageTheme].
   static MessageThemeData of(BuildContext context) {
-    final MessageTheme? messageTheme =
-        context.dependOnInheritedWidgetOfExactType<MessageTheme>();
+    final MessageTheme? messageTheme = context
+        .dependOnInheritedWidgetOfExactType<MessageTheme>();
     MessageThemeData? messageThemeData = messageTheme?.data;
 
     if (messageThemeData == null || !messageThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       messageThemeData ??= themeData.messageTheme;
 
-      final messageValue =
-          _MessageThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final messageValue = _MessageThemeData(themeData);
 
       final TextStyle textStyle =
           messageThemeData.textStyle ?? messageValue.textStyle;

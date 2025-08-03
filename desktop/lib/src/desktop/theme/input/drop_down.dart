@@ -15,13 +15,12 @@ const double _kFontSize = 14.0;
 /// Theme data for [Dropdown].
 @immutable
 class _DropDownThemeData {
-  const _DropDownThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _DropDownThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.contentTextTheme;
+  ColorScheme get _colorScheme => _themeData.contentColorScheme;
 
   /// The icon theme of the button. The color is ignored.
   ///
@@ -42,9 +41,9 @@ class _DropDownThemeData {
   /// ```dart
   /// textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
   /// ```
-  TextStyle get textStyle => textTheme.body2.copyWith(
+  TextStyle get textStyle => _textTheme.body2.copyWith(
         fontSize: _kFontSize,
-        color: textTheme.textMedium,
+        color: _textTheme.textMedium,
       );
 
   /// The color of the border when disabled.
@@ -54,7 +53,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.disabled
   /// ```
-  Color get disabledColor => colorScheme.disabled;
+  Color get disabledColor => _colorScheme.disabled;
 
   /// The color of the border.
   ///
@@ -63,7 +62,7 @@ class _DropDownThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get color => textTheme.textLow;
+  Color get color => _textTheme.textLow;
 
   /// The color of the border when focused.
   ///
@@ -81,7 +80,7 @@ class _DropDownThemeData {
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get hoverColor => textTheme.textHigh;
+  Color get hoverColor => _textTheme.textHigh;
 
   /// The color of the border when the menu is open.
   ///
@@ -90,7 +89,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.background[20]
   /// ```
-  Color get waitingColor => colorScheme.background[20];
+  Color get waitingColor => _colorScheme.background[20];
 
   /// The background color of the button.
   ///
@@ -99,7 +98,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get backgroundColor => colorScheme.background[0];
+  Color get backgroundColor => _colorScheme.background[0];
 
   /// The background color when the button is being hovered.
   ///
@@ -108,7 +107,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get hoverBackgroundColor => colorScheme.background[0];
+  Color get hoverBackgroundColor => _colorScheme.background[0];
 
   /// The background color when the menu is open.
   ///
@@ -117,7 +116,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get waitingBackgroundColor => colorScheme.background[0];
+  Color get waitingBackgroundColor => _colorScheme.background[0];
 
   /// The background color when the button is disabled.
   ///
@@ -126,7 +125,7 @@ class _DropDownThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get disabledBackgroundColor => colorScheme.background[0];
+  Color get disabledBackgroundColor => _colorScheme.background[0];
 
   /// The color of the icon in the drop down.
   ///

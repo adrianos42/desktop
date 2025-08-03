@@ -94,8 +94,6 @@ class _TextFieldSelectionGestureDetectorBuilder
         case TargetPlatform.windows:
           renderEditable.selectPosition(cause: SelectionChangedCause.tap);
           break;
-        default:
-          break;
       }
     }
     _state._requestKeyboard();
@@ -605,7 +603,7 @@ class _TextFieldState extends State<TextField>
         enabled ? colorScheme.background[0] : colorScheme.shade[90];
     final Color characterColor =
         enabled ? textTheme.textHigh : colorScheme.disabled;
-    final Color selectionColor = enabled ? colorScheme.primary[30] : background;
+    final Color selectionColor = enabled ? colorScheme.primary[50] : background;
     final Color borderColor =
         focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[30];
 

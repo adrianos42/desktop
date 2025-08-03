@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'dart:math' as math;
+import 'dart:math' show min, max;
 
 import 'package:collection/collection.dart' show ListEquality;
 import 'package:flutter/gestures.dart';
@@ -12,26 +12,25 @@ import '../icons.dart';
 import '../input/button.dart';
 import '../theme/theme.dart';
 
+const double _kTreeWidth = 220.0;
+const double _kMinDragWidth = 120.0;
+
 /// Class for building nodes in a [Tree].
 @immutable
 class TreeNode {
   /// Creates a tree node with the page title, and child or children.
-  const TreeNode._(
-    this.titleBuilder, {
-    this.builder,
-    this.nodes,
-  }) : assert((builder == null || nodes == null) &&
-            (builder != null || nodes != null));
+  const TreeNode._(this.titleBuilder, {this.builder, this.nodes})
+    : assert(
+        (builder == null || nodes == null) &&
+            (builder != null || nodes != null),
+      );
 
   /// Creates a node.
   static TreeNode child({
     required WidgetBuilder titleBuilder,
     required WidgetBuilder builder,
   }) {
-    return TreeNode._(
-      titleBuilder,
-      builder: builder,
-    );
+    return TreeNode._(titleBuilder, builder: builder);
   }
 
   /// Creates a node with children.
@@ -59,8 +58,8 @@ class TreeNode {
 
   /// If this node is collapsed, given a [BuildContext].
   static bool isCollapsed(BuildContext context) {
-    final _TreeNodeCollapse? result =
-        context.dependOnInheritedWidgetOfExactType<_TreeNodeCollapse>();
+    final _TreeNodeCollapse? result = context
+        .dependOnInheritedWidgetOfExactType<_TreeNodeCollapse>();
     if (result == null) {
       throw Exception('Must have a node with children in the tree.');
     }
@@ -84,9 +83,7 @@ class TreeNode {
 /// the list [1, 1, 0] would set the User page.
 class TreeController extends ChangeNotifier {
   /// Creates a [TreeController].
-  TreeController({
-    List<int>? initialIndex,
-  }) : _index = initialIndex;
+  TreeController({List<int>? initialIndex}) : _index = initialIndex;
 
   bool _isDisposed = false;
 
@@ -127,8 +124,9 @@ class _TreeNodeTextCollapse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconCollpased =
-        TreeNode.isCollapsed(context) ? Icons.expandMore : Icons.expandLess;
+    final iconCollpased = TreeNode.isCollapsed(context)
+        ? Icons.expandMore
+        : Icons.expandLess;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -139,7 +137,7 @@ class _TreeNodeTextCollapse extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Icon(iconCollpased),
-        )
+        ),
       ],
     );
   }
@@ -211,6 +209,7 @@ class Tree extends StatefulWidget {
     this.showDraggingIndicator = true,
     this.allowDragging = false,
     this.controller,
+    this.minWidth,
     super.key,
   });
 
@@ -235,6 +234,9 @@ class Tree extends StatefulWidget {
   /// If the tree can be resized.
   final bool allowDragging;
 
+  // The initial tree width.
+  final double? minWidth;
+
   /// Controls selected index.
   final TreeController? controller;
 
@@ -243,10 +245,7 @@ class Tree extends StatefulWidget {
 }
 
 class _BuildTreePage {
-  _BuildTreePage({
-    required this.builder,
-    required this.shouldBuild,
-  });
+  _BuildTreePage({required this.builder, required this.shouldBuild});
 
   final WidgetBuilder builder;
   bool shouldBuild;
@@ -278,7 +277,8 @@ class _TreeState extends State<Tree>
 
   double? _initialColumnWidth;
   double _previoutColumnWidth = 0.0;
-  double get initialColumnWidth => _initialColumnWidth ??= 200.0;
+  double get initialColumnWidth =>
+      _initialColumnWidth ??= widget.minWidth ?? _kTreeWidth;
 
   TreeController? _internalController;
   TreeController get _controller => widget.controller ?? _internalController!;
@@ -307,8 +307,10 @@ class _TreeState extends State<Tree>
   }
 
   void _updateCurrentIndex() {
-    _current = _controller._index!
-        .fold('', (previousValue, element) => '$previousValue/$element');
+    _current = _controller._index!.fold(
+      '',
+      (previousValue, element) => '$previousValue/$element',
+    );
 
     _forceCollapseIndex = List.of(_controller._index!);
 
@@ -319,10 +321,10 @@ class _TreeState extends State<Tree>
 
         final offsetToScroll =
             nodeOffset.height > position.viewportDimension + position.pixels
-                ? nodeOffset.height - position.viewportDimension
-                : nodeOffset.offset < position.pixels
-                    ? nodeOffset.offset
-                    : null;
+            ? nodeOffset.height - position.viewportDimension
+            : nodeOffset.offset < position.pixels
+            ? nodeOffset.offset
+            : null;
 
         if (offsetToScroll != null) {
           position.animateTo(
@@ -391,10 +393,13 @@ class _TreeState extends State<Tree>
     if (_offset != null) {
       setState(() {
         final double delta = details.globalPosition.dx - _offset!;
-        _initialColumnWidth = math.max(
-            math.min(_previoutColumnWidth + delta,
-                (_totalWidth ?? double.infinity) - 200.0),
-            200.0);
+        _initialColumnWidth = max(
+          min(
+            _previoutColumnWidth + delta,
+            (_totalWidth ?? double.infinity) - (widget.minWidth ?? _kMinDragWidth),
+          ),
+          widget.minWidth ?? _kMinDragWidth,
+        );
       });
     }
   }
@@ -421,7 +426,12 @@ class _TreeState extends State<Tree>
   Widget _createTree(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      width: initialColumnWidth,
+      constraints: BoxConstraints(
+        minWidth: initialColumnWidth,
+        maxWidth: widget.allowDragging || widget.minWidth != null
+            ? initialColumnWidth
+            : double.infinity,
+      ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.only(left: 16.0),
         controller: _scrollController,
@@ -536,6 +546,12 @@ class _TreeState extends State<Tree>
         _controller.index = _lastIndex(widget.nodes);
       }
     }
+
+    if (widget.minWidth != oldWidget.minWidth) {
+      if (widget.minWidth != null) {
+        _initialColumnWidth = widget.minWidth;
+      }
+    }
   }
 
   @override
@@ -558,85 +574,38 @@ class _TreeState extends State<Tree>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final pagesResult = List<Widget>.empty(growable: true);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final pagesResult = List<Widget>.empty(growable: true);
+        final children = List<Widget>.empty(growable: true);
 
-      _totalWidth = constraints.maxWidth;
+        _totalWidth = constraints.maxWidth;
 
-      for (final entry in _pages.entries) {
-        final active = entry.key == _current;
-        entry.value.shouldBuild = active || entry.value.shouldBuild;
+        for (final entry in _pages.entries) {
+          final active = entry.key == _current;
+          entry.value.shouldBuild = active || entry.value.shouldBuild;
 
-        pagesResult.add(
-          Offstage(
-            offstage: !active,
-            child: TickerMode(
-              enabled: active,
-              child: Builder(
-                builder: (context) {
-                  return entry.value.shouldBuild
-                      ? Padding(
-                          padding: widget.pagePadding ?? EdgeInsets.zero,
-                          child: entry.value.builder(context),
-                        )
-                      : Container();
-                },
-              ),
-            ),
-          ),
-        );
-      }
-
-      if (widget.allowDragging) {
-        pagesResult.add(
-          Offstage(
-            offstage: widget.collapsed,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: FadeTransition(
-                //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
-                opacity: const AlwaysStoppedAnimation(1.0),
-                child: GestureDetector(
-                  onHorizontalDragStart: _onDragStart,
-                  onHorizontalDragCancel: _onDragCancel,
-                  onHorizontalDragEnd: _onDragEnd,
-                  onHorizontalDragUpdate: _onDragUpdate,
-                  child: MouseRegion(
-                    cursor: !hovered && !dragged
-                        ? MouseCursor.defer
-                        : SystemMouseCursors.resizeColumn,
-                    onEnter: (_) => _handleHoverMoved(),
-                    onHover: (_) => _handleHoverMoved(),
-                    onExit: (_) => _handleHoverExited(),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      constraints: const BoxConstraints(maxWidth: 2.0),
-                      margin: const EdgeInsets.only(right: 4.0),
-                      child: SizeTransition(
-                        axis: Axis.horizontal,
-                        sizeFactor: _indicatorSizecontroller,
-                        child: Container(
-                          width: 2.0,
-                          color: widget.collapsed || dragged
-                              ? Theme.of(context).colorScheme.primary[50]
-                              : hovered
-                                  ? Theme.of(context).textTheme.textHigh
-                                  : Theme.of(context).colorScheme.background[0],
-                        ),
-                      ),
-                    ),
-                  ),
+          pagesResult.add(
+            Offstage(
+              offstage: !active,
+              child: TickerMode(
+                enabled: active,
+                child: Builder(
+                  builder: (context) {
+                    return entry.value.shouldBuild
+                        ? Padding(
+                            padding: widget.pagePadding ?? EdgeInsets.zero,
+                            child: entry.value.builder(context),
+                          )
+                        : Container();
+                  },
                 ),
               ),
             ),
-          ),
-        );
-      }
+          );
+        }
 
-      Widget result;
-
-      result = Row(
-        children: [
+        children.add(
           Offstage(
             offstage: widget.collapsed && _columnController.isCompleted,
             child: SizeTransition(
@@ -645,18 +614,68 @@ class _TreeState extends State<Tree>
               child: _createTree(context),
             ),
           ),
+        );
+
+        if (widget.allowDragging) {
+          final treeTheme = TreeTheme.of(context);
+
+          children.add(
+            Offstage(
+              offstage: widget.collapsed,
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: FadeTransition(
+                  //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
+                  opacity: const AlwaysStoppedAnimation(1.0),
+                  child: GestureDetector(
+                    onHorizontalDragStart: _onDragStart,
+                    onHorizontalDragCancel: _onDragCancel,
+                    onHorizontalDragEnd: _onDragEnd,
+                    onHorizontalDragUpdate: _onDragUpdate,
+                    child: MouseRegion(
+                      cursor: !hovered && !dragged
+                          ? MouseCursor.defer
+                          : SystemMouseCursors.resizeColumn,
+                      onEnter: (_) => _handleHoverMoved(),
+                      onHover: (_) => _handleHoverMoved(),
+                      onExit: (_) => _handleHoverExited(),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        constraints: const BoxConstraints(maxWidth: 2.0),
+                        child: SizeTransition(
+                          axis: Axis.horizontal,
+                          sizeFactor: _indicatorSizecontroller,
+                          child: Container(
+                            width: 2.0,
+                            color: widget.collapsed || dragged
+                                ? treeTheme.indicatorHighlightColor!
+                                : hovered
+                                ? treeTheme.indicatorHoverColor
+                                : treeTheme.indicatorColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        children.add(
           Expanded(
             child: Stack(
               key: _stackKey,
               fit: StackFit.expand,
               children: pagesResult,
             ),
-          )
-        ],
-      );
+          ),
+        );
 
-      return result;
-    });
+        return Row(children: children);
+      },
+    );
   }
 }
 
@@ -664,10 +683,7 @@ typedef _SizeTreeCallback = void Function(String name, _TreeNodeOffset offset);
 typedef _SizeCallback = void Function(int index, _TreeNodeOffset offset);
 
 class _NodeBuild {
-  const _NodeBuild(
-    this.name,
-    this.child,
-  );
+  const _NodeBuild(this.name, this.child);
 
   final String name;
   final Widget child;
@@ -787,8 +803,10 @@ class _TreeColumnState extends State<_TreeColumn> {
       _createNodeState(widget.nodes, []);
     }
 
-    if (!(const ListEquality<int>()
-        .equals(oldWidget.forceExpandIndex, widget.forceExpandIndex))) {
+    if (!(const ListEquality<int>().equals(
+      oldWidget.forceExpandIndex,
+      widget.forceExpandIndex,
+    ))) {
       _updateCollapseIndex(
         widget.nodes,
         [],
@@ -799,7 +817,10 @@ class _TreeColumnState extends State<_TreeColumn> {
   }
 
   List<_NodeBuild> _buildNodes(
-      List<TreeNode> nodes, List<int> parentIndex, bool parentCollapsed) {
+    List<TreeNode> nodes,
+    List<int> parentIndex,
+    bool parentCollapsed,
+  ) {
     final treeTheme = TreeTheme.of(context);
     final List<_NodeBuild> children = List.empty(growable: true);
 
@@ -842,14 +863,14 @@ class _TreeColumnState extends State<_TreeColumn> {
           ),
         );
 
-        children.addAll(_buildNodes(
-          nodes[i].nodes!,
-          index,
-          parentCollapsed || collapsed,
-        ));
+        children.addAll(
+          _buildNodes(nodes[i].nodes!, index, parentCollapsed || collapsed),
+        );
       } else {
-        final active =
-            const ListEquality<int>().equals(widget.controller._index, index);
+        final active = const ListEquality<int>().equals(
+          widget.controller._index,
+          index,
+        );
         final highlightColor = treeTheme.highlightColor;
 
         children.add(
@@ -891,13 +912,11 @@ class _TreeColumnState extends State<_TreeColumn> {
     return _ListTableRows(
       children: [
         if (widget.title != null) widget.title!,
-        ...result.map((e) => e.child)
+        ...result.map((e) => e.child),
       ],
       hasTitle: widget.title != null,
-      sizeChanged: (int i, _TreeNodeOffset offset) => widget.sizeChanged(
-        nodeNames[i],
-        offset,
-      ),
+      sizeChanged: (int i, _TreeNodeOffset offset) =>
+          widget.sizeChanged(nodeNames[i], offset),
     );
   }
 }
@@ -914,14 +933,13 @@ class _ListTableRows extends MultiChildRenderObjectWidget {
 
   @override
   _TreeColumnRender createRenderObject(BuildContext context) =>
-      _TreeColumnRender(
-        sizeChanged: sizeChanged,
-        hasTitle: hasTitle,
-      );
+      _TreeColumnRender(sizeChanged: sizeChanged, hasTitle: hasTitle);
 
   @override
   void updateRenderObject(
-      BuildContext context, _TreeColumnRender renderObject) {
+    BuildContext context,
+    _TreeColumnRender renderObject,
+  ) {
     renderObject.hasTitle = hasTitle;
   }
 }
@@ -968,11 +986,7 @@ class _TreeColumnRender extends RenderBox
 
     while (child != null) {
       height += child
-          .getDryLayout(
-            BoxConstraints.tightFor(
-              width: constraints.maxWidth,
-            ),
-          )
+          .getDryLayout(BoxConstraints.tightFor(width: constraints.maxWidth))
           .height;
 
       child = childAfter(child);
@@ -984,15 +998,19 @@ class _TreeColumnRender extends RenderBox
   @override
   void performLayout() {
     RenderBox? child = firstChild;
-    double height;
-
-    height = 0.0;
+    double height = 0.0;
+    double width = 0.0;
 
     if (_hasTitle && child != null) {
       child.layout(
-        BoxConstraints.tightFor(width: constraints.maxWidth),
+        BoxConstraints(
+          minWidth: constraints.minWidth,
+          maxWidth: constraints.maxWidth,
+        ),
         parentUsesSize: true,
       );
+
+      width = max(width, child.size.width);
 
       (child.parentData! as _TreeColumnParentData).offset = Offset(0.0, height);
 
@@ -1005,7 +1023,10 @@ class _TreeColumnRender extends RenderBox
 
     while (child != null) {
       child.layout(
-        BoxConstraints.tightFor(width: constraints.maxWidth),
+        BoxConstraints(
+          minWidth: constraints.minWidth,
+          maxWidth: constraints.maxWidth,
+        ),
         parentUsesSize: true,
       );
 
@@ -1014,6 +1035,7 @@ class _TreeColumnRender extends RenderBox
       final childOffset = height;
 
       height += child.size.height;
+      width = max(width, child.size.width);
 
       sizeChanged(x, _TreeNodeOffset(childOffset, height));
 
@@ -1021,7 +1043,7 @@ class _TreeColumnRender extends RenderBox
       x += 1;
     }
 
-    size = Size(constraints.maxWidth, height);
+    size = Size(width, height);
   }
 
   @override
@@ -1039,6 +1061,7 @@ class _TreeColumnRender extends RenderBox
           return child!.hitTest(result, position: transformed);
         },
       );
+
       if (isHit) {
         return true;
       }

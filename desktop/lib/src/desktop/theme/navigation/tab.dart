@@ -12,13 +12,12 @@ const double _kPadding = 8.0;
 /// Theme data for [Tab].
 @immutable
 class _TabThemeData {
-  const _TabThemeData({
-    required this.textTheme,
-    required this.colorScheme,
-  });
+  const _TabThemeData(ThemeData themeData) : _themeData = themeData;
 
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
+  final ThemeData _themeData;
+
+  TextTheme get _textTheme => _themeData.textTheme;
+  ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The padding for the tab bar.
   ///
@@ -58,7 +57,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.background[0]
   /// ```
-  Color get tabBarBackgroundColor => colorScheme.background[0];
+  Color get tabBarBackgroundColor => _colorScheme.background[0];
 
   /// The style for the text. The color is ignored.
   ///
@@ -67,7 +66,7 @@ class _TabThemeData {
   /// ```dart
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
-  TextStyle get textStyle => textTheme.body2.copyWith(
+  TextStyle get textStyle => _textTheme.body2.copyWith(
         fontSize: defaultFontSize,
         overflow: TextOverflow.ellipsis,
       );
@@ -109,7 +108,7 @@ class _TabThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get itemColor => textTheme.textLow;
+  Color get itemColor => _textTheme.textLow;
 
   /// The hover color of the tab item.
   ///
@@ -118,7 +117,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
-  Color get itemHoverColor => colorScheme.shade[100];
+  Color get itemHoverColor => _colorScheme.shade[100];
 
   /// The highlight color of the tab item.
   ///
@@ -127,7 +126,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get itemHighlightColor => colorScheme.primary[60];
+  Color get itemHighlightColor => _colorScheme.primary[60];
 
   /// If the tab bar item should use a filled button.
   /// See [itemBackgroundColor] to change the background color.
@@ -146,7 +145,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.primary[30]
   /// ```
-  Color get itemBackgroundColor => colorScheme.primary[30];
+  Color get itemBackgroundColor => _colorScheme.primary[30];
 
   /// The background color when the button is being hovered.
   ///
@@ -155,7 +154,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.shade[30]
   /// ```
-  Color get itemHoverBackgroundColor => colorScheme.shade[30];
+  Color get itemHoverBackgroundColor => _colorScheme.shade[30];
 
   /// The background color when the button is pressed.
   ///
@@ -164,7 +163,7 @@ class _TabThemeData {
   /// ```dart
   /// colorScheme.background[20]
   /// ```
-  Color get itemHighlightBackgroundColor => colorScheme.background[20];
+  Color get itemHighlightBackgroundColor => _colorScheme.background[20];
 
   /// The duration of the menu transition.
   ///

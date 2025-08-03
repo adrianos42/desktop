@@ -139,7 +139,7 @@ class ListTableThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       iconThemeData,
       itemHeight,
       textStyle,
@@ -153,7 +153,7 @@ class ListTableThemeData {
       borderHoverColor,
       borderHighlightColor,
       borderIndicatorColor,
-    );
+    ]);
   }
 
   @override
@@ -186,11 +186,7 @@ iconThemeData:;;itemHeight:;;textStyle:;;selectedColor:;;selectedHighlightColor:
 @immutable
 class ListTableTheme extends InheritedTheme {
   /// Creates a [ListTableTheme].
-  const ListTableTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const ListTableTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [ListTableTheme].
   final ListTableThemeData data;
@@ -253,12 +249,9 @@ class ListTableTheme extends InheritedTheme {
 
   /// Returns a copy of [ListTableTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final ListTableTheme? listTableTheme =
-        context.findAncestorWidgetOfExactType<ListTableTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final ListTableTheme? listTableTheme = context
+        .findAncestorWidgetOfExactType<ListTableTheme>();
     return identical(this, listTableTheme)
         ? child
         : ListTableTheme(data: data, child: child);
@@ -266,19 +259,16 @@ class ListTableTheme extends InheritedTheme {
 
   /// Returns the nearest [ListTableTheme].
   static ListTableThemeData of(BuildContext context) {
-    final ListTableTheme? listTableTheme =
-        context.dependOnInheritedWidgetOfExactType<ListTableTheme>();
+    final ListTableTheme? listTableTheme = context
+        .dependOnInheritedWidgetOfExactType<ListTableTheme>();
     ListTableThemeData? listTableThemeData = listTableTheme?.data;
 
     if (listTableThemeData == null || !listTableThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       listTableThemeData ??= themeData.listTableTheme;
 
-      final listTableValue =
-          _ListTableThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final listTableValue = _ListTableThemeData(themeData);
 
       final IconThemeData iconThemeData =
           listTableThemeData.iconThemeData ?? listTableValue.iconThemeData;
@@ -290,8 +280,9 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.selectedColor ?? listTableValue.selectedColor;
       final Color selectedHighlightColor =
           listTableThemeData.selectedHighlightColor ??
-              listTableValue.selectedHighlightColor;
-      final Color selectedHoverColor = listTableThemeData.selectedHoverColor ??
+          listTableValue.selectedHighlightColor;
+      final Color selectedHoverColor =
+          listTableThemeData.selectedHoverColor ??
           listTableValue.selectedHoverColor;
       final Color hoverColor =
           listTableThemeData.hoverColor ?? listTableValue.hoverColor;
@@ -301,14 +292,15 @@ class ListTableTheme extends InheritedTheme {
           listTableThemeData.background ?? listTableValue.background;
       final Color borderColor =
           listTableThemeData.borderColor ?? listTableValue.borderColor;
-      final Color borderHoverColor = listTableThemeData.borderHoverColor ??
+      final Color borderHoverColor =
+          listTableThemeData.borderHoverColor ??
           listTableValue.borderHoverColor;
       final Color borderHighlightColor =
           listTableThemeData.borderHighlightColor ??
-              listTableValue.borderHighlightColor;
+          listTableValue.borderHighlightColor;
       final Color borderIndicatorColor =
           listTableThemeData.borderIndicatorColor ??
-              listTableValue.borderIndicatorColor;
+          listTableValue.borderIndicatorColor;
 
       return listTableThemeData.copyWith(
         iconThemeData: iconThemeData,

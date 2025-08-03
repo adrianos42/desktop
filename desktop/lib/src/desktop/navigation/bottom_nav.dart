@@ -14,7 +14,7 @@ const int _kIntialIndexValue = 0;
 const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
 const Curve _kDefaultAnimationCurve = Curves.linearToEaseOut;
 
-// TODO(as): 
+// TODO(as):
 /// EXPERIMENTAL!!!
 class BottomNav extends StatefulWidget {
   /// Creates a navigation bar.
@@ -23,7 +23,7 @@ class BottomNav extends StatefulWidget {
     required this.items,
     required this.trailingMenu,
     this.isBackButtonEnabled,
-  })  : assert(items.length > 0);
+  }) : assert(items.length > 0);
 
   /// The items with builder and route names for transition among pages.
   final List<NavItem> items;
@@ -121,8 +121,8 @@ class _BottomNavState extends State<BottomNav>
         _menuActive = true;
 
         final Color barrierColor = DialogTheme.of(context).barrierColor!;
-        _menuColorTween.begin = barrierColor.withOpacity(0.0);
-        _menuColorTween.end = barrierColor.withOpacity(0.8);
+        _menuColorTween.begin = barrierColor.withValues(alpha: 0.0);
+        _menuColorTween.end = barrierColor.withValues(alpha: 0.8);
 
         _menuOverlayEntry = OverlayEntry(
           maintainState: false,
@@ -184,7 +184,7 @@ class _BottomNavState extends State<BottomNav>
               // Icon(widget.items[index].icon),
               Padding(
                 padding: const EdgeInsets.only(left: 0),
-                child: Text(widget.items[index].title ?? ''),
+                child: Text(widget.items[index].title),
               ),
             ],
           );

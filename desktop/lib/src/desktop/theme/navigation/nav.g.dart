@@ -12,11 +12,16 @@ class NavThemeData {
   /// Creates a [NavThemeData].
   const NavThemeData({
     this.iconThemeData,
-    this.itemsSpacing,
+    this.itemSpacing,
+    this.verticalItemSpacing,
     this.width,
     this.height,
     this.indicatorWidth,
     this.animationDuration,
+    this.navBarBackgroundColor,
+    this.menuTransitionDuration,
+    this.menuTrasitionCurve,
+    this.menuTrasitionReverseCurve,
   });
 
   /// The [IconThemeData] for the nav items.
@@ -41,7 +46,16 @@ class NavThemeData {
   /// ```dart
   /// 8.0
   /// ```
-  final double? itemsSpacing;
+  final double? itemSpacing;
+
+  /// The space between items inside the axis is vertical.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 12.0
+  /// ```
+  final double? verticalItemSpacing;
 
   /// The width of the nab bar when the axis is [Axis.horizontal].
   ///
@@ -79,22 +93,71 @@ class NavThemeData {
   /// ```
   final Duration? animationDuration;
 
+  /// The background of the nav bar.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// colorScheme.background[0]
+  /// ```
+  final Color? navBarBackgroundColor;
+
+  /// The duration of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Duration(milliseconds: 400)
+  /// ```
+  final Duration? menuTransitionDuration;
+
+  /// The animation curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut
+  /// ```
+  final Curve? menuTrasitionCurve;
+
+  /// The animation reverse curve of the menu transition.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// Curves.fastEaseInToSlowEaseOut.flipped
+  /// ```
+  final Curve? menuTrasitionReverseCurve;
+
   /// Makes a copy of [NavThemeData] overwriting selected fields.
   NavThemeData copyWith({
     IconThemeData? iconThemeData,
-    double? itemsSpacing,
+    double? itemSpacing,
+    double? verticalItemSpacing,
     double? width,
     double? height,
     double? indicatorWidth,
     Duration? animationDuration,
+    Color? navBarBackgroundColor,
+    Duration? menuTransitionDuration,
+    Curve? menuTrasitionCurve,
+    Curve? menuTrasitionReverseCurve,
   }) {
     return NavThemeData(
       iconThemeData: iconThemeData ?? this.iconThemeData,
-      itemsSpacing: itemsSpacing ?? this.itemsSpacing,
+      itemSpacing: itemSpacing ?? this.itemSpacing,
+      verticalItemSpacing: verticalItemSpacing ?? this.verticalItemSpacing,
       width: width ?? this.width,
       height: height ?? this.height,
       indicatorWidth: indicatorWidth ?? this.indicatorWidth,
       animationDuration: animationDuration ?? this.animationDuration,
+      navBarBackgroundColor:
+          navBarBackgroundColor ?? this.navBarBackgroundColor,
+      menuTransitionDuration:
+          menuTransitionDuration ?? this.menuTransitionDuration,
+      menuTrasitionCurve: menuTrasitionCurve ?? this.menuTrasitionCurve,
+      menuTrasitionReverseCurve:
+          menuTrasitionReverseCurve ?? this.menuTrasitionReverseCurve,
     );
   }
 
@@ -105,33 +168,48 @@ class NavThemeData {
     }
     return copyWith(
       iconThemeData: other.iconThemeData,
-      itemsSpacing: other.itemsSpacing,
+      itemSpacing: other.itemSpacing,
+      verticalItemSpacing: other.verticalItemSpacing,
       width: other.width,
       height: other.height,
       indicatorWidth: other.indicatorWidth,
       animationDuration: other.animationDuration,
+      navBarBackgroundColor: other.navBarBackgroundColor,
+      menuTransitionDuration: other.menuTransitionDuration,
+      menuTrasitionCurve: other.menuTrasitionCurve,
+      menuTrasitionReverseCurve: other.menuTrasitionReverseCurve,
     );
   }
 
   bool get _isConcrete {
     return iconThemeData != null &&
-        itemsSpacing != null &&
+        itemSpacing != null &&
+        verticalItemSpacing != null &&
         width != null &&
         height != null &&
         indicatorWidth != null &&
-        animationDuration != null;
+        animationDuration != null &&
+        navBarBackgroundColor != null &&
+        menuTransitionDuration != null &&
+        menuTrasitionCurve != null &&
+        menuTrasitionReverseCurve != null;
   }
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       iconThemeData,
-      itemsSpacing,
+      itemSpacing,
+      verticalItemSpacing,
       width,
       height,
       indicatorWidth,
       animationDuration,
-    );
+      navBarBackgroundColor,
+      menuTransitionDuration,
+      menuTrasitionCurve,
+      menuTrasitionReverseCurve,
+    ]);
   }
 
   @override
@@ -143,7 +221,7 @@ iconThemeData: The [IconThemeData] for the nav items.
 
  ```dart
  IconThemeData(size: width - 8.0 * 2.0)
- ```;;itemsSpacing: The space between items inside the navbar.
+ ```;;itemSpacing: The space between items inside the navbar.
 
  In this order:
  - The back button does not have it.
@@ -155,6 +233,12 @@ iconThemeData: The [IconThemeData] for the nav items.
 
  ```dart
  8.0
+ ```;;verticalItemSpacing: The space between items inside the axis is vertical.
+
+ Defaults to:
+
+ ```dart
+ 12.0
  ```;;width: The width of the nab bar when the axis is [Axis.horizontal].
 
  Defaults to:
@@ -179,6 +263,30 @@ iconThemeData: The [IconThemeData] for the nav items.
 
  ```dart
  Duration(milliseconds: 200)
+ ```;;navBarBackgroundColor: The background of the nav bar.
+
+ Defaults to:
+
+ ```dart
+ colorScheme.background[0]
+ ```;;menuTransitionDuration: The duration of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Duration(milliseconds: 400)
+ ```;;menuTrasitionCurve: The animation curve of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Curves.fastEaseInToSlowEaseOut
+ ```;;menuTrasitionReverseCurve: The animation reverse curve of the menu transition.
+
+ Defaults to:
+
+ ```dart
+ Curves.fastEaseInToSlowEaseOut.flipped
  ```;;
 ''';
   }
@@ -187,11 +295,16 @@ iconThemeData: The [IconThemeData] for the nav items.
   bool operator ==(covariant NavThemeData other) {
     return identical(this, other) ||
         other.iconThemeData == iconThemeData &&
-            other.itemsSpacing == itemsSpacing &&
+            other.itemSpacing == itemSpacing &&
+            other.verticalItemSpacing == verticalItemSpacing &&
             other.width == width &&
             other.height == height &&
             other.indicatorWidth == indicatorWidth &&
-            other.animationDuration == animationDuration;
+            other.animationDuration == animationDuration &&
+            other.navBarBackgroundColor == navBarBackgroundColor &&
+            other.menuTransitionDuration == menuTransitionDuration &&
+            other.menuTrasitionCurve == menuTrasitionCurve &&
+            other.menuTrasitionReverseCurve == menuTrasitionReverseCurve;
   }
 }
 
@@ -199,11 +312,7 @@ iconThemeData: The [IconThemeData] for the nav items.
 @immutable
 class NavTheme extends InheritedTheme {
   /// Creates a [NavTheme].
-  const NavTheme({
-    super.key,
-    required super.child,
-    required this.data,
-  });
+  const NavTheme({super.key, required super.child, required this.data});
 
   /// The data representing this [NavTheme].
   final NavThemeData data;
@@ -216,10 +325,8 @@ class NavTheme extends InheritedTheme {
   }) {
     return Builder(
       key: key,
-      builder: (context) => NavTheme(
-        data: NavTheme.of(context).merge(data),
-        child: child,
-      ),
+      builder: (context) =>
+          NavTheme(data: NavTheme.of(context).merge(data), child: child),
     );
   }
 
@@ -228,22 +335,32 @@ class NavTheme extends InheritedTheme {
     Key? key,
     required Widget child,
     IconThemeData? iconThemeData,
-    double? itemsSpacing,
+    double? itemSpacing,
+    double? verticalItemSpacing,
     double? width,
     double? height,
     double? indicatorWidth,
     Duration? animationDuration,
+    Color? navBarBackgroundColor,
+    Duration? menuTransitionDuration,
+    Curve? menuTrasitionCurve,
+    Curve? menuTrasitionReverseCurve,
   }) {
     return Builder(
       key: key,
       builder: (context) => NavTheme(
         data: NavTheme.of(context).copyWith(
           iconThemeData: iconThemeData,
-          itemsSpacing: itemsSpacing,
+          itemSpacing: itemSpacing,
+          verticalItemSpacing: verticalItemSpacing,
           width: width,
           height: height,
           indicatorWidth: indicatorWidth,
           animationDuration: animationDuration,
+          navBarBackgroundColor: navBarBackgroundColor,
+          menuTransitionDuration: menuTransitionDuration,
+          menuTrasitionCurve: menuTrasitionCurve,
+          menuTrasitionReverseCurve: menuTrasitionReverseCurve,
         ),
         child: child,
       ),
@@ -252,12 +369,9 @@ class NavTheme extends InheritedTheme {
 
   /// Returns a copy of [NavTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
-    final NavTheme? navTheme =
-        context.findAncestorWidgetOfExactType<NavTheme>();
+  Widget wrap(BuildContext context, Widget child) {
+    final NavTheme? navTheme = context
+        .findAncestorWidgetOfExactType<NavTheme>();
     return identical(this, navTheme)
         ? child
         : NavTheme(data: data, child: child);
@@ -265,38 +379,52 @@ class NavTheme extends InheritedTheme {
 
   /// Returns the nearest [NavTheme].
   static NavThemeData of(BuildContext context) {
-    final NavTheme? navTheme =
-        context.dependOnInheritedWidgetOfExactType<NavTheme>();
+    final NavTheme? navTheme = context
+        .dependOnInheritedWidgetOfExactType<NavTheme>();
     NavThemeData? navThemeData = navTheme?.data;
 
     if (navThemeData == null || !navThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       navThemeData ??= themeData.navTheme;
 
-      final navValue =
-          _NavThemeData(textTheme: textTheme, colorScheme: colorScheme);
+      final navValue = _NavThemeData(themeData);
 
       final IconThemeData iconThemeData =
           navThemeData.iconThemeData ?? navValue.iconThemeData;
-      final double itemsSpacing =
-          navThemeData.itemsSpacing ?? navValue.itemsSpacing;
+      final double itemSpacing =
+          navThemeData.itemSpacing ?? navValue.itemSpacing;
+      final double verticalItemSpacing =
+          navThemeData.verticalItemSpacing ?? navValue.verticalItemSpacing;
       final double width = navThemeData.width ?? navValue.width;
       final double height = navThemeData.height ?? navValue.height;
       final double indicatorWidth =
           navThemeData.indicatorWidth ?? navValue.indicatorWidth;
       final Duration animationDuration =
           navThemeData.animationDuration ?? navValue.animationDuration;
+      final Color navBarBackgroundColor =
+          navThemeData.navBarBackgroundColor ?? navValue.navBarBackgroundColor;
+      final Duration menuTransitionDuration =
+          navThemeData.menuTransitionDuration ??
+          navValue.menuTransitionDuration;
+      final Curve menuTrasitionCurve =
+          navThemeData.menuTrasitionCurve ?? navValue.menuTrasitionCurve;
+      final Curve menuTrasitionReverseCurve =
+          navThemeData.menuTrasitionReverseCurve ??
+          navValue.menuTrasitionReverseCurve;
 
       return navThemeData.copyWith(
         iconThemeData: iconThemeData,
-        itemsSpacing: itemsSpacing,
+        itemSpacing: itemSpacing,
+        verticalItemSpacing: verticalItemSpacing,
         width: width,
         height: height,
         indicatorWidth: indicatorWidth,
         animationDuration: animationDuration,
+        navBarBackgroundColor: navBarBackgroundColor,
+        menuTransitionDuration: menuTransitionDuration,
+        menuTrasitionCurve: menuTrasitionCurve,
+        menuTrasitionReverseCurve: menuTrasitionReverseCurve,
       );
     }
 

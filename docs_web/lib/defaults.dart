@@ -6,6 +6,12 @@ import 'package:dart_style/dart_style.dart';
 import 'package:desktop/desktop.dart';
 import 'package:markdown_docs_flutter/markdown_docs_flutter.dart';
 
+const Color classColor = Color(0xff5ecda8);
+const Color commentsColor = Color(0xff696969);
+const Color stringColor = Color(0xffdc8c6a);
+const Color keywordColor = Color(0xff60b5f6);
+const Color numericColor = Color(0xffc2dcb5);
+
 ///
 class StyleItem {
   ///
@@ -59,28 +65,7 @@ class CodeTextController extends TextEditingController {
     required bool withComposing,
   }) {
     final themeData = Theme.of(context);
-    final brightness = themeData.brightness;
     final textStyle = style ?? themeData.textTheme.monospace;
-
-    final Color classColor;
-    final Color commentsColor;
-    final Color stringColor;
-    final Color keywordColor;
-    final Color numericColor;
-
-    if (brightness == Brightness.dark) {
-      classColor = const Color(0xff5ecda8);
-      commentsColor = const Color(0xff696969);
-      stringColor = const Color(0xffdc8c6a);
-      keywordColor = const Color(0xff60b5f6);
-      numericColor = const Color(0xffc2dcb5);
-    } else {
-      classColor = const Color(0xff418D73);
-      commentsColor = const Color(0xff969696);
-      stringColor = const Color(0xffB37256);
-      keywordColor = const Color(0xff4684B3);
-      numericColor = const Color(0xff92A688);
-    }
 
     final textColor = Theme.of(context).textTheme.textHigh;
 
@@ -150,28 +135,7 @@ class ThemeTextController extends TextEditingController {
     required bool withComposing,
   }) {
     final themeData = Theme.of(context);
-    final brightness = themeData.brightness;
     final textStyle = style ?? themeData.textTheme.body1;
-
-    final Color classColor;
-    final Color commentsColor;
-    final Color stringColor;
-    final Color keywordColor;
-    final Color numericColor;
-
-    if (brightness == Brightness.dark) {
-      classColor = const Color(0xff5ecda8);
-      commentsColor = const Color(0xff696969);
-      stringColor = const Color(0xffdc8c6a);
-      keywordColor = const Color(0xff60b5f6);
-      numericColor = const Color(0xffc2dcb5);
-    } else {
-      classColor = const Color(0xff418D73);
-      commentsColor = const Color(0xff969696);
-      stringColor = const Color(0xffB37256);
-      keywordColor = const Color(0xff4684B3);
-      numericColor = const Color(0xff92A688);
-    }
 
     final textColor = Theme.of(context).textTheme.textHigh;
 

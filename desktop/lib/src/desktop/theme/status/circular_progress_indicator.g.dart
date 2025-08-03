@@ -12,6 +12,7 @@ class CircularProgressIndicatorThemeData {
   /// Creates a [CircularProgressIndicatorThemeData].
   const CircularProgressIndicatorThemeData({
     this.size,
+    this.strokeWidth,
     this.color,
     this.backgroundColor,
     this.indeterminateDuration,
@@ -25,6 +26,15 @@ class CircularProgressIndicatorThemeData {
   /// 40.0
   /// ```
   final double? size;
+
+  /// The stroke width of the circular progress indicator.
+  ///
+  /// Defaults to:
+  ///
+  /// ```dart
+  /// 2.0
+  /// ```
+  final double? strokeWidth;
 
   /// The color of the circular progress indicator. Defaults to []
   ///
@@ -56,12 +66,14 @@ class CircularProgressIndicatorThemeData {
   /// Makes a copy of [CircularProgressIndicatorThemeData] overwriting selected fields.
   CircularProgressIndicatorThemeData copyWith({
     double? size,
+    double? strokeWidth,
     Color? color,
     Color? backgroundColor,
     Duration? indeterminateDuration,
   }) {
     return CircularProgressIndicatorThemeData(
       size: size ?? this.size,
+      strokeWidth: strokeWidth ?? this.strokeWidth,
       color: color ?? this.color,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       indeterminateDuration:
@@ -71,12 +83,14 @@ class CircularProgressIndicatorThemeData {
 
   /// Merges the theme data [CircularProgressIndicatorThemeData].
   CircularProgressIndicatorThemeData merge(
-      CircularProgressIndicatorThemeData? other) {
+    CircularProgressIndicatorThemeData? other,
+  ) {
     if (other == null) {
       return this;
     }
     return copyWith(
       size: other.size,
+      strokeWidth: other.strokeWidth,
       color: other.color,
       backgroundColor: other.backgroundColor,
       indeterminateDuration: other.indeterminateDuration,
@@ -85,6 +99,7 @@ class CircularProgressIndicatorThemeData {
 
   bool get _isConcrete {
     return size != null &&
+        strokeWidth != null &&
         color != null &&
         backgroundColor != null &&
         indeterminateDuration != null;
@@ -92,12 +107,13 @@ class CircularProgressIndicatorThemeData {
 
   @override
   int get hashCode {
-    return Object.hash(
+    return Object.hashAll([
       size,
+      strokeWidth,
       color,
       backgroundColor,
       indeterminateDuration,
-    );
+    ]);
   }
 
   @override
@@ -109,6 +125,12 @@ size: The size of the circular progress indicator.
 
  ```dart
  40.0
+ ```;;strokeWidth: The stroke width of the circular progress indicator.
+
+ Defaults to:
+
+ ```dart
+ 2.0
  ```;;color: The color of the circular progress indicator. Defaults to []
 
  Defaults to:
@@ -135,6 +157,7 @@ size: The size of the circular progress indicator.
   bool operator ==(covariant CircularProgressIndicatorThemeData other) {
     return identical(this, other) ||
         other.size == size &&
+            other.strokeWidth == strokeWidth &&
             other.color == color &&
             other.backgroundColor == backgroundColor &&
             other.indeterminateDuration == indeterminateDuration;
@@ -174,6 +197,7 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
     Key? key,
     required Widget child,
     double? size,
+    double? strokeWidth,
     Color? color,
     Color? backgroundColor,
     Duration? indeterminateDuration,
@@ -183,6 +207,7 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
       builder: (context) => CircularProgressIndicatorTheme(
         data: CircularProgressIndicatorTheme.of(context).copyWith(
           size: size,
+          strokeWidth: strokeWidth,
           color: color,
           backgroundColor: backgroundColor,
           indeterminateDuration: indeterminateDuration,
@@ -194,10 +219,7 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
 
   /// Returns a copy of [CircularProgressIndicatorTheme] with the specified [child].
   @override
-  Widget wrap(
-    BuildContext context,
-    Widget child,
-  ) {
+  Widget wrap(BuildContext context, Widget child) {
     final CircularProgressIndicatorTheme? circularProgressIndicatorTheme =
         context.findAncestorWidgetOfExactType<CircularProgressIndicatorTheme>();
     return identical(this, circularProgressIndicatorTheme)
@@ -207,38 +229,41 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
 
   /// Returns the nearest [CircularProgressIndicatorTheme].
   static CircularProgressIndicatorThemeData of(BuildContext context) {
-    final CircularProgressIndicatorTheme? circularProgressIndicatorTheme =
-        context.dependOnInheritedWidgetOfExactType<
-            CircularProgressIndicatorTheme>();
+    final CircularProgressIndicatorTheme?
+    circularProgressIndicatorTheme = context
+        .dependOnInheritedWidgetOfExactType<CircularProgressIndicatorTheme>();
     CircularProgressIndicatorThemeData? circularProgressIndicatorThemeData =
         circularProgressIndicatorTheme?.data;
 
     if (circularProgressIndicatorThemeData == null ||
         !circularProgressIndicatorThemeData._isConcrete) {
       final ThemeData themeData = Theme.of(context);
-      final TextTheme textTheme = themeData.textTheme;
-      final ColorScheme colorScheme = themeData.colorScheme;
 
       circularProgressIndicatorThemeData ??=
           themeData.circularProgressIndicatorTheme;
 
       final circularProgressIndicatorValue =
-          _CircularProgressIndicatorThemeData(
-              textTheme: textTheme, colorScheme: colorScheme);
+          _CircularProgressIndicatorThemeData(themeData);
 
-      final double size = circularProgressIndicatorThemeData.size ??
+      final double size =
+          circularProgressIndicatorThemeData.size ??
           circularProgressIndicatorValue.size;
-      final Color color = circularProgressIndicatorThemeData.color ??
+      final double strokeWidth =
+          circularProgressIndicatorThemeData.strokeWidth ??
+          circularProgressIndicatorValue.strokeWidth;
+      final Color color =
+          circularProgressIndicatorThemeData.color ??
           circularProgressIndicatorValue.color;
       final Color backgroundColor =
           circularProgressIndicatorThemeData.backgroundColor ??
-              circularProgressIndicatorValue.backgroundColor;
+          circularProgressIndicatorValue.backgroundColor;
       final Duration indeterminateDuration =
           circularProgressIndicatorThemeData.indeterminateDuration ??
-              circularProgressIndicatorValue.indeterminateDuration;
+          circularProgressIndicatorValue.indeterminateDuration;
 
       return circularProgressIndicatorThemeData.copyWith(
         size: size,
+        strokeWidth: strokeWidth,
         color: color,
         backgroundColor: backgroundColor,
         indeterminateDuration: indeterminateDuration,

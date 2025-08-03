@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class ButtonContextMenuPage extends StatefulWidget {
@@ -9,13 +10,13 @@ class ButtonContextMenuPage extends StatefulWidget {
 }
 
 class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
-  String _firstValue = 'Joinville';
+  String _firstValue = 'Item 1';
 
   bool _disabled = false;
 
   @override
   Widget build(BuildContext context) {
-    final codeText = ''' 
+    final codeText = '''
 return ContextMenuButton(
   Icon(Icons.place),
   value: firstValue,
@@ -24,20 +25,20 @@ return ContextMenuButton(
       setState(() => firstValue = value),
   itemBuilder: (context) => [
     ContextMenuItem(
-      child: Text('Florianópolis'),
-      value: 'Florianópolis',
+      value: 'Item 1',
+      child: Text('Item 1'),
     ),
     ContextMenuItem(
-      child: Text('Joinville'),
-      value: 'Joinville',
+      value: 'Item 2',
+      child: Text('Item 2'),
     ),
     ContextMenuItem(
-      child: Text('Palhoça'),
-      value: 'Palhoça',
+      value: 'Item 3',
+      child: Text('Item 3'),
     ),
     ContextMenuItem(
-      child: Text('Pedra Branca'),
-      value: 'Pedra Branca',
+      value: 'Item 4',
+      child: Text('Item 4'),
     ),
   ],
 );
@@ -49,42 +50,45 @@ return ContextMenuButton(
       styleItems: Defaults.createStyle(themeData.toString()),
       items: [
         ItemTitle(
-          body: (context) => Align(
-            alignment: Alignment.topLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ContextMenuButton.icon(
-                  Icons.place,
-                  value: _firstValue,
-                  onSelected: !_disabled
-                      ? (String value) => setState(() => _firstValue = value)
-                      : null,
-                  itemBuilder: (context) => const [
-                    ContextMenuItem(
-                      value: 'Florianópolis',
-                      child: Text('Florianópolis'),
-                    ),
-                    ContextMenuItem(
-                      value: 'Joinville',
-                      child: Text('Joinville'),
-                    ),
-                    ContextMenuItem(
-                      value: 'Palhoça',
-                      child: Text('Palhoça'),
-                    ),
-                    ContextMenuItem(
-                      value: 'Pedra Branca',
-                      child: Text('Pedra Branca'),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  alignment: Alignment.center,
-                  child: Text(_firstValue),
-                ),
-              ],
+          title: 'Example',
+          body: (context) => Center(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ContextMenuButton.icon(
+                    Icons.place,
+                    value: _firstValue,
+                    onSelected: !_disabled
+                        ? (String value) => setState(() => _firstValue = value)
+                        : null,
+                    itemBuilder: (context) => const [
+                      ContextMenuItem(
+                        value: 'Item 1',
+                        child: Text('Item 1'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Item 2',
+                        child: Text('Item 2'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Item 3',
+                        child: Text('Item 3'),
+                      ),
+                      ContextMenuItem(
+                        value: 'Item 4',
+                        child: Text('Item 4'),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    alignment: Alignment.center,
+                    child: Text(_firstValue),
+                  ),
+                ],
+              ),
             ),
           ),
           options: [
@@ -95,7 +99,6 @@ return ContextMenuButton(
             ),
           ],
           codeText: codeText,
-          title: 'Example',
         ),
       ],
       header: 'Context Menu',
