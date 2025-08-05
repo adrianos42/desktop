@@ -497,6 +497,7 @@ class NavMenuButton extends StatelessWidget {
     this.titleBuilder,
     this.title,
     this.onHover,
+    this.onHoverEnd,
     this.compact = true,
     required this.enabled,
   });
@@ -510,6 +511,8 @@ class NavMenuButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   final VoidCallback? onHover;
+
+  final VoidCallback? onHoverEnd;
 
   final bool active;
 
@@ -562,13 +565,19 @@ class NavMenuButton extends StatelessWidget {
       return MouseRegion(
         cursor: enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,
         onEnter: enabled ? (_) => onHover!() : null,
-        child: SizedBox(
-          height: buttonHeight,
-          child: Padding(
-            padding: buttonBodyPadding,
-            child: IconTheme(
-              data: iconThemeData.copyWith(color: foreground),
-              child: DefaultTextStyle(style: style, child: child),
+        child: GestureDetector(
+          behavior: HitTestBehavior.deferToChild,
+          onTap: () {},
+          onLongPress: enabled ? () => onHover!() : null,
+          onLongPressUp: enabled ? () => onHoverEnd!() : null,
+          child: SizedBox(
+            height: buttonHeight,
+            child: Padding(
+              padding: buttonBodyPadding,
+              child: IconTheme(
+                data: iconThemeData.copyWith(color: foreground),
+                child: DefaultTextStyle(style: style, child: child),
+              ),
             ),
           ),
         ),
@@ -625,7 +634,7 @@ mixin NavMenuMixin {
   }
 
   Duration get menuTransitionDuration;
-  Curve get menuTrasitionCurve;
+  Curve get menuTransitionCurve;
   Color get navBarBackgroundColor;
   Color get barrierColor;
   OverlayState get overlay;
@@ -712,7 +721,7 @@ mixin NavMenuMixin {
                           color: navBarBackgroundColor,
                           child: AnimatedSize(
                             duration: menuTransitionDuration,
-                            curve: menuTrasitionCurve,
+                            curve: menuTransitionCurve,
                             child: builders[menuIndex](context),
                           ),
                         ),

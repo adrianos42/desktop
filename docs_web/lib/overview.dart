@@ -67,7 +67,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       body: ScalableImageWidget.fromSISource(
                         si: ScalableImageSource.fromSvgHttpUrl(
                           Uri.parse(
-                            'https://img.shields.io/pub/v/desktop.svg?style=flat-square',
+                            'https://img.shields.io/pub/v/desktop.svg?style=flat-square&include_prereleases',
                           ),
                         ),
                       ),

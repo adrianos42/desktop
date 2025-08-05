@@ -179,7 +179,7 @@ class _TabState extends State<Tab>
   Duration get menuTransitionDuration => _menuTransitionDuration;
 
   @override
-  Curve get menuTrasitionCurve => _menuTrasitionCurve;
+  Curve get menuTransitionCurve => _menuTrasitionCurve;
 
   @override
   Color get navBarBackgroundColor => _tabBarBackgroundColor;

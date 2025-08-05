@@ -52,15 +52,12 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   Future<void> showButtonMenu() async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Overlay.of(context, rootOverlay: true)
-        .context
-        .findRenderObject()! as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context, rootOverlay: true).context.findRenderObject()!
+            as RenderBox;
 
     final Rect position = Rect.fromPoints(
-      button.localToGlobal(
-        Offset.zero,
-        ancestor: overlay,
-      ),
+      button.localToGlobal(Offset.zero, ancestor: overlay),
       button.localToGlobal(
         button.size.bottomRight(Offset.zero),
         ancestor: overlay,
@@ -78,7 +75,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       items: items,
       initialValue: widget.value,
       position: position,
-      width: button.size.width,
+      width: button.size.width >= contextMenuThemeData.minMenuWidth!
+          ? button.size.width
+          : null,
       contextMenuThemeData: contextMenuThemeData,
     ).then<void>((T? newValue) {
       if (!mounted) {
@@ -175,8 +174,9 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final DropDownThemeData buttonThemeData =
-        DropDownTheme.of(context).merge(widget.theme);
+    final DropDownThemeData buttonThemeData = DropDownTheme.of(
+      context,
+    ).merge(widget.theme);
 
     final bool enabled = widget.enabled;
 
@@ -192,10 +192,10 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     final Color borderColor = enabled
         ? waiting
-            ? buttonThemeData.waitingColor!
-            : hovered
-                ? buttonThemeData.hoverColor!
-                : buttonThemeData.color!
+              ? buttonThemeData.waitingColor!
+              : hovered
+              ? buttonThemeData.hoverColor!
+              : buttonThemeData.color!
         : buttonThemeData.disabledColor!;
 
     final Color foreground = enabled
@@ -206,25 +206,29 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     final Color background = enabled
         ? waiting
-            ? buttonThemeData.waitingBackgroundColor!
-            : hovered
-                ? buttonThemeData.hoverBackgroundColor!
-                : buttonThemeData.backgroundColor!
+              ? buttonThemeData.waitingBackgroundColor!
+              : hovered
+              ? buttonThemeData.hoverBackgroundColor!
+              : buttonThemeData.backgroundColor!
         : buttonThemeData.disabledBackgroundColor!;
 
-    _backgroundColor =
-        ColorTween(begin: _backgroundColor?.end ?? background, end: background);
+    _backgroundColor = ColorTween(
+      begin: _backgroundColor?.end ?? background,
+      end: background,
+    );
 
     Widget result = AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        final borderColor =
-            _color!.evaluate(AlwaysStoppedAnimation(_controller.value))!;
+        final borderColor = _color!.evaluate(
+          AlwaysStoppedAnimation(_controller.value),
+        )!;
         final border = Border.fromBorderSide(
           buttonThemeData.border!.copyWith(color: borderColor),
         );
-        final background = _backgroundColor!
-            .evaluate(AlwaysStoppedAnimation(_controller.value));
+        final background = _backgroundColor!.evaluate(
+          AlwaysStoppedAnimation(_controller.value),
+        );
 
         return DefaultTextStyle(
           style: buttonThemeData.textStyle!.copyWith(
@@ -237,10 +241,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
               minHeight: contextMenuThemeData.itemHeight!,
               maxHeight: contextMenuThemeData.itemHeight!,
             ),
-            decoration: BoxDecoration(
-              color: background,
-              border: border,
-            ),
+            decoration: BoxDecoration(color: background, border: border),
             child: Stack(
               children: [
                 IgnorePointer(
@@ -284,16 +285,10 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       );
     }
 
-    result = Semantics(
-      button: true,
-      child: result,
-    );
+    result = Semantics(button: true, child: result);
 
     if (widget.tooltip != null) {
-      result = Tooltip(
-        message: widget.tooltip!,
-        child: result,
-      );
+      result = Tooltip(message: widget.tooltip!, child: result);
     }
 
     return result;

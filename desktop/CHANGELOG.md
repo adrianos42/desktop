@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.0.0-dev.2
+
+- Changes the button height to 28.
+- Fixes `DropDownButton` context menu width.
+
 ## 6.0.0-dev.1
 
 - Removes light mode from theme data.

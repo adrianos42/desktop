@@ -95,7 +95,7 @@ packages:
       path: "../desktop"
       relative: true
     source: path
-    version: "5.1.3"
+    version: "6.0.0-dev.1"
   fake_async:
     dependency: transitive
     description:

@@ -9,7 +9,6 @@ class DrawerPage extends StatefulWidget {
 }
 
 class _DrawerPageState extends State<DrawerPage> {
-  bool _drawerActive = false;
   bool _drawerDismissActive = false;
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:desktop/desktop.dart';
 import 'dart:math' show Random;
 
@@ -105,21 +106,22 @@ class PageOne extends StatefulWidget {
 }
 
 class _PageOneState extends State<PageOne> {
+  static bool get _isMobile =>
+      defaultTargetPlatform == TargetPlatform.android ||
+      defaultTargetPlatform == TargetPlatform.iOS;
+
   WidgetSpan _createHeader(String title, Color foreground) {
     final style = headerStyle.copyWith(color: foreground);
 
     return WidgetSpan(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 24.0),
-            child: Text(
-              title,
-              style: style,
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 24.0),
+        child: Text(
+          title,
+          style: style,
+          textAlign: TextAlign.left,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }
@@ -129,26 +131,40 @@ class _PageOneState extends State<PageOne> {
     final style = paragraphStyle.copyWith(color: foreground);
 
     return WidgetSpan(
-      child: Row(
+      child: Flex(
+        direction: _isMobile ? Axis.vertical : Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: style,
-                children: contents,
+          if (!_isMobile)
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: style,
+                    children: contents,
+                  ),
+                ),
               ),
             ),
-          ),
           Container(
             constraints: const BoxConstraints(maxWidth: 300.0),
-            padding: const EdgeInsets.only(left: 8.0),
             child: Image.asset(
               'assets/cats_small/$image.webp',
               fit: BoxFit.contain,
               frameBuilder: _frameBuilder,
             ),
           ),
+          if (_isMobile)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RichText(
+                text: TextSpan(
+                  style: style,
+                  children: contents,
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -159,26 +175,40 @@ class _PageOneState extends State<PageOne> {
     final style = paragraphStyle.copyWith(color: foreground);
 
     return WidgetSpan(
-      child: Row(
+      child: Flex(
+        direction: _isMobile ? Axis.vertical : Axis.horizontal,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             constraints: const BoxConstraints(maxWidth: 300.0),
-            padding: const EdgeInsets.only(right: 8.0),
             child: Image.asset(
               'assets/cats_small/$image.webp',
               fit: BoxFit.contain,
               frameBuilder: _frameBuilder,
             ),
           ),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: style,
-                children: contents,
+          if (_isMobile)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RichText(
+                text: TextSpan(
+                  style: style,
+                  children: contents,
+                ),
               ),
             ),
-          ),
+          if (!_isMobile)
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: style,
+                    children: contents,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

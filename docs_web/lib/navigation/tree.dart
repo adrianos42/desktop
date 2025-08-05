@@ -431,7 +431,7 @@ return Tree(
                     ),
                   ),
                 ),
-                allowDragging: _basicExampleDrag,
+                allowResizing: _basicExampleDrag,
                 nodes: [
                   TreeNode.child(
                     titleBuilder: (context) => const Text('Node 0'),

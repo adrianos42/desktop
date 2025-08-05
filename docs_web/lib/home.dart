@@ -176,7 +176,12 @@ class _DocHomeState extends State<DocHome> {
             Expanded(
               child: Tree(
                 collapsed: !isShowingTree,
-                allowDragging: widget.allowDragging,
+                allowResizing: widget.allowDragging,
+                showAsDialog: !widget.allowDragging &&
+                    (defaultTargetPlatform == TargetPlatform.android ||
+                        defaultTargetPlatform == TargetPlatform.iOS),
+                onTreeCollapsed: () => setState(() => _isShowingTree = false),
+                dismissWhenSelected: true,
                 title: Builder(
                   builder: (context) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -207,14 +212,14 @@ class DocApp extends StatelessWidget {
       TreeNode.child(
         titleBuilder: (context) => const Text('Overview'),
         builder: (context) {
-          if (kReleaseMode) {
+          if (kReleaseMode || true) {
             return const OverviewPage();
           } else {
             // return const ButtonPage();
-            // return const NavPage();
+            return const NavPage();
             // return const DrawerPage();
             // return const ButtonRadioPage();
-            return const BreadcrumbPage();
+            //return const BreadcrumbPage();
           }
         },
       ),

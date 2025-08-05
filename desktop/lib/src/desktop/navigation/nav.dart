@@ -354,7 +354,7 @@ class _NavState extends State<Nav>
   Duration get menuTransitionDuration => _menuTransitionDuration;
 
   @override
-  Curve get menuTrasitionCurve => _menuTrasitionCurve;
+  Curve get menuTransitionCurve => _menuTrasitionCurve;
 
   @override
   Color get navBarBackgroundColor => _navBarBackgroundColor;
@@ -485,6 +485,7 @@ class _NavState extends State<Nav>
               _showMenu(i, true, AxisDirection.up);
             }
           },
+          onHoverEnd: () => setState(hideMenu),
           compact: true,
           enabled: items[i].enabled && enabled,
         ),

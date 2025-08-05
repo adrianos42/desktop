@@ -207,11 +207,21 @@ class Tree extends StatefulWidget {
     this.isScrollbarAlwaysShown = true,
     this.collapsed = false,
     this.showDraggingIndicator = true,
-    this.allowDragging = false,
+    this.allowResizing = false,
+    this.showAsDialog = false,
+    this.dismissWhenSelected = false,
+    this.onTreeCollapsed,
     this.controller,
     this.minWidth,
     super.key,
-  });
+  }) : assert(
+         !showAsDialog || !allowResizing,
+         'Tree cannot be resized when shown as a dialog',
+       ),
+       assert(
+         !showAsDialog || onTreeCollapsed != null,
+         'Visibity callback mut not be null',
+       );
 
   /// The title above the tree.
   final Widget? title;
@@ -232,13 +242,22 @@ class Tree extends StatefulWidget {
   final bool showDraggingIndicator;
 
   /// If the tree can be resized.
-  final bool allowDragging;
+  final bool allowResizing;
 
   // The initial tree width.
   final double? minWidth;
 
+  /// If, when not collapsed, to be shown as a dialog.
+  final bool showAsDialog;
+
   /// Controls selected index.
   final TreeController? controller;
+
+  // Called when the dialog is dismissed.
+  final VoidCallback? onTreeCollapsed;
+
+  // Dismiss the dialog when an item is selected.
+  final bool dismissWhenSelected;
 
   @override
   State<Tree> createState() => _TreeState();
@@ -303,7 +322,10 @@ class _TreeState extends State<Tree>
   }
 
   void _onCurrentIndexChange() {
-    setState(() => _updateCurrentIndex());
+    if (widget.showAsDialog && widget.dismissWhenSelected) {
+      widget.onTreeCollapsed!();
+    }
+    setState(_updateCurrentIndex);
   }
 
   void _updateCurrentIndex() {
@@ -396,7 +418,8 @@ class _TreeState extends State<Tree>
         _initialColumnWidth = max(
           min(
             _previoutColumnWidth + delta,
-            (_totalWidth ?? double.infinity) - (widget.minWidth ?? _kMinDragWidth),
+            (_totalWidth ?? double.infinity) -
+                (widget.minWidth ?? _kMinDragWidth),
           ),
           widget.minWidth ?? _kMinDragWidth,
         );
@@ -428,7 +451,7 @@ class _TreeState extends State<Tree>
       alignment: Alignment.topLeft,
       constraints: BoxConstraints(
         minWidth: initialColumnWidth,
-        maxWidth: widget.allowDragging || widget.minWidth != null
+        maxWidth: widget.allowResizing || widget.minWidth != null
             ? initialColumnWidth
             : double.infinity,
       ),
@@ -452,6 +475,9 @@ class _TreeState extends State<Tree>
 
   late AnimationController _indicatorSizecontroller;
   late AnimationController _columnController;
+
+  AnimationController? _treeController;
+  CurvedAnimation? _treeAnimation;
 
   late CurvedAnimation _columnAnimation;
 
@@ -512,6 +538,19 @@ class _TreeState extends State<Tree>
       curve: Curves.easeInOutSine,
     );
 
+    if (widget.showAsDialog) {
+      _treeController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 400),
+        value: widget.collapsed ? 0.0 : 1.0,
+      );
+
+      _treeAnimation = CurvedAnimation(
+        parent: _treeController!,
+        curve: Curves.fastEaseInToSlowEaseOut,
+      );
+    }
+
     _updateTreeController();
 
     WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
@@ -532,10 +571,18 @@ class _TreeState extends State<Tree>
     }
 
     if (oldWidget.collapsed != widget.collapsed) {
-      if (widget.collapsed) {
-        _columnController.animateBack(0.0);
+      if (widget.showAsDialog) {
+        if (widget.collapsed) {
+          _treeController!.animateBack(0.0);
+        } else {
+          _treeController!.animateTo(1.0);
+        }
       } else {
-        _columnController.animateTo(1.0);
+        if (widget.collapsed) {
+          _columnController.animateBack(0.0);
+        } else {
+          _columnController.animateTo(1.0);
+        }
       }
     }
 
@@ -552,6 +599,25 @@ class _TreeState extends State<Tree>
         _initialColumnWidth = widget.minWidth;
       }
     }
+
+    if (!widget.showAsDialog && oldWidget.showAsDialog) {
+      if (widget.showAsDialog) {
+        _treeController = AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 400),
+          value: widget.collapsed ? 0.0 : 1.0,
+        );
+
+        _treeAnimation = CurvedAnimation(
+          parent: _treeController!,
+          curve: Curves.fastEaseInToSlowEaseOut,
+        );
+      } else {
+        _treeController?.dispose();
+        _treeController = null;
+        _treeAnimation = null;
+      }
+    }
   }
 
   @override
@@ -562,6 +628,7 @@ class _TreeState extends State<Tree>
 
     _indicatorSizecontroller.dispose();
     _columnController.dispose();
+    _treeController?.dispose();
     WidgetsBinding.instance.pointerRouter.removeGlobalRoute(_mouseRoute);
 
     super.dispose();
@@ -605,18 +672,20 @@ class _TreeState extends State<Tree>
           );
         }
 
-        children.add(
-          Offstage(
-            offstage: widget.collapsed && _columnController.isCompleted,
-            child: SizeTransition(
-              axis: Axis.horizontal,
-              sizeFactor: _columnAnimation,
-              child: _createTree(context),
+        if (!widget.showAsDialog) {
+          children.add(
+            Offstage(
+              offstage: widget.collapsed && _columnController.isCompleted,
+              child: SizeTransition(
+                axis: Axis.horizontal,
+                sizeFactor: _columnAnimation,
+                child: _createTree(context),
+              ),
             ),
-          ),
-        );
+          );
+        }
 
-        if (widget.allowDragging) {
+        if (widget.allowResizing) {
           final treeTheme = TreeTheme.of(context);
 
           children.add(
@@ -625,7 +694,6 @@ class _TreeState extends State<Tree>
               child: Align(
                 alignment: Alignment.topLeft,
                 child: FadeTransition(
-                  //opacity: CurvedAnimation(parent: _controller, curve: Curves.linear),
                   opacity: const AlwaysStoppedAnimation(1.0),
                   child: GestureDetector(
                     onHorizontalDragStart: _onDragStart,
@@ -657,6 +725,62 @@ class _TreeState extends State<Tree>
                       ),
                     ),
                   ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        if (widget.showAsDialog) {
+          final dialogTheme = DialogTheme.of(context);
+          final barrierColor = dialogTheme.barrierColor!;
+
+          final menuColorTween = ColorTween(
+            begin: barrierColor.withValues(alpha: 0.0),
+            end: barrierColor.withValues(alpha: 0.8),
+          );
+
+          pagesResult.add(
+            Offstage(
+              offstage: widget.collapsed && !_treeAnimation!.isAnimating,
+              child: IgnorePointer(
+                ignoring: widget.collapsed,
+                child: AnimatedBuilder(
+                  animation: _treeAnimation!,
+                  builder: (context, _) {
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => widget.onTreeCollapsed!(),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        color: menuColorTween.evaluate(_treeAnimation!),
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.deferToChild,
+                          onTap: () {},
+                          child: ClipRect(
+                            child: FractionalTranslation(
+                              translation: Tween<Offset>(
+                                begin: const Offset(-1.0, 0.0),
+                                end: const Offset(0.0, 0.0),
+                              ).evaluate(_treeAnimation!),
+                              child: Container(
+                                height: double.infinity,
+                                width: initialColumnWidth,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.background[0],
+                                child: AnimatedSize(
+                                  duration: const Duration(milliseconds: 800),
+                                  curve: Curves.fastEaseInToSlowEaseOut,
+                                  child: _createTree(context),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

@@ -81,19 +81,31 @@ return SizedBox(
                       itemBuilder: (context) => const [
                         ContextMenuItem(
                           value: 0,
-                          child: Text('Item 1'),
+                          child: Text(
+                            'Item 1',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         ContextMenuItem(
                           value: 1,
-                          child: Text('Item 2'),
+                          child: Text(
+                            'Item 2',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         ContextMenuItem(
                           value: 2,
-                          child: Text('Item 3'),
+                          child: Text(
+                            'Item 3',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         ContextMenuItem(
                           value: 3,
-                          child: Text('Item 4'),
+                          child: Text(
+                            'Item 4',
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),
@@ -145,19 +157,31 @@ return SizedBox(
                     itemBuilder: (context) => const [
                       ContextMenuItem(
                         value: 0,
-                        child: Text('Item 1'),
+                        child: Text(
+                          'Item 1',
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       ContextMenuItem(
                         value: 1,
-                        child: Text('Item 2'),
+                        child: Text(
+                          'Item 2',
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       ContextMenuItem(
                         value: 2,
-                        child: Text('Item 3'),
+                        child: Text(
+                          'Item 3',
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       ContextMenuItem(
                         value: 3,
-                        child: Text('Item 4'),
+                        child: Text(
+                          'Item 4',
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),

@@ -8,7 +8,7 @@ part 'button.g.dart';
 
 const double _kSidePadding = 4.0;
 const double _kFilledSidePadding = 12.0;
-const double _kHeight = 32.0;
+const double _kHeight = 28.0;
 const double _kMinWidth = 12.0;
 
 /// Theme data for [Button].
