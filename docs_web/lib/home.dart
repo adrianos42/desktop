@@ -1,17 +1,17 @@
 import 'package:desktop/desktop.dart';
 import 'package:flutter/foundation.dart';
+
 import 'data/data.dart';
 import 'dialogs/dialogs.dart';
 import 'input/input.dart';
 import 'navigation/navigation.dart';
-import 'scrolling.dart';
+import 'overview.dart';
 import 'status/status.dart';
 import 'text/text.dart';
 import 'theme/color_scheme.dart';
+import 'theme/custom_theme.dart';
 import 'theme/primary_color.dart';
 import 'theme/typography.dart';
-import 'theme/custom_theme.dart';
-import 'overview.dart';
 
 const String _version = '5.0.1';
 
@@ -212,11 +212,11 @@ class DocApp extends StatelessWidget {
       TreeNode.child(
         titleBuilder: (context) => const Text('Overview'),
         builder: (context) {
-          if (kReleaseMode || true) {
+          if (kReleaseMode) {
             return const OverviewPage();
           } else {
-            // return const ButtonPage();
-            return const NavPage();
+             return const ButtonPage();
+            // return const NavPage();
             // return const DrawerPage();
             // return const ButtonRadioPage();
             //return const BreadcrumbPage();
@@ -381,10 +381,6 @@ class DocApp extends StatelessWidget {
               builder: (context) => const CustomTheme(),
             ),
         ],
-      ),
-      TreeNode.child(
-        titleBuilder: (context) => const Text('Scrollbar'),
-        builder: (context) => const ScrollingPage(),
       ),
     ];
   }

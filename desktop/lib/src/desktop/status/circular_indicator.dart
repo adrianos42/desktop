@@ -63,9 +63,9 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator>
       child: CustomPaint(
         painter: _CircularProgressIndicatorPainter(
           valueColor: widget.color ?? themeData.color!,
-          backgroundColor: widget.value != null
-              ? widget.backgroundColor ?? themeData.backgroundColor!
-              : null,
+          backgroundColor:
+              widget.backgroundColor ??
+              (widget.value != null ? themeData.backgroundColor! : null),
           value: widget.value, // may be null
           headValue:
               headValue, // remaining arguments are ignored if widget.value is not null
@@ -168,7 +168,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt;
 
-    if (backgroundColor != null) {
+    if (backgroundColor != null && value != null) {
       final Paint backgroundPaint = Paint()
         ..color = backgroundColor!
         ..strokeWidth = strokeWidth
@@ -177,9 +177,11 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
     }
 
     if (value == null) {
+      final color = backgroundColor ?? Colors.black;
+
       paint.shader = ui.Gradient.sweep(
         Offset(size.width / 2.0, size.height / 2.0),
-        [Colors.black, valueColor],
+        [color, valueColor],
         [0.0, 1.0],
         TileMode.repeated,
         headValue * _sweep,

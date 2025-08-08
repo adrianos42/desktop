@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 import '../component.dart';
 import '../dialogs/tooltip.dart';
+import '../status/circular_indicator.dart';
 import '../theme/theme.dart';
 
 /// The base button which is used to create other kinds of buttons.
@@ -116,7 +117,6 @@ class Button extends StatefulWidget {
     bool canRequestFocus = true,
     bool autofocus = false,
     bool? active,
-    bool enableAnimation = false,
     bool willChangeState = false,
     required VoidCallback? onPressed,
     VoidCallback? onLongPress,
@@ -137,12 +137,45 @@ class Button extends StatefulWidget {
       active: active,
       filled: true,
       willChangeState: willChangeState,
-      enableAnimation: enableAnimation,
+      enableAnimation: true,
       mainAxisAlignment: mainAxisAlignment,
       body: Text(
         text,
         style: fontSize != null ? TextStyle(fontSize: fontSize) : null,
       ),
+    );
+  }
+
+  /// Creates a button with a filled background.
+  factory Button.progress(
+    Widget child, {
+    Key? key,
+    String? tooltip,
+    EdgeInsets? padding,
+    FocusNode? focusNode,
+    bool canRequestFocus = true,
+    bool autofocus = false,
+    bool willChangeState = false,
+    required bool loading,
+    required VoidCallback? onPressed,
+    VoidCallback? onLongPress,
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
+  }) {
+    return Button(
+      key: key,
+      padding: padding,
+      bodyPadding: padding != null ? EdgeInsets.zero : null,
+      tooltip: tooltip,
+      onPressed: !loading ? onPressed : null,
+      onLongPress: onLongPress,
+      focusNode: focusNode,
+      canRequestFocus: canRequestFocus,
+      autofocus: autofocus,
+      filled: true,
+      willChangeState: willChangeState,
+      enableAnimation: true,
+      mainAxisAlignment: mainAxisAlignment,
+      body: _ButtonProgress(child: child, loading: loading),
     );
   }
 
@@ -265,12 +298,14 @@ class ButtonState<B extends Button> extends State<B>
 
   late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
     ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _invoke),
-    ButtonActivateIntent:
-        CallbackAction<ButtonActivateIntent>(onInvoke: _invoke),
+    ButtonActivateIntent: CallbackAction<ButtonActivateIntent>(
+      onInvoke: _invoke,
+    ),
   };
 
   bool get _canRequestFocus {
-    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
+    final NavigationMode mode =
+        MediaQuery.maybeOf(context)?.navigationMode ??
         NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
@@ -281,7 +316,8 @@ class ButtonState<B extends Button> extends State<B>
   }
 
   bool get _shouldShowFocus {
-    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
+    final NavigationMode mode =
+        MediaQuery.maybeOf(context)?.navigationMode ??
         NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
@@ -333,10 +369,10 @@ class ButtonState<B extends Button> extends State<B>
 
         foregroundColor = enabled
             ? isActive || pressed
-                ? pressedForeground
-                : hovered || _focusHighlight
-                    ? hoveredForeground
-                    : enabledForeground
+                  ? pressedForeground
+                  : hovered || _focusHighlight
+                  ? hoveredForeground
+                  : enabledForeground
             : disabledForeground;
       } else {
         final Color pressedBackground = buttonThemeData.highlightBackground!;
@@ -350,15 +386,15 @@ class ButtonState<B extends Button> extends State<B>
         foregroundColor = isActive || pressed
             ? pressedForeground
             : hovered
-                ? hoveredForeground
-                : enabledForeground;
+            ? hoveredForeground
+            : enabledForeground;
 
         backgroundColor = enabled
             ? isActive || pressed
-                ? pressedBackground
-                : hovered
-                    ? hoveredBackground
-                    : enabledBackground
+                  ? pressedBackground
+                  : hovered
+                  ? hoveredBackground
+                  : enabledBackground
             : disabledBackgound;
       }
 
@@ -388,10 +424,7 @@ class ButtonState<B extends Button> extends State<B>
           }
         });
       } else {
-        _color = ColorTween(
-          begin: foregroundColor,
-          end: foregroundColor,
-        );
+        _color = ColorTween(begin: foregroundColor, end: foregroundColor);
 
         _backgroundColor = ColorTween(
           begin: backgroundColor,
@@ -438,10 +471,8 @@ class ButtonState<B extends Button> extends State<B>
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      value: 1.0,
-    )..addStatusListener(_statusController);
+    _controller = AnimationController(vsync: this, value: 1.0)
+      ..addStatusListener(_statusController);
 
     WidgetsBinding.instance.pointerRouter.addGlobalRoute(_mouseRoute);
   }
@@ -491,17 +522,21 @@ class ButtonState<B extends Button> extends State<B>
     if (buttonThemeData.axis == Axis.horizontal) {
       constraints = BoxConstraints(minHeight: buttonThemeData.height!);
 
-      leadingPadding = widget.leadingPadding ??
+      leadingPadding =
+          widget.leadingPadding ??
           EdgeInsets.symmetric(horizontal: itemSpacing);
-      trailingPadding = widget.trailingPadding ??
+      trailingPadding =
+          widget.trailingPadding ??
           EdgeInsets.symmetric(horizontal: itemSpacing);
       bodyPadding =
           widget.bodyPadding ?? EdgeInsets.symmetric(horizontal: itemSpacing);
-      buttonPadding = widget.padding ??
+      buttonPadding =
+          widget.padding ??
           EdgeInsets.symmetric(
-              horizontal: !widget.filled
-                  ? itemSpacing
-                  : buttonThemeData.filledSpacing!);
+            horizontal: !widget.filled
+                ? itemSpacing
+                : buttonThemeData.filledSpacing!,
+          );
     } else {
       constraints = BoxConstraints(minHeight: buttonThemeData.minWidth!);
 
@@ -511,32 +546,34 @@ class ButtonState<B extends Button> extends State<B>
           widget.trailingPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
       bodyPadding =
           widget.bodyPadding ?? EdgeInsets.symmetric(vertical: itemSpacing);
-      buttonPadding = widget.padding ??
+      buttonPadding =
+          widget.padding ??
           EdgeInsets.symmetric(
-              vertical: !widget.filled
-                  ? itemSpacing
-                  : buttonThemeData.filledSpacing!);
+            vertical: !widget.filled
+                ? itemSpacing
+                : buttonThemeData.filledSpacing!,
+          );
     }
 
     Widget result = AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        final Color? foreground =
-            _color!.evaluate(AlwaysStoppedAnimation(_controller.value));
+        final Color? foreground = _color!.evaluate(
+          AlwaysStoppedAnimation(_controller.value),
+        );
 
         final Color? background = widget.filled
-            ? _backgroundColor!
-                .evaluate(AlwaysStoppedAnimation(_controller.value))
+            ? _backgroundColor!.evaluate(
+                AlwaysStoppedAnimation(_controller.value),
+              )
             : null;
 
         final TextStyle textStyle = buttonThemeData.textStyle!.copyWith(
           color: foreground,
         );
 
-        final IconThemeData iconThemeData =
-            buttonThemeData.iconThemeData!.copyWith(
-          color: foreground,
-        );
+        final IconThemeData iconThemeData = buttonThemeData.iconThemeData!
+            .copyWith(color: foreground);
 
         final Widget result = DefaultTextStyle(
           style: textStyle,
@@ -549,21 +586,12 @@ class ButtonState<B extends Button> extends State<B>
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (leading != null)
-                  Padding(
-                    padding: leadingPadding,
-                    child: leading,
-                  ),
+                  Padding(padding: leadingPadding, child: leading),
                 // The widget that is always placed in the button.
                 if (widget.body != null)
-                  Padding(
-                    padding: bodyPadding,
-                    child: widget.body,
-                  ),
+                  Padding(padding: bodyPadding, child: widget.body),
                 if (trailing != null)
-                  Padding(
-                    padding: trailingPadding,
-                    child: trailing,
-                  ),
+                  Padding(padding: trailingPadding, child: trailing),
               ],
             ),
           ),
@@ -610,15 +638,48 @@ class ButtonState<B extends Button> extends State<B>
     );
 
     if (widget.tooltip != null) {
-      result = Tooltip(
-        message: widget.tooltip!,
-        child: result,
-      );
+      result = Tooltip(message: widget.tooltip!, child: result);
     }
 
-    return Semantics(
-      button: true,
-      child: result,
+    return Semantics(button: true, child: result);
+  }
+}
+
+class _ButtonProgress extends StatefulWidget {
+  const _ButtonProgress({required this.child, required this.loading});
+
+  final Widget child;
+
+  final bool loading;
+
+  @override
+  State<StatefulWidget> createState() => _ButtonProgressState();
+}
+
+class _ButtonProgressState extends State<_ButtonProgress> {
+  @override
+  Widget build(BuildContext context) {
+    final ButtonThemeData themeData = ButtonTheme.of(context);
+
+    return AnimatedCrossFade(
+      layoutBuilder: (topChild, _, bottomChild, _) => Stack(
+        alignment: AlignmentGeometry.center,
+        children: [topChild, bottomChild],
+      ),
+      crossFadeState: !widget.loading
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      firstChild: widget.child,
+      secondChild: CircularProgressIndicator(
+        size: 16.0,
+        color: themeData.foreground!,
+        backgroundColor: themeData.disabledColor!,
+      ),
+      secondCurve: Curves.easeInSine,
+      firstCurve: Curves.easeOutSine,
+      duration: const Duration(milliseconds: 100),
+      reverseDuration: const Duration(milliseconds: 100),
+      
     );
   }
 }

@@ -12,6 +12,8 @@ class ButtonPage extends StatefulWidget {
 
 class _ButtonPageState extends State<ButtonPage> {
   bool _disabledFilled = false;
+  bool _disabledProgress = false;
+  bool _loadingProgress = false;
   bool _contentFilled = false;
   bool _disabledText = false;
   bool _disabledIcon = false;
@@ -99,7 +101,7 @@ return Button.text(
         ItemTitle(
           title: 'Icon',
           body: (context) => Center(
-            child:  Button.icon(
+            child: Button.icon(
               Icons.controlCamera,
               onPressed: !_disabledIcon ? () {} : null,
             ),
@@ -140,6 +142,34 @@ return Button.text(
             ),
           ),
           codeText: customCode,
+        ),
+        ItemTitle(
+          title: 'Progress',
+          body: (context) => InputContent(
+            enabled: _contentFilled,
+            child: Button.progress(
+              const Text('Login'),
+              loading: _loadingProgress,
+              onPressed: !_disabledProgress
+                  ? () => setState(() => _loadingProgress = true)
+                  : null,
+            ),
+          ),
+          codeText: enabledCode,
+          options: [
+            Button.icon(
+              Icons.downloading,
+              active: _loadingProgress,
+              onPressed: () =>
+                  setState(() => _loadingProgress = !_loadingProgress),
+            ),
+            Button.icon(
+              Icons.close,
+              active: _disabledProgress,
+              onPressed: () =>
+                  setState(() => _disabledProgress = !_disabledProgress),
+            ),
+          ],
         ),
       ],
     );

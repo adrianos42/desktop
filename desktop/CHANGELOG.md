@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0-dev.3
+
+- Creates button with progress.
+
 ## 6.0.0-dev.2
 
 - Changes the button height to 28.
