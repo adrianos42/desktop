@@ -18,6 +18,7 @@ Minimal Desktop widgets for Flutter.
   * Message
   * Tooltip
   * Date picker
+  * Drawer
 * Input
   * Button
   * Context menu
@@ -42,29 +43,13 @@ Minimal Desktop widgets for Flutter.
 | ---------- | --- |
 | ![breadcrumb](assets/breadcrumb.PNG "Breadcrumb") | ![nav_vertical](assets/nav_vertical.PNG "Nav vertical") |
 
-| Nav Horizontal | Nav Horizontal Menu |
+| Nav Horizontal | Tree |
 | -------------- | ------------------- |
-| ![nav_horizontal](assets/nav_horizontal.PNG "Nav horizontal") | ![nav_horizontal_menu](assets/nav_horizontal_menu.PNG "Nav horizontal with menu") |
-
-| Tree | Custom Tree |
-| ---- | ----------- |
-| ![tree](assets/tree.PNG "Tree") | ![tree_custom](assets/tree_custom.PNG "Custom tree") |
+| ![nav_horizontal](assets/nav_horizontal.PNG "Nav horizontal") | ![tree](assets/tree.PNG "Tree") |
 
 | Tab | Custom Tab |
 | --- | ---------- |
 | ![tab](assets/tab.PNG "Tab") | ![tab_custom](assets/tab_custom.PNG "Custom tab") |
-
-| Tab Menu | Tab Controlled |
-| -------- | -------------- |
-| ![tab_menu](assets/tab_menu.PNG "Tab with menu") | ![tab_controlled](assets/tab_controlled.PNG "Controlled tab") |
-
-| Tab Positioned Bottom | Tab Positioned Left |
-| --------------------- | ------------------- |
-| ![tab_positioned_bottom](assets/tab_positioned_bottom.PNG "Tab positioned bottom") | ![tab_positioned_left](assets/tab_positioned_left.PNG "Tab positioned left") |
-
-| Tab Positioned Right | Tab Positioned Rigth Menu |
-| -------------------- | ------------------------- |
-| ![tab_positioned_right](assets/tab_positioned_right.PNG) | ![tab_positioned_right_menu](assets/tab_positioned_right_menu.PNG "Tab positioned right with menu") |
 
 ### Data
 
@@ -81,26 +66,16 @@ Minimal Desktop widgets for Flutter.
 | Dialog | Date Picker |
 | ------ | ------- |
 | ![dialog](assets/dialog.PNG "Dialog") | ![date_picker](assets/date_picker.PNG "Date picker") |
-| ![dialog_dismissible](assets/dialog_dismissible.PNG "Dialog dismissible") |  |
 
 | Tooltip | Message |
 | ------- | ------- |
 | ![tooltip](assets/tooltip.PNG "Tooltip") | ![message_error](assets/message_error.PNG "Message error") |
-|  | ![message_info](assets/message_info.PNG "Message info") |
-|  | ![message_success](assets/message_success.PNG "Message success") |
-|  | ![message_warning](assets/message_warning.PNG "Message warning") |
 
 ### Input
 
-| Button | Context Menu |
-| ------ | ------------ |
-| ![button](assets/button.PNG "Button") | ![context_menu](assets/context_menu.PNG "Context menu") |
-| ![buton_text_icon](assets/buton_text_icon.PNG "Button with text and icon") |
-| ![button_filled](assets/button_filled.PNG "Filled button") |
-
-| Drop Down Menu | Hyperlink |
-| -------------- | --------- |
-| ![drop_down_menu](assets/drop_down_menu.PNG "Drop down menu") | ![hyperlink](assets/hyperlink.PNG "Hyperlink") |
+| Button | Hyperlink |
+| ------ | --------- |
+| ![button](assets/button_filled.PNG "Button") | ![hyperlink](assets/hyperlink.PNG "Hyperlink") |
 
 | Slider | Checkbox |
 | ------ | -------- |
@@ -115,12 +90,6 @@ Minimal Desktop widgets for Flutter.
 | Linear Progress Indicator | Circular Progress Indicator |
 | ------------------------- | --------------------------- |
 | ![linear_progress_bar](assets/linear_progress_bar.PNG "Linear progress bar") | ![circular_progress](assets/circular_progress.PNG "Circular progress") |
-
-### Text
-
-| Text Field | Selectable Text |
-| ---------- | --------------- |
-| ![text_field](assets/text_field.PNG "Text field") | ![selectable_text](assets/selectable_text.PNG "Selectable text") |
 
 See [Gallery](https://adrianos42.github.io/desktop/), for more examples.
 

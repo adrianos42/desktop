@@ -57,5 +57,5 @@ class _CircularProgressIndicatorThemeData {
   /// ```dart
   /// Duration(milliseconds: 6400)
   /// ```
-  Duration get indeterminateDuration => const Duration(milliseconds: 3000);
+  Duration get indeterminateDuration => const Duration(milliseconds: 2000);
 }

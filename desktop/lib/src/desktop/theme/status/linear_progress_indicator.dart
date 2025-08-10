@@ -47,7 +47,7 @@ class _LinearProgressIndicatorThemeData {
   /// ```dart
   /// Duration(milliseconds: 4000)
   /// ```
-  Duration get indeterminateDuration => const Duration(milliseconds: 3000);
+  Duration get indeterminateDuration => const Duration(milliseconds: 4000);
 
   /// The vertical padding.
   ///

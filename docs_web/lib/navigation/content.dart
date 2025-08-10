@@ -6,42 +6,13 @@ const _kFontFamily = 'IBM Plex Serif';
 const _kFontPackage = 'desktop';
 
 const _kFileNames = [
-  'pexels-3127729',
-  'pexels-5456616',
-  'pexels-4734723',
-  'pexels-1828875',
-  'pexels-979503',
-  'pexels-1643457',
-  'pexels-45170',
   'pexels-45201',
-  'pexels-160755',
-  'pexels-979247',
-  'pexels-2693561',
-  'pexels-2611939',
-  'pexels-1687831',
-  'pexels-4858815',
-  'pexels-3030635',
-  'pexels-720684',
-  'pexels-479009',
-  'pexels-192384',
-  'pexels-1653357',
-  'pexels-2817405',
-  'pexels-3772262',
-  'pexels-2255565',
-  'pexels-1571724',
-  'pexels-1416792',
-  'pexels-4391733',
-  'pexels-156321',
-  'pexels-4411430',
-  'pexels-96428',
-  'pexels-1754986',
   'pexels-1299518',
-  'pexels-5800065',
-  'pexels-731553',
-  'pexels-5044690',
-  'pexels-1784289',
-  'pexels-1770918',
-  'pexels-104827',
+  'pexels-1571724',
+  'pexels-1653357',
+  'pexels-1828875',
+  'pexels-2693561',
+  'pexels-3127729',
 ];
 
 Widget _frameBuilder(
@@ -274,7 +245,7 @@ class _PageOneState extends State<PageOne> {
           [paragraph, paragraph, paragraph, paragraph, paragraph]
               .map((e) => TextSpan(text: e))
               .toList(),
-          _kFileNames[12],
+          _kFileNames[6],
           foreground,
         ),
         const TextSpan(text: paragraph),
@@ -293,7 +264,7 @@ class _PageOneState extends State<PageOne> {
           [paragraph, paragraph, paragraph]
               .map((e) => TextSpan(text: e))
               .toList(),
-          _kFileNames[13],
+          _kFileNames[5],
           foreground,
         ),
         _createTitle(paragraphTitle, foreground),
@@ -315,7 +286,7 @@ class _PageOneState extends State<PageOne> {
           [paragraph, paragraph, paragraph, paragraph, paragraph]
               .map((e) => TextSpan(text: e))
               .toList(),
-          _kFileNames[18],
+          _kFileNames[4],
           foreground,
         ),
         _createTitle(paragraphTitle, foreground),
@@ -327,7 +298,7 @@ class _PageOneState extends State<PageOne> {
           [paragraph, paragraph, paragraph, paragraph, paragraph]
               .map((e) => TextSpan(text: e))
               .toList(),
-          _kFileNames[19],
+          _kFileNames[0],
           foreground,
         ),
       ],
@@ -349,7 +320,7 @@ class _PageOneState extends State<PageOne> {
         const TextSpan(text: paragraph),
         _createParagraphsWithLeftImage(
           [paragraph, paragraph].map((e) => TextSpan(text: e)).toList(),
-          _kFileNames[22],
+          _kFileNames[1],
           foreground,
         ),
       ],
@@ -368,7 +339,7 @@ class _PageOneState extends State<PageOne> {
           [paragraph, paragraph, paragraph, paragraph, paragraph]
               .map((e) => TextSpan(text: e))
               .toList(),
-          _kFileNames[24],
+          _kFileNames[2],
           foreground,
         ),
         _createTitle(paragraphTitle, foreground),
