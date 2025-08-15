@@ -11,7 +11,8 @@ class CircularProgressIndicatorPage extends StatefulWidget {
 }
 
 class _CircularProgressIndicatorPageState
-    extends State<CircularProgressIndicatorPage> with TickerProviderStateMixin {
+    extends State<CircularProgressIndicatorPage>
+    with TickerProviderStateMixin {
   double circularValue = 0.5;
 
   @override
@@ -30,9 +31,11 @@ class _CircularProgressIndicatorPageState
         ItemTitle(
           body: (context) => Container(
             alignment: Alignment.center,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            child: const CircularProgressIndicator(),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
+            child: const CircularProgressIndicator(size: 40.0, strokeWidth: 4.0),
           ),
           codeText: circularIndeterminateCodeExample,
           title: 'Circular indeterminate',
@@ -54,15 +57,21 @@ class _CircularProgressIndicatorPageState
           ],
           body: (context) => Container(
             alignment: Alignment.center,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: CircularProgressIndicator(value: circularValue),
+                  child: CircularProgressIndicator(
+                    value: circularValue,
+                    size: 40.0,
+                    strokeWidth: 4.0,
+                  ),
                 ),
               ],
             ),

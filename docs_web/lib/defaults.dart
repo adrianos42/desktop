@@ -1,5 +1,3 @@
-library defaults;
-
 import 'dart:math' as math;
 
 import 'package:dart_style/dart_style.dart';
@@ -15,10 +13,7 @@ const Color numericColor = Color(0xffc2dcb5);
 ///
 class StyleItem {
   ///
-  const StyleItem({
-    required this.title,
-    required this.value,
-  });
+  const StyleItem({required this.title, required this.value});
 
   final String title;
   final String value;
@@ -82,25 +77,40 @@ class CodeTextController extends TextEditingController {
       spans.add(TextSpan(text: text.substring(lastEnd, start)));
 
       if (match.namedGroup('class') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: classColor)));
+            style: textStyle.copyWith(color: classColor),
+          ),
+        );
       } else if (match.namedGroup('keyword') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: keywordColor)));
+            style: textStyle.copyWith(color: keywordColor),
+          ),
+        );
       } else if (match.namedGroup('string') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: stringColor)));
+            style: textStyle.copyWith(color: stringColor),
+          ),
+        );
       } else if (match.namedGroup('comment') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: commentsColor)));
+            style: textStyle.copyWith(color: commentsColor),
+          ),
+        );
       } else if (match.namedGroup('numeric') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: numericColor)));
+            style: textStyle.copyWith(color: numericColor),
+          ),
+        );
       } else {
         spans.add(TextSpan(text: text.substring(start, end)));
       }
@@ -152,17 +162,26 @@ class ThemeTextController extends TextEditingController {
       spans.add(TextSpan(text: text.substring(lastEnd, start)));
 
       if (match.namedGroup('class') != null && false) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: classColor)));
+            style: textStyle.copyWith(color: classColor),
+          ),
+        );
       } else if (match.namedGroup('string') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: stringColor)));
+            style: textStyle.copyWith(color: stringColor),
+          ),
+        );
       } else if (match.namedGroup('numeric') != null) {
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: text.substring(start, end),
-            style: textStyle.copyWith(color: numericColor)));
+            style: textStyle.copyWith(color: numericColor),
+          ),
+        );
       } else {
         spans.add(TextSpan(text: text.substring(start, end)));
       }
@@ -200,13 +219,13 @@ class Defaults extends StatefulWidget {
 
   ///
   static BoxDecoration itemDecoration(BuildContext context) => BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Theme.of(context).colorScheme.background[20],
-            width: 1.0,
-          ),
-        ),
-      );
+    border: Border(
+      top: BorderSide(
+        color: Theme.of(context).colorScheme.background[20],
+        width: 1.0,
+      ),
+    ),
+  );
 
   ///
   static Widget createHeader(BuildContext context, String name) {
@@ -274,19 +293,19 @@ class Defaults extends StatefulWidget {
 
   ///
   static List<StyleItem> createStyle(String value) =>
-      value.split(';;').where((e) => e.indexOf(':') > 0).map(
-        (e) {
-          final index = e.indexOf(':');
-          return StyleItem(
-            title: e.substring(0, index).trim(),
-            value: e.substring(index + 1).trim(),
-          );
-        },
-      ).toList();
+      value.split(';;').where((e) => e.indexOf(':') > 0).map((e) {
+        final index = e.indexOf(':');
+        return StyleItem(
+          title: e.substring(0, index).trim(),
+          value: e.substring(index + 1).trim(),
+        );
+      }).toList();
 
   ///
   static Widget createStylePage(
-      BuildContext context, List<StyleItem> styleItems) {
+    BuildContext context,
+    List<StyleItem> styleItems,
+  ) {
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
@@ -294,50 +313,53 @@ class Defaults extends StatefulWidget {
       child: ListTable(
         colCount: 2,
         //tableBorder: TableBorder.all(color: borderColor, width: 1.0),
-        header: ListTableHeader(builder: (context, col) {
-          assert(col < 2);
+        header: ListTableHeader(
+          builder: (context, col) {
+            assert(col < 2);
 
-          final String title;
+            final String title;
 
-          if (col == 0) {
-            title = 'Field';
-          } else {
-            title = 'Description';
-          }
+            if (col == 0) {
+              title = 'Field';
+            } else {
+              title = 'Description';
+            }
 
-          return Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(8.0),
-            child: Text(title),
-          );
-        }),
+            return Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(8.0),
+              child: Text(title),
+            );
+          },
+        ),
         allowColumnDragging: false,
         colFraction: const {0: 0.2},
         rows: styleItems
             .map(
               (e) => ListTableRow(
-                  itemExtent: null,
-                  builder: (context, col) {
-                    final Widget title;
+                itemExtent: null,
+                builder: (context, col) {
+                  final Widget title;
 
-                    if (col == 0) {
-                      title = Text(
-                        e.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.body2.copyWith(
-                          color: textTheme.textMedium,
-                        ),
-                      );
-                    } else {
-                      title = Markdown(text: e.value);
-                    }
-
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(8.0),
-                      child: title,
+                  if (col == 0) {
+                    title = Text(
+                      e.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.body2.copyWith(
+                        color: textTheme.textMedium,
+                      ),
                     );
-                  }),
+                  } else {
+                    title = Markdown(text: e.value);
+                  }
+
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.all(8.0),
+                    child: title,
+                  );
+                },
+              ),
             )
             .toList(),
       ),
@@ -354,7 +376,10 @@ class DefaultsState extends State<Defaults> {
 
   final List<bool> _shouldBuildView = <bool>[];
 
-  String get _codeFormatted => DartFormatter().format('''
+  String get _codeFormatted =>
+      DartFormatter(
+        languageVersion: DartFormatter.latestLanguageVersion,
+      ).format('''
 import 'package:desktop/desktop.dart';
 
 void main() => runApp(DesktopApp(home: App()));
@@ -378,11 +403,14 @@ class App extends StatelessWidget {
     super.didUpdateWidget(oldWidget);
 
     if (widget.items.length - _shouldBuildView.length > 0) {
-      _shouldBuildView.addAll(List<bool>.filled(
-          widget.items.length - _shouldBuildView.length, false));
+      _shouldBuildView.addAll(
+        List<bool>.filled(widget.items.length - _shouldBuildView.length, false),
+      );
     } else if (widget.items.length - _shouldBuildView.length < 0) {
       _shouldBuildView.removeRange(
-          widget.items.length, _shouldBuildView.length);
+        widget.items.length,
+        _shouldBuildView.length,
+      );
     }
 
     _index = math.min(_index, widget.items.length - 1);
@@ -419,13 +447,14 @@ class App extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              children: [
-                Defaults.createHeader(context, widget.header),
-                Defaults.createTitle(context, widget.items[_index].title),
-              ],
-            )),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Column(
+            children: [
+              Defaults.createHeader(context, widget.header),
+              Defaults.createTitle(context, widget.items[_index].title),
+            ],
+          ),
+        ),
         Expanded(
           child: Tab(
             items: [
@@ -433,14 +462,9 @@ class App extends StatelessWidget {
                 itemBuilder: (context) => const Icon(Icons.visibility),
                 builder: (context) => Column(
                   children: [
-                    Container(
-                      decoration: Defaults.itemDecoration(context),
-                    ),
+                    Container(decoration: Defaults.itemDecoration(context)),
                     Expanded(
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: list,
-                      ),
+                      child: Stack(fit: StackFit.expand, children: list),
                     ),
                   ],
                 ),
@@ -450,9 +474,7 @@ class App extends StatelessWidget {
                   itemBuilder: (context) => const Icon(Icons.style),
                   builder: (context) => Column(
                     children: [
-                      Container(
-                        decoration: Defaults.itemDecoration(context),
-                      ),
+                      Container(decoration: Defaults.itemDecoration(context)),
                       Expanded(
                         child: Defaults.createStylePage(
                           context,
@@ -468,10 +490,13 @@ class App extends StatelessWidget {
                   builder: (context) => Container(
                     decoration: Defaults.itemDecoration(context),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 4.0),
+                      vertical: 4.0,
+                      horizontal: 4.0,
+                    ),
                     child: SelectableText.rich(
-                      CodeTextController(text: _codeFormatted).buildTextSpan(
-                          context: context, withComposing: false),
+                      CodeTextController(
+                        text: _codeFormatted,
+                      ).buildTextSpan(context: context, withComposing: false),
                       style: Theme.of(context).textTheme.monospace,
                     ),
                   ),
@@ -497,7 +522,7 @@ class App extends StatelessWidget {
                           child: Text(widget.items[index].title),
                         ),
                       ),
-                    )
+                    ),
                 ],
               );
             },

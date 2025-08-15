@@ -7,7 +7,7 @@ funding:
   - https://github.com/sponsors/adrianos42
 
 environment:
-  sdk: ^3.9.0-333.2.beta
+  sdk: ^3.9.0
 
 dependencies:
   flutter:
