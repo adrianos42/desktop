@@ -6,10 +6,9 @@ Widget createItemForColor(
   String name, [
   Color? foreground,
 ]) {
-  final textStyle = Theme.of(context).textTheme.caption.copyWith(
-        color: foreground,
-        fontWeight: FontWeight.bold,
-      );
+  final textStyle = Theme.of(
+    context,
+  ).textTheme.caption.copyWith(color: foreground, fontWeight: FontWeight.bold);
 
   return Container(
     color: color,
@@ -23,15 +22,19 @@ Widget createItemForColor(
         Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Text.rich(
-            TextSpan(text: 'ARGB: ', style: textStyle, children: [
-              WidgetSpan(
-                child: SelectableText(
-                  color.toARGB32().toRadixString(0x10),
-                  style: textStyle,
-                  maxLines: 1,
+            TextSpan(
+              text: 'ARGB: ',
+              style: textStyle,
+              children: [
+                WidgetSpan(
+                  child: SelectableText(
+                    color.toARGB32().toRadixString(0x10),
+                    style: textStyle,
+                    maxLines: 1,
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
         ),
       ],

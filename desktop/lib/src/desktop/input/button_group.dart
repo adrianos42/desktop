@@ -6,11 +6,7 @@ import 'button.dart';
 typedef ToggleButtonItemSelected<T> = void Function(T value);
 
 class ToggleItem<T> {
-  ToggleItem({
-    required this.builder,
-    required this.value,
-    this.tooltip,
-  });
+  ToggleItem({required this.builder, required this.value, this.tooltip});
   final WidgetBuilder builder;
   final String? tooltip;
   final T value;
@@ -34,9 +30,12 @@ class ToggleButton<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     assert(
-        items.every((element) =>
-            items.where((other) => other.value == element.value).length == 1),
-        'Cannot have more than one item with the same value');
+      items.every(
+        (element) =>
+            items.where((other) => other.value == element.value).length == 1,
+      ),
+      'Cannot have more than one item with the same value',
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -55,8 +54,9 @@ class ToggleButton<T> extends StatelessWidget {
               padding: EdgeInsets.zero,
               body: e.builder(context),
               tooltip: e.tooltip,
-              onPressed:
-                  onSelected != null ? () => onSelected!(e.value as T) : null,
+              onPressed: onSelected != null
+                  ? () => onSelected!(e.value as T)
+                  : null,
             ),
           );
         }).toList(),

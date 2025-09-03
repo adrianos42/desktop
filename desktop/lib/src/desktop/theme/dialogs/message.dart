@@ -33,9 +33,8 @@ class _MessageThemeData {
   /// ```dart
   /// textTheme.caption.copyWith(fontWeight: FontWeight.w500)
   /// ```
-  TextStyle get titleTextStyle => _textTheme.caption.copyWith(
-        fontWeight: FontWeight.w500,
-      );
+  TextStyle get titleTextStyle =>
+      _textTheme.caption.copyWith(fontWeight: FontWeight.w500);
 
   /// The title padding.
   ///
@@ -144,6 +143,4 @@ class _MessageThemeData {
   /// Duration(milliseconds: 100)
   /// ```
   Duration get animationDuration => const Duration(milliseconds: 100);
-
-  
 }

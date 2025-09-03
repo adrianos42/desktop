@@ -132,39 +132,39 @@ class ToggleSwitchThemeData {
   String toString() {
     return r'''
 disabledColor: The disabled color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;activeColor: The active color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.primary[50]
  ```;;activeHoverColor: The active hover color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;inactiveColor: The inactive color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;inactiveHoverColor: The inactive hover color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;foreground: The foreground color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;
@@ -189,8 +189,8 @@ class ToggleSwitchTheme extends InheritedTheme {
   /// Creates a [ToggleSwitchTheme].
   const ToggleSwitchTheme({
     super.key,
-    required super.child,
     required this.data,
+    required super.child,
   });
 
   /// The data representing this [ToggleSwitchTheme].

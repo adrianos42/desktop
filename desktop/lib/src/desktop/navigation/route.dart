@@ -49,10 +49,19 @@ mixin _DesktopRouteTransitionMixin<T> on PageRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return buildPageTransitions<T>(
-        this, context, animation, secondaryAnimation, child);
+      this,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
   }
 
   static Widget buildPageTransitions<T>(
@@ -66,29 +75,24 @@ mixin _DesktopRouteTransitionMixin<T> on PageRoute<T> {
       case TargetPlatform.android:
       case TargetPlatform.iOS:
         return SlideTransition(
-          position: Tween(
-            begin: const Offset(1.0, 0.0),
-            end: const Offset(0.0, 0.0),
-          ).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.fastLinearToSlowEaseIn,
-            ),
-          ),
+          position:
+              Tween(
+                begin: const Offset(1.0, 0.0),
+                end: const Offset(0.0, 0.0),
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                ),
+              ),
           child: FadeTransition(
-            opacity: CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeIn,
-            ),
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
             child: child,
           ),
         );
       default:
         return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeIn,
-          ),
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeIn),
           child: child,
         );
     }
@@ -99,10 +103,10 @@ class DesktopPageRoute<T> extends PageRoute<T>
     with _DesktopRouteTransitionMixin {
   DesktopPageRoute({
     required this.builder,
-    RouteSettings? settings,
-    bool fullscreenDialog = true,
     this.maintainState = true,
-  }) : super(settings: settings, fullscreenDialog: fullscreenDialog);
+    super.settings,
+    super.fullscreenDialog = true,
+  });
 
   final WidgetBuilder builder;
 
@@ -158,9 +162,7 @@ class _PageBasedDesktopPageRoute<T> extends PageRoute<T>
 }
 
 abstract class ContextRoute<T> extends ModalRoute<T> {
-  ContextRoute({
-    required super.settings,
-  }) : super(filter: null);
+  ContextRoute({required super.settings}) : super(filter: null);
 
   @override
   bool get opaque => false;
@@ -180,13 +182,14 @@ class _DialogRoute<T> extends PopupRoute<T> {
     RouteTransitionsBuilder? transitionBuilder,
     super.settings,
     super.filter,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor,
-        _transitionDuration = transitionDuration,
-        _transitionBuilder = transitionBuilder;
+  }) : _pageBuilder = pageBuilder,
+       _barrierDismissible = barrierDismissible,
+       _barrierLabel =
+           barrierLabel ??
+           DesktopLocalizations.of(context).modalBarrierDismissLabel,
+       _barrierColor = barrierColor,
+       _transitionDuration = transitionDuration,
+       _transitionBuilder = transitionBuilder;
 
   final RoutePageBuilder _pageBuilder;
 
@@ -209,8 +212,11 @@ class _DialogRoute<T> extends PopupRoute<T> {
   final RouteTransitionsBuilder? _transitionBuilder;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -219,18 +225,24 @@ class _DialogRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     if (_transitionBuilder == null) {
       return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: Curves.linear,
-          ),
-          child: child);
+        opacity: CurvedAnimation(parent: animation, curve: Curves.linear),
+        child: child,
+      );
     } // Some default transition
-    return _transitionBuilder!(
-        context, animation, secondaryAnimation, child); // TODO(as): ???
+    return _transitionBuilder(
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    ); // TODO(as): ???
   }
 }
 

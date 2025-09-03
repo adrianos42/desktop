@@ -8,7 +8,7 @@ part 'tooltip.g.dart';
 /// Theme data for [Tooltip].
 @immutable
 class _TooltipThemeData {
-   _TooltipThemeData(ThemeData themeData) {
+  _TooltipThemeData(ThemeData themeData) {
     _themeData = themeData.invertedTheme;
   }
 
@@ -54,9 +54,9 @@ class _TooltipThemeData {
   Color get backgroundColor => _colorScheme.background[0];
 
   /// The [TextStyle] for the tooltip text.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.caption
   /// ```

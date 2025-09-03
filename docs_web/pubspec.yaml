@@ -14,7 +14,7 @@ dependencies:
   dart_style: ^3.1.2
   url_launcher: ^6.1.10
   intl: ^0.20.2
-  markdown_docs_flutter: 1.0.0-dev.3
+  markdown_docs_flutter: ^1.0.0-dev.4
   jovial_svg: ^1.1.14
 
 dependency_overrides:

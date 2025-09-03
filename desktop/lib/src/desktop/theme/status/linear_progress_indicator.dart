@@ -7,7 +7,8 @@ part 'linear_progress_indicator.g.dart';
 /// Theme data for [LinearProgressIndicator].
 @immutable
 class _LinearProgressIndicatorThemeData {
-  const _LinearProgressIndicatorThemeData(ThemeData themeData) : _themeData = themeData;
+  const _LinearProgressIndicatorThemeData(ThemeData themeData)
+    : _themeData = themeData;
 
   final ThemeData _themeData;
 
@@ -16,7 +17,7 @@ class _LinearProgressIndicatorThemeData {
   /// The height of the linear progress indicator.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 2.0
   /// ```
@@ -25,7 +26,7 @@ class _LinearProgressIndicatorThemeData {
   /// The color of the linear progress indicator.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
@@ -34,7 +35,7 @@ class _LinearProgressIndicatorThemeData {
   /// The background color of the linear progress indicator.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.disabled
   /// ```
@@ -43,7 +44,7 @@ class _LinearProgressIndicatorThemeData {
   /// The indeterminate animation duration.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// Duration(milliseconds: 4000)
   /// ```
@@ -52,7 +53,7 @@ class _LinearProgressIndicatorThemeData {
   /// The vertical padding.
   ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// EdgeInsets.symmetric(vertical: 2.0)
   /// ```

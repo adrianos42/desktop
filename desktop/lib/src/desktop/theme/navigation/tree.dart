@@ -60,7 +60,8 @@ class _TreeThemeData {
   /// ```dart
   /// colorScheme.primary[60]
   /// ```
-  Color get indicatorHighlightColor => _colorScheme.primary[highlightColorIndex];
+  Color get indicatorHighlightColor =>
+      _colorScheme.primary[highlightColorIndex];
 
   /// The indicator hover highlight color.
   ///

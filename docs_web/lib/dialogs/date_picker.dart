@@ -1,6 +1,7 @@
 import 'package:desktop/desktop.dart';
-import '../defaults.dart';
 import 'package:flutter/foundation.dart';
+
+import '../defaults.dart';
 
 class DatePickerPage extends StatefulWidget {
   const DatePickerPage({super.key});
@@ -29,8 +30,9 @@ class _DatePickerPageState extends State<DatePickerPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Text(
-                    DesktopLocalizations.of(context)
-                        .formatFullDate(_selectedDate),
+                    DesktopLocalizations.of(
+                      context,
+                    ).formatFullDate(_selectedDate),
                   ),
                 ),
                 Button.text(

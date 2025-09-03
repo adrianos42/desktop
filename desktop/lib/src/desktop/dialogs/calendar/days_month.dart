@@ -24,12 +24,17 @@ class DaysMonth extends MultiChildRenderObjectWidget {
   @override
   DayPickerRender createRenderObject(BuildContext context) {
     return DayPickerRender(
-        daysOffset: daysOffset, boxSize: boxSize, columns: columns);
+      daysOffset: daysOffset,
+      boxSize: boxSize,
+      columns: columns,
+    );
   }
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant DayPickerRender renderObject) {
+    BuildContext context,
+    covariant DayPickerRender renderObject,
+  ) {
     renderObject
       ..daysOffset = daysOffset
       ..boxSize = boxSize
@@ -50,9 +55,9 @@ class DayPickerRender extends RenderBox
     required int daysOffset,
     required Size boxSize,
     required int columns,
-  })  : _daysOffset = daysOffset,
-        _boxSize = boxSize,
-        _columns = columns {
+  }) : _daysOffset = daysOffset,
+       _boxSize = boxSize,
+       _columns = columns {
     addAll(children);
   }
 
@@ -120,10 +125,7 @@ class DayPickerRender extends RenderBox
       );
 
       child.layout(
-        BoxConstraints.tightFor(
-          width: _boxSize.width,
-          height: _boxSize.height,
-        ),
+        BoxConstraints.tightFor(width: _boxSize.width, height: _boxSize.height),
       );
 
       childParentData.offset = position;
@@ -138,10 +140,9 @@ class DayPickerRender extends RenderBox
       }
     }
 
-    size = constraints.constrain(Size(
-      _boxSize.width * columns,
-      _boxSize.height * _rows,
-    ));
+    size = constraints.constrain(
+      Size(_boxSize.width * columns, _boxSize.height * _rows),
+    );
   }
 
   @override

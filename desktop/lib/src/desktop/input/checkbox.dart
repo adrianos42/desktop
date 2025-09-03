@@ -21,11 +21,12 @@ class Checkbox extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-    this.theme,
     this.forceEnabled = false,
-  })  : assert(tristate || value != null),
-        assert(!forceEnabled || onChanged == null,
-            'Cannot have `onChanged` when `forceEnabled` is true');
+  }) : assert(tristate || value != null),
+       assert(
+         !forceEnabled || onChanged == null,
+         'Cannot have `onChanged` when `forceEnabled` is true',
+       );
 
   /// The value of the input.
   final bool? value;
@@ -44,9 +45,6 @@ class Checkbox extends StatefulWidget {
 
   /// See [FocusableActionDetector] field [autofocus].
   final bool autofocus;
-
-  /// The style [CheckboxThemeData] of the checkbox.
-  final CheckboxThemeData? theme;
 
   @override
   State<Checkbox> createState() => _CheckboxState();
@@ -179,7 +177,7 @@ class _CheckboxState extends State<Checkbox> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CheckboxTheme.of(context).merge(widget.theme);
+    final theme = CheckboxTheme.of(context);
 
     final activeColor = theme.activeColor!;
     final hoverColor = widget.value != false
@@ -261,19 +259,19 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
 
   @override
   _RenderCheckbox createRenderObject(BuildContext context) => _RenderCheckbox(
-        value: value,
-        state: state,
-        activeColor: activeColor,
-        foregroundColor: foregroundColor,
-        foregroundHoverColor: foregroundHoverColor,
-        inactiveColor: inactiveColor,
-        disabledColor: disabledColor,
-        onChanged: onChanged,
-        hoverColor: hoverColor,
-        hovering: hovering,
-        additionalConstraints: additionalConstraints,
-        forceEnabled: forceEnabled,
-      );
+    value: value,
+    state: state,
+    activeColor: activeColor,
+    foregroundColor: foregroundColor,
+    foregroundHoverColor: foregroundHoverColor,
+    inactiveColor: inactiveColor,
+    disabledColor: disabledColor,
+    onChanged: onChanged,
+    hoverColor: hoverColor,
+    hovering: hovering,
+    additionalConstraints: additionalConstraints,
+    forceEnabled: forceEnabled,
+  );
 
   @override
   void updateRenderObject(BuildContext context, _RenderCheckbox renderObject) {
@@ -305,20 +303,19 @@ class _RenderCheckbox extends RenderConstrainedBox {
     required Color disabledColor,
     required Color hoverColor,
     required bool hovering,
-    required BoxConstraints additionalConstraints,
-  })  : _state = state,
-        _value = value,
-        _oldValue = value,
-        _activeColor = activeColor,
-        _disabledColor = disabledColor,
-        _foregroundColor = foregroundColor,
-        _foregroundHoverColor = foregroundHoverColor,
-        _inactiveColor = inactiveColor,
-        _hoverColor = hoverColor,
-        _hovering = hovering,
-        _onChanged = onChanged,
-        _forceEnabled = forceEnabled,
-        super(additionalConstraints: additionalConstraints);
+    required super.additionalConstraints,
+  }) : _state = state,
+       _value = value,
+       _oldValue = value,
+       _activeColor = activeColor,
+       _disabledColor = disabledColor,
+       _foregroundColor = foregroundColor,
+       _foregroundHoverColor = foregroundHoverColor,
+       _inactiveColor = inactiveColor,
+       _hoverColor = hoverColor,
+       _hovering = hovering,
+       _onChanged = onChanged,
+       _forceEnabled = forceEnabled;
 
   final _CheckboxState _state;
 
@@ -472,8 +469,9 @@ class _RenderCheckbox extends RenderConstrainedBox {
   void _drawBorder(Canvas canvas, RRect outer, double t, Paint paint) {
     assert(t >= 0.0 && t <= 0.5);
     final double size = outer.width;
-    final RRect inner =
-        outer.deflate(math.min(size / 2.0, _kStrokeWidth + size * t));
+    final RRect inner = outer.deflate(
+      math.min(size / 2.0, _kStrokeWidth + size * t),
+    );
     canvas.drawDRRect(outer, inner, paint);
   }
 
@@ -536,8 +534,8 @@ class _RenderCheckbox extends RenderConstrainedBox {
     final AnimationStatus status = _state._position.status;
     final double tNormalized =
         status == AnimationStatus.forward || status == AnimationStatus.completed
-            ? _state._position.value
-            : 1.0 - _state._position.value;
+        ? _state._position.value
+        : 1.0 - _state._position.value;
 
     if (_oldValue == false || value == false) {
       final double t = value == false ? 1.0 - tNormalized : tNormalized;

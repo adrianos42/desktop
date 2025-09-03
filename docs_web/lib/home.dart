@@ -50,10 +50,7 @@ class _DocHomeState extends State<DocHome> {
   static ContextMenuItem<PrimaryColors> _menuItemPrimaryColor(
     PrimaryColors color,
   ) {
-    return ContextMenuItem(
-      value: color,
-      child: Text(color.toString()),
-    );
+    return ContextMenuItem(value: color, child: Text(color.toString()));
   }
 
   PrimaryColors? _primaryColor;
@@ -66,22 +63,22 @@ class _DocHomeState extends State<DocHome> {
 
   Widget _createColorButton() {
     List<ContextMenuItem<PrimaryColors>> itemBuilder(context) => [
-          _menuItemPrimaryColor(PrimaryColors.coral),
-          _menuItemPrimaryColor(PrimaryColors.sandyBrown),
-          _menuItemPrimaryColor(PrimaryColors.orange),
-          _menuItemPrimaryColor(PrimaryColors.goldenrod),
-          _menuItemPrimaryColor(PrimaryColors.springGreen),
-          _menuItemPrimaryColor(PrimaryColors.turquoise),
-          _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
-          _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
-          _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
-          _menuItemPrimaryColor(PrimaryColors.royalBlue),
-          _menuItemPrimaryColor(PrimaryColors.slateBlue),
-          _menuItemPrimaryColor(PrimaryColors.purple),
-          _menuItemPrimaryColor(PrimaryColors.violet),
-          _menuItemPrimaryColor(PrimaryColors.hotPink),
-          _menuItemPrimaryColor(PrimaryColors.red),
-        ];
+      _menuItemPrimaryColor(PrimaryColors.coral),
+      _menuItemPrimaryColor(PrimaryColors.sandyBrown),
+      _menuItemPrimaryColor(PrimaryColors.orange),
+      _menuItemPrimaryColor(PrimaryColors.goldenrod),
+      _menuItemPrimaryColor(PrimaryColors.springGreen),
+      _menuItemPrimaryColor(PrimaryColors.turquoise),
+      _menuItemPrimaryColor(PrimaryColors.deepSkyBlue),
+      _menuItemPrimaryColor(PrimaryColors.dodgerBlue),
+      _menuItemPrimaryColor(PrimaryColors.cornflowerBlue),
+      _menuItemPrimaryColor(PrimaryColors.royalBlue),
+      _menuItemPrimaryColor(PrimaryColors.slateBlue),
+      _menuItemPrimaryColor(PrimaryColors.purple),
+      _menuItemPrimaryColor(PrimaryColors.violet),
+      _menuItemPrimaryColor(PrimaryColors.hotPink),
+      _menuItemPrimaryColor(PrimaryColors.red),
+    ];
 
     return Builder(
       builder: (context) => ButtonTheme.merge(
@@ -100,9 +97,7 @@ class _DocHomeState extends State<DocHome> {
             Theme.updateThemeData(
               context,
               themeData.copyWith(
-                colorScheme: ColorScheme(
-                  primary: value.primaryColor,
-                ),
+                colorScheme: ColorScheme(primary: value.primaryColor),
               ),
             );
           },
@@ -112,92 +107,96 @@ class _DocHomeState extends State<DocHome> {
   }
 
   Widget _createHome() {
-    return Builder(builder: (context) {
-      final orientation = MediaQuery.maybeOf(context)?.orientation;
+    return Builder(
+      builder: (context) {
+        final orientation = MediaQuery.maybeOf(context)?.orientation;
 
-      final isShowingTree =
-          _isShowingTree ?? orientation == Orientation.landscape;
+        final isShowingTree =
+            _isShowingTree ?? orientation == Orientation.landscape;
 
-      return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.only(top: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.spaceBetween,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Button.icon(
-                        Icons.menuOpen,
-                        active: isShowingTree,
-                        size: 22.0,
-                        onPressed: () =>
-                            setState(() => _isShowingTree = !isShowingTree),
+        return Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Wrap(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: Button.icon(
+                          Icons.menuOpen,
+                          active: isShowingTree,
+                          size: 22.0,
+                          onPressed: () =>
+                              setState(() => _isShowingTree = !isShowingTree),
+                        ),
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Builder(
-                        builder: (context) {
-                          return Tooltip(
-                            message: widget.packageVersion,
-                            child: Text(
-                              widget.packageName,
-                              style: Theme.of(context).textTheme.title.copyWith(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary[70],
-                                  ),
-                            ),
-                          );
-                        },
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Builder(
+                          builder: (context) {
+                            return Tooltip(
+                              message: widget.packageVersion,
+                              child: Text(
+                                widget.packageName,
+                                style: Theme.of(context).textTheme.title
+                                    .copyWith(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary[70],
+                                    ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
+                    ],
+                  ),
+                  if (widget.allowThemeColorChange)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: _createColorButton(),
                     ),
-                  ],
-                ),
-                if (widget.allowThemeColorChange)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: _createColorButton(),
-                  )
-              ],
-            ),
-            Expanded(
-              child: Tree(
-                collapsed: !isShowingTree,
-                allowResizing: widget.allowDragging,
-                showAsDialog: !widget.allowDragging &&
-                    (defaultTargetPlatform == TargetPlatform.android ||
-                        defaultTargetPlatform == TargetPlatform.iOS),
-                onTreeCollapsed: () => setState(() => _isShowingTree = false),
-                dismissWhenSelected: true,
-                title: Builder(
-                  builder: (context) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      'Documentation',
-                      style: Theme.of(context).textTheme.body2,
+                ],
+              ),
+              Expanded(
+                child: Tree(
+                  collapsed: !isShowingTree,
+                  allowResizing: widget.allowDragging,
+                  showAsDialog:
+                      !widget.allowDragging &&
+                      (defaultTargetPlatform == TargetPlatform.android ||
+                          defaultTargetPlatform == TargetPlatform.iOS),
+                  onTreeCollapsed: () => setState(() => _isShowingTree = false),
+                  dismissWhenSelected: true,
+                  title: Builder(
+                    builder: (context) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'Documentation',
+                        style: Theme.of(context).textTheme.body2,
+                      ),
                     ),
                   ),
+                  nodes: widget.treeNodes,
                 ),
-                nodes: widget.treeNodes,
               ),
-            ),
-          ],
-        ),
-      );
-    });
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -215,8 +214,8 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
-             return const ButtonPage();
-            // return const NavPage();
+            //return const ButtonPage();
+            return const NavPage();
             // return const DrawerPage();
             // return const ButtonRadioPage();
             //return const BreadcrumbPage();

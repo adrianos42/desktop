@@ -1,5 +1,3 @@
-library dialogs;
-
 export 'date_picker.dart';
 export 'dialog.dart';
 export 'drawer.dart';

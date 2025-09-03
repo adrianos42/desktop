@@ -67,9 +67,9 @@ class _TabThemeData {
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => _textTheme.body2.copyWith(
-        fontSize: defaultFontSize,
-        overflow: TextOverflow.ellipsis,
-      );
+    fontSize: defaultFontSize,
+    overflow: TextOverflow.ellipsis,
+  );
 
   /// The theme for the icon. The color is ignored.
   ///
@@ -78,10 +78,8 @@ class _TabThemeData {
   /// ```dart
   /// IconThemeData(size: kDefaultIconSize)
   /// ```
-  IconThemeData get iconThemeData => const IconThemeData(
-        size: defaultIconSize,
-        fill: 1.0,
-      );
+  IconThemeData get iconThemeData =>
+      const IconThemeData(size: defaultIconSize, fill: 1.0);
 
   /// The space between items inside the tab bar, if they are simple text or an icon.
   ///

@@ -206,9 +206,9 @@ height: The height of the tooltip's [child].
  ```dart
  colorScheme.background[0]
  ```;;textStyle: The [TextStyle] for the tooltip text.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.caption
  ```;;padding: The amount of space by which to inset the tooltip's [child].
@@ -263,7 +263,7 @@ height: The height of the tooltip's [child].
 @immutable
 class TooltipTheme extends InheritedTheme {
   /// Creates a [TooltipTheme].
-  const TooltipTheme({super.key, required super.child, required this.data});
+  const TooltipTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [TooltipTheme].
   final TooltipThemeData data;

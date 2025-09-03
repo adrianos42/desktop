@@ -1,6 +1,8 @@
-import 'package:desktop/desktop.dart';
-import '../defaults.dart';
 import 'dart:math' as math;
+
+import 'package:desktop/desktop.dart';
+
+import '../defaults.dart';
 
 class LinearProgressIndicatorPage extends StatefulWidget {
   const LinearProgressIndicatorPage({super.key});
@@ -11,7 +13,8 @@ class LinearProgressIndicatorPage extends StatefulWidget {
 }
 
 class _LinearProgressIndicatorPageState
-    extends State<LinearProgressIndicatorPage> with TickerProviderStateMixin {
+    extends State<LinearProgressIndicatorPage>
+    with TickerProviderStateMixin {
   double linearValue = 0.5;
 
   @override
@@ -30,8 +33,10 @@ class _LinearProgressIndicatorPageState
           title: 'Linear indeterminate',
           body: (context) => Container(
             alignment: Alignment.center,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
             child: const LinearProgressIndicator(),
           ),
           codeText: linearIndeterminateCodeExample,
@@ -54,8 +59,10 @@ class _LinearProgressIndicatorPageState
           ],
           body: (context) => Container(
             alignment: Alignment.center,
-            padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

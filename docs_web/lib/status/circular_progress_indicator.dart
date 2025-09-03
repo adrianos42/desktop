@@ -1,6 +1,8 @@
-import 'package:desktop/desktop.dart';
-import '../defaults.dart';
 import 'dart:math' as math;
+
+import 'package:desktop/desktop.dart';
+
+import '../defaults.dart';
 
 class CircularProgressIndicatorPage extends StatefulWidget {
   const CircularProgressIndicatorPage({super.key});
@@ -35,7 +37,7 @@ class _CircularProgressIndicatorPageState
               horizontal: 32.0,
               vertical: 16.0,
             ),
-            child: const CircularProgressIndicator(size: 40.0, strokeWidth: 4.0),
+            child: const CircularProgressIndicator(size: 40.0),
           ),
           codeText: circularIndeterminateCodeExample,
           title: 'Circular indeterminate',
@@ -70,7 +72,6 @@ class _CircularProgressIndicatorPageState
                   child: CircularProgressIndicator(
                     value: circularValue,
                     size: 40.0,
-                    strokeWidth: 4.0,
                   ),
                 ),
               ],

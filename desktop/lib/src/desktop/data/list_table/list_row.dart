@@ -46,7 +46,9 @@ class ListRow extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant ListRowRender renderObject) {
+    BuildContext context,
+    covariant ListRowRender renderObject,
+  ) {
     renderObject
       ..columnWidths = colSizes
       ..itemExtent = itemExtent
@@ -74,13 +76,13 @@ class ListRowRender extends RenderBox
     ImageConfiguration configuration = ImageConfiguration.empty,
     List<RenderBox>? children,
     required double? itemExtent,
-  })  : assert(columns == null || columns >= 0),
-        _itemExtent = itemExtent,
-        _columnWidths = columnWidths,
-        _bottomBorder = bottomBorder,
-        _configuration = configuration,
-        _decoration = decoration,
-        _backgroundColor = backgroundColor {
+  }) : assert(columns == null || columns >= 0),
+       _itemExtent = itemExtent,
+       _columnWidths = columnWidths,
+       _bottomBorder = bottomBorder,
+       _configuration = configuration,
+       _decoration = decoration,
+       _backgroundColor = backgroundColor {
     addAll(children);
   }
 
@@ -182,11 +184,7 @@ class ListRowRender extends RenderBox
         height = math.max(
           height,
           child
-              .getDryLayout(
-                BoxConstraints.tightFor(
-                  width: _columnWidths[x],
-                ),
-              )
+              .getDryLayout(BoxConstraints.tightFor(width: _columnWidths[x]))
               .height,
         );
 
@@ -213,8 +211,10 @@ class ListRowRender extends RenderBox
       return;
     }
 
-    final List<double> positions =
-        List<double>.filled(_columnWidths.length, 0.0);
+    final List<double> positions = List<double>.filled(
+      _columnWidths.length,
+      0.0,
+    );
 
     positions[0] = 0.0;
     for (int x = 1; x < _columnWidths.length; x += 1) {
@@ -227,10 +227,7 @@ class ListRowRender extends RenderBox
 
     while (child != null) {
       child.layout(
-        BoxConstraints.tightFor(
-          width: _columnWidths[x],
-          height: _itemExtent,
-        ),
+        BoxConstraints.tightFor(width: _columnWidths[x], height: _itemExtent),
         parentUsesSize: true,
       );
 
@@ -238,8 +235,10 @@ class ListRowRender extends RenderBox
         height = math.max(height, child.size.height);
       }
 
-      (child.parentData! as _ListRowParentData).offset =
-          Offset(positions[x], 0.0);
+      (child.parentData! as _ListRowParentData).offset = Offset(
+        positions[x],
+        0.0,
+      );
 
       child = childAfter(child);
       x += 1;
@@ -296,7 +295,9 @@ class ListRowRender extends RenderBox
     if (backgroundColor != null) {
       final paint = Paint()..color = backgroundColor!;
       context.canvas.drawRect(
-          Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height), paint);
+        Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
+        paint,
+      );
     }
 
     if (_decoration != null) {
@@ -309,12 +310,12 @@ class ListRowRender extends RenderBox
     }
 
     RenderBox? child = firstChild;
-    
+
     while (child != null) {
       final _ListRowParentData childParentData =
           child.parentData! as _ListRowParentData;
       context.paintChild(child, childParentData.offset + offset);
-      
+
       child = childAfter(child);
     }
 
@@ -335,16 +336,10 @@ class ListRowRender extends RenderBox
       } else {
         paint.style = PaintingStyle.fill;
 
-        path.lineTo(
-          rect.left,
-          rect.bottom - bottomBorder.width,
-        );
-        path.lineTo(
-          rect.right,
-          rect.bottom - bottomBorder.width,
-        );
+        path.lineTo(rect.left, rect.bottom - bottomBorder.width);
+        path.lineTo(rect.right, rect.bottom - bottomBorder.width);
       }
-      
+
       context.canvas.drawPath(path, paint);
     }
   }

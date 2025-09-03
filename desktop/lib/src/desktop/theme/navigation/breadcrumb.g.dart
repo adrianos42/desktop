@@ -231,7 +231,7 @@ padding: The padding for the breadcrumb.
 @immutable
 class BreadcrumbTheme extends InheritedTheme {
   /// Creates a [BreadcrumbTheme].
-  const BreadcrumbTheme({super.key, required super.child, required this.data});
+  const BreadcrumbTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [BreadcrumbTheme].
   final BreadcrumbThemeData data;

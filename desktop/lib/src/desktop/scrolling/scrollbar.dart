@@ -92,13 +92,10 @@ class _ScrollbarState extends State<Scrollbar>
     final Color color = pressed
         ? theme.highlightColor!
         : hovered
-            ? theme.hoverColor!
-            : theme.color!;
+        ? theme.hoverColor!
+        : theme.color!;
 
-    _color = ColorTween(
-      begin: _color?.end ?? color,
-      end: color,
-    );
+    _color = ColorTween(begin: _color?.end ?? color, end: color);
     return _color!;
   }
 
@@ -125,72 +122,74 @@ class _ScrollbarState extends State<Scrollbar>
 
     gestures[_ThumbPressGestureRecognizer] =
         GestureRecognizerFactoryWithHandlers<_ThumbPressGestureRecognizer>(
-      () => _ThumbPressGestureRecognizer(
-        debugOwner: this,
-        customPaintKey: _customPaintKey,
-      ),
-      (_ThumbPressGestureRecognizer instance) {
-        instance.onLongPress = _handleThumbPress;
-        instance.onLongPressEnd = (LongPressEndDetails details) =>
-            _handleThumbPressEnd(details.localPosition, details.velocity);
-        instance.onLongPressMoveUpdate = (LongPressMoveUpdateDetails details) =>
-            _handleThumbPressUpdate(details.localPosition);
-        instance.onLongPressStart = (LongPressStartDetails details) =>
-            _handleThumbPressStart(details.localPosition);
-      },
-    );
+          () => _ThumbPressGestureRecognizer(
+            debugOwner: this,
+            customPaintKey: _customPaintKey,
+          ),
+          (_ThumbPressGestureRecognizer instance) {
+            instance.onLongPress = _handleThumbPress;
+            instance.onLongPressEnd = (LongPressEndDetails details) =>
+                _handleThumbPressEnd(details.localPosition, details.velocity);
+            instance.onLongPressMoveUpdate =
+                (LongPressMoveUpdateDetails details) =>
+                    _handleThumbPressUpdate(details.localPosition);
+            instance.onLongPressStart = (LongPressStartDetails details) =>
+                _handleThumbPressStart(details.localPosition);
+          },
+        );
 
     gestures[_TapGestureRecognizer] =
         GestureRecognizerFactoryWithHandlers<_TapGestureRecognizer>(
-      () => _TapGestureRecognizer(
-        debugOwner: this,
-        customPaintKey: _customPaintKey,
-      ),
-      (_TapGestureRecognizer instance) {
-        instance.onTapDown = (details) {
-          double scrollIncrement;
-          final ScrollIncrementCalculator? scrollIncrementCalculator =
-              Scrollable.of(
-                      _currentController!.position.context.notificationContext!)
-                  .widget
-                  .incrementCalculator;
-          if (scrollIncrementCalculator != null) {
-            scrollIncrement = scrollIncrementCalculator(ScrollIncrementDetails(
-              type: ScrollIncrementType.page,
-              metrics: _currentController!.position,
-            ));
-          } else {
-            scrollIncrement =
-                0.8 * _currentController!.position.viewportDimension;
-          }
+          () => _TapGestureRecognizer(
+            debugOwner: this,
+            customPaintKey: _customPaintKey,
+          ),
+          (_TapGestureRecognizer instance) {
+            instance.onTapDown = (details) {
+              double scrollIncrement;
+              final ScrollIncrementCalculator? scrollIncrementCalculator =
+                  Scrollable.of(
+                    _currentController!.position.context.notificationContext!,
+                  ).widget.incrementCalculator;
+              if (scrollIncrementCalculator != null) {
+                scrollIncrement = scrollIncrementCalculator(
+                  ScrollIncrementDetails(
+                    type: ScrollIncrementType.page,
+                    metrics: _currentController!.position,
+                  ),
+                );
+              } else {
+                scrollIncrement =
+                    0.8 * _currentController!.position.viewportDimension;
+              }
 
-          switch (_currentController!.position.axisDirection) {
-            case AxisDirection.up:
-              if (details.localPosition.dy > _painter!.thumbOffset) {
-                scrollIncrement = -scrollIncrement;
+              switch (_currentController!.position.axisDirection) {
+                case AxisDirection.up:
+                  if (details.localPosition.dy > _painter!.thumbOffset) {
+                    scrollIncrement = -scrollIncrement;
+                  }
+                  break;
+                case AxisDirection.right:
+                  if (details.localPosition.dx < _painter!.thumbOffset) {
+                    scrollIncrement = -scrollIncrement;
+                  }
+                  break;
+                case AxisDirection.down:
+                  if (details.localPosition.dy < _painter!.thumbOffset) {
+                    scrollIncrement = -scrollIncrement;
+                  }
+                  break;
+                case AxisDirection.left:
+                  if (details.localPosition.dx > _painter!.thumbOffset) {
+                    scrollIncrement = -scrollIncrement;
+                  }
+                  break;
               }
-              break;
-            case AxisDirection.right:
-              if (details.localPosition.dx < _painter!.thumbOffset) {
-                scrollIncrement = -scrollIncrement;
-              }
-              break;
-            case AxisDirection.down:
-              if (details.localPosition.dy < _painter!.thumbOffset) {
-                scrollIncrement = -scrollIncrement;
-              }
-              break;
-            case AxisDirection.left:
-              if (details.localPosition.dx > _painter!.thumbOffset) {
-                scrollIncrement = -scrollIncrement;
-              }
-              break;
-          }
 
-          _handleIncrement(scrollIncrement);
-        };
-      },
-    );
+              _handleIncrement(scrollIncrement);
+            };
+          },
+        );
 
     return gestures;
   }
@@ -266,8 +265,10 @@ class _ScrollbarState extends State<Scrollbar>
     final double scrollOffsetLocal = _painter!.getTrackToScroll(primaryDelta);
     final double scrollOffsetGlobal = scrollOffsetLocal + position.pixels;
     if (scrollOffsetGlobal != position.pixels) {
-      final double physicsAdjustment = position.physics
-          .applyBoundaryConditions(position, scrollOffsetGlobal);
+      final double physicsAdjustment = position.physics.applyBoundaryConditions(
+        position,
+        scrollOffsetGlobal,
+      );
       position.jumpTo(scrollOffsetGlobal - physicsAdjustment);
     }
   }
@@ -353,20 +354,23 @@ class _ScrollbarState extends State<Scrollbar>
     }
 
     return
-        // The scroll controller is not attached to a position.
-        !scrollController.hasClients
-            // The notification matches the scroll controller's axis.
-            ||
-            scrollController.position.axis == notificationAxis;
+    // The scroll controller is not attached to a position.
+    !scrollController.hasClients
+        // The notification matches the scroll controller's axis.
+        ||
+        scrollController.position.axis == notificationAxis;
   }
 
   bool _handleScrollMetricsNotification(
-      ScrollMetricsNotification notification) {
-    if (!widget.notificationPredicate(ScrollUpdateNotification(
-      metrics: notification.metrics,
-      context: notification.context,
-      depth: notification.depth,
-    ))) {
+    ScrollMetricsNotification notification,
+  ) {
+    if (!widget.notificationPredicate(
+      ScrollUpdateNotification(
+        metrics: notification.metrics,
+        context: notification.context,
+        depth: notification.depth,
+      ),
+    )) {
       return false;
     }
 
@@ -505,74 +509,6 @@ class _ScrollbarState extends State<Scrollbar>
     }
   }
 
-  bool _debugCheckHasValidScrollPosition() {
-    final ScrollController scrollController =
-        widget.controller ?? PrimaryScrollController.of(context);
-    final bool tryPrimary = widget.controller == null;
-    final String controllerForError =
-        tryPrimary ? 'PrimaryScrollController' : 'provided ScrollController';
-
-    String when = '';
-    if (showScrollbar) {
-      when = 'Scrollbar.isAlwaysShown is true';
-    } else {
-      when = 'the scrollbar is interactive';
-    }
-
-    assert(() {
-      if (!scrollController.hasClients) {
-        throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary(
-            "The Scrollbar's ScrollController has no ScrollPosition attached.",
-          ),
-          ErrorDescription(
-            'A Scrollbar cannot be painted without a ScrollPosition. ',
-          ),
-          ErrorHint(
-            'The Scrollbar attempted to use the $controllerForError. This '
-            'ScrollController should be associated with the ScrollView that '
-            'the Scrollbar is being applied to. '
-            '${tryPrimary ? 'A ScrollView with an Axis.vertical '
-                'ScrollDirection will automatically use the '
-                'PrimaryScrollController if the user has not provided a '
-                'ScrollController, but a ScrollDirection of Axis.horizontal will '
-                'not. To use the PrimaryScrollController explicitly, set ScrollView.primary '
-                'to true for the Scrollable widget.' : 'When providing your own ScrollController, ensure both the '
-                'Scrollbar and the Scrollable widget use the same one.'}',
-          ),
-        ]);
-      }
-      return true;
-    }());
-    assert(() {
-      try {
-        scrollController.position;
-      } catch (_) {
-        throw FlutterError.fromParts(<DiagnosticsNode>[
-          ErrorSummary(
-            'The $controllerForError is currently attached to more than one '
-            'ScrollPosition.',
-          ),
-          ErrorDescription(
-            'The Scrollbar requires a single ScrollPosition in order to be painted.',
-          ),
-          ErrorHint(
-            'When $when, the associated Scrollable '
-            'widgets must have unique ScrollControllers. '
-            '${tryPrimary ? 'The PrimaryScrollController is used by default for '
-                'ScrollViews with an Axis.vertical ScrollDirection, '
-                'unless the ScrollView has been provided its own '
-                'ScrollController. More than one Scrollable may have tried '
-                'to use the PrimaryScrollController of the current context.' : 'The provided ScrollController must be unique to a '
-                'Scrollable widget.'}',
-          ),
-        ]);
-      }
-      return true;
-    }());
-    return true;
-  }
-
   @override
   void didUpdateWidget(Scrollbar oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -630,8 +566,8 @@ class _ThumbPressGestureRecognizer extends LongPressGestureRecognizer {
   _ThumbPressGestureRecognizer({
     super.debugOwner,
     required GlobalKey customPaintKey,
-  })  : _customPaintKey = customPaintKey,
-        super(duration: Duration.zero);
+  }) : _customPaintKey = customPaintKey,
+       super(duration: Duration.zero);
 
   final GlobalKey _customPaintKey;
 
@@ -644,7 +580,10 @@ class _ThumbPressGestureRecognizer extends LongPressGestureRecognizer {
   }
 
   bool _hitTest(
-      GlobalKey customPaintKey, Offset offset, PointerDeviceKind kind) {
+    GlobalKey customPaintKey,
+    Offset offset,
+    PointerDeviceKind kind,
+  ) {
     if (customPaintKey.currentContext == null) {
       return false;
     }
@@ -661,10 +600,8 @@ class _ThumbPressGestureRecognizer extends LongPressGestureRecognizer {
 }
 
 class _TapGestureRecognizer extends TapGestureRecognizer {
-  _TapGestureRecognizer({
-    super.debugOwner,
-    required GlobalKey customPaintKey,
-  }) : _customPaintKey = customPaintKey;
+  _TapGestureRecognizer({super.debugOwner, required GlobalKey customPaintKey})
+    : _customPaintKey = customPaintKey;
 
   final GlobalKey _customPaintKey;
   GlobalKey get customPaintKey => _customPaintKey;
@@ -689,7 +626,10 @@ class _TapGestureRecognizer extends TapGestureRecognizer {
   }
 
   bool _hitTest(
-      GlobalKey customPaintKey, Offset offset, PointerDeviceKind kind) {
+    GlobalKey customPaintKey,
+    Offset offset,
+    PointerDeviceKind kind,
+  ) {
     if (customPaintKey.currentContext == null) {
       return false;
     }

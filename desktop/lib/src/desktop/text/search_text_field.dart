@@ -169,10 +169,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
     final themeData = Theme.of(context);
     final String placeholder = widget.placeholder ?? 'Search';
 
-    final TextStyle placeholderStyle = widget.placeholderStyle ??
-        themeData.textTheme.body1.copyWith(
-          color: themeData.textTheme.textLow,
-        );
+    final TextStyle placeholderStyle =
+        widget.placeholderStyle ??
+        themeData.textTheme.body1.copyWith(color: themeData.textTheme.textLow);
 
     final double scaledIconSize = widget.itemSize;
     // TODO(as): Set scale in theme data.    MediaQuery.textScaleFactorOf(context) * widget.itemSize;
@@ -190,38 +189,39 @@ class _SearchTextFieldState extends State<SearchTextField> {
     if (widget.onPrefixTap != null) {
       prefix = Padding(
         padding: widget.prefixInsets,
-        child: Button(
-          onPressed: widget.onPrefixTap!,
-          padding: EdgeInsets.zero,
-          bodyPadding: EdgeInsets.zero,
-          theme: ButtonThemeData(
+        child: ButtonTheme(
+          data: ButtonThemeData(
             iconThemeData: iconThemeData,
             color: themeData.textTheme.textLow,
           ),
-          body: widget.prefixIcon,
+          child: Button(
+            onPressed: widget.onPrefixTap!,
+            padding: EdgeInsets.zero,
+            bodyPadding: EdgeInsets.zero,
+            body: widget.prefixIcon,
+          ),
         ),
       );
     } else {
       prefix = Padding(
         padding: widget.prefixInsets,
-        child: IconTheme(
-          data: iconThemeData,
-          child: widget.prefixIcon,
-        ),
+        child: IconTheme(data: iconThemeData, child: widget.prefixIcon),
       );
     }
 
     final Widget suffix = Padding(
       padding: widget.suffixInsets,
-      child: Button(
-        onPressed: widget.onSuffixTap ?? _defaultOnSuffixTap,
-        padding: EdgeInsets.zero,
-        bodyPadding: EdgeInsets.zero,
-        theme: ButtonThemeData(
+      child: ButtonTheme(
+        data: ButtonThemeData(
           iconThemeData: iconThemeData,
           color: themeData.textTheme.textLow,
         ),
-        body: widget.suffixIcon,
+        child: Button(
+          onPressed: widget.onSuffixTap ?? _defaultOnSuffixTap,
+          padding: EdgeInsets.zero,
+          bodyPadding: EdgeInsets.zero,
+          body: widget.suffixIcon,
+        ),
       ),
     );
 
@@ -237,7 +237,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
       enabled: widget.enabled ?? true,
       placeholder: placeholder,
       placeholderStyle: placeholderStyle,
-      // TODO padding: widget.padding,
+      // TODO(as): padding: widget.padding,
       onChanged: widget.onChanged,
       onSubmitted: widget.onSubmitted,
       focusNode: widget.focusNode,

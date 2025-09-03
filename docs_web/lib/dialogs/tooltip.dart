@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class TooltipPage extends StatefulWidget {
@@ -33,7 +34,7 @@ return Button.text(
           ),
           codeText: codeExample,
           title: 'Button with tooltip',
-        )
+        ),
       ],
     );
   }

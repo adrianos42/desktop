@@ -16,7 +16,8 @@ class TestRegistry<T> extends RadioGroupRegistry<T> {
   T? groupValue;
 
   @override
-  ValueChanged<T?> get onChanged => (T? newValue) => groupValue = newValue;
+  ValueChanged<T?> get onChanged =>
+      (T? newValue) => groupValue = newValue;
 
   @override
   void registerClient(RadioClient<T> radio) => clients.add(radio);
@@ -34,16 +35,47 @@ class _ButtonRadioPageState extends State<ButtonRadioPage> {
   @override
   Widget build(BuildContext context) {
     const groupCode = '''
-return Container(
-  width: 100.0,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+ return RadioGroup<String>(
+  onChanged: (value) {
+    setState(() => _valueGroup = value);
+  },
+  groupValue: _valueGroup,
+  child: Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Radio(
-        value: true,
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<String>(
+            value: 'First',
+            enabled: !_disabled,
+            toggleable: _toggleable,
+          ),
+          const Text('First'),
+        ],
       ),
-      Radio(
-        value: false,
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<String>(
+            value: 'Second',
+            enabled: !_disabled,
+            toggleable: _toggleable,
+          ),
+          const Text('Second'),
+        ],
+      ),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<String>(
+            value: 'Third',
+            enabled: !_disabled,
+            toggleable: _toggleable,
+          ),
+          const Text('Third'),
+        ],
       ),
     ],
   ),
@@ -119,16 +151,12 @@ return Container(
             Button.icon(
               Icons.lightMode,
               active: _buttonContent,
-              onPressed: () => setState(
-                () => _buttonContent = !_buttonContent,
-              ),
+              onPressed: () => setState(() => _buttonContent = !_buttonContent),
             ),
             Button.icon(
               Icons.toggleOn,
               active: _toggleable,
-              onPressed: () => setState(
-                () => _toggleable = !_toggleable,
-              ),
+              onPressed: () => setState(() => _toggleable = !_toggleable),
             ),
             Button.icon(
               Icons.close,

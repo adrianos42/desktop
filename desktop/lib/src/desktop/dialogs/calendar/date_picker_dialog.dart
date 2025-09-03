@@ -22,15 +22,17 @@ class DatePickerDialog extends StatefulWidget {
     this.selectableDayPredicate,
     this.helpText,
     this.initialCalendarMode = DatePickerMode.day,
-  })  : initialDate = DateUtils.dateOnly(initialDate),
-        firstDate = DateUtils.dateOnly(firstDate),
-        lastDate = DateUtils.dateOnly(lastDate),
-        currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()) {
+  }) : initialDate = DateUtils.dateOnly(initialDate),
+       firstDate = DateUtils.dateOnly(firstDate),
+       lastDate = DateUtils.dateOnly(lastDate),
+       currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()) {
     assert(!this.lastDate.isBefore(this.firstDate));
     assert(!this.initialDate.isBefore(this.firstDate));
     assert(!this.initialDate.isAfter(this.lastDate));
-    assert(selectableDayPredicate == null ||
-        selectableDayPredicate!(this.initialDate));
+    assert(
+      selectableDayPredicate == null ||
+          selectableDayPredicate!(this.initialDate),
+    );
   }
 
   /// The initially selected [DateTime].
@@ -84,10 +86,7 @@ class DatePickerDialog extends StatefulWidget {
     );
 
     if (textDirection != null) {
-      dialog = Directionality(
-        textDirection: textDirection,
-        child: dialog,
-      );
+      dialog = Directionality(textDirection: textDirection, child: dialog);
     }
 
     if (locale != null) {
@@ -118,11 +117,9 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
     // TODO(as): final Orientation orientation = MediaQuery.of(context).orientation;
 
     return DialogTheme(
-      data: DialogTheme.of(context).copyWith(
-        bodyPadding: const EdgeInsets.symmetric(
-          vertical: 0,
-        ),
-      ),
+      data: DialogTheme.of(
+        context,
+      ).copyWith(bodyPadding: const EdgeInsets.symmetric(vertical: 0)),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -140,10 +137,8 @@ class _DatePickerDialogState extends State<DatePickerDialog> {
                 currentDate: widget.currentDate,
                 initialCalendarMode: widget.initialCalendarMode,
                 selectableDayPredicate: widget.selectableDayPredicate,
-                onDateSelected: (selectedDate) => Navigator.pop(
-                  context,
-                  selectedDate,
-                ),
+                onDateSelected: (selectedDate) =>
+                    Navigator.pop(context, selectedDate),
               ),
             ),
           ],

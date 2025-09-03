@@ -15,7 +15,6 @@ class HyperlinkButton extends StatelessWidget {
     required this.onPressed,
     this.padding,
     this.tooltip,
-    this.theme,
   });
 
   /// The text for the button.
@@ -27,9 +26,6 @@ class HyperlinkButton extends StatelessWidget {
   /// The button padding.
   final EdgeInsets? padding;
 
-  /// The style [HyperlinkThemeData] of the button.
-  final HyperlinkThemeData? theme;
-
   /// Called when button is pressed, with the text as an argument.
   /// This helps in the case the full url was used,
   /// and then use the url text when the hyperlink is pressed.
@@ -38,8 +34,9 @@ class HyperlinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ButtonThemeData buttonThemeData = ButtonTheme.of(context);
-    final HyperlinkThemeData hyperlinkButtonThemeData =
-        HyperlinkTheme.of(context).merge(theme);
+    final HyperlinkThemeData hyperlinkButtonThemeData = HyperlinkTheme.of(
+      context,
+    );
 
     return ButtonTheme.merge(
       data: buttonThemeData.copyWith(

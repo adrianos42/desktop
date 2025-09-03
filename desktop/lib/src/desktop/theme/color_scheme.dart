@@ -1,5 +1,5 @@
-import 'dart:ui' show Brightness;
 import 'package:flutter/widgets.dart';
+
 export 'theme_data.dart' show ThemeData, Theme;
 
 const PrimaryColor _kDefaultPrimary = _DodgerBluePrimaryColor();
@@ -16,11 +16,11 @@ class ColorScheme {
     ShadeColor? shade,
     Color? disabledColor,
     Color? errorColor,
-  })  : _primary = primary ?? _kDefaultPrimary,
-        _shade = shade ?? _kDefaultShadeColor,
-        _background = backgroundColor ?? _backgroundColor,
-        _disabled = disabledColor ?? const Color(0xff404040),
-        _error = errorColor ?? const Color(0xffd74242);
+  }) : _primary = primary ?? _kDefaultPrimary,
+       _shade = shade ?? _kDefaultShadeColor,
+       _background = backgroundColor ?? _backgroundColor,
+       _disabled = disabledColor ?? const Color(0xff404040),
+       _error = errorColor ?? const Color(0xffd74242);
 
   final ShadeColor _shade;
   final PrimaryColor _primary;
@@ -346,20 +346,8 @@ abstract class BackgroundColor {
   }
 
   @override
-  int get hashCode => Object.hash(
-        w0,
-        w4,
-        w8,
-        w12,
-        w16,
-        w20,
-        b0,
-        b4,
-        b8,
-        b12,
-        b16,
-        b20,
-      );
+  int get hashCode =>
+      Object.hash(w0, w4, w8, w12, w16, w20, b0, b4, b8, b12, b16, b20);
 
   @override
   bool operator ==(covariant BackgroundColor other) {
@@ -445,9 +433,7 @@ class _DefaultBackgroundColor extends BackgroundColor {
 @immutable
 abstract class PrimaryColor {
   /// Creates a [PrimaryColor].
-  const PrimaryColor({
-    required this.name,
-  });
+  const PrimaryColor({required this.name});
 
   /// The name of the primary color.
   final String name;

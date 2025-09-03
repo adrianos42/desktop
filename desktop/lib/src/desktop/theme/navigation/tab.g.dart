@@ -467,7 +467,7 @@ padding: The padding for the tab bar.
 @immutable
 class TabTheme extends InheritedTheme {
   /// Creates a [TabTheme].
-  const TabTheme({super.key, required super.child, required this.data});
+  const TabTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [TabTheme].
   final TabThemeData data;

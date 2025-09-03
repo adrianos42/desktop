@@ -4,12 +4,7 @@ import '../theme/theme.dart';
 import 'tab_scope.dart';
 
 class TabDialog extends StatefulWidget {
-  const TabDialog({
-    required this.child,
-    this.height,
-    this.width,
-    super.key,
-  });
+  const TabDialog({required this.child, this.height, this.width, super.key});
 
   final Widget child;
 
@@ -36,9 +31,9 @@ class _TabDialogState extends State<TabDialog> {
       width: axis == Axis.vertical
           ? widget.width
           : null, // TODO(as): Set this in theme.
-      color: Theme.of(context)
-          .colorScheme
-          .background[0], // TODO(as): Set this in theme.
+      color: Theme.of(
+        context,
+      ).colorScheme.background[0], // TODO(as): Set this in theme.
       child: widget.child,
     );
   }

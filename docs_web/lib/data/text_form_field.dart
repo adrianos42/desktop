@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class TextFormFieldPage extends StatefulWidget {
@@ -27,27 +28,20 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
         context,
         title: const Text('Login'),
         actions: [
-          Button.text(
-            'Ok',
-            onPressed: () => Navigator.of(context).pop(),
-          )
+          Button.text('Ok', onPressed: () => Navigator.of(context).pop()),
         ],
         body: Text.rich(
           TextSpan(
             text: '',
             children: [
-              TextSpan(text: '\nEmail: ', children: [
-                TextSpan(
-                  text: _email,
-                  style: textStyle,
-                )
-              ]),
-              TextSpan(text: '\nPassword: ', children: [
-                TextSpan(
-                  text: _password,
-                  style: textStyle,
-                )
-              ]),
+              TextSpan(
+                text: '\nEmail: ',
+                children: [TextSpan(text: _email, style: textStyle)],
+              ),
+              TextSpan(
+                text: '\nPassword: ',
+                children: [TextSpan(text: _password, style: textStyle)],
+              ),
             ],
           ),
         ),
@@ -115,8 +109,10 @@ class _TextFormFieldPageState extends State<TextFormFieldPage> {
                       padding: const EdgeInsets.only(top: 16.0),
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: Button.filled('Login',
-                            onPressed: () => _validate()),
+                        child: Button.filled(
+                          'Login',
+                          onPressed: () => _validate(),
+                        ),
                       ),
                     ),
                   ],

@@ -94,12 +94,12 @@ class ListTable extends StatefulWidget {
     required this.header,
     required this.rows,
     this.margin,
-  })  : assert(colCount > 0),
-        assert(
-          !allowColumnDragging ||
-              columnIndexMapping == null ||
-              columnIndexMapping.length == colCount,
-        );
+  }) : assert(colCount > 0),
+       assert(
+         !allowColumnDragging ||
+             columnIndexMapping == null ||
+             columnIndexMapping.length == colCount,
+       );
 
   /// Header item.
   final ListTableHeader header;
@@ -165,10 +165,8 @@ class _ListTableState extends State<ListTable> {
 
   int get colCount => colSizes.length;
 
-  BorderSide get _defaultHeaderBorder => BorderSide(
-        color: ListTableTheme.of(context).borderColor!,
-        width: 1.0,
-      );
+  BorderSide get _defaultHeaderBorder =>
+      BorderSide(color: ListTableTheme.of(context).borderColor!, width: 1.0);
 
   ScrollController? currentController;
   ScrollController get controller =>
@@ -176,24 +174,29 @@ class _ListTableState extends State<ListTable> {
 
   Widget createHeaderFeedback(int col, double colWidth) {
     return FeedbackColumn(
-      backgroundColor:
-          Theme.of(context).colorScheme.background[0].withValues(alpha: 0.85),
+      backgroundColor: Theme.of(
+        context,
+      ).colorScheme.background[0].withValues(alpha: 0.85),
       col: col,
       itemSize: Size(colWidth, totalHeight!),
       header: FeedbackHeaderItem(
-        builder: widget.header.builder ??
+        builder:
+            widget.header.builder ??
             (context, index) => widget.header.children![index],
         columnBorder: widget.tableBorder?.top ?? BorderSide.none,
         itemExtent: widget.header.itemExtent ?? _kHeaderHeight,
         decoration: widget.header.decoration,
       ),
       rows: widget.rows
-          .map((rowItem) => FeedbackRowItem(
-                builder: rowItem.builder ??
-                    (context, index) => rowItem.children![index],
-                // Ignores the [ListTable.itemExtent] null value for now.
-                itemExtent: rowItem.itemExtent ?? _kHeaderHeight,
-              ))
+          .map(
+            (rowItem) => FeedbackRowItem(
+              builder:
+                  rowItem.builder ??
+                  (context, index) => rowItem.children![index],
+              // Ignores the [ListTable.itemExtent] null value for now.
+              itemExtent: rowItem.itemExtent ?? _kHeaderHeight,
+            ),
+          )
           .toList(),
       tableBorder: widget.tableBorder ?? const TableBorder(),
     );
@@ -222,10 +225,7 @@ class _ListTableState extends State<ListTable> {
         final int mappedIndex = colIndexes?[col] ?? col;
 
         final Widget result = widget.header.builder != null
-            ? widget.header.builder!(
-                context,
-                mappedIndex,
-              )
+            ? widget.header.builder!(context, mappedIndex)
             : widget.header.children![mappedIndex];
 
         if (!widget.allowColumnDragging || widget.colCount <= 1) {
@@ -234,8 +234,9 @@ class _ListTableState extends State<ListTable> {
 
         return MouseRegion(
           hitTestBehavior: HitTestBehavior.deferToChild,
-          cursor:
-              isDraggingColumn ? MouseCursor.defer : SystemMouseCursors.click,
+          cursor: isDraggingColumn
+              ? MouseCursor.defer
+              : SystemMouseCursors.click,
           child: LongPressDraggable<int>(
             data: col,
             childWhenDragging: const SizedBox(),
@@ -246,7 +247,7 @@ class _ListTableState extends State<ListTable> {
                 draggingColumnTargetItemIndex = -1;
               });
             },
-            onDraggableCanceled: (_, __) {
+            onDraggableCanceled: (_, _) {
               setState(() => draggingColumnIndex = -1);
             },
             onDragEnd: (details) {
@@ -284,12 +285,13 @@ class _ListTableState extends State<ListTable> {
 
     final Color? backgroundColor =
         pressedIndex == index || waitingIndex == index
-            ? listTableThemeData.highlightColor
-            : hoveredIndex == index
-                ? listTableThemeData.hoverColor
-                : null;
+        ? listTableThemeData.highlightColor
+        : hoveredIndex == index
+        ? listTableThemeData.hoverColor
+        : null;
 
-    final BorderSide bottomBorder = widget.tableBorder != null &&
+    final BorderSide bottomBorder =
+        widget.tableBorder != null &&
             (widget.tableBorder!.horizontalInside != BorderSide.none) &&
             (index < widget.rows.length - 1)
         ? widget.tableBorder!.horizontalInside
@@ -382,10 +384,7 @@ class _ListTableState extends State<ListTable> {
             assert(col < colSizes.length);
 
             return tableRow.builder != null
-                ? tableRow.builder!(
-                    context,
-                    mappedIndex,
-                  )
+                ? tableRow.builder!(context, mappedIndex)
                 : tableRow.children![mappedIndex];
           }).toList(),
         ),
@@ -409,7 +408,9 @@ class _ListTableState extends State<ListTable> {
           draggingColumnTargetIndex = index;
         });
       },
-      onAccept: (columnIndex) {
+      onAcceptWithDetails: (details) {
+        final columnIndex = details.data;
+        
         colIndexes ??= List.generate(widget.colCount, (x) => x);
 
         final int mappedIndex = colIndexes![columnIndex];
@@ -461,8 +462,9 @@ class _ListTableState extends State<ListTable> {
     if (nfactors < colCount) {
       int remNFactors = colCount - nfactors;
       // The width for each remaining item.
-      final double nonFactorWidth =
-          remWidth > 0.0 ? remWidth / remNFactors : 0.0;
+      final double nonFactorWidth = remWidth > 0.0
+          ? remWidth / remNFactors
+          : 0.0;
 
       for (var i = 0; i < colCount; i++) {
         if (!colFraction!.containsKey(i)) {
@@ -480,8 +482,11 @@ class _ListTableState extends State<ListTable> {
             break;
           }
 
-          final double fraction =
-              clampDouble(nonFactorWidth / totalWidth!, 0.0, 1.0);
+          final double fraction = clampDouble(
+            nonFactorWidth / totalWidth!,
+            0.0,
+            1.0,
+          );
           colFraction![i] = fraction;
           remWidth -= totalWidth! * fraction;
         }
@@ -525,7 +530,8 @@ class _ListTableState extends State<ListTable> {
 
           if (remWidth < 0.0) {
             throw Exception(
-                'Wrong fraction value at index $i, value ${colFraction![mappedIndex]} with $remWidth width.');
+              'Wrong fraction value at index $i, value ${colFraction![mappedIndex]} with $remWidth width.',
+            );
           }
         } else {
           break;
@@ -556,8 +562,11 @@ class _ListTableState extends State<ListTable> {
       final int mappedIndex = colIndexes?[col] ?? col;
 
       if (delta < 0) {
-        delta =
-            clampDouble(delta, -previousColSizes![col] + _kMinColumnWidth, 0.0);
+        delta = clampDouble(
+          delta,
+          -previousColSizes![col] + _kMinColumnWidth,
+          0.0,
+        );
       } else {
         delta = clampDouble(delta, 0.0, delta);
       }
@@ -679,9 +688,9 @@ class _ListTableState extends State<ListTable> {
                     ),
                     Expanded(
                       child: ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(context).copyWith(
-                          scrollbars: showScrollbar,
-                        ),
+                        behavior: ScrollConfiguration.of(
+                          context,
+                        ).copyWith(scrollbars: showScrollbar),
                         child: ListView.custom(
                           padding: EdgeInsets.only(
                             right: margin.right,
@@ -746,11 +755,10 @@ class _ListTableState extends State<ListTable> {
                 createHeader(),
                 ...List.generate(
                   widget.rows.length,
-                  (index) => Builder(
-                    builder: (context) => createListItem(index),
-                  ),
+                  (index) =>
+                      Builder(builder: (context) => createListItem(index)),
                 ),
-                ...targetChildren
+                ...targetChildren,
               ],
             ),
           );
@@ -794,19 +802,19 @@ class _ListTableBorder extends MultiChildRenderObjectWidget {
 
   @override
   ListTableRender createRenderObject(BuildContext context) => ListTableRender(
-        tableBorder: tableBorder,
-        headerColumnBorder: headerColumnBorder,
-        columnWidths: columnWidths,
-        headerExtent: headerExtent,
-        dragCancel: dragCancel,
-        dragEnd: dragEnd,
-        dragStart: dragStart,
-        dragUpdate: dragUpdate,
-        highlightColor: highlightColor,
-        hoverColor: hoverColor,
-        draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
-        isDraggingColumn: isDraggingColumn,
-      );
+    tableBorder: tableBorder,
+    headerColumnBorder: headerColumnBorder,
+    columnWidths: columnWidths,
+    headerExtent: headerExtent,
+    dragCancel: dragCancel,
+    dragEnd: dragEnd,
+    dragStart: dragStart,
+    dragUpdate: dragUpdate,
+    highlightColor: highlightColor,
+    hoverColor: hoverColor,
+    draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+    isDraggingColumn: isDraggingColumn,
+  );
 
   @override
   void updateRenderObject(BuildContext context, ListTableRender renderObject) {
@@ -839,8 +847,10 @@ class _ListTableRows extends MultiChildRenderObjectWidget {
     required this.isDraggingColumn,
     required this.rowCount,
     required this.targetCount,
-  }) : assert(children.length == rowCount + targetCount,
-            'Invalid number of children');
+  }) : assert(
+         children.length == rowCount + targetCount,
+         'Invalid number of children',
+       );
 
   final TableBorder tableBorder;
   final BorderSide headerColumnBorder;
@@ -859,21 +869,21 @@ class _ListTableRows extends MultiChildRenderObjectWidget {
 
   @override
   ListTableRender createRenderObject(BuildContext context) => ListTableRender(
-        tableBorder: tableBorder,
-        headerColumnBorder: headerColumnBorder,
-        columnWidths: columnWidths,
-        headerExtent: headerExtent,
-        dragCancel: dragCancel,
-        dragEnd: dragEnd,
-        dragStart: dragStart,
-        dragUpdate: dragUpdate,
-        highlightColor: highlightColor,
-        hoverColor: hoverColor,
-        draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
-        isDraggingColumn: isDraggingColumn,
-        rowCount: rowCount,
-        targetCount: targetCount,
-      );
+    tableBorder: tableBorder,
+    headerColumnBorder: headerColumnBorder,
+    columnWidths: columnWidths,
+    headerExtent: headerExtent,
+    dragCancel: dragCancel,
+    dragEnd: dragEnd,
+    dragStart: dragStart,
+    dragUpdate: dragUpdate,
+    highlightColor: highlightColor,
+    hoverColor: hoverColor,
+    draggingColumnTargetItemIndex: draggingColumnTargetItemIndex,
+    isDraggingColumn: isDraggingColumn,
+    rowCount: rowCount,
+    targetCount: targetCount,
+  );
 
   @override
   void updateRenderObject(BuildContext context, ListTableRender renderObject) {

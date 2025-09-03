@@ -425,18 +425,19 @@ ${fields.fold('', (p, e) => '$p${e.name3}:${e.getter2!.documentationComment!.rep
                         ..toSuper = true
                         ..named = true,
                     ),
-                    Parameter(
-                      (b) => b
-                        ..name = 'child'
-                        ..required = true
-                        ..toSuper = true
-                        ..named = true,
-                    ),
+
                     Parameter(
                       (b) => b
                         ..name = 'data'
                         ..toThis = true
                         ..required = true
+                        ..named = true,
+                    ),
+                    Parameter(
+                      (b) => b
+                        ..name = 'child'
+                        ..required = true
+                        ..toSuper = true
                         ..named = true,
                     ),
                   ])

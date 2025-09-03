@@ -40,11 +40,8 @@ class _ButtonThemeData {
   /// ```dart
   /// IconThemeData(size: kDefaultIconSize, color: color)
   /// ```
-  IconThemeData get iconThemeData => IconThemeData(
-        size: defaultIconSize,
-        color: color,
-        fill: 1.0,
-      );
+  IconThemeData get iconThemeData =>
+      IconThemeData(size: defaultIconSize, color: color, fill: 1.0);
 
   /// Spacing used in body and button paddings.
   ///
@@ -90,9 +87,9 @@ class _ButtonThemeData {
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => _textTheme.body2.copyWith(
-        fontSize: defaultFontSize,
-        overflow: TextOverflow.ellipsis,
-      );
+    fontSize: defaultFontSize,
+    overflow: TextOverflow.ellipsis,
+  );
 
   /// The color when the button is disabled.
   ///

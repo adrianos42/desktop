@@ -107,7 +107,9 @@ class FeedbackColumn extends StatelessWidget {
                 ? [
                     header.itemExtent,
                     ...List.generate(
-                        rowItems.length, (index) => rows[index].itemExtent)
+                      rowItems.length,
+                      (index) => rows[index].itemExtent,
+                    ),
                   ]
                 : null,
             tableBorder: tableBorder,
@@ -115,7 +117,7 @@ class FeedbackColumn extends StatelessWidget {
             headerBorder: header.columnBorder,
             headerDecoration: header.decoration,
             children: [header.builder(context, col), ...rowItems],
-          )
+          ),
         ],
       ),
     );
@@ -157,7 +159,9 @@ class _FeedbackColumnItems extends MultiChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _FeedbackColumnRender renderObject) {
+    BuildContext context,
+    covariant _FeedbackColumnRender renderObject,
+  ) {
     renderObject
       ..headerBorder = headerBorder
       ..headerDecoration = headerDecoration
@@ -184,12 +188,12 @@ class _FeedbackColumnRender extends RenderBox
     Decoration? headerDecoration,
     ImageConfiguration configuration = ImageConfiguration.empty,
     List<RenderBox>? children,
-  })  : _configuration = configuration,
-        _backgroundColor = backgroundColor,
-        _headerBorder = headerBorder,
-        _tableBorder = tableBorder,
-        _headerDecoration = headerDecoration,
-        _heights = heights {
+  }) : _configuration = configuration,
+       _backgroundColor = backgroundColor,
+       _headerBorder = headerBorder,
+       _tableBorder = tableBorder,
+       _headerDecoration = headerDecoration,
+       _heights = heights {
     addAll(children);
   }
 
@@ -277,11 +281,7 @@ class _FeedbackColumnRender extends RenderBox
 
       while (child != null) {
         height += child
-            .getDryLayout(
-              BoxConstraints.tightFor(
-                width: constraints.maxWidth,
-              ),
-            )
+            .getDryLayout(BoxConstraints.tightFor(width: constraints.maxWidth))
             .height;
 
         child = childAfter(child);
@@ -320,10 +320,7 @@ class _FeedbackColumnRender extends RenderBox
       y += 1;
     }
 
-    size = constraints.constrain(Size(
-      constraints.maxWidth,
-      height,
-    ));
+    size = constraints.constrain(Size(constraints.maxWidth, height));
   }
 
   void _paintInsideBorders(Canvas canvas, Offset offset) {
@@ -337,8 +334,9 @@ class _FeedbackColumnRender extends RenderBox
       final double y =
           (child.parentData! as _FeedbackColumnParentData).offset.dy;
 
-      final BorderSide borderSide =
-          i == 0 ? _headerBorder : _tableBorder.horizontalInside;
+      final BorderSide borderSide = i == 0
+          ? _headerBorder
+          : _tableBorder.horizontalInside;
 
       if (borderSide.style != BorderStyle.solid) {
         continue;
@@ -351,28 +349,16 @@ class _FeedbackColumnRender extends RenderBox
 
       path.reset();
 
-      path.moveTo(
-        offset.dx,
-        offset.dy + y,
-      );
-      path.lineTo(
-        offset.dx + size.width,
-        offset.dy + y,
-      );
+      path.moveTo(offset.dx, offset.dy + y);
+      path.lineTo(offset.dx + size.width, offset.dy + y);
 
       if (borderSide.width == 0.0) {
         paint.style = PaintingStyle.stroke;
       } else {
         paint.style = PaintingStyle.fill;
 
-        path.lineTo(
-          offset.dx + size.width,
-          offset.dy + y - lineWidth,
-        );
-        path.lineTo(
-          offset.dx,
-          offset.dy + y - lineWidth,
-        );
+        path.lineTo(offset.dx + size.width, offset.dy + y - lineWidth);
+        path.lineTo(offset.dx, offset.dy + y - lineWidth);
       }
 
       canvas.drawPath(path, paint);

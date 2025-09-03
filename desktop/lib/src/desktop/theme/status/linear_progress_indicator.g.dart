@@ -122,31 +122,31 @@ class LinearProgressIndicatorThemeData {
 height: The height of the linear progress indicator.
 
  Defaults to:
- 
+
  ```dart
  2.0
  ```;;color: The color of the linear progress indicator.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.primary[50]
  ```;;backgroundColor: The background color of the linear progress indicator.
 
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;indeterminateDuration: The indeterminate animation duration.
 
  Defaults to:
- 
+
  ```dart
  Duration(milliseconds: 4000)
  ```;;padding: The vertical padding.
 
  Defaults to:
- 
+
  ```dart
  EdgeInsets.symmetric(vertical: 2.0)
  ```;;
@@ -170,8 +170,8 @@ class LinearProgressIndicatorTheme extends InheritedTheme {
   /// Creates a [LinearProgressIndicatorTheme].
   const LinearProgressIndicatorTheme({
     super.key,
-    required super.child,
     required this.data,
+    required super.child,
   });
 
   /// The data representing this [LinearProgressIndicatorTheme].

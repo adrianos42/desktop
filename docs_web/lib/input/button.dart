@@ -69,9 +69,7 @@ return Button.text(
             Button.icon(
               Icons.lightMode,
               active: _contentFilled,
-              onPressed: () => setState(
-                () => _contentFilled = !_contentFilled,
-              ),
+              onPressed: () => setState(() => _contentFilled = !_contentFilled),
             ),
             Button.icon(
               Icons.close,
@@ -131,14 +129,17 @@ return Button.text(
           title: 'Custom',
           body: (context) => Align(
             alignment: Alignment.center,
-            child: Button(
-              body: const Text('Custom Button'),
-              // Uses a recommended color for the button.
-              theme: ButtonThemeData(
+            child: ButtonTheme(
+              data: ButtonThemeData(
                 color: customColor,
                 highlightColor: Theme.of(context).textTheme.textLow,
               ),
-              onPressed: () {},
+              child: Button(
+                body: const Text('Custom Button'),
+
+                // Uses a recommended color for the button.
+                onPressed: () {},
+              ),
             ),
           ),
           codeText: customCode,

@@ -186,7 +186,7 @@ iconThemeData:;;itemHeight:;;textStyle:;;selectedColor:;;selectedHighlightColor:
 @immutable
 class ListTableTheme extends InheritedTheme {
   /// Creates a [ListTableTheme].
-  const ListTableTheme({super.key, required super.child, required this.data});
+  const ListTableTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [ListTableTheme].
   final ListTableThemeData data;

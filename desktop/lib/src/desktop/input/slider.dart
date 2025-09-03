@@ -26,7 +26,6 @@ class Slider extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableTooltip = false,
-    this.theme,
   }) : assert(value >= min && value <= max);
 
   final double value;
@@ -46,9 +45,6 @@ class Slider extends StatefulWidget {
   final bool autofocus;
 
   final bool enableTooltip;
-
-  /// The style [SliderThemeData] of the slider.
-  final SliderThemeData? theme;
 
   @override
   State<Slider> createState() => _SliderState();
@@ -153,7 +149,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final active = widget.onChanged != null;
-    final theme = SliderTheme.of(context).merge(widget.theme);
+    final theme = SliderTheme.of(context);
 
     final Color activeColor = theme.activeColor!;
     final hoverColor = theme.activeHoverColor!;
@@ -185,22 +181,16 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
               if (active) {
                 _handleDragChanged(true);
                 widget.onChangeStart?.call(
-                  lerpDouble(
-                    widget.min,
-                    widget.max,
-                    value,
-                  )!,
+                  lerpDouble(widget.min, widget.max, value)!,
                 );
               }
             },
             onChangeEnd: (value) {
               if (active) {
                 _handleDragChanged(false);
-                widget.onChangeEnd?.call(lerpDouble(
-                  widget.min,
-                  widget.max,
-                  value,
-                )!);
+                widget.onChangeEnd?.call(
+                  lerpDouble(widget.min, widget.max, value)!,
+                );
               }
             },
           );
@@ -209,11 +199,13 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     );
 
     if (widget.enableTooltip) {
-      return Tooltip(
-        message: (widget.value * 100).round().toString(),
-        theme: const TooltipThemeData(height: 14.0),
-        preferBelow: false,
-        child: result,
+      return TooltipTheme(
+        data: const TooltipThemeData(height: 14.0),
+        child: Tooltip(
+          message: (widget.value * 100).round().toString(),
+          preferBelow: false,
+          child: result,
+        ),
       );
     } else {
       return result;
@@ -297,20 +289,23 @@ class _RenderSlider extends RenderConstrainedBox {
     required Color trackColor,
     required Color hightlightColor,
     required TextDirection textDirection,
-  })  : assert(value >= 0.0 && value <= 1.0),
-        _disabledColor = disabledColor,
-        _hoverColor = hoverColor,
-        _hovering = hovering,
-        _state = state,
-        _value = value,
-        _activeColor = activeColor,
-        _trackColor = trackColor,
-        _onChanged = onChanged,
-        _textDirection = textDirection,
-        _hightlightColor = hightlightColor,
-        super(
-            additionalConstraints: const BoxConstraints.tightFor(
-                width: _kSliderWidth, height: _kSliderHeight)) {
+  }) : assert(value >= 0.0 && value <= 1.0),
+       _disabledColor = disabledColor,
+       _hoverColor = hoverColor,
+       _hovering = hovering,
+       _state = state,
+       _value = value,
+       _activeColor = activeColor,
+       _trackColor = trackColor,
+       _onChanged = onChanged,
+       _textDirection = textDirection,
+       _hightlightColor = hightlightColor,
+       super(
+         additionalConstraints: const BoxConstraints.tightFor(
+           width: _kSliderWidth,
+           height: _kSliderHeight,
+         ),
+       ) {
     state._drag.onStart = _handleDragStart;
     state._drag.onUpdate = _handleDragUpdate;
     state._drag.onCancel = _endInteraction;
@@ -435,8 +430,11 @@ class _RenderSlider extends RenderConstrainedBox {
   }
 
   double get _discretizedCurrentDragValue {
-    final double dragValue =
-        clampDouble(_currentDragValue ?? _currentStartDragValue, 0.0, 1.0);
+    final double dragValue = clampDouble(
+      _currentDragValue ?? _currentStartDragValue,
+      0.0,
+      1.0,
+    );
     return dragValue;
   }
 
@@ -456,8 +454,11 @@ class _RenderSlider extends RenderConstrainedBox {
         break;
     }
 
-    return lerpDouble(_trackLeft + _kThumbRadius, _trackRight - _kThumbRadius,
-        visualPosition)!;
+    return lerpDouble(
+      _trackLeft + _kThumbRadius,
+      _trackRight - _kThumbRadius,
+      visualPosition,
+    )!;
   }
 
   void _handleDragStart(DragStartDetails details) {
@@ -497,7 +498,7 @@ class _RenderSlider extends RenderConstrainedBox {
   double _getValueFromGlobalPosition(Offset globalPosition) {
     final double visualPosition =
         (globalToLocal(globalPosition).dx - (_trackLeft + _kThumbRadius)) /
-            _trackExtent;
+        _trackExtent;
     return _getValueFromVisualPosition(visualPosition);
   }
 
@@ -633,13 +634,17 @@ class _RenderSlider extends RenderConstrainedBox {
     if (visualPosition > 0.0) {
       final Paint paint = leftPaintColor;
       canvas.drawRect(
-          Rect.fromLTRB(trackLeft, trackTop, trackActive, trackBottom), paint);
+        Rect.fromLTRB(trackLeft, trackTop, trackActive, trackBottom),
+        paint,
+      );
     }
 
     if (visualPosition < 1.0) {
       final Paint paint = rightPaintColor;
       canvas.drawRect(
-          Rect.fromLTRB(trackActive, trackTop, trackRight, trackBottom), paint);
+        Rect.fromLTRB(trackActive, trackTop, trackRight, trackBottom),
+        paint,
+      );
     }
 
     final Paint tPaint = _thumbPaintColor;

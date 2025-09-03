@@ -227,9 +227,9 @@ height: The height of the menu bar's [child].
  ```dart
  colorScheme.background[0]
  ```;;textStyle: The [TextStyle] for the menu bar text.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.caption
  ```;;padding: The amount of space by which to inset the menu bar's [child].
@@ -287,8 +287,8 @@ class FloatingMenuBarTheme extends InheritedTheme {
   /// Creates a [FloatingMenuBarTheme].
   const FloatingMenuBarTheme({
     super.key,
-    required super.child,
     required this.data,
+    required super.child,
   });
 
   /// The data representing this [FloatingMenuBarTheme].

@@ -273,7 +273,7 @@ menuPadding: The [EdgeInsets] padding of the menu.
 @immutable
 class DialogTheme extends InheritedTheme {
   /// Creates a [DialogTheme].
-  const DialogTheme({super.key, required super.child, required this.data});
+  const DialogTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [DialogTheme].
   final DialogThemeData data;

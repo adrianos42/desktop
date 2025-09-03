@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -74,19 +76,8 @@ class _NavGroupVerticalState extends State<NavGroupVertical>
       titleItems.add(
         _NavButtonItem(
           onLayout: onLayout,
-          child: Button(
-            filled: false,
-            leading: widget.navItems[index].iconBuilder!(context),
-            padding: buttonBodyPadding,
-            bodyPadding: EdgeInsets.only(left: navThemeData.itemSpacing!),
-            body: !widget.compact
-                ? widget.navItems[index].titleBuilder != null
-                      ? widget.navItems[index].titleBuilder!(context)
-                      : Text(widget.navItems[index].title)
-                : null,
-            leadingPadding: EdgeInsets.zero,
-            onPressed: enabled ? () => widget.onChanged(index) : null,
-            theme: ButtonThemeData(
+          child: ButtonTheme(
+            data: ButtonThemeData(
               color: active ? highlightColor : color,
               highlightColor: highlightColor,
               hoverColor: active ? highlightColor : hoverColor,
@@ -96,8 +87,22 @@ class _NavGroupVerticalState extends State<NavGroupVertical>
               minWidth: buttonWidth,
               axis: Axis.horizontal,
             ),
-            mainAxisAlignment: MainAxisAlignment.start,
-            tooltip: widget.compact ? widget.navItems[index].title : null,
+            child: Button(
+              filled: false,
+              leading: widget.navItems[index].iconBuilder!(context),
+              padding: buttonBodyPadding,
+              bodyPadding: EdgeInsets.only(left: navThemeData.itemSpacing!),
+              body: !widget.compact
+                  ? widget.navItems[index].titleBuilder != null
+                        ? widget.navItems[index].titleBuilder!(context)
+                        : Text(widget.navItems[index].title)
+                  : null,
+              leadingPadding: EdgeInsets.zero,
+              onPressed: enabled ? () => widget.onChanged(index) : null,
+
+              mainAxisAlignment: MainAxisAlignment.start,
+              tooltip: widget.compact ? widget.navItems[index].title : null,
+            ),
           ),
         ),
       );
@@ -212,12 +217,8 @@ class _NavGroupHorizontalState extends State<NavGroupHorizontal>
           child: Container(
             constraints: constraints,
             alignment: Alignment.center,
-            child: Button(
-              body: widget.navWidgets(context, index),
-              padding: EdgeInsets.zero,
-              bodyPadding: buttonBodyPadding,
-              onPressed: enabled ? () => widget.onChanged(index) : null,
-              theme: ButtonThemeData(
+            child: ButtonTheme(
+              data: ButtonThemeData(
                 color: active ? highlightColor : color,
                 highlightColor: highlightColor,
                 hoverColor: active ? highlightColor : hoverColor,
@@ -225,6 +226,12 @@ class _NavGroupHorizontalState extends State<NavGroupHorizontal>
                 iconThemeData: iconThemeData,
                 height: buttonHeight,
                 axis: Axis.horizontal,
+              ),
+              child: Button(
+                body: widget.navWidgets(context, index),
+                padding: EdgeInsets.zero,
+                bodyPadding: buttonBodyPadding,
+                onPressed: enabled ? () => widget.onChanged(index) : null,
               ),
             ),
           ),
@@ -583,25 +590,8 @@ class NavMenuButton extends StatelessWidget {
         ),
       );
     } else {
-      return Button(
-        onPressed: enabled ? onPressed : null,
-        filled: false,
-        leading: child,
-        padding: buttonBodyPadding,
-        bodyPadding: EdgeInsets.only(left: navThemeData.itemSpacing!),
-        body: !compact
-            ? titleBuilder != null
-                  ? titleBuilder!(context)
-                  : title != null
-                  ? Text(title!)
-                  : null
-            : null,
-        tooltip: compact ? title : null,
-        leadingPadding: EdgeInsets.zero,
-        mainAxisAlignment: Axis.vertical == axis
-            ? MainAxisAlignment.start
-            : MainAxisAlignment.center,
-        theme: ButtonThemeData(
+      return ButtonTheme(
+        data: ButtonThemeData(
           color: active ? highlightColor : color,
           highlightColor: highlightColor,
           hoverColor: active ? highlightColor : hoverColor,
@@ -610,6 +600,25 @@ class NavMenuButton extends StatelessWidget {
           height: buttonHeight,
           minWidth: buttonWidth,
           axis: flipAxis(axis),
+        ),
+        child: Button(
+          onPressed: enabled ? onPressed : null,
+          filled: false,
+          leading: child,
+          padding: buttonBodyPadding,
+          bodyPadding: EdgeInsets.only(left: navThemeData.itemSpacing!),
+          body: !compact
+              ? titleBuilder != null
+                    ? titleBuilder!(context)
+                    : title != null
+                    ? Text(title!)
+                    : null
+              : null,
+          tooltip: compact ? title : null,
+          leadingPadding: EdgeInsets.zero,
+          mainAxisAlignment: Axis.vertical == axis
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
         ),
       );
     }
@@ -620,10 +629,12 @@ mixin NavMenuMixin {
   int menuIndex = -1;
   bool menuShown = false;
   OverlayEntry? menuOverlay;
+  OverlayEntry? barrierOverlay;
 
   Animation<double>? menuAnimation;
   AnimationController? menuController;
   late Tween<Offset> menuOffsetTween;
+  late Tween<ImageFilter> filterTween;
   final ColorTween menuColorTween = ColorTween();
 
   void hideMenu() {
@@ -633,10 +644,21 @@ mixin NavMenuMixin {
     }
   }
 
+  void handleMenuAnimationStatusChanged(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed) {
+      menuOverlay?.remove();
+      menuOverlay = null;
+      barrierOverlay?.remove();
+      barrierOverlay = null;
+      menuIndex = -1;
+    }
+  }
+
   Duration get menuTransitionDuration;
   Curve get menuTransitionCurve;
   Color get navBarBackgroundColor;
   Color get barrierColor;
+  ImageFilter get filter;
   OverlayState get overlay;
 
   void showMenu(
@@ -660,7 +682,7 @@ mixin NavMenuMixin {
       menuIndex = index;
 
       menuColorTween.begin = barrierColor.withValues(alpha: 0.0);
-      menuColorTween.end = barrierColor.withValues(alpha: 0.8);
+      menuColorTween.end = barrierColor.withValues(alpha: 0.6);
 
       final (Alignment alignment, Offset begin, Offset end) = switch (axis) {
         AxisDirection.left => (
@@ -687,6 +709,39 @@ mixin NavMenuMixin {
 
       menuOffsetTween = Tween<Offset>(begin: begin, end: end);
 
+      barrierOverlay = OverlayEntry(
+        maintainState: false,
+        builder: (context) => AnimatedBuilder(
+          animation: menuAnimation!,
+          builder: (context, _) {
+            Widget barrier = GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: hideMenu,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints.expand(),
+                child: ColoredBox(
+                  // color: Colors.red,
+                  color: menuColorTween.evaluate(menuAnimation!)!,
+                  //child: Container(width: 800, height: 800,),
+                ),
+              ),
+            );
+
+            if (menuAnimation!.isForwardOrCompleted) {
+              barrier = BackdropFilter(filter: filter, child: barrier);
+            }
+
+            barrier = IgnorePointer(
+              ignoring: !menuAnimation!.isForwardOrCompleted,
+              // ignoring: false,
+              child: barrier,
+            );
+
+            return barrier;
+          },
+        ),
+      );
+
       menuOverlay = OverlayEntry(
         maintainState: false,
         builder: (context) => AnimatedBuilder(
@@ -697,33 +752,28 @@ mixin NavMenuMixin {
                 ? Axis.horizontal
                 : Axis.vertical;
 
-            return GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: hideMenu,
-              child: Container(
-                alignment: alignment,
-                color: menuColorTween.evaluate(menuAnimation!),
-                child: MouseRegion(
-                  onExit: isInfoMenu ? (event) => hideMenu() : null,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.deferToChild,
-                    onTap: () {},
-                    child: ClipRect(
-                      child: FractionalTranslation(
-                        translation: menuOffsetTween.evaluate(menuAnimation!),
-                        child: Container(
-                          width: direction == Axis.vertical
-                              ? null
-                              : double.infinity,
-                          height: direction == Axis.horizontal
-                              ? null
-                              : double.infinity,
-                          color: navBarBackgroundColor,
-                          child: AnimatedSize(
-                            duration: menuTransitionDuration,
-                            curve: menuTransitionCurve,
-                            child: builders[menuIndex](context),
-                          ),
+            return Align(
+              alignment: alignment,
+              child: MouseRegion(
+                onExit: isInfoMenu ? (event) => hideMenu() : null,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.deferToChild,
+                  onTap: () {},
+                  child: ClipRect(
+                    child: FractionalTranslation(
+                      translation: menuOffsetTween.evaluate(menuAnimation!),
+                      child: Container(
+                        width: direction == Axis.vertical
+                            ? null
+                            : double.infinity,
+                        height: direction == Axis.horizontal
+                            ? null
+                            : double.infinity,
+                        color: navBarBackgroundColor,
+                        child: AnimatedSize(
+                          duration: menuTransitionDuration,
+                          curve: menuTransitionCurve,
+                          child: builders[menuIndex](context),
                         ),
                       ),
                     ),
@@ -736,6 +786,7 @@ mixin NavMenuMixin {
       );
 
       menuController!.forward(from: 0.0);
+      overlay.insert(barrierOverlay!);
       overlay.insert(menuOverlay!);
       menuShown = true;
     } else if (menuIndex == index) {

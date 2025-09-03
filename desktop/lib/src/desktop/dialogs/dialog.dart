@@ -22,14 +22,13 @@ class DialogRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
     this.themes,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
-        super(
-          filter: filter ?? DialogTheme.of(context).imageFilter!,
-        );
+  }) : _pageBuilder = pageBuilder,
+       _barrierDismissible = barrierDismissible,
+       _barrierLabel =
+           barrierLabel ??
+           DesktopLocalizations.of(context).modalBarrierDismissLabel,
+       _barrierColor = barrierColor ?? DialogTheme.of(context).barrierColor!,
+       super(filter: filter ?? DialogTheme.of(context).imageFilter!);
 
   final RoutePageBuilder _pageBuilder;
 
@@ -52,13 +51,16 @@ class DialogRoute<T> extends PopupRoute<T> {
 
   @override
   Duration get transitionDuration => _kDuration;
-  
+
   @override
   Duration get reverseTransitionDuration => _kReverseDuration;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     final Widget pageChild = Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -70,8 +72,12 @@ class DialogRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return FadeTransition(
       opacity: CurvedAnimation(
         parent: animation,
@@ -90,7 +96,6 @@ class Dialog extends StatelessWidget {
     this.title,
     this.actions,
     this.allowScroll = true,
-    this.theme,
     required this.body,
   });
 
@@ -105,9 +110,6 @@ class Dialog extends StatelessWidget {
 
   final bool allowScroll;
 
-  /// The style [DialogThemeData] of the dialog.
-  final DialogThemeData? theme;
-
   static Future<T?> showDialog<T>(
     BuildContext context, {
     required Widget body,
@@ -117,7 +119,6 @@ class Dialog extends StatelessWidget {
     bool useRootNavigator = true,
     RouteSettings? routeSettings,
     List<Widget>? actions,
-    DialogThemeData? theme,
     Widget? title,
     bool allowScroll = true,
   }) {
@@ -125,10 +126,7 @@ class Dialog extends StatelessWidget {
 
     final CapturedThemes themes = InheritedTheme.capture(
       from: context,
-      to: Navigator.of(
-        context,
-        rootNavigator: useRootNavigator,
-      ).context,
+      to: Navigator.of(context, rootNavigator: useRootNavigator).context,
     );
 
     return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
@@ -137,7 +135,6 @@ class Dialog extends StatelessWidget {
         pageBuilder: (context, animation, secondaryAnimation) => Dialog(
           body: body,
           actions: actions,
-          theme: theme,
           title: title,
           allowScroll: allowScroll,
         ),
@@ -163,10 +160,7 @@ class Dialog extends StatelessWidget {
 
     final CapturedThemes themes = InheritedTheme.capture(
       from: context,
-      to: Navigator.of(
-        context,
-        rootNavigator: useRootNavigator,
-      ).context,
+      to: Navigator.of(context, rootNavigator: useRootNavigator).context,
     );
 
     return Navigator.of(context, rootNavigator: useRootNavigator).push<T>(
@@ -188,8 +182,7 @@ class Dialog extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
 
-    final DialogThemeData dialogThemeData =
-        DialogTheme.of(context).merge(theme);
+    final DialogThemeData dialogThemeData = DialogTheme.of(context);
 
     final Color backgroundColor = dialogThemeData.background!;
 
@@ -220,8 +213,9 @@ class Dialog extends StatelessWidget {
         ),
       );
 
-      resultBody =
-          isConstrained ? Expanded(child: child) : Flexible(child: child);
+      resultBody = isConstrained
+          ? Expanded(child: child)
+          : Flexible(child: child);
     } else {
       final Widget child = Padding(
         padding: dialogThemeData.bodyPadding!,
@@ -262,9 +256,7 @@ class Dialog extends StatelessWidget {
                   actions!.length,
                   (index) => Padding(
                     padding: index > 0
-                        ? EdgeInsets.only(
-                            left: dialogThemeData.menuSpacing!,
-                          )
+                        ? EdgeInsets.only(left: dialogThemeData.menuSpacing!)
                         : EdgeInsets.zero,
                     child: ButtonTheme.copyWith(
                       itemSpacing: 0.0,

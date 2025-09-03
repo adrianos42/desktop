@@ -387,7 +387,7 @@ iconThemeData: The icon theme.
 @immutable
 class ContextMenuTheme extends InheritedTheme {
   /// Creates a [ContextMenuTheme].
-  const ContextMenuTheme({super.key, required super.child, required this.data});
+  const ContextMenuTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [ContextMenuTheme].
   final ContextMenuThemeData data;

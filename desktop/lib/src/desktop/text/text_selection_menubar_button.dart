@@ -73,17 +73,19 @@ class _TextSelectionMenubarButtonState extends State<TextSelectionMenubarButton>
 
   @override
   Widget build(BuildContext context) {
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData = ContextMenuTheme.of(
+      context,
+    );
 
     final Color background = pressed
         ? contextMenuThemeData.highlightColor! // TODO(as): ???
         : hovered
-            ? contextMenuThemeData.hoverColor! // TODO(as): ???
-            : contextMenuThemeData.background!;
+        ? contextMenuThemeData.hoverColor! // TODO(as): ???
+        : contextMenuThemeData.background!;
 
-    final Color? foreground =
-        hovered ? contextMenuThemeData.selectedForeground : null;
+    final Color? foreground = hovered
+        ? contextMenuThemeData.selectedForeground
+        : null;
 
     Widget item = DefaultTextStyle(
       style: contextMenuThemeData.textStyle!.copyWith(color: foreground),

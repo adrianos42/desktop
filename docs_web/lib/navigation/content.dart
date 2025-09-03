@@ -1,6 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:desktop/desktop.dart';
 import 'dart:math' show Random;
+
+import 'package:desktop/desktop.dart';
+import 'package:flutter/foundation.dart';
 
 const _kFontFamily = 'IBM Plex Serif';
 const _kFontPackage = 'desktop';
@@ -62,11 +63,8 @@ const TextStyle paragraphStyle = TextStyle(
 );
 
 class PageOne extends StatefulWidget {
-  const PageOne({
-    this.index,
-    this.title,
-    super.key,
-  }) : assert(index == null || index <= 5);
+  const PageOne({this.index, this.title, super.key})
+    : assert(index == null || index <= 5);
 
   final int? index;
 
@@ -98,7 +96,10 @@ class _PageOneState extends State<PageOne> {
   }
 
   WidgetSpan _createParagraphsWithRightImage(
-      List<TextSpan> contents, String image, Color foreground) {
+    List<TextSpan> contents,
+    String image,
+    Color foreground,
+  ) {
     final style = paragraphStyle.copyWith(color: foreground);
 
     return WidgetSpan(
@@ -111,10 +112,7 @@ class _PageOneState extends State<PageOne> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: RichText(
-                  text: TextSpan(
-                    style: style,
-                    children: contents,
-                  ),
+                  text: TextSpan(style: style, children: contents),
                 ),
               ),
             ),
@@ -130,10 +128,7 @@ class _PageOneState extends State<PageOne> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: RichText(
-                text: TextSpan(
-                  style: style,
-                  children: contents,
-                ),
+                text: TextSpan(style: style, children: contents),
               ),
             ),
         ],
@@ -142,7 +137,10 @@ class _PageOneState extends State<PageOne> {
   }
 
   WidgetSpan _createParagraphsWithLeftImage(
-      List<TextSpan> contents, String image, Color foreground) {
+    List<TextSpan> contents,
+    String image,
+    Color foreground,
+  ) {
     final style = paragraphStyle.copyWith(color: foreground);
 
     return WidgetSpan(
@@ -162,10 +160,7 @@ class _PageOneState extends State<PageOne> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: RichText(
-                text: TextSpan(
-                  style: style,
-                  children: contents,
-                ),
+                text: TextSpan(style: style, children: contents),
               ),
             ),
           if (!_isMobile)
@@ -173,10 +168,7 @@ class _PageOneState extends State<PageOne> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: RichText(
-                  text: TextSpan(
-                    style: style,
-                    children: contents,
-                  ),
+                  text: TextSpan(style: style, children: contents),
                 ),
               ),
             ),
@@ -193,11 +185,7 @@ class _PageOneState extends State<PageOne> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
-            child: Text(
-              title,
-              style: style,
-              textAlign: TextAlign.left,
-            ),
+            child: Text(title, style: style, textAlign: TextAlign.left),
           ),
         ],
       ),
@@ -213,9 +201,13 @@ class _PageOneState extends State<PageOne> {
         _createHeader(paragraphTitle, foreground),
         _createTitle(paragraphTitle, foreground),
         _createParagraphsWithRightImage(
-          [paragraph, paragraph, paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[3],
           foreground,
         ),
@@ -242,9 +234,13 @@ class _PageOneState extends State<PageOne> {
         _createHeader(paragraphTitle, foreground),
         _createTitle(paragraphTitle, foreground),
         _createParagraphsWithLeftImage(
-          [paragraph, paragraph, paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[6],
           foreground,
         ),
@@ -261,9 +257,11 @@ class _PageOneState extends State<PageOne> {
         _createHeader(paragraphTitle, foreground),
         _createTitle(paragraphTitle, foreground),
         _createParagraphsWithRightImage(
-          [paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[5],
           foreground,
         ),
@@ -283,9 +281,13 @@ class _PageOneState extends State<PageOne> {
         _createHeader(paragraphTitle, foreground),
         _createTitle(paragraphTitle, foreground),
         _createParagraphsWithLeftImage(
-          [paragraph, paragraph, paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[4],
           foreground,
         ),
@@ -295,9 +297,13 @@ class _PageOneState extends State<PageOne> {
         const TextSpan(text: paragraph),
         const TextSpan(text: paragraph),
         _createParagraphsWithRightImage(
-          [paragraph, paragraph, paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[0],
           foreground,
         ),
@@ -336,9 +342,13 @@ class _PageOneState extends State<PageOne> {
         _createHeader(paragraphTitle, foreground),
         _createTitle(paragraphTitle, foreground),
         _createParagraphsWithLeftImage(
-          [paragraph, paragraph, paragraph, paragraph, paragraph]
-              .map((e) => TextSpan(text: e))
-              .toList(),
+          [
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+            paragraph,
+          ].map((e) => TextSpan(text: e)).toList(),
           _kFileNames[2],
           foreground,
         ),
@@ -379,10 +389,7 @@ class _PageOneState extends State<PageOne> {
       color: background,
       child: SingleChildScrollView(
         padding: const EdgeInsetsGeometry.all(32.0),
-        child: SelectableText.rich(
-          text,
-          textAlign: TextAlign.justify,
-        ),
+        child: SelectableText.rich(text, textAlign: TextAlign.justify),
       ),
     );
   }

@@ -1,5 +1,3 @@
-library navigation;
-
 export 'breadcrumb.dart';
 export 'floating_menu_bar.dart';
 export 'nav.dart';

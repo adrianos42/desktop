@@ -6,10 +6,7 @@ const Duration _kHoverDuration = Duration(milliseconds: 200);
 const Duration _kOpacityDuration = Duration(milliseconds: 400);
 
 class FloatingMenuItem {
-  const FloatingMenuItem({
-    this.onPressed,
-    required this.icon,
-  });
+  const FloatingMenuItem({this.onPressed, required this.icon});
 
   /// An icon to be built for the menu.
   final WidgetBuilder icon;
@@ -81,18 +78,19 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
       reverseCurve: Curves.easeOut.flipped,
     );
 
-    _opacityPositionController = AnimationController(
-      duration: _kOpacityDuration,
-      value: 1.0,
-      vsync: this,
-    )..addListener(() {
-        switch (_opacityPositionController.status) {
-          case AnimationStatus.dismissed:
-          case AnimationStatus.completed:
-            setState(() {});
-          default:
-        }
-      });
+    _opacityPositionController =
+        AnimationController(
+          duration: _kOpacityDuration,
+          value: 1.0,
+          vsync: this,
+        )..addListener(() {
+          switch (_opacityPositionController.status) {
+            case AnimationStatus.dismissed:
+            case AnimationStatus.completed:
+              setState(() {});
+            default:
+          }
+        });
 
     const opacityCurve = Curves.fastEaseInToSlowEaseOut;
 
@@ -141,10 +139,9 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
                   ? Brightness.dark
                   : Brightness.light,
               child: DefaultTextStyle(
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    .copyWith(color: foreground),
+                style: Theme.of(
+                  context,
+                ).textTheme.caption.copyWith(color: foreground),
                 child: IconTheme(
                   data: IconThemeData(color: foreground),
                   child: Align(
@@ -161,12 +158,14 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
                           builder: (context, _) => Opacity(
                             opacity: _opacityPosition.value,
                             child: AbsorbPointer(
-                              absorbing: _hoverPositionController.isAnimating ||
+                              absorbing:
+                                  _hoverPositionController.isAnimating ||
                                   _hoverPositionController.isDismissed,
                               child: Container(
                                 margin: const EdgeInsets.all(12.0),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4.0,
+                                ),
                                 color: Color.lerp(
                                   menuThemeData.backgroundColor!.withValues(
                                     alpha: menuThemeData.inactiveOpacity!,
@@ -185,8 +184,9 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      ...widget.items
-                                          .map((e) => e.icon(context)),
+                                      ...widget.items.map(
+                                        (e) => e.icon(context),
+                                      ),
                                       if (widget.expanded) const Spacer(),
                                       if (widget.trailingMenu != null) ...[
                                         Padding(
@@ -194,7 +194,8 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
                                             horizontal: 8.0,
                                           ),
                                           child: Center(
-                                              child: widget.trailingMenu),
+                                            child: widget.trailingMenu,
+                                          ),
                                         ),
                                       ],
                                     ],
@@ -216,12 +217,7 @@ class _FloatingMenuBarState extends State<FloatingMenuBar>
     );
 
     if (widget.child != null) {
-      return Stack(
-        children: [
-          widget.child!,
-          result,
-        ],
-      );
+      return Stack(children: [widget.child!, result]);
     } else {
       return result;
     }

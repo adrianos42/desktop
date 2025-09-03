@@ -1,7 +1,8 @@
 import 'package:desktop/desktop.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'home.dart';
 import 'package:intl/intl.dart';
+
+import 'home.dart';
 
 void main() {
   Intl.defaultLocale = 'en_GB';

@@ -41,10 +41,7 @@ enum MessageClosedReason {
 }
 
 class MessageAction {
-  const MessageAction({
-    required this.title,
-    required this.onPressed,
-  });
+  const MessageAction({required this.title, required this.onPressed});
 
   final String title;
 
@@ -62,14 +59,14 @@ class MessageController {
     required String message,
     required MessageKind kind,
     String? title,
-  })  : _overlayEntry = overlayEntry,
-        _completer = completer,
-        _durarion = duration,
-        _hasMenu = hasMenu,
-        _count = count,
-        _kind = kind,
-        _title = title,
-        _message = message;
+  }) : _overlayEntry = overlayEntry,
+       _completer = completer,
+       _durarion = duration,
+       _hasMenu = hasMenu,
+       _count = count,
+       _kind = kind,
+       _title = title,
+       _message = message;
 
   final OverlayEntry _overlayEntry;
 
@@ -95,10 +92,7 @@ class MessageController {
 /// A stack for showing [Message].
 class Messenger extends StatefulWidget {
   /// Creates a widget that manages a [Message] stack.
-  const Messenger({
-    super.key,
-    required this.child,
-  });
+  const Messenger({super.key, required this.child});
 
   /// The widget below this widget in the tree.
   ///
@@ -106,8 +100,8 @@ class Messenger extends StatefulWidget {
   final Widget child;
 
   static _MessengerState _of(BuildContext context) {
-    final _MessengerScope scope =
-        context.dependOnInheritedWidgetOfExactType<_MessengerScope>()!;
+    final _MessengerScope scope = context
+        .dependOnInheritedWidgetOfExactType<_MessengerScope>()!;
     return scope._messengerState;
   }
 
@@ -120,7 +114,6 @@ class Messenger extends StatefulWidget {
     Duration? duration,
     List<MessageAction>? actions,
     bool clearMessages = false,
-    MessageThemeData? theme,
   }) {
     return _of(context).showMessage(
       context,
@@ -129,7 +122,6 @@ class Messenger extends StatefulWidget {
       duration: duration,
       actions: actions,
       clearMessages: clearMessages,
-      theme: theme,
       title: title,
     );
   }
@@ -181,14 +173,14 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
     required String message,
     required MessageKind kind,
     required bool clearMessages,
-    MessageThemeData? theme,
   }) {
     late MessageController entry;
-    final MessageThemeData messageThemeData =
-        MessageTheme.of(context).merge(theme);
+    final MessageThemeData messageThemeData = MessageTheme.of(context);
 
-    _messageController ??=
-        Message._createAnimationController(messageThemeData, vsync: this);
+    _messageController ??= Message._createAnimationController(
+      messageThemeData,
+      vsync: this,
+    );
 
     int count = 1;
     bool replaceFirst = false;
@@ -205,8 +197,10 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
         MessageController? entry;
 
         try {
-          entry = _messages.firstWhere((e) =>
-              e._kind == kind && e._message == message && e._title == title);
+          entry = _messages.firstWhere(
+            (e) =>
+                e._kind == kind && e._message == message && e._title == title,
+          );
         } catch (_) {}
 
         if (entry != null) {
@@ -230,7 +224,6 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
           resumeTimer: _startTimer,
           remove: removeCurrentMessage,
           actions: actions,
-          theme: messageThemeData,
           count: count,
         ),
         maintainState: false,
@@ -302,8 +295,10 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
       entry._overlayEntry.remove();
       entry._completer.complete(reason);
 
-      Overlay.of(context, rootOverlay: true)
-          .insert(_messages.first._overlayEntry);
+      Overlay.of(
+        context,
+        rootOverlay: true,
+      ).insert(_messages.first._overlayEntry);
       _startTimer();
     } else {
       _messageController?.reverse().then<void>((void value) {
@@ -312,8 +307,10 @@ class _MessengerState extends State<Messenger> with TickerProviderStateMixin {
         entry._completer.complete(reason);
 
         if (_messages.isNotEmpty && _hideTimer == null) {
-          Overlay.of(context, rootOverlay: true)
-              .insert(_messages.first._overlayEntry);
+          Overlay.of(
+            context,
+            rootOverlay: true,
+          ).insert(_messages.first._overlayEntry);
           _startTimer();
         }
       });
@@ -361,8 +358,8 @@ class _MessengerScope extends InheritedWidget {
     required super.child,
     required _MessengerState messengerState,
     required int length,
-  })  : _messengerState = messengerState,
-        _length = length;
+  }) : _messengerState = messengerState,
+       _length = length;
 
   final _MessengerState _messengerState;
   final int _length;
@@ -386,7 +383,6 @@ class Message extends StatefulWidget {
     required this.stopTimer,
     required this.remove,
     required this.count,
-    this.theme,
   });
 
   final String message;
@@ -404,8 +400,6 @@ class Message extends StatefulWidget {
   final VoidCallback stopTimer;
 
   final MessageReasonCallback remove;
-
-  final MessageThemeData? theme;
 
   final int count;
 
@@ -435,8 +429,9 @@ class _MessageState extends State<Message> {
     super.initState();
 
     _mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
-    RendererBinding.instance.mouseTracker
-        .addListener(_handleMouseTrackerChange);
+    RendererBinding.instance.mouseTracker.addListener(
+      _handleMouseTrackerChange,
+    );
   }
 
   void _handleMouseTrackerChange() {
@@ -463,18 +458,20 @@ class _MessageState extends State<Message> {
 
   @override
   void dispose() {
-    RendererBinding.instance.mouseTracker
-        .removeListener(_handleMouseTrackerChange);
+    RendererBinding.instance.mouseTracker.removeListener(
+      _handleMouseTrackerChange,
+    );
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final MessageThemeData messageThemeData =
-        MessageTheme.of(context).merge(widget.theme);
+    final MessageThemeData messageThemeData = MessageTheme.of(context);
 
     _animation ??= CurvedAnimation(
-        parent: widget.animation!, curve: messageThemeData.animationCurve!);
+      parent: widget.animation!,
+      curve: messageThemeData.animationCurve!,
+    );
 
     final Color backgroundColor = messageThemeData.backgroundColor!;
     final Color iconForeground;
@@ -499,8 +496,9 @@ class _MessageState extends State<Message> {
         break;
     }
 
-    final focusColor =
-        _hasFocus ? messageThemeData.highlightColor! : iconForeground;
+    final focusColor = _hasFocus
+        ? messageThemeData.highlightColor!
+        : iconForeground;
 
     Widget result = Container(
       padding: messageThemeData.padding!,
@@ -516,10 +514,7 @@ class _MessageState extends State<Message> {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: messageThemeData.itemSpacing!),
-                child: Icon(
-                  iconData,
-                  color: iconForeground,
-                ),
+                child: Icon(iconData, color: iconForeground),
               ),
               Expanded(
                 child: Column(
@@ -548,10 +543,7 @@ class _MessageState extends State<Message> {
                   child: Column(
                     children: widget.actions!
                         .map(
-                          (e) => Button.text(
-                            e.title,
-                            onPressed: e.onPressed,
-                          ),
+                          (e) => Button.text(e.title, onPressed: e.onPressed),
                         )
                         .toList(),
                   ),
@@ -562,9 +554,9 @@ class _MessageState extends State<Message> {
                   child: Text(
                     widget.count.toString(),
                     style: Theme.of(context).textTheme.caption.copyWith(
-                          color: focusColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: focusColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
             ],

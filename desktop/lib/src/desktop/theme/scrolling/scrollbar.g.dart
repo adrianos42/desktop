@@ -125,7 +125,7 @@ disabledColor:;;color:;;hoverColor:;;highlightColor:;;inhoverColor:;;foreground:
 @immutable
 class ScrollbarTheme extends InheritedTheme {
   /// Creates a [ScrollbarTheme].
-  const ScrollbarTheme({super.key, required super.child, required this.data});
+  const ScrollbarTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [ScrollbarTheme].
   final ScrollbarThemeData data;

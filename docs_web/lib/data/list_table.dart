@@ -89,7 +89,8 @@ class _ListTablePageState extends State<ListTablePage> {
   bool _allowDragDataExample = true;
   bool _allowDragBordelessExample = false;
 
-  String get someDataSample => ''' 
+  String get someDataSample =>
+      ''' 
 final borderColor = Theme.of(context).colorScheme.shade[40];
 final borderSide = BorderSide(color: borderColor, width: 1.0);
 final dataTableRows = [...someDataTableRows, ...someDataTableRows];
@@ -141,7 +142,8 @@ return ListTable(
 );
 ''';
 
-  String get codeSample => '''
+  String get codeSample =>
+      '''
 return ListTable(
   colCount: 4,
   rows: List.generate(10, (row) {
@@ -176,8 +178,10 @@ return ListTable(
         ItemTitle(
           title: 'Example with data',
           body: (context) => Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 12.0,
+            ),
             child: ListTable(
               colCount: 4,
               allowColumnDragging: _allowDragDataExample,
@@ -236,8 +240,10 @@ return ListTable(
         ItemTitle(
           title: 'Borderless list table',
           body: (context) => Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 12.0,
+              horizontal: 12.0,
+            ),
             child: ListTable(
               colCount: 4,
               rows: List.generate(10, (row) {

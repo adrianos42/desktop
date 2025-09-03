@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 import 'content.dart';
 
@@ -128,46 +129,41 @@ return Nav(
       required int? index,
       required bool visible,
       required bool expanded,
-    }) =>
-        FloatingMenuBar(
-          visible: visible,
-          expanded: expanded,
-          items: [
-            Button.icon(
-              Icons.arrowUpward,
-              onPressed: () {},
-            ),
-            Button.icon(
-              Icons.arrowDownward,
-              onPressed: () {},
-            ),
-            Button.icon(
-              Icons.selectAll,
-              onPressed: () async {
-                await Drawer.showDrawer(
-                  context,
-                  title: const Text('Lorem Ipsum'),
-                  body: const Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
-                );
-              },
-            ),
-            Button.icon(
-              Icons.share,
-              onPressed: () async {
-                await Dialog.showDialog(
-                  context,
-                  title: const Text('Lorem Ipsum'),
-                  body: const Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
-                );
-              },
-            ),
-          ].map((e) => FloatingMenuItem(icon: (context) => e)).toList(),
-          trailingMenu: Text(title ?? 'Page ${index ?? 0}'),
-        );
+    }) => FloatingMenuBar(
+      visible: visible,
+      expanded: expanded,
+      items: [
+        Button.icon(Icons.arrowUpward, onPressed: () {}),
+        Button.icon(Icons.arrowDownward, onPressed: () {}),
+        Button.icon(
+          Icons.selectAll,
+          onPressed: () async {
+            await Drawer.showDrawer(
+              context,
+              title: const Text('Lorem Ipsum'),
+              body: const Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+              ),
+            );
+          },
+        ),
+        Button.icon(
+          Icons.share,
+          onPressed: () async {
+            await Dialog.showDialog(
+              context,
+              title: const Text('Lorem Ipsum'),
+              body: const Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+              ),
+            );
+          },
+        ),
+      ].map((e) => FloatingMenuItem(icon: (context) => e)).toList(),
+      trailingMenu: Text(title ?? 'Page ${index ?? 0}'),
+    );
 
     return Defaults(
       styleItems: Defaults.createStyle(NavTheme.of(context).toString()),
@@ -234,17 +230,15 @@ return Nav(
               Icons.lightMode,
               tooltip: 'Toggle content mode',
               active: _verticalContent,
-              onPressed: () => setState(
-                () => _verticalContent = !_verticalContent,
-              ),
+              onPressed: () =>
+                  setState(() => _verticalContent = !_verticalContent),
             ),
             Button.icon(
               Icons.build,
               tooltip: 'Toggle floating menu bar',
               active: _verticalSampleMenu,
-              onPressed: () => setState(
-                () => _verticalSampleMenu = !_verticalSampleMenu,
-              ),
+              onPressed: () =>
+                  setState(() => _verticalSampleMenu = !_verticalSampleMenu),
             ),
             Button(
               trailing: const RotatedBox(
@@ -255,8 +249,8 @@ return Nav(
               active: _verticalMenuExpanded,
               onPressed: _verticalSampleMenu
                   ? () => setState(
-                        () => _verticalMenuExpanded = !_verticalMenuExpanded,
-                      )
+                      () => _verticalMenuExpanded = !_verticalMenuExpanded,
+                    )
                   : null,
             ),
           ],
@@ -266,8 +260,9 @@ return Nav(
           body: (context) {
             return Theme.withBrightness(
               context,
-              brightness:
-                  _horizontaContent ? Brightness.light : Brightness.dark,
+              brightness: _horizontaContent
+                  ? Brightness.light
+                  : Brightness.dark,
               child: Nav.horizontal(
                 infoItems: [
                   NavInfoItem(
@@ -282,9 +277,7 @@ return Nav(
                         ),
                       ),
                     ),
-                    icon: (context) => const Center(
-                      child: Text('Maps'),
-                    ),
+                    icon: (context) => const Center(child: Text('Maps')),
                   ),
                   NavInfoItem(
                     builder: (context) => TabDialog(
@@ -298,9 +291,7 @@ return Nav(
                         ),
                       ),
                     ),
-                    icon: (context) => const Center(
-                      child: Text('Info'),
-                    ),
+                    icon: (context) => const Center(child: Text('Info')),
                   ),
                 ],
                 trailingMenu: [
@@ -323,21 +314,18 @@ return Nav(
                 items: [
                   NavItem(
                     title: 'Page 0',
-                    builder: (context, _) => const TabDialog(
-                      child: PageOne(index: 5),
-                    ),
+                    builder: (context, _) =>
+                        const TabDialog(child: PageOne(index: 5)),
                   ),
                   NavItem(
                     title: 'Page 1',
-                    builder: (context, _) => const TabDialog(
-                      child: PageOne(index: 4),
-                    ),
+                    builder: (context, _) =>
+                        const TabDialog(child: PageOne(index: 4)),
                   ),
                   NavItem(
                     title: 'Page 2',
-                    builder: (context, _) => const TabDialog(
-                      child: PageOne(index: 3),
-                    ),
+                    builder: (context, _) =>
+                        const TabDialog(child: PageOne(index: 3)),
                   ),
                 ],
               ),
@@ -348,9 +336,8 @@ return Nav(
             Button.icon(
               Icons.lightMode,
               active: _horizontaContent,
-              onPressed: () => setState(
-                () => _horizontaContent = !_horizontaContent,
-              ),
+              onPressed: () =>
+                  setState(() => _horizontaContent = !_horizontaContent),
             ),
           ],
         ),
@@ -408,9 +395,8 @@ return Nav(
             Button.icon(
               Icons.lightMode,
               active: _compactContent,
-              onPressed: () => setState(
-                () => _compactContent = !_compactContent,
-              ),
+              onPressed: () =>
+                  setState(() => _compactContent = !_compactContent),
             ),
           ],
         ),

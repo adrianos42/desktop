@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
@@ -96,8 +95,10 @@ class TextTheme {
     required this.monospace,
   });
 
-  factory TextTheme.withColorScheme(ColorScheme colorScheme,
-      [Brightness brightness = Brightness.dark]) {
+  factory TextTheme.withColorScheme(
+    ColorScheme colorScheme, [
+    Brightness brightness = Brightness.dark,
+  ]) {
     TextTheme result;
 
     switch (brightness) {

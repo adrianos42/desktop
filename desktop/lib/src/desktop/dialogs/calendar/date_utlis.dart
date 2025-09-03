@@ -1,34 +1,32 @@
-import 'package:flutter/widgets.dart';
-
 import '../../localizations.dart';
 
-@immutable
-class _DateTimeRange {
-  _DateTimeRange({
-    required this.start,
-    required this.end,
-  }) : assert(!start.isAfter(end));
+// @immutable
+// class _DateTimeRange {
+//   _DateTimeRange({
+//     required this.start,
+//     required this.end,
+//   }) : assert(!start.isAfter(end));
 
-  final DateTime start;
+//   final DateTime start;
 
-  final DateTime end;
+//   final DateTime end;
 
-  Duration get duration => end.difference(start);
+//   Duration get duration => end.difference(start);
 
-  @override
-  bool operator ==(Object other) {
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is _DateTimeRange && other.start == start && other.end == end;
-  }
+//   @override
+//   bool operator ==(Object other) {
+//     if (other.runtimeType != runtimeType) {
+//       return false;
+//     }
+//     return other is _DateTimeRange && other.start == start && other.end == end;
+//   }
 
-  @override
-  int get hashCode => Object.hash(start, end);
+//   @override
+//   int get hashCode => Object.hash(start, end);
 
-  @override
-  String toString() => '$start - $end';
-}
+//   @override
+//   String toString() => '$start - $end';
+// }
 
 class DateUtils {
   DateUtils._();
@@ -37,10 +35,10 @@ class DateUtils {
     return DateTime(date.year, date.month, date.day);
   }
 
-  static _DateTimeRange _datesOnly(_DateTimeRange range) {
-    return _DateTimeRange(
-        start: dateOnly(range.start), end: dateOnly(range.end));
-  }
+  // static _DateTimeRange _datesOnly(_DateTimeRange range) {
+  //   return _DateTimeRange(
+  //       start: dateOnly(range.start), end: dateOnly(range.end));
+  // }
 
   static bool isSameDay(DateTime? dateA, DateTime? dateB) {
     return dateA?.year == dateB?.year &&
@@ -67,7 +65,10 @@ class DateUtils {
   }
 
   static int firstDayOffset(
-      int year, int month, DesktopLocalizations localizations) {
+    int year,
+    int month,
+    DesktopLocalizations localizations,
+  ) {
     // 0-based day of week for the month and year, with 0 representing Monday.
     final int weekdayFromMonday = DateTime(year, month).weekday - 1;
 
@@ -101,7 +102,7 @@ class DateUtils {
       30,
       31,
       30,
-      31
+      31,
     ];
     return daysInMonth[month - 1];
   }

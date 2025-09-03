@@ -16,7 +16,6 @@ class Button extends StatefulWidget {
     this.trailing,
     this.leading,
     this.tooltip,
-    this.theme,
     this.leadingPadding,
     this.padding,
     this.bodyPadding,
@@ -39,7 +38,6 @@ class Button extends StatefulWidget {
     Key? key,
     double? fontSize,
     String? tooltip,
-    ButtonThemeData? theme,
     EdgeInsets? padding,
     FocusNode? focusNode,
     bool canRequestFocus = true,
@@ -61,7 +59,6 @@ class Button extends StatefulWidget {
       autofocus: autofocus,
       active: active,
       willChangeState: willChangeState,
-      theme: theme,
       enableAnimation: true,
       filled: false,
       body: Text(
@@ -85,7 +82,6 @@ class Button extends StatefulWidget {
     bool willChangeState = false,
     required VoidCallback? onPressed,
     VoidCallback? onLongPress,
-    ButtonThemeData? theme,
   }) {
     return Button(
       key: key,
@@ -101,7 +97,6 @@ class Button extends StatefulWidget {
       willChangeState: willChangeState,
       enableAnimation: true,
       filled: false,
-      theme: theme,
       body: Icon(icon, size: size),
     );
   }
@@ -120,14 +115,12 @@ class Button extends StatefulWidget {
     bool willChangeState = false,
     required VoidCallback? onPressed,
     VoidCallback? onLongPress,
-    ButtonThemeData? theme,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
   }) {
     return Button(
       key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      theme: theme,
       tooltip: tooltip,
       onPressed: onPressed,
       onLongPress: onLongPress,
@@ -232,9 +225,6 @@ class Button extends StatefulWidget {
 
   final MainAxisAlignment mainAxisAlignment;
 
-  /// The style [ButtonThemeData] of the button.
-  final ButtonThemeData? theme;
-
   @override
   State<Button> createState() => ButtonState<Button>();
 }
@@ -334,7 +324,7 @@ class ButtonState<B extends Button> extends State<B>
   }
 
   ButtonThemeData _buttonThemeData(BuildContext context) =>
-      ButtonTheme.of(context).merge(widget.theme);
+      ButtonTheme.of(context);
 
   void _invoke([Intent? intent]) => _handleTap();
 
@@ -679,7 +669,6 @@ class _ButtonProgressState extends State<_ButtonProgress> {
       firstCurve: Curves.easeOutSine,
       duration: const Duration(milliseconds: 100),
       reverseDuration: const Duration(milliseconds: 100),
-      
     );
   }
 }

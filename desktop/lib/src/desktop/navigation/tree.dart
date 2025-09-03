@@ -964,22 +964,24 @@ class _TreeColumnState extends State<_TreeColumn> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16.0 * parentIndex.length),
-                  child: Button(
-                    bodyPadding: EdgeInsets.zero,
-                    theme: ButtonThemeData(
+                  child: ButtonTheme(
+                    data: ButtonThemeData(
                       color: treeTheme.color,
                       hoverColor: treeTheme.hoverColor,
                       highlightColor: treeTheme.highlightColor,
                     ),
-                    padding: EdgeInsets.zero,
-                    body: _TreeNodeCollapse(
-                      collapsed,
-                      child: nodes[i].titleBuilder(context),
+                    child: Button(
+                      bodyPadding: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
+                      body: _TreeNodeCollapse(
+                        collapsed,
+                        child: nodes[i].titleBuilder(context),
+                      ),
+                      onPressed: () {
+                        widget.updatePage();
+                        setState(() => _nodesCollapsed[name] = !collapsed);
+                      },
                     ),
-                    onPressed: () {
-                      widget.updatePage();
-                      setState(() => _nodesCollapsed[name] = !collapsed);
-                    },
                   ),
                 ),
               ),
@@ -1006,16 +1008,18 @@ class _TreeColumnState extends State<_TreeColumn> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(left: 16.0 * parentIndex.length),
-                  child: Button(
-                    theme: ButtonThemeData(
+                  child: ButtonTheme(
+                    data: ButtonThemeData(
                       color: highlightColor,
                       highlightColor: treeTheme.color,
                     ),
-                    padding: EdgeInsets.zero,
-                    bodyPadding: EdgeInsets.zero,
-                    body: nodes[i].titleBuilder(context),
-                    active: active,
-                    onPressed: () => widget.controller.index = index,
+                    child: Button(
+                      padding: EdgeInsets.zero,
+                      bodyPadding: EdgeInsets.zero,
+                      body: nodes[i].titleBuilder(context),
+                      active: active,
+                      onPressed: () => widget.controller.index = index,
+                    ),
                   ),
                 ),
               ),

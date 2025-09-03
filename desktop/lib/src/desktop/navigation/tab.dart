@@ -1,12 +1,13 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 
 import '../input/input.dart';
 import '../theme/theme.dart';
+import 'nav_button.dart' show NavMenuMixin;
 import 'tab_scope.dart';
 import 'tab_view.dart';
-import 'nav_button.dart' show NavMenuMixin;
 
 /// Controls the tab index.
 class TabController extends ChangeNotifier {
@@ -129,7 +130,6 @@ class Tab extends StatefulWidget {
     required this.items,
     this.leading,
     this.trailing,
-    this.theme,
     this.controller,
     this.trailingMenu,
     this.axis = AxisDirection.up,
@@ -146,9 +146,6 @@ class Tab extends StatefulWidget {
 
   /// The menu items placed after the tab bar and before [trailing].
   final List<TabMenuItem>? trailingMenu;
-
-  /// The theme for [Tab].
-  final TabThemeData? theme;
 
   /// Controls selected index.
   final TabController? controller;
@@ -187,6 +184,9 @@ class _TabState extends State<Tab>
   @override
   Color get barrierColor => DialogTheme.of(context).barrierColor!;
 
+  @override
+  ImageFilter get filter => DialogTheme.of(context).imageFilter!;
+
   TabController? _internalController;
   TabController get _controller => widget.controller ?? _internalController!;
 
@@ -221,13 +221,8 @@ class _TabState extends State<Tab>
     return false;
   }
 
-  void _handleMenuAnimationStatusChanged(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed) {
-      menuOverlay?.remove();
-      menuOverlay = null;
-      setState(() => menuIndex = -1);
-    }
-  }
+  void _handleMenuAnimationStatusChanged(AnimationStatus status) =>
+      setState(() => handleMenuAnimationStatusChanged(status));
 
   void _showMenu(int index) {
     final builders = [...widget.trailingMenu!.map((e) => e.builder)];
@@ -289,27 +284,29 @@ class _TabState extends State<Tab>
     ) {
       final active = index == menuIndex;
 
-      return Button(
-        theme: ButtonThemeData(
+      return ButtonTheme(
+        data: ButtonThemeData(
           color: themeData.itemHighlightColor!,
           highlightColor: themeData.itemColor!,
           hoverColor: themeData.itemHoverColor!,
         ),
-        onPressed: () => _showMenu(index),
-        active: active,
-        body: Builder(
-          builder: (context) => Container(
-            alignment: _direction == Axis.horizontal
-                ? Alignment.center
-                : Alignment.centerLeft,
-            padding: themeData.itemPadding!,
-            child: tabMenuItems[index].itemBuilder(context),
+        child: Button(
+          onPressed: () => _showMenu(index),
+          active: active,
+          body: Builder(
+            builder: (context) => Container(
+              alignment: _direction == Axis.horizontal
+                  ? Alignment.center
+                  : Alignment.centerLeft,
+              padding: themeData.itemPadding!,
+              child: tabMenuItems[index].itemBuilder(context),
+            ),
           ),
+          bodyPadding: EdgeInsets.zero,
+          leadingPadding: EdgeInsets.zero,
+          trailingPadding: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
         ),
-        bodyPadding: EdgeInsets.zero,
-        leadingPadding: EdgeInsets.zero,
-        trailingPadding: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
       );
     });
 
@@ -328,9 +325,8 @@ class _TabState extends State<Tab>
     ) {
       final bool active = _controller.index == index && !menuShown;
 
-      return Button(
-        filled: themeData.itemFilled!,
-        theme: ButtonThemeData(
+      return ButtonTheme(
+        data: ButtonThemeData(
           color: themeData.itemHighlightColor!,
           highlightColor: themeData.itemColor!,
           hoverColor: themeData.itemHoverColor!,
@@ -338,24 +334,27 @@ class _TabState extends State<Tab>
           hoverBackground: themeData.itemHoverBackgroundColor,
           highlightBackground: themeData.itemHighlightBackgroundColor,
         ),
-        onPressed: () {
-          setState(hideMenu);
-          _indexChanged(index);
-        },
-        active: active,
-        body: Builder(
-          builder: (context) => Container(
-            alignment: _direction == Axis.horizontal
-                ? Alignment.center
-                : Alignment.centerLeft,
-            padding: themeData.itemPadding!,
-            child: widget.items[index].itemBuilder(context),
+        child: Button(
+          filled: themeData.itemFilled!,
+          onPressed: () {
+            setState(hideMenu);
+            _indexChanged(index);
+          },
+          active: active,
+          body: Builder(
+            builder: (context) => Container(
+              alignment: _direction == Axis.horizontal
+                  ? Alignment.center
+                  : Alignment.centerLeft,
+              padding: themeData.itemPadding!,
+              child: widget.items[index].itemBuilder(context),
+            ),
           ),
+          bodyPadding: EdgeInsets.zero,
+          leadingPadding: EdgeInsets.zero,
+          trailingPadding: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
         ),
-        bodyPadding: EdgeInsets.zero,
-        leadingPadding: EdgeInsets.zero,
-        trailingPadding: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
       );
     });
 
@@ -513,14 +512,15 @@ class _TabState extends State<Tab>
     }
 
     _internalController?.dispose();
-    menuController!.dispose();
+    menuController?.removeStatusListener(_handleMenuAnimationStatusChanged);
+    menuController?.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final TabThemeData themeData = TabTheme.of(context).merge(widget.theme);
+    final TabThemeData themeData = TabTheme.of(context);
 
     Widget result = Flex(
       direction: _direction == Axis.horizontal

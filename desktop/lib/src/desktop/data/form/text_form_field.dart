@@ -44,7 +44,7 @@ class TextFormField extends FormField<String> {
     super.onSaved,
     super.validator,
     List<TextInputFormatter>? inputFormatters,
-    bool enabled = true,
+    super.enabled = true,
     double cursorWidth = 2.0,
     double? cursorHeight,
     EdgeInsets scrollPadding = const EdgeInsets.all(20.0),
@@ -58,166 +58,165 @@ class TextFormField extends FormField<String> {
     this.prefix,
     this.focusNode,
     // MouseCursor? mouseCursor,
-  })  : assert(initialValue == null || controller == null),
-        assert(obscuringCharacter.length == 1),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "MinLines can't be greater than maxLines.",
-        ),
-        assert(
-          !expands || (maxLines == null && minLines == null),
-          'MinLines and maxLines must be null when expands is true.',
-        ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
-        assert(maxLength == null || maxLength > 0),
-        super(
-          initialValue:
-              controller != null ? controller.text : (initialValue ?? ''),
-          enabled: enabled,
-          autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
-          builder: (FormFieldState<String> field) {
-            final _TextFormFieldState state = field as _TextFormFieldState;
+  }) : assert(initialValue == null || controller == null),
+       assert(obscuringCharacter.length == 1),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "MinLines can't be greater than maxLines.",
+       ),
+       assert(
+         !expands || (maxLines == null && minLines == null),
+         'MinLines and maxLines must be null when expands is true.',
+       ),
+       assert(
+         !obscureText || maxLines == 1,
+         'Obscured fields cannot be multiline.',
+       ),
+       assert(maxLength == null || maxLength > 0),
+       super(
+         initialValue: controller != null
+             ? controller.text
+             : (initialValue ?? ''),
+         autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
+         builder: (FormFieldState<String> field) {
+           final _TextFormFieldState state = field as _TextFormFieldState;
 
-            void onChangedHandler(String value) {
-              field.didChange(value);
-              if (onChanged != null) {
-                onChanged(value);
-              }
-            }
+           void onChangedHandler(String value) {
+             field.didChange(value);
+             if (onChanged != null) {
+               onChanged(value);
+             }
+           }
 
-            final FocusNode effectiveFocusNode = state._effectiveFocusNode;
+           final FocusNode effectiveFocusNode = state._effectiveFocusNode;
 
-            final ThemeData themeData = Theme.of(field.context);
-            final ColorScheme colorScheme = themeData.colorScheme;
-            final TextTheme textTheme = themeData.textTheme;
+           final ThemeData themeData = Theme.of(field.context);
+           final ColorScheme colorScheme = themeData.colorScheme;
+           final TextTheme textTheme = themeData.textTheme;
 
-            final Widget? error = field.errorText != null
-                ? Text(
-                    field.errorText!,
-                    style: textTheme.caption.copyWith(
-                      color: textTheme.textError,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                : null;
+           final Widget? error = field.errorText != null
+               ? Text(
+                   field.errorText!,
+                   style: textTheme.caption.copyWith(
+                     color: textTheme.textError,
+                     fontWeight: FontWeight.w500,
+                   ),
+                 )
+               : null;
 
-            final Color background =
-                enabled ? colorScheme.background[0] : colorScheme.shade[90];
+           final Color background = enabled
+               ? colorScheme.background[0]
+               : colorScheme.shade[90];
 
-            final foreground = effectiveFocusNode.hasFocus
-                ? colorScheme.shade[50]
-                : colorScheme.shade[30];
+           final foreground = effectiveFocusNode.hasFocus
+               ? colorScheme.shade[50]
+               : colorScheme.shade[30];
 
-            final Color borderColor = foreground;
+           final Color borderColor = foreground;
 
-            final BoxDecoration decoration = BoxDecoration(
-              color: background,
-              border: enabled
-                  ? Border.all(color: borderColor, width: _kBorderWidth)
-                  : null,
-            );
+           final BoxDecoration decoration = BoxDecoration(
+             color: background,
+             border: enabled
+                 ? Border.all(color: borderColor, width: _kBorderWidth)
+                 : null,
+           );
 
-            final TextStyle prefixTextStyle = textTheme.caption.copyWith(
-              color: foreground,
-              fontWeight: FontWeight.w500,
-            );
+           final TextStyle prefixTextStyle = textTheme.caption.copyWith(
+             color: foreground,
+             fontWeight: FontWeight.w500,
+           );
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DecoratedBox(
-                  decoration: decoration,
-                  child: Padding(
-                    padding: decoration.padding,
-                    child: Row(
-                      children: [
-                        if (prefix != null)
-                          Padding(
-                            // Considering the padding inside [TextField].
-                            padding: const EdgeInsets.only(left: 4.0),
-                            child: Text(
-                              prefix,
-                              style: prefixTextStyle,
-                            ),
-                          ),
-                        Flexible(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: UnmanagedRestorationScope(
-                              bucket: field.bucket,
-                              child: TextField(
-                                restorationId: restorationId,
-                                controller: state._effectiveController,
-                                focusNode: effectiveFocusNode,
-                                decoration: const BoxDecoration(),
-                                keyboardType: keyboardType,
-                                textInputAction: textInputAction,
-                                style: style,
-                                strutStyle: strutStyle,
-                                textAlign: textAlign,
-                                textDirection: textDirection,
-                                textCapitalization: textCapitalization,
-                                autofocus: autofocus,
-                                readOnly: readOnly,
-                                showCursor: showCursor,
-                                obscuringCharacter: obscuringCharacter,
-                                obscureText: obscureText,
-                                autocorrect: autocorrect,
-                                smartDashesType: smartDashesType ??
-                                    (obscureText
-                                        ? SmartDashesType.disabled
-                                        : SmartDashesType.enabled),
-                                smartQuotesType: smartQuotesType ??
-                                    (obscureText
-                                        ? SmartQuotesType.disabled
-                                        : SmartQuotesType.enabled),
-                                enableSuggestions: enableSuggestions,
-                                maxLines: maxLines,
-                                minLines: minLines,
-                                expands: expands,
-                                maxLength: maxLength,
-                                onChanged: onChangedHandler,
-                                onTap: onTap,
-                                onEditingComplete: onEditingComplete,
-                                onSubmitted: onFieldSubmitted,
-                                inputFormatters: inputFormatters,
-                                enabled: enabled,
-                                cursorWidth: cursorWidth,
-                                cursorHeight: cursorHeight,
-                                scrollPadding: scrollPadding,
-                                enableInteractiveSelection:
-                                    enableInteractiveSelection ??
-                                        (!obscureText || !readOnly),
-                                selectionControls: selectionControls,
-                                autofillHints: autofillHints,
-                                scrollController: scrollController,
-                                enableIMEPersonalizedLearning:
-                                    enableIMEPersonalizedLearning,
-                                maxLengthEnforcement: maxLengthEnforcement,
-                                // mouseCursor: mouseCursor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (error != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: error,
-                    ),
-                  ),
-              ],
-            );
-          },
-        );
+           return Column(
+             mainAxisSize: MainAxisSize.min,
+             children: [
+               DecoratedBox(
+                 decoration: decoration,
+                 child: Padding(
+                   padding: decoration.padding,
+                   child: Row(
+                     children: [
+                       if (prefix != null)
+                         Padding(
+                           // Considering the padding inside [TextField].
+                           padding: const EdgeInsets.only(left: 4.0),
+                           child: Text(prefix, style: prefixTextStyle),
+                         ),
+                       Flexible(
+                         child: Align(
+                           alignment: Alignment.centerRight,
+                           child: UnmanagedRestorationScope(
+                             bucket: field.bucket,
+                             child: TextField(
+                               restorationId: restorationId,
+                               controller: state._effectiveController,
+                               focusNode: effectiveFocusNode,
+                               decoration: const BoxDecoration(),
+                               keyboardType: keyboardType,
+                               textInputAction: textInputAction,
+                               style: style,
+                               strutStyle: strutStyle,
+                               textAlign: textAlign,
+                               textDirection: textDirection,
+                               textCapitalization: textCapitalization,
+                               autofocus: autofocus,
+                               readOnly: readOnly,
+                               showCursor: showCursor,
+                               obscuringCharacter: obscuringCharacter,
+                               obscureText: obscureText,
+                               autocorrect: autocorrect,
+                               smartDashesType:
+                                   smartDashesType ??
+                                   (obscureText
+                                       ? SmartDashesType.disabled
+                                       : SmartDashesType.enabled),
+                               smartQuotesType:
+                                   smartQuotesType ??
+                                   (obscureText
+                                       ? SmartQuotesType.disabled
+                                       : SmartQuotesType.enabled),
+                               enableSuggestions: enableSuggestions,
+                               maxLines: maxLines,
+                               minLines: minLines,
+                               expands: expands,
+                               maxLength: maxLength,
+                               onChanged: onChangedHandler,
+                               onTap: onTap,
+                               onEditingComplete: onEditingComplete,
+                               onSubmitted: onFieldSubmitted,
+                               inputFormatters: inputFormatters,
+                               enabled: enabled,
+                               cursorWidth: cursorWidth,
+                               cursorHeight: cursorHeight,
+                               scrollPadding: scrollPadding,
+                               enableInteractiveSelection:
+                                   enableInteractiveSelection ??
+                                   (!obscureText || !readOnly),
+                               selectionControls: selectionControls,
+                               autofillHints: autofillHints,
+                               scrollController: scrollController,
+                               enableIMEPersonalizedLearning:
+                                   enableIMEPersonalizedLearning,
+                               maxLengthEnforcement: maxLengthEnforcement,
+                               // mouseCursor: mouseCursor,
+                             ),
+                           ),
+                         ),
+                       ),
+                     ],
+                   ),
+                 ),
+               ),
+               if (error != null)
+                 Padding(
+                   padding: const EdgeInsets.only(top: 4.0),
+                   child: Align(alignment: Alignment.bottomRight, child: error),
+                 ),
+             ],
+           );
+         },
+       );
 
   ///
   final TextEditingController? controller;
@@ -323,8 +322,9 @@ class _TextFormFieldState extends FormFieldState<String> {
 
     if (_textFormField.focusNode != oldWidget.focusNode) {
       (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
-      (_textFormField.focusNode ?? _focusNode)
-          ?.addListener(_handleFocusChanged);
+      (_textFormField.focusNode ?? _focusNode)?.addListener(
+        _handleFocusChanged,
+      );
     }
 
     _effectiveFocusNode.canRequestFocus = widget.enabled;

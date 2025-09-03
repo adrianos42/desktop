@@ -312,7 +312,7 @@ iconThemeData: The [IconThemeData] for the nav items.
 @immutable
 class NavTheme extends InheritedTheme {
   /// Creates a [NavTheme].
-  const NavTheme({super.key, required super.child, required this.data});
+  const NavTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [NavTheme].
   final NavThemeData data;

@@ -242,10 +242,10 @@ packages:
     dependency: "direct main"
     description:
       name: markdown_docs_flutter
-      sha256: a5d0b7dd619f5d0ee8f2d8368e5bc52ae9bef201ef907c20b99087d61ed9159d
+      sha256: "6d9bba2822da53eebda5407e04643284c2183a21c7222e0beb6e422e2c43af49"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0-dev.3"
+    version: "1.0.0-dev.4"
   matcher:
     dependency: transitive
     description:

@@ -16,7 +16,8 @@ class _ButtonContextMenuPageState extends State<ButtonContextMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    final codeText = '''
+    final codeText =
+        '''
 return ContextMenuButton(
   Icon(Icons.place),
   value: firstValue,
@@ -64,22 +65,10 @@ return ContextMenuButton(
                         ? (String value) => setState(() => _firstValue = value)
                         : null,
                     itemBuilder: (context) => const [
-                      ContextMenuItem(
-                        value: 'Item 1',
-                        child: Text('Item 1'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Item 2',
-                        child: Text('Item 2'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Item 3',
-                        child: Text('Item 3'),
-                      ),
-                      ContextMenuItem(
-                        value: 'Item 4',
-                        child: Text('Item 4'),
-                      ),
+                      ContextMenuItem(value: 'Item 1', child: Text('Item 1')),
+                      ContextMenuItem(value: 'Item 2', child: Text('Item 2')),
+                      ContextMenuItem(value: 'Item 3', child: Text('Item 3')),
+                      ContextMenuItem(value: 'Item 4', child: Text('Item 4')),
                     ],
                   ),
                   Container(

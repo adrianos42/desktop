@@ -106,9 +106,7 @@ return Container(
             Button.icon(
               Icons.lightMode,
               active: _buttonContent,
-              onPressed: () => setState(
-                () => _buttonContent = !_buttonContent,
-              ),
+              onPressed: () => setState(() => _buttonContent = !_buttonContent),
             ),
             Button.icon(
               Icons.close,

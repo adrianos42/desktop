@@ -38,7 +38,7 @@ class TreePage extends StatefulWidget {
 class _TreePageState extends State<TreePage> {
   bool _isShowingTree = true;
   bool _basicExampleDrag = false;
-  
+
   final TreeController _controller = TreeController();
 
   Widget _buildTreeControllerPage() {
@@ -47,16 +47,17 @@ class _TreePageState extends State<TreePage> {
         controller: ScrollController(),
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: _indexes
-                .map(
-                  (e) => Button.text(
-                    'Node ${e.fold('', (p, e) => '$p${p.isNotEmpty ? ' -> ' : ''} $e')}',
-                    onPressed: () => _controller.index = e,
-                  ),
-                )
-                .toList()),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _indexes
+              .map(
+                (e) => Button.text(
+                  'Node ${e.fold('', (p, e) => '$p${p.isNotEmpty ? ' -> ' : ''} $e')}',
+                  onPressed: () => _controller.index = e,
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
@@ -89,19 +90,14 @@ class _TreePageState extends State<TreePage> {
         result.add(
           TreeNode.child(
             titleBuilder: (context) => Text('Node $name'),
-            builder: (context) => Center(
-              child: Text(titleName),
-            ),
+            builder: (context) => Center(child: Text(titleName)),
           ),
         );
       } else {
         result.add(
           TreeNode.children(
             titleBuilder: (context) => Text('Node $name'),
-            children: _generateTree(
-              nodes[i]!,
-              titleName,
-            ),
+            children: _generateTree(nodes[i]!, titleName),
           ),
         );
       }
@@ -413,9 +409,8 @@ return Tree(
               Icons.dragHandle,
               tooltip: 'Allow tree dragging',
               active: _basicExampleDrag,
-              onPressed: () => setState(
-                () => _basicExampleDrag = !_basicExampleDrag,
-              ),
+              onPressed: () =>
+                  setState(() => _basicExampleDrag = !_basicExampleDrag),
             ),
           ],
           body: (context) {

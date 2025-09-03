@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../dialogs/context_menu/context_menu.dart';
 import '../icons.dart';
-import '../theme/theme.dart';
 import 'button.dart';
 
 /// Button that shows a context menu when pressed.
@@ -14,7 +13,6 @@ class ContextMenuButton<T> extends Button {
     super.trailing,
     super.leading,
     super.tooltip,
-    super.theme,
     super.leadingPadding,
     super.padding,
     super.bodyPadding,
@@ -30,8 +28,8 @@ class ContextMenuButton<T> extends Button {
     this.value,
     required this.onSelected,
     required this.itemBuilder,
-  })  : assert(body != null || trailing != null || leading != null),
-        super(onPressed: null);
+  }) : assert(body != null || trailing != null || leading != null),
+       super(onPressed: null);
 
   /// Creates a button with a text.
   factory ContextMenuButton.text(
@@ -39,7 +37,6 @@ class ContextMenuButton<T> extends Button {
     Key? key,
     double? fontSize,
     String? tooltip,
-    ButtonThemeData? theme,
     EdgeInsets? padding,
     FocusNode? focusNode,
     bool canRequestFocus = true,
@@ -61,7 +58,6 @@ class ContextMenuButton<T> extends Button {
       canRequestFocus: canRequestFocus,
       autofocus: autofocus,
       willChangeState: willChangeState,
-      theme: theme,
       enableAnimation: true,
       filled: false,
       value: value,
@@ -87,7 +83,6 @@ class ContextMenuButton<T> extends Button {
     bool autofocus = false,
     bool willChangeState = false,
     VoidCallback? onLongPress,
-    ButtonThemeData? theme,
     T? value,
     ContextMenuCanceled? onCanceled,
     required ContextMenuItemSelected<T>? onSelected,
@@ -105,7 +100,6 @@ class ContextMenuButton<T> extends Button {
       willChangeState: willChangeState,
       enableAnimation: true,
       filled: false,
-      theme: theme,
       value: value,
       itemBuilder: itemBuilder,
       onCanceled: onCanceled,
@@ -127,7 +121,6 @@ class ContextMenuButton<T> extends Button {
     bool enableAnimation = false,
     bool willChangeState = false,
     VoidCallback? onLongPress,
-    ButtonThemeData? theme,
     T? value,
     ContextMenuCanceled? onCanceled,
     required ContextMenuItemSelected<T>? onSelected,
@@ -137,7 +130,6 @@ class ContextMenuButton<T> extends Button {
       key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      theme: theme,
       tooltip: tooltip,
       onLongPress: onLongPress,
       focusNode: focusNode,
@@ -169,7 +161,6 @@ class ContextMenuButton<T> extends Button {
     bool autofocus = false,
     bool willChangeState = false,
     VoidCallback? onLongPress,
-    ButtonThemeData? theme,
     T? value,
     ContextMenuCanceled? onCanceled,
     required ContextMenuItemSelected<T>? onSelected,
@@ -179,7 +170,6 @@ class ContextMenuButton<T> extends Button {
       key: key,
       padding: padding,
       bodyPadding: padding != null ? EdgeInsets.zero : null,
-      theme: theme,
       tooltip: tooltip,
       onLongPress: onLongPress,
       focusNode: focusNode,
@@ -216,15 +206,12 @@ class _ContextMenuButtonState<T> extends ButtonState<ContextMenuButton<T>> {
 
   Future<void> showButtonMenu(BuildContext context) async {
     final RenderBox button = context.findRenderObject()! as RenderBox;
-    final RenderBox overlay = Overlay.of(context, rootOverlay: true)
-        .context
-        .findRenderObject()! as RenderBox;
+    final RenderBox overlay =
+        Overlay.of(context, rootOverlay: true).context.findRenderObject()!
+            as RenderBox;
 
     final Rect position = Rect.fromPoints(
-      button.localToGlobal(
-        Offset.zero,
-        ancestor: overlay,
-      ),
+      button.localToGlobal(Offset.zero, ancestor: overlay),
       button.localToGlobal(
         button.size.bottomRight(Offset.zero),
         ancestor: overlay,
@@ -287,7 +274,6 @@ class _ContextMenuButtonDropdown<T> extends ContextMenuButton<T> {
     super.key,
     super.body,
     super.tooltip,
-    super.theme,
     super.padding,
     super.bodyPadding,
     super.onLongPress,
@@ -310,7 +296,6 @@ class _ContextMenuButtonDropdown<T> extends ContextMenuButton<T> {
 
 class _ContextMenuButtonDropdownState<T> extends _ContextMenuButtonState<T> {
   @override
-  Widget? get trailing => Icon(
-        _buttonActive ? Icons.expandLess : Icons.expandMore,
-      );
+  Widget? get trailing =>
+      Icon(_buttonActive ? Icons.expandLess : Icons.expandMore);
 }

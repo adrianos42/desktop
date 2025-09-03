@@ -49,8 +49,9 @@ return Container(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
-                    child:
-                        Text('Slider value: ${first.toStringAsPrecision(1)}'),
+                    child: Text(
+                      'Slider value: ${first.toStringAsPrecision(1)}',
+                    ),
                   ),
                   Slider(
                     value: first,

@@ -210,7 +210,7 @@ textStyle: The style for the text. The color is ignored.
 @immutable
 class TreeTheme extends InheritedTheme {
   /// Creates a [TreeTheme].
-  const TreeTheme({super.key, required super.child, required this.data});
+  const TreeTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [TreeTheme].
   final TreeThemeData data;

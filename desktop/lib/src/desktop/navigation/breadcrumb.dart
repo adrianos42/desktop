@@ -24,8 +24,9 @@ class BreadcrumbController extends ChangeNotifier {
 
   bool _isDisposed = false;
 
-  final List<_BreadcrumbItem> _items =
-      List<_BreadcrumbItem>.empty(growable: true);
+  final List<_BreadcrumbItem> _items = List<_BreadcrumbItem>.empty(
+    growable: true,
+  );
 
   int get index => _items.length - 1;
 
@@ -97,7 +98,6 @@ class Breadcrumb extends StatefulWidget {
     super.key,
     this.trailing,
     this.leading,
-    this.theme,
     required this.controller,
   });
 
@@ -109,9 +109,6 @@ class Breadcrumb extends StatefulWidget {
 
   /// Widget placed at the beginning of the breadcrumb.
   final Widget? leading;
-
-  /// The theme for [Breadcrumb].
-  final BreadcrumbThemeData? theme;
 
   @override
   State<Breadcrumb> createState() => _BreadcrumbState();
@@ -127,8 +124,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
   final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 
   Widget _createBarNavigation() {
-    final BreadcrumbThemeData themeData =
-        BreadcrumbTheme.of(context).merge(widget.theme);
+    final BreadcrumbThemeData themeData = BreadcrumbTheme.of(context);
 
     final items = List<Widget>.empty(growable: true);
 
@@ -162,13 +158,15 @@ class _BreadcrumbState extends State<Breadcrumb> {
       );
 
       if (!isLast) {
-        items.add(Padding(
-          padding: EdgeInsets.symmetric(horizontal: itemSpacing),
-          child: IconTheme(
-            data: themeData.iconTheme!.copyWith(color: color),
-            child: const Icon(Icons.chevronRight),
+        items.add(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: itemSpacing),
+            child: IconTheme(
+              data: themeData.iconTheme!.copyWith(color: color),
+              child: const Icon(Icons.chevronRight),
+            ),
           ),
-        ));
+        );
       }
     }
     Widget result = Container(
@@ -184,18 +182,13 @@ class _BreadcrumbState extends State<Breadcrumb> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: ScrollConfiguration(
-                behavior: const DesktopScrollBehavior(
-                  isAlwaysShown: false,
-                ),
+                behavior: const DesktopScrollBehavior(isAlwaysShown: false),
                 child: SingleChildScrollView(
                   reverse: true,
                   padding: padding,
                   controller: scrollController,
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: items,
-                  ),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: items),
                 ),
               ),
             ),
@@ -205,10 +198,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
       ),
     );
 
-    result = TabScope(
-      axis: Axis.horizontal,
-      child: result,
-    );
+    result = TabScope(axis: Axis.horizontal, child: result);
 
     return result;
   }
@@ -261,9 +251,7 @@ class _BreadcrumbState extends State<Breadcrumb> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Builder(
-          builder: (context) => _createBarNavigation(),
-        ),
+        Builder(builder: (context) => _createBarNavigation()),
         Expanded(
           child: Overlay(
             key: overlayKey,

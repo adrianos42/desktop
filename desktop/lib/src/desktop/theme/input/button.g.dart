@@ -517,7 +517,7 @@ axis: The axis of the button.
 @immutable
 class ButtonTheme extends InheritedTheme {
   /// Creates a [ButtonTheme].
-  const ButtonTheme({super.key, required super.child, required this.data});
+  const ButtonTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [ButtonTheme].
   final ButtonThemeData data;

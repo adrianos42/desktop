@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class DialogMessagePage extends StatefulWidget {
@@ -114,7 +115,7 @@ class _DialogPageState extends State<DialogMessagePage> {
           ),
           codeText: dismissableDialog,
           title: 'Success message',
-        )
+        ),
       ],
       header: 'Message',
     );

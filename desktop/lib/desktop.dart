@@ -1,5 +1,3 @@
-library desktop;
-
 export 'dart:ui' show Brightness;
 
 export 'package:flutter/widgets.dart';

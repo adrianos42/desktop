@@ -28,9 +28,7 @@ abstract class ContextMenuEntry<T> extends StatefulWidget {
 }
 
 class _MenuItem extends SingleChildRenderObjectWidget {
-  const _MenuItem({
-    required super.child,
-  });
+  const _MenuItem({required super.child});
 
   @override
   RenderObject createRenderObject(BuildContext context) =>
@@ -69,8 +67,9 @@ class ContextMenuItem<T> extends ContextMenuEntry<T> {
     this.height,
     this.child,
     this.builder,
-  }) : assert(child != null && builder == null ||
-            child == null && builder != null);
+  }) : assert(
+         child != null && builder == null || child == null && builder != null,
+       );
 
   final T value;
 
@@ -146,25 +145,27 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
 
   @override
   Widget build(BuildContext context) {
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData = ContextMenuTheme.of(
+      context,
+    );
 
     final bool selected = widget.selected(context);
 
     final Color background = pressed
         ? (selected
-            ? contextMenuThemeData.selectedHighlightColor!
-            : contextMenuThemeData.highlightColor!) // TODO(as): ???
+              ? contextMenuThemeData.selectedHighlightColor!
+              : contextMenuThemeData.highlightColor!) // TODO(as): ???
         : selected
-            ? (hovered
-                ? contextMenuThemeData.selectedHoverColor!
-                : contextMenuThemeData.selectedColor!)
-            : hovered
-                ? contextMenuThemeData.hoverColor! // TODO(as): ???
-                : contextMenuThemeData.background!;
+        ? (hovered
+              ? contextMenuThemeData.selectedHoverColor!
+              : contextMenuThemeData.selectedColor!)
+        : hovered
+        ? contextMenuThemeData.hoverColor! // TODO(as): ???
+        : contextMenuThemeData.background!;
 
-    final Color? foreground =
-        hovered ? contextMenuThemeData.selectedForeground : null;
+    final Color? foreground = hovered
+        ? contextMenuThemeData.selectedForeground
+        : null;
 
     Widget item = DefaultTextStyle(
       style: contextMenuThemeData.textStyle!.copyWith(color: foreground),
@@ -181,9 +182,7 @@ class ContextMenuItemState<T, W extends ContextMenuItem<T>> extends State<W>
                   minHeight: widget.height!,
                   maxHeight: widget.height!,
                 )
-              : BoxConstraints(
-                  minHeight: contextMenuThemeData.itemHeight!,
-                ),
+              : BoxConstraints(minHeight: contextMenuThemeData.itemHeight!),
           child: buildChild(),
         ),
       ),
@@ -233,20 +232,14 @@ class _ContextMenuDividerState extends State<ContextMenuDivider> {
     return SizedBox(
       height: _kDividerHeight,
       child: Center(
-        child: Container(
-          height: _kDividerThickness,
-          color: background,
-        ),
+        child: Container(height: _kDividerThickness, color: background),
       ),
     );
   }
 }
 
 class _MenuItemSelected extends InheritedWidget {
-  const _MenuItemSelected({
-    required super.child,
-    required this.selected,
-  });
+  const _MenuItemSelected({required super.child, required this.selected});
 
   final bool selected;
 
@@ -261,10 +254,7 @@ class _MenuItemSelected extends InheritedWidget {
 }
 
 class _ContextMenu<T> extends StatelessWidget {
-  _ContextMenu({
-    super.key,
-    this.semanticLabel,
-  });
+  _ContextMenu({super.key, this.semanticLabel});
 
   _ContextController<T> controller(BuildContext context) =>
       _ContextScope._of<T>(context);
@@ -274,8 +264,9 @@ class _ContextMenu<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData = ContextMenuTheme.of(
+      context,
+    );
 
     final double menuWidth =
         controller(context).width ?? contextMenuThemeData.minMenuWidth!;
@@ -290,10 +281,7 @@ class _ContextMenu<T> extends StatelessWidget {
       }
 
       return _MenuItem(
-        child: _MenuItemSelected(
-          selected: selected,
-          child: item,
-        ),
+        child: _MenuItemSelected(selected: selected, child: item),
       );
     }).toList();
 
@@ -303,9 +291,7 @@ class _ContextMenu<T> extends StatelessWidget {
     );
 
     final Widget child = ConstrainedBox(
-      constraints: BoxConstraints.tightFor(
-        width: menuWidth,
-      ),
+      constraints: BoxConstraints.tightFor(width: menuWidth),
       child: Semantics(
         scopesRoute: true,
         namesRoute: true,
@@ -320,7 +306,8 @@ class _ContextMenu<T> extends StatelessWidget {
             child: controller(context).width == null
                 ? IntrinsicWidth(
                     stepWidth: contextMenuThemeData.menuWidthStep!,
-                    child: contextView)
+                    child: contextView,
+                  )
                 : contextView,
           ),
         ),
@@ -328,9 +315,7 @@ class _ContextMenu<T> extends StatelessWidget {
     );
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: contextMenuThemeData.background!,
-      ),
+      decoration: BoxDecoration(color: contextMenuThemeData.background!),
       position: DecorationPosition.background,
       child: child,
     );
@@ -338,10 +323,7 @@ class _ContextMenu<T> extends StatelessWidget {
 }
 
 class _ContextScope<T> extends InheritedWidget {
-  const _ContextScope(
-    this.contextController, {
-    required super.child,
-  });
+  const _ContextScope(this.contextController, {required super.child});
 
   final _ContextController<T> contextController;
 
@@ -382,8 +364,8 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
     String? barrierLabel,
     this.themes,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierLabel = barrierLabel;
+  }) : _pageBuilder = pageBuilder,
+       _barrierLabel = barrierLabel;
 
   final RoutePageBuilder _pageBuilder;
 
@@ -406,8 +388,11 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
   Duration get transitionDuration => _kContextDuration;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     final Widget pageChild = Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -419,8 +404,12 @@ class _ContextMenuRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return FadeTransition(
       opacity: CurvedAnimation(
         parent: animation,
@@ -486,7 +475,7 @@ typedef ContextMenuItemSelected<T> = void Function(T value);
 
 typedef ContextMenuCanceled = void Function();
 
-typedef ContextMenuItemBuilder<T> = List<ContextMenuEntry<T>> Function(
-    BuildContext context);
+typedef ContextMenuItemBuilder<T> =
+    List<ContextMenuEntry<T>> Function(BuildContext context);
 
-typedef ContextMenuItemStateBuilder = Widget Function(Set<ComponentState> states);
+typedef ContextMenuItemStateBuilder = Widget Function(Set<WidgetState> states);

@@ -4,18 +4,17 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-import 'selection_menubar.dart';
 import '../theme/theme.dart';
+import 'selection_menubar.dart';
 
 const double _kCursorWidth = 1.0;
 const int iOSHorizontalOffset = -2;
 
 class _SelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
-  _SelectionGestureDetectorBuilder({
-    required _SelectableTextState state,
-  })  : _state = state,
-        super(delegate: state);
+  _SelectionGestureDetectorBuilder({required _SelectableTextState state})
+    : _state = state,
+      super(delegate: state);
 
   final _SelectableTextState _state;
 
@@ -60,13 +59,13 @@ class SelectableText extends StatefulWidget {
     this.dragStartBehavior = DragStartBehavior.start,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.onSelectionChanged,
-  })  : assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        textSpan = null;
+  }) : assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       textSpan = null;
 
   ///
   const SelectableText.rich(
@@ -97,13 +96,13 @@ class SelectableText extends StatefulWidget {
     this.dragStartBehavior = DragStartBehavior.start,
     this.contextMenuBuilder = _defaultContextMenuBuilder,
     this.onSelectionChanged,
-  })  : assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        text = null;
+  }) : assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       text = null;
 
   ///
   final String? text;
@@ -182,7 +181,7 @@ class SelectableText extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.scrollBehavior}
   final ScrollBehavior? scrollBehavior;
 
-/// {@macro flutter.widgets.editableText.scrollController}
+  /// {@macro flutter.widgets.editableText.scrollController}
   final ScrollController? scrollController;
 
   static Widget _defaultContextMenuBuilder(
@@ -228,7 +227,9 @@ class _SelectableTextState extends State<SelectableText>
   bool _showSelectionHandles = false;
 
   void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause? cause) {
+    TextSelection selection,
+    SelectionChangedCause? cause,
+  ) {
     final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
     if (willShowSelectionHandles != _showSelectionHandles) {
       setState(() {
@@ -295,8 +296,9 @@ class _SelectableTextState extends State<SelectableText>
   @override
   void initState() {
     super.initState();
-    _selectionGestureDetectorBuilder =
-        _SelectionGestureDetectorBuilder(state: this);
+    _selectionGestureDetectorBuilder = _SelectionGestureDetectorBuilder(
+      state: this,
+    );
     _controller = _TextSpanEditingController(
       textSpan: widget.textSpan ?? TextSpan(text: widget.text),
     );
@@ -338,10 +340,12 @@ class _SelectableTextState extends State<SelectableText>
 
   @override
   Widget build(BuildContext context) {
-    final TextSelectionControls? textSelectionControls = widget.selectionControls;
+    final TextSelectionControls? textSelectionControls =
+        widget.selectionControls;
 
-    final DefaultSelectionStyle selectionStyle =
-        DefaultSelectionStyle.of(context);
+    final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(
+      context,
+    );
     final FocusNode focusNode = _effectiveFocusNode;
 
     final ThemeData theme = Theme.of(context);
@@ -366,13 +370,16 @@ class _SelectableTextState extends State<SelectableText>
         // textSelectionControls ??= cupertinoTextSelectionHandleControls;
         paintCursorAboveText = true;
         cursorOpacityAnimates = true;
-        cursorColor = widget.cursorColor ??
+        cursorColor =
+            widget.cursorColor ??
             selectionStyle.cursorColor ??
             colorScheme.primary[40];
         selectionColor =
             selectionStyle.selectionColor ?? colorScheme.primary[50];
         cursorOffset = Offset(
-            iOSHorizontalOffset / MediaQuery.devicePixelRatioOf(context), 0);
+          iOSHorizontalOffset / MediaQuery.devicePixelRatioOf(context),
+          0,
+        );
         break;
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
@@ -380,7 +387,8 @@ class _SelectableTextState extends State<SelectableText>
         // textSelectionControls ??= materialTextSelectionHandleControls;
         paintCursorAboveText = false;
         cursorOpacityAnimates = false;
-        cursorColor = widget.cursorColor ??
+        cursorColor =
+            widget.cursorColor ??
             selectionStyle.cursorColor ??
             theme.colorScheme.primary[40];
         cursorOffset = Offset.zero;
@@ -394,7 +402,8 @@ class _SelectableTextState extends State<SelectableText>
         // textSelectionControls ??= desktopTextSelectionHandleControls;
         paintCursorAboveText = false;
         cursorOpacityAnimates = false;
-        cursorColor = widget.cursorColor ??
+        cursorColor =
+            widget.cursorColor ??
             selectionStyle.cursorColor ??
             theme.colorScheme.primary[40];
         cursorOffset = Offset.zero;
@@ -458,9 +467,7 @@ class _SelectableTextState extends State<SelectableText>
       behavior: HitTestBehavior.translucent,
       child: GestureDetector(
         onLongPress: () => _effectiveFocusNode.requestFocus(),
-        child: RepaintBoundary(
-          child: editable,
-        ),
+        child: RepaintBoundary(child: editable),
       ),
     );
   }
@@ -468,20 +475,18 @@ class _SelectableTextState extends State<SelectableText>
 
 class _TextSpanEditingController extends TextEditingController {
   _TextSpanEditingController({required TextSpan textSpan})
-      : _textSpan = textSpan,
-        super(text: textSpan.toPlainText(includeSemanticsLabels: false));
+    : _textSpan = textSpan,
+      super(text: textSpan.toPlainText(includeSemanticsLabels: false));
 
   final TextSpan _textSpan;
 
   @override
-  TextSpan buildTextSpan(
-      {required BuildContext context,
-      TextStyle? style,
-      required bool withComposing}) {
-    return TextSpan(
-      style: style,
-      children: <TextSpan>[_textSpan],
-    );
+  TextSpan buildTextSpan({
+    required BuildContext context,
+    TextStyle? style,
+    required bool withComposing,
+  }) {
+    return TextSpan(style: style, children: <TextSpan>[_textSpan]);
   }
 
   @override
@@ -498,7 +503,10 @@ class _InputScrollBehavior extends ScrollBehavior {
   /// Applies a [Scrollbar] to the child widget.
   @override
   Widget buildScrollbar(
-      BuildContext context, Widget child, ScrollableDetails details) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child;
   }
 }

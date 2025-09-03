@@ -32,24 +32,25 @@ class ListTableRender extends RenderBox
     int? rowCount,
     int? targetCount,
     List<RenderBox>? children,
-  })  : _headerColumnBorder = headerColumnBorder,
-        _tableBorder = tableBorder,
-        _columnWidths = columnWidths,
-        _headerExtent = headerExtent,
-        _columns = _generateColumns(columnWidths),
-        _highlightColor = highlightColor,
-        _hoverColor = hoverColor,
-        _hasHiddenColumns = columnWidths.any((elem) => elem == 0.0),
-        _draggingColumnTargetItemIndex = draggingColumnTargetItemIndex,
-        _isDraggingColumn = isDraggingColumn,
-        _rowCount = rowCount,
-        _targetCount = targetCount {
+  }) : _headerColumnBorder = headerColumnBorder,
+       _tableBorder = tableBorder,
+       _columnWidths = columnWidths,
+       _headerExtent = headerExtent,
+       _columns = _generateColumns(columnWidths),
+       _highlightColor = highlightColor,
+       _hoverColor = hoverColor,
+       _hasHiddenColumns = columnWidths.any((elem) => elem == 0.0),
+       _draggingColumnTargetItemIndex = draggingColumnTargetItemIndex,
+       _isDraggingColumn = isDraggingColumn,
+       _rowCount = rowCount,
+       _targetCount = targetCount {
     addAll(children);
   }
 
   static List<double> _generateColumns(List<double> values) {
-    final List<double> nonZeroColumns =
-        values.where((elem) => elem > 0.0).toList();
+    final List<double> nonZeroColumns = values
+        .where((elem) => elem > 0.0)
+        .toList();
 
     if (values.any((elem) => elem == 0.0)) {
       nonZeroColumns.add(0.0);
@@ -193,12 +194,14 @@ class ListTableRender extends RenderBox
 
   int _indexOfColumn(Offset localPosition) {
     return _columns
-        .map((column) => Rect.fromLTWH(
-              column - _kHandlerWidth,
-              0.0,
-              _kHandlerWidth * 2,
-              _effectiveHeaderExtent,
-            ))
+        .map(
+          (column) => Rect.fromLTWH(
+            column - _kHandlerWidth,
+            0.0,
+            _kHandlerWidth * 2,
+            _effectiveHeaderExtent,
+          ),
+        )
         .toList()
         .indexWhere((e) => e.contains(localPosition));
   }
@@ -282,11 +285,7 @@ class ListTableRender extends RenderBox
 
       while (child != null && y < _rowCount!) {
         height += child
-            .getDryLayout(
-              BoxConstraints.tightFor(
-                width: constraints.maxWidth,
-              ),
-            )
+            .getDryLayout(BoxConstraints.tightFor(width: constraints.maxWidth))
             .height;
 
         child = childAfter(child);
@@ -302,8 +301,9 @@ class ListTableRender extends RenderBox
 
   @override
   void performLayout() {
-    final List<double> nonZeroColumns =
-        _columnWidths.where((elem) => elem > 0.0).toList();
+    final List<double> nonZeroColumns = _columnWidths
+        .where((elem) => elem > 0.0)
+        .toList();
 
     RenderBox? child = firstChild;
     double height;
@@ -320,8 +320,10 @@ class ListTableRender extends RenderBox
           parentUsesSize: true,
         );
 
-        (child.parentData! as _ListTableParentData).offset =
-            Offset(0.0, height);
+        (child.parentData! as _ListTableParentData).offset = Offset(
+          0.0,
+          height,
+        );
 
         if (y == 0) {
           _headerHeight = child.size.height;
@@ -339,8 +341,10 @@ class ListTableRender extends RenderBox
     final effectiveChildCount = _targetCount ?? childCount;
 
     if (nonZeroColumns.isNotEmpty && effectiveChildCount > 0) {
-      final List<double> targetWidths =
-          List<double>.filled(effectiveChildCount, 0.0);
+      final List<double> targetWidths = List<double>.filled(
+        effectiveChildCount,
+        0.0,
+      );
 
       targetWidths[0] = nonZeroColumns[0] / 2.0;
 
@@ -351,8 +355,10 @@ class ListTableRender extends RenderBox
       targetWidths[targetWidths.length - 1] =
           nonZeroColumns[nonZeroColumns.length - 1] / 2.0;
 
-      final List<double> positions =
-          List<double>.filled(targetWidths.length, 0.0);
+      final List<double> positions = List<double>.filled(
+        targetWidths.length,
+        0.0,
+      );
 
       for (int x = 1; x < targetWidths.length; x += 1) {
         positions[x] = positions[x - 1] + targetWidths[x - 1];
@@ -361,13 +367,14 @@ class ListTableRender extends RenderBox
       int x = 0;
 
       while (child != null) {
-        child.layout(BoxConstraints.tightFor(
-          width: targetWidths[x],
-          height: height,
-        ));
+        child.layout(
+          BoxConstraints.tightFor(width: targetWidths[x], height: height),
+        );
 
-        (child.parentData! as _ListTableParentData).offset =
-            Offset(positions[x], 0.0);
+        (child.parentData! as _ListTableParentData).offset = Offset(
+          positions[x],
+          0.0,
+        );
 
         child = childAfter(child);
         x += 1;
@@ -605,8 +612,8 @@ class ListTableRender extends RenderBox
         : 0.0;
     final double bottomBorderWidth =
         tableBorder.bottom.style == BorderStyle.solid
-            ? tableBorder.bottom.width
-            : 0.0;
+        ? tableBorder.bottom.width
+        : 0.0;
 
     if (_isDraggingColumn && _draggingColumnTargetItemIndex == 0) {
       final double lineWidth =
@@ -616,14 +623,8 @@ class ListTableRender extends RenderBox
 
       path.reset();
 
-      path.moveTo(
-        offset.dx,
-        offset.dy + topBorderWidth,
-      );
-      path.lineTo(
-        offset.dx,
-        offset.dy + size.height - bottomBorderWidth,
-      );
+      path.moveTo(offset.dx, offset.dy + topBorderWidth);
+      path.lineTo(offset.dx, offset.dy + size.height - bottomBorderWidth);
 
       if (lineWidth == 0.0) {
         paint.style = PaintingStyle.stroke;
@@ -634,10 +635,7 @@ class ListTableRender extends RenderBox
           offset.dx + lineWidth,
           offset.dy + size.height - bottomBorderWidth,
         );
-        path.lineTo(
-          offset.dx + lineWidth,
-          offset.dy + topBorderWidth,
-        );
+        path.lineTo(offset.dx + lineWidth, offset.dy + topBorderWidth);
       }
 
       context.canvas.drawPath(path, paint);
@@ -672,14 +670,8 @@ class ListTableRender extends RenderBox
 
         path.reset();
 
-        path.moveTo(
-          offset.dx + x,
-          offset.dy + _effectiveHeaderExtent,
-        );
-        path.lineTo(
-          offset.dx + x,
-          offset.dy + size.height - bottomBorderWidth,
-        );
+        path.moveTo(offset.dx + x, offset.dy + _effectiveHeaderExtent);
+        path.lineTo(offset.dx + x, offset.dy + size.height - bottomBorderWidth);
 
         if (lineWidth == 0.0) {
           paint.style = PaintingStyle.stroke;
@@ -714,8 +706,8 @@ class ListTableRender extends RenderBox
           paint.color = _draggingIndex == i
               ? highlightColor
               : _columnHoverIndex == i
-                  ? hoverColor
-                  : highlightColor;
+              ? hoverColor
+              : highlightColor;
         } else if (_isDraggingColumn &&
             _draggingColumnTargetItemIndex - 1 == i) {
           paint.color = hoverColor;
@@ -731,14 +723,8 @@ class ListTableRender extends RenderBox
 
         path.reset();
 
-        path.moveTo(
-          offset.dx + x,
-          offset.dy + topBorderWidth,
-        );
-        path.lineTo(
-          offset.dx + x,
-          offset.dy + _effectiveHeaderExtent,
-        );
+        path.moveTo(offset.dx + x, offset.dy + topBorderWidth);
+        path.lineTo(offset.dx + x, offset.dy + _effectiveHeaderExtent);
 
         if (lineWidth == 0.0) {
           paint.style = PaintingStyle.stroke;
@@ -749,10 +735,7 @@ class ListTableRender extends RenderBox
             offset.dx + x - lineWidth,
             offset.dy + _effectiveHeaderExtent,
           );
-          path.lineTo(
-            offset.dx + x - lineWidth,
-            offset.dy + topBorderWidth,
-          );
+          path.lineTo(offset.dx + x - lineWidth, offset.dy + topBorderWidth);
         }
 
         context.canvas.drawPath(path, paint);

@@ -27,8 +27,9 @@ return ToggleSwitch(
 
     return Defaults(
       header: 'Toggle Switch',
-      styleItems:
-          Defaults.createStyle(ToggleSwitchTheme.of(context).toString()),
+      styleItems: Defaults.createStyle(
+        ToggleSwitchTheme.of(context).toString(),
+      ),
       items: [
         ItemTitle(
           title: 'Example',

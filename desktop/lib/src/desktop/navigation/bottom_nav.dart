@@ -14,7 +14,7 @@ const int _kIntialIndexValue = 0;
 const Duration _kMenuTransitionDuration = Duration(milliseconds: 400);
 const Curve _kDefaultAnimationCurve = Curves.linearToEaseOut;
 
-// TODO(as):
+// TODO(as): create widget.
 /// EXPERIMENTAL!!!
 class BottomNav extends StatefulWidget {
   /// Creates a navigation bar.
@@ -53,8 +53,9 @@ class _BottomNavState extends State<BottomNav>
 
   final GlobalKey<OverlayState> _overlayKey = GlobalKey<OverlayState>();
 
-  final List<OverlayEntry> _menuOverlays =
-      List<OverlayEntry>.empty(growable: true);
+  final List<OverlayEntry> _menuOverlays = List<OverlayEntry>.empty(
+    growable: true,
+  );
 
   final GlobalKey<OverlayState> _menuOverlayKey = GlobalKey<OverlayState>();
 
@@ -77,10 +78,7 @@ class _BottomNavState extends State<BottomNav>
     const Offset begin = Offset(0.0, 1.0);
     const Offset end = Offset(0.0, 0.0);
 
-    _menuOffsetTween = Tween<Offset>(
-      begin: begin,
-      end: end,
-    );
+    _menuOffsetTween = Tween<Offset>(begin: begin, end: end);
   }
 
   void nextView() => _indexChanged((_index + 1) % _length);
@@ -213,9 +211,7 @@ class _BottomNavState extends State<BottomNav>
 
     final navList = <Widget>[];
 
-    navList.add(
-      _createNavItems(itemsSpacing, navThemeData),
-    );
+    navList.add(_createNavItems(itemsSpacing, navThemeData));
 
     Widget result = Container(
       constraints: constraints,
@@ -245,8 +241,12 @@ class _BottomNavState extends State<BottomNav>
 
     _shouldBuildView.addAll(List<bool>.filled(_length, false));
 
-    _overlays.addAll(List<OverlayEntry>.generate(
-        _length, (index) => _createPageOverlayEntry(index)));
+    _overlays.addAll(
+      List<OverlayEntry>.generate(
+        _length,
+        (index) => _createPageOverlayEntry(index),
+      ),
+    );
 
     _menuController = AnimationController(
       vsync: this,
@@ -258,22 +258,23 @@ class _BottomNavState extends State<BottomNav>
 
   OverlayEntry _createPageOverlayEntry(int index) {
     return OverlayEntry(
-        maintainState: true,
-        builder: (context) {
-          final bool active = index == _index;
-          _shouldBuildView[index] = active || _shouldBuildView[index];
-          return Offstage(
-            offstage: !active,
-            child: TickerMode(
-              enabled: active,
-              child: Builder(
-                builder: _shouldBuildView[index]
-                    ? (context) => widget.items[index].builder(context, index)
-                    : (context) => Container(),
-              ),
+      maintainState: true,
+      builder: (context) {
+        final bool active = index == _index;
+        _shouldBuildView[index] = active || _shouldBuildView[index];
+        return Offstage(
+          offstage: !active,
+          child: TickerMode(
+            enabled: active,
+            child: Builder(
+              builder: _shouldBuildView[index]
+                  ? (context) => widget.items[index].builder(context, index)
+                  : (context) => Container(),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -286,20 +287,27 @@ class _BottomNavState extends State<BottomNav>
     super.didUpdateWidget(oldWidget);
 
     if (widget.items.length - _shouldBuildView.length > 0) {
-      _shouldBuildView.addAll(List<bool>.filled(
-          widget.items.length - _shouldBuildView.length, false));
+      _shouldBuildView.addAll(
+        List<bool>.filled(widget.items.length - _shouldBuildView.length, false),
+      );
 
-      for (int index = _overlays.length;
-          index < widget.items.length - _shouldBuildView.length;
-          index += 1) {
+      for (
+        int index = _overlays.length;
+        index < widget.items.length - _shouldBuildView.length;
+        index += 1
+      ) {
         _overlays.add(_createPageOverlayEntry(index));
       }
     } else {
       _shouldBuildView.removeRange(
-          widget.items.length, _shouldBuildView.length);
+        widget.items.length,
+        _shouldBuildView.length,
+      );
 
-      for (final overlayEntry
-          in _overlays.getRange(widget.items.length, _overlays.length)) {
+      for (final overlayEntry in _overlays.getRange(
+        widget.items.length,
+        _overlays.length,
+      )) {
         overlayEntry.remove();
       }
 
@@ -321,18 +329,12 @@ class _BottomNavState extends State<BottomNav>
         Column(
           children: [
             Expanded(
-              child: Overlay(
-                key: _overlayKey,
-                initialEntries: _overlays,
-              ),
+              child: Overlay(key: _overlayKey, initialEntries: _overlays),
             ),
             _createNavBar(),
           ],
         ),
-        Overlay(
-          key: _menuOverlayKey,
-          initialEntries: _menuOverlays,
-        ),
+        Overlay(key: _menuOverlayKey, initialEntries: _menuOverlays),
         _createMenuItem(),
       ],
     );

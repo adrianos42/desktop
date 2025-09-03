@@ -18,7 +18,6 @@ class DropDownButton<T> extends StatefulWidget {
     this.onCanceled,
     this.tooltip,
     this.enabled = true,
-    this.theme,
   });
 
   /// The list of [ContextMenuItem] used for the context menu.
@@ -38,9 +37,6 @@ class DropDownButton<T> extends StatefulWidget {
 
   /// If this button is enabled.
   final bool enabled;
-
-  /// The style [DropDownThemeData] of the drop down.
-  final DropDownThemeData? theme;
 
   @override
   State<DropDownButton<T>> createState() => _DropDownButtonState<T>();
@@ -68,7 +64,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
     assert(items.isNotEmpty);
 
-    setState(() => waiting = true);
+    setState(() => selected = true);
 
     await showMenu<T>(
       context: context,
@@ -96,7 +92,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
       }
     });
 
-    setState(() => waiting = false);
+    setState(() => selected = false);
   }
 
   void _handleHoverEntered() {
@@ -174,9 +170,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
 
   @override
   Widget build(BuildContext context) {
-    final DropDownThemeData buttonThemeData = DropDownTheme.of(
-      context,
-    ).merge(widget.theme);
+    final DropDownThemeData buttonThemeData = DropDownTheme.of(context);
 
     final bool enabled = widget.enabled;
 
@@ -191,7 +185,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     }
 
     final Color borderColor = enabled
-        ? waiting
+        ? selected
               ? buttonThemeData.waitingColor!
               : hovered
               ? buttonThemeData.hoverColor!
@@ -205,7 +199,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
     _color = ColorTween(begin: _color?.end ?? borderColor, end: borderColor);
 
     final Color background = enabled
-        ? waiting
+        ? selected
               ? buttonThemeData.waitingBackgroundColor!
               : hovered
               ? buttonThemeData.hoverBackgroundColor!
@@ -256,7 +250,7 @@ class _DropDownButtonState<T> extends State<DropDownButton<T>>
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Icon(
-                      waiting ? Icons.expandLess : Icons.expandMore,
+                      selected ? Icons.expandLess : Icons.expandMore,
                       size: buttonThemeData.iconThemeData!.size,
                       color: foreground,
                     ),

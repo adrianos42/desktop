@@ -18,7 +18,6 @@ class Tooltip extends StatefulWidget {
     this.preferBelow,
     this.excludeFromSemantics,
     this.visible,
-    this.theme,
     this.child,
   });
 
@@ -46,9 +45,6 @@ class Tooltip extends StatefulWidget {
   final Widget? child;
 
   final bool? visible;
-
-  /// The theme data for [Tooltip].
-  final TooltipThemeData? theme;
 
   @override
   State<Tooltip> createState() => _TooltipState();
@@ -85,8 +81,9 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       vsync: this,
     )..addStatusListener(_handleStatusChanged);
     // Listen to see when a mouse is added.
-    RendererBinding.instance.mouseTracker
-        .addListener(_handleMouseTrackerChange);
+    RendererBinding.instance.mouseTracker.addListener(
+      _handleMouseTrackerChange,
+    );
     // Listen to global pointer events so that we can hide a tooltip immediately
     // if some other control is clicked on.
     GestureBinding.instance.pointerRouter.addGlobalRoute(_handlePointerEvent);
@@ -239,10 +236,12 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    GestureBinding.instance.pointerRouter
-        .removeGlobalRoute(_handlePointerEvent);
-    RendererBinding.instance.mouseTracker
-        .removeListener(_handleMouseTrackerChange);
+    GestureBinding.instance.pointerRouter.removeGlobalRoute(
+      _handlePointerEvent,
+    );
+    RendererBinding.instance.mouseTracker.removeListener(
+      _handleMouseTrackerChange,
+    );
     if (_entry != null) {
       _removeEntry();
     }
@@ -257,8 +256,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final TooltipThemeData tooltipThemeData =
-        TooltipTheme.of(context).merge(widget.theme);
+    final TooltipThemeData tooltipThemeData = TooltipTheme.of(context);
 
     height = tooltipThemeData.height!;
     maxWidth = tooltipThemeData.maxWidth!;
@@ -387,8 +385,10 @@ class _TooltipOverlay extends StatelessWidget {
           child: FadeTransition(
             opacity: animation,
             child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(minHeight: height, maxWidth: maxWidth),
+              constraints: BoxConstraints(
+                minHeight: height,
+                maxWidth: maxWidth,
+              ),
               child: Container(
                 color: background,
                 padding: padding,

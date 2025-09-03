@@ -170,8 +170,8 @@ class CircularProgressIndicatorTheme extends InheritedTheme {
   /// Creates a [CircularProgressIndicatorTheme].
   const CircularProgressIndicatorTheme({
     super.key,
-    required super.child,
     required this.data,
+    required super.child,
   });
 
   /// The data representing this [CircularProgressIndicatorTheme].

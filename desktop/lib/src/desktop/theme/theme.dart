@@ -1,5 +1,3 @@
-library theme;
-
 export 'color_scheme.dart';
 export 'constants.dart';
 export 'data/data.dart';

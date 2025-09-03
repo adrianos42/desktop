@@ -162,51 +162,51 @@ class CheckboxThemeData {
   String toString() {
     return r'''
 disabledColor: The disabled color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;activeColor: The active color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.primary[50]
  ```;;activeHoverColor: The active hover color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;inactiveColor: The inactive color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;inactiveHoverColor: The inactive hover color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;foreground: The foreground color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[100]
  ```;;hoverForeground: The hover foreground color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.background[0]
  ```;;containerSize: The container size.
- 
+
  Defaults to:
- 
+
  ```dart
  32.0
  ```;;
@@ -231,7 +231,7 @@ disabledColor: The disabled color.
 @immutable
 class CheckboxTheme extends InheritedTheme {
   /// Creates a [CheckboxTheme].
-  const CheckboxTheme({super.key, required super.child, required this.data});
+  const CheckboxTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [CheckboxTheme].
   final CheckboxThemeData data;

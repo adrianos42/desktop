@@ -24,7 +24,6 @@ class ToggleSwitch extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.autofocus = false,
-    this.theme,
   });
 
   final bool value;
@@ -34,9 +33,6 @@ class ToggleSwitch extends StatefulWidget {
   final FocusNode? focusNode;
 
   final bool autofocus;
-
-  /// The style [ToggleSwitchThemeData] of the toggle switch.
-  final ToggleSwitchThemeData? theme;
 
   @override
   State<ToggleSwitch> createState() => _ToggleSwitchState();
@@ -143,8 +139,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   @override
   Widget build(BuildContext context) {
-    final ToggleSwitchThemeData theme =
-        ToggleSwitchTheme.of(context).merge(widget.theme);
+    final ToggleSwitchThemeData theme = ToggleSwitchTheme.of(context);
 
     final Color activeColor = theme.activeColor!;
     final Color hoverColor = theme.activeHoverColor!;
@@ -238,7 +233,9 @@ class _ToggleSwitchRenderObjectWidget extends LeafRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, _RenderToggleSwitch renderObject) {
+    BuildContext context,
+    _RenderToggleSwitch renderObject,
+  ) {
     renderObject
       ..value = value
       ..activeColor = activeColor
@@ -266,16 +263,16 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     required Color inactiveHoverColor,
     required bool hovering,
     required super.additionalConstraints,
-  })  : _state = state,
-        _value = value,
-        _activeColor = activeColor,
-        _disabledColor = disabledColor,
-        _foregroundColor = foregroundColor,
-        _inactiveColor = inactiveColor,
-        _hoverColor = hoverColor,
-        _inactiveHoverColor = inactiveHoverColor,
-        _hovering = hovering,
-        _onChanged = onChanged;
+  }) : _state = state,
+       _value = value,
+       _activeColor = activeColor,
+       _disabledColor = disabledColor,
+       _foregroundColor = foregroundColor,
+       _inactiveColor = inactiveColor,
+       _hoverColor = hoverColor,
+       _inactiveHoverColor = inactiveHoverColor,
+       _hovering = hovering,
+       _onChanged = onChanged;
 
   final _ToggleSwitchState _state;
 
@@ -414,8 +411,11 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     final color = Color.lerp(inactiveColor, activeColor, t)!;
 
     if (hovering || _state._hoverPositionController.isAnimating) {
-      return Color.lerp(color, Color.lerp(inactiveHoverColor, hoverColor, t),
-          _state._hoverPosition.value)!;
+      return Color.lerp(
+        color,
+        Color.lerp(inactiveHoverColor, hoverColor, t),
+        _state._hoverPosition.value,
+      )!;
     }
 
     return color;
@@ -460,8 +460,8 @@ class _RenderToggleSwitch extends RenderConstrainedBox {
     final AnimationStatus status = _state._position.status;
     final double tNormalized =
         status == AnimationStatus.forward || status == AnimationStatus.completed
-            ? _state._position.value
-            : 1.0 - _state._position.value;
+        ? _state._position.value
+        : 1.0 - _state._position.value;
 
     final double t = value == false ? 1.0 - tNormalized : tNormalized;
 

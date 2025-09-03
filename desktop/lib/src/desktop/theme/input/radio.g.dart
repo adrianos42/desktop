@@ -165,7 +165,7 @@ disabledColor: The disabled color.
 @immutable
 class RadioTheme extends InheritedTheme {
   /// Creates a [RadioTheme].
-  const RadioTheme({super.key, required super.child, required this.data});
+  const RadioTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [RadioTheme].
   final RadioThemeData data;

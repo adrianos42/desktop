@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class TextFieldPage extends StatefulWidget {
@@ -32,10 +33,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
             alignment: Alignment.center,
             child: SizedBox(
               width: 200.0,
-              child: TextField(
-                focusNode: _focusNode,
-                maxLines: 1,
-              ),
+              child: TextField(focusNode: _focusNode, maxLines: 1),
             ),
           ),
           codeText: basicExample,

@@ -26,7 +26,8 @@ class _ButtonDropDownPageState extends State<ButtonDropDownPage> {
     final waitingBackgroundColor = colorScheme.background[4];
     final highlightBackgroundColor = colorScheme.background[12];
 
-    final codeText = '''
+    final codeText =
+        '''
 return SizedBox(
   width: 200.0,
   enabled: $_disabled,
@@ -157,31 +158,19 @@ return SizedBox(
                     itemBuilder: (context) => const [
                       ContextMenuItem(
                         value: 0,
-                        child: Text(
-                          'Item 1',
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: Text('Item 1', overflow: TextOverflow.ellipsis),
                       ),
                       ContextMenuItem(
                         value: 1,
-                        child: Text(
-                          'Item 2',
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: Text('Item 2', overflow: TextOverflow.ellipsis),
                       ),
                       ContextMenuItem(
                         value: 2,
-                        child: Text(
-                          'Item 3',
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: Text('Item 3', overflow: TextOverflow.ellipsis),
                       ),
                       ContextMenuItem(
                         value: 3,
-                        child: Text(
-                          'Item 4',
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        child: Text('Item 4', overflow: TextOverflow.ellipsis),
                       ),
                     ],
                   ),

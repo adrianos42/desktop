@@ -50,7 +50,9 @@ abstract class DesktopLocalizations {
 
   static DesktopLocalizations of(BuildContext context) {
     return Localizations.of<DesktopLocalizations>(
-        context, DesktopLocalizations)!;
+      context,
+      DesktopLocalizations,
+    )!;
   }
 }
 
@@ -228,7 +230,8 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
 
   static Future<DesktopLocalizations> load(Locale locale) {
     return SynchronousFuture<DesktopLocalizations>(
-        const DefaultDesktopLocalizations());
+      const DefaultDesktopLocalizations(),
+    );
   }
 
   static const LocalizationsDelegate<DesktopLocalizations> delegate =
@@ -238,8 +241,9 @@ class DefaultDesktopLocalizations implements DesktopLocalizations {
 class _DefaultDateFormInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(oldValue, TextEditingValue newValue) {
-    if (RegExp(r'^((\d{0,2})|(\d{2}\/\d{0,2})|(\d{2}\/\d{2}\/\d{0,4}))$')
-            .hasMatch(newValue.text) ||
+    if (RegExp(
+          r'^((\d{0,2})|(\d{2}\/\d{0,2})|(\d{2}\/\d{2}\/\d{0,4}))$',
+        ).hasMatch(newValue.text) ||
         newValue.text.isEmpty) {
       return newValue;
     } else {

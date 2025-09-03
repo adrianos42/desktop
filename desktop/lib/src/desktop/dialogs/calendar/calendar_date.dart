@@ -15,7 +15,7 @@ import 'year_picker.dart';
 
 const double _kBoxSize = 40.0;
 const double _kDefaultCalendarSpacing = 8.0;
-const double _KDefaultHeight = 320.0 + _kDefaultCalendarSpacing * 2;
+const double _kDefaultHeight = 320.0 + _kDefaultCalendarSpacing * 2;
 
 const int _yearPickerColumnCount = 3;
 const int _yearPickerRowCount = 6;
@@ -47,10 +47,10 @@ class CalendarDate extends StatefulWidget {
     this.onDisplayedMonthChanged,
     this.initialCalendarMode = DatePickerMode.day,
     this.onDateSelected,
-  })  : initialDate = _dateOnly(initialDate),
-        firstDate = _dateOnly(firstDate),
-        lastDate = _dateOnly(lastDate),
-        currentDate = _dateOnly(currentDate ?? DateTime.now());
+  }) : initialDate = _dateOnly(initialDate),
+       firstDate = _dateOnly(firstDate),
+       lastDate = _dateOnly(lastDate),
+       currentDate = _dateOnly(currentDate ?? DateTime.now());
 
   /// The initially selected [DateTime].
   final DateTime initialDate;
@@ -99,8 +99,10 @@ class _CalendarDateState extends State<CalendarDate> {
   @override
   void initState() {
     super.initState();
-    _currentDisplayedMonthDate =
-        DateTime(widget.initialDate.year, widget.initialDate.month);
+    _currentDisplayedMonthDate = DateTime(
+      widget.initialDate.year,
+      widget.initialDate.month,
+    );
     _selectedDate = widget.initialDate;
     _mode = widget.initialCalendarMode;
   }
@@ -119,8 +121,10 @@ class _CalendarDateState extends State<CalendarDate> {
     }
 
     if (!DateUtils.isSameDay(widget.initialDate, oldWidget.initialDate)) {
-      _currentDisplayedMonthDate =
-          DateTime(widget.initialDate.year, widget.initialDate.month);
+      _currentDisplayedMonthDate = DateTime(
+        widget.initialDate.year,
+        widget.initialDate.month,
+      );
       _selectedDate = widget.initialDate;
     }
 
@@ -324,7 +328,7 @@ class _CalendarDateState extends State<CalendarDate> {
 
     return Container(
       alignment: Alignment.center,
-      constraints: const BoxConstraints.tightFor(height: _KDefaultHeight),
+      constraints: const BoxConstraints.tightFor(height: _kDefaultHeight),
       child: Row(
         children: [
           Expanded(child: _buildPicker()),

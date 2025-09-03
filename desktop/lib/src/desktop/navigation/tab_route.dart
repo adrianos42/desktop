@@ -11,13 +11,14 @@ class TabMenuRoute<T> extends PopupRoute<T> {
     required Color barrierColor,
     this.axis = Axis.horizontal,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor,
-        _animationCurve = TabTheme.of(context).menuTrasitionCurve!,
-        _animationReverseCurve = TabTheme.of(context).menuTrasitionReverseCurve!,
-        _transitionDuration = TabTheme.of(context).menuTransitionDuration!; 
+  }) : _pageBuilder = pageBuilder,
+       _barrierLabel =
+           barrierLabel ??
+           DesktopLocalizations.of(context).modalBarrierDismissLabel,
+       _barrierColor = barrierColor,
+       _animationCurve = TabTheme.of(context).menuTrasitionCurve!,
+       _animationReverseCurve = TabTheme.of(context).menuTrasitionReverseCurve!,
+       _transitionDuration = TabTheme.of(context).menuTransitionDuration!;
 
   final Axis axis;
 
@@ -44,7 +45,6 @@ class TabMenuRoute<T> extends PopupRoute<T> {
   Color? get barrierColor => _barrierColor;
   final Color _barrierColor;
 
-
   @override
   Duration get transitionDuration => _transitionDuration;
 
@@ -62,17 +62,17 @@ class TabMenuRoute<T> extends PopupRoute<T> {
         : const Offset(0.0, -1.0);
     const Offset end = Offset(0.0, 0.0);
 
-    _offsetTween = Tween<Offset>(
-      begin: begin,
-      end: end,
-    );
+    _offsetTween = Tween<Offset>(begin: begin, end: end);
 
     return _animation!;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -81,8 +81,12 @@ class TabMenuRoute<T> extends PopupRoute<T> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return ClipRect(
       child: Align(
         alignment: Alignment.topLeft,

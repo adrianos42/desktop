@@ -152,7 +152,7 @@ color: The color of the hyperlink text.
 @immutable
 class HyperlinkTheme extends InheritedTheme {
   /// Creates a [HyperlinkTheme].
-  const HyperlinkTheme({super.key, required super.child, required this.data});
+  const HyperlinkTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [HyperlinkTheme].
   final HyperlinkThemeData data;

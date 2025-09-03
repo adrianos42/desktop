@@ -60,11 +60,7 @@ class _ColorschemePageState extends State<ColorschemePage> {
                   colorScheme.background[20],
                   'Background 20',
                 ),
-                createItemForColor(
-                  context,
-                  colorScheme.disabled,
-                  'Disabled',
-                ),
+                createItemForColor(context, colorScheme.disabled, 'Disabled'),
                 createItemForColor(
                   context,
                   colorScheme.shade[30],

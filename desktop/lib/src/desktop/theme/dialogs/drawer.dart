@@ -85,7 +85,7 @@ class _DrawerThemeData {
   /// ```dart
   /// colorScheme.background[20].withValues(alpha: (0.8)
   /// ```
-  Color get barrierColor => _colorScheme.background[20].withValues(alpha: 0.8);
+  Color get barrierColor => _colorScheme.background[20].withValues(alpha: 0.6);
 
   /// The [TextStyle] for the title.
   ///

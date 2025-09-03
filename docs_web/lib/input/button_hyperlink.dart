@@ -16,7 +16,8 @@ class _ButtonHyperlinkPageState extends State<ButtonHyperlinkPage> {
 
   @override
   Widget build(BuildContext context) {
-    final codeText = '''
+    final codeText =
+        '''
 return HyperlinkButton(
   'https://github.com/adrianos42/desktop',
   onPressed: ${_disabled ? '(value) {}' : 'null'},
@@ -47,9 +48,7 @@ return HyperlinkButton(
             Button.icon(
               Icons.lightMode,
               active: _buttonContent,
-              onPressed: () => setState(
-                () => _buttonContent = !_buttonContent,
-              ),
+              onPressed: () => setState(() => _buttonContent = !_buttonContent),
             ),
             Button.icon(
               Icons.close,

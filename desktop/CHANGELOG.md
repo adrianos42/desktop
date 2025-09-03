@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.0.0
+
+- Use `RadioGroup` for `Radio` input.
+- Update theme.
+- Menu hover for horizontal nav bar.
+- Change style for progress indicator.
+
 ## 6.0.0-dev.3
 
 - Creates button with progress.

@@ -22,14 +22,13 @@ class DrawerRoute<T> extends PopupRoute<T> {
     ImageFilter? filter,
     this.themes,
     super.settings,
-  })  : _pageBuilder = pageBuilder,
-        _barrierDismissible = barrierDismissible,
-        _barrierLabel = barrierLabel ??
-            DesktopLocalizations.of(context).modalBarrierDismissLabel,
-        _barrierColor = barrierColor ?? DrawerTheme.of(context).barrierColor!,
-        super(
-          filter: filter ?? DrawerTheme.of(context).imageFilter!,
-        );
+  }) : _pageBuilder = pageBuilder,
+       _barrierDismissible = barrierDismissible,
+       _barrierLabel =
+           barrierLabel ??
+           DesktopLocalizations.of(context).modalBarrierDismissLabel,
+       _barrierColor = barrierColor ?? DrawerTheme.of(context).barrierColor!,
+       super(filter: filter ?? DrawerTheme.of(context).imageFilter!);
 
   final WidgetBuilder _pageBuilder;
 
@@ -57,8 +56,11 @@ class DrawerRoute<T> extends PopupRoute<T> {
   Duration get reverseTransitionDuration => _kReverseDuration;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     final Widget pageChild = Semantics(
       scopesRoute: true,
       explicitChildNodes: true,
@@ -69,16 +71,17 @@ class DrawerRoute<T> extends PopupRoute<T> {
     return Align(
       alignment: Alignment.centerRight,
       child: SlideTransition(
-        position: Tween(
-          begin: const Offset(1.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ).animate(
-          CurvedAnimation(
-            parent: animation,
-            curve: _curve,
-            reverseCurve: _curve.flipped,
-          ),
-        ),
+        position:
+            Tween(
+              begin: const Offset(1.0, 0.0),
+              end: const Offset(0.0, 0.0),
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: _curve,
+                reverseCurve: _curve.flipped,
+              ),
+            ),
         child: FadeTransition(
           opacity: CurvedAnimation(
             parent: animation,
@@ -94,13 +97,7 @@ class DrawerRoute<T> extends PopupRoute<T> {
 
 class Drawer extends StatelessWidget {
   /// Creates a [Drawer].
-  const Drawer({
-    super.key,
-    this.title,
-    this.actions,
-    this.theme,
-    required this.body,
-  });
+  const Drawer({super.key, this.title, this.actions, required this.body});
 
   /// The widget placed between the title and menus.
   final Widget body;
@@ -111,9 +108,6 @@ class Drawer extends StatelessWidget {
   /// Widgets to be placed at the bottom right of the drawer.
   final List<Widget>? actions;
 
-  /// The style [DrawerThemeData] of the drawer.
-  final DrawerThemeData? theme;
-
   static Future<T?> showDrawer<T>(
     BuildContext context, {
     required Widget body,
@@ -121,28 +115,20 @@ class Drawer extends StatelessWidget {
     String? barrierLabel,
     RouteSettings? routeSettings,
     List<Widget>? actions,
-    DrawerThemeData? theme,
     Widget? title,
   }) {
     final Color barrierColor = DrawerTheme.of(context).barrierColor!;
 
     final CapturedThemes themes = InheritedTheme.capture(
       from: context,
-      to: Navigator.of(
-        context,
-        rootNavigator: true,
-      ).context,
+      to: Navigator.of(context, rootNavigator: true).context,
     );
 
     return Navigator.of(context, rootNavigator: true).push<T>(
       DrawerRoute<T>(
         context: context,
-        pageBuilder: (context) => Drawer(
-          body: body,
-          actions: actions,
-          theme: theme,
-          title: title,
-        ),
+        pageBuilder: (context) =>
+            Drawer(body: body, actions: actions, title: title),
         barrierColor: barrierColor,
         barrierLabel: barrierLabel,
         settings: routeSettings,
@@ -163,10 +149,7 @@ class Drawer extends StatelessWidget {
 
     final CapturedThemes themes = InheritedTheme.capture(
       from: context,
-      to: Navigator.of(
-        context,
-        rootNavigator: true,
-      ).context,
+      to: Navigator.of(context, rootNavigator: true).context,
     );
 
     return Navigator.of(context, rootNavigator: true).push<T>(
@@ -187,8 +170,7 @@ class Drawer extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
 
-    final DrawerThemeData drawerThemeData =
-        DrawerTheme.of(context).merge(theme);
+    final DrawerThemeData drawerThemeData = DrawerTheme.of(context);
 
     final Color backgroundColor = drawerThemeData.background!;
 
@@ -229,9 +211,7 @@ class Drawer extends StatelessWidget {
                   actions!.length,
                   (index) => Padding(
                     padding: index > 0
-                        ? EdgeInsets.only(
-                            left: drawerThemeData.menuSpacing!,
-                          )
+                        ? EdgeInsets.only(left: drawerThemeData.menuSpacing!)
                         : EdgeInsets.zero,
                     child: ButtonTheme.copyWith(
                       itemSpacing: 0.0,
@@ -245,10 +225,6 @@ class Drawer extends StatelessWidget {
       ),
     );
 
-    return Focus(
-      autofocus: true,
-      debugLabel: 'Drawer',
-      child: result,
-    );
+    return Focus(autofocus: true, debugLabel: 'Drawer', child: result);
   }
 }

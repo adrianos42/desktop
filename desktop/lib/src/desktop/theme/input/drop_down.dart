@@ -29,10 +29,8 @@ class _DropDownThemeData {
   /// ```dart
   /// IconThemeData(size: 18.0)
   /// ```
-  IconThemeData get iconThemeData => const IconThemeData(
-        size: _kIconSize,
-        fill: 1.0,
-      );
+  IconThemeData get iconThemeData =>
+      const IconThemeData(size: _kIconSize, fill: 1.0);
 
   /// The style of the button.
   ///
@@ -42,9 +40,9 @@ class _DropDownThemeData {
   /// textTheme.body2.copyWith(fontSize: 14.0, color: textTheme.textMedium)
   /// ```
   TextStyle get textStyle => _textTheme.body2.copyWith(
-        fontSize: _kFontSize,
-        color: _textTheme.textMedium,
-      );
+    fontSize: _kFontSize,
+    color: _textTheme.textMedium,
+  );
 
   /// The color of the border when disabled.
   ///

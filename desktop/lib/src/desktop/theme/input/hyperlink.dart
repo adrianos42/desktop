@@ -51,11 +51,11 @@ class _HyperlinkThemeData {
   /// )
   /// ```
   TextStyle get textStyle => _textTheme.body2.copyWith(
-        fontSize: 14.0,
-        decoration: TextDecoration.underline,
-        decorationThickness: _kLineThickness,
-        overflow: TextOverflow.ellipsis,
-      );
+    fontSize: 14.0,
+    decoration: TextDecoration.underline,
+    decorationThickness: _kLineThickness,
+    overflow: TextOverflow.ellipsis,
+  );
 
   /// The color of the hyperlink text when highlighted.
   ///
@@ -64,5 +64,6 @@ class _HyperlinkThemeData {
   /// ```dart
   /// textTheme.textLow
   /// ```
-  Color get highlightColor => _isDark ? _textTheme.textLow : _textTheme.textHigh;
+  Color get highlightColor =>
+      _isDark ? _textTheme.textLow : _textTheme.textHigh;
 }

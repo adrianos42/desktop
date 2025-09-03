@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'theme/theme.dart';
@@ -27,8 +26,9 @@ class GridTileBar extends StatelessWidget {
   Widget build(BuildContext context) {
     BoxDecoration? decoration;
 
-    if (backgroundColor != null)
+    if (backgroundColor != null) {
       decoration = BoxDecoration(color: backgroundColor);
+    }
 
     final EdgeInsetsDirectional padding = EdgeInsetsDirectional.only(
       start: leading != null ? 8.0 : 16.0,
@@ -39,7 +39,7 @@ class GridTileBar extends StatelessWidget {
     final ThemeData darkTheme = ThemeData(
       primaryColor: theme.colorScheme.primary,
     );
-    
+
     return Container(
       padding: padding,
       decoration: decoration,
@@ -54,8 +54,9 @@ class GridTileBar extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 8.0),
-                    child: leading),
+                  padding: const EdgeInsetsDirectional.only(end: 8.0),
+                  child: leading,
+                ),
               ),
             if (title != null && subtitle != null)
               Expanded(
@@ -91,8 +92,9 @@ class GridTileBar extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 8.0),
-                    child: trailing),
+                  padding: const EdgeInsetsDirectional.only(start: 8.0),
+                  child: trailing,
+                ),
               ),
           ],
         ),

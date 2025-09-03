@@ -21,10 +21,9 @@ const double _kDefaultHeight = 32.0;
 
 class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
-  _TextFieldSelectionGestureDetectorBuilder({
-    required _TextFieldState state,
-  })  : _state = state,
-        super(delegate: state);
+  _TextFieldSelectionGestureDetectorBuilder({required _TextFieldState state})
+    : _state = state,
+      super(delegate: state);
 
   final _TextFieldState _state;
 
@@ -197,27 +196,32 @@ class TextField extends StatefulWidget {
     this.maxLengthEnforcement,
     // TODO(as): Remove it when TextField's style is created.
     this.padding,
-  })  : smartDashesType = smartDashesType ??
-            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-        smartQuotesType = smartQuotesType ??
-            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
-        assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(
-          !identical(textInputAction, TextInputAction.newline) ||
-              maxLines == 1 ||
-              !identical(keyboardType, TextInputType.text),
-          'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
-        ),
-        assert(obscuringCharacter.length == 1),
-        keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0);
+  }) : smartDashesType =
+           smartDashesType ??
+           (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+       smartQuotesType =
+           smartQuotesType ??
+           (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+       assert(
+         !obscureText || maxLines == 1,
+         'Obscured fields cannot be multiline.',
+       ),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !identical(textInputAction, TextInputAction.newline) ||
+             maxLines == 1 ||
+             !identical(keyboardType, TextInputType.text),
+         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+       ),
+       assert(obscuringCharacter.length == 1),
+       keyboardType =
+           keyboardType ??
+           (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0);
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -393,12 +397,13 @@ class _TextFieldState extends State<TextField>
       widget.focusNode ?? (_focusNode ??= FocusNode());
 
   late _TextFieldSelectionGestureDetectorBuilder
-      _selectionGestureDetectorBuilder;
+  _selectionGestureDetectorBuilder;
 
   MaxLengthEnforcement get _effectiveMaxLengthEnforcement =>
       widget.maxLengthEnforcement ??
       LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement(
-          defaultTargetPlatform);
+        defaultTargetPlatform,
+      );
 
   EditableTextState? get _editableText => editableTextKey.currentState;
 
@@ -540,7 +545,8 @@ class _TextFieldState extends State<TextField>
       return input;
     }
 
-    final placeholderStyle = widget.placeholderStyle ??
+    final placeholderStyle =
+        widget.placeholderStyle ??
         TextStyle(
           overflow: TextOverflow.ellipsis,
           color: Theme.of(context).textTheme.textLow,
@@ -569,7 +575,7 @@ class _TextFieldState extends State<TextField>
                         ),
                       ),
                     ),
-                  child!
+                  child!,
                 ],
               ),
             ),
@@ -599,21 +605,23 @@ class _TextFieldState extends State<TextField>
     final textTheme = themeData.textTheme;
     final colorScheme = themeData.colorScheme;
 
-    final Color background =
-        enabled ? colorScheme.background[0] : colorScheme.shade[90];
-    final Color characterColor =
-        enabled ? textTheme.textHigh : colorScheme.disabled;
+    final Color background = enabled
+        ? colorScheme.background[0]
+        : colorScheme.shade[90];
+    final Color characterColor = enabled
+        ? textTheme.textHigh
+        : colorScheme.disabled;
     final Color selectionColor = enabled ? colorScheme.primary[50] : background;
-    final Color borderColor =
-        focusNode.hasFocus ? colorScheme.shade[50] : colorScheme.shade[30];
+    final Color borderColor = focusNode.hasFocus
+        ? colorScheme.shade[50]
+        : colorScheme.shade[30];
 
-    final textStyle = textTheme.body1.copyWith(
-      color: characterColor,
-    );
+    final textStyle = textTheme.body1.copyWith(color: characterColor);
 
     const Brightness keyboardAppearance = Brightness.dark;
 
-    final decoration = widget.decoration ??
+    final decoration =
+        widget.decoration ??
         BoxDecoration(
           color: background,
           border: enabled
@@ -678,8 +686,9 @@ class _TextFieldState extends State<TextField>
                 widget.scrollBehavior ?? const _InputScrollBehavior(),
             scrollController: widget.scrollController,
             scrollPadding: widget.scrollPadding,
-            selectionColor:
-                enabled ? selectionColor : colorScheme.background[0],
+            selectionColor: enabled
+                ? selectionColor
+                : colorScheme.background[0],
             selectionControls: widget.enableInteractiveSelection
                 ? textSelectionControls
                 : null,
@@ -712,11 +721,9 @@ class _TextFieldState extends State<TextField>
             alignment: isMultiline ? Alignment.topLeft : Alignment.center,
             child: _addTextDependentAttachments(
               Padding(
-                padding: widget.padding ??
-                    const EdgeInsets.symmetric(
-                      horizontal: 4.0,
-                      vertical: 4.0,
-                    ),
+                padding:
+                    widget.padding ??
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
                 child: _selectionGestureDetectorBuilder.buildGestureDetector(
                   behavior: HitTestBehavior.translucent,
                   child: editable,
@@ -740,7 +747,10 @@ class _InputScrollBehavior extends ScrollBehavior {
   /// Applies a [Scrollbar] to the child widget.
   @override
   Widget buildScrollbar(
-      BuildContext context, Widget child, ScrollableDetails details) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child;
   }
 }

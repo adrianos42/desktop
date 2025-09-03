@@ -62,10 +62,7 @@ class _BreadcrumbThemeData {
   /// ```dart
   /// IconThemeData(size: 20.0)
   /// ```
-  IconThemeData get iconTheme => const IconThemeData(
-        size: 20.0,
-        fill: 1.0,
-      );
+  IconThemeData get iconTheme => const IconThemeData(size: 20.0, fill: 1.0);
 
   /// The style for the text.
   ///
@@ -75,9 +72,9 @@ class _BreadcrumbThemeData {
   /// textTheme.body2.copyWith(fontSize: defaultFontSize, overflow: TextOverflow.ellipsis)
   /// ```
   TextStyle get textStyle => _textTheme.body2.copyWith(
-        fontSize: defaultFontSize,
-        overflow: TextOverflow.ellipsis,
-      );
+    fontSize: defaultFontSize,
+    overflow: TextOverflow.ellipsis,
+  );
 
   /// The background color of the breadcrumb.
   ///

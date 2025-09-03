@@ -117,33 +117,33 @@ class SliderThemeData {
   String toString() {
     return r'''
 disabledColor: The disabled color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.disabled
  ```;;activeColor: The active color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.primary[60]
  ```;;activeHoverColor: The active hover color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textHigh
  ```;;trackColor: The track color.
- 
+
  Defaults to:
- 
+
  ```dart
  colorScheme.shade[30]
  ```;;hightlightColor: The highlight color.
- 
+
  Defaults to:
- 
+
  ```dart
  textTheme.textLow
  ```;;
@@ -165,7 +165,7 @@ disabledColor: The disabled color.
 @immutable
 class SliderTheme extends InheritedTheme {
   /// Creates a [SliderTheme].
-  const SliderTheme({super.key, required super.child, required this.data});
+  const SliderTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [SliderTheme].
   final SliderThemeData data;

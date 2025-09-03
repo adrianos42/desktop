@@ -21,17 +21,17 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     required double minLength,
     double? minOverscrollLength,
     Color? trackColor,
-  })  : assert(minLength >= 0),
-        assert(minOverscrollLength == null || minOverscrollLength <= minLength),
-        assert(minOverscrollLength == null || minOverscrollLength >= 0),
-        assert(padding.isNonNegative),
-        _thumbColor = thumbColor,
-        _trackColor = trackColor,
-        _thickness = thickness,
-        _textDirection = textDirection,
-        _padding = padding,
-        _minLength = minLength,
-        _minOverscrollLength = minOverscrollLength ?? minLength {
+  }) : assert(minLength >= 0),
+       assert(minOverscrollLength == null || minOverscrollLength <= minLength),
+       assert(minOverscrollLength == null || minOverscrollLength >= 0),
+       assert(padding.isNonNegative),
+       _thumbColor = thumbColor,
+       _trackColor = trackColor,
+       _thickness = thickness,
+       _textDirection = textDirection,
+       _padding = padding,
+       _minLength = minLength,
+       _minOverscrollLength = minOverscrollLength ?? minLength {
     fadeoutOpacityAnimation.addListener(notifyListeners);
     thumbColorAnimation.addListener(notifyListeners);
   }
@@ -168,10 +168,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   /// based on these new metrics.
   ///
   /// The scrollbar will remain on screen.
-  void update(
-    ScrollMetrics metrics,
-    AxisDirection axisDirection,
-  ) {
+  void update(ScrollMetrics metrics, AxisDirection axisDirection) {
     _lastMetrics = metrics;
     _lastAxisDirection = axisDirection;
     notifyListeners();
@@ -186,16 +183,22 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
   Paint get _paint {
     final color = thumbColor.evaluate(thumbColorAnimation)!;
     return Paint()
-      ..color =
-          color.withValues(alpha: color.a * fadeoutOpacityAnimation.value);
+      ..color = color.withValues(
+        alpha: color.a * fadeoutOpacityAnimation.value,
+      );
   }
 
   Paint get _trackPaint {
     return Paint()..color = trackColor!;
   }
 
-  void _paintThumbCrossAxis(Canvas canvas, Size size, double thumbOffset,
-      double thumbExtent, AxisDirection direction) {
+  void _paintThumbCrossAxis(
+    Canvas canvas,
+    Size size,
+    double thumbOffset,
+    double thumbExtent,
+    AxisDirection direction,
+  ) {
     final double x, y;
     final Size thumbSize, trackSize;
     final Offset trackOffset;
@@ -254,10 +257,11 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     // isn't less than the absolute minimum size.
     // _totalContentExtent >= viewportDimension, so (_totalContentExtent - _mainAxisPadding) > 0
     final double fractionVisible = clampDouble(
-        (_lastMetrics!.extentInside - _mainAxisPadding) /
-            (_totalContentExtent - _mainAxisPadding),
-        0.0,
-        1.0);
+      (_lastMetrics!.extentInside - _mainAxisPadding) /
+          (_totalContentExtent - _mainAxisPadding),
+      0.0,
+      1.0,
+    );
 
     final double thumbExtent = math.max(
       math.min(_trackExtent, minOverscrollLength),
@@ -282,7 +286,7 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
         // values for the thumb that range between minLength and the smallest
         // possible value, minOverscrollLength.
         : safeMinLength *
-            (1.0 - clampDouble(fractionOverscrolled, 0.0, 0.2) / 0.2);
+              (1.0 - clampDouble(fractionOverscrolled, 0.0, 0.2) / 0.2);
 
     // The `thumbExtent` should be no greater than `trackSize`, otherwise
     // the scrollbar may scroll towards the wrong direction.
@@ -343,7 +347,8 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
         ? clampDouble(
             (metrics.pixels - metrics.minScrollExtent) / scrollableExtent,
             0.0,
-            1.0)
+            1.0,
+          )
         : 0;
 
     return (_isReversed ? 1 - fractionPast : fractionPast) *
@@ -364,8 +369,10 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
     final double beforePadding = _isVertical ? padding.top : padding.left;
     final double thumbExtent = _thumbExtent();
-    final double thumbOffsetLocal =
-        _getScrollToTrack(_lastMetrics!, thumbExtent);
+    final double thumbOffsetLocal = _getScrollToTrack(
+      _lastMetrics!,
+      thumbExtent,
+    );
     _thumbOffset = thumbOffsetLocal + mainAxisMargin + beforePadding;
 
     if (_lastMetrics!.maxScrollExtent.isInfinite) {
@@ -373,7 +380,12 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
     }
 
     return _paintThumbCrossAxis(
-        canvas, size, _thumbOffset, thumbExtent, _lastAxisDirection!);
+      canvas,
+      size,
+      _thumbOffset,
+      thumbExtent,
+      _lastAxisDirection!,
+    );
   }
 
   /// Same as hitTest, but includes some padding when the [PointerEvent] is
@@ -393,7 +405,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
       case PointerDeviceKind.touch:
         final Rect touchScrollbarRect = interactiveRect.expandToInclude(
           Rect.fromCircle(
-              center: _thumbRect!.center, radius: _kMinInteractiveSize / 2),
+            center: _thumbRect!.center,
+            radius: _kMinInteractiveSize / 2,
+          ),
         );
         return touchScrollbarRect.contains(position);
       case PointerDeviceKind.mouse:
@@ -420,7 +434,9 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
       case PointerDeviceKind.touch:
         final Rect touchThumbRect = _thumbRect!.expandToInclude(
           Rect.fromCircle(
-              center: _thumbRect!.center, radius: _kMinInteractiveSize / 2),
+            center: _thumbRect!.center,
+            radius: _kMinInteractiveSize / 2,
+          ),
         );
         return touchThumbRect.contains(position);
       case PointerDeviceKind.mouse:
@@ -450,7 +466,8 @@ class DesktopScrollbarPainter extends ChangeNotifier implements CustomPainter {
 
   @override
   bool shouldRepaint(DesktopScrollbarPainter old) {
-    final should = thumbColor != old.thumbColor ||
+    final should =
+        thumbColor != old.thumbColor ||
         textDirection != old.textDirection ||
         thickness != old.thickness ||
         fadeoutOpacityAnimation != old.fadeoutOpacityAnimation ||

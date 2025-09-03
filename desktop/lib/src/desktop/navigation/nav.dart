@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 
@@ -362,6 +363,9 @@ class _NavState extends State<Nav>
   @override
   Color get barrierColor => DialogTheme.of(context).barrierColor!;
 
+  @override
+  ImageFilter get filter => DialogTheme.of(context).imageFilter!;
+
   void nextView() => _indexChanged((_controller.index + 1) % _length);
 
   void previousView() => _indexChanged((_controller.index - 1) % _length);
@@ -412,13 +416,8 @@ class _NavState extends State<Nav>
     setState(() {});
   }
 
-  void _handleMenuAnimationStatusChanged(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed) {
-      menuOverlay?.remove();
-      menuOverlay = null;
-      setState(() => menuIndex = -1);
-    }
-  }
+  void _handleMenuAnimationStatusChanged(AnimationStatus status) =>
+      setState(() => handleMenuAnimationStatusChanged(status));
 
   Widget _createMenuItems(
     EdgeInsets itemSpacing,
@@ -840,7 +839,8 @@ class _NavState extends State<Nav>
       _controller.removeListener(_onCurrentIndexChange);
     }
 
-    menuController!.dispose();
+    menuController?.removeStatusListener(_handleMenuAnimationStatusChanged);
+    menuController?.dispose();
 
     super.dispose();
   }

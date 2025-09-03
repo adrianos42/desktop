@@ -16,54 +16,54 @@ class _ToggleSwitchThemeData {
   ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The disabled color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.disabled
   /// ```
   Color get disabledColor => _colorScheme.disabled;
 
   /// The active color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
-  Color get activeColor =>  _colorScheme.primary[50];
+  Color get activeColor => _colorScheme.primary[50];
 
   /// The active hover color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textHigh
   /// ```
   Color get activeHoverColor => _textTheme.textHigh;
 
   /// The inactive color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textLow
   /// ```
   Color get inactiveColor => _textTheme.textLow;
 
   /// The inactive hover color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textHigh
   /// ```
   Color get inactiveHoverColor => _textTheme.textHigh;
 
   /// The foreground color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[100]
   /// ```

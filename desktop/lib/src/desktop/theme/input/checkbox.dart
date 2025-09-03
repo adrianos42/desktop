@@ -21,72 +21,74 @@ class _CheckboxThemeData {
   bool get _isDark => _themeData.brightness == Brightness.dark;
 
   /// The disabled color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textLow
   /// ```
   Color get disabledColor => _contentColorScheme.disabled;
 
   /// The active color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.primary[50]
   /// ```
-  Color get activeColor => _isDark ? _colorScheme.primary[50] : _textTheme.textHigh;
+  Color get activeColor =>
+      _isDark ? _colorScheme.primary[50] : _textTheme.textHigh;
 
   /// The active hover color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get activeHoverColor =>  _textTheme.textLow;
+  Color get activeHoverColor => _textTheme.textLow;
 
   /// The inactive color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textLow
   /// ```
   Color get inactiveColor => _isDark ? _textTheme.textLow : _textTheme.textHigh;
 
   /// The inactive hover color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.textHigh
   /// ```
-  Color get inactiveHoverColor => _isDark ? _textTheme.textHigh : _textTheme.textLow;
+  Color get inactiveHoverColor =>
+      _isDark ? _textTheme.textHigh : _textTheme.textLow;
 
   /// The foreground color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.shade[100]
   /// ```
   Color get foreground => _colorScheme.shade[100];
 
   /// The hover foreground color.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// colorScheme.background[0]
   /// ```
   Color get hoverForeground => _contentColorScheme.background[0];
 
   /// The container size.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// 32.0
   /// ```

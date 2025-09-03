@@ -30,10 +30,10 @@ class _ContextMenuThemeData {
   /// IconThemeData(size: kDefaultIconSize, color: textTheme.textHigh)
   /// ```
   IconThemeData get iconThemeData => IconThemeData(
-        size: defaultIconSize,
-        color: _textTheme.textHigh,
-        fill: 1.0,
-      );
+    size: defaultIconSize,
+    color: _textTheme.textHigh,
+    fill: 1.0,
+  );
 
   /// The menu step width.
   ///

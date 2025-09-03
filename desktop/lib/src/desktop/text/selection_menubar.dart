@@ -4,15 +4,17 @@ import 'package:flutter/rendering.dart';
 
 import '../icons.dart';
 import '../localizations.dart';
+import '../theme/dialogs/context_menu.dart';
 import 'text_selection_menubar.dart';
 import 'text_selection_menubar_button.dart';
-import '../theme/dialogs/context_menu.dart';
 
 /// The default context menu for text selection for the current platform.
 class AdaptiveTextSelectionMenubar extends StatelessWidget {
-  const AdaptiveTextSelectionMenubar(
-      {super.key, required this.children, required this.anchors})
-      : buttonItems = null;
+  const AdaptiveTextSelectionMenubar({
+    super.key,
+    required this.children,
+    required this.anchors,
+  }) : buttonItems = null;
 
   /// Create an instance of [AdaptiveTextSelectionMenubar] whose children will
   const AdaptiveTextSelectionMenubar.buttonItems({
@@ -33,25 +35,25 @@ class AdaptiveTextSelectionMenubar extends StatelessWidget {
     required VoidCallback? onShare,
     required VoidCallback? onLiveTextInput,
     required this.anchors,
-  })  : children = null,
-        buttonItems = EditableText.getEditableButtonItems(
-          clipboardStatus: clipboardStatus,
-          onCopy: onCopy,
-          onCut: onCut,
-          onPaste: onPaste,
-          onSelectAll: onSelectAll,
-          onLookUp: onLookUp,
-          onSearchWeb: onSearchWeb,
-          onShare: onShare,
-          onLiveTextInput: onLiveTextInput,
-        );
+  }) : children = null,
+       buttonItems = EditableText.getEditableButtonItems(
+         clipboardStatus: clipboardStatus,
+         onCopy: onCopy,
+         onCut: onCut,
+         onPaste: onPaste,
+         onSelectAll: onSelectAll,
+         onLookUp: onLookUp,
+         onSearchWeb: onSearchWeb,
+         onShare: onShare,
+         onLiveTextInput: onLiveTextInput,
+       );
 
   AdaptiveTextSelectionMenubar.editableText({
     super.key,
     required EditableTextState editableTextState,
-  })  : children = null,
-        buttonItems = editableTextState.contextMenuButtonItems,
-        anchors = editableTextState.contextMenuAnchors;
+  }) : children = null,
+       buttonItems = editableTextState.contextMenuButtonItems,
+       anchors = editableTextState.contextMenuAnchors;
 
   AdaptiveTextSelectionMenubar.selectable({
     super.key,
@@ -60,20 +62,20 @@ class AdaptiveTextSelectionMenubar extends StatelessWidget {
     required VoidCallback? onShare,
     required SelectionGeometry selectionGeometry,
     required this.anchors,
-  })  : children = null,
-        buttonItems = SelectableRegion.getSelectableButtonItems(
-          selectionGeometry: selectionGeometry,
-          onCopy: onCopy,
-          onSelectAll: onSelectAll,
-          onShare: onShare,
-        );
+  }) : children = null,
+       buttonItems = SelectableRegion.getSelectableButtonItems(
+         selectionGeometry: selectionGeometry,
+         onCopy: onCopy,
+         onSelectAll: onSelectAll,
+         onShare: onShare,
+       );
 
   AdaptiveTextSelectionMenubar.selectableRegion({
     super.key,
     required SelectableRegionState selectableRegionState,
-  })  : children = null,
-        buttonItems = selectableRegionState.contextMenuButtonItems,
-        anchors = selectableRegionState.contextMenuAnchors;
+  }) : children = null,
+       buttonItems = selectableRegionState.contextMenuButtonItems,
+       anchors = selectableRegionState.contextMenuAnchors;
 
   final List<ContextMenuButtonItem>? buttonItems;
 
@@ -98,51 +100,52 @@ class AdaptiveTextSelectionMenubar extends StatelessWidget {
             context,
             buttonItem,
           ),
-          null
+          null,
         );
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
       case TargetPlatform.linux:
       case TargetPlatform.windows:
-        final DesktopLocalizations localizations =
-            DesktopLocalizations.of(context);
+        final DesktopLocalizations localizations = DesktopLocalizations.of(
+          context,
+        );
         return switch (buttonItem.type) {
           ContextMenuButtonType.cut => (
-              localizations.cutButtonLabel,
-              Icons.cut
-            ),
+            localizations.cutButtonLabel,
+            Icons.cut,
+          ),
           ContextMenuButtonType.copy => (
-              localizations.copyButtonLabel,
-              Icons.copy
-            ),
+            localizations.copyButtonLabel,
+            Icons.copy,
+          ),
           ContextMenuButtonType.paste => (
-              localizations.pasteButtonLabel,
-              Icons.paste
-            ),
+            localizations.pasteButtonLabel,
+            Icons.paste,
+          ),
           ContextMenuButtonType.selectAll => (
-              localizations.selectAllButtonLabel,
-              Icons.selectAll
-            ),
+            localizations.selectAllButtonLabel,
+            Icons.selectAll,
+          ),
           ContextMenuButtonType.delete => (
-              localizations.deleteButtonTooltip.toUpperCase(),
-              Icons.delete
-            ),
+            localizations.deleteButtonTooltip.toUpperCase(),
+            Icons.delete,
+          ),
           ContextMenuButtonType.lookUp => (
-              localizations.lookUpButtonLabel,
-              Icons.searchOff
-            ),
+            localizations.lookUpButtonLabel,
+            Icons.searchOff,
+          ),
           ContextMenuButtonType.searchWeb => (
-              localizations.searchWebButtonLabel,
-              Icons.web
-            ),
+            localizations.searchWebButtonLabel,
+            Icons.web,
+          ),
           ContextMenuButtonType.share => (
-              localizations.shareButtonLabel,
-              Icons.share
-            ),
+            localizations.shareButtonLabel,
+            Icons.share,
+          ),
           ContextMenuButtonType.liveTextInput => (
-              localizations.scanTextButtonLabel,
-              Icons.scanner
-            ),
+            localizations.scanTextButtonLabel,
+            Icons.scanner,
+          ),
           ContextMenuButtonType.custom => ('', null),
         };
     }
@@ -152,8 +155,9 @@ class AdaptiveTextSelectionMenubar extends StatelessWidget {
     BuildContext context,
     ContextMenuButtonItem buttonItem,
   ) {
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData = ContextMenuTheme.of(
+      context,
+    );
 
     return Builder(
       builder: (context) {

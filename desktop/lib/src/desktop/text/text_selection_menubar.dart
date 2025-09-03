@@ -34,17 +34,20 @@ class DesktopTextSelectionMenubarLayoutDelegate
 }
 
 class TextSelectionMenubar extends StatelessWidget {
-  const TextSelectionMenubar(
-      {super.key, required this.anchor, required this.children})
-      : assert(children.length > 0);
+  const TextSelectionMenubar({
+    super.key,
+    required this.anchor,
+    required this.children,
+  }) : assert(children.length > 0);
 
   final Offset anchor;
 
   final List<Widget> children;
 
   Widget _defaultMenubarBuilder(BuildContext context) {
-    final ContextMenuThemeData contextMenuThemeData =
-        ContextMenuTheme.of(context);
+    final ContextMenuThemeData contextMenuThemeData = ContextMenuTheme.of(
+      context,
+    );
 
     final contextView = SingleChildScrollView(
       // controller: scrollController,
@@ -57,15 +60,11 @@ class TextSelectionMenubar extends StatelessWidget {
       scopesRoute: true,
       namesRoute: true,
       explicitChildNodes: true,
-      child: IntrinsicWidth(
-        child: contextView,
-      ),
+      child: IntrinsicWidth(child: contextView),
     );
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: contextMenuThemeData.background!,
-      ),
+      decoration: BoxDecoration(color: contextMenuThemeData.background!),
       position: DecorationPosition.background,
       child: child,
     );

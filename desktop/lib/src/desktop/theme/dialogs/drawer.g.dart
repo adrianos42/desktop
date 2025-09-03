@@ -273,7 +273,7 @@ constraints: The [BoxConstraints] of the [Drawer].
 @immutable
 class DrawerTheme extends InheritedTheme {
   /// Creates a [DrawerTheme].
-  const DrawerTheme({super.key, required super.child, required this.data});
+  const DrawerTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [DrawerTheme].
   final DrawerThemeData data;

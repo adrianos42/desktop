@@ -42,7 +42,8 @@ class _FloatingMenuBarThemeData {
   /// ```dart
   /// hoverColor.withValues(alpha: 0.8)
   /// ```
-  Color get backgroundColor => _isDark ? _colorScheme.shade[90] : _colorScheme.shade[100];
+  Color get backgroundColor =>
+      _isDark ? _colorScheme.shade[90] : _colorScheme.shade[100];
 
   /// The menu bar opacity when inactive.
   ///
@@ -63,9 +64,9 @@ class _FloatingMenuBarThemeData {
   Color get foreground => _colorScheme.background[0];
 
   /// The [TextStyle] for the menu bar text.
-  /// 
+  ///
   /// Defaults to:
-  /// 
+  ///
   /// ```dart
   /// textTheme.caption
   /// ```

@@ -1,4 +1,5 @@
 import 'package:desktop/desktop.dart';
+
 import '../defaults.dart';
 
 class TabPage extends StatefulWidget {
@@ -69,7 +70,7 @@ return Tab(
     const customCodeSample = '''
 return Tab(
   themeData: TabThemeData(
-    backgroundColor: Theme.of(context).colorScheme.background[12],
+    backgroundColor: Theme.of(context).colorScheme.background[8],
     itemPadding: EdgeInsets.zero,
   ),
   items: [
@@ -181,7 +182,7 @@ return Tab(
 );
 ''';
 
-const codeSamplePositioned = '''
+    const codeSamplePositioned = '''
 return Tab(
   axis: _positionAxis,
   theme: const TabThemeData(
@@ -232,7 +233,7 @@ return Tab(
 );
 ''';
 
-const codeSampleWithMenu = '''
+    const codeSampleWithMenu = '''
 return Tab(
   trailingMenu: [
     TabMenuItem.text(
@@ -287,30 +288,18 @@ return Tab(
               items: [
                 TabItem(
                   itemBuilder: (context) => const Text('page 0'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 0',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 0', style: textTheme.title)),
                 ),
                 TabItem(
                   itemBuilder: (context) => const Text('page 1'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 1',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 1', style: textTheme.title)),
                 ),
                 TabItem(
                   itemBuilder: (context) => const Text('page 2'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 2',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 2', style: textTheme.title)),
                 ),
               ],
             );
@@ -322,73 +311,69 @@ return Tab(
           body: (context) {
             return Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: Tab(
-                theme: TabThemeData(
-                    itemBackgroundColor: colorScheme.background[12],
-                    itemHoverBackgroundColor: colorScheme.shade[30],
-                    itemHighlightBackgroundColor: colorScheme.background[0],
-                    itemColor: colorScheme.shade[100],
-                    tabBarBackgroundColor: colorScheme.background[12],
-                    itemFilled: true,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 12.0)),
-                trailingMenu: [
-                  TabMenuItem(
-                    builder: (context) => Container(
-                      height: 200.0,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'settings',
-                        style: textTheme.title,
+              child: TabTheme(
+                data: TabThemeData(
+                  itemBackgroundColor: colorScheme.background[8],
+                  itemHoverBackgroundColor: colorScheme.shade[30],
+                  itemHighlightBackgroundColor: colorScheme.background[0],
+                  itemColor: colorScheme.shade[100],
+                  tabBarBackgroundColor: colorScheme.background[8],
+                  itemFilled: true,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                ),
+                child: Tab(
+                  trailingMenu: [
+                    TabMenuItem(
+                      builder: (context) => Container(
+                        height: 200.0,
+                        alignment: Alignment.center,
+                        child: Text('settings', style: textTheme.title),
+                      ),
+                      itemBuilder: (context) => Padding(
+                        padding: TabTheme.of(context).itemPadding!,
+                        child: const Icon(Icons.camera),
                       ),
                     ),
-                    itemBuilder: (context) => Padding(
-                      padding: TabTheme.of(context).itemPadding!,
-                      child: const Icon(Icons.camera),
-                    ),
-                  ),
-                ],
-                items: [
-                  TabItem(
-                    itemBuilder:
-                        _createCustomTab(title: 'camera', icon: Icons.camera),
-                    builder: (context) => Center(
-                      child: Text(
-                        'camera page',
-                        style: textTheme.title,
+                  ],
+                  items: [
+                    TabItem(
+                      itemBuilder: _createCustomTab(
+                        title: 'camera',
+                        icon: Icons.camera,
+                      ),
+                      builder: (context) => Center(
+                        child: Text('camera page', style: textTheme.title),
                       ),
                     ),
-                  ),
-                  TabItem(
-                    itemBuilder: _createCustomTab(
-                        title: 'computer', icon: Icons.computer),
-                    builder: (context) => Center(
-                      child: Text(
-                        'computer page',
-                        style: textTheme.title,
+                    TabItem(
+                      itemBuilder: _createCustomTab(
+                        title: 'computer',
+                        icon: Icons.computer,
+                      ),
+                      builder: (context) => Center(
+                        child: Text('computer page', style: textTheme.title),
                       ),
                     ),
-                  ),
-                  TabItem(
-                    itemBuilder:
-                        _createCustomTab(title: 'map', icon: Icons.map),
-                    builder: (context) => Center(
-                      child: Text(
-                        'map page',
-                        style: textTheme.title,
+                    TabItem(
+                      itemBuilder: _createCustomTab(
+                        title: 'map',
+                        icon: Icons.map,
+                      ),
+                      builder: (context) => Center(
+                        child: Text('map page', style: textTheme.title),
                       ),
                     ),
-                  ),
-                  TabItem(
-                    itemBuilder:
-                        _createCustomTab(title: 'cloud', icon: Icons.cloud),
-                    builder: (context) => Center(
-                      child: Text(
-                        'cloud page',
-                        style: textTheme.title,
+                    TabItem(
+                      itemBuilder: _createCustomTab(
+                        title: 'cloud',
+                        icon: Icons.cloud,
+                      ),
+                      builder: (context) => Center(
+                        child: Text('cloud page', style: textTheme.title),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
@@ -406,12 +391,18 @@ return Tab(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Button.text('computer',
-                          onPressed: () => _controller.index = 1),
-                      Button.text('map',
-                          onPressed: () => _controller.index = 2),
-                      Button.text('cloud',
-                          onPressed: () => _controller.index = 3),
+                      Button.text(
+                        'computer',
+                        onPressed: () => _controller.index = 1,
+                      ),
+                      Button.text(
+                        'map',
+                        onPressed: () => _controller.index = 2,
+                      ),
+                      Button.text(
+                        'cloud',
+                        onPressed: () => _controller.index = 3,
+                      ),
                     ],
                   ),
                 ),
@@ -421,12 +412,18 @@ return Tab(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Button.text('camera',
-                          onPressed: () => _controller.index = 0),
-                      Button.text('map',
-                          onPressed: () => _controller.index = 2),
-                      Button.text('cloud',
-                          onPressed: () => _controller.index = 3),
+                      Button.text(
+                        'camera',
+                        onPressed: () => _controller.index = 0,
+                      ),
+                      Button.text(
+                        'map',
+                        onPressed: () => _controller.index = 2,
+                      ),
+                      Button.text(
+                        'cloud',
+                        onPressed: () => _controller.index = 3,
+                      ),
                     ],
                   ),
                 ),
@@ -436,12 +433,18 @@ return Tab(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Button.text('camera',
-                          onPressed: () => _controller.index = 0),
-                      Button.text('computer',
-                          onPressed: () => _controller.index = 1),
-                      Button.text('cloud',
-                          onPressed: () => _controller.index = 3),
+                      Button.text(
+                        'camera',
+                        onPressed: () => _controller.index = 0,
+                      ),
+                      Button.text(
+                        'computer',
+                        onPressed: () => _controller.index = 1,
+                      ),
+                      Button.text(
+                        'cloud',
+                        onPressed: () => _controller.index = 3,
+                      ),
                     ],
                   ),
                 ),
@@ -451,12 +454,18 @@ return Tab(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Button.text('camera',
-                          onPressed: () => _controller.index = 0),
-                      Button.text('computer',
-                          onPressed: () => _controller.index = 1),
-                      Button.text('map',
-                          onPressed: () => _controller.index = 2),
+                      Button.text(
+                        'camera',
+                        onPressed: () => _controller.index = 0,
+                      ),
+                      Button.text(
+                        'computer',
+                        onPressed: () => _controller.index = 1,
+                      ),
+                      Button.text(
+                        'map',
+                        onPressed: () => _controller.index = 2,
+                      ),
                     ],
                   ),
                 ),
@@ -498,30 +507,18 @@ return Tab(
               items: [
                 TabItem(
                   itemBuilder: (context) => const Text('page 0'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 0',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 0', style: textTheme.title)),
                 ),
                 TabItem(
                   itemBuilder: (context) => const Text('page 1'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 1',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 1', style: textTheme.title)),
                 ),
                 TabItem(
                   itemBuilder: (context) => const Text('page 2'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 2',
-                      style: textTheme.title,
-                    ),
-                  ),
+                  builder: (context) =>
+                      Center(child: Text('page 2', style: textTheme.title)),
                 ),
               ],
             );
@@ -533,85 +530,69 @@ return Tab(
           options: [
             Button.icon(
               Icons.keyboardArrowLeft,
-              onPressed: () => setState(
-                () => _positionAxis = AxisDirection.left,
-              ),
+              onPressed: () =>
+                  setState(() => _positionAxis = AxisDirection.left),
               active: _positionAxis == AxisDirection.left,
               tooltip: 'left',
             ),
             Button.icon(
               Icons.keyboardArrowUp,
-              onPressed: () => setState(
-                () => _positionAxis = AxisDirection.up,
-              ),
+              onPressed: () => setState(() => _positionAxis = AxisDirection.up),
               active: _positionAxis == AxisDirection.up,
               tooltip: 'up',
             ),
             Button.icon(
               Icons.keyboardArrowRight,
-              onPressed: () => setState(
-                () => _positionAxis = AxisDirection.right,
-              ),
+              onPressed: () =>
+                  setState(() => _positionAxis = AxisDirection.right),
               active: _positionAxis == AxisDirection.right,
               tooltip: 'right',
             ),
             Button.icon(
               Icons.keyboardArrowDown,
-              onPressed: () => setState(
-                () => _positionAxis = AxisDirection.down,
-              ),
+              onPressed: () =>
+                  setState(() => _positionAxis = AxisDirection.down),
               active: _positionAxis == AxisDirection.down,
               tooltip: 'down',
             ),
           ],
           body: (context) {
-            return Tab(
-              axis: _positionAxis,
-              theme: const TabThemeData(
-                padding: EdgeInsets.symmetric(
-                  vertical: 8.0,
-                ),
+            return TabTheme(
+              data: const TabThemeData(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
               ),
-              trailingMenu: [
-                TabMenuItem.text(
-                  'menu',
-                  builder: (context) => Container(
-                    width: 120.0,
-                    height: 120.0,
-                    alignment: Alignment.center,
-                    child: const Text('menu 3'),
-                  ),
-                ),
-              ],
-              items: [
-                TabItem(
-                  itemBuilder: (context) => const Text('page 0'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 0',
-                      style: textTheme.title,
+              child: Tab(
+                axis: _positionAxis,
+
+                trailingMenu: [
+                  TabMenuItem.text(
+                    'menu',
+                    builder: (context) => Container(
+                      width: 120.0,
+                      height: 120.0,
+                      alignment: Alignment.center,
+                      child: const Text('menu 3'),
                     ),
                   ),
-                ),
-                TabItem(
-                  itemBuilder: (context) => const Text('page 1'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 1',
-                      style: textTheme.title,
-                    ),
+                ],
+                items: [
+                  TabItem(
+                    itemBuilder: (context) => const Text('page 0'),
+                    builder: (context) =>
+                        Center(child: Text('page 0', style: textTheme.title)),
                   ),
-                ),
-                TabItem(
-                  itemBuilder: (context) => const Text('page 2'),
-                  builder: (context) => Center(
-                    child: Text(
-                      'page 2',
-                      style: textTheme.title,
-                    ),
+                  TabItem(
+                    itemBuilder: (context) => const Text('page 1'),
+                    builder: (context) =>
+                        Center(child: Text('page 1', style: textTheme.title)),
                   ),
-                ),
-              ],
+                  TabItem(
+                    itemBuilder: (context) => const Text('page 2'),
+                    builder: (context) =>
+                        Center(child: Text('page 2', style: textTheme.title)),
+                  ),
+                ],
+              ),
             );
           },
         ),

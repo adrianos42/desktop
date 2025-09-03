@@ -1,6 +1,6 @@
 import 'package:desktop/desktop.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:jovial_svg/jovial_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'defaults.dart';
 
@@ -17,11 +17,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Image.asset(
-        assetsFile,
-        width: 16.0,
-        height: 16.0,
-      ),
+      child: Image.asset(assetsFile, width: 16.0, height: 16.0),
     );
   }
 
@@ -30,11 +26,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Image.asset(
-        assetsFile,
-        width: 16.0,
-        height: 16.0,
-      ),
+      child: Image.asset(assetsFile, width: 16.0, height: 16.0),
     );
   }
 
@@ -46,9 +38,7 @@ class _OverviewPageState extends State<OverviewPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Defaults.createHeader(context, 'Overview'),
-            ],
+            children: [Defaults.createHeader(context, 'Overview')],
           ),
         ),
         Expanded(
@@ -87,9 +77,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         'Homepage [Github]',
                         onPressed: (_) async {
                           await launchUrl(
-                            Uri.parse(
-                              'https://github.com/adrianos42/desktop',
-                            ),
+                            Uri.parse('https://github.com/adrianos42/desktop'),
                           );
                         },
                       ),
@@ -99,9 +87,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   HyperlinkButton(
                     'Desktop support for Flutter',
                     onPressed: (_) async {
-                      await launchUrl(
-                        Uri.parse('https://flutter.dev/desktop'),
-                      );
+                      await launchUrl(Uri.parse('https://flutter.dev/desktop'));
                     },
                   ),
                   HyperlinkButton(
@@ -134,7 +120,8 @@ class _OverviewPageState extends State<OverviewPage> {
                     onPressed: (_) async {
                       await launchUrl(
                         Uri.parse(
-                            'https://github.com/adrianos42/desktop_charts'),
+                          'https://github.com/adrianos42/desktop_charts',
+                        ),
                       );
                     },
                   ),

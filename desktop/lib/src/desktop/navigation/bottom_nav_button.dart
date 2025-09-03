@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 import '../input/button.dart';
 import '../theme/theme.dart';
-
 import 'nav.dart';
 
 /// Nav Group
@@ -39,8 +38,11 @@ class _NavBottomGroupState extends State<NavBottomGroup>
   @override
   void initState() {
     super.initState();
-    itemLengths =
-        List<double>.filled(widget.navItems.length, 0.0, growable: true);
+    itemLengths = List<double>.filled(
+      widget.navItems.length,
+      0.0,
+      growable: true,
+    );
   }
 
   @override
@@ -103,8 +105,9 @@ class _NavBottomGroupState extends State<NavBottomGroup>
     }
 
     final double renderIndicatorLength = navThemeData.indicatorWidth!;
-    final double renderMainLength =
-        itemLengths.reduce((value, elem) => value + elem);
+    final double renderMainLength = itemLengths.reduce(
+      (value, elem) => value + elem,
+    );
 
     double renderHeight;
     double renderWidth;
@@ -150,10 +153,8 @@ class _NavBottomGroupState extends State<NavBottomGroup>
 }
 
 class _NavButtonItem extends SingleChildRenderObjectWidget {
-  const _NavButtonItem({
-    required this.onLayout,
-    required this.button,
-  }) : super(child: button);
+  const _NavButtonItem({required this.onLayout, required this.button})
+    : super(child: button);
 
   final ValueChanged<Size> onLayout;
   final Widget button;
@@ -165,7 +166,9 @@ class _NavButtonItem extends SingleChildRenderObjectWidget {
 
   @override
   void updateRenderObject(
-      BuildContext context, covariant _NavButtonRenderItem renderObject) {
+    BuildContext context,
+    covariant _NavButtonRenderItem renderObject,
+  ) {
     renderObject.onLayout = onLayout;
   }
 }
@@ -207,16 +210,16 @@ class _SideIconRenderObjectWidget extends LeafRenderObjectWidget {
 
   @override
   _RenderIconSide createRenderObject(BuildContext context) => _RenderIconSide(
-        index: index,
-        vsync: vsync,
-        additionalConstraints: additionalConstraints,
-        lengths: lengths,
-        sideLength: sideLength,
-        crossLength: crossLength,
-        duration: duration,
-        foreground: foreground,
-        text: text,
-      );
+    index: index,
+    vsync: vsync,
+    additionalConstraints: additionalConstraints,
+    lengths: lengths,
+    sideLength: sideLength,
+    crossLength: crossLength,
+    duration: duration,
+    foreground: foreground,
+    text: text,
+  );
 
   @override
   void updateRenderObject(BuildContext context, _RenderIconSide renderObject) {
@@ -243,10 +246,10 @@ class _RenderIconSide extends RenderConstrainedBox {
     required this.crossLength,
     required this.lengths,
     required super.additionalConstraints,
-  })  : _oldIndex = index,
-        _index = index,
-        _vsync = vsync,
-        _text = text {
+  }) : _oldIndex = index,
+       _index = index,
+       _vsync = vsync,
+       _text = text {
     _positionController = AnimationController(
       duration: duration,
       value: 0.0,
@@ -284,9 +287,7 @@ class _RenderIconSide extends RenderConstrainedBox {
 
     _textPainter.text = TextSpan(
       text: _text[index],
-      style: const TextStyle(
-        color: Color(0xffffffff),
-      ),
+      style: const TextStyle(color: Color(0xffffffff)),
     );
   }
 
@@ -346,12 +347,14 @@ class _RenderIconSide extends RenderConstrainedBox {
     Rect rectLast;
     Rect rectNew;
 
-    final double lOldOffset =
-        lengths.sublist(0, oldIndex).fold(0.0, (value, elem) => value + elem);
+    final double lOldOffset = lengths
+        .sublist(0, oldIndex)
+        .fold(0.0, (value, elem) => value + elem);
     final double oldLength = lengths[oldIndex];
 
-    final double lOffset =
-        lengths.sublist(0, index).fold(0.0, (value, elem) => value + elem);
+    final double lOffset = lengths
+        .sublist(0, index)
+        .fold(0.0, (value, elem) => value + elem);
     final double length = lengths[index];
 
     final double dy = offset.dy + crossLength - sideLength;
@@ -401,8 +404,9 @@ class BottomNavMenuButton extends StatelessWidget {
 
     final Color highlightColor = colorScheme.shade[100];
 
-    final IconThemeData iconThemeData =
-        navThemeData.iconThemeData!.copyWith(size: 24.0);
+    final IconThemeData iconThemeData = navThemeData.iconThemeData!.copyWith(
+      size: 24.0,
+    );
     final Color color = buttonThemeData.highlightColor!;
 
     return Container(

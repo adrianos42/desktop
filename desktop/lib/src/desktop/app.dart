@@ -48,11 +48,11 @@ class DesktopApp extends StatefulWidget {
     Map<String, WidgetBuilder> this.routes = const <String, WidgetBuilder>{},
     List<NavigatorObserver> this.navigatorObservers =
         const <NavigatorObserver>[],
-  })  : routeInformationParser = null,
-        routeInformationProvider = null,
-        routerDelegate = null,
-        backButtonDispatcher = null,
-        routerConfig = null;
+  }) : routeInformationParser = null,
+       routeInformationProvider = null,
+       routerDelegate = null,
+       backButtonDispatcher = null,
+       routerConfig = null;
 
   /// Creates a [DesktopApp] that uses the [Router] instead of a [Navigator].
   const DesktopApp.router({
@@ -81,20 +81,23 @@ class DesktopApp extends StatefulWidget {
     this.restorationScopeId,
     this.debugShowWidgetInspector = false,
     this.onNavigationNotification,
-  })  : navigatorObservers = null,
-        navigatorKey = null,
-        onGenerateRoute = null,
-        home = null,
-        onGenerateInitialRoutes = null,
-        onUnknownRoute = null,
-        routes = null,
-        initialRoute = null;
+  }) : navigatorObservers = null,
+       navigatorKey = null,
+       onGenerateRoute = null,
+       home = null,
+       onGenerateInitialRoutes = null,
+       onUnknownRoute = null,
+       routes = null,
+       initialRoute = null;
 
   static final _shortcuts = {
     LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.tab):
         const NextTabIntent(),
-    LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-        LogicalKeyboardKey.tab): const PreviousTabIntent(),
+    LogicalKeySet(
+      LogicalKeyboardKey.control,
+      LogicalKeyboardKey.shift,
+      LogicalKeyboardKey.tab,
+    ): const PreviousTabIntent(),
   };
 
   /// {@macro flutter.widgets.widgetsApp.navigatorKey}
@@ -201,7 +204,7 @@ class DesktopApp extends StatefulWidget {
   ///  * [NotificationListener.onNotification], which uses this callback.
   /// {@endtemplate}
   final NotificationListenerCallback<NavigationNotification>?
-      onNavigationNotification;
+  onNavigationNotification;
 
   /// {@template flutter.widgets.widgetsApp.routerConfig}
   /// An object to configure the underlying [Router].
@@ -393,7 +396,10 @@ class DesktopScrollBehavior extends ScrollBehavior {
   /// Applies a [Scrollbar] to the child widget.
   @override
   Widget buildScrollbar(
-      BuildContext context, Widget child, ScrollableDetails details) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     switch (getPlatform(context)) {
       case TargetPlatform.linux:
       case TargetPlatform.macOS:

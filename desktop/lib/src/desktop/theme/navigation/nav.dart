@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../color_scheme.dart';
-import '../theme_text.dart';
 
 part 'nav.g.dart';
 
@@ -19,7 +18,6 @@ class _NavThemeData {
 
   final ThemeData _themeData;
 
-  TextTheme get _textTheme => _themeData.textTheme;
   ColorScheme get _colorScheme => _themeData.colorScheme;
 
   /// The [IconThemeData] for the nav items.
@@ -29,10 +27,8 @@ class _NavThemeData {
   /// ```dart
   /// IconThemeData(size: width - 8.0 * 2.0)
   /// ```
-  IconThemeData get iconThemeData => IconThemeData(
-        size: width - _kPadding * 2.0,
-        fill: 1.0,
-      );
+  IconThemeData get iconThemeData =>
+      IconThemeData(size: width - _kPadding * 2.0, fill: 1.0);
 
   /// The space between items inside the navbar.
   ///

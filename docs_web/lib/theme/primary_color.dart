@@ -10,10 +10,7 @@ class PrimaryColorPage extends StatefulWidget {
   State<PrimaryColorPage> createState() => PrimaryColorPageState();
 }
 
-Widget _itemPrimary(
-  BuildContext context,
-  PrimaryColors color,
-) {
+Widget _itemPrimary(BuildContext context, PrimaryColors color) {
   final colorScheme = Theme.of(context).colorScheme;
   final lightForeground = colorScheme.shade[100];
   final darkForeground = colorScheme.background[0];
@@ -26,20 +23,40 @@ Widget _itemPrimary(
         child: Text(
           color.toString(),
           style: Theme.of(context).textTheme.title.copyWith(
-                color: TextTheme.withColorScheme(const ColorScheme()).textHigh,
-              ),
+            color: TextTheme.withColorScheme(const ColorScheme()).textHigh,
+          ),
         ),
       ),
       createItemForColor(
-          context, color.primaryColor[30], 'Primary 30', lightForeground),
+        context,
+        color.primaryColor[30],
+        'Primary 30',
+        lightForeground,
+      ),
       createItemForColor(
-          context, color.primaryColor[40], 'Primary 40', lightForeground),
+        context,
+        color.primaryColor[40],
+        'Primary 40',
+        lightForeground,
+      ),
       createItemForColor(
-          context, color.primaryColor[50], 'Primary 50', lightForeground),
+        context,
+        color.primaryColor[50],
+        'Primary 50',
+        lightForeground,
+      ),
       createItemForColor(
-          context, color.primaryColor[60], 'Primary 60', darkForeground),
+        context,
+        color.primaryColor[60],
+        'Primary 60',
+        darkForeground,
+      ),
       createItemForColor(
-          context, color.primaryColor[70], 'Primary 70', darkForeground),
+        context,
+        color.primaryColor[70],
+        'Primary 70',
+        darkForeground,
+      ),
     ],
   );
 }
@@ -70,9 +87,9 @@ class PrimaryColorPageState extends State<PrimaryColorPage> {
         Container(
           alignment: Alignment.topLeft,
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Column(children: [
-            Defaults.createHeader(context, 'Primary Colors'),
-          ]),
+          child: Column(
+            children: [Defaults.createHeader(context, 'Primary Colors')],
+          ),
         ),
         Expanded(
           child: ListView.separated(
@@ -81,8 +98,10 @@ class PrimaryColorPageState extends State<PrimaryColorPage> {
             itemCount: colors.length,
             separatorBuilder: (context, _) => const SizedBox(height: 24.0),
             controller: ScrollController(),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 12.0,
+            ),
           ),
         ),
       ],

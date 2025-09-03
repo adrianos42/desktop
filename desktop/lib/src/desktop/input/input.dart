@@ -1,5 +1,3 @@
-library input;
-
 export 'button.dart' show Button;
 export 'button_context_menu.dart';
 export 'button_drop_down.dart';

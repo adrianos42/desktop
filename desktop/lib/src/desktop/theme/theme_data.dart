@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'color_scheme.dart';
@@ -12,26 +11,22 @@ import 'theme_text.dart';
 
 @immutable
 class Theme extends StatefulWidget {
-  const Theme({
-    super.key,
-    required this.data,
-    required this.child,
-  });
+  const Theme({super.key, required this.data, required this.child});
 
   final ThemeData data;
 
   final Widget child;
 
   static ThemeData of(BuildContext context) {
-    final _InheritedTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
+    final _InheritedTheme? inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedTheme>();
 
     return inheritedTheme?.theme.data ?? ThemeData.fallback();
   }
 
   static void updateThemeData(BuildContext context, ThemeData themeData) {
-    final _InheritedTheme inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
+    final _InheritedTheme inheritedTheme = context
+        .dependOnInheritedWidgetOfExactType<_InheritedTheme>()!;
 
     inheritedTheme.theme.updateThemeData(themeData);
   }
@@ -75,17 +70,14 @@ class _ThemeState extends State<Theme> {
 }
 
 class _InheritedTheme extends InheritedTheme {
-  const _InheritedTheme({
-    required this.theme,
-    required super.child,
-  });
+  const _InheritedTheme({required this.theme, required super.child});
 
   final _ThemeState theme;
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    final _InheritedTheme? ancestorTheme =
-        context.findAncestorWidgetOfExactType<_InheritedTheme>();
+    final _InheritedTheme? ancestorTheme = context
+        .findAncestorWidgetOfExactType<_InheritedTheme>();
     return identical(this, ancestorTheme)
         ? child
         : Theme(data: theme.data, child: child);
@@ -264,8 +256,9 @@ class ThemeData {
     final contentColorScheme = ColorScheme(
       primary: effectiveColorScheme.primary,
       shade: effectiveColorScheme.shade.withBrightness(effectiveBrightness),
-      backgroundColor:
-          effectiveColorScheme.background.withBrightness(effectiveBrightness),
+      backgroundColor: effectiveColorScheme.background.withBrightness(
+        effectiveBrightness,
+      ),
       disabledColor: effectiveBrightness == Brightness.light
           ? const Color(0xffbfbfbf)
           : null,
@@ -299,8 +292,10 @@ class ThemeData {
       floatingMenuBarTheme: floatingMenuBarTheme ?? this.floatingMenuBarTheme,
       brightness: effectiveBrightness,
       contentColorScheme: contentColorScheme,
-      contentTextTheme:
-          TextTheme.withColorScheme(contentColorScheme, effectiveBrightness),
+      contentTextTheme: TextTheme.withColorScheme(
+        contentColorScheme,
+        effectiveBrightness,
+      ),
     );
   }
 
@@ -315,8 +310,10 @@ class ThemeData {
     return ThemeData._raw(
       colorScheme: contentColorScheme,
       navTheme: navTheme,
-      textTheme:
-          TextTheme.withColorScheme(contentColorScheme, Brightness.light),
+      textTheme: TextTheme.withColorScheme(
+        contentColorScheme,
+        Brightness.light,
+      ),
       buttonTheme: buttonTheme,
       dropDownTheme: dropDownTheme,
       dialogTheme: dialogTheme,

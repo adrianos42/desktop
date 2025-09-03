@@ -1,12 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class GridTile extends StatelessWidget {
-  const GridTile({
-    super.key,
-    this.header,
-    this.footer,
-    required this.child,
-  });
+  const GridTile({super.key, this.header, this.footer, required this.child});
 
   final Widget? header;
 
@@ -22,9 +17,7 @@ class GridTile extends StatelessWidget {
 
     return Stack(
       children: <Widget>[
-        Positioned.fill(
-          child: child,
-        ),
+        Positioned.fill(child: child),
         if (header != null)
           Positioned(
             top: 0.0,

@@ -32,9 +32,9 @@ class YearPicker extends StatefulWidget {
     required this.onChanged,
     required this.onDisplayedYearPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
-  })  : assert(!firstDate.isAfter(lastDate)),
-        currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()),
-        initialDate = DateUtils.dateOnly(initialDate ?? selectedDate);
+  }) : assert(!firstDate.isAfter(lastDate)),
+       currentDate = DateUtils.dateOnly(currentDate ?? DateTime.now()),
+       initialDate = DateUtils.dateOnly(initialDate ?? selectedDate);
 
   /// The current date.
   ///
@@ -78,8 +78,9 @@ class YearPickerState extends State<YearPicker> {
   void initState() {
     super.initState();
 
-    _pageController =
-        PageController(initialPage: _pageYear(widget.selectedDate));
+    _pageController = PageController(
+      initialPage: _pageYear(widget.selectedDate),
+    );
   }
 
   @override
@@ -93,11 +94,9 @@ class YearPickerState extends State<YearPicker> {
     super.didUpdateWidget(oldWidget);
     if (widget.firstDate != oldWidget.firstDate ||
         oldWidget.lastDate != widget.lastDate) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (Duration timeStamp) {
-          _pageController.jumpToPage(_pageYear(widget.selectedDate));
-        },
-      );
+      WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+        _pageController.jumpToPage(_pageYear(widget.selectedDate));
+      });
     }
   }
 
@@ -132,8 +131,9 @@ class YearPickerState extends State<YearPicker> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    final int offset =
-        _itemCount < _minYears ? (_minYears - _itemCount) ~/ 2 : 0;
+    final int offset = _itemCount < _minYears
+        ? (_minYears - _itemCount) ~/ 2
+        : 0;
     final int year = widget.firstDate.year + index - offset;
     final bool isSelected = year == widget.selectedDate.year;
     final bool isCurrentYear = year == widget.currentDate.year;
@@ -153,16 +153,16 @@ class YearPickerState extends State<YearPicker> {
       textColor = textTheme.textLow;
     }
 
-    return Button.filled(
-      year.toString(),
-      key: ValueKey<int>(year),
-      theme: ButtonThemeData(
-        background: background,
-        foreground: textColor,
+    return ButtonTheme(
+      data: ButtonThemeData(background: background, foreground: textColor),
+      child: Button.filled(
+        year.toString(),
+        key: ValueKey<int>(year),
+
+        onPressed: !isDisabled
+            ? () => widget.onChanged(DateTime(year, widget.initialDate.month))
+            : null,
       ),
-      onPressed: !isDisabled
-          ? () => widget.onChanged(DateTime(year, widget.initialDate.month))
-          : null,
     );
   }
 

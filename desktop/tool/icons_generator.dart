@@ -7,12 +7,13 @@ import 'package:source_gen/source_gen.dart';
 
 extension StringCase on String {
   String toCamelCase() => replaceAllMapped(
-      RegExp(r'(^[A-Z])|(?:_([a-z]))|(_)'),
-      (match) => match[1] != null
-          ? match[1]!.toLowerCase()
-          : match[2] != null
-              ? match[2]!.toUpperCase()
-              : '');
+    RegExp(r'(^[A-Z])|(?:_([a-z]))|(_)'),
+    (match) => match[1] != null
+        ? match[1]!.toLowerCase()
+        : match[2] != null
+        ? match[2]!.toUpperCase()
+        : '',
+  );
 }
 
 ///
@@ -22,8 +23,9 @@ class IconsGenerator extends Generator {
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    final myFile = await File('fonts/Material_Icons_Sharp_Regular/codepoints')
-        .readAsLines();
+    final myFile = await File(
+      'fonts/Material_Icons_Sharp_Regular/codepoints',
+    ).readAsLines();
 
     final fields = <Field>[];
 
@@ -41,19 +43,23 @@ class IconsGenerator extends Generator {
         name = '\$$name';
       }
 
-      fields.add(Field((b) => b
-        ..name = name
-        ..static = true
-        ..modifier = FieldModifier.constant
-        ..type = refer('IconData')
-        ..docs.add('/// The `${items[0].toCamelCase()}` material icon.')
-        ..assignment = Code('''
+      fields.add(
+        Field(
+          (b) => b
+            ..name = name
+            ..static = true
+            ..modifier = FieldModifier.constant
+            ..type = refer('IconData')
+            ..docs.add('/// The `${items[0].toCamelCase()}` material icon.')
+            ..assignment = Code('''
         IconData(
           0x$code,
           fontFamily: _kFontFamily,
           fontPackage: _kFontPackage,
         )
-      ''')));
+      '''),
+        ),
+      );
     }
 
     final themeLibrary = Library(

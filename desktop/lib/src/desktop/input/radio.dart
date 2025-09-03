@@ -147,11 +147,11 @@ class _RadioState<T> extends State<Radio<T>>
       registry != null ? _handleChanged : null;
 
   Set<WidgetState> get states => <WidgetState>{
-        if (!_enabled) WidgetState.disabled,
-        if (_hovering) WidgetState.hovered,
-        if (_focused) WidgetState.focused,
-        if (value ?? true) WidgetState.selected,
-      };
+    if (!_enabled) WidgetState.disabled,
+    if (_hovering) WidgetState.hovered,
+    if (_focused) WidgetState.focused,
+    if (value ?? true) WidgetState.selected,
+  };
 
   bool? get value => widget.value == registry?.groupValue;
 
@@ -252,20 +252,23 @@ class _RadioState<T> extends State<Radio<T>>
   @override
   Widget build(BuildContext context) {
     final Color activeColor = (widget.color ?? _color).resolve(
-        states.union({WidgetState.selected}).difference({WidgetState.hovered}));
+      states.union({WidgetState.selected}).difference({WidgetState.hovered}),
+    );
     final Color inactiveColor = (widget.color ?? _color).resolve(
-        states.difference({WidgetState.selected, WidgetState.hovered}));
-    final Color hoverColor =
-        (widget.color ?? _color).resolve(states.union({WidgetState.hovered}));
-    final Color foregroundColor =
-        (widget.foregroundColor ?? _foregroundColor).resolve(states);
+      states.difference({WidgetState.selected, WidgetState.hovered}),
+    );
+    final Color hoverColor = (widget.color ?? _color).resolve(
+      states.union({WidgetState.hovered}),
+    );
+    final Color foregroundColor = (widget.foregroundColor ?? _foregroundColor)
+        .resolve(states);
 
     const Size size = Size.square(_kOuterRadius * 2.0);
 
     final BoxConstraints additionalConstraints = BoxConstraints.tight(size);
 
-    final WidgetStateProperty<MouseCursor> effectiveMouseCursor = widget
-            .mouseCursor ??
+    final WidgetStateProperty<MouseCursor> effectiveMouseCursor =
+        widget.mouseCursor ??
         WidgetStateProperty.resolveWith<MouseCursor>((Set<WidgetState> states) {
           return !states.contains(WidgetState.disabled)
               ? SystemMouseCursors.click
@@ -330,16 +333,16 @@ class _RadioRenderObjectWidget extends LeafRenderObjectWidget {
 
   @override
   _RenderRadio createRenderObject(BuildContext context) => _RenderRadio(
-        value: value,
-        state: state,
-        activeColor: activeColor,
-        foregroundColor: foregroundColor,
-        inactiveColor: inactiveColor,
-        onChanged: onChanged,
-        hoverColor: hoverColor,
-        hovering: hovering,
-        additionalConstraints: additionalConstraints,
-      );
+    value: value,
+    state: state,
+    activeColor: activeColor,
+    foregroundColor: foregroundColor,
+    inactiveColor: inactiveColor,
+    onChanged: onChanged,
+    hoverColor: hoverColor,
+    hovering: hovering,
+    additionalConstraints: additionalConstraints,
+  );
 
   @override
   void updateRenderObject(BuildContext context, _RenderRadio renderObject) {
@@ -364,17 +367,16 @@ class _RenderRadio extends RenderConstrainedBox {
     required Color inactiveColor,
     required Color hoverColor,
     required bool hovering,
-    required BoxConstraints additionalConstraints,
+    required super.additionalConstraints,
     ValueChanged<bool>? onChanged,
-  })  : _state = state,
-        _value = value,
-        _activeColor = activeColor,
-        _foregroundColor = foregroundColor,
-        _inactiveColor = inactiveColor,
-        _hoverColor = hoverColor,
-        _hovering = hovering,
-        _onChanged = onChanged,
-        super(additionalConstraints: additionalConstraints);
+  }) : _state = state,
+       _value = value,
+       _activeColor = activeColor,
+       _foregroundColor = foregroundColor,
+       _inactiveColor = inactiveColor,
+       _hoverColor = hoverColor,
+       _hovering = hovering,
+       _onChanged = onChanged;
 
   final _RadioState _state;
 

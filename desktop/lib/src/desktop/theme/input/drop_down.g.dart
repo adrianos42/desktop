@@ -321,7 +321,7 @@ iconThemeData: The icon theme of the button. The color is ignored.
 @immutable
 class DropDownTheme extends InheritedTheme {
   /// Creates a [DropDownTheme].
-  const DropDownTheme({super.key, required super.child, required this.data});
+  const DropDownTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [DropDownTheme].
   final DropDownThemeData data;

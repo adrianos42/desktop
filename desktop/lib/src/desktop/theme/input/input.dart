@@ -1,5 +1,3 @@
-library input;
-
 export 'button.dart';
 export 'checkbox.dart';
 export 'drop_down.dart';

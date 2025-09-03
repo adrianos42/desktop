@@ -363,7 +363,7 @@ textStyle: The text style for the message.
 @immutable
 class MessageTheme extends InheritedTheme {
   /// Creates a [MessageTheme].
-  const MessageTheme({super.key, required super.child, required this.data});
+  const MessageTheme({super.key, required this.data, required super.child});
 
   /// The data representing this [MessageTheme].
   final MessageThemeData data;
