@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.1
+
+- Fix code analysis.
+
 ## 6.0.0
 
 - Use `RadioGroup` for `Radio` input.

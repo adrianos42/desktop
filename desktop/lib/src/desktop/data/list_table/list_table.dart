@@ -410,7 +410,7 @@ class _ListTableState extends State<ListTable> {
       },
       onAcceptWithDetails: (details) {
         final columnIndex = details.data;
-        
+
         colIndexes ??= List.generate(widget.colCount, (x) => x);
 
         final int mappedIndex = colIndexes![columnIndex];
