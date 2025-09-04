@@ -17,6 +17,7 @@ Minimal desktop widgets for flutter.
   * Text form field
 * Dialogs
   * Dialog
+  * Drawer
   * Message
   * Tooltip
   * Date picker
@@ -33,9 +34,6 @@ Minimal desktop widgets for flutter.
   * Progress indicator
 * Text
   * Text field
+  * Search text field
   * Selectable text
 * Scrollbar
-
-## Generating Theme Files
-
-To generate the theme files, run `dart run build_runner build`.
