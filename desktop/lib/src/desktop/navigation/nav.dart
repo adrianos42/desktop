@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui';
 
@@ -194,6 +195,7 @@ class Nav extends StatefulWidget {
     this.compact = false,
     this.infoItems = const [],
     this.contentMenu,
+    this.trailing,
   }) : assert(items.length > 0),
        assert(!compact || navAxis == Axis.vertical),
        assert(navbarWidget == null || (!compact && navAxis == Axis.vertical)),
@@ -209,6 +211,7 @@ class Nav extends StatefulWidget {
     NavController? controller,
     Map<Type, GestureRecognizerFactory>? navbarGestures,
     WidgetBuilder? contentMenu,
+    WidgetBuilder? trailing,
   }) {
     return Nav._(
       items: items,
@@ -222,6 +225,7 @@ class Nav extends StatefulWidget {
       visible: true,
       contentMenu: contentMenu,
       infoItems: infoItems,
+      trailing: trailing,
     );
   }
 
@@ -302,7 +306,7 @@ class Nav extends StatefulWidget {
 
   final WidgetBuilder? navbarWidget;
 
-  /// A widget that's above all pages. Usually used for [FloatingMenuBar].
+  /// A widget that's above all pages. Usually a [FloatingMenuBar].
   final WidgetBuilder? contentMenu;
 
   /// Controls selected index.
@@ -312,6 +316,8 @@ class Nav extends StatefulWidget {
       context.dependOnInheritedWidgetOfExactType<NavContext>();
 
   final Map<Type, GestureRecognizerFactory>? navbarGestures;
+
+  final WidgetBuilder? trailing;
 
   @override
   State<Nav> createState() => _NavState();
@@ -348,23 +354,7 @@ class _NavState extends State<Nav>
   late Curve _menuTrasitionCurve;
   late Color _navBarBackgroundColor;
 
-  @override
-  OverlayState get overlay => _overlayKey.currentState!;
-
-  @override
-  Duration get menuTransitionDuration => _menuTransitionDuration;
-
-  @override
-  Curve get menuTransitionCurve => _menuTrasitionCurve;
-
-  @override
-  Color get navBarBackgroundColor => _navBarBackgroundColor;
-
-  @override
-  Color get barrierColor => DialogTheme.of(context).barrierColor!;
-
-  @override
-  ImageFilter get filter => DialogTheme.of(context).imageFilter!;
+  Timer? _timer;
 
   void nextView() => _indexChanged((_controller.index + 1) % _length);
 
@@ -480,11 +470,28 @@ class _NavState extends State<Nav>
           axis: Axis.horizontal,
           active: menuIndex == i,
           onHover: () {
+            _timer?.cancel();
+
+            void showInfoMenu() {
+              if (menuIndex != i || menuController!.isAnimating) {
+                _showMenu(i, true, AxisDirection.up);
+              }
+            }
+
+            if (menuIndex != -1) {
+              showInfoMenu();
+            } else {
+              _timer = Timer(const Duration(milliseconds: 200), showInfoMenu);
+            }
+          },
+          onLongPress: () {
             if (menuIndex != i || menuController!.isAnimating) {
               _showMenu(i, true, AxisDirection.up);
             }
           },
-          onHoverEnd: () => setState(hideMenu),
+          onLongPressUp: () {
+            setState(hideMenu);
+          },
           compact: true,
           enabled: items[i].enabled && enabled,
         ),
@@ -494,6 +501,9 @@ class _NavState extends State<Nav>
     return MouseRegion(
       onExit: enabled
           ? (event) {
+              _timer?.cancel();
+              _timer = null;
+
               if (event.localPosition.dy < navThemeData.height!) {
                 setState(hideMenu);
               }
@@ -685,6 +695,10 @@ class _NavState extends State<Nav>
       navList.add(_createMenuItems(itemSpacing, navThemeData, _trailingMenu));
     }
 
+    if (widget.trailing != null) {
+      navList.add(widget.trailing!(context));
+    }
+
     Widget result = Container(
       constraints: constraints,
       color: backgroundColor,
@@ -727,6 +741,24 @@ class _NavState extends State<Nav>
       },
     );
   }
+
+  @override
+  OverlayState get overlay => _overlayKey.currentState!;
+
+  @override
+  Duration get menuTransitionDuration => _menuTransitionDuration;
+
+  @override
+  Curve get menuTransitionCurve => _menuTrasitionCurve;
+
+  @override
+  Color get navBarBackgroundColor => _navBarBackgroundColor;
+
+  @override
+  Color get barrierColor => DialogTheme.of(context).barrierColor!;
+
+  @override
+  ImageFilter get filter => DialogTheme.of(context).imageFilter!;
 
   @override
   void initState() {
@@ -778,6 +810,9 @@ class _NavState extends State<Nav>
       curve: themeData.menuTrasitionCurve!,
       reverseCurve: themeData.menuTrasitionReverseCurve!,
     );
+
+    _timer?.cancel();
+    _timer = null;
   }
 
   @override

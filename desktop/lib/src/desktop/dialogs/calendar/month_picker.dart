@@ -14,8 +14,7 @@ const double _kDefaultCalendarSpacing = 8.0;
 const Duration _monthScrollDuration = Duration(milliseconds: 120);
 const Curve _monthScrollCurve = Curves.easeInSine;
 
-///
-typedef SelectableDayPredicate = bool Function(DateTime day);
+typedef SelectableDay = bool Function(DateTime day);
 
 ///
 class MonthPicker extends StatefulWidget {
@@ -60,7 +59,7 @@ class MonthPicker extends StatefulWidget {
   final ValueChanged<DateTime> onDisplayedMonthChanged;
 
   ///
-  final SelectableDayPredicate? selectableDayPredicate;
+  final SelectableDay? selectableDayPredicate;
 
   @override
   State<MonthPicker> createState() => MonthPickerState();
@@ -493,7 +492,7 @@ class _DayPicker extends StatefulWidget {
   final DateTime displayedMonth;
 
   /// Optional user supplied predicate function to customize selectable days.
-  final SelectableDayPredicate? selectableDayPredicate;
+  final SelectableDay? selectableDayPredicate;
 
   @override
   State<_DayPicker> createState() => _DayPickerState();

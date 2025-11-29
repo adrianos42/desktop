@@ -104,9 +104,9 @@ class _NavThemeData {
   /// Defaults to:
   ///
   /// ```dart
-  /// Duration(milliseconds: 400)
+  /// Duration(milliseconds: 600)
   /// ```
-  Duration get menuTransitionDuration => const Duration(milliseconds: 400);
+  Duration get menuTransitionDuration => const Duration(milliseconds: 500);
 
   /// The animation curve of the menu transition.
   ///

@@ -1,6 +1,7 @@
 export 'breadcrumb.dart';
 export 'floating_menu_bar.dart';
 export 'nav.dart';
+export 'nav_bar.dart';
 export 'route.dart';
 export 'tab.dart';
 export 'tab_dialog.dart';

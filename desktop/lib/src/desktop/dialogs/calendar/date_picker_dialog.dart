@@ -48,7 +48,7 @@ class DatePickerDialog extends StatefulWidget {
   final DateTime currentDate;
 
   /// Function to provide full control over which [DateTime] can be selected.
-  final SelectableDayPredicate? selectableDayPredicate;
+  final SelectableDay? selectableDayPredicate;
 
   /// The text that is displayed at the top of the header.
   final String? helpText;
@@ -63,7 +63,7 @@ class DatePickerDialog extends StatefulWidget {
     required DateTime firstDate,
     required DateTime lastDate,
     DateTime? currentDate,
-    SelectableDayPredicate? selectableDayPredicate,
+    SelectableDay? selectableDayPredicate,
     String? helpText,
     Locale? locale,
     bool useRootNavigator = true,

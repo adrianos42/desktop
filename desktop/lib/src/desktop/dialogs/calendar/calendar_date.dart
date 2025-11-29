@@ -74,7 +74,7 @@ class CalendarDate extends StatefulWidget {
   final ValueChanged<DateTime>? onDateSelected;
 
   /// Optional supplied predicate function to customize selectable days.
-  final SelectableDayPredicate? selectableDayPredicate;
+  final SelectableDay? selectableDayPredicate;
 
   /// The initial display of the calendar picker.
   final DatePickerMode initialCalendarMode;

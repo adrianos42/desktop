@@ -223,7 +223,7 @@ class DateFormField extends FormField<String> {
 
   final DateTime? currentDate;
 
-  final SelectableDayPredicate? selectableDayPredicate;
+  final SelectableDay? selectableDayPredicate;
 
   final DatePickerMode initialCalendarMode;
 
@@ -443,7 +443,7 @@ class _DatePickerController {
     required DateTime firstDate,
     required DateTime lastDate,
     required DateTime? currentDate,
-    required SelectableDayPredicate? selectableDayPredicate,
+    required SelectableDay? selectableDayPredicate,
     required DatePickerMode initialCalendarMode,
     required Color background,
   }) : _completer = Completer<DateTime?>() {

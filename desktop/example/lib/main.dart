@@ -11,7 +11,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DesktopApp(
       theme: ThemeData(
-        brightness: Brightness.dark,
         primaryColor: PrimaryColors.royalBlue.primaryColor,
       ),
       home: const HomePage(),

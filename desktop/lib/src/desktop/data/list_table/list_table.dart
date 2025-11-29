@@ -82,7 +82,7 @@ typedef ColumnIndexMappingCallback = void Function(List<int> indexMapping);
 /// A table with columns that can be resized.
 class ListTable extends StatefulWidget {
   /// Creates a [ListTable].
-  const ListTable({
+  ListTable({
     super.key,
     this.tableBorder,
     required this.colCount,
@@ -99,6 +99,10 @@ class ListTable extends StatefulWidget {
          !allowColumnDragging ||
              columnIndexMapping == null ||
              columnIndexMapping.length == colCount,
+       ),
+       assert(
+         tableBorder == null || tableBorder.borderRadius == BorderRadius.zero,
+         'Border radius must be zero',
        );
 
   /// Header item.

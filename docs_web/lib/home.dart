@@ -214,8 +214,9 @@ class DocApp extends StatelessWidget {
           if (kReleaseMode) {
             return const OverviewPage();
           } else {
+            return NavBarPage();
             //return const ButtonPage();
-            return const NavPage();
+            // return const NavPage();
             // return const DrawerPage();
             // return const ButtonRadioPage();
             //return const BreadcrumbPage();

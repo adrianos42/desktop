@@ -73,7 +73,7 @@ return Column(
 }
 
 class _MainPage extends StatelessWidget {
-  _MainPage(this.count, this.pushPage);
+  const _MainPage(this.count, this.pushPage);
 
   final int count;
 

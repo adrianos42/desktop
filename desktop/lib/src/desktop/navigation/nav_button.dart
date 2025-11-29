@@ -504,7 +504,8 @@ class NavMenuButton extends StatelessWidget {
     this.titleBuilder,
     this.title,
     this.onHover,
-    this.onHoverEnd,
+    this.onLongPress,
+    this.onLongPressUp,
     this.compact = true,
     required this.enabled,
   });
@@ -518,8 +519,10 @@ class NavMenuButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   final VoidCallback? onHover;
+  
+  final VoidCallback? onLongPress;
 
-  final VoidCallback? onHoverEnd;
+  final VoidCallback? onLongPressUp;
 
   final bool active;
 
@@ -575,8 +578,8 @@ class NavMenuButton extends StatelessWidget {
         child: GestureDetector(
           behavior: HitTestBehavior.deferToChild,
           onTap: () {},
-          onLongPress: enabled ? () => onHover!() : null,
-          onLongPressUp: enabled ? () => onHoverEnd!() : null,
+          onLongPress: enabled ? () => onLongPress!() : null,
+          onLongPressUp: enabled ? () => onLongPressUp!() : null,
           child: SizedBox(
             height: buttonHeight,
             child: Padding(
